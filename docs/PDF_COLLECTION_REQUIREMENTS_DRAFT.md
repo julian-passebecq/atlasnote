@@ -31,3 +31,7 @@ Add tools/add-pdf-to-pack.mjs with dry-run support. It should validate PDF bytes
 - PDF Focus uses maximum canvas;
 - moving a PDF does not change its stable page/document identity;
 - existing PDF fallback/integrated-engine honesty rules remain intact.
+
+## Existing architecture confirmation
+
+The current source already has the primitives needed for this feature. `DocumentEntry` supports `pack-file`, `library-file`, HTTPS, external-link and local sources. The pack loader maps `pack-file` documents to verified pack assets and checks PDF byte/hash consistency. The reader resolves a PDF by matching its `pageId`, so a PDF can use the same recursive tree placement as a normal Atlas page. This pass should therefore extend workflow/UX rather than introduce a parallel document database.
