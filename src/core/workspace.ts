@@ -7,8 +7,9 @@ export function blankPersonal():Personal{return {schemaVersion:2,notes:{},rating
 export function blankWorkspace():Workspace{return {imports:[],overlays:blankOverlays(),personal:blankPersonal(),assets:[],generation:0};}
 export function current(view:View|undefined){return view?.history[view.cursor];}
 export function newLocation(pageId:string):Location{return {pageId,presentation:'continuous',pdfMode:'single',pdfPage:1,zoom:1,rotation:0,cover:false};}
-export function newView(pageId:string,anchor?:any):View{return {id:uid('view'),history:[{...newLocation(pageId),anchor}],cursor:0,collapsed:{},revealed:{},english:true};}
-export function navigate(view:View,pageId:string,anchor?:any):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;return {...view,history:[...view.history.slice(0,view.cursor+1),{...newLocation(pageId),anchor}],cursor:view.cursor+1};}
+function locationWithAnchor(pageId:string,anchor?:any):Location{const location=newLocation(pageId);if(anchor!==undefined)location.anchor=anchor;return location;}
+export function newView(pageId:string,anchor?:any):View{return {id:uid('view'),history:[locationWithAnchor(pageId,anchor)],cursor:0,collapsed:{},revealed:{},english:true};}
+export function navigate(view:View,pageId:string,anchor?:any):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;return {...view,history:[...view.history.slice(0,view.cursor+1),locationWithAnchor(pageId,anchor)],cursor:view.cursor+1};}
 export function travel(view:View,delta:number):View{return {...view,cursor:Math.max(0,Math.min(view.history.length-1,view.cursor+delta))};}
 export function findNode(projects:Project[],id:string):{node:TreeNode;list:TreeNode[];index:number;project:Project;ancestors:string[]}|undefined{
  function walk(ns:TreeNode[],p:Project,ancestors:string[]):any{for(let i=0;i<ns.length;i++){if(ns[i].id===id)return {node:ns[i],list:ns,index:i,project:p,ancestors};const r=walk(ns[i].children??[],p,[...ancestors,ns[i].id]);if(r)return r;}}
