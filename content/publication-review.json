@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-09-10",
+  "policy": "Only the original safe example pack and newly authored generic guide are allowlisted. Private corpus excluded in full.",
+  "packs": {
+    "example.notes": {
+      "review": "Supplied public example, no private source content.",
+      "sha256": "dfa80a12da4ead8cb9bc78a6b7ba69adf544437c9e6c5db68df8b7c393899d95"
+    },
+    "atlas.reader-guide": {
+      "review": "New original reader guide and supplied synthetic author-created PDF fixtures.",
+      "sha256": "e56129748131d9029b6556919f78af714d7a9c5fcad485b9848ffd099e2eb3ec"
+    }
+  }
+}

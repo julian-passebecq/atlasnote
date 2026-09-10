@@ -1,0 +1,14 @@
+import fs from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+import {compileContent} from './compile-content.mjs';
+await fs.rm('dist',{recursive:true,force:true});await fs.mkdir('dist',{recursive:true});
+execFileSync(process.execPath,['node_modules/typescript/bin/tsc'],{stdio:'inherit'});
+await fs.cp('src/vendor','dist/app/vendor',{recursive:true,filter:p=>!p.endsWith('.d.mts')});
+await fs.cp('src/content/schemas','dist/app/content/schemas',{recursive:true});
+await fs.cp('src/styles','dist/styles',{recursive:true});await fs.cp('public','dist',{recursive:true});
+await fs.copyFile('LICENSE','dist/LICENSE.txt');
+await fs.copyFile('THIRD_PARTY_NOTICES.md','dist/THIRD_PARTY_NOTICES.md');
+await fs.cp('docs/licenses','dist/licenses',{recursive:true});
+await compileContent();
+await fs.writeFile('dist/index.html',`<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f7fb"><meta name="referrer" content="no-referrer"><title>Knowledge Atlas</title><link rel="icon" href="./assets/atlas.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles/app.css"></head><body><div id="root"><p class="loading">Opening Knowledge Atlas...</p></div><noscript>Knowledge Atlas needs JavaScript for local storage and reading views. Your library is not sent to a server.</noscript><script src="./app/vendor/jszip.js"></script><script src="./app/vendor/prism.js"></script><script type="module" src="./app/main.js"></script></body></html>`);
+console.log('Static build complete in dist/. No private library is included.');

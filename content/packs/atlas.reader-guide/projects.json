@@ -1,0 +1,52 @@
+[
+  {
+    "id": "project.atlas.guide",
+    "title": "Reader guide",
+    "icon": "book",
+    "description": "Learn the workspace, layouts and privacy controls.",
+    "nodes": [
+      {
+        "id": "node.atlas.read",
+        "title": "Start reading",
+        "children": [
+          {
+            "id": "node.page.atlas.welcome",
+            "title": "A quiet place to connect your notes",
+            "pageId": "page.atlas.welcome"
+          },
+          {
+            "id": "node.page.atlas.layouts",
+            "title": "One note, several ways to read",
+            "pageId": "page.atlas.layouts"
+          },
+          {
+            "id": "node.page.atlas.language",
+            "title": "Read in Norwegian, keep English nearby",
+            "pageId": "page.atlas.language"
+          }
+        ]
+      },
+      {
+        "id": "node.atlas.documents",
+        "title": "PDF documents",
+        "children": [
+          {
+            "id": "node.page.atlas.pdf",
+            "title": "PDF reading fixture",
+            "pageId": "page.atlas.pdf"
+          },
+          {
+            "id": "node.page.atlas.rotated",
+            "title": "Rotated PDF fixture",
+            "pageId": "page.atlas.rotated"
+          },
+          {
+            "id": "node.page.atlas.password",
+            "title": "Password-protected PDF fixture",
+            "pageId": "page.atlas.password"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+
+> knowledge-atlas@1.0.0 build:vite
+> node tools/build-vite.mjs
+
+file:///mnt/data/knowledge-atlas/tools/build-vite.mjs:4
+let vite,reactPDF,pdfjs;try{vite=await packageRoot(require.resolve('vite'),'vite');reactPDF=await packageRoot(require.resolve('react-pdf'),'react-pdf');const fromWrapper=createRequire(path.join(reactPDF.dir,'package.json'));pdfjs=await packageRoot(fromWrapper.resolve('pdfjs-dist'),'pdfjs-dist');}catch(e){throw Error('Optional dependencies are unavailable. Run npm run enable:online on a network-enabled computer first. '+e.message);}
+                                                                                                                                                                                                                                                                                                                        ^
+
+Error: Optional dependencies are unavailable. Run npm run enable:online on a network-enabled computer first. Cannot find module 'vite'
+Require stack:
+- /mnt/data/knowledge-atlas/tools/build-vite.mjs
+    at file:///mnt/data/knowledge-atlas/tools/build-vite.mjs:4:313
+
+Node.js v22.16.0

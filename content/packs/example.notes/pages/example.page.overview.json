@@ -1,0 +1,43 @@
+{
+  "id": "example.page.overview",
+  "title": "A portable page",
+  "summary": "Illustrative content for testing the import contract.",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "overview",
+      "title": "Overview",
+      "children": [
+        {
+          "type": "markdown",
+          "text": "Replace this illustrative text with your reviewed knowledge.",
+          "id": "block.db82cc1f42d2e04e0bb5a6f7"
+        },
+        {
+          "type": "code",
+          "language": "sql",
+          "code": "SELECT 1 AS example_value;",
+          "explanation": "This snippet is displayed, never executed.",
+          "id": "block.ab7e6df49342e1b2962765ac"
+        },
+        {
+          "type": "question",
+          "question": "Where should personal remarks be stored?",
+          "answer": "In the personal workspace state, not in the canonical page file.",
+          "id": "block.863fbbd702f45703d74d90e0"
+        }
+      ]
+    }
+  ],
+  "related": [
+    "example.page.second"
+  ],
+  "terms": [
+    "example.term.pack"
+  ],
+  "sources": [],
+  "tags": [
+    "example",
+    "authoring"
+  ]
+}

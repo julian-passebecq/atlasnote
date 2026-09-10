@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "sha256(pageId + NUL + sourcePointer + NUL + collisionSalt)",
+  "assignments": [
+    {
+      "pageId": "example.page.overview",
+      "sourcePointer": "/blocks/0/children/0",
+      "blockId": "block.db82cc1f42d2e04e0bb5a6f7"
+    },
+    {
+      "pageId": "example.page.overview",
+      "sourcePointer": "/blocks/0/children/1",
+      "blockId": "block.ab7e6df49342e1b2962765ac"
+    },
+    {
+      "pageId": "example.page.overview",
+      "sourcePointer": "/blocks/0/children/2",
+      "blockId": "block.863fbbd702f45703d74d90e0"
+    },
+    {
+      "pageId": "example.page.second",
+      "sourcePointer": "/blocks/0",
+      "blockId": "block.d7b1dae7d76c64238b589c3f"
+    }
+  ]
+}

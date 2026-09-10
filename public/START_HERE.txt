@@ -1,0 +1,20 @@
+KNOWLEDGE ATLAS - PREBUILT OFFLINE NOTE READER
+
+Extract the ZIP first. On Windows, run Start_Atlas.cmd with Node.js or Python installed.
+Or, inside this folder: node serve.mjs
+Or: python -m http.server 4173 --bind 127.0.0.1
+Then open http://127.0.0.1:4173
+Do not open index.html directly with file://.
+
+FULL PRIVATE LIBRARY:
+Keep the separate knowledge-atlas-local-library-private.zip OUTSIDE this served folder.
+Workspace settings -> Import library -> Choose library ZIP -> review -> Confirm.
+Canonical private library: 137 pages, 685 terms, five projects. Public guide remains separate.
+Use workspace backups regularly. Keep backups/private content OUTSIDE the served folder.
+
+LIMITS:
+This prebuilt reader has browser PDF preview only, not integrated Atlas PDF controls.
+The source ZIP includes an optional unverified Vite/React-PDF path.
+Normal-origin IndexedDB recovery certification was blocked in the build environment.
+Use one active browser tab for editing. No cloud sync or backup encryption.
+See RELEASE_REPORT.md in the source ZIP / separate download for exact test scope.

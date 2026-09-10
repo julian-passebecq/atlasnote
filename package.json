@@ -1,0 +1,30 @@
+{
+  "name": "knowledge-atlas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "dev": "node tools/build.mjs && node tools/serve.mjs",
+    "local": "npm run dev",
+    "preview": "node tools/serve.mjs",
+    "validate": "node tools/compile-content.mjs --check",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "python tests/browser_test.py",
+    "pack:local": "node tools/package-library.mjs",
+    "check:release": "node tools/check-release.mjs",
+    "enable:online": "node tools/enable-online.mjs",
+    "build:vite": "node tools/build-vite.mjs",
+    "test:dom": "python tests/dom_test.py",
+    "pretest": "npm run build"
+  },
+  "dependencies": {
+    "jszip": "3.10.1",
+    "prismjs": "1.30.0",
+    "typescript": "5.8.3"
+  }
+}
