@@ -1,0 +1,423 @@
+{
+  "scope": "Actual Chromium UI/DOM on about:blank; storage writes suppressed. NOT persistence / reload / integrated PDF certification.",
+  "checks": [
+    {
+      "name": "Compare toggles closed and preserves active right pane exactly",
+      "accepts": [
+        "D01",
+        "D02",
+        "D03",
+        "D04",
+        "D07",
+        "D14"
+      ],
+      "status": "PASS",
+      "detail": {
+        "survivor": "pane.ff5d08ace4bf6f419e1b8ddbb9dffc00",
+        "tabs": 1
+      },
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Compare preserves active left pane too",
+      "accepts": [
+        "D03",
+        "D14"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Compare remains closable with an empty active pane",
+      "accepts": [
+        "D02",
+        "D03"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Per-pane close still works",
+      "accepts": [
+        "D02"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Focus immediately precedes Compare in the requested control order",
+      "accepts": [
+        "E01"
+      ],
+      "status": "PASS",
+      "detail": [
+        "Export to AI",
+        "Print or Save as PDF",
+        "Enter focus mode",
+        "Compare in two panes",
+        "Show learning flags"
+      ],
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Focus restores exact panels: left=False, right=False",
+      "accepts": [
+        "E02",
+        "E03",
+        "E04",
+        "E06"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Focus restores exact panels: left=False, right=True",
+      "accepts": [
+        "E02",
+        "E03",
+        "E04",
+        "E06"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Focus restores exact panels: left=True, right=False",
+      "accepts": [
+        "E02",
+        "E03",
+        "E04",
+        "E06"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Focus restores exact panels: left=True, right=True",
+      "accepts": [
+        "E02",
+        "E03",
+        "E04",
+        "E06"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Escape exits Focus while Compare remains usable",
+      "accepts": [
+        "E05",
+        "E07"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Right-click opens a fresh internal tab without changing source view",
+      "accepts": [
+        "B05",
+        "B02"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Tree menu keyboard navigation and focus return",
+      "accepts": [
+        "B05",
+        "L10"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Other-pane action targets the non-active pane only",
+      "accepts": [
+        "D05",
+        "D14"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Tree document bookmark toggle does not copy another page position",
+      "accepts": [
+        "H03"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Tree new tab via Control",
+      "accepts": [
+        "B03"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Tree new tab via Meta",
+      "accepts": [
+        "B03"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Tree new tab via middle",
+      "accepts": [
+        "B04"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Five-tab cap is visible; closing active tab chooses its neighbor",
+      "accepts": [
+        "B01",
+        "B06"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "New-tab picker does not inherit another view settings",
+      "accepts": [
+        "B02",
+        "B08",
+        "B09"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Search exposes an explicit open-in-new-tab action",
+      "accepts": [
+        "G11"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Tab modes, English, anchor and history restore independently",
+      "accepts": [
+        "B07",
+        "B08",
+        "B09",
+        "B10"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Pointer divider, keyboard divider and swap",
+      "accepts": [
+        "D08",
+        "D09",
+        "D10"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Mobile pane switcher and toggle preserve a visible survivor",
+      "accepts": [
+        "D13",
+        "D03"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Long-note guide opens Book: paired 1-2 then 3-4, not Compare",
+      "accepts": [
+        "C01",
+        "C02",
+        "C03",
+        "C04"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Short note is one real Book sheet",
+      "accepts": [
+        "C05"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Rapid A/B remarks retain their stable page keys",
+      "accepts": [
+        "F07",
+        "F08"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Contextual glossary, global glossary, related pages and backlinks",
+      "accepts": [
+        "F01",
+        "F02",
+        "F03",
+        "F04"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "All learning flags and global hide/show preserve values",
+      "accepts": [
+        "H01",
+        "H02"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Notebook create, rename, archive and restore through real controls",
+      "accepts": [
+        "A01",
+        "A02",
+        "A03"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Six-level folders, deep page, rename, move and folder archive/restore",
+      "accepts": [
+        "A04",
+        "A05",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Manage project groups via Home",
+      "accepts": [
+        "A12"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Note plus PDF Compare retains explicitly labelled fallback",
+      "accepts": [],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Root page creation, same-notebook move, page archive and restore",
+      "accepts": [
+        "A06",
+        "A09",
+        "A11"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Outline jump opens a folded section at its stable block anchor",
+      "accepts": [
+        "F05",
+        "F06"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Explicit page break advances sheet; oversized callout has full-source fallback",
+      "accepts": [
+        "C14",
+        "C15"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "PDF revision remarks remain separate and require explicit copy",
+      "accepts": [
+        "F09"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Mixed layouts, reading positions, tabs and history remain per-pane",
+      "accepts": [
+        "D04",
+        "D06",
+        "D07",
+        "D11",
+        "D12",
+        "D14"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "Position bookmark resolves stable page ID after source relocation",
+      "accepts": [
+        "H04",
+        "H06"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    },
+    {
+      "name": "No uncaught JavaScript errors in hardening interactions",
+      "accepts": [
+        "L11"
+      ],
+      "status": "PASS",
+      "detail": null,
+      "scope": "DOM / in-memory UI"
+    }
+  ],
+  "passed": 39,
+  "failed": 0
+}

@@ -7,8 +7,9 @@ export function blankPersonal():Personal{return {schemaVersion:2,notes:{},rating
 export function blankWorkspace():Workspace{return {imports:[],overlays:blankOverlays(),personal:blankPersonal(),assets:[],generation:0};}
 export function current(view:View|undefined){return view?.history[view.cursor];}
 export function newLocation(pageId:string):Location{return {pageId,presentation:'continuous',pdfMode:'single',pdfPage:1,zoom:1,rotation:0,cover:false};}
-export function newView(pageId:string,anchor?:any):View{return {id:uid('view'),history:[{...newLocation(pageId),anchor}],cursor:0,collapsed:{},revealed:{},english:true};}
-export function navigate(view:View,pageId:string,anchor?:any):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;return {...view,history:[...view.history.slice(0,view.cursor+1),{...newLocation(pageId),anchor}],cursor:view.cursor+1};}
+function locationWithAnchor(pageId:string,anchor?:any):Location{const location=newLocation(pageId);if(anchor!==undefined)location.anchor=anchor;return location;}
+export function newView(pageId:string,anchor?:any):View{return {id:uid('view'),history:[locationWithAnchor(pageId,anchor)],cursor:0,collapsed:{},revealed:{},english:true};}
+export function navigate(view:View,pageId:string,anchor?:any):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;return {...view,history:[...view.history.slice(0,view.cursor+1),locationWithAnchor(pageId,anchor)],cursor:view.cursor+1};}
 export function travel(view:View,delta:number):View{return {...view,cursor:Math.max(0,Math.min(view.history.length-1,view.cursor+delta))};}
 export function findNode(projects:Project[],id:string):{node:TreeNode;list:TreeNode[];index:number;project:Project;ancestors:string[]}|undefined{
  function walk(ns:TreeNode[],p:Project,ancestors:string[]):any{for(let i=0;i<ns.length;i++){if(ns[i].id===id)return {node:ns[i],list:ns,index:i,project:p,ancestors};const r=walk(ns[i].children??[],p,[...ancestors,ns[i].id]);if(r)return r;}}
@@ -43,3 +44,18 @@ export function searchCatalog(c:Catalogue,query:string){const words=normalize(qu
 export function makeMarkdownPage(title:string,text:string):Page{return {id:uid('page.local'),title,summary:'',blocks:[{id:uid('block'),type:'markdown',text}],related:[],terms:[],sources:[],tags:['Personal']};}
 export function editPageLosslessly(page:Page,title:string,summary:string,textByBlock:Record<string,string>){const p=structuredClone(page);p.title=title;p.summary=summary;walkBlocks(p.blocks,(b:any)=>{if(b.type==='markdown'&&Object.hasOwn(textByBlock,b.id))b.text=textByBlock[b.id];});return p;}
 export function exportText(page:Page,opts:{english:boolean;answers:boolean;notes?:string;related?:string[]}){return `# ${page.title}\n\nStable ID: ${page.id}\n\n${page.summary}\n\n${blocksText(page.blocks,opts)}\n\n## Sources\n${page.sources.map(s=>s.title+(s.url?' - '+s.url:'')).join('\n')}\n\n## Related references (not instructions)\n${(opts.related??page.related).join('\n')}${opts.notes?'\n\n## Personal remarks (explicitly included)\n'+opts.notes:''}`;}
+
+/** Toggle Compare without reconstructing the surviving pane or its reading threads. */
+export function toggleCompare(session:Session):boolean {
+ const active=session.panes.find(p=>p.id===session.activePane)??session.panes[0];
+ if(!active)return false;
+ if(session.panes.length===2){
+  session.panes=[active];session.activePane=active.id;session.ratio=50;
+  session.screen=active.views.length?'reader':'home';return true;
+ }
+ const source=active.views.find(v=>v.id===active.active);
+ if(!source||!current(source))return false;
+ const view=structuredClone(source);view.id=uid('view');
+ const pane={id:uid('pane'),views:[view],active:view.id};
+ session.panes.push(pane);session.activePane=pane.id;session.ratio=50;session.screen='reader';return true;
+}

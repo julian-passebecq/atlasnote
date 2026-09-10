@@ -1,0 +1,1262 @@
+{
+  "release": "1.0.1",
+  "generatedAt": "2026-09-10T16:21:01.934849+00:00",
+  "decision": "Reader hardening delivered; full release acceptance remains gated by normal-origin persistence/download, integrated PDF and dependency/runtime verification.",
+  "counts": {
+    "PASS": 103,
+    "BLOCKED": 36
+  },
+  "rows": [
+    {
+      "id": "A01",
+      "section": "A. Home and hierarchy",
+      "requirement": "Create notebook.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Notebook create/rename/archive/restore through real controls."
+    },
+    {
+      "id": "A02",
+      "section": "A. Home and hierarchy",
+      "requirement": "Rename notebook.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Notebook create/rename/archive/restore through real controls."
+    },
+    {
+      "id": "A03",
+      "section": "A. Home and hierarchy",
+      "requirement": "Archive and restore notebook.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Notebook create/rename/archive/restore through real controls."
+    },
+    {
+      "id": "A04",
+      "section": "A. Home and hierarchy",
+      "requirement": "Create folder.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Six-level folders, deep-page rename/move and folder restore."
+    },
+    {
+      "id": "A05",
+      "section": "A. Home and hierarchy",
+      "requirement": "Create nested folders to at least depth 6.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Six-level folders, deep-page rename/move and folder restore."
+    },
+    {
+      "id": "A06",
+      "section": "A. Home and hierarchy",
+      "requirement": "Create page at root.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Root page creation, same-notebook move and page restore."
+    },
+    {
+      "id": "A07",
+      "section": "A. Home and hierarchy",
+      "requirement": "Create page in deep folder.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Six-level folders, deep-page rename/move and folder restore."
+    },
+    {
+      "id": "A08",
+      "section": "A. Home and hierarchy",
+      "requirement": "Rename page.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Six-level folders, deep-page rename/move and folder restore."
+    },
+    {
+      "id": "A09",
+      "section": "A. Home and hierarchy",
+      "requirement": "Move page between folders.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Root page moved into PDF documents through the destination selector."
+    },
+    {
+      "id": "A10",
+      "section": "A. Home and hierarchy",
+      "requirement": "Move page between notebooks if supported.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Deep page moved from Reader guide into Example project."
+    },
+    {
+      "id": "A11",
+      "section": "A. Home and hierarchy",
+      "requirement": "Archive and restore page/folder.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Both folder and page archive/restore exercised through Home."
+    },
+    {
+      "id": "A12",
+      "section": "A. Home and hierarchy",
+      "requirement": "Manage project groups.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Manage project groups via Home."
+    },
+    {
+      "id": "A13",
+      "section": "A. Home and hierarchy",
+      "requirement": "Reload and verify all changes.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Administrative policy blocks normal HTTP-origin navigation before persistence/reload can run."
+    },
+    {
+      "id": "B01",
+      "section": "B. Tabs",
+      "requirement": "Open 5 tabs in one pane.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Five-tab cap enforced and reported; neighbor activation checked."
+    },
+    {
+      "id": "B02",
+      "section": "B. Tabs",
+      "requirement": "New-tab picker starts a fresh view.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "New-tab picker and tree new tab do not inherit another view state."
+    },
+    {
+      "id": "B03",
+      "section": "B. Tabs",
+      "requirement": "Ctrl/Cmd-click opens new tab.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Both Control and Meta modifiers exercised."
+    },
+    {
+      "id": "B04",
+      "section": "B. Tabs",
+      "requirement": "Middle-click opens new tab.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Middle-click exercised on the actual tree page button."
+    },
+    {
+      "id": "B05",
+      "section": "B. Tabs",
+      "requirement": "Right-click menu opens page in new tab.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Right-click menu plus keyboard menu activation exercised."
+    },
+    {
+      "id": "B06",
+      "section": "B. Tabs",
+      "requirement": "Closing active tab activates a sensible neighbor.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Closing the fifth active tab selects the previous neighbor."
+    },
+    {
+      "id": "B07",
+      "section": "B. Tabs",
+      "requirement": "Back/Forward independent by tab.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Tab history navigation and per-pane history tested independently."
+    },
+    {
+      "id": "B08",
+      "section": "B. Tabs",
+      "requirement": "Book/Continuous/Parallel state independent by tab.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Book/Continuous/Parallel views and mixed pane layouts tested."
+    },
+    {
+      "id": "B09",
+      "section": "B. Tabs",
+      "requirement": "English visibility independent by tab.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Per-tab and per-pane English toggle isolation checked."
+    },
+    {
+      "id": "B10",
+      "section": "B. Tabs",
+      "requirement": "Reading position restored after tab switches.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Exact source anchor and tab state restored after switches."
+    },
+    {
+      "id": "C01",
+      "section": "C. Book",
+      "requirement": "Long fixture produces >5 sheets.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Long-note guide and original fixture yield more than five measured sheets."
+    },
+    {
+      "id": "C02",
+      "section": "C. Book",
+      "requirement": "Wide single-pane Focus displays paired consecutive sheets.",
+      "status": "PASS",
+      "scope": "DOM / actual pagination geometry",
+      "evidence": "evidence/hardening/baseline-dom/dom-tests.json",
+      "note": "Wide Focus Book forms two columns of the same source note."
+    },
+    {
+      "id": "C03",
+      "section": "C. Book",
+      "requirement": "First spread is 1\u20132, next is 3\u20134.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Actual sheet positions pair 1-2, then 3-4."
+    },
+    {
+      "id": "C04",
+      "section": "C. Book",
+      "requirement": "One vertical scroller only.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "One Book scroller; grid/sheets/reader body do not introduce nested vertical scrolling."
+    },
+    {
+      "id": "C05",
+      "section": "C. Book",
+      "requirement": "Short page produces one sheet without error.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Short supplied fixture produces exactly one sheet."
+    },
+    {
+      "id": "C06",
+      "section": "C. Book",
+      "requirement": "Resize 1366x768 -> 1920x1080 -> mobile, no lost content.",
+      "status": "PASS",
+      "scope": "DOM / actual pagination geometry",
+      "evidence": "evidence/hardening/baseline-dom/dom-tests.json",
+      "note": "1366/1920/mobile geometry and source markers checked."
+    },
+    {
+      "id": "C07",
+      "section": "C. Book",
+      "requirement": "Font-size change repaginates and restores source anchor.",
+      "status": "PASS",
+      "scope": "DOM / actual pagination geometry",
+      "evidence": "evidence/hardening/baseline-dom/dom-tests.json",
+      "note": "Font reflow restores the exact saved source block and offset."
+    },
+    {
+      "id": "C08",
+      "section": "C. Book",
+      "requirement": "Paragraph source reconstructed exactly.",
+      "status": "PASS",
+      "scope": "DOM / actual pagination geometry",
+      "evidence": "evidence/hardening/baseline-dom/dom-tests.json",
+      "note": "Paragraph fragments reconstruct source text exactly."
+    },
+    {
+      "id": "C09",
+      "section": "C. Book",
+      "requirement": "Code source reconstructed exactly.",
+      "status": "PASS",
+      "scope": "DOM / actual pagination geometry",
+      "evidence": "evidence/hardening/baseline-dom/dom-tests.json",
+      "note": "Code fragments reconstruct source lines exactly."
+    },
+    {
+      "id": "C10",
+      "section": "C. Book",
+      "requirement": "Table rows reconstructed exactly.",
+      "status": "PASS",
+      "scope": "DOM / actual pagination geometry",
+      "evidence": "evidence/hardening/baseline-dom/dom-tests.json",
+      "note": "Table fragments reconstruct source rows exactly."
+    },
+    {
+      "id": "C11",
+      "section": "C. Book",
+      "requirement": "List items reconstructed exactly.",
+      "status": "PASS",
+      "scope": "DOM / actual pagination geometry",
+      "evidence": "evidence/hardening/baseline-dom/dom-tests.json",
+      "note": "List fragments reconstruct source items exactly."
+    },
+    {
+      "id": "C12",
+      "section": "C. Book",
+      "requirement": "No stranded heading at tested page endings.",
+      "status": "PASS",
+      "scope": "DOM / actual pagination geometry",
+      "evidence": "evidence/hardening/baseline-dom/dom-tests.json",
+      "note": "No stranded headings in the tested measured page endings."
+    },
+    {
+      "id": "C13",
+      "section": "C. Book",
+      "requirement": "Mermaid survives cloned Book fragments.",
+      "status": "PASS",
+      "scope": "DOM / actual pagination geometry",
+      "evidence": "evidence/hardening/baseline-dom/dom-tests.json",
+      "note": "Actual Mermaid SVG survives cloned Book fragments."
+    },
+    {
+      "id": "C14",
+      "section": "C. Book",
+      "requirement": "Page-break starts next virtual sheet.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Explicit page-break block advances to a later sheet."
+    },
+    {
+      "id": "C15",
+      "section": "C. Book",
+      "requirement": "Oversized unsplittable block provides readable fallback.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Oversized callout links to Continuous; all 500 source tokens retained."
+    },
+    {
+      "id": "D01",
+      "section": "D. Compare",
+      "requirement": "Compare button opens pane 2.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Top-bar Compare opens a second pane with independent view identity."
+    },
+    {
+      "id": "D02",
+      "section": "D. Compare",
+      "requirement": "Compare button clicked again closes pane 2.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Second click closes Compare, including an empty active pane."
+    },
+    {
+      "id": "D03",
+      "section": "D. Compare",
+      "requirement": "Active pane survives top-bar close.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Both left-active and right-active exact surviving states checked."
+    },
+    {
+      "id": "D04",
+      "section": "D. Compare",
+      "requirement": "Same page in two panes.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Same source page opened independently in both panes."
+    },
+    {
+      "id": "D05",
+      "section": "D. Compare",
+      "requirement": "Different pages in two panes.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Other-pane menu opens a different page without mutating the active peer."
+    },
+    {
+      "id": "D06",
+      "section": "D. Compare",
+      "requirement": "Book left + Continuous right.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Book left / Continuous right exercised with independent scroll anchors."
+    },
+    {
+      "id": "D07",
+      "section": "D. Compare",
+      "requirement": "Parallel left + Book right.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Parallel left / Book right exercised through the toolbar."
+    },
+    {
+      "id": "D08",
+      "section": "D. Compare",
+      "requirement": "Divider drag.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Pointer drag moves the divider within allowed bounds."
+    },
+    {
+      "id": "D09",
+      "section": "D. Compare",
+      "requirement": "Divider keyboard arrows.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Arrow key divider controls checked on the real separator."
+    },
+    {
+      "id": "D10",
+      "section": "D. Compare",
+      "requirement": "Swap.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Swap exchanges pane order without losing the panes."
+    },
+    {
+      "id": "D11",
+      "section": "D. Compare",
+      "requirement": "Per-pane tabs.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Second-pane extra tab leaves first-pane tabs unchanged."
+    },
+    {
+      "id": "D12",
+      "section": "D. Compare",
+      "requirement": "Per-pane history.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Second-pane Back/Forward leaves first-pane history unchanged."
+    },
+    {
+      "id": "D13",
+      "section": "D. Compare",
+      "requirement": "Mobile pane switcher.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Mobile shows one selected pane and keeps the visible survivor on close."
+    },
+    {
+      "id": "D14",
+      "section": "D. Compare",
+      "requirement": "No accidental state leakage.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Exact peer-pane snapshots remain unchanged during other-pane operations."
+    },
+    {
+      "id": "E01",
+      "section": "E. Focus",
+      "requirement": "Focus button is immediately before Compare.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Topbar control order asserted exactly."
+    },
+    {
+      "id": "E02",
+      "section": "E. Focus",
+      "requirement": "Focus hides full left/right panels.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Full left and right panels hidden in Focus."
+    },
+    {
+      "id": "E03",
+      "section": "E. Focus",
+      "requirement": "Utility rails remain usable.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Utility rails remain; Global search opens from Focus and modal focus stays trapped."
+    },
+    {
+      "id": "E04",
+      "section": "E. Focus",
+      "requirement": "Exit Focus restores exact prior sidebar state.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "All four initial sidebar-open combinations restored exactly."
+    },
+    {
+      "id": "E05",
+      "section": "E. Focus",
+      "requirement": "Escape exits Focus.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Escape exits Focus."
+    },
+    {
+      "id": "E06",
+      "section": "E. Focus",
+      "requirement": "Book remains usable in Focus.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Measured Book remains visible and usable in Focus."
+    },
+    {
+      "id": "E07",
+      "section": "E. Focus",
+      "requirement": "Compare remains usable in Focus.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Compare remains open and usable when exiting Focus."
+    },
+    {
+      "id": "F01",
+      "section": "F. Context, remarks, glossary",
+      "requirement": "Contextual terms only before search.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Only two contextual stress-page terms initially displayed."
+    },
+    {
+      "id": "F02",
+      "section": "F. Context, remarks, glossary",
+      "requirement": "Global glossary search.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Global definition-only token finds the unrelated glossary entry."
+    },
+    {
+      "id": "F03",
+      "section": "F. Context, remarks, glossary",
+      "requirement": "Related pages.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Related pages section inspected on the supplied fixture."
+    },
+    {
+      "id": "F04",
+      "section": "F. Context, remarks, glossary",
+      "requirement": "Backlinks.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Backlinks section inspected on the supplied fixture."
+    },
+    {
+      "id": "F05",
+      "section": "F. Context, remarks, glossary",
+      "requirement": "Outline jump.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Outline click sets a stable source block anchor."
+    },
+    {
+      "id": "F06",
+      "section": "F. Context, remarks, glossary",
+      "requirement": "Folded section opens on jump.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Previously folded section is expanded before the jump."
+    },
+    {
+      "id": "F07",
+      "section": "F. Context, remarks, glossary",
+      "requirement": "Remark A saved to page A when rapidly switching to page B.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Immediate A-to-B remark switching preserves the exact A key/text."
+    },
+    {
+      "id": "F08",
+      "section": "F. Context, remarks, glossary",
+      "requirement": "Remark B saved to page B.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Immediate A-to-B remark switching preserves the exact B key/text."
+    },
+    {
+      "id": "F09",
+      "section": "F. Context, remarks, glossary",
+      "requirement": "PDF revision-specific remark not silently reassigned.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Old PDF revision note remains separate; current note starts empty and saves separately."
+    },
+    {
+      "id": "F10",
+      "section": "F. Context, remarks, glossary",
+      "requirement": "Remarks excluded from AI export by default.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Export dialog excludes remarks by default; core export tests verify omission."
+    },
+    {
+      "id": "G01",
+      "section": "G. Search",
+      "requirement": "title",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Synthetic title search: pagination stress."
+    },
+    {
+      "id": "G02",
+      "section": "G. Search",
+      "requirement": "body",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Synthetic body search: UniqueSearchToken_ATLAS_9472."
+    },
+    {
+      "id": "G03",
+      "section": "G. Search",
+      "requirement": "code token",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Synthetic code search: row_04."
+    },
+    {
+      "id": "G04",
+      "section": "G. Search",
+      "requirement": "tags",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Synthetic tag search: search-tag-unique-813."
+    },
+    {
+      "id": "G05",
+      "section": "G. Search",
+      "requirement": "folder path",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Synthetic deep folder search: Level 5."
+    },
+    {
+      "id": "G06",
+      "section": "G. Search",
+      "requirement": "glossary label",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Glossary label search: Glossary-only audit term."
+    },
+    {
+      "id": "G07",
+      "section": "G. Search",
+      "requirement": "glossary definition",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Glossary definition search: GlossaryDefinitionOnlyToken_7319."
+    },
+    {
+      "id": "G08",
+      "section": "G. Search",
+      "requirement": "glossary translation",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Glossary translation search: Parallellsprak (actual accented fixture tested)."
+    },
+    {
+      "id": "G09",
+      "section": "G. Search",
+      "requirement": "bilingual English/Norwegian",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Separate English and Norwegian phrase searches."
+    },
+    {
+      "id": "G10",
+      "section": "G. Search",
+      "requirement": "result opens in active pane",
+      "status": "PASS",
+      "scope": "DOM / actual pagination geometry",
+      "evidence": "evidence/hardening/baseline-dom/dom-tests.json",
+      "note": "Actual search UI opens its result in the active pane."
+    },
+    {
+      "id": "G11",
+      "section": "G. Search",
+      "requirement": "new-tab search result opens separate tab",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Explicit new-tab search result creates a separate view."
+    },
+    {
+      "id": "H01",
+      "section": "H. Learning state / bookmarks",
+      "requirement": "red/orange/green/gray flag.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "All four learning-flag values tested through the select control."
+    },
+    {
+      "id": "H02",
+      "section": "H. Learning state / bookmarks",
+      "requirement": "global hide/show flags preserves values.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Global hide/show removes the controls without changing stored in-memory values."
+    },
+    {
+      "id": "H03",
+      "section": "H. Learning state / bookmarks",
+      "requirement": "document bookmark.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Tree document bookmark toggles the intended page without another page anchor."
+    },
+    {
+      "id": "H04",
+      "section": "H. Learning state / bookmarks",
+      "requirement": "block-position bookmark.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Scrolled source-block bookmark captures the current stable anchor."
+    },
+    {
+      "id": "H05",
+      "section": "H. Learning state / bookmarks",
+      "requirement": "reload persistence.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Normal-origin reload is blocked; exact in-memory and ZIP data are separately tested."
+    },
+    {
+      "id": "H06",
+      "section": "H. Learning state / bookmarks",
+      "requirement": "bookmark still works after source pack update with stable IDs.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Saved bookmark opens the same stable page after synthetic source relocation."
+    },
+    {
+      "id": "I01",
+      "section": "I. Import/update",
+      "requirement": "import synthetic v1.0.0.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Both supplied ZIPs pass the real parser/schema checks, but browser commit is not certified."
+    },
+    {
+      "id": "I02",
+      "section": "I. Import/update",
+      "requirement": "personal note/flag/bookmark added.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Actual remark/flag/bookmark UI exercised; synthetic state also constructed for exact merge tests."
+    },
+    {
+      "id": "I03",
+      "section": "I. Import/update",
+      "requirement": "import synthetic v1.1.0.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "v1.1 parser/plan/compose succeeds, but native IndexedDB commit is not certified."
+    },
+    {
+      "id": "I04",
+      "section": "I. Import/update",
+      "requirement": "source update applied.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Actual supplied v1.1 source summary/version/hash applied by the core composition path."
+    },
+    {
+      "id": "I05",
+      "section": "I. Import/update",
+      "requirement": "moved page keeps ID.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Relocated long page keeps its page ID and remains reachable."
+    },
+    {
+      "id": "I06",
+      "section": "I. Import/update",
+      "requirement": "personal state survives.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Exact pure import-update retention passes; persistence across native transactions remains blocked."
+    },
+    {
+      "id": "I07",
+      "section": "I. Import/update",
+      "requirement": "v1.1 reimport idempotent.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "v1.1 reimport leaves source and local state unchanged without duplicate pages."
+    },
+    {
+      "id": "I08",
+      "section": "I. Import/update",
+      "requirement": "same-version different bytes blocked.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Changed equal-version source conflicts without mutating the workspace."
+    },
+    {
+      "id": "I09",
+      "section": "I. Import/update",
+      "requirement": "older version blocked/ignored.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Older synthetic source revision is blocked."
+    },
+    {
+      "id": "I10",
+      "section": "I. Import/update",
+      "requirement": "missing stable page IDs never treated as deletion without explicit semantics.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Omitted stable IDs produce explicit conflicts instead of deletion."
+    },
+    {
+      "id": "I11",
+      "section": "I. Import/update",
+      "requirement": "local source edit conflict requires rebase/explicit resolution.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Locally edited source requires explicit rebase/resolution."
+    },
+    {
+      "id": "J01",
+      "section": "J. Backup/restore",
+      "requirement": "actual backup download.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Actual browser download is attempted only by the blocked normal-origin suite."
+    },
+    {
+      "id": "J02",
+      "section": "J. Backup/restore",
+      "requirement": "ZIP opens.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Real generated ZIP passes CRC/checksum/bounded decompression and backup parsing."
+    },
+    {
+      "id": "J03",
+      "section": "J. Backup/restore",
+      "requirement": "fresh browser context.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Independent fresh browser context is part of the blocked production suite."
+    },
+    {
+      "id": "J04",
+      "section": "J. Backup/restore",
+      "requirement": "restore succeeds.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Native restore commit not certified; pure verified parsing succeeds separately."
+    },
+    {
+      "id": "J05",
+      "section": "J. Backup/restore",
+      "requirement": "remarks exact.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Core ZIP round trip preserves exact remarks; fresh-context persistence remains blocked."
+    },
+    {
+      "id": "J06",
+      "section": "J. Backup/restore",
+      "requirement": "bookmarks exact.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Core ZIP round trip preserves exact bookmarks; fresh-context persistence remains blocked."
+    },
+    {
+      "id": "J07",
+      "section": "J. Backup/restore",
+      "requirement": "flags exact.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Core ZIP round trip preserves exact flags; fresh-context persistence remains blocked."
+    },
+    {
+      "id": "J08",
+      "section": "J. Backup/restore",
+      "requirement": "tabs/session as specified.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Core ZIP round trip preserves exact session; fresh-context persistence remains blocked."
+    },
+    {
+      "id": "J09",
+      "section": "J. Backup/restore",
+      "requirement": "imported packs retained.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Core ZIP includes selected source snapshots; fresh-context persistence remains blocked."
+    },
+    {
+      "id": "J10",
+      "section": "J. Backup/restore",
+      "requirement": "local page retained.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Core ZIP includes local pages; fresh-context persistence remains blocked."
+    },
+    {
+      "id": "J11",
+      "section": "J. Backup/restore",
+      "requirement": "local PDF bytes byte-identical.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Core ZIP preserves exact PDF bytes/SHA-256; fresh-context persisted bytes remain blocked."
+    },
+    {
+      "id": "J12",
+      "section": "J. Backup/restore",
+      "requirement": "missing attachment dependency blocks incomplete backup.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Missing pack/local PDF dependencies and corrupt required/orphan assets reject before ZIP offer."
+    },
+    {
+      "id": "K01",
+      "section": "K. PDF",
+      "requirement": "local PDF import into chosen folder.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Prepared actual UI import into a selected folder; native browser entry blocked."
+    },
+    {
+      "id": "K02",
+      "section": "K. PDF",
+      "requirement": "local bytes persist after reload.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Prepared exact byte/hash comparison after reload; native browser entry blocked."
+    },
+    {
+      "id": "K03",
+      "section": "K. PDF",
+      "requirement": "integrated engine actually loads.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "React-PDF and Vite unavailable; no integrated loader/canvas claim."
+    },
+    {
+      "id": "K04",
+      "section": "K. PDF",
+      "requirement": "worker version check.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Actual matching worker/version and mismatch recovery tests prepared; dependencies unavailable."
+    },
+    {
+      "id": "K05",
+      "section": "K. PDF",
+      "requirement": "single page.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Integrated physical single-page case awaits the real engine."
+    },
+    {
+      "id": "K06",
+      "section": "K. PDF",
+      "requirement": "continuous.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Integrated continuous-page case awaits the real engine."
+    },
+    {
+      "id": "K07",
+      "section": "K. PDF",
+      "requirement": "two-page physical spread.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Physical spread helper exhaustively tested; actual rendered spreads not certified."
+    },
+    {
+      "id": "K08",
+      "section": "K. PDF",
+      "requirement": "cover-alone.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Cover-aware helper tested for odd/even counts; actual renderer case not certified."
+    },
+    {
+      "id": "K09",
+      "section": "K. PDF",
+      "requirement": "page input.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Actual physical-page input case prepared, not executed."
+    },
+    {
+      "id": "K10",
+      "section": "K. PDF",
+      "requirement": "zoom.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Actual canvas-size zoom case prepared, not executed."
+    },
+    {
+      "id": "K11",
+      "section": "K. PDF",
+      "requirement": "rotate.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Intrinsic plus viewer rotation case prepared, not executed."
+    },
+    {
+      "id": "K12",
+      "section": "K. PDF",
+      "requirement": "outline.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Actual PDF outline case prepared, not executed."
+    },
+    {
+      "id": "K13",
+      "section": "K. PDF",
+      "requirement": "searchable selectable text.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Real text-layer selection/search case prepared, not executed."
+    },
+    {
+      "id": "K14",
+      "section": "K. PDF",
+      "requirement": "image-only reports no selectable text; no fake OCR.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Raster-only fixture verified without OCR; engine no-text message case not executed."
+    },
+    {
+      "id": "K15",
+      "section": "K. PDF",
+      "requirement": "password PDF unlock + bad-password retry.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Wrong-password and correct-password retry scenario prepared, not executed."
+    },
+    {
+      "id": "K16",
+      "section": "K. PDF",
+      "requirement": "password never persisted.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Password field remains transient in source; real database inspection not executed."
+    },
+    {
+      "id": "K17",
+      "section": "K. PDF",
+      "requirement": "note + PDF Compare.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Note/browser-fallback Compare UI passes; integrated note/PDF Compare remains blocked."
+    },
+    {
+      "id": "K18",
+      "section": "K. PDF",
+      "requirement": "PDF + PDF Compare.",
+      "status": "BLOCKED",
+      "scope": "Installed integrated PDF runtime",
+      "evidence": "evidence/hardening/pdf-runtime/results.json",
+      "note": "Integrated PDF/PDF independent-page Compare case prepared, not executed."
+    },
+    {
+      "id": "K19",
+      "section": "K. PDF",
+      "requirement": "original PDF open/download.",
+      "status": "BLOCKED",
+      "scope": "Normal-origin browser runtime",
+      "evidence": "evidence/hardening/runtime/results.json",
+      "note": "Original open/download links present in fallback UI; actual byte-download browser gate blocked."
+    },
+    {
+      "id": "L01",
+      "section": "L. Security / release",
+      "requirement": "no private corpus in public `dist`.",
+      "status": "PASS",
+      "scope": "Public build / release scan",
+      "evidence": "evidence/hardening/release-check.log",
+      "note": "Public dist contains only the two reviewed generic packs: 8 pages, 1 term."
+    },
+    {
+      "id": "L02",
+      "section": "L. Security / release",
+      "requirement": "release allowlist/hash check.",
+      "status": "PASS",
+      "scope": "Public build / release scan",
+      "evidence": "evidence/hardening/release-check.log",
+      "note": "Publication allowlist and exact semantic review hashes validated."
+    },
+    {
+      "id": "L03",
+      "section": "L. Security / release",
+      "requirement": "no raw notebooks.",
+      "status": "PASS",
+      "scope": "Public build / release scan",
+      "evidence": "evidence/hardening/release-check.log",
+      "note": "Release scan excludes raw notebooks, private library files and font binaries."
+    },
+    {
+      "id": "L04",
+      "section": "L. Security / release",
+      "requirement": "active SVG rejected.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Active SVG/script/events/foreignObject/remote references rejected in tests."
+    },
+    {
+      "id": "L05",
+      "section": "L. Security / release",
+      "requirement": "path traversal rejected.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Unsafe paths and ZIP traversal rejected before extraction."
+    },
+    {
+      "id": "L06",
+      "section": "L. Security / release",
+      "requirement": "ZIP bomb limits.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Entry count, expansion size and compression-ratio guards tested."
+    },
+    {
+      "id": "L07",
+      "section": "L. Security / release",
+      "requirement": "no executable notebook imports.",
+      "status": "PASS",
+      "scope": "Core algorithms / real ZIP serialization",
+      "evidence": "evidence/hardening/unit.log",
+      "note": "Notebook/executable imports quarantined, not run."
+    },
+    {
+      "id": "L08",
+      "section": "L. Security / release",
+      "requirement": "dependency/license audit.",
+      "status": "BLOCKED",
+      "scope": "Dependency/license verification",
+      "evidence": "evidence/hardening/dependency-inventory.json",
+      "note": "113 vendor hashes and installed lock versions pass; complete transitive/license/vulnerability audit unavailable."
+    },
+    {
+      "id": "L09",
+      "section": "L. Security / release",
+      "requirement": "Netlify headers verified.",
+      "status": "BLOCKED",
+      "scope": "Live hosted runtime verification",
+      "evidence": "evidence/hardening/headers.json",
+      "note": "dist/_headers and actual localhost headers pass; no live Netlify response verification."
+    },
+    {
+      "id": "L10",
+      "section": "L. Security / release",
+      "requirement": "accessibility smoke.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "Keyboard menu navigation, focus return, modal focus containment and divider keys exercised."
+    },
+    {
+      "id": "L11",
+      "section": "L. Security / release",
+      "requirement": "no uncaught errors.",
+      "status": "PASS",
+      "scope": "DOM / in-memory UI",
+      "evidence": "evidence/hardening/ui/results.json",
+      "note": "No uncaught JavaScript errors in the executed DOM/UI suites; blocked runtimes not implied."
+    }
+  ]
+}

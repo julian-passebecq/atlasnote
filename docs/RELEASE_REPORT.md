@@ -1,183 +1,117 @@
-# Knowledge Atlas - application delivery report
+# AtlasNote / Knowledge Atlas - release-hardening report
 
-Date: September 10, 2026  
-Input authority: `Knowledge_Atlas_V2_Fresh_Start_MegaPack.zip`, beginning with `00_START_HERE/BUILD_NOW.md`  
-Target repository, documentation only: `julian-passebecq/deepnote_jul`
+**Version:** 1.0.1  
+**Date:** September 10, 2026  
+**Baseline:** repository-matched `julian-passebecq/atlasnote` source plus the supplied release-audit/PDF fallback package.
 
 ## Release decision
 
-**Runnable offline note-reader delivery, with important incomplete release gates. This is not a fully accepted implementation of the entire PDF/Vite specification.**
+The existing reader has been hardened and packaged as an actual source release and static build. **The application hardening changes are delivered; full release sign-off is still blocked by the explicitly identified browser, PDF dependency/runtime and dependency-provenance gates.** The build is not presented as a fully certified advanced-PDF release.
 
-This delivery contains actual application source, a static build, a separate complete normalized private library, runnable tests, and evidence. The offline note reader has been built and its actual React components and rendered layouts have been exercised in Chromium. The source is not merely a content archive or a UI mockup.
+No repository, branch, remote workflow or deployed site was changed. GitHub read access worked. All **17 repository-root blob/tree entries** matched the uploaded source snapshot; that snapshot was used as the authoritative baseline. Shell cloning was unavailable, but connector inspection and hash comparison resolved the source authority. The PDF fallback copy is executable-equivalent to that baseline; two files differ only in a historical header comment or statement line break. See `evidence/hardening/provenance.json` for exact hashes.
 
-The two primary limitations are explicit:
+## Deliverables
 
-1. Normal HTTP-origin browser navigation is blocked by this environment's administrator policy. Actual IndexedDB persistence, production-entry boot, native downloads and a fresh-context restore could not be browser-certified. The DOM harness does not replace those checks.
-2. React-PDF and Vite dependency downloads were unavailable. The shipped static build uses a tested TypeScript-to-ESM fallback and browser PDF preview/open/download. A real optional React-PDF/Vite source path is included but has only been syntax-transpiled, not installed, type-checked with its dependencies, bundled or runtime-tested. It is not enabled in the prebuilt ZIP.
-
-A complete transitive license/SBOM audit of the emergency vendored Mermaid dependency closure also remains open. The content publication check does not establish complete licensing or security certification. See `THIRD_PARTY_NOTICES.md` before broad public redistribution.
-
-No repository, remote service or live site was modified as part of this delivery.
-
-## Delivered files
-
-| File | Contents and intended use |
+| Artifact | Contents |
 | --- | --- |
-| `knowledge-atlas-v1-source.zip` | Clean source at ZIP root, real lockfile, build tools, schemas, tests, documentation, screenshot evidence, public starter/help content and local vendor assets. No `node_modules`, compiled `dist`, private study corpus or system font files. |
-| `knowledge-atlas-v1-built.zip` | Static app at ZIP root, including `index.html`, bundled local runtime assets, public content, license notices, `serve.mjs`, `Start_Atlas.cmd` and `START_HERE.txt`. No private study corpus. |
-| `knowledge-atlas-local-library-private.zip` | Complete canonical normalized private library and locally supplied assets, explicit block-ID migration records, SHA-256 transfer manifest and import instructions. Keep this outside GitHub and outside the served website folder. |
-| `RELEASE_REPORT.md` | This report; also included in the source under `docs/RELEASE_REPORT.md`. |
+| `AtlasNote_Release_Hardened_Source.zip` | Repository-root source, exact base lockfile, original and new tests, synthetic fixtures, deployment config, preserved advanced PDF code, all acceptance rows and evidence. No node_modules, private corpus or font files. |
+| `AtlasNote_Release_Hardened_Build.zip` | Static site with index.html at the root, compiled fallback reader, local server, Windows launcher, public starter and Netlify header file. No build installation is needed to serve it. |
+| `AtlasNote_Release_Test_Report.md` | This release report. |
+| `AtlasNote_Release_Test_Evidence.zip` | Convenience copy of current logs, machine-readable results, acceptance matrix and actual screenshots. The same evidence is in the source ZIP. |
 
-The source and built archives deliberately contain only the reviewed neutral example pack and newly authored public reader guide. The full private library is imported locally through Settings, not compiled into the website. The private ZIP is a source-content transfer, not a future backup of your personal changes.
+The existing separate `knowledge-atlas-local-library-private.zip` is not changed or embedded in either public artifact. Import it locally through Workspace settings. Public content remains **8 generic pages, 2 notebooks and 1 glossary term**; the private library is deliberately separate.
 
-## Start and import
+## Implemented changes
 
-### Fastest: use the prebuilt reader
+### Compare, Focus and tabs
 
-Extract `knowledge-atlas-v1-built.zip` into its own folder. On Windows, double-click `Start_Atlas.cmd`; it needs Node.js or Python already installed. Keep its terminal open. Alternatively, run either command in the extracted folder:
+Compare is now a real on/off toggle. Closing it retains the **active pane**, not an arbitrary left pane, with its complete views, active tab, histories, anchors, English visibility, disclosure settings and reading modes. An empty active pane does not make Compare impossible to close. The per-pane close controls still work.
+
+Focus is immediately before Compare in the top bar. The tested control order is Export to AI, Print, Focus, Compare, Learning flags. All four initial left/right-sidebar combinations restore exactly on exit. Utility rails, search, keyboard focus containment, Escape, Book and Compare remain usable.
+
+Tree pages have right-click/More/Shift+F10 menus for open, fresh internal tab, other pane, bookmark, rename, move and archive. Folder/notebook actions reuse the existing management dialogs. Menus support keyboard traversal, Escape focus restoration and viewport clamping. Ctrl/Cmd-click, middle-click, the five-tab cap, neighbor selection and explicit search-result new-tab actions are exercised. Separate pane histories, tabs, English state and source anchors are checked for leakage.
+
+### Book and linked context
+
+A Home shortcut opens the existing long reading fixture directly in Book mode. Its real measured sheets form 1-2 and 3-4 pairs on a wide canvas; Compare remains a different workflow.
+
+A reflow bug that replaced the saved source anchor with a newly generated sheet's first block was fixed. Font changes now retain the exact block/offset. The tests reconstruct paragraph, code, table and list source content, check heading boundaries and real Mermaid clones, and resize through desktop/mobile widths. An explicit page break advances the sheet. An oversized callout opens its full Continuous source rather than clipping or discarding it.
+
+Outline jumps expand folded sections. Rapid A/B remarks retain the correct keys. PDF revision notes remain separate and require an explicit copy to move to the current revision. Contextual/global glossary, related pages, backlinks, flags, document/position bookmarks and post-update stable-ID navigation are exercised.
+
+### Import updates and backups
+
+The supplied synthetic v1.0.0 and v1.1.0 ZIPs are parsed with the application's actual bounded ZIP/schema validation. Their changed source content and relocation are applied by the core update/composition path. Exact personal and local state retention, idempotence, equal-version changed-byte conflicts, older versions, omitted IDs and local-source rebase requirements are checked.
+
+Backup preparation now includes **imported-pack and local-PDF dependencies**, not only built-in assets. Missing bytes, mismatched hashes, wrong PDF byte counts and corrupt orphan attachments stop an incomplete backup before it is offered. Restore validates local PDF revision metadata against the actual bytes. A real ZIP serialization/parser round trip preserves exact remarks, bookmarks, flags, session, overlays, imports and PDF bytes. **That is not a substitute for a real fresh-browser restore.**
+
+The normal-origin suite is designed to perform the full UI sequence: import, local additions, chosen-folder PDF import, reload, update, actual browser backup download, new empty browser context, restore, exact checks and another reload. It was attempted here and stopped at the administrative navigation block. No mock database is substituted.
+
+### Retained PDF implementation
+
+`src/online/PdfEngine.tsx`, its React runtime bridge, physical-page helpers, worker/version check, Vite path and CSS remain present. No replacement PDF implementation was introduced. This pass fixes cover-aware spread stepping, prevents a worker mismatch error from being cleared by a document-reset effect, supports retry, resets stale search results, restores continuous-page positioning and preserves original download access. Worker/CMap/WASM/standard-font resource paths are taken from the wrapper-resolved PDF.js package.
+
+The delivered static build still uses `src/pdf/PdfReader.tsx`'s **clearly labelled browser preview fallback**. It does not claim integrated page, zoom, rotate, text-search or physical-spread controls. The integrated source passes isolated syntax/emit checks, but installation, installed-dependency type checking, Vite bundling and real PDF runtime are blocked. The optional typecheck currently reports missing React/React-PDF modules, not a successful check.
+
+A prepared 17-scenario integrated suite waits for real canvases and text layers, records the actual local worker response, tests spreads/cover, navigation, zoom, intrinsic rotation, outline, search/selection, image-only behavior, passwords, Compare, original-byte download and a fault-injected worker mismatch/retry. None of those scenarios is falsely counted as executed here. The standalone raster-only fixture was extracted from the original public fixture, checked for zero selectable text and visually inspected without OCR.
+
+## Actual test results
+
+| Gate | Result | Evidence |
+| --- | --- | --- |
+| Offline TypeScript and static build | PASS | `typecheck.log`, `final-build.log` |
+| Original plus new core tests | **106 PASS, 0 FAIL** | `unit.log` |
+| Strengthened baseline Chromium geometry/UI | **14 PASS, 0 FAIL** | `baseline-dom/dom-tests.json` |
+| Added Chromium hardening UI | **39 PASS, 0 FAIL** | `ui/results.json` |
+| Synthetic ZIP/update and PDF-byte round trip | PASS, core/serialization scope | `synthetic-roundtrip.json`, `unit.log` |
+| Public review hashes and excluded private/raw/font files | PASS | `release-check.log` |
+| Installed base dependency versions and vendor bytes | PASS, local inventory scope; 113 vendored files | `dependency-inventory.json` |
+| Packaged header file and actual local HTTP responses | PASS, not live Netlify | `headers.json` |
+| Retained integrated source isolated syntax/emit | PASS, not installed-dependency typecheck or runtime | `pdf-static/syntax.json` |
+| Normal-origin persistence/download/fresh-context workflow | **BLOCKED, 13 stages** | `runtime/results.json`, `runtime.log` |
+| Optional PDF installation/typecheck/build/runtime | **BLOCKED, 17 runtime scenarios** | `online-install.log`, `online-typecheck.log`, `online-build.log`, `pdf-runtime/results.json` |
+| Registry vulnerability audit / complete transitive license reconciliation | **BLOCKED** | `npm-audit.json`, `dependency-inventory.json` |
+| Clean source ZIP extraction and rebuild | PASS | `clean-source.json`, `clean-source.log` |
+
+**Clean build detail:** PASS: clean ZIP extraction, cached lockfile installation, TypeScript, build, 106 tests and release scan; every generated dist file matches the working build.
+
+The supplied acceptance matrix contains **139 rows: 103 PASS, 0 FAIL, 36 BLOCKED**. Every row retains the original requirement, its executed scope, a reason and an evidence pointer in `RELEASE_ACCEPTANCE_MATRIX.md` and `.json`. Strict native-restore and integrated-PDF rows remain blocked even where their underlying algorithms have passed unit tests.
+
+## Exact blockers and remaining limits
+
+**Normal browser runtime:** managed Chromium returned `net::ERR_BLOCKED_BY_ADMINISTRATOR` for localhost navigation. Its policy was inspected only, not modified. The about:blank DOM harness explicitly suppresses persistent writes and cannot establish production boot, real IndexedDB durability, native download or fresh-context restoration.
+
+**Optional dependencies/runtime:** npm requests returned `EAI_AGAIN` for `registry.npmjs.org`. React-PDF/Vite are not installed and no compatible worker bundle could be produced here. The base app uses its locked cached dependencies; optional syntax/physical-page-helper passes are not represented as a runtime pass.
+
+**Dependency provenance:** all inherited vendor byte pins match. A complete original transitive lock/SBOM for the precompiled Mermaid closure was not present, and registry audit access failed. Original notices and the existing licensing caveat remain. This needs completion before broad redistribution is described as fully license/audit-cleared.
+
+**Hosted response verification:** the Netlify header file is in the deployable ZIP and the same headers were checked over actual localhost HTTP. A live Netlify site was neither deployed nor tested, so that specific acceptance row remains blocked.
+
+Other normal browser/OS actions such as native print, clipboard permissions, quota failures and cross-browser/screen-reader certification are not implied by this release's selected DOM tests. No Chrome policy workaround, fake PDF engine, fake IndexedDB, silent schema reset or untested cloud synchronization was added.
+
+## Use the artifacts
+
+For GitHub, extract the source ZIP and place its contents at the repository root. For the prebuilt reader, extract the build ZIP and run:
 
 ```sh
 node serve.mjs
-# Alternative:
-python -m http.server 4173 --bind 127.0.0.1
 ```
 
-Open `http://127.0.0.1:4173`. Refresh once if the browser opens before the server is listening. Do not open `index.html` directly as a `file://` URL.
+Open `http://127.0.0.1:4173`. Windows users can use `Start_Atlas.cmd`. Import the existing private library from Workspace settings. Keep private libraries and complete backups out of a public repository.
 
-Keep the private ZIP outside this extracted folder. In the app, open **Workspace settings -> Import library -> Choose library ZIP**. Select `knowledge-atlas-local-library-private.zip`, review the preview, then confirm. The private transfer contains 137 pages and 685 terms. The app also retains the separate public examples/help, so combined workspace totals will be larger.
+The source's default build is `npm ci && npm run build`, with output `dist`. The optional network-enabled PDF gate is separate: `npm run enable:online`, `npm run typecheck:online`, `npm run build:vite`, then `npm run test:pdf`. The normal production persistence gate is `npm run test:runtime` against the default fallback build.
 
-Immediately create a workspace backup and test restoring a copy before making this your only storage. Keep using the same browser profile and site address. Different hostnames, ports, profiles or deployed domains have different browser storage. Clearing site data removes locally saved work.
+The existing database name/schema and source IDs are retained. Back up before changing browser/origin; clearing browser storage can remove local data. A backup snapshots selected built-in packs and assets in addition to imports, so restore comparisons intentionally account for those snapshots.
 
-### Source development and manual GitHub upload
+## Evidence and source references
 
-Extract `knowledge-atlas-v1-source.zip` and use its contents as the repository root, rather than uploading only the ZIP itself. Include dotfiles and `.github`. Do not include private library ZIPs, personal workspace backups or `node_modules` in a public repository.
+Current screenshots are actual application renders in `evidence/hardening/baseline-dom/` and `evidence/hardening/ui/`. They are not AI-generated app mockups and do not prove a successful native PDF/IndexedDB runtime. The image-only fixture render is in `pdf-static/`.
 
-With Node.js 22.12 or later:
+Primary technical references consulted while preparing the optional gates and static deployment configuration:
 
-```sh
-npm ci
-npm run dev
-```
+- React-PDF official repository/README: https://github.com/wojtekmaj/react-pdf
+- Playwright browser downloads: https://playwright.dev/python/docs/downloads
+- Playwright browser contexts: https://playwright.dev/python/docs/browser-contexts
+- Netlify custom headers: https://docs.netlify.com/manage/routing/headers/
 
-The app is then served at `http://127.0.0.1:4173`. For a static host, use `npm ci && npm run build` and publish `dist`. Netlify settings and a manual GitHub Pages workflow are included as configuration only; neither was deployed remotely here.
-
-### Optional advanced PDF build - not certified
-
-On a computer with dependency-download access:
-
-```sh
-npm run enable:online
-npm run build:vite
-npm run preview
-```
-
-The first command deliberately updates `package.json` and `package-lock.json` to actually installed exact versions. Review and retain those files after installation. The worker, CMaps and WASM are resolved from React-PDF's own compatible PDF.js dependency; the app does not force-install a separate latest PDF.js. Run the PDF matrix in `docs/TESTING.md` before treating this path as usable or deploying it.
-
-## Implemented / partial / blocked matrix
-
-| Area | Delivered behavior | Verification / limitation |
-| --- | --- | --- |
-| App shell and Home | Project cards, compact tree, utility rails, project grouping, local creation/editing, icons, archives and settings. | Real Home and navigation rendered in Chromium. Exhaustive Home operation persistence remains unverified. |
-| Tree and local editing | Arbitrary nested folders, page/project creation, rename/move/archive/restore, stable links, local overlays and validated structured editing. | Core logic tested. Not every UI combination was end-to-end exercised. |
-| Continuous notes | Text, links, sections, lists, tables, code, figures, questions, answers and bilingual blocks. | Real components exercised with source-preserving fixtures. Markdown is a safe supported subset, not a claim of full CommonMark coverage. |
-| Book | Real DOM measurement into numbered same-note sheets; one vertical scroller; wide paired sheets, narrow single sheets; safe paragraph/code/list/table fragments and explicit oversized fallback. | Actual Chromium geometry and source-text reconstruction passed. Representative long fixture, not a proof for every conceivable imported layout. |
-| Book reflow | Reflow on resize, font/content changes; source-block anchors rather than generated sheet numbers. | Font change preserved target visibility. The captured anchor may normalize to a containing block; exact pixel restoration is not promised. |
-| Compare and internal tabs | Up to two independently navigable resizable panes, same-page comparison, internal cross-project tabs, Back/Forward, mobile active-pane switching. | Same-page independent English visibility and keyboard resizing passed. Complete persistence and all tab/history combinations remain manual gates. |
-| Parallel NO/EN | Aligned bilingual pairs with per-view English visibility. | Real Compare DOM verified independence. |
-| Context and glossary | Searchable glossary, related pages, outline, source provenance and personal remarks. Glossary backlinks and page annotations are both considered. | All supplied glossary relationships accounted for; no missing targets. |
-| Search and learning state | Global text/code search, bookmarks, flags and view controls; hiding flags does not delete their underlying values. | Search navigation and core state preservation tested; full reload certification blocked. |
-| Mermaid and code | Real local Mermaid SVG rendering and Prism syntax highlighting. No fake diagram image substituted. | SVG rendered in Chromium, including Book cloning. Vendor license audit incomplete. |
-| Images | Local images and provenance; external references require a load decision. | No automatic rights upgrade or automatic remote-asset download. No exhaustive remote-host matrix. |
-| Local storage | Native IndexedDB with separate imports, overlays, personal state and asset stores; queued writes, explicit saving/error state and atomic import/restore transactions. | Implemented, but actual browser persistence/atomicity/quota/fresh-context restoration are BLOCKED here. |
-| Library import | Bounded ZIP parsing, schemas, checksums, preview, stable ownership, dependency/reference validation, version conflict handling and idempotent reimport. | Pure algorithms and final private ZIP parser passed. UI-to-IndexedDB commit remains unverified. |
-| Personal-state safety | Source pack imports do not replace remarks, flags, bookmarks, local additions or open views. | Real corpus composition test preserved all tested personal fields; this is not an IndexedDB integration claim. |
-| Workspace backup | Source packs, retained imported revisions, local overlays, personal state and exact local attachment bytes; preflight validation before restore. | Pure ZIP backup/restore and exact synthetic PDF bytes passed. Browser download plus fresh-context restore is BLOCKED. |
-| Repository-ready export | Canonical private content pack export retains IDs, dependencies and local assets. | Core round-trip tested. Personal state requires workspace backup, not content-only export. |
-| Export to AI | Local preview/copy/download only, scope controls, answer/remark exclusions and private-content acknowledgement. No external AI call. | Privacy UI and core omissions tested. Native clipboard/download not certified. |
-| Print / Save as PDF | Explicit note/collection print projection and browser print dialog. | Implemented; native print output and Save-as-PDF interaction not certified here. |
-| PDF in prebuilt reader | Local PDF attachment storage, honest browser preview, original-document opening/downloading and fallback notices. | Integrated Atlas physical-page controls are NOT included in this offline build. |
-| Optional React-PDF | Source adapter for physical single/continuous/spread modes, worker compatibility checks, page input, zoom/rotation, outline, text search, memory-only password prompt, anchors and visibility-based rendering. | Syntax-only checked. Dependency installation, optional type compatibility, Vite production build, worker loading and all real PDF interactions BLOCKED. |
-| Themes and accessibility | Three light token themes, Focus, collapsible sidebars, labels, modal focus/Escape and keyboard pane divider. | Representative responsive layouts passed. Full screen-reader/axe/keyboard audit not done. |
-| Public-source controls | Exact public pack allowlist and semantic SHA-256 review, no raw notebooks or private source library in static output. | Actual release check passed. This is a content boundary, not comprehensive legal/security certification. |
-
-## Actual commands and evidence
-
-All commands below were executed against the delivered offline application code, unless explicitly described as a reference or a blocked optional path. Raw selected logs are in `docs/evidence/`.
-
-| Command / check | Actual result | Evidence |
-| --- | --- | --- |
-| `npm ci --offline --cache /root/.npm` | PASS; restored the locked cached build dependencies. The explicit cache path is specific to this environment. | `npm-ci-offline.txt` |
-| `npm test` | PASS; its pretest builds the real static app, then 66 tests passed, zero failed/skipped. | `app-unit-tests.txt` |
-| `npm run typecheck` | PASS for the offline application's configured TypeScript scope. Optional online adapter is intentionally outside this check. | `typecheck.txt` |
-| `npm run validate` | PASS; reviewed public content and references validated. | `validation.txt` |
-| `npm run check:release` | PASS; public build matches exact reviewed source pack hashes; excluded file classes absent. | `release-check.txt` |
-| `node --check public/serve.mjs` | PASS; standalone static-server syntax checked. | Executed during final build verification. |
-| `ATLAS_EVIDENCE=... python tests/dom_test.py` | PASS; 14 actual Chromium DOM/layout checks, zero failures. | `dom-tests.json`, `dom-tests.log`, eight PNGs |
-| `ATLAS_EVIDENCE=... python tests/browser_test.py` | BLOCKED, not PASS: `net::ERR_BLOCKED_BY_ADMINISTRATOR` on the real HTTP app origin. | `browser-integration.json`, `browser-integration.log` |
-| `node tools/audit-private-library.mjs ORIGINAL MIGRATED REPORT.json` | PASS; complete original/migrated corpus equality, relationship accounting, idempotence and preservation checks. | `private-library-audit.json` |
-| `node tools/package-library.mjs PRIVATE OUTPUT.zip` plus final `unzipBounded` / `readWorkspace` | PASS; delivered private ZIP CRC, file SHA-256 values, safe paths, decompression limits and actual parser verified. | `private-library-package.json`, `final-private-zip.json` |
-| Optional online source transpilation | Syntax-only PASS; no claim of dependency resolution or type compatibility. | `online-syntax-only.json` |
-| Optional Vite build | BLOCKED; required package unavailable. | `online-build-blocked.txt` |
-| Supplied reference suites | 124 reference tests passed: 39 content, 42 Book, 43 PDF. These are separate from the 66 new app tests and do not certify app integration. | `reference-tests-summary.json` |
-
-The DOM suite loads actual React components, real public content, actual styles, Prism and Mermaid into an opaque-origin `about:blank` harness. Persistence writes, UUID availability and address-bar updates are adapted there. It **does not** verify normal-origin boot, IndexedDB, secure clipboard APIs, real downloads or PDF.js. Browser policy was not altered or bypassed.
-
-Observed Book results: 14 sheets in the representative desktop fixture; all paragraph/code/table/list source text reconstructed exactly across fragments; no stranded final heading in tested sheets; zero measured vertical overflow. The same fixture reflowed without overflow at 1366x768, 1920x1080 and 390x844. Wide Focus created two consecutive same-note columns. Compare retained both mobile views while showing one selected pane.
-
-The cached npm install's audit output is not a fresh comprehensive vulnerability assessment, and does not audit all vendored JavaScript. No full dependency security audit, performance benchmark, long-PDF memory profile or cross-browser release matrix is claimed.
-
-## Private content and migration accounting
-
-The normalized private library contains:
-
-| Measure | Verified value |
-| --- | ---: |
-| Pages | 137 |
-| Glossary terms | 685 |
-| Projects | 5 |
-| Packs | 6 |
-| Glossary backlink edges | 1,205 |
-| Unique target pages of those glossary edges | 57 |
-| Backlink edges not mirrored in target page `terms` annotations | 50 |
-| Resulting stable block IDs | 1,820 |
-| Newly assigned deterministic block IDs | 1,131 |
-| Existing block/section IDs retained | 689 |
-| Unresolved references | 0 |
-| Added pages on identical reimport | 0 |
-
-The 50 non-mirrored backlink edges are not silently deleted or fabricated into symmetric relationships. Page-side terms and glossary-side page IDs remain independent supplied relationships; the contextual glossary accounts for either direction.
-
-The migration preserves every page ID, complete page body, glossary record, project tree and workspace group. Existing block IDs remain intact; missing block IDs are assigned deterministically by an explicit @1-to-@2 migration. Parsers, validators, content compiler and backups accept the new format rather than passing it into the unchanged strict @1 schema. The migration tool refuses to overwrite an existing output directory.
-
-The full library is the 137-page complete set, not that set plus the alternative 125-page core. Raw historical notebooks, old prompts and redundant source archive copies are not replicated into the import ZIP. Remote image/source links remain references with their existing provenance, not locally cached assets or newly approved public content.
-
-The eight public pages are separate: two original neutral examples plus six new reader-help pages. Added guide IDs are `page.atlas.welcome`, `page.atlas.layouts`, `page.atlas.language`, `page.atlas.pdf`, `page.atlas.rotated` and `page.atlas.password`, under `project.atlas.guide`. App logic does not hard-code the private corpus counts.
-
-## Screenshot index
-
-These are actual Chromium renders of the shipped reader components with only public guide/example content, not generated mockups. They show the DOM test harness, not a certified production-origin persistence session.
-
-| Screenshot | What it demonstrates |
-| --- | --- |
-| `01-home-desktop.png` | Home and reviewed public project cards. |
-| `02-continuous-desktop.png` | Continuous reader, tree and context layout. |
-| `03-book-desktop.png` | Numbered Book sheets for a long source note. |
-| `04-book-paired-focus.png` | Consecutive same-note sheet pairs in Focus. |
-| `05-book-mobile.png` | Single-column mobile Book reflow. |
-| `06-compare-desktop.png` | Independently configured two-pane note comparison. |
-| `07-export-privacy-preview.png` | Export scope and privacy controls. |
-| `08-compare-mobile.png` | Mobile active-pane switching without discarding the other view. |
-
-All are in `docs/evidence/` in the source ZIP. There are deliberately no screenshots pretending to demonstrate a working advanced PDF engine.
-
-## Storage, security and remaining acceptance work
-
-Use a single active browser tab for writing. Atlas internal tabs and Compare panes are supported, but simultaneous writes from separate browser tabs are not coordinated. No cloud sync, account recovery, application-level encryption or automatic backup service is provided. A downloaded workspace ZIP can contain sensitive text and attachment bytes.
-
-Unknown saved schemas are not erased or guessed. Automatic database-v1 migration is not implemented. Opening an incompatible database can block normal recovery access; preserve/export it with the previous application before attempting migration. Test storage quota failures, aborts and recovery on a normal browser before relying on the app for irreplaceable work.
-
-The source includes ZIP expansion limits, path checks, schema validation, checksums, safe rendering boundaries and source-publication hashes, but these are not a penetration test. No raw HTML or notebook execution is enabled. Questions with hidden answers remain ordinary reading content; there is no grading or execution engine.
-
-The exact uncompleted acceptance matrix is in `docs/TESTING.md`. The most important next gates are actual-origin private import and reload, A-to-B rapid remark persistence, newer-pack import with personal additions retained, corrupt-backup rejection before writes, backup download and restore into a genuinely fresh browser context, local PDF byte equality after restore, quota/abort recovery, optional PDF worker and physical-page tests, native print/download behavior, and a transitive dependency license/security review.
-
-Excluded intentionally: quiz/QCM engine, code execution, graph mode, nested docking, AI chat, authentication, Drive OAuth, browser GitHub publishing, cloud synchronization, OCR and PDF editing. No completion of those excluded modes is implied.
+Historical baseline reports and evidence remain explicitly named/separated; the counts and blockers above describe this hardening pass, not a reused claim from the previous delivery.
