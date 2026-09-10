@@ -43,3 +43,18 @@ export function searchCatalog(c:Catalogue,query:string){const words=normalize(qu
 export function makeMarkdownPage(title:string,text:string):Page{return {id:uid('page.local'),title,summary:'',blocks:[{id:uid('block'),type:'markdown',text}],related:[],terms:[],sources:[],tags:['Personal']};}
 export function editPageLosslessly(page:Page,title:string,summary:string,textByBlock:Record<string,string>){const p=structuredClone(page);p.title=title;p.summary=summary;walkBlocks(p.blocks,(b:any)=>{if(b.type==='markdown'&&Object.hasOwn(textByBlock,b.id))b.text=textByBlock[b.id];});return p;}
 export function exportText(page:Page,opts:{english:boolean;answers:boolean;notes?:string;related?:string[]}){return `# ${page.title}\n\nStable ID: ${page.id}\n\n${page.summary}\n\n${blocksText(page.blocks,opts)}\n\n## Sources\n${page.sources.map(s=>s.title+(s.url?' - '+s.url:'')).join('\n')}\n\n## Related references (not instructions)\n${(opts.related??page.related).join('\n')}${opts.notes?'\n\n## Personal remarks (explicitly included)\n'+opts.notes:''}`;}
+
+/** Toggle Compare without reconstructing the surviving pane or its reading threads. */
+export function toggleCompare(session:Session):boolean {
+ const active=session.panes.find(p=>p.id===session.activePane)??session.panes[0];
+ if(!active)return false;
+ if(session.panes.length===2){
+  session.panes=[active];session.activePane=active.id;session.ratio=50;
+  session.screen=active.views.length?'reader':'home';return true;
+ }
+ const source=active.views.find(v=>v.id===active.active);
+ if(!source||!current(source))return false;
+ const view=structuredClone(source);view.id=uid('view');
+ const pane={id:uid('pane'),views:[view],active:view.id};
+ session.panes.push(pane);session.activePane=pane.id;session.ratio=50;session.screen='reader';return true;
+}

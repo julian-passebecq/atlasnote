@@ -1,0 +1,11 @@
+{
+  "scope": "Real ZIP serialization/parser, not browser persistence",
+  "status": "PASS",
+  "original": 50938,
+  "restored": 50938,
+  "sha256": "0eea0f025b7a63a0c83ee83bafdef900d3bf4ab99ff39db1122eea16ad17c1af",
+  "packVersion": "1.1.0",
+  "personalExact": true,
+  "overlaysExact": true,
+  "importsExact": true
+}

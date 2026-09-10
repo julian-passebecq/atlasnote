@@ -3,8 +3,4 @@
   publish = "dist"
 [build.environment]
   NODE_VERSION = "22"
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "no-referrer"
+# Response headers are in public/_headers and copied into dist/_headers.

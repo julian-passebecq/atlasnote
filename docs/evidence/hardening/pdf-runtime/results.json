@@ -1,0 +1,108 @@
+{
+  "scope": "Integrated React-PDF + actual PDF.js worker on normal origin",
+  "status": "BLOCKED",
+  "checks": [
+    {
+      "id": "engine",
+      "name": "Actual integrated engine and matching local worker",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "single",
+      "name": "Single physical page",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "continuous",
+      "name": "Continuous physical pages",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "spread",
+      "name": "Consecutive physical two-page spreads",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "cover",
+      "name": "Cover-alone 1 / 2-3 / 4-5",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "page",
+      "name": "Physical page input",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "zoom",
+      "name": "Zoom changes actual canvas size",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "rotation",
+      "name": "Viewer rotation including intrinsic-rotation fixture",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "outline",
+      "name": "Actual document outline",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "text",
+      "name": "Selectable searchable PDF text",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "image_only",
+      "name": "Image-only PDF reports no selectable text, no OCR",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "password",
+      "name": "Wrong password then correct unlock",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "password_storage",
+      "name": "Entered passwords absent from saved records",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "note_compare",
+      "name": "Note + integrated PDF Compare",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "pdf_compare",
+      "name": "Integrated PDF + PDF Compare",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "original",
+      "name": "Original byte-identical PDF browser download",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    },
+    {
+      "id": "worker_mismatch",
+      "name": "Wrong worker metadata refuses render and supports retry",
+      "status": "BLOCKED",
+      "error": "Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log."
+    }
+  ]
+}

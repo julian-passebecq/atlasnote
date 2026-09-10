@@ -1,20 +1,27 @@
-KNOWLEDGE ATLAS - PREBUILT OFFLINE NOTE READER
+ATLASNOTE / KNOWLEDGE ATLAS - HARDENED STATIC READER 1.0.1
 
-Extract the ZIP first. On Windows, run Start_Atlas.cmd with Node.js or Python installed.
-Or, inside this folder: node serve.mjs
-Or: python -m http.server 4173 --bind 127.0.0.1
-Then open http://127.0.0.1:4173
-Do not open index.html directly with file://.
+1. Extract this ZIP into its own folder.
+2. Run: node serve.mjs
+   On Windows, Start_Atlas.cmd can use installed Node.js or Python instead.
+3. Open http://127.0.0.1:4173 after the server starts.
+4. Workspace settings -> Import library -> choose your separate private library ZIP.
 
-FULL PRIVATE LIBRARY:
-Keep the separate knowledge-atlas-local-library-private.zip OUTSIDE this served folder.
-Workspace settings -> Import library -> Choose library ZIP -> review -> Confirm.
-Canonical private library: 137 pages, 685 terms, five projects. Public guide remains separate.
-Use workspace backups regularly. Keep backups/private content OUTSIDE the served folder.
+Do not double-click index.html. This is a static site that must be served via HTTP/HTTPS.
+Keep your private library and workspace backups out of a public GitHub repository.
 
-LIMITS:
-This prebuilt reader has browser PDF preview only, not integrated Atlas PDF controls.
-The source ZIP includes an optional unverified Vite/React-PDF path.
-Normal-origin IndexedDB recovery certification was blocked in the build environment.
-Use one active browser tab for editing. No cloud sync or backup encryption.
-See RELEASE_REPORT.md in the source ZIP / separate download for exact test scope.
+Compare toggles between one and two panes, keeping the active pane on close.
+Focus is immediately before Compare. Right-click a tree page for new-tab and management actions.
+Try the long-note Book example on Home to see actual consecutive sheet pairs.
+
+PDF IN THIS BUILD: honest browser preview/open/download, not the integrated PDF engine.
+The advanced React-PDF implementation remains in the separate source ZIP and needs its
+network-installed dependency/runtime checks. It has not been replaced or mislabelled.
+
+106 core and 53 actual Chromium UI/layout checks passed. Real-origin IndexedDB/download/
+fresh-context restore checks were blocked by managed browser policy in the delivery
+sandbox; integrated PDF dependency/runtime checks were blocked by npm DNS failures.
+See the accompanying source/report/evidence for all 139 acceptance rows and limitations.
+
+Storage is local to this origin. There is no cloud sync. Use a complete workspace backup
+before moving browsers, machines, localhost names or hosted URLs. Clearing browser data
+can remove local work; a content export does not replace a full backup.

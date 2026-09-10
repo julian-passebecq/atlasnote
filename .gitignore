@@ -8,3 +8,7 @@ private-library/
 test-results/
 .env*
 .vite-public/
+
+__pycache__/
+*.pyc
+.vite-public/

@@ -1,9 +1,9 @@
-name: Validate and build
+name: Validate, build and release gates
 on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
-  build:
+  offline-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -11,11 +11,28 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
       - run: npm run check:release
+      - run: npm run test:online:syntax
+      - run: npm run audit:local
+      - run: python -m pip install -r requirements-test.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: npm run test:headers
+      - run: npm run test:dom
+      - run: npm run test:hardening:ui
+      # A blocked normal-origin gate is deliberately not treated as green.
+      - run: npm run test:runtime
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlasnote-release-evidence
+          path: docs/evidence/hardening
       - uses: actions/upload-artifact@v4
         with:
-          name: knowledge-atlas-public-build
+          name: atlasnote-public-build
           path: dist

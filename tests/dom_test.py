@@ -8,8 +8,9 @@ All React components, Mermaid, CSS, content and DOM measurements are the real bu
 from pathlib import Path
 import os, json, traceback
 from playwright.sync_api import sync_playwright
-OUT=Path(os.environ.get('ATLAS_EVIDENCE','docs/evidence'));OUT.mkdir(parents=True,exist_ok=True)
-BASE=os.environ.get('ATLAS_BASE_URL','http://127.0.0.1:4173/')
+from browser_support import start_server, launch
+OUT=Path(os.environ.get('ATLAS_EVIDENCE','docs/evidence/hardening/baseline-dom'));OUT.mkdir(parents=True,exist_ok=True)
+BASE=start_server(dom_only=True)
 results=[]
 def check(name,fn):
     try:
@@ -17,7 +18,7 @@ def check(name,fn):
     except Exception as exc:
         results.append({'name':name,'status':'FAIL','error':str(exc)});print('FAIL',name,str(exc),flush=True);traceback.print_exc()
 with sync_playwright() as p:
-    browser=p.chromium.launch(executable_path=os.environ.get('CHROMIUM_PATH','/usr/bin/chromium'),headless=True,args=['--no-sandbox'])
+    browser=launch(p)
     page=browser.new_page(viewport={'width':1440,'height':900},device_scale_factor=1);page.set_default_timeout(4000)
     errors=[];failed=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('requestfailed',lambda r:failed.append({'url':r.url,'failure':r.failure}))
     page.set_content(f'<!doctype html><html lang="en"><head><base href="{BASE}"><link rel="stylesheet" href="styles/app.css"></head><body><div id="root"></div></body></html>')
@@ -86,7 +87,7 @@ with sync_playwright() as p:
         assert before and before.get('blockId')
         page.evaluate('window.testStore.personal(p=>p.session.fontSize=20)');page.wait_for_timeout(1100)
         after=page.evaluate('window.testCore.current(window.testStore.state.personal.session.panes[0].views[0]).anchor')
-        assert after and after.get('blockId');visible=page.locator('.book-grid [data-block-id="'+before['blockId']+'"]').evaluate_all('(es)=>es.some(e=>{const r=e.getBoundingClientRect();return r.top<innerHeight&&r.bottom>100;})');assert visible,(before,after)
+        assert after==before,(before,after);visible=page.locator('.book-grid [data-block-id="'+before['blockId']+'"]').evaluate_all('(es)=>es.some(e=>{const r=e.getBoundingClientRect();return r.top<innerHeight&&r.bottom>100;})');assert visible,(before,after)
         assert max(page.locator('.sheet-body').evaluate_all('(es)=>es.map(e=>e.scrollHeight-e.clientHeight)'))<=1
         page.evaluate('window.testStore.personal(p=>p.session.fontSize=16)');page.wait_for_timeout(800)
         return {'before':before,'after':after}
