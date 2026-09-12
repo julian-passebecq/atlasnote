@@ -1,0 +1,5 @@
+
+> knowledge-atlas@1.0.0 validate
+> node tools/compile-content.mjs --check
+
+Validated public content: {"owners":{"page.atlas.language":"atlas.reader-guide","page.atlas.layouts":"atlas.reader-guide","page.atlas.password":"atlas.reader-guide","page.atlas.pdf":"atlas.reader-guide","page.atlas.rotated":"atlas.reader-guide","page.atlas.welcome":"atlas.reader-guide","project.atlas.guide":"atlas.reader-guide","example.page.overview":"example.notes","example.page.second":"example.notes","example.term.pack":"example.notes","example.project":"example.notes"},"missing":[],"pages":8,"terms":1,"projects":2,"glossaryLinks":1}

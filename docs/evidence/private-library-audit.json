@@ -1,0 +1,31 @@
+{
+  "scope": "Real supplied private corpus; actual pure import/compose/migration algorithms. This is NOT an IndexedDB browser transaction test.",
+  "passed": true,
+  "pages": 137,
+  "terms": 685,
+  "projects": 5,
+  "packs": 6,
+  "glossaryLinkEdges": 1205,
+  "uniqueGlossaryTargets": 57,
+  "glossaryTargetsWithNoPageTermsAnnotation": 50,
+  "unresolvedReferences": [],
+  "blockIds": 1820,
+  "migrationAssignments": 1131,
+  "preserved": {
+    "pageIds": true,
+    "fullPageBodies": true,
+    "glossaryRecordsAndEdges": true,
+    "projectTrees": true,
+    "groups": true,
+    "addedPersonalPage": true,
+    "remarks": true,
+    "flags": true,
+    "bookmarks": true,
+    "openViews": true
+  },
+  "reimportAddedPages": 0,
+  "notes": [
+    "Glossary pageIds backlinks and page.terms annotations are independent preserved source relationships, not assumed symmetric.",
+    "Browser persistence/atomicity still needs a normal-origin browser run."
+  ]
+}

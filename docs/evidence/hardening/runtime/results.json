@@ -1,0 +1,85 @@
+{
+  "scope": "Actual normal-origin production app / real IndexedDB / actual browser ZIP download / independent fresh browser context",
+  "status": "BLOCKED",
+  "checks": [
+    {
+      "id": "real_origin",
+      "name": "Unmodified production entry on a normal HTTP origin",
+      "status": "BLOCKED",
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:40893/\nCall log:\n  - navigating to \"http://127.0.0.1:40893/\", waiting until \"networkidle\"\n"
+    },
+    {
+      "id": "import_v1",
+      "name": "Synthetic v1 imported through the library preview and commit controls",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "personal_state",
+      "name": "Personal remarks, flags, position bookmark and local root page created",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "local_pdf",
+      "name": "PDF imported into the chosen folder with byte-identical local data",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "reload",
+      "name": "Newly created hierarchy, tabs, personal state and local bytes survive reload",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "import_v2",
+      "name": "Synthetic v1.1 update and source move preserve local/personal state",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "idempotent",
+      "name": "Repeated v1.1 import does not duplicate pages or change personal state",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "backup_download",
+      "name": "Actual browser workspace-backup download produces a readable ZIP",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "fresh_context",
+      "name": "New browser context starts with an empty IndexedDB workspace",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "restore",
+      "name": "Backup is restored through preview, consent and restore controls",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "restored_exact",
+      "name": "Exact remarks, bookmarks, flags, overlays, imports and PDF bytes restored",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "restored_reload",
+      "name": "Restored workspace survives a second reload",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    },
+    {
+      "id": "no_errors",
+      "name": "No uncaught errors during the normal-origin end-to-end flow",
+      "status": "BLOCKED",
+      "error": "Prerequisite real_origin did not complete. No simulated pass is substituted."
+    }
+  ],
+  "errors": []
+}

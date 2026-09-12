@@ -1,0 +1,17 @@
+{
+  "scope": "Syntax/transpilation only. Dependency types, bundling and real PDF runtime remain BLOCKED.",
+  "results": [
+    {
+      "file": "PdfEngine.tsx",
+      "status": "SYNTAX_ONLY_PASS"
+    },
+    {
+      "file": "entry.tsx",
+      "status": "SYNTAX_ONLY_PASS"
+    },
+    {
+      "file": "react-runtime.ts",
+      "status": "SYNTAX_ONLY_PASS"
+    }
+  ]
+}

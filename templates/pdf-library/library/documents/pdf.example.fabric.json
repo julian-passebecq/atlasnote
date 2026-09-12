@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "id": "pdf.example.fabric",
+  "title": "Fabric architecture cheatsheet",
+  "summary": "Synthetic PDF library fixture for AtlasNote development.",
+  "language": "en",
+  "documentType": "cheatsheet",
+  "primaryPlacement": {
+    "projectId": "project.fabric",
+    "folderPath": [
+      "Architecture",
+      "Cheatsheets"
+    ]
+  },
+  "domains": [
+    "cloud-architecture",
+    "data-engineering"
+  ],
+  "technologies": [
+    "microsoft-fabric"
+  ],
+  "topics": [
+    "architecture",
+    "onelake"
+  ],
+  "level": "reference",
+  "source": {
+    "platform": "personal",
+    "author": "AtlasNote test fixture"
+  },
+  "rights": {
+    "status": "author-created",
+    "attribution": "Synthetic AtlasNote test fixture."
+  },
+  "file": {
+    "path": "assets/pdf/pdf.example.fabric/fabric-cheatsheet.pdf",
+    "sha256": "24e77167c001589fef7322e968c06f3c739a15395ce8fa308d2f7fb744af2dc8",
+    "bytes": 51033,
+    "pageCount": 5
+  },
+  "processing": {
+    "profile": "synthetic-fixture-revision",
+    "originalBytes": 50938,
+    "optimizedBytes": 51033,
+    "processor": "PyMuPDF 1.26.7",
+    "note": "Added a visible private-library fixture label. Separate test revision from public reader fixtures; no user document is modified."
+  },
+  "extraTags": [
+    "fixture:pdf-library"
+  ]
+}

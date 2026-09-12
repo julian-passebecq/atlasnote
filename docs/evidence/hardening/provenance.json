@@ -1,0 +1,89 @@
+{
+  "repository": "julian-passebecq/atlasnote",
+  "branch": "main",
+  "githubReadSucceeded": true,
+  "githubReportedTree": "f0d3e45d7f12432dcf63bb4916bc719f526f4955",
+  "verification": "All 17 repository-root blob/tree entries matched the uploaded source baseline. This compares file/subtree hashes, not an asserted whole-root tree equality.",
+  "rootEntries": {
+    ".github": "4647a35a5e85f419e0d3e744851ce63ea4a8ba03",
+    ".gitignore": "d0fd1f52003719ccc89adbef930140d86cab7ced",
+    "LICENSE": "7908723fc9f372d6bcb8fcebbf2a21ec38d68023",
+    "README.md": "ed43b49cd0970dbf3183f3f2e86aad3c727e9bc9",
+    "THIRD_PARTY_NOTICES.md": "c2713320cefee3a1a725abe04a78cffec88be811",
+    "content": "34733cb2264352f47d4b6bd4fb414f8385ee7f50",
+    "docs": "92ff849039dadcd1cf5793a124f6863b1062af34",
+    "index.html": "15ca6969379e0d9102b00212dc87f8ce5d707a75",
+    "netlify.toml": "854b99cce7078ef0d64a10034900f0950c09d306",
+    "package-lock.json": "d88145ab0ecea8d8551198f8ce4c3bfdbff55a39",
+    "package.json": "be1a7058efde7c7022d042fdd0018e9ad1f52da6",
+    "public": "e39e9fbafbed4a296a0a82c78f4007aa37dd64ef",
+    "src": "413a6786ee1633b9343bef57a9785b21c601ce9d",
+    "tests": "fdeeff613ad405f51978ca2c3be698310f52220d",
+    "tools": "77b5d83148412b4681459f0aff31aa70acb5725a",
+    "tsconfig.json": "042a61e1470a51ad5c83c86664e788e15ee8019f",
+    "vite.config.mjs": "7b17dc77d59b7feaa398a612b0f1f13c4b26ea9a"
+  },
+  "sourceArchiveSha256": "cafd6188f6eca35aae7f992d6588c3d334436f53bf51ef6bc37ee0d09c5c86ef",
+  "fallbackArchiveSha256": "0e0808e69943589b22d5ab733b384371c35329f3ce9787609f72b6552036d816",
+  "pdfPreservation": [
+    {
+      "path": "src/pdf/PdfReader.tsx",
+      "baselineSha256": "5a9000a4035b0ff9710b84293b6f05af1ec69085e769d3a61781c6ea0b83ca8c",
+      "currentSha256": "5a9000a4035b0ff9710b84293b6f05af1ec69085e769d3a61781c6ea0b83ca8c",
+      "fallbackBaselineMatch": true
+    },
+    {
+      "path": "src/online/PdfEngine.tsx",
+      "baselineSha256": "2051c40a2fb42ba059568f06436b300f49a4a8aeffae8d5545574be21f08c560",
+      "currentSha256": "c516a4538fed3460a8b6b09eb24b7c825dbafbd0209c5b082b8eeac41b021f2d",
+      "fallbackBaselineMatch": false
+    },
+    {
+      "path": "src/pdf/physical-pages.mjs",
+      "baselineSha256": "24a966086130fde1ad9f7ea4e8fd27b567b41a3fbf395ed929d3b63588ac3803",
+      "currentSha256": "b2a87d68bd08abb332052afa08cdc8b2524441d5db09f1b3d323b04577f0f1c6",
+      "fallbackBaselineMatch": true
+    },
+    {
+      "path": "src/online/entry.tsx",
+      "baselineSha256": "a7e16288dae0f29c60b7e950cea9480c5183eb9a18e5c6f2569f3c26a742bfcd",
+      "currentSha256": "a7e16288dae0f29c60b7e950cea9480c5183eb9a18e5c6f2569f3c26a742bfcd",
+      "fallbackBaselineMatch": true
+    },
+    {
+      "path": "src/online/react-runtime.ts",
+      "baselineSha256": "f84ce823630c1772d2f4457195d0df90b15d167dcd6b38a373035cf14f5c8b72",
+      "currentSha256": "f84ce823630c1772d2f4457195d0df90b15d167dcd6b38a373035cf14f5c8b72",
+      "fallbackBaselineMatch": true
+    },
+    {
+      "path": "src/online/pdf.css",
+      "baselineSha256": "0128618c9aa82d25328a65fb98cc04c0878c3b19dd80ac2e877523ab6b3bbea5",
+      "currentSha256": "0128618c9aa82d25328a65fb98cc04c0878c3b19dd80ac2e877523ab6b3bbea5",
+      "fallbackBaselineMatch": true
+    },
+    {
+      "path": "tools/enable-online.mjs",
+      "baselineSha256": "ca3e090250cd182533881b8bd3d4bf81c3468094e277602ba2a0b7ac6763140d",
+      "currentSha256": "d5c1262da6dcc453dd0497887a6cde71234dcad8a98a5915776e8869b5620c39",
+      "fallbackBaselineMatch": false
+    },
+    {
+      "path": "tools/build-vite.mjs",
+      "baselineSha256": "ef81132b907ce51c05b85cd19cd9b9e83c548d3c9e890c6d44dd8ce08f2fd81a",
+      "currentSha256": "ff2a5245c45927a38726deb651e1de54f4102f7fdbde655d57d43a4e9498ed03",
+      "fallbackBaselineMatch": true
+    },
+    {
+      "path": "vite.config.mjs",
+      "baselineSha256": "e7cdd84e5c83188a02e2e65620a355400c19e991ff3905bebc7628153deec1a6",
+      "currentSha256": "e7cdd84e5c83188a02e2e65620a355400c19e991ff3905bebc7628153deec1a6",
+      "fallbackBaselineMatch": true
+    }
+  ],
+  "remoteWrites": false,
+  "fallbackNonByteIdenticalNotes": {
+    "src/online/PdfEngine.tsx": "Only the historical four-line comment differs in the baseline fallback; executable source is identical.",
+    "tools/enable-online.mjs": "Only a statement line break differs in the baseline fallback; executable source is identical."
+  }
+}

@@ -1,0 +1,4 @@
+
+> knowledge-atlas@1.0.1 typecheck
+> tsc --noEmit
+

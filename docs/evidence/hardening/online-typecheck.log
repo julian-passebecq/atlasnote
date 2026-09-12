@@ -1,0 +1,9 @@
+
+> knowledge-atlas@1.0.1 typecheck:online
+> tsc --project tsconfig.online.json --noEmit
+
+src/online/PdfEngine.tsx(5,55): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+src/online/PdfEngine.tsx(6,43): error TS2307: Cannot find module 'react-pdf' or its corresponding type declarations.
+src/online/react-runtime.ts(2,23): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+src/online/react-runtime.ts(3,15): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+src/online/react-runtime.ts(4,27): error TS2307: Cannot find module 'react-dom/client' or its corresponding type declarations.

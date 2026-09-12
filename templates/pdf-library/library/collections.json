@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "description": "Optional named views over metadata. These are not canonical storage folders.",
+  "collections": [
+    {
+      "id": "collection.cloud-architecture",
+      "title": "Cloud Architecture",
+      "filter": {"domains": ["cloud-architecture"]}
+    },
+    {
+      "id": "collection.cheatsheets",
+      "title": "Cheatsheets",
+      "filter": {"documentTypes": ["cheatsheet"]}
+    },
+    {
+      "id": "collection.english",
+      "title": "English PDFs",
+      "filter": {"languages": ["en"]}
+    }
+  ]
+}
