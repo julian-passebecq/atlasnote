@@ -8,6 +8,6 @@ for(const [path,expected]of Object.entries(baseline.sha256)){const actual=create
 const report={scope:'Local installed lockfile packages and unchanged vendor bytes. Does NOT certify current vulnerabilities or complete precompiled Mermaid transitive licenses.',
  lockfilePackages:packages,vendorFiles:vendor.length,vendorByteIntegrity:vendor.every(v=>v.status==='PASS')?'PASS':'FAIL',
  installedVersionsMatch:packages.every(p=>p.version===p.installedVersion),
- fullDependencyLicenseAudit:{status:'BLOCKED',reason:'Registry audit requests fail DNS; the inherited precompiled Mermaid closure has no complete original dependency lock/SBOM. Original upstream notices and byte pins remain intact.'},vendor};
+ fullDependencyLicenseAudit:{status:'BLOCKED',reason:'Registry vulnerability review was not executed in the offline release environment; the inherited precompiled Mermaid closure has no complete original dependency lock/SBOM. Original upstream notices and byte pins remain intact.'},vendor};
 await fs.mkdir('docs/evidence/hardening',{recursive:true});await fs.writeFile('docs/evidence/hardening/dependency-inventory.json',JSON.stringify(report,null,2));console.log(JSON.stringify({...report,vendor:undefined,lockfilePackages:packages.map(p=>({name:p.name,version:p.version,license:p.license}))},null,2));
 if(report.vendorByteIntegrity!=='PASS'||!report.installedVersionsMatch)process.exit(1);

@@ -5,7 +5,7 @@
       "path": "node_modules/core-util-is",
       "name": "core-util-is",
       "version": "1.0.3",
-      "installedVersion": "1.0.3",
+      "installedVersion": null,
       "license": "MIT",
       "integrity": "sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ=="
     },
@@ -13,7 +13,7 @@
       "path": "node_modules/immediate",
       "name": "immediate",
       "version": "3.0.6",
-      "installedVersion": "3.0.6",
+      "installedVersion": null,
       "license": "MIT",
       "integrity": "sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ=="
     },
@@ -21,7 +21,7 @@
       "path": "node_modules/inherits",
       "name": "inherits",
       "version": "2.0.4",
-      "installedVersion": "2.0.4",
+      "installedVersion": null,
       "license": "ISC",
       "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ=="
     },
@@ -29,7 +29,7 @@
       "path": "node_modules/isarray",
       "name": "isarray",
       "version": "1.0.0",
-      "installedVersion": "1.0.0",
+      "installedVersion": null,
       "license": "MIT",
       "integrity": "sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ=="
     },
@@ -45,7 +45,7 @@
       "path": "node_modules/lie",
       "name": "lie",
       "version": "3.3.0",
-      "installedVersion": "3.3.0",
+      "installedVersion": null,
       "license": "MIT",
       "integrity": "sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ=="
     },
@@ -53,7 +53,7 @@
       "path": "node_modules/pako",
       "name": "pako",
       "version": "1.0.11",
-      "installedVersion": "1.0.11",
+      "installedVersion": null,
       "license": "(MIT AND Zlib)",
       "integrity": "sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw=="
     },
@@ -69,7 +69,7 @@
       "path": "node_modules/process-nextick-args",
       "name": "process-nextick-args",
       "version": "2.0.1",
-      "installedVersion": "2.0.1",
+      "installedVersion": null,
       "license": "MIT",
       "integrity": "sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag=="
     },
@@ -77,7 +77,7 @@
       "path": "node_modules/readable-stream",
       "name": "readable-stream",
       "version": "2.3.8",
-      "installedVersion": "2.3.8",
+      "installedVersion": null,
       "license": "MIT",
       "integrity": "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA=="
     },
@@ -85,7 +85,7 @@
       "path": "node_modules/safe-buffer",
       "name": "safe-buffer",
       "version": "5.1.2",
-      "installedVersion": "5.1.2",
+      "installedVersion": null,
       "license": "MIT",
       "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g=="
     },
@@ -93,7 +93,7 @@
       "path": "node_modules/setimmediate",
       "name": "setimmediate",
       "version": "1.0.5",
-      "installedVersion": "1.0.5",
+      "installedVersion": null,
       "license": "MIT",
       "integrity": "sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA=="
     },
@@ -101,7 +101,7 @@
       "path": "node_modules/string_decoder",
       "name": "string_decoder",
       "version": "1.1.1",
-      "installedVersion": "1.1.1",
+      "installedVersion": null,
       "license": "MIT",
       "integrity": "sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg=="
     },
@@ -117,17 +117,17 @@
       "path": "node_modules/util-deprecate",
       "name": "util-deprecate",
       "version": "1.0.2",
-      "installedVersion": "1.0.2",
+      "installedVersion": null,
       "license": "MIT",
       "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="
     }
   ],
   "vendorFiles": 113,
   "vendorByteIntegrity": "PASS",
-  "installedVersionsMatch": true,
+  "installedVersionsMatch": false,
   "fullDependencyLicenseAudit": {
     "status": "BLOCKED",
-    "reason": "Registry audit requests fail DNS; the inherited precompiled Mermaid closure has no complete original dependency lock/SBOM. Original upstream notices and byte pins remain intact."
+    "reason": "Registry vulnerability review was not executed in the offline release environment; the inherited precompiled Mermaid closure has no complete original dependency lock/SBOM. Original upstream notices and byte pins remain intact."
   },
   "vendor": [
     {

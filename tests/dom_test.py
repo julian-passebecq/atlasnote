@@ -108,6 +108,8 @@ with sync_playwright() as p:
         page.get_by_role('button',name='Compare in two panes').click();page.wait_for_timeout(600)
         assert page.locator('.document-pane').count()==2
         right=page.locator('.document-pane').nth(1);left=page.locator('.document-pane').nth(0)
+        assert right.locator('.empty-pane').count()==1
+        page.evaluate("window.testOpen('page.atlas.language','parallel')");page.wait_for_timeout(450)
         assert left.locator('.english').count()>0 and right.locator('.english').count()>0
         right.get_by_role('button',name='Hide English').click();page.wait_for_timeout(400)
         assert right.locator('.english').count()==0 and left.locator('.english').count()>0

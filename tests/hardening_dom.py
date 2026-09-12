@@ -52,6 +52,8 @@ with sync_playwright() as pw:
         page.get_by_role('button',name='Compare in two panes',exact=True).click()
         assert page.locator('.document-pane').count()==2
         right=page.locator('.document-pane').nth(1)
+        assert right.locator('.empty-pane').count()==1
+        tree('Read in Norwegian').click();page.wait_for_timeout(300)
         right.get_by_role('button',name='Hide English',exact=True).click()
         right.get_by_role('button',name='Book',exact=True).click()
         page.wait_for_timeout(350)
@@ -74,7 +76,7 @@ with sync_playwright() as pw:
     def compare_empty_close():
         reset();page.get_by_role('button',name='Compare in two panes').click()
         pane=page.locator('.document-pane').last
-        pane.get_by_role('button',name='Close tab A quiet place to connect your notes').click()
+        assert pane.locator('.empty-pane').count()==1
         assert page.get_by_role('button',name='Compare in two panes').is_enabled()
         page.get_by_role('button',name='Compare in two panes').click()
         assert len(state()['panes'])==1
@@ -97,17 +99,17 @@ with sync_playwright() as pw:
                 page.evaluate('(x)=>testStore.personal(p=>{p.session.leftOpen=x[0];p.session.rightOpen=x[1]})',[left,right])
                 page.get_by_role('button',name='Enter focus mode').click()
                 assert page.locator('.library-sidebar').count()==0 and page.locator('.context-panel').count()==0
-                assert page.locator('.utility-rail').is_visible()
-                assert page.locator('.context-rail').is_visible()
+                assert not page.locator('.utility-rail').is_visible()
+                assert not page.locator('.context-rail').is_visible()
                 assert page.locator('.book-scroller').is_visible()
                 if not left and not right:
-                    page.get_by_role('button',name='Global search',exact=True).click()
+                    page.keyboard.press('Control+k')
                     assert page.get_by_role('dialog').is_visible()
                     for _ in range(8):page.keyboard.press('Tab')
                     assert page.evaluate('!!document.activeElement.closest("dialog")')
                     page.get_by_role('button',name='Close dialog',exact=True).click()
                     assert state()['focus']
-                page.get_by_role('button',name='Exit focus mode').click()
+                page.get_by_role('button',name='Exit focus').click()
                 assert state()['leftOpen']==left and state()['rightOpen']==right
                 assert bool(page.locator('.library-sidebar').count())==left
                 assert bool(page.locator('.context-panel').count())==right
@@ -169,6 +171,8 @@ with sync_playwright() as pw:
         reset('page.atlas.layouts','book')
         page.get_by_role('button',name='Hide English').click()
         page.get_by_role('button',name='New tab in pane 1',exact=True).click()
+        assert page.locator('.empty-pane').is_visible()
+        page.get_by_role('button',name='Find a page',exact=True).click()
         page.get_by_role('textbox',name='Search all pages and glossary').fill('Norwegian')
         page.locator('.search-result').first.click()
         views=state()['panes'][0]['views'];assert len(views)==2;assert views[1]['english'];assert views[1]['history'][0]['presentation']=='continuous'
@@ -273,7 +277,7 @@ with sync_playwright() as pw:
         assert any(g['title']=='My release group' for g in state('overlays.groups'))
     check('Manage project groups via Home',['A12'],groups)
     def note_pdf():
-        reset();page.get_by_role('button',name='Compare in two panes').click();menu('PDF reading fixture','Open in other pane')
+        reset();page.get_by_role('button',name='Compare in two panes').click();tree('PDF reading fixture').click()
         assert page.locator('.pdf-reader').count()==1;assert page.locator('.reader-body').count()==1
         assert page.get_by_text('Browser preview only in this offline build',exact=True).is_visible()
         assert page.get_by_role('link',name='Open original PDF',exact=True).is_visible();assert page.get_by_role('link',name='Download original',exact=True).is_visible()
@@ -325,6 +329,7 @@ with sync_playwright() as pw:
     def pane_isolation():
         reset('page.atlas.layouts')
         page.get_by_role('button',name='Compare in two panes').click()
+        tree('One note, several ways to read').click()
         left=page.locator('.document-pane').first;right=page.locator('.document-pane').last
         left.get_by_role('button',name='Book',exact=True).click();page.wait_for_timeout(450)
         assert left.locator('.reader-body.book').count()==1 and right.locator('.reader-body.continuous').count()==1

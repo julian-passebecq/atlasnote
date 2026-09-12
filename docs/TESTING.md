@@ -1,65 +1,27 @@
-# Test commands and evidence boundaries
+# AtlasNote 1.1 test scopes
 
-All commands run from the repository root. The current evidence is in `docs/evidence/hardening/`; root-level evidence files are historical, not a claim of a new runtime pass.
+Run `python tools/run-release-gates.py --out docs/evidence/release-1.1` after preparing Node 22.12+, globally installed TypeScript 5.8.3 and the Python packages in `requirements-test.txt` / `requirements-pdf-authoring.txt`. Install browser/dependencies before a disconnected session. The runner deliberately tries `npm ci --offline`; a cache miss is reported, then checked-in bundle restoration is attempted independently. No network install, push or deployment occurs.
 
-## Setup
+The runner writes raw command logs, exit codes, durations and gate statuses. Exit 2 is BLOCKED, not success; exit 1 indicates at least one genuine failure. Optional engine build tests run only against installed prerequisites. The final command restores the offline distribution.
 
-```sh
-npm ci
-python -m pip install -r requirements-test.txt
-python -m playwright install chromium
-```
+## Evidence that can pass offline
 
-Use Node.js 22.12+ and Python 3.10+. `CHROMIUM_PATH` may point at an existing browser. The tests do not change managed browser policy. The UI/runtime test helpers start and stop their own local server unless `ATLAS_BASE_URL` is provided.
+`npm test` exercises actual validation, import planning/rebase, state validation, exports, backup serialization and attachment validation. The 1.1 tests include empty Compare/tab state, exact-byte PDF intake/deduplication, mixed collections/facets, stable metadata/move identities, actual library ZIP reading and round trips. Source-owned hierarchy is not re-owned by exported private packs. A generated 137-page/685-term fixture exercises scale without loading the supplied private reference corpus.
 
-## Executable gates
+`test:dom` and `test:hardening:ui` execute Chromium layout, real DOM rendering, measured pagination and user controls in the labelled about:blank harness. `test:reader:ui` adds full-viewport Focus/Compare, semantic anchors, modifier/context interactions, themes, actual file-picker and local ZIP-download controls. Its import commit is explicitly an in-memory adapter and its about:blank SHA-256 uses a Python digest bridge because that context lacks secure WebCrypto. None of these substitutes for IndexedDB, reload, native PDF rendering, secure-context cryptography or normal-origin download/restore evidence.
 
-| Command | Evidence / meaning |
-| --- | --- |
-| `npm run typecheck` | Offline application TypeScript, not optional installed PDF dependencies. |
-| `npm test` | Rebuild plus all 106 Node tests. Original 66 tests retained; 40 added. |
-| `npm run validate` | Public source schema/relationship validation. |
-| `npm run check:release` | Exact reviewed pack hashes and private/raw/font-file exclusion in the offline dist. |
-| `npm run audit:local` | Installed lockfile inventory and all 113 vendored file hashes; not full license/vulnerability certification. |
-| `npm run test:headers` | Real localhost HTTP headers and deployed header-file contents; not a remote Netlify test. |
-| `npm run test:dom` | 14 original strengthened Chromium DOM/layout checks. |
-| `npm run test:hardening:ui` | 39 additional Chromium UI checks, including tree menus, hierarchy, tabs, Compare, Focus, anchors and revision remarks. |
-| `npm run test:runtime` | 13 sequential normal-origin stages with actual IndexedDB, browser ZIP download, new browser context and restore. |
-| `npm run test:online:syntax` | Isolated syntax/emit check for the retained online adapter, no dependency resolution. |
-| `npm run enable:online` | Explicit optional dependency installation; updates exact resolved lockfile. |
-| `npm run typecheck:online` | Installed React/React-PDF dependency type checking. |
-| `npm run build:vite` | Actual optional PDF build and matching local worker/resources. |
-| `npm run test:pdf` | 17 actual integrated PDF runtime scenarios, including real canvases/text, cover, passwords, Compare and a fault-injected worker mismatch. |
+`test:pdf:authoring` runs real PyMuPDF/Pillow processing on synthetic text/vector, image-heavy and image-only inputs. It checks hash/text/page preservation, lossless/study/compact behavior, render/diff QA, exact 12/20 MiB policy, duplicate, malformed/encrypted/active-content inputs, safe paths and deterministic library construction. Image QA output is evidence, not automatic human approval. Metadata hashes, malicious paths and missing/tampered/oversized pack assets are exercised. No OCR or user-private PDF content is used.
 
-The normal-origin and integrated PDF scripts exit **2 for BLOCKED**, **1 for FAIL**, and **0 only for PASS**. The CI jobs do not mask exit 2 as a successful gate.
+`test:headers` checks actual local HTTP responses and packaged static headers, not live host responses. `test:online:syntax` is isolated TS emit, not installed module typechecking. `audit:local` separately reports vendor-byte integrity, installed lockfile metadata and incomplete license/vulnerability inventory.
 
-## What the DOM harness does and does not do
+## Gates requiring a permitted normal origin / optional packages
 
-`tests/dom_test.py` and `tests/hardening_dom.py` mount the real React application, CSS, content and Mermaid renderer on `about:blank`, with a local static-asset CORS server. They explicitly suppress the database write queue and adapt unavailable address-bar/UUID APIs. Chromium still measures the actual rendered layout and processes real pointer/keyboard interactions.
+`test:browser` and `test:runtime` navigate the unmodified production entry and use actual IndexedDB, file intake, reload, browser backup download, fresh-context restore and re-reload. Managed `ERR_BLOCKED_BY_ADMINISTRATOR` yields BLOCKED for unexecuted cases. No browser policy is disabled or bypassed.
 
-That is useful evidence for source reconstruction, sheet geometry, keyboard menus and per-view behavior. It is **not** normal production boot, durable browser storage, native downloads or integrated PDF verification. No managed browser policy is removed or bypassed. The separate normal-origin suite uses the unmodified production entry and real IndexedDB.
+`typecheck:online`, `build:vite`, and `test:pdf` require installed compatible React-PDF/PDF.js and the matching local worker/resources. A fallback frame or syntax transpile does not pass the integrated physical-page/search/password matrix. The optional PDF suite exercises real canvases/text layers and the worker when those prerequisites exist.
 
-## Actual backup test contract
+The normal-origin local-PDF fixture is a distinct author-created synthetic template PDF so SHA-256 deduplication does not simply reuse a built-in public fixture. Runtime selectors reflect the 1.1 intake form. These updated runtime cases still need actual execution on a permitted machine.
 
-`release_runtime.py` imports the two supplied synthetic packs through the UI, creates a personal root page, remarks, a flag, a block bookmark and a PDF in a selected folder, then checks reload. It applies v1.1 and checks personal/local retention and idempotence. It requests a real browser download, opens the saved ZIP, closes the original browser context, opens a new empty context, restores through the UI and checks exact saved data and another reload.
+## Historical material
 
-The backup intentionally includes snapshots of built-in packs and their dependencies too. Comparisons normalize attachment metadata to key, media type, SHA-256 and exact byte array; archive-internal `path` fields are not treated as user state. The exact backup payload is the expected fresh-context result. Core tests separately verify ZIP/parser round trips and refusal of absent or corrupt required/orphan attachments. Those core passes do not stand in for the blocked browser flow.
-
-## Supplied fixtures
-
-The v1.0.0 and v1.1.0 audit ZIPs under `tests/fixtures/` are the supplied synthetic stress libraries, not private corpus data. The image-only PDF is the last page extracted from the existing author-created public PDF fixture. Its zero selectable text characters and actual raster image were checked with PyMuPDF and visually inspected; no OCR was used.
-
-## PDF gate precautions
-
-Run the PDF gate only after the optional Vite build. It checks the version marker against the wrapper's actual `pdfjs.version`, records the successful local worker response and waits for real canvases/text. The worker-mismatch negative test intercepts only metadata to exercise recovery; positive rendering cases use the real worker and bytes.
-
-The password fixture uses `atlas-demo`; the test enters a wrong password first and inspects saved records to ensure input passwords are absent. Fixture assertions remain unexecuted here because optional dependencies are unavailable. A successful syntax pass alone is never sufficient.
-
-## Environment results in this package
-
-- Offline build, TypeScript, 106 Node tests, 53 DOM/UI checks and local publication/headers/vendor integrity checks: PASS.
-- Normal HTTP-origin Chromium navigation: `net::ERR_BLOCKED_BY_ADMINISTRATOR`; the 13 real persistence/download/restore stages are BLOCKED.
-- npm registry requests: `EAI_AGAIN`; optional installation and registry audit are BLOCKED. Online typecheck reports missing React/React-PDF modules; Vite build reports unavailable optional dependencies. The 17 integrated PDF scenarios are BLOCKED.
-- Full precompiled Mermaid transitive license/SBOM reconciliation and live Netlify response verification remain unapproved. They are not certified by byte pins or local headers.
-
-The complete supplied release matrix is evaluated in `RELEASE_ACCEPTANCE_MATRIX.md`; its original text is preserved separately. Workflow files are prepared but were not run on GitHub.
+`docs/evidence/hardening`, baseline reports, and `tools/release-report-baseline.py` document the 1.0.1 predecessor (some fixed-path audit files are regenerated by current commands). They do not prove 1.1 by themselves. The current release report, 160-row matrix and delivered `test-evidence.zip/final/` are authoritative. Iteration logs are retained separately and explicitly superseded by the final run.

@@ -126,7 +126,7 @@ try:
         record(phase,{'localPageId':local_id,'bookmark':created['personal']['bookmarks'][0]})
 
         phase='local_pdf';open_settings(page)
-        original=(ROOT/'content/packs/atlas.reader-guide/assets/atlas-reader-fixture.pdf').read_bytes()
+        original=(ROOT/'templates/pdf-library/assets/pdf/pdf.example.fabric/fabric-cheatsheet.pdf').read_bytes()
         digest=hashlib.sha256(original).hexdigest()
         page.get_by_label('Import local PDF',exact=True).set_input_files({'name':'retained-runtime.pdf','mimeType':'application/pdf','buffer':original})
         page.get_by_label('Document title',exact=True).fill('Runtime retained PDF')
