@@ -19,7 +19,21 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat .atlasnote-transfer/chunk-* | base64 -d > /tmp/atlasnote.patch.xz
+          cat \
+            .atlasnote-transfer/chunk-000 \
+            .atlasnote-transfer/chunk-001 \
+            .atlasnote-transfer/chunk-002 \
+            .atlasnote-transfer/chunk-003005 \
+            .atlasnote-transfer/chunk-006008 \
+            .atlasnote-transfer/chunk-009011 \
+            .atlasnote-transfer/chunk-012014 \
+            .atlasnote-transfer/chunk-015017 \
+            .atlasnote-transfer/chunk-018020 \
+            .atlasnote-transfer/chunk-021 \
+            .atlasnote-transfer/chunk-022 \
+            .atlasnote-transfer/chunk-023 \
+            .atlasnote-transfer/chunk-024025 \
+            | base64 -d > /tmp/atlasnote.patch.xz
           echo "13cefcf1888aed7e6329f4eb438e4486ae2c2b02d93434914346b7098bb5ca76  /tmp/atlasnote.patch.xz" | sha256sum -c -
           xz -dc /tmp/atlasnote.patch.xz > /tmp/atlasnote.patch
           git apply --binary --index /tmp/atlasnote.patch
