@@ -19,6 +19,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          cp .github/workflows/ci.yml /tmp/ci.yml
           cat \
             .atlasnote-transfer/chunk-000 \
             .atlasnote-transfer/chunk-001 \
@@ -38,9 +39,9 @@ jobs:
           xz -dc /tmp/atlasnote.patch.xz > /tmp/atlasnote.patch
           git apply --binary --reject /tmp/atlasnote.patch || true
           cp .atlasnote-transfer/workspace.final.ts src/core/workspace.ts
+          cp /tmp/ci.yml .github/workflows/ci.yml
           rm -f src/core/workspace.ts.rej
           rm -rf .atlasnote-transfer
-          rm -f .github/workflows/promote-v11.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
