@@ -1,12 +1,10 @@
-# AtlasNote - Knowledge Atlas reader
+# AtlasNote 1.1 - Knowledge Atlas reader
 
-A local-first notebook reader with folders, linked pages, glossary context, Book pagination and independent Compare panes. This repository continues the existing Knowledge Atlas application; the on-screen identity and database are retained.
+A local-first knowledge and PDF reader. This release continues the hardened 1.0.1 source; the on-screen Knowledge Atlas identity, stable content IDs, measured paginator, import ownership rules and `knowledge-atlas` IndexedDB schema 2 are retained.
 
-**Release 1.0.1: reader hardening, with explicit outstanding runtime gates.**
+## Start
 
-## Run the source
-
-Use Node.js 22.12 or later from the repository root:
+Use Node.js 22.12 or later:
 
 ```sh
 npm ci
@@ -14,57 +12,62 @@ npm run build
 npm run preview
 ```
 
-Open `http://127.0.0.1:4173`. The static output is `dist/`. No account, backend or API key is needed for the reader. Do not open `index.html` as a file.
+Open `http://127.0.0.1:4173`. Do not double-click `index.html`. No account, backend or API key is needed.
 
-For the prebuilt ZIP, extract it and run `node serve.mjs`, or use `Start_Atlas.cmd` on Windows with Node.js or Python installed. Keep the server terminal open.
-
-## Reader workflows
-
-**Compare** opens a second independent pane. Clicking Compare again keeps the **active pane**, including all its tabs, history, layout, English visibility and anchors. The per-pane close buttons still work. Focus sits immediately before Compare and restores the previous sidebar state on exit. Escape exits Focus.
-
-Right-click a page, use its More menu, or press Shift+F10 to open it, create a fresh internal tab, send it to the other Compare pane, bookmark, rename, move or archive it. Ctrl/Cmd-click and middle-click open new internal tabs. Each pane supports five tabs. Search results also have a dedicated new-tab button.
-
-Book paginates one note into real DOM-measured sheets. A wide single pane displays consecutive pairs, 1-2 then 3-4. This is separate from Compare. Home has a long-note Book example. Font and viewport changes restore the source anchor; oversized unsplittable blocks link to their complete Continuous source.
-
-## Import your library and preserve local work
-
-The public app includes only the reviewed generic starter: **8 pages, 2 notebooks, 1 glossary term**. It does not embed the private corpus. In Workspace settings, choose **Import library ZIP**, inspect the preview and confirm. The existing separate private library ZIP remains compatible.
-
-Remarks, learning flags, bookmarks, local additions and view state are separate from imported source packs. Stable IDs retain relationships across source moves. Equal-version changed bytes, older versions, missing IDs and local-edit conflicts are blocked instead of silently overwriting data.
-
-Use **Download workspace backup** before switching machines, browsers or origins. A backup contains the complete selected content snapshots, attachments and personal state; an ordinary content export is not a backup. Restore asks for explicit replacement consent. Required missing or corrupt attachment bytes prevent an incomplete backup from being offered.
-
-Local storage remains the existing `knowledge-atlas` IndexedDB database, schema version 2. This update does not reset it. `localhost`, `127.0.0.1` and a hosted site are different origins; use a backup to transfer between them. There is no cloud sync.
-
-## PDF builds: do not confuse them
-
-The supplied **deployable ZIP uses the honest browser-PDF fallback**. It preserves original PDF bytes and exposes browser preview, original open and download links. It does not claim integrated physical-page controls or PDF text search.
-
-The existing advanced implementation remains in `src/online/PdfEngine.tsx`. Its compatible-worker path, PDF.js rendering, physical spreads, cover-alone mode, outline, search, rotation and password handling have not been replaced. This pass adds cover-aware spread stepping, a worker-error retry fix, source checks and runtime tests.
-
-On a network-enabled development machine, the optional path is:
+On a disconnected computer with **TypeScript 5.8.3 already installed globally**, the checked-in JSZip and Prism bundles support a second route:
 
 ```sh
-npm run enable:online
-npm run typecheck:online
-npm run build:vite
-npm run test:pdf
+npm run bootstrap:offline
+npm run build
+npm run typecheck
+npm test
+npm run preview
 ```
 
-Installation writes exact resolved versions into `package.json` and `package-lock.json`; review and commit both only after the gate passes. Worker/resources come from the PDF.js version resolved by React-PDF. Do not independently force a newer PDF.js version. The optional path is **not certified by the delivered fallback build**.
+This restores local Node entry points from existing vendor bundles; it does **not** reproduce a complete `npm ci` transitive installation. It does not download anything or install the optional PDF engine. For the prebuilt ZIP, extract and run `node serve.mjs` (or `Start_Atlas.cmd` on Windows); no source dependencies are needed.
 
-## Verification and release status
+## Reader
 
-Read [the release report](docs/RELEASE_REPORT.md), [all 139 acceptance rows](docs/RELEASE_ACCEPTANCE_MATRIX.md) and [test commands and evidence scope](docs/TESTING.md).
+**Focus** removes all persistent chrome, including top bar, rails, sidebars, tabs, breadcrumbs, layout controls and status bar. Content fills the app viewport. Use the floating **Exit focus** button or Escape. No browser Fullscreen API is invoked. Sidebar preferences and semantic reading anchors are restored on exit.
 
-The hardening run passed 106 core tests and 53 Chromium UI/layout checks. Normal-origin IndexedDB/download/fresh-context tests were attempted but blocked by administrative browser policy. React-PDF installation, installed-dependency typechecking, Vite bundling and PDF runtime were blocked by unavailable npm downloads. These are not substituted with simulated passes.
+**Compare** creates an **empty, active second pane**. Choose a note, PDF or folder through the tree/search, or use its picker. It never clones the first pane automatically. Toggle Compare off to keep the active non-empty pane, including its tabs and history; an empty active pane falls back to the non-empty peer. Your split ratio is retained for next time. Each pane owns independent tabs, history, English visibility, note/PDF presentation and reading state.
 
-Every vendored file remains pinned and its bytes are verified. The inherited precompiled Mermaid closure still needs a complete original transitive dependency/license inventory; registry vulnerability checks could not run. See `THIRD_PARTY_NOTICES.md`. The local byte audit does not certify that missing work.
+**Book** is one note paginated into measured, block-aware virtual sheets: 1-2, then 3-4 while scrolling vertically. It is not Compare, PDF pagination or CSS columns. Virtual numbers never replace source Page/Block IDs. Unsplittable content retains a link to the complete Continuous source.
 
-## Static hosting
+Choose **Microsoft Fluent**, **Light Minimal** or **Medium / Paper** in Workspace settings. The original persisted keys are unchanged. Right-click, Shift+F10, Ctrl/Cmd-click and middle-click remain available. New internal tabs start at a picker instead of borrowing another tab's state.
 
-For a source build, use `npm ci && npm run build` and publish `dist`. For a prebuilt deployment, publish the extracted build **contents**, with `index.html` at the root. `public/_headers` is copied into `dist/_headers` for Netlify, including direct static uploads. Actual local HTTP responses and packaged headers were tested; no live Netlify deployment was changed or certified.
+## Mixed folders and local PDFs
 
-`.github/workflows/ci.yml` runs core, DOM and real-origin persistence gates. `.github/workflows/pdf-runtime.yml` is a separate manual network-enabled PDF gate. They are included for reproducibility; no remote workflow was triggered during this delivery.
+Click a notebook/folder **label** to read its derived direct-child collection; click its chevron to expand the tree. Collections show notes, PDFs and subfolders, summary, language, known physical page count and enabled learning flags. Filter by type, language, domain, technology or text; sort by tree order or title. Menus support open/new tab/other pane, bookmark, rename, move and archive.
 
-Original code is MIT-licensed. Private library material and third-party dependencies retain their own rights and notices. No quiz engine, notebook execution environment or graph mode was added.
+Use **Import PDF privately** in a collection, or **Add a local PDF** in Workspace settings. Select the exact file, choose any nested folder (or create a folder), and enter metadata. Unknown provenance/page counts remain blank. SHA-256 duplicates reuse the existing document. PDF bytes are unchanged; uncertain rights remain reference-only or unreviewed and private. Files above 12 MiB warn; files above 20 MiB are rejected.
+
+The page editor exposes local PDF title, primary language and comma-separated tags without requiring JSON. Namespaced tags are facets, for example `domain:data-engineering`, `tech:dbt`, `doctype:guide`, `source:linkedin`. A document has one canonical tree placement even with many facets. For source-owned imported metadata, update its authoring pack with the same IDs and a higher version rather than creating a conflicting local DocumentEntry.
+
+See [PDF preparation](docs/PDF_PREPARATION.md) and [private PDF-library workflow](docs/PDF_LIBRARY_WORKFLOW.md). The runnable repository template is in `templates/pdf-library/`.
+
+## Private content, updates and backups
+
+Public default content remains **8 pages, 2 notebooks, 1 glossary term**. The supplied 137-page private reference corpus is not in this source or the public build. Its content was not imported during implementation; generated synthetic fixtures test equivalent scale.
+
+Import standard Atlas private library ZIPs through Workspace settings. Personal remarks, flags, bookmarks and local additions remain separate from imported packs. Equal-version changed bytes, downgrades, missing IDs and unresolved local conflicts stay blocked. A PDF library ZIP is a **content pack**, not a complete workspace backup.
+
+Use **Download workspace backup** before changing browser, machine or origin. Complete backups include exact required attachment bytes and personal state; missing/corrupt required bytes prevent an incomplete backup. Restore requires explicit replacement consent. Localhost, 127.0.0.1 and hosted URLs are distinct storage origins. There is no cloud sync.
+
+## PDF engine boundary
+
+The delivered static build uses the clearly labelled **browser preview fallback**: original open/download and a native preview frame. Physical-page search, outline, integrated spreads, zoom, rotation and password workflows are **not certified in this fallback**.
+
+The advanced implementation in `src/online/PdfEngine.tsx` is preserved byte-for-byte. The optional build requires exactly **React-PDF 10.5.0 / PDF.js 5.4.296**, with matching worker, CMaps, WASM and standard-font assets. Missing or mismatched resources stop the build rather than producing an incomplete engine. The one-React-instance adapter includes portals and flushSync.
+
+On a separate network-enabled development machine, `npm run enable:online` resolves the optional Vite/types packages and writes exact resolved versions into the lockfile. Review those versions and the resulting lockfile, then run `npm run typecheck:online`, `npm run build:vite` and `npm run test:pdf`. The delivered fallback lockfile does not pretend to contain that unexecuted optional installation. Do not independently force a newer PDF.js version.
+
+## Verification and integration
+
+[Release report](docs/RELEASE_REPORT.md) and [all 160 acceptance rows](docs/RELEASE_ACCEPTANCE_MATRIX.md) distinguish PASS, FAIL and BLOCKED. [Testing](docs/TESTING.md) explains each evidence scope. Run `python tools/run-release-gates.py --out docs/evidence/release-1.1` for the gate set; a blocked gate returns a non-zero overall result, not a green release.
+
+Real Chromium DOM/layout tests run in a labelled about:blank harness when normal-origin navigation is prohibited. They are not IndexedDB, reload or secure-context certification. The new file-intake harness uses a clearly marked in-memory commit adapter and SHA-256 bridge; production storage/cryptography code is not replaced. Normal-origin persistence and optional integrated PDF tests remain separate gates.
+
+Publish only `dist/` or the extracted build contents, with `index.html` at root. Do not publish source templates, private ZIPs, backups, intake files or evidence. The packaged `_headers` are tested locally; no push, remote CI, preview or deployment was performed. The coordinator's integration target is `improvement/atlasnote-1.1-reader-pdf-library`.
+
+Original application code is MIT; third-party dependencies and private documents retain their own licenses. No quiz, execution sandbox, graph, OCR, cloud authentication or AI chat was added.

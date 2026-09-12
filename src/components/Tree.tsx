@@ -5,7 +5,7 @@ import {normalize} from '../core/workspace.js';
 
 type MenuState={project:Project;node?:TreeNode;x:number;y:number;returnFocus:HTMLElement};
 /** All tree actions also have an ordinary, keyboard-focusable Actions button. */
-export function ProjectTree({catalogue:c,workspace:ws,activePage,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
+export function ProjectTree({catalogue:c,workspace:ws,activePage,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
  const [filter,setFilter]=useState(''),[menu,setMenu]=useState<MenuState|null>(null);
  const menuRef=useRef<HTMLDivElement|null>(null);
  const expanded=new Set(ws.personal.session.expanded),archived=new Set(ws.overlays.archived),query=normalize(filter);
@@ -47,12 +47,12 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,onOpen,onOther,
    const open=expanded.has(n.id)||!!query,page=c.pages.find((p:any)=>p.id===n.pageId);
    return <div className="tree-node" key={n.id}>
     <div className={'tree-row '+(n.pageId===activePage?'active':'')} style={{paddingLeft:(10+depth*14)+'px'}} onContextMenu={e=>showMenu(e,p,n)} onKeyDown={e=>keyboardMenu(e,p,n)}>
-     <button className="tree-target" title={n.title} aria-expanded={n.children?open:undefined} aria-current={n.pageId===activePage?'page':undefined}
-      onClick={e=>n.pageId?onOpen(n.pageId,undefined,e.ctrlKey||e.metaKey):onToggle(n.id)}
-      onAuxClick={e=>{if(e.button===1&&n.pageId){e.preventDefault();onOpen(n.pageId,undefined,true);}}}>
-      {n.children?<Icon name={open?'down':'chevron'} size={12}/>:<span className="tree-indent"/>}
+     <>{n.children&&<button className="tree-expander" aria-label={(open?'Collapse ':'Expand ')+n.title} aria-expanded={open} onClick={()=>onToggle(n.id)}><Icon name={open?'down':'chevron'} size={12}/></button>}<button className="tree-target" title={n.title} aria-expanded={n.children?open:undefined} aria-current={n.pageId===activePage?'page':undefined}
+      onClick={e=>n.pageId?onOpen(n.pageId,undefined,e.ctrlKey||e.metaKey):(onCollection(n.id,undefined,e.ctrlKey||e.metaKey),!open&&onToggle(n.id))}
+      onAuxClick={e=>{if(e.button===1){e.preventDefault();onOpen(n.pageId??n.id,undefined,true);}}}>
+      {!n.children&&<span className="tree-indent"/>}
       <Icon name={n.children?'folder':c.documents.some((d:any)=>d.pageId===n.pageId)?'pdf':'page'} size={15}/><span>{page?.title??n.title}</span>
-     </button>
+     </button></>
      {n.pageId&&ws.personal.session.showFlags&&ws.personal.ratings[n.pageId]&&<span className={'flag-dot '+ws.personal.ratings[n.pageId]} title={ws.personal.ratings[n.pageId]}/>}
      <IconButton name="more" label={'Actions for '+n.title} className="tree-more" aria-haspopup="menu" onClick={e=>showMenu(e,p,n)}/>
     </div>
@@ -65,7 +65,7 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,onOpen,onOther,
   if(query&&!normalize(p.title).includes(query)&&!p.nodes.some(matches))return null;
   return <div className="tree-project" key={p.id}>
    <div className="tree-row project-row" onContextMenu={e=>showMenu(e,p)} onKeyDown={e=>keyboardMenu(e,p)}>
-    <button className="tree-target" onClick={()=>onToggle(p.id)} aria-expanded={open} title={p.title}><Icon name={open?'down':'chevron'} size={12}/><span className="project-icon"><Icon name={p.icon} size={17}/></span><strong>{p.title}</strong></button>
+    <button className="tree-expander" aria-label={(open?'Collapse ':'Expand ')+p.title} aria-expanded={open} onClick={()=>onToggle(p.id)}><Icon name={open?'down':'chevron'} size={12}/></button><button className="tree-target" onClick={e=>{onCollection(p.id,undefined,e.ctrlKey||e.metaKey);if(!open)onToggle(p.id);}} title={p.title}><span className="project-icon"><Icon name={p.icon} size={17}/></span><strong>{p.title}</strong></button>
     <IconButton name="more" label={'Actions for notebook '+p.title} className="tree-more" aria-haspopup="menu" onClick={e=>showMenu(e,p)}/>
     <IconButton name="plus" label={'Add to '+p.title} className="tree-more" onClick={()=>onCreate('page',p)}/>
    </div>{open&&nodes(p.nodes,p,0)}
@@ -92,7 +92,7 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,onOpen,onOther,
     {onOther&&<button role="menuitem" onClick={()=>action(()=>onOther(menuPage))}><Icon name="split"/>Open in other pane</button>}
     <button role="menuitem" onClick={()=>action(()=>onBookmark(menuPage))}><Icon name="bookmark"/>Bookmark</button>
    </>:<>
-    {overview&&<button role="menuitem" onClick={()=>action(()=>onOpen(overview))}><Icon name="book"/>Open overview</button>}
+    <button role="menuitem" onClick={()=>action(()=>onCollection(menu.node?.id??menu.project.id))}><Icon name="folder"/>Open collection</button>{overview&&<button role="menuitem" onClick={()=>action(()=>onOpen(overview))}><Icon name="book"/>Open overview</button>}
     <button role="menuitem" onClick={()=>action(()=>onCreate('page',menu.project,menu.node))}><Icon name="plus"/>Add page</button>
     <button role="menuitem" onClick={()=>action(()=>onCreate('folder',menu.project,menu.node))}><Icon name="folder"/>Add folder</button>
    </>}

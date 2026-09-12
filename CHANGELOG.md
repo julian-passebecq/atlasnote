@@ -1,3 +1,18 @@
+# AtlasNote 1.1.0 - Reader UX and private PDF library
+
+- True full-viewport Focus with floating exit, Escape and source-anchor preservation.
+- Empty active Compare picker, independent state, exact surviving pane and remembered divider ratio.
+- Existing measured Book paginator preserved; finer semantic anchor restoration across layout changes.
+- Microsoft Fluent, Light Minimal and Medium / Paper semantic themes.
+- Derived mixed folder collections, metadata/facets, modifier clicks and portal-based accessible menus.
+- Exact-byte private PDF intake, arbitrary nested placement, metadata editing and SHA-256 reuse.
+- Standard private PDF-library export; deterministic public-context remapping prevents fresh-import ownership collisions.
+- Hardened private repository validator/builder and offline lossless/study/compact processor with actual render QA.
+- Preserved advanced PDF engine source; strict matching worker/resource build checks and one-React portal adapter.
+- New unit, DOM, authoring and release-gate evidence. Unavailable normal-origin/optional-engine gates remain BLOCKED.
+
+## Earlier history
+
 # 1.0.1 - release hardening
 
 - Compare is a reversible toggle. The active pane survives with all its views and state; empty panes can still be closed.

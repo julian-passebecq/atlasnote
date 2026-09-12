@@ -1,6 +1,6 @@
 {
   "name": "knowledge-atlas",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -27,7 +27,12 @@
     "test:online:syntax": "node tools/check-online-syntax.mjs",
     "audit:local": "node tools/audit-local.mjs",
     "test:headers": "python tests/headers_test.py",
-    "typecheck:online": "tsc --project tsconfig.online.json --noEmit"
+    "typecheck:online": "tsc --project tsconfig.online.json --noEmit",
+    "bootstrap:offline": "node tools/bootstrap-offline.mjs",
+    "test:reader:ui": "python tests/reader_11_dom.py",
+    "test:pdf:authoring": "python tests/pdf_authoring_test.py",
+    "pdf:library:validate": "python templates/pdf-library/tools/validate_library.py templates/pdf-library",
+    "pdf:library:build": "python templates/pdf-library/tools/build_atlas_library.py --root templates/pdf-library"
   },
   "dependencies": {
     "jszip": "3.10.1",
