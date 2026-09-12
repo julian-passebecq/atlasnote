@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "reviewedOn": "2026-09-12",
+  "policy": "Only explicitly reviewed public packs with exact semantic hashes may ship. PDF Atlas is a reference-only metadata catalog; supplied public PDF bytes are excluded from this application.",
+  "packs": {
+    "example.notes": {
+      "review": "Supplied public example, no private source content.",
+      "sha256": "dfa80a12da4ead8cb9bc78a6b7ba69adf544437c9e6c5db68df8b7c393899d95"
+    },
+    "atlas.reader-guide": {
+      "review": "Original author-created guide and synthetic fixtures; 1.2 copy points to the Reading mode rail. Stable IDs unchanged.",
+      "sha256": "8719ba938e44cd14a6194bfe261cf2ef49ab006ea9c807e4a202bc8be651e0e1"
+    },
+    "pdfatlas.public": {
+      "metadataOnlyReferences": true,
+      "review": "Reviewed user-supplied public reference metadata only. No PDF binaries. Attribution and reference-only rights retained. Final external URL pin and hosting rights require coordinator review.",
+      "sha256": "1dd9af9f4c7bb14b4bf4841953847336aba9091db6dec1b5fa7e10b2067a6c82"
+    }
+  }
+}

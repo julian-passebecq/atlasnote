@@ -1,0 +1,102 @@
+{
+  "format": "atlas-pdf-library",
+  "schemaVersion": 1,
+  "id": "pdfatlas.public",
+  "version": "1.0.0",
+  "title": "PDF Atlas",
+  "categories": [
+    {
+      "id": "node.pdfatlas.data-engineering",
+      "path": [
+        "Data Engineering"
+      ]
+    },
+    {
+      "id": "node.pdfatlas.apache-spark",
+      "path": [
+        "Data Engineering",
+        "Apache Spark"
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "id": "doc.pdfatlas.spark-concepts",
+      "title": "Apache Spark: 30 concepts",
+      "printedTitle": "Apache Spark was hard until I learned these 30 concepts.",
+      "titleKind": "descriptive catalogue title",
+      "relativePath": "library/data-engineering/apache-spark/apache-spark-30-concepts.pdf",
+      "sha256": "b6761e0907cb28ff660936c79ad2a2dcafd500cc01c5fa5a613470396a0af095",
+      "bytes": 2548426,
+      "pageCount": 6,
+      "language": "en",
+      "summary": "Six illustrated topics: MapReduce, cluster architecture, deployment modes, transformations and actions, query plans and scheduling, and executor memory.",
+      "categoryPath": [
+        "Data Engineering",
+        "Apache Spark"
+      ],
+      "tags": [
+        "doctype:guide",
+        "domain:data-engineering",
+        "tech:apache-spark",
+        "tech:pyspark",
+        "tech:yarn"
+      ],
+      "revision": "1",
+      "source": {
+        "repository": "julian-passebecq/pdfatlas",
+        "originalFilename": "1788785230477.pdf",
+        "inputSnapshot": "pdfatlas-main.zip"
+      },
+      "rights": {
+        "status": "reference-only",
+        "attribution": "Document displays theseniordev.io and afaqueahmad7117. No redistribution licence established from the supplied PDF."
+      },
+      "inspection": {
+        "method": "PyMuPDF metadata and complete selectable text; rendered cover review",
+        "metadataTitle": null,
+        "metadataAuthor": null,
+        "license": "not established"
+      }
+    },
+    {
+      "id": "doc.pdfatlas.pyspark-pandas",
+      "title": "PySpark and Pandas: DataFrame guide",
+      "printedTitle": "PYSPARK / PANDAS",
+      "titleKind": "descriptive catalogue title",
+      "relativePath": "library/data-engineering/apache-spark/pyspark-pandas-dataframe-guide.pdf",
+      "sha256": "15f7be6e6970a77ddfc70be4cf8a9418c03445bf82937482b2a78ee5348b65c2",
+      "bytes": 5912749,
+      "pageCount": 28,
+      "language": "en",
+      "summary": "Introduces PySpark versus Pandas, then gives PySpark DataFrame examples for exploration, transformations, SQL functions, joins and window operations.",
+      "categoryPath": [
+        "Data Engineering",
+        "Apache Spark"
+      ],
+      "tags": [
+        "doctype:guide",
+        "domain:data-engineering",
+        "tech:pyspark",
+        "tech:pandas",
+        "tech:databricks"
+      ],
+      "revision": "1",
+      "source": {
+        "repository": "julian-passebecq/pdfatlas",
+        "originalFilename": "1788834725906.pdf",
+        "inputSnapshot": "pdfatlas-main.zip"
+      },
+      "rights": {
+        "status": "reference-only",
+        "attribution": "Nitya CloudTech is displayed on the cover. No individual author or redistribution licence established from the supplied PDF."
+      },
+      "inspection": {
+        "method": "PyMuPDF metadata and complete selectable text; rendered cover review",
+        "metadataTitle": null,
+        "metadataAuthor": null,
+        "license": "not established"
+      }
+    }
+  ]
+}

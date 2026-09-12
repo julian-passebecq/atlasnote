@@ -1,0 +1,4 @@
+{
+  "baseUrl": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/",
+  "stage": "Upload the organized repository, then replace main with its exact 40-character commit SHA and run npm run pdfatlas:sync. Never use a blob URL."
+}

@@ -1,0 +1,913 @@
+{
+  "release": "1.2.0",
+  "verdict": "IMPLEMENTATION_CANDIDATE_BLOCKED_RELEASE_GATES",
+  "scope": "Supplied 1.2 checklist, not historical 1.1 numbering. Evidence paths are relative to the evidence ZIP unless source or deliverable paths are explicit. PASS states only the scope described in each row.",
+  "counts": {
+    "BLOCKED": 21,
+    "PASS": 65,
+    "FAIL": 0
+  },
+  "rows": [
+    {
+      "id": "A01",
+      "section": "Regression baseline",
+      "criterion": "`npm ci` succeeds with the final lockfile.",
+      "status": "BLOCKED",
+      "note": "Registry DNS EAI_AGAIN and offline cache ENOTCACHED. Existing bundled bootstrap passes; it is not npm ci.",
+      "evidence": [
+        "final/npm-ci.log",
+        "final/complete-run/logs/offline-install.log"
+      ]
+    },
+    {
+      "id": "A02",
+      "section": "Regression baseline",
+      "criterion": "TypeScript typecheck passes.",
+      "status": "PASS",
+      "note": "Main application TypeScript check; optional installed React-PDF typecheck remains blocked in section I.",
+      "evidence": [
+        "final/complete-run/logs/typecheck.log"
+      ]
+    },
+    {
+      "id": "A03",
+      "section": "Regression baseline",
+      "criterion": "Existing Node suite remains green (127 baseline tests, plus new tests).",
+      "status": "PASS",
+      "note": "127 supplied core cases retained; 49 new cases; 176/176 pass, zero skipped. Intentional public catalog is now 10 pages rather than 8.",
+      "evidence": [
+        "baseline/core.log",
+        "final/complete-run/logs/unit.log"
+      ]
+    },
+    {
+      "id": "A04",
+      "section": "Regression baseline",
+      "criterion": "Release/private-content check passes; no private reference library leaks into public build.",
+      "status": "PASS",
+      "note": "Reviewed public-only catalog, exact review hashes, original 8 stable page IDs retained. Actual PDF Atlas bytes are absent from source/build.",
+      "evidence": [
+        "final/complete-run/logs/public-release.log",
+        "final/verification/public-content.json"
+      ]
+    },
+    {
+      "id": "A05",
+      "section": "Regression baseline",
+      "criterion": "DOM/browser hardening suite passes after intentional selector updates.",
+      "status": "PASS",
+      "note": "39/39 hardening UI and 14/14 baseline DOM cases; actual Chromium DOM with suppressed persistence. Normal-origin browser is separately BLOCKED.",
+      "evidence": [
+        "final/complete-run/hardening-ui/results.json",
+        "final/complete-run/baseline-dom/dom-tests.json"
+      ]
+    },
+    {
+      "id": "A06",
+      "section": "Regression baseline",
+      "criterion": "Reader 1.1 behavioral contracts remain intact unless explicitly superseded below.",
+      "status": "PASS",
+      "note": "18/18 reader behavior cases and existing core contracts pass for notes, Focus, Compare, native fallback, intake and private export. Does not certify real reload or integrated PDF.",
+      "evidence": [
+        "final/complete-run/reader-ui/reader-11-dom.json"
+      ]
+    },
+    {
+      "id": "A07",
+      "section": "Regression baseline",
+      "criterion": "PDF preparation/authoring suite remains green.",
+      "status": "PASS",
+      "note": "12/12 actual offline PDF-authoring/processing and repository-builder checks on synthetic fixtures.",
+      "evidence": [
+        "final/complete-run/pdf-authoring/pdf-authoring-tests.json"
+      ]
+    },
+    {
+      "id": "B01",
+      "section": "P0 persistence",
+      "criterion": "Runtime normal-origin test survives reload with exact equality for notes, ratings, bookmarks, overlays, imports, assets AND `personal.session`.",
+      "status": "BLOCKED",
+      "note": "Normal HTTP navigation rejected by ERR_BLOCKED_BY_ADMINISTRATOR before IndexedDB. Startup mutation fixed and two App-mount diffs are empty, but these do not certify page.reload().",
+      "evidence": [
+        "final/complete-run/runtime/results.json",
+        "final/complete-run/startup-dom/"
+      ]
+    },
+    {
+      "id": "B02",
+      "section": "P0 persistence",
+      "criterion": "Runtime flow continues past reload and completes import-v2, idempotent reimport, backup download, fresh context, restore, restored exact state, restored reload and no-errors gates.",
+      "status": "BLOCKED",
+      "note": "Every production flow row remains blocked behind real_origin. No mock, skipped equality, or partial pipeline was counted as a pass.",
+      "evidence": [
+        "final/complete-run/runtime/results.json"
+      ]
+    },
+    {
+      "id": "B03",
+      "section": "P0 persistence",
+      "criterion": "No test relaxation, storage mock or browser-policy workaround is accepted.",
+      "status": "PASS",
+      "note": "Real-origin suite retains exact whole-session/record equality and no storage substitution. Separate DOM diagnostics explicitly do not close B01/B02. No browser-policy bypass.",
+      "evidence": [
+        "baseline/release_runtime.original.py",
+        "tests/release_runtime.py",
+        "tests/startup_diagnostic.py"
+      ]
+    },
+    {
+      "id": "C01",
+      "section": "Compact chrome",
+      "criterion": "Visible `Knowledge Atlas`/`LOCAL` brand block no longer consumes the top ribbon.",
+      "status": "PASS",
+      "note": "Routine top ribbon has mode/back/forward/search/AI export, no brand or LOCAL block.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "C02",
+      "section": "Compact chrome",
+      "criterion": "Global search occupies the primary top-bar area.",
+      "status": "PASS",
+      "note": "Measured search width exceeds 80% on tested desktops and 55% at 390px.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "C03",
+      "section": "Compact chrome",
+      "criterion": "Export-to-AI is icon-only in routine chrome with accessible label/tooltip.",
+      "status": "PASS",
+      "note": "Export icon has full accessible label and title tooltip.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "C04",
+      "section": "Compact chrome",
+      "criterion": "Compare is icon-only in routine chrome with accessible label/tooltip.",
+      "status": "PASS",
+      "note": "Compare icon in rail has full accessible label and title tooltip.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "C05",
+      "section": "Compact chrome",
+      "criterion": "No overflow at 1366x768, 1440x900, 1920x1080 and 390x844.",
+      "status": "PASS",
+      "note": "All four required viewport geometry/overflow checks pass; full screenshots included.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "C06",
+      "section": "Compact chrome",
+      "criterion": "Context drawer overlays instead of shrinking the reader canvas.",
+      "status": "PASS",
+      "note": "Exact reader bounding box unchanged when drawer opens; drawer overlays the canvas.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "C07",
+      "section": "Compact chrome",
+      "criterion": "Opening/closing Context does not alter reading anchor, split ratio, active pane or saved history.",
+      "status": "PASS",
+      "note": "Whole in-memory session exactly unchanged across Context open/close; Escape returns trigger focus. Not a durable reload test.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "D01",
+      "section": "Right reader rail",
+      "criterion": "Rail grouping/order matches the product decisions.",
+      "status": "PASS",
+      "note": "Required rail order/grouping; More anchored at bottom.",
+      "evidence": [
+        "final/complete-run/hardening-ui/results.json"
+      ]
+    },
+    {
+      "id": "D02",
+      "section": "Right reader rail",
+      "criterion": "Focus affects the active workspace exactly as before.",
+      "status": "PASS",
+      "note": "Full-viewport Focus and exact semantic anchors across note presentations, Compare and native-PDF shell.",
+      "evidence": [
+        "final/complete-run/reader-ui/reader-11-dom.json"
+      ]
+    },
+    {
+      "id": "D03",
+      "section": "Right reader rail",
+      "criterion": "Reading Mode applies only to active pane/view.",
+      "status": "PASS",
+      "note": "Actions target active pane only; opposite pane object remains equal. Actual English DOM reflow checked.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "D04",
+      "section": "Right reader rail",
+      "criterion": "Context opens the preserved Context/Outline/Remarks drawer.",
+      "status": "PASS",
+      "note": "Original Context/Outline/Remarks content reused in overlay, not a reduced replacement.",
+      "evidence": [
+        "final/compact-verified/results.json",
+        "final/complete-run/hardening-ui/results.json"
+      ]
+    },
+    {
+      "id": "D05",
+      "section": "Right reader rail",
+      "criterion": "Compare opens/closes without cloning source pane.",
+      "status": "PASS",
+      "note": "Empty Compare thread, no cloned source view; exact active survivor on close.",
+      "evidence": [
+        "final/complete-run/hardening-ui/results.json"
+      ]
+    },
+    {
+      "id": "D06",
+      "section": "Right reader rail",
+      "criterion": "Swap works only when relevant.",
+      "status": "PASS",
+      "note": "Swap visible only with two panes; whole pane state preserved.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "D07",
+      "section": "Right reader rail",
+      "criterion": "Bookmark targets active view/page.",
+      "status": "PASS",
+      "note": "Bookmark targets active page/reading view in Compare.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "D08",
+      "section": "Right reader rail",
+      "criterion": "Theme popover exposes exactly five themes.",
+      "status": "PASS",
+      "note": "Exactly the five requested choices.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "D09",
+      "section": "Right reader rail",
+      "criterion": "More/Settings exposes learning-flag visibility and less-frequent actions.",
+      "status": "PASS",
+      "note": "More contains Home, Bookmarks, Edit, Print, flags visibility/rating and settings; hiding flags preserves rating values.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "E01",
+      "section": "Compare pane identity",
+      "criterion": "Pane A selected tab has blue identity.",
+      "status": "PASS",
+      "note": "Semantic blue Pane A selected-tab border/tint.",
+      "evidence": [
+        "final/compact-verified/compare-dual-identity.png"
+      ]
+    },
+    {
+      "id": "E02",
+      "section": "Compare pane identity",
+      "criterion": "Pane B selected tab has lavender identity.",
+      "status": "PASS",
+      "note": "Semantic lavender Pane B selected-tab border/tint.",
+      "evidence": [
+        "final/compact-verified/compare-dual-identity.png"
+      ]
+    },
+    {
+      "id": "E03",
+      "section": "Compare pane identity",
+      "criterion": "Tree marks Pane A page in blue.",
+      "status": "PASS",
+      "note": "Pane A page marker in shared canonical tree.",
+      "evidence": [
+        "final/compact-verified/compare-dual-identity.png"
+      ]
+    },
+    {
+      "id": "E04",
+      "section": "Compare pane identity",
+      "criterion": "Tree marks Pane B page in lavender.",
+      "status": "PASS",
+      "note": "Pane B marker independent of selected tree node.",
+      "evidence": [
+        "final/compact-verified/compare-dual-identity.png"
+      ]
+    },
+    {
+      "id": "E05",
+      "section": "Compare pane identity",
+      "criterion": "Same page in both panes gets a dual marker.",
+      "status": "PASS",
+      "note": "Same-page tree ownership contains a and b; both visible letter markers.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "E06",
+      "section": "Compare pane identity",
+      "criterion": "Active pane has a non-color-only indicator.",
+      "status": "PASS",
+      "note": "Active-pane text, solid border and asterisk in addition to color.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "E07",
+      "section": "Compare pane identity",
+      "criterion": "Behavior remains clear under all five themes.",
+      "status": "PASS",
+      "note": "All five themes tested with two-pane ownership and Context; screenshots reviewed.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "E08",
+      "section": "Compare pane identity",
+      "criterion": "Same-page Compare still preserves independent history/layout/English/PDF state.",
+      "status": "PASS",
+      "note": "Core/DOM independence of history, layouts, English and saved PDF view state retained. Actual integrated PDF rendering remains blocked.",
+      "evidence": [
+        "final/complete-run/logs/unit.log",
+        "final/complete-run/hardening-ui/results.json",
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "F01",
+      "section": "Themes",
+      "criterion": "Fluent Blue",
+      "status": "PASS",
+      "note": "Rendered, selectable theme fluent.",
+      "evidence": [
+        "final/compact-verified/theme-fluent.png"
+      ]
+    },
+    {
+      "id": "F02",
+      "section": "Themes",
+      "criterion": "Neutral/Sage",
+      "status": "PASS",
+      "note": "Rendered, selectable theme neutral.",
+      "evidence": [
+        "final/compact-verified/theme-neutral.png"
+      ]
+    },
+    {
+      "id": "F03",
+      "section": "Themes",
+      "criterion": "Academic Paper",
+      "status": "PASS",
+      "note": "Rendered, selectable theme academic.",
+      "evidence": [
+        "final/compact-verified/theme-academic.png"
+      ]
+    },
+    {
+      "id": "F04",
+      "section": "Themes",
+      "criterion": "Soft Lavender",
+      "status": "PASS",
+      "note": "Rendered, selectable theme lavender.",
+      "evidence": [
+        "final/compact-verified/theme-lavender.png"
+      ]
+    },
+    {
+      "id": "F05",
+      "section": "Themes",
+      "criterion": "Dark Slate",
+      "status": "PASS",
+      "note": "Rendered, selectable theme slate.",
+      "evidence": [
+        "final/compact-verified/theme-slate.png"
+      ]
+    },
+    {
+      "id": "F06",
+      "section": "Themes",
+      "criterion": "all persist through reload and backup/restore",
+      "status": "BLOCKED",
+      "note": "All five actual backup serializer/parser round-trips pass; runtime reload remains unavailable. Conjunctive reload-and-backup criterion not claimed.",
+      "evidence": [
+        "final/complete-run/logs/unit.log",
+        "final/complete-run/runtime/results.json"
+      ]
+    },
+    {
+      "id": "F07",
+      "section": "Themes",
+      "criterion": "old backups with the original three theme values still validate",
+      "status": "PASS",
+      "note": "Original fluent/neutral/academic values and legacy absent libraryMode remain valid.",
+      "evidence": [
+        "final/complete-run/logs/unit.log"
+      ]
+    },
+    {
+      "id": "F08",
+      "section": "Themes",
+      "criterion": "text/focus contrast tests pass",
+      "status": "PASS",
+      "note": "Twenty tested normal/muted/accent semantic text pairs exceed 4.5:1; keyboard focus visibly indicated. Not an exhaustive WCAG audit.",
+      "evidence": [
+        "final/complete-run/reader-ui/reader-11-dom.json"
+      ]
+    },
+    {
+      "id": "F09",
+      "section": "Themes",
+      "criterion": "dialog, tree, collection, context drawer, tabs, PDF, Focus and Compare surfaces are all themed",
+      "status": "PASS",
+      "note": "Five semantic themes applied to shell/portals/collections/tree/drawer/tabs and fallback PDF chrome; original PDF artwork is not recolored. Optional engine chrome CSS updated but runtime blocked.",
+      "evidence": [
+        "final/compact-verified/results.json",
+        "final/complete-run/reader-ui/reader-11-dom.json"
+      ]
+    },
+    {
+      "id": "G01",
+      "section": "PDF Library mode",
+      "criterion": "top-left mode icon toggles Notes <-> PDF Library",
+      "status": "PASS",
+      "note": "Top-left accessible icon toggles notes/pdfs session mode.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "G02",
+      "section": "PDF Library mode",
+      "criterion": "PDF mode uses the same notebook/folder/subfolder tree",
+      "status": "PASS",
+      "note": "Projection reuses canonical notebook/node IDs and collection renderer.",
+      "evidence": [
+        "src/core/library-projection.ts",
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "G03",
+      "section": "PDF Library mode",
+      "criterion": "note leaves are recursively filtered out in PDF mode",
+      "status": "PASS",
+      "note": "Recursive note-leaf filtering tested at depth without mutating overlays.",
+      "evidence": [
+        "final/complete-run/logs/unit.log",
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "G04",
+      "section": "PDF Library mode",
+      "criterion": "folders/notebooks with PDF descendants remain visible",
+      "status": "PASS",
+      "note": "Folders/notebooks with PDF descendants retained; empty note branches hidden.",
+      "evidence": [
+        "final/complete-run/logs/unit.log",
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "G05",
+      "section": "PDF Library mode",
+      "criterion": "PDF leaf click opens in the same tabs/panes shell",
+      "status": "PASS",
+      "note": "PDF leaves open existing tabs/views; no separate routing shell.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "G06",
+      "section": "PDF Library mode",
+      "criterion": "Focus works on PDF",
+      "status": "PASS",
+      "note": "PDF native-preview shell expands in Focus; no integrated-renderer claim.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "G07",
+      "section": "PDF Library mode",
+      "criterion": "Compare supports PDF/PDF and Note/PDF",
+      "status": "PASS",
+      "note": "PDF/PDF and Note/PDF native-fallback Compare shells; actual PDF.js cases in I remain blocked.",
+      "evidence": [
+        "final/complete-run/reader-ui/reader-11-dom.json"
+      ]
+    },
+    {
+      "id": "G08",
+      "section": "PDF Library mode",
+      "criterion": "bookmarks/remarks preserve document identity and revision rules",
+      "status": "PASS",
+      "note": "Stable document/revision-scoped bookmark/remark behavior retained.",
+      "evidence": [
+        "final/complete-run/hardening-ui/results.json",
+        "final/complete-run/logs/unit.log"
+      ]
+    },
+    {
+      "id": "G09",
+      "section": "PDF Library mode",
+      "criterion": "PDF presentation state is independent per view",
+      "status": "PASS",
+      "note": "Independent persisted view-state model remains; fallback mode controls honestly disabled. Physical rendering not certified.",
+      "evidence": [
+        "final/complete-run/logs/unit.log",
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "G10",
+      "section": "PDF Library mode",
+      "criterion": "no second PDF dashboard/shell exists",
+      "status": "PASS",
+      "note": "Same tree/tabs/panes/collections; no second PDF app or storage engine.",
+      "evidence": [
+        "src/core/library-projection.ts",
+        "src/app/App.tsx"
+      ]
+    },
+    {
+      "id": "H01",
+      "section": "pdfatlas external library",
+      "criterion": "If PDF snapshot supplied, both actual PDFs are inspected and truthfully named/categorized.",
+      "status": "PASS",
+      "note": "Both supplied documents inspected using complete selectable text, metadata and rendered covers; content-derived titles/categories.",
+      "evidence": [
+        "pdf-inspection/catalogue.json",
+        "final/verification/pdf-byte-preservation.json"
+      ]
+    },
+    {
+      "id": "H02",
+      "section": "pdfatlas external library",
+      "criterion": "SHA-256/size/page count are recorded from actual bytes.",
+      "status": "PASS",
+      "note": "SHA-256, exact bytes and 6/28 page counts recomputed from supplied binaries.",
+      "evidence": [
+        "final/verification/pdf-byte-preservation.json"
+      ]
+    },
+    {
+      "id": "H03",
+      "section": "pdfatlas external library",
+      "criterion": "Stable IDs do not depend on path.",
+      "status": "PASS",
+      "note": "Explicit document/category IDs independent from relativePath; generated page IDs stable.",
+      "evidence": [
+        "config/pdfatlas.library.json"
+      ]
+    },
+    {
+      "id": "H04",
+      "section": "pdfatlas external library",
+      "criterion": "Returned organized pdfatlas package includes README + manifest + category directories.",
+      "status": "PASS",
+      "note": "Organized ZIP contains unchanged PDFs, README, manifest and category/subcategory folders.",
+      "evidence": [
+        "pdfatlas_organized.zip",
+        "final/verification/pdf-byte-preservation.json"
+      ]
+    },
+    {
+      "id": "H05",
+      "section": "pdfatlas external library",
+      "criterion": "AtlasNote bundles metadata/tree only; it does not duplicate public pdfatlas binaries into the app build.",
+      "status": "PASS",
+      "note": "Only reference metadata/tree in app; zero PDF Atlas pack assets. Original synthetic guide fixtures retained.",
+      "evidence": [
+        "final/verification/public-content.json"
+      ]
+    },
+    {
+      "id": "H06",
+      "section": "pdfatlas external library",
+      "criterion": "URLs use raw GitHub form, not `blob` HTML.",
+      "status": "PASS",
+      "note": "Canonical HTTPS raw-content URLs, no blob HTML page links; live paths are staging and not verified hosted.",
+      "evidence": [
+        "config/pdfatlas.json",
+        "content/packs/pdfatlas.public/atlas-documents.json"
+      ]
+    },
+    {
+      "id": "H07",
+      "section": "pdfatlas external library",
+      "criterion": "final coordinator can pin all URLs to one pdfatlas commit in a single well-defined place.",
+      "status": "PASS",
+      "note": "Single base URL config accepts final full commit; deterministic offline sync regenerates reviewed pack.",
+      "evidence": [
+        "config/pdfatlas.json",
+        "tools/sync-pdfatlas.mjs"
+      ]
+    },
+    {
+      "id": "H08",
+      "section": "pdfatlas external library",
+      "criterion": "only exact `raw.githubusercontent.com/julian-passebecq/pdfatlas/...` entries bypass the arbitrary-external consent gate.",
+      "status": "PASS",
+      "note": "Exact repo/path + approved pack + reviewed hash, no query/credentials/redirect; bounded verified fetch. Controlled synthetic transport tests, not live hosting.",
+      "evidence": [
+        "final/complete-run/logs/unit.log",
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "H09",
+      "section": "pdfatlas external library",
+      "criterion": "arbitrary external PDFs still require consent.",
+      "status": "PASS",
+      "note": "Arbitrary external references retain explicit consent; spoofed/mismatched inputs fail closed.",
+      "evidence": [
+        "final/compact-verified/results.json"
+      ]
+    },
+    {
+      "id": "I01",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "online/Vite build succeeds",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I02",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "PDF.js worker metadata/version compatibility passes",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I03",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "single page",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I04",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "continuous pages",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I05",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "spread / cover-alone",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I06",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "page input",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I07",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "zoom",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I08",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "rotation",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I09",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "outline",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I10",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "selectable-text search",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I11",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "image-only no-fake-OCR behavior",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I12",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "password wrong/correct flow",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I13",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "password not persisted",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I14",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "Note/PDF Compare",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I15",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "PDF/PDF Compare",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I16",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "original download is byte-identical",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "I17",
+      "section": "Integrated PDF engine - preferred final gate",
+      "criterion": "worker mismatch fails safely and can retry",
+      "status": "BLOCKED",
+      "note": "Optional React-PDF/Vite dependencies unavailable; no installed integrated engine/worker. Browser-native or DOM behavior is not a substitute.",
+      "evidence": [
+        "final/complete-run/pdf-runtime/results.json",
+        "final/complete-run/logs/online-build.log"
+      ]
+    },
+    {
+      "id": "J01",
+      "section": "Deliverable quality",
+      "criterion": "no GitHub or Netlify operations performed",
+      "status": "PASS",
+      "note": "No remote repository/hosting operations performed; all inputs/outputs are local ZIP artifacts.",
+      "evidence": [
+        "docs/release-1.2/COORDINATOR.md"
+      ]
+    },
+    {
+      "id": "J02",
+      "section": "Deliverable quality",
+      "criterion": "source ZIP contains complete project root, not a patch-only bundle",
+      "status": "PASS",
+      "note": "Full root source with package/lock/config/tests/docs; excludes node_modules, dist, caches, private corpus and generated evidence.",
+      "evidence": [
+        "AtlasNote_1.2_source.zip"
+      ]
+    },
+    {
+      "id": "J03",
+      "section": "Deliverable quality",
+      "criterion": "build ZIP is deployable with `index.html` at root of extracted build contents",
+      "status": "PASS",
+      "note": "Actual compiled fallback distribution, index.html at root; Node static launcher and safety headers included. No hosted production assertion.",
+      "evidence": [
+        "AtlasNote_1.2_build.zip"
+      ]
+    },
+    {
+      "id": "J04",
+      "section": "Deliverable quality",
+      "criterion": "organized pdfatlas ZIP returned separately when source PDFs were supplied",
+      "status": "PASS",
+      "note": "Separate organized PDF ZIP, not bundled into app build.",
+      "evidence": [
+        "pdfatlas_organized.zip"
+      ]
+    },
+    {
+      "id": "J05",
+      "section": "Deliverable quality",
+      "criterion": "actual test logs/results included",
+      "status": "PASS",
+      "note": "Baseline, intermediate and final machine results, stdout/stderr and diagnostics included.",
+      "evidence": [
+        "AtlasNote_1.2_TEST_EVIDENCE.zip"
+      ]
+    },
+    {
+      "id": "J06",
+      "section": "Deliverable quality",
+      "criterion": "screenshots include: compact single-pane, Compare pane identity, PDF Library tree, PDF opened, context drawer, each of five themes, narrow viewport",
+      "status": "PASS",
+      "note": "All required screenshot categories included; PDF opened screenshot is explicitly native fallback, not integrated PDF evidence.",
+      "evidence": [
+        "final/compact-verified/",
+        "final/complete-run/reader-ui/"
+      ]
+    },
+    {
+      "id": "J07",
+      "section": "Deliverable quality",
+      "criterion": "release report lists every PASS/FAIL/BLOCKED row without hiding blockers",
+      "status": "PASS",
+      "note": "All supplied checklist rows individually classified, with evidence scope and blocked prerequisites.",
+      "evidence": [
+        "AtlasNote_1.2_RELEASE_REPORT.md"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "page.pdfatlas.pyspark-pandas",
+  "title": "PySpark and Pandas: DataFrame guide",
+  "summary": "Introduces PySpark versus Pandas, then gives PySpark DataFrame examples for exploration, transformations, SQL functions, joins and window operations.",
+  "blocks": [
+    {
+      "id": "block.pdfatlas.pyspark-pandas.reference",
+      "type": "markdown",
+      "text": "Introduces PySpark versus Pandas, then gives PySpark DataFrame examples for exploration, transformations, SQL functions, joins and window operations.\n\nExternal PDF reference. Nitya CloudTech is displayed on the cover. No individual author or redistribution licence established from the supplied PDF."
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [
+    {
+      "title": "PySpark and Pandas: DataFrame guide",
+      "url": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/library/data-engineering/apache-spark/pyspark-pandas-dataframe-guide.pdf",
+      "note": "Nitya CloudTech is displayed on the cover. No individual author or redistribution licence established from the supplied PDF."
+    }
+  ],
+  "tags": [
+    "doctype:guide",
+    "domain:data-engineering",
+    "tech:pyspark",
+    "tech:pandas",
+    "tech:databricks",
+    "lang:en"
+  ],
+  "provenance": "Metadata inspected from user-supplied pdfatlas snapshot; PDF binaries are not bundled."
+}

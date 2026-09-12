@@ -1,0 +1,30 @@
+{
+  "id": "page.pdfatlas.spark-concepts",
+  "title": "Apache Spark: 30 concepts",
+  "summary": "Six illustrated topics: MapReduce, cluster architecture, deployment modes, transformations and actions, query plans and scheduling, and executor memory.",
+  "blocks": [
+    {
+      "id": "block.pdfatlas.spark-concepts.reference",
+      "type": "markdown",
+      "text": "Six illustrated topics: MapReduce, cluster architecture, deployment modes, transformations and actions, query plans and scheduling, and executor memory.\n\nExternal PDF reference. Document displays theseniordev.io and afaqueahmad7117. No redistribution licence established from the supplied PDF."
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [
+    {
+      "title": "Apache Spark: 30 concepts",
+      "url": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/library/data-engineering/apache-spark/apache-spark-30-concepts.pdf",
+      "note": "Document displays theseniordev.io and afaqueahmad7117. No redistribution licence established from the supplied PDF."
+    }
+  ],
+  "tags": [
+    "doctype:guide",
+    "domain:data-engineering",
+    "tech:apache-spark",
+    "tech:pyspark",
+    "tech:yarn",
+    "lang:en"
+  ],
+  "provenance": "Metadata inspected from user-supplied pdfatlas snapshot; PDF binaries are not bundled."
+}

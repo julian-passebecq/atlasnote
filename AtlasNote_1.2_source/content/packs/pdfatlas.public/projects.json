@@ -1,0 +1,32 @@
+[
+  {
+    "id": "project.pdfatlas",
+    "title": "PDF Atlas",
+    "icon": "pdf",
+    "description": "External Spark and PySpark references. Verified metadata; PDF bytes remain in the separate public repository.",
+    "nodes": [
+      {
+        "id": "node.pdfatlas.data-engineering",
+        "title": "Data Engineering",
+        "children": [
+          {
+            "id": "node.pdfatlas.apache-spark",
+            "title": "Apache Spark",
+            "children": [
+              {
+                "id": "node.pdfatlas.spark-concepts",
+                "title": "Apache Spark: 30 concepts",
+                "pageId": "page.pdfatlas.spark-concepts"
+              },
+              {
+                "id": "node.pdfatlas.pyspark-pandas",
+                "title": "PySpark and Pandas: DataFrame guide",
+                "pageId": "page.pdfatlas.pyspark-pandas"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
