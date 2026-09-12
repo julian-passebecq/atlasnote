@@ -1,9 +1,11 @@
 name: Validate, build and release gates
-on: [push, pull_request, workflow_dispatch]
-permissions:
-  contents: read
+
+on:
+  push:
+  pull_request:
+
 jobs:
-  offline-release:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,25 +16,44 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm test
-      - run: npm run check:release
-      - run: npm run test:online:syntax
-      - run: npm run audit:local
-      - run: python -m pip install -r requirements-test.txt
-      - run: python -m playwright install --with-deps chromium
-      - run: npm run test:headers
-      - run: npm run test:dom
-      - run: npm run test:hardening:ui
-      # A blocked normal-origin gate is deliberately not treated as green.
-      - run: npm run test:runtime
-      - uses: actions/upload-artifact@v4
+
+      - name: Install deterministic Node dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Install deterministic Python test dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements-test.txt
+
+      - name: Install pdftoppm for PDF visual smoke tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+
+      - name: TypeScript gate
+        run: npm run typecheck
+
+      - name: Unit and regression suite
+        run: npm test
+
+      - name: Build deployable artifact
+        run: npm run build
+
+      - name: Content validator
+        run: npm run validate
+
+      - name: Full release gate bundle
+        run: npm run release:gates
+
+      - name: Upload deployable artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlasnote-dist
+          path: dist/
+          if-no-files-found: error
+
+      - name: Upload release evidence
         if: always()
+        uses: actions/upload-artifact@v4
         with:
           name: atlasnote-release-evidence
-          path: docs/evidence/hardening
-      - uses: actions/upload-artifact@v4
-        with:
-          name: atlasnote-public-build
-          path: dist
+          path: evidence/release-gates/
+          if-no-files-found: warn
