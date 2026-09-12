@@ -1,7 +1,0 @@
-{
-  "pages": 1,
-  "selectableCharacters": 0,
-  "imageCount": 1,
-  "source": "Last page of supplied author-created public PDF fixture",
-  "scope": "PyMuPDF fixture validation, NOT integrated browser engine verification"
-}

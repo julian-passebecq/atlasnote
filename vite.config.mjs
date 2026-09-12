@@ -1,2 +1,0 @@
-import {defineConfig} from 'vite';import {fileURLToPath} from 'node:url';
-export default defineConfig({base:'./',publicDir:'.vite-public',resolve:{alias:[{find:/^(?:\.{1,2}\/)+vendor\/react\.mjs$/,replacement:fileURLToPath(new URL('./src/online/react-runtime.ts',import.meta.url))}]},build:{outDir:'dist',emptyOutDir:true,target:'es2022',sourcemap:false},esbuild:{jsxFactory:'React.createElement',jsxFragment:'React.Fragment'}});
