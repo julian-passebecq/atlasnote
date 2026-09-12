@@ -1,0 +1,4 @@
+# Optional offline authoring/test tools, NOT browser runtime or bundled dependencies.
+# Install ahead of an offline session; respect each dependency's own license.
+PyMuPDF==1.26.7
+Pillow==12.3.0

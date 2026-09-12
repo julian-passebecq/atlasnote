@@ -31,3 +31,15 @@ Reference documentation consulted:
 ## Publication/content review
 
 Only `example.notes` and `atlas.reader-guide` are in the public source and build. The former is the supplied neutral public example. The latter consists of newly authored generic help pages and supplied author-created synthetic PDF fixtures. The publication review pins semantic hashes and rejects private, unreviewed, unlisted or changed content. The private library remains a separate archive; its source terms, links and provenance are not changed or granted a blanket public redistribution license.
+
+## 1.1 authoring-only additions
+
+The Python preparation/test utilities optionally load separately installed PyMuPDF
+(tested 1.26.7) and Pillow (tested 12.3.0). These packages, their binaries and font
+files are not bundled in the source or static build. They retain their own licenses;
+review those licenses for your intended reuse or distribution. This does not change
+the original application's license or confer any rights to imported PDFs.
+
+All inherited vendored runtime bytes and their integrity pins remain unchanged.
+The online React adapter now exposes the existing DOM portal/flushSync APIs together
+with the client root APIs; the advanced PdfEngine.tsx itself remains unchanged.

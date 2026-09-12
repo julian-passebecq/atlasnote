@@ -1,3 +1,4 @@
+from browser_support import close_panels,more_action,open_more,open_settings,open_context,reader_action,open_reading,set_learning_flag
 """Release gate: real-origin app, actual IndexedDB, browser ZIP download and fresh-context restore.
 No route interception, storage mocks, database seeding or browser-policy changes.
 Exit 2 is BLOCKED, never success. Use the offline production build, not the DOM harness.
@@ -57,7 +58,7 @@ def snapshot(target):
 
 
 def open_settings(target):
-    target.get_by_role('button', name='Workspace settings', exact=True).click()
+    more_action(target,'Workspace settings')
 
 
 def import_version(target, version):
@@ -77,6 +78,22 @@ def search_open(target, title, new_tab=False):
         target.locator('.search-result').filter(has_text=title).first.click()
 
 
+def save_session_diff(before, after, name='reload'):
+    (OUT/(name+'-before.json')).write_text(json.dumps(before['personal']['session'], indent=2))
+    (OUT/(name+'-after.json')).write_text(json.dumps(after['personal']['session'], indent=2))
+    diffs=[]
+    def walk(a,b,path):
+        if type(a)!=type(b): diffs.append({'path':path,'before':a,'after':b})
+        elif isinstance(a,dict):
+            for k in sorted(set(a)|set(b)): walk(a.get(k),b.get(k),path+'.'+k)
+        elif isinstance(a,list):
+            if len(a)!=len(b): diffs.append({'path':path+'.length','before':len(a),'after':len(b)})
+            for i in range(min(len(a),len(b))): walk(a[i],b[i],path+'['+str(i)+']')
+        elif a!=b: diffs.append({'path':path,'before':a,'after':b})
+    walk(before['personal']['session'],after['personal']['session'],'session')
+    (OUT/(name+'-structural-diff.json')).write_text(json.dumps(diffs,indent=2))
+
+
 def same_saved_state(actual, expected, session=True):
     for key in ['notes', 'ratings', 'bookmarks']:
         assert actual['personal'][key] == expected['personal'][key], key
@@ -94,7 +111,7 @@ try:
         page=context.new_page();page.set_default_timeout(15000)
         page.on('pageerror', lambda e:errors.append(str(e)))
         page.goto(base,wait_until='networkidle')
-        page.get_by_role('button',name='Workspace settings',exact=True).wait_for()
+        page.get_by_role('button',name='More / Settings',exact=True).wait_for()
         first=snapshot(page)
         assert first['imports']==[] and first['assets']==[] and first['personal']['notes']=={}
         record(phase, {'origin':base,'storage':'actual IndexedDB; no mocks'})
@@ -104,13 +121,13 @@ try:
         record(phase)
 
         phase='personal_state';search_open(page,long_title)
-        page.get_by_role('button',name='Remarks',exact=True).click()
+        open_context(page,'Remarks')
         page.get_by_role('textbox',name='Personal remarks',exact=True).fill('RUNTIME_REMARK_A_exact\nSecond line retained.')
-        page.get_by_role('combobox',name='Learning flag',exact=True).select_option('green')
+        set_learning_flag(page,'green')
         page.locator('.active-pane .note-scroller').evaluate('(e)=>{e.scrollTop=800;e.dispatchEvent(new Event("scroll"));}')
         page.wait_for_timeout(450)
         page.get_by_role('button',name='Bookmark reading position',exact=True).click()
-        page.locator('.active-pane').get_by_role('button',name='Book',exact=True).click()
+        reader_action(page,'Book',page.locator('.active-pane'))
         page.wait_for_timeout(500)
         # Root page creation uses the same normal modal as a reader would use.
         page.locator('.tree-target').filter(has_text='Reader guide').last.click(button='right')
@@ -126,7 +143,7 @@ try:
         record(phase,{'localPageId':local_id,'bookmark':created['personal']['bookmarks'][0]})
 
         phase='local_pdf';open_settings(page)
-        original=(ROOT/'content/packs/atlas.reader-guide/assets/atlas-reader-fixture.pdf').read_bytes()
+        original=(ROOT/'templates/pdf-library/assets/pdf/pdf.example.fabric/fabric-cheatsheet.pdf').read_bytes()
         digest=hashlib.sha256(original).hexdigest()
         page.get_by_label('Import local PDF',exact=True).set_input_files({'name':'retained-runtime.pdf','mimeType':'application/pdf','buffer':original})
         page.get_by_label('Document title',exact=True).fill('Runtime retained PDF')
@@ -143,7 +160,7 @@ try:
         assert len(pre['personal']['session']['panes'])==2
         record(phase,{'bytes':len(original),'sha256':digest,'folder':op['parentId']})
 
-        phase='reload';page.reload(wait_until='networkidle');post=snapshot(page);same_saved_state(post,pre)
+        phase='reload';page.reload(wait_until='networkidle');post=snapshot(page);save_session_diff(pre,post);same_saved_state(post,pre)
         page.screenshot(path=str(OUT/'01-reloaded-workspace.png'));record(phase)
 
         phase='import_v2';prior=snapshot(page);import_version(page,'1.1.0');updated=snapshot(page)
@@ -194,7 +211,7 @@ try:
         restored_page.get_by_role('dialog').wait_for(state='detached');record(phase)
         phase='restored_exact';restored=snapshot(restored_page);same_saved_state(restored,expected_backup)
         record(phase,{'personalExact':True,'sessionExact':True,'overlaysExact':True,'importsExact':True,'localPDFBytesExact':True,'sha256':digest})
-        phase='restored_reload';restored_page.reload(wait_until='networkidle');same_saved_state(snapshot(restored_page),expected_backup)
+        phase='restored_reload';restored_page.reload(wait_until='networkidle');restored_post=snapshot(restored_page);save_session_diff(expected_backup,restored_post,'restored-reload');same_saved_state(restored_post,expected_backup)
         restored_page.screenshot(path=str(OUT/'02-restored-reloaded.png'));record(phase)
         phase='no_errors';assert errors==[],errors;record(phase)
         browser.close()

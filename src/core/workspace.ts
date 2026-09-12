@@ -3,13 +3,12 @@ import {selectPacks} from './packs.mjs';
 import {pageLinks,walkBlocks,stable} from './validation.mjs';
 export const uid=(prefix='id')=>prefix+'.'+crypto.randomUUID().replaceAll('-','');
 export function blankOverlays():Overlays{return {schemaVersion:2,pages:{},projects:[],projectPrefs:{},operations:[],archived:[],groups:null,documents:[]};}
-export function blankPersonal():Personal{return {schemaVersion:2,notes:{},ratings:{},bookmarks:[],session:{panes:[{id:'left',views:[],active:''}],activePane:'left',ratio:50,screen:'home',leftOpen:true,rightOpen:true,focus:false,theme:'fluent',showFlags:true,expanded:[],fontSize:16}};}
+export function blankPersonal():Personal{return {schemaVersion:2,notes:{},ratings:{},bookmarks:[],session:{panes:[{id:'left',views:[],active:''}],activePane:'left',ratio:50,screen:'home',leftOpen:true,rightOpen:false,focus:false,theme:'fluent',libraryMode:'notes',showFlags:true,expanded:[],fontSize:16}};}
 export function blankWorkspace():Workspace{return {imports:[],overlays:blankOverlays(),personal:blankPersonal(),assets:[],generation:0};}
 export function current(view:View|undefined){return view?.history[view.cursor];}
 export function newLocation(pageId:string):Location{return {pageId,presentation:'continuous',pdfMode:'single',pdfPage:1,zoom:1,rotation:0,cover:false};}
-function locationWithAnchor(pageId:string,anchor?:any):Location{const location=newLocation(pageId);if(anchor!==undefined)location.anchor=anchor;return location;}
-export function newView(pageId:string,anchor?:any):View{return {id:uid('view'),history:[locationWithAnchor(pageId,anchor)],cursor:0,collapsed:{},revealed:{},english:true};}
-export function navigate(view:View,pageId:string,anchor?:any):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;return {...view,history:[...view.history.slice(0,view.cursor+1),locationWithAnchor(pageId,anchor)],cursor:view.cursor+1};}
+export function newView(pageId?:string,anchor?:any):View{return {id:uid('view'),history:pageId?[{...newLocation(pageId),...(anchor?{anchor}:{})}]:[],cursor:0,collapsed:{},revealed:{},english:true};}
+export function navigate(view:View,pageId:string,anchor?:any):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;const prefix=view.history.slice(0,view.cursor+1);return {...view,history:[...prefix,{...newLocation(pageId),...(anchor?{anchor}:{})}],cursor:prefix.length};}
 export function travel(view:View,delta:number):View{return {...view,cursor:Math.max(0,Math.min(view.history.length-1,view.cursor+delta))};}
 export function findNode(projects:Project[],id:string):{node:TreeNode;list:TreeNode[];index:number;project:Project;ancestors:string[]}|undefined{
  function walk(ns:TreeNode[],p:Project,ancestors:string[]):any{for(let i=0;i<ns.length;i++){if(ns[i].id===id)return {node:ns[i],list:ns,index:i,project:p,ancestors};const r=walk(ns[i].children??[],p,[...ancestors,ns[i].id]);if(r)return r;}}
@@ -34,7 +33,7 @@ export function compose(built:{packs:Pack[];groups:Group[]},ws:Workspace):Catalo
  for(const {page,baseHash}of Object.values(ws.overlays.pages)){if(baseHash){const pack=chosen.packs.find(p=>p.manifest.id===owners[page.id]);if(pack&&pack.hash!==baseHash)warnings.push('Local overlay '+page.id+' is retained over an updated source. Review the rebase in Settings.');}pages.set(page.id,page);owners[page.id]??='local';}
  for(const p of ws.overlays.projects)owners[p.id]='local';
  const docs=[...chosen.packs.flatMap(p=>p.documents??[]),...ws.overlays.documents];
- return {projects,pages:[...pages.values()],glossary:chosen.packs.flatMap(p=>p.glossary),groups:ws.overlays.groups??built.groups,packs:chosen.packs,owners,documents:docs,warnings};
+ return {projects,pages:[...pages.values()],glossary:chosen.packs.flatMap(p=>p.glossary),groups:ws.overlays.groups??built.groups,packs:chosen.packs,owners,documents:docs.map(d=>({...d,title:pages.get(d.pageId)?.title??d.title})),warnings};
 }
 export function locations(c:Catalogue){const result=new Map<string,{project:Project;ancestors:string[];path:string[];nodeId:string}>();function walk(p:Project,ns:TreeNode[],path:string[],ancestors:string[]){for(const n of ns){if(n.pageId)result.set(n.pageId,{project:p,ancestors,path:[...path,n.title],nodeId:n.id});if(n.children)walk(p,n.children,[...path,n.title],[...ancestors,n.id]);}}for(const p of c.projects)walk(p,p.nodes,[p.title],[p.id]);return result;}
 export function isArchived(pageId:string,c:Catalogue,overlays:Overlays){const loc=locations(c).get(pageId);return overlays.archived.includes(pageId)||!!loc&&[loc.nodeId,...loc.ancestors].some(id=>overlays.archived.includes(id));}
@@ -45,17 +44,18 @@ export function makeMarkdownPage(title:string,text:string):Page{return {id:uid('
 export function editPageLosslessly(page:Page,title:string,summary:string,textByBlock:Record<string,string>){const p=structuredClone(page);p.title=title;p.summary=summary;walkBlocks(p.blocks,(b:any)=>{if(b.type==='markdown'&&Object.hasOwn(textByBlock,b.id))b.text=textByBlock[b.id];});return p;}
 export function exportText(page:Page,opts:{english:boolean;answers:boolean;notes?:string;related?:string[]}){return `# ${page.title}\n\nStable ID: ${page.id}\n\n${page.summary}\n\n${blocksText(page.blocks,opts)}\n\n## Sources\n${page.sources.map(s=>s.title+(s.url?' - '+s.url:'')).join('\n')}\n\n## Related references (not instructions)\n${(opts.related??page.related).join('\n')}${opts.notes?'\n\n## Personal remarks (explicitly included)\n'+opts.notes:''}`;}
 
-/** Toggle Compare without reconstructing the surviving pane or its reading threads. */
+/** Compare is a second workspace, never a clone of the current document.
+ * The ratio is a durable preference, even while a single pane is visible.
+ */
 export function toggleCompare(session:Session):boolean {
  const active=session.panes.find(p=>p.id===session.activePane)??session.panes[0];
  if(!active)return false;
  if(session.panes.length===2){
-  session.panes=[active];session.activePane=active.id;session.ratio=50;
-  session.screen=active.views.length?'reader':'home';return true;
+  const hasContent=(pane:typeof active)=>pane.views.some(v=>v.history.length>0);
+  const survivor=hasContent(active)?active:session.panes.find(hasContent)??active;
+  session.panes=[survivor];session.activePane=survivor.id;
+  session.screen='reader';return true;
  }
- const source=active.views.find(v=>v.id===active.active);
- if(!source||!current(source))return false;
- const view=structuredClone(source);view.id=uid('view');
- const pane={id:uid('pane'),views:[view],active:view.id};
- session.panes.push(pane);session.activePane=pane.id;session.ratio=50;session.screen='reader';return true;
+ const pane={id:uid('pane'),views:[],active:''};
+ session.panes.push(pane);session.activePane=pane.id;session.screen='reader';return true;
 }

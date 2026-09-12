@@ -1,27 +1,45 @@
-ATLASNOTE / KNOWLEDGE ATLAS - HARDENED STATIC READER 1.0.1
+ATLASNOTE 1.2 - COMPACT LIBRARY / PDF READER
 
-1. Extract this ZIP into its own folder.
-2. Run: node serve.mjs
-   On Windows, Start_Atlas.cmd can use installed Node.js or Python instead.
-3. Open http://127.0.0.1:4173 after the server starts.
-4. Workspace settings -> Import library -> choose your separate private library ZIP.
+Extract this build into its own folder. Run node serve.mjs, or Start_Atlas.cmd on
+Windows. Open http://127.0.0.1:4173 and keep the server terminal open. Do not
+double-click index.html. For static hosting, publish these build contents only,
+with index.html at the root. Source, reports and test evidence are separate ZIPs.
 
-Do not double-click index.html. This is a static site that must be served via HTTP/HTTPS.
-Keep your private library and workspace backups out of a public GitHub repository.
+Top-left switches Notes / PDF Library. Both use the same tree, tabs and reader.
+The top bar is search-first. The right rail contains tree visibility, Focus,
+Reading mode, Context, Compare, conditional Swap, Bookmark, Theme and More.
+More contains Home, Bookmarks, Edit, Print, learning flags and Workspace settings.
+Context / Outline / Remarks overlay the reader rather than reducing its width.
 
-Compare toggles between one and two panes, keeping the active pane on close.
-Focus is immediately before Compare. Right-click a tree page for new-tab and management actions.
-Try the long-note Book example on Home to see actual consecutive sheet pairs.
+Focus hides all chrome; Exit focus or Escape restores it. Compare starts with an
+empty second pane and preserves the active pane on close. Pane A is blue and
+Pane B lavender; the tree can show both. Book displays sheets of one note, not
+Compare. Reading mode and English visibility apply to the active pane only.
 
-PDF IN THIS BUILD: honest browser preview/open/download, not the integrated PDF engine.
-The advanced React-PDF implementation remains in the separate source ZIP and needs its
-network-installed dependency/runtime checks. It has not been replaced or mislabelled.
+Exactly five themes: Fluent Blue, Neutral/Sage, Academic Paper, Soft Lavender,
+and Dark Slate. Theme selection is in the rail. Saved ratings remain when hidden.
 
-106 core and 53 actual Chromium UI/layout checks passed. Real-origin IndexedDB/download/
-fresh-context restore checks were blocked by managed browser policy in the delivery
-sandbox; integrated PDF dependency/runtime checks were blocked by npm DNS failures.
-See the accompanying source/report/evidence for all 139 acceptance rows and limitations.
+PDF Atlas includes two inspected external references, not embedded PDF bytes.
+Their organized main-branch paths are STAGING and may not be uploaded yet. A
+coordinator must review publication rights, upload the organized PDF package,
+pin config/pdfatlas.json to the final commit in source, run pdfatlas:sync and
+rebuild. A failed remote request is shown honestly. Private local PDF import
+works separately and can create an offline copy of a metadata-only reference.
+Actual local/bundled duplicate bytes still reuse the existing local PDF.
 
-Storage is local to this origin. There is no cloud sync. Use a complete workspace backup
-before moving browsers, machines, localhost names or hosted URLs. Clearing browser data
-can remove local work; a content export does not replace a full backup.
+THIS BUILD USES THE LABELLED NATIVE/BROWSER PDF FALLBACK. PDF Single/Continuous/
+Spread engine controls are unavailable here, not simulated. The existing optional
+React-PDF engine source is retained in the source ZIP, but its installation,
+worker and full runtime were not certified in the restricted build environment.
+
+This is an implementation candidate, not a production certificate. The source
+release report maps the 86 supplied acceptance rows: 65 PASS, 21 BLOCKED, 0 FAIL.
+Startup App-mount diagnostics preserve exact state; the full real-origin reload,
+backup/restore flow is still BLOCKED by environment policy and must be verified.
+No GitHub, Netlify or deployment operations were performed.
+
+No private user corpus or supplied PDF Atlas binaries are in this build. The
+bundled guide PDFs are original synthetic/author-created fixtures. Never publish
+private library ZIPs or complete workspace backups. Localhost and hosted URLs
+use different local storage: download a full workspace backup before switching
+origin/browser/machine. External references alone back up metadata, not PDF bytes.

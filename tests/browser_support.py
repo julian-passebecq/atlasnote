@@ -66,3 +66,48 @@ def mount_dom(page, base):
       ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App,{built}));
     }''', {'base': base, 'synthetic': synthetic_data()})
     page.wait_for_timeout(200)
+
+
+# AtlasNote 1.2: controls intentionally moved into the shared reader rail.
+# These helpers use visible controls. They do not alter production storage/state.
+def close_panels(page):
+    for _ in range(3):
+        if page.locator('dialog[open],.floating-panel,[role="menu"]').count():
+            page.keyboard.press('Escape')
+        else:
+            break
+
+def open_more(page):
+    if not page.locator('.popover-more').count():
+        page.get_by_role('button',name='More / Settings',exact=True).click()
+    return page.locator('.popover-more')
+
+def more_action(page,name):
+    open_more(page).get_by_role('button',name=name,exact=True).click()
+
+def open_settings(page):
+    more_action(page,'Workspace settings')
+
+def open_context(page,tab=None):
+    if not page.locator('.context-drawer').count():
+        page.get_by_role('button',name='Open context panel',exact=True).click()
+    panel=page.locator('.context-panel')
+    if tab:
+        panel.get_by_role('button',name=tab,exact=True).click()
+    return panel
+
+def open_reading(page,pane=None):
+    if pane is not None:
+        if page.locator('.popover-reading').count():page.keyboard.press('Escape')
+        pane.locator('.pane-tabbar').click(position={'x':1,'y':1})
+    if not page.locator('.popover-reading').count():
+        page.get_by_role('button',name='Reading mode',exact=True).click()
+    return page.locator('.popover-reading')
+
+def reader_action(page,name,pane=None):
+    open_reading(page,pane).get_by_role('button',name=name,exact=True).click()
+    if page.locator('.popover-reading').count():page.keyboard.press('Escape')
+
+def set_learning_flag(page,flag):
+    open_more(page).get_by_role('combobox',name='Learning flag',exact=True).select_option(flag)
+    page.keyboard.press('Escape')

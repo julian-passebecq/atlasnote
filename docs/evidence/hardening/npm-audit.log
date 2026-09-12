@@ -1,3 +1,0 @@
-npm warn audit request to https://registry.npmjs.org/-/npm/v1/security/audits/quick failed, reason: getaddrinfo EAI_AGAIN registry.npmjs.org
-npm error audit endpoint returned an error
-npm error A complete log of this run can be found in: /home/oai/.npm/_logs/2026-09-10T16_10_23_328Z-debug-0.log

@@ -1,0 +1,48 @@
+{
+  "format": "atlas-document-index",
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "packId": "pdfatlas.public",
+  "documents": [
+    {
+      "id": "doc.pdfatlas.spark-concepts",
+      "pageId": "page.pdfatlas.spark-concepts",
+      "title": "Apache Spark: 30 concepts",
+      "source": {
+        "kind": "https",
+        "url": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/library/data-engineering/apache-spark/apache-spark-30-concepts.pdf"
+      },
+      "sha256": "b6761e0907cb28ff660936c79ad2a2dcafd500cc01c5fa5a613470396a0af095",
+      "bytes": 2548426,
+      "pageCount": 6,
+      "visibility": "public",
+      "rights": {
+        "status": "reference-only",
+        "attribution": "Document displays theseniordev.io and afaqueahmad7117. No redistribution licence established from the supplied PDF.",
+        "sourceUrl": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/library/data-engineering/apache-spark/apache-spark-30-concepts.pdf"
+      },
+      "language": "en",
+      "defaultView": "single"
+    },
+    {
+      "id": "doc.pdfatlas.pyspark-pandas",
+      "pageId": "page.pdfatlas.pyspark-pandas",
+      "title": "PySpark and Pandas: DataFrame guide",
+      "source": {
+        "kind": "https",
+        "url": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/library/data-engineering/apache-spark/pyspark-pandas-dataframe-guide.pdf"
+      },
+      "sha256": "15f7be6e6970a77ddfc70be4cf8a9418c03445bf82937482b2a78ee5348b65c2",
+      "bytes": 5912749,
+      "pageCount": 28,
+      "visibility": "public",
+      "rights": {
+        "status": "reference-only",
+        "attribution": "Nitya CloudTech is displayed on the cover. No individual author or redistribution licence established from the supplied PDF.",
+        "sourceUrl": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/library/data-engineering/apache-spark/pyspark-pandas-dataframe-guide.pdf"
+      },
+      "language": "en",
+      "defaultView": "single"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+from browser_support import close_panels,more_action,open_more,open_settings,open_context,reader_action,open_reading,set_learning_flag
 """Integrated React-PDF acceptance on the optional real Vite build.
 No imitation renderer. Missing dependencies or blocked origin -> exit 2 / BLOCKED.
 Positive cases use the actual worker, PDF bytes, canvases and text layer.
@@ -69,14 +70,14 @@ try:
         assert len(text.inner_text().strip())>30
         selection=text.evaluate('(el)=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);return s.toString();}')
         assert len(selection)>30;record(phase,{'selectedCharacters':len(selection)})
-        phase='image_only';page.get_by_role('button',name='Workspace settings',exact=True).click()
+        phase='image_only';more_action(page,'Workspace settings')
         page.get_by_label('Import local PDF',exact=True).set_input_files(str(ROOT/'tests/fixtures/atlas-image-only.pdf'))
         page.get_by_label('Document title',exact=True).fill('Image only runtime fixture');page.get_by_role('button',name='Import PDF locally',exact=True).click();page.locator('.react-pdf__Page canvas').first.wait_for()
         page.get_by_role('textbox',name='Find text in PDF').fill('scan');page.get_by_role('button',name='Find',exact=True).click();page.get_by_text('No selectable text found.',exact=False).wait_for();record(phase)
         phase='password';search(page,'Password-protected PDF fixture');field=page.get_by_label('PDF password',exact=True);field.fill('WRONG_PASSWORD_RUNTIME');page.get_by_role('button',name='Unlock PDF',exact=True).click();page.get_by_text('Incorrect password. Try again.',exact=False).wait_for()
         field.fill('atlas-demo');page.get_by_role('button',name='Unlock PDF',exact=True).click();page.locator('.react-pdf__Page canvas').first.wait_for();record(phase)
         phase='password_storage';page.wait_for_timeout(500);records=json.dumps(saved_records(page));assert 'WRONG_PASSWORD_RUNTIME' not in records and 'atlas-demo' not in records;record(phase)
-        phase='pdf_compare';search(page,'PDF reading fixture');page.locator('.react-pdf__Page canvas').first.wait_for();page.get_by_role('button',name='Compare in two panes',exact=True).click();page.locator('.integrated-pdf').nth(1).wait_for();assert page.locator('.integrated-pdf').count()==2
+        phase='pdf_compare';search(page,'PDF reading fixture');page.locator('.react-pdf__Page canvas').first.wait_for();page.get_by_role('button',name='Compare in two panes',exact=True).click();search(page,'PDF reading fixture');page.locator('.integrated-pdf').nth(1).wait_for();assert page.locator('.integrated-pdf').count()==2
         second=page.locator('.document-pane').last;second.get_by_role('spinbutton',name='Physical PDF page number').fill('3');second.get_by_role('spinbutton',name='Physical PDF page number').press('Enter');page.wait_for_timeout(350)
         assert page.locator('.document-pane').first.get_by_role('spinbutton',name='Physical PDF page number').input_value()=='1';record(phase)
         phase='note_compare';search(page,'One note, several ways to read');assert page.locator('.integrated-pdf').count()==1 and page.locator('.reader-body').count()==1;record(phase)

@@ -1,65 +1,47 @@
-# Test commands and evidence boundaries
+# AtlasNote 1.2 testing
 
-All commands run from the repository root. The current evidence is in `docs/evidence/hardening/`; root-level evidence files are historical, not a claim of a new runtime pass.
+Run commands from the source root. The release report, acceptance JSON and evidence ZIP distinguish actual results from unavailable gates. A DOM harness result is never an IndexedDB/reload or integrated PDF pass.
 
-## Setup
+| Command | What it actually checks |
+|---|---|
+| `npm ci` | Complete dependency installation with the supplied lockfile; blocked here by registry DNS |
+| `npm run bootstrap:offline` | Supplied vendor bundles plus an already installed global TypeScript 5.8.3; not a full install attestation |
+| `npm run build` | Actual offline TypeScript compilation, public content validation and static build |
+| `npm run typecheck` | Application TypeScript typecheck |
+| `npm test` | Builds, then executes all Node tests (176 in this pass) |
+| `npm run check:release` | Exact reviewed public hashes and private/raw/font exclusion |
+| `npm run test:dom` | Real DOM pagination/layout/interaction regression suite; opaque origin and in-memory writes |
+| `npm run test:hardening:ui` | Real UI hardening, keyboard, tree, Compare, flags, remarks and CRUD tests |
+| `npm run test:reader:ui` | Reader contracts, five-theme contrasts, mixed collections, local PDF intake and actual export ZIPs; in-memory commit/SHA bridge explicitly labelled |
+| `npm run test:compact:ui` | Four viewport geometry, Context overlay, Compare identity, five themes, PDF filtering, active rail, controlled synthetic external transport |
+| `npm run test:startup:dom` | Twice repeated strict before/after App-mount session comparison; preloaded session, NOT browser reload |
+| `npm run test:runtime` | Unmodified normal-origin entry, actual IndexedDB/import/reload/backup/fresh-context/restore sequence, exact state equality |
+| `npm run test:pdf` | Actual optional React-PDF worker/canvas/search/password/Compare/download matrix, no fake renderer |
+| `npm run test:pdf:authoring` | Real PDF processing, safety, limits, source-byte/visual checks and authoring round-trip |
+| `npm run test:headers` | Actual local HTTP response headers and packaged hosting-header configuration |
+| `npm run test:online:syntax` | Optional-source syntax/isolated emit only; NOT installed-module typecheck or render certification |
+| `npm run audit:local` | Checked-in vendor integrity and installed dependency inventory; no remote vulnerability database claim |
+
+## Reproducible complete local run
 
 ```sh
-npm ci
-python -m pip install -r requirements-test.txt
-python -m playwright install chromium
+python tools/run-release-gates.py --out docs/evidence/release-1.2
 ```
 
-Use Node.js 22.12+ and Python 3.10+. `CHROMIUM_PATH` may point at an existing browser. The tests do not change managed browser policy. The UI/runtime test helpers start and stop their own local server unless `ATLAS_BASE_URL` is provided.
+The runner is offline and performs no connector or deployment operations. It intentionally tries `npm ci --offline`, then the documented bootstrap, before building. It returns **0 only when every gate passes, 1 for failures, 2 for blockers without failures**. It preserves command logs and individual statuses. It restores the fallback build last, even if an optional build was possible. Therefore, run `build:vite` separately after its installed prerequisites when preparing an integrated-engine distribution.
 
-## Executable gates
+An unrestricted coordinator must also run normal `npm ci` against the final lockfile. Optional dependencies require the separate `enable:online` installation and resulting reviewed lockfile. A syntax check is never a substitute for these gates.
 
-| Command | Evidence / meaning |
-| --- | --- |
-| `npm run typecheck` | Offline application TypeScript, not optional installed PDF dependencies. |
-| `npm test` | Rebuild plus all 106 Node tests. Original 66 tests retained; 40 added. |
-| `npm run validate` | Public source schema/relationship validation. |
-| `npm run check:release` | Exact reviewed pack hashes and private/raw/font-file exclusion in the offline dist. |
-| `npm run audit:local` | Installed lockfile inventory and all 113 vendored file hashes; not full license/vulnerability certification. |
-| `npm run test:headers` | Real localhost HTTP headers and deployed header-file contents; not a remote Netlify test. |
-| `npm run test:dom` | 14 original strengthened Chromium DOM/layout checks. |
-| `npm run test:hardening:ui` | 39 additional Chromium UI checks, including tree menus, hierarchy, tabs, Compare, Focus, anchors and revision remarks. |
-| `npm run test:runtime` | 13 sequential normal-origin stages with actual IndexedDB, browser ZIP download, new browser context and restore. |
-| `npm run test:online:syntax` | Isolated syntax/emit check for the retained online adapter, no dependency resolution. |
-| `npm run enable:online` | Explicit optional dependency installation; updates exact resolved lockfile. |
-| `npm run typecheck:online` | Installed React/React-PDF dependency type checking. |
-| `npm run build:vite` | Actual optional PDF build and matching local worker/resources. |
-| `npm run test:pdf` | 17 actual integrated PDF runtime scenarios, including real canvases/text, cover, passwords, Compare and a fault-injected worker mismatch. |
+## Browser harness boundaries
 
-The normal-origin and integrated PDF scripts exit **2 for BLOCKED**, **1 for FAIL**, and **0 only for PASS**. The CI jobs do not mask exit 2 as a successful gate.
+This execution environment denies Chromium navigation to normal HTTP origins with `ERR_BLOCKED_BY_ADMINISTRATOR`. No browser policy was changed. Existing opaque-origin DOM tests use real compiled components and CSS, with explicitly suppressed storage writes. The startup diagnostic reproduces and tests the actual App startup route behavior against preloaded state; it does not simulate a successful real reload.
 
-## What the DOM harness does and does not do
+The compact external-reference case uses **author-created synthetic PDF bytes and a mocked transport**. It makes zero remote repository calls. The UI consent/hash logic is real; hashing in the opaque-origin harness uses the labelled Python SHA-256 bridge when secure-context WebCrypto is unavailable. The live external host and normal-origin WebCrypto gates remain for independent verification.
 
-`tests/dom_test.py` and `tests/hardening_dom.py` mount the real React application, CSS, content and Mermaid renderer on `about:blank`, with a local static-asset CORS server. They explicitly suppress the database write queue and adapt unavailable address-bar/UUID APIs. Chromium still measures the actual rendered layout and processes real pointer/keyboard interactions.
+Screenshots are actual test-run screenshots, not generated mockups. Native browser PDF frames are labelled fallback, not integrated-renderer evidence. Native/plugin pixels may be unavailable to headless Chromium; the fallback shell must not be reported as an actual PDF.js render.
 
-That is useful evidence for source reconstruction, sheet geometry, keyboard menus and per-view behavior. It is **not** normal production boot, durable browser storage, native downloads or integrated PDF verification. No managed browser policy is removed or bypassed. The separate normal-origin suite uses the unmodified production entry and real IndexedDB.
+## Intentional regression-test updates
 
-## Actual backup test contract
+Existing behavioral assertions were retained. Selectors now open the shared rail's Reading mode, More / Settings or Context drawer through actual UI clicks. The old top-ribbon order was replaced by the specified 1.2 rail order. Legacy `rightOpen` preference values remain in saved sessions, but the Context drawer is transient rather than a persistent restored column. Hidden flags retain their values; editing a flag is now available in More even when tree flags are hidden.
 
-`release_runtime.py` imports the two supplied synthetic packs through the UI, creates a personal root page, remarks, a flag, a block bookmark and a PDF in a selected folder, then checks reload. It applies v1.1 and checks personal/local retention and idempotence. It requests a real browser download, opens the saved ZIP, closes the original browser context, opens a new empty context, restores through the UI and checks exact saved data and another reload.
-
-The backup intentionally includes snapshots of built-in packs and their dependencies too. Comparisons normalize attachment metadata to key, media type, SHA-256 and exact byte array; archive-internal `path` fields are not treated as user state. The exact backup payload is the expected fresh-context result. Core tests separately verify ZIP/parser round trips and refusal of absent or corrupt required/orphan attachments. Those core passes do not stand in for the blocked browser flow.
-
-## Supplied fixtures
-
-The v1.0.0 and v1.1.0 audit ZIPs under `tests/fixtures/` are the supplied synthetic stress libraries, not private corpus data. The image-only PDF is the last page extracted from the existing author-created public PDF fixture. Its zero selectable text characters and actual raster image were checked with PyMuPDF and visually inspected; no OCR was used.
-
-## PDF gate precautions
-
-Run the PDF gate only after the optional Vite build. It checks the version marker against the wrapper's actual `pdfjs.version`, records the successful local worker response and waits for real canvases/text. The worker-mismatch negative test intercepts only metadata to exercise recovery; positive rendering cases use the real worker and bytes.
-
-The password fixture uses `atlas-demo`; the test enters a wrong password first and inspects saved records to ensure input passwords are absent. Fixture assertions remain unexecuted here because optional dependencies are unavailable. A successful syntax pass alone is never sufficient.
-
-## Environment results in this package
-
-- Offline build, TypeScript, 106 Node tests, 53 DOM/UI checks and local publication/headers/vendor integrity checks: PASS.
-- Normal HTTP-origin Chromium navigation: `net::ERR_BLOCKED_BY_ADMINISTRATOR`; the 13 real persistence/download/restore stages are BLOCKED.
-- npm registry requests: `EAI_AGAIN`; optional installation and registry audit are BLOCKED. Online typecheck reports missing React/React-PDF modules; Vite build reports unavailable optional dependencies. The 17 integrated PDF scenarios are BLOCKED.
-- Full precompiled Mermaid transitive license/SBOM reconciliation and live Netlify response verification remain unapproved. They are not certified by byte pins or local headers.
-
-The complete supplied release matrix is evaluated in `RELEASE_ACCEPTANCE_MATRIX.md`; its original text is preserved separately. Workflow files are prepared but were not run on GitHub.
+The default catalog assertion is still exact: 10 pages/3 notebooks/1 term, including exactly the original 8 guide/example pages. The stale-publication-hash test retains the explicit metadata-review permission before deliberately corrupting hashes, so it still tests the stale-hash rejection rather than an earlier permission rejection. Three-theme assertions were extended to all five themes. Real-runtime exact equality and import/restore/download checks were not relaxed.

@@ -9,7 +9,7 @@
       "children": [
         {
           "type": "markdown",
-          "text": "Choose **Book** in the toolbar. This entire note becomes numbered sheets. On a wide canvas the sheets form pairs, but both sheets belong to this one note. Scroll down for the next pair. Collapse the sidebars to make more room.\n\nThe reader measures the rendered content after fonts and diagrams settle. It does not cut screenshots or substitute two independently scrolling columns.",
+          "text": "Open **Reading mode** on the right rail and choose **Book**. This entire note becomes numbered sheets. On a wide canvas the sheets form pairs, but both sheets belong to this one note. Scroll down for the next pair. Collapse the notebook tree to make more room. Context opens as an overlay when needed.\n\nThe reader measures the rendered content after fonts and diagrams settle. It does not cut screenshots or substitute two independently scrolling columns.",
           "id": "block.atlas.layouts.0.0"
         },
         {

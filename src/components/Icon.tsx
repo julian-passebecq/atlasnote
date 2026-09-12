@@ -1,8 +1,9 @@
 import React from '../vendor/react.mjs';
 const paths:Record<string,string>={
+ theme:'M12 3a9 9 0 1 0 9 9c0-2-1-3-3-3h-2c-2 0-2-2-2-3s-1-3-2-3zM7 9h.01M7 14h.01M11 17h.01',
  book:'M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4zm0 12h15M8 4v12M11 8h5M11 11h5',
  home:'m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9',search:'M20 20l-5-5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',
- folder:'M3 6h7l2 3h9v11H3V6z',page:'M5 3h9l5 5v13H5V3zm9 0v6h5M8 13h8M8 17h6',pdf:'M5 3h9l5 5v13H5V3zm9 0v6h5M8 14h8M8 17h6',
+ folder:'M3 6h7l2 3h9v11H3V6z',page:'M5 3h9l5 5v13H5V3zm9 0v6h5M8 13h8M8 17h6',pdf:'M5 3h9l5 5v13H5V3zm9 0v6h5M8 18v-6h2a2 2 0 0 1 0 4H8m6 2v-6h2m-2 3h2',
  chevron:'m9 5 7 7-7 7',down:'m5 9 7 7 7-7',left:'m15 5-7 7 7 7',right:'m9 5 7 7-7 7',plus:'M12 5v14M5 12h14',close:'m6 6 12 12M6 18 18 6',
  settings:'m9 3-1 3-3 1v3l-2 2 2 2v3l3 1 1 3h6l1-3 3-1v-3l2-2-2-2V7l-3-1-1-3H9zm7 9a4 4 0 1 1-8 0 4 4 0 0 1 8 0',
  bookmark:'M6 3h12v18l-6-4-6 4V3z',flag:'M5 21V3m0 1h7l2 2h6v10h-6l-2-2H5',eye:'M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zm13 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0',

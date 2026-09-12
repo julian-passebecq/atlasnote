@@ -1,3 +1,4 @@
+from browser_support import close_panels,more_action,open_more,open_settings,open_context,reader_action,open_reading,set_learning_flag
 """Actual Chromium DOM/layout tests on an opaque-origin harness.
 
 This deliberately does NOT certify IndexedDB, secure-context APIs, normal-origin
@@ -46,7 +47,7 @@ with sync_playwright() as p:
         assert page.locator('h1').inner_text()=='One note, several ways to read'
     check('normal UI navigation follows stable page hyperlink',follow)
     def book():
-        page.get_by_role('button',name='Book',exact=True).click();page.wait_for_timeout(2000)
+        reader_action(page,'Book');page.wait_for_timeout(2000)
         assert page.locator('[data-sheet]').count()>5
         overflows=page.locator('.sheet-body').evaluate_all('(els)=>els.map(e=>e.scrollHeight-e.clientHeight)')
         assert max(overflows)<=1,overflows
@@ -108,15 +109,17 @@ with sync_playwright() as p:
         page.get_by_role('button',name='Compare in two panes').click();page.wait_for_timeout(600)
         assert page.locator('.document-pane').count()==2
         right=page.locator('.document-pane').nth(1);left=page.locator('.document-pane').nth(0)
+        assert right.locator('.empty-pane').count()==1
+        page.evaluate("window.testOpen('page.atlas.language','parallel')");page.wait_for_timeout(450)
         assert left.locator('.english').count()>0 and right.locator('.english').count()>0
-        right.get_by_role('button',name='Hide English').click();page.wait_for_timeout(400)
+        reader_action(page,'Hide English',right);page.wait_for_timeout(400)
         assert right.locator('.english').count()==0 and left.locator('.english').count()>0
         page.get_by_role('separator',name='Resize comparison panes').focus();page.keyboard.press('ArrowRight');page.wait_for_timeout(500)
         assert page.get_by_role('separator').get_attribute('aria-valuenow')=='52'
         page.screenshot(path=str(OUT/'06-compare-desktop.png'));return {'panes':2,'EnglishIndependent':True,'splitRatio':52}
     check('Compare same page in two independently configured panes',compare)
     def remarks():
-        page.get_by_role('button',name='Remarks',exact=True).click();page.get_by_role('textbox',name='Personal remarks').fill('REMARK_A_KEEP')
+        open_context(page,'Remarks');page.get_by_role('textbox',name='Personal remarks').fill('REMARK_A_KEEP')
         page.evaluate("window.testOpen('page.atlas.welcome')");page.wait_for_timeout(400)
         page.get_by_role('textbox',name='Personal remarks').fill('REMARK_B_KEEP');page.wait_for_timeout(200)
         notes=page.evaluate('window.testStore.state.personal.notes');assert notes['page.atlas.language']['text']=='REMARK_A_KEEP';assert notes['page.atlas.welcome']['text']=='REMARK_B_KEEP'
