@@ -1,0 +1,139 @@
+name: AtlasNote 1.2.1 workspace integration
+on:
+  push:
+    branches: ['integration/atlasnote-1.2.1']
+    paths: ['.atlasnote-integration/**', '.github/workflows/integrate-121.yml']
+permissions:
+  contents: write
+concurrency:
+  group: atlasnote-121-integration
+  cancel-in-progress: false
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify and materialize retained workspace
+        id: materialize
+        run: python .atlasnote-integration/materialize.py
+      - name: Resolve and pin integrated dependencies once
+        id: pin
+        run: npm run enable:online
+      - name: Preserve integrated source on staging branch
+        if: always() && steps.materialize.outcome == 'success'
+        run: |
+          python - <<'PY'
+          import json,subprocess
+          paths=json.load(open('.atlasnote-integration/source-paths.json'))
+          subprocess.run(['git','add','--',*paths],check=True)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git diff --cached --quiet || git commit -m 'Integrate exact AtlasNote 1.2.1 workspace and resolved dependency lock'
+          git push origin HEAD:refs/heads/integration/atlasnote-1.2.1
+          git rev-parse HEAD
+      - name: Clean dependency installation
+        id: clean
+        if: always() && steps.pin.outcome == 'success'
+        run: npm ci
+      - name: Integrated dependency contract
+        if: always() && steps.clean.outcome == 'success'
+        run: npm run check:integrated-deps
+      - name: Registry vulnerability audit
+        if: always() && steps.clean.outcome == 'success'
+        run: |
+          mkdir -p docs/evidence/integration
+          npm audit --json > docs/evidence/integration/npm-audit.json
+      - name: Core TypeScript
+        if: always() && steps.clean.outcome == 'success'
+        run: npm run typecheck
+      - name: Core regression suite and compatibility build
+        id: core
+        if: always() && steps.clean.outcome == 'success'
+        run: npm test
+      - name: Compatibility public release checks
+        if: always() && steps.core.outcome == 'success'
+        run: npm run check:release:offline
+      - name: Online syntax
+        if: always() && steps.clean.outcome == 'success'
+        run: npm run test:online:syntax
+      - name: Dependency and vendor inventory
+        if: always() && steps.clean.outcome == 'success'
+        run: npm run audit:local
+      - name: Install browser test tooling
+        id: browser
+        if: always() && steps.materialize.outcome == 'success'
+        run: |
+          python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
+          python -m playwright install --with-deps chromium
+      - name: DOM
+        if: always() && steps.core.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:dom
+      - name: Hardening UI
+        if: always() && steps.core.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:hardening:ui
+      - name: Reader UI
+        if: always() && steps.core.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:reader:ui
+      - name: Compact UI
+        if: always() && steps.core.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:compact:ui
+      - name: New 1.2.1 UI
+        if: always() && steps.core.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:finish:ui
+      - name: Exact backup diagnostic
+        if: always() && steps.core.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:backup:diagnostic
+      - name: PDF authoring
+        if: always() && steps.core.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:pdf:authoring
+      - name: Integrated TypeScript
+        if: always() && steps.clean.outcome == 'success'
+        run: npm run typecheck:online
+      - name: Exact integrated production build
+        id: production
+        if: always() && steps.clean.outcome == 'success'
+        run: npm run build && npm run check:release
+      - name: Integrated PDF runtime
+        if: always() && steps.production.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:pdf
+      - name: New integrated PDF acceptance
+        if: always() && steps.production.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:finish:integrated
+      - name: Real-origin exact backup restore reload
+        if: always() && steps.production.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:runtime
+      - name: Production response headers
+        if: always() && steps.production.outcome == 'success' && steps.browser.outcome == 'success'
+        run: npm run test:headers
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlasnote-121-integration-evidence
+          path: docs/evidence
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.production.outcome == 'success'
+        with:
+          name: atlasnote-121-integrated-dist-candidate
+          path: dist
+      - name: Record source tree
+        if: always() && steps.materialize.outcome == 'success'
+        run: |
+          mkdir -p /tmp/atlasnote-121-handoff
+          git ls-tree -r HEAD > /tmp/atlasnote-121-handoff/tree.txt
+          cp package.json package-lock.json /tmp/atlasnote-121-handoff/
+          tar --exclude='./.git' --exclude='./node_modules' --exclude='./dist' --exclude='./dist-offline' --exclude='./.atlasnote-integration' --exclude='./docs/evidence' -czf /tmp/atlasnote-121-handoff/source.tar.gz .
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.materialize.outcome == 'success'
+        with:
+          name: atlasnote-121-source-and-lock
+          path: /tmp/atlasnote-121-handoff
