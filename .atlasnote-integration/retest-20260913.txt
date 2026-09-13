@@ -1,1 +1,0 @@
-Trigger the full AtlasNote 1.2.1 integration/release gate after the local PDF fallback first-render URL fix.

@@ -1,9 +1,9 @@
-name: Validate, build and release gates
+name: Integrated production and compatibility release gates
 on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
 jobs:
-  offline-release:
+  production-release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,21 +14,35 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      # Exact committed dependencies only. Never author a new lockfile in CI.
       - run: npm ci
+      - run: npm run check:integrated-deps
+      - run: npm audit
       - run: npm run typecheck
+      # pretest builds dist-offline, never dist.
       - run: npm test
-      - run: npm run check:release
+      - run: npm run check:release:offline
       - run: npm run test:online:syntax
       - run: npm run audit:local
       - run: python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
       - run: python -m playwright install --with-deps chromium
-      - run: npm run test:headers
       - run: npm run test:dom
       - run: npm run test:hardening:ui
       - run: npm run test:reader:ui
+      - run: npm run test:compact:ui
+      - run: npm run test:finish:ui
+      - run: npm run test:backup:diagnostic
       - run: npm run test:pdf:authoring
-      # A blocked normal-origin gate is deliberately not treated as green.
+      # Build the exact hosted distribution after all compatibility suites.
+      - run: npm run typecheck:online
+      - run: npm run build
+      - run: npm run check:release
+      - run: npm run test:pdf
+      - run: npm run test:finish:integrated
+      # Actual normal origin + IndexedDB + real browser download/fresh restore.
+      # A FAIL or BLOCKED result deliberately prevents the release artifact.
       - run: npm run test:runtime
+      - run: npm run test:headers
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -36,5 +50,6 @@ jobs:
           path: docs/evidence
       - uses: actions/upload-artifact@v4
         with:
-          name: atlasnote-public-build
+          name: atlasnote-integrated-production-dist
           path: dist
+          if-no-files-found: error
