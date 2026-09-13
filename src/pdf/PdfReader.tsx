@@ -9,7 +9,7 @@ import {EngineBoundary} from './EngineBoundary.js';
 export function PdfReader({document:doc,location,onLocation,resolve,fetchBytes,onRenderer}: {document:DocumentEntry;location:Location;onLocation:any;resolve:(key:string)=>string|undefined;fetchBytes:(key:string)=>Promise<Uint8Array>;onRenderer?:(renderer:'loading'|'integrated'|'native-fallback')=>void}){
  const [adapter,setAdapter]=useState<any>(null),[engineError,setEngineError]=useState(''),[engineAttempt,setEngineAttempt]=useState(0);
  const [engineLoading,setEngineLoading]=useState(!!window.atlasPdfLoader),[native,setNative]=useState(false),[info,setInfo]=useState(false);
- const [consent,setConsent]=useState(false),[url,setUrl]=useState<string|undefined>(undefined),[externalError,setExternalError]=useState(''),[retry,setRetry]=useState(0);
+ const [consent,setConsent]=useState(false),[url,setUrl]=useState<string|undefined>(()=>doc.assetKey?resolve(doc.assetKey):undefined),[externalError,setExternalError]=useState(''),[retry,setRetry]=useState(0);
  const renderer=engineLoading?'loading':adapter&&!native?'integrated':'native-fallback';
  const rendererCallback=useRef(onRenderer);rendererCallback.current=onRenderer;
  useEffect(()=>{rendererCallback.current?.(renderer);},[renderer]);
