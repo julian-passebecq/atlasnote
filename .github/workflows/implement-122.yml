@@ -29,9 +29,10 @@ jobs:
           python3 - <<'PY'
           import os, json, base64, hashlib, lzma, pathlib, urllib.request, subprocess
           root=pathlib.Path.cwd()
-          chunks=['632a2ad14fd79e3835e147b54dbce1e458c03d92a','3c980196c09565dc0682a6cc73855e890433cf48','a4b1dc025b3552ddc50179a0c8cb3d98b9a3ae62','a21730d42fe1d3980801a712a16525ec6e149b2f','a0c96805269589e2850d3b6ee4d23d5ac0387691']
+          chunks=['cb8f4bf5be75976c90e270a6857d6662144aaffa','72cf7a170b67c1fd83543fe10cce46f5ea8992f1','8a4d643993e65f5d8eb59e3e40b4971a8254fe06','a21730d42fe1d3980801a712a16525ec6e149b2f','a0c96805269589e2850d3b6ee4d23d5ac0387691']
           packed=b''
           for sha in chunks:
+              print('Reading source chunk',sha,flush=True)
               request=urllib.request.Request('https://api.github.com/repos/julian-passebecq/atlasnote/git/blobs/'+sha,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
               with urllib.request.urlopen(request,timeout=30) as response: value=json.load(response)
               chunk=base64.b64decode(value['content'])
@@ -64,20 +65,19 @@ jobs:
               else:text=subprocess.check_output(['node','--input-type=module','-e',"import {COMPANION_SCHEMA} from './src/companion/schema.mjs'; console.log(JSON.stringify(COMPANION_SCHEMA,null,2));"],text=True)
               assert hashlib.sha256(text.encode()).hexdigest()==item['after'],item['path']
               destination=root/item['path'];destination.parent.mkdir(parents=True,exist_ok=True);destination.write_text(text)
-          # Correct an unexecuted acceptance-test selector; no app behavior is mocked.
           test=root/'tests/workspace_122_runtime.py'
           test.write_text(test.read_text().replace("cp.locator('.companion-body')","cp.locator('.companion-expanded')"))
           pathlib.Path('/tmp/atlas-source-files.json').write_text(json.dumps([i['path'] for i in packet['files']]))
           print('Verified and restored',len(packet['files']),'implementation files')
           PY
-      - name: Commit isolated implementation
+      - name: Commit isolated application implementation
         shell: bash
         run: |
           git config user.name 'AtlasNote implementation'
           git config user.email '64646018+julian-passebecq@users.noreply.github.com'
           python3 - <<'PY'
           import json,subprocess
-          names=json.load(open('/tmp/atlas-source-files.json'))
+          names=[n for n in json.load(open('/tmp/atlas-source-files.json')) if not n.startswith('.github/workflows/')]
           subprocess.run(['git','add','--',*names],check=True)
           PY
           git commit -m 'Implement independent workspaces, compact reader controls and PDF Companion 1.2.2'
