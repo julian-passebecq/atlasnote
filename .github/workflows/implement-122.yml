@@ -1,119 +1,45 @@
-name: Integrate and validate AtlasNote 1.2.2
+name: AtlasNote 1.2.2 integrated workspace acceptance
 on:
   push:
     branches: [release/atlasnote-1.2.2-workspaces-pdf-companion]
-    paths: [.github/workflows/implement-122.yml]
+    paths:
+      - .github/workflows/implement-122.yml
+      - src/**
+      - tests/workspace_122_runtime.py
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
-  implement-and-test:
+  workspaces-runtime:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: release/atlasnote-1.2.2-workspaces-pdf-companion
-          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Restore independently hash-verified implementation
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          import os, json, base64, hashlib, lzma, pathlib, urllib.request, subprocess
-          root=pathlib.Path.cwd()
-          chunks=['cb8f4bf5be75976c90e270a6857d6662144aaffa','72cf7a170b67c1fd83543fe10cce46f5ea8992f1','8a4d643993e65f5d8eb59e3e40b4971a8254fe06','a21730d42fe1d3980801a712a16525ec6e149b2f','a0c96805269589e2850d3b6ee4d23d5ac0387691']
-          packed=b''
-          for sha in chunks:
-              print('Reading source chunk',sha,flush=True)
-              request=urllib.request.Request('https://api.github.com/repos/julian-passebecq/atlasnote/git/blobs/'+sha,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
-              with urllib.request.urlopen(request,timeout=30) as response: value=json.load(response)
-              chunk=base64.b64decode(value['content'])
-              assert hashlib.sha1(b'blob '+str(len(chunk)).encode()+b'\0'+chunk).hexdigest()==sha
-              packed+=chunk
-          assert hashlib.sha256(packed).hexdigest()=='741f75ac0beb722aad94d8cb7b1d99455515157c99ce7bc29fe23101ecb6e274'
-          packet=json.loads(lzma.decompress(packed))
-          assert packet['format']=='atlas-workspace-source-transfer-2'
-          old={}
-          for item in packet['files']:
-              path=pathlib.PurePosixPath(item['path'])
-              assert not path.is_absolute() and '..' not in path.parts
-              assert str(path).startswith(('src/','tests/','content/','examples/','tools/','.github/workflows/')) or str(path) in ['package.json','package-lock.json']
-              old[str(path)]=(root/path).read_text() if (root/path).exists() else ''
-              if item.get('copy'):old[item['copy']]=(root/item['copy']).read_text()
-          for item in packet['files']:
-              name=item['path']
-              if item['before']:assert hashlib.sha256(old[name].encode()).hexdigest()==item['before'],name+' baseline mismatch'
-              if 'derive' in item:continue
-              if 'edits' in item:
-                  text=old[name]
-                  for first,last,replacement in reversed(item['edits']):text=text[:first]+replacement+text[last:]
-              elif 'copy' in item:text=old[item['copy']].rstrip()+'\n'
-              else:text=item['content']
-              assert hashlib.sha256(text.encode()).hexdigest()==item['after'],name+' output mismatch'
-              destination=root/name;destination.parent.mkdir(parents=True,exist_ok=True);destination.write_text(text)
-          for item in packet['files']:
-              if not item.get('derive'):continue
-              if item['derive']=='spark-example':text=json.dumps(json.loads((root/'src/companion/spark-sample.ts').read_text().split(' = ',1)[1].rstrip().removesuffix(';')),ensure_ascii=False,indent=2)+'\n'
-              else:text=subprocess.check_output(['node','--input-type=module','-e',"import {COMPANION_SCHEMA} from './src/companion/schema.mjs'; console.log(JSON.stringify(COMPANION_SCHEMA,null,2));"],text=True)
-              assert hashlib.sha256(text.encode()).hexdigest()==item['after'],item['path']
-              destination=root/item['path'];destination.parent.mkdir(parents=True,exist_ok=True);destination.write_text(text)
-          test=root/'tests/workspace_122_runtime.py'
-          test.write_text(test.read_text().replace("cp.locator('.companion-body')","cp.locator('.companion-expanded')"))
-          pathlib.Path('/tmp/atlas-source-files.json').write_text(json.dumps([i['path'] for i in packet['files']]))
-          print('Verified and restored',len(packet['files']),'implementation files')
-          PY
-      - name: Commit isolated application implementation
-        shell: bash
-        run: |
-          git config user.name 'AtlasNote implementation'
-          git config user.email '64646018+julian-passebecq@users.noreply.github.com'
-          python3 - <<'PY'
-          import json,subprocess
-          names=[n for n in json.load(open('/tmp/atlas-source-files.json')) if not n.startswith('.github/workflows/')]
-          subprocess.run(['git','add','--',*names],check=True)
-          PY
-          git commit -m 'Implement independent workspaces, compact reader controls and PDF Companion 1.2.2'
-          git push origin HEAD:release/atlasnote-1.2.2-workspaces-pdf-companion
-          git rev-parse HEAD | tee /tmp/implementation-commit.txt
-      - name: Prepare actual browser test environment
-        run: |
-          python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
-          python -m playwright install --with-deps chromium
-      - name: Run every release gate with retained real exit codes
-        run: node tools/run-release.mjs
+      - run: npm ci
+      - run: python -m pip install -r requirements-test.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: npm run build:offline && npm run build
+      - name: Real-origin workspace, wheel, companion, migration and backup tests
+        run: timeout 240s npm run test:workspaces:runtime
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: atlasnote-122-release-evidence
-          path: docs/evidence
-          retention-days: 14
+          name: atlasnote-122-priority-runtime
+          path: docs/evidence/1.2.2/runtime
           if-no-files-found: warn
+          retention-days: 14
+      - name: Preserve exact tested source
+        if: always()
+        run: git archive --format=zip HEAD -o /tmp/atlasnote-122-source.zip
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: atlasnote-122-integrated-build
-          path: dist
+          name: atlasnote-122-priority-source
+          path: /tmp/atlasnote-122-source.zip
           retention-days: 14
-          if-no-files-found: warn
-      - name: Preserve tested source and baseline provenance
-        if: always()
-        run: |
-          git archive --format=zip HEAD -o /tmp/atlasnote-122-source.zip
-          git log -1 --format='%H %s' > /tmp/atlasnote-122-commit.txt
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: atlasnote-122-tested-source
-          path: |
-            /tmp/atlasnote-122-source.zip
-            /tmp/atlasnote-122-commit.txt
-          retention-days: 14
-          if-no-files-found: warn
