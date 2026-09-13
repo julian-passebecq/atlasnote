@@ -1,5 +1,5 @@
 from browser_support import close_panels,more_action,open_more,open_settings,open_context,reader_action,open_reading,set_learning_flag
-"""Integrated React-PDF acceptance on the optional real Vite build.
+"""Integrated React-PDF acceptance on the primary hosted Vite build.
 No imitation renderer. Missing dependencies or blocked origin -> exit 2 / BLOCKED.
 Positive cases use the actual worker, PDF bytes, canvases and text layer.
 """
@@ -25,7 +25,7 @@ results=[];phase='engine';errors=[]
 metadata=ROOT/'dist/pdf-assets/engine.json'
 if not metadata.exists():
     report={'scope':'Integrated React-PDF + actual PDF.js worker on normal origin','status':'BLOCKED',
-      'checks':[{'id':key,'name':name,'status':'BLOCKED','error':'Optional React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See online-install.log and online-build.log.'} for key,name in CASES]}
+      'checks':[{'id':key,'name':name,'status':'BLOCKED','error':'Integrated React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See FINAL_TEST_STATUS.md and the dependency/build logs.'} for key,name in CASES]}
     (OUT/'results.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2));raise SystemExit(2)
 base=start_server();meta=json.loads(metadata.read_text())
 def record(key,detail=None):
@@ -62,10 +62,10 @@ try:
         page.get_by_role('button',name='Next',exact=True).click();page.wait_for_timeout(200);assert visible_pages(page)==[4,5];record(phase)
         phase='page';page.get_by_role('combobox',name='PDF presentation').select_option('single');input_page(page,3);assert visible_pages(page)==[3];record(phase)
         phase='zoom';canvas=page.locator('.react-pdf__Page canvas').first;before=canvas.bounding_box()['width'];page.get_by_role('combobox',name='PDF zoom').select_option('1.5');page.wait_for_timeout(500);assert canvas.bounding_box()['width']>before*1.4;record(phase)
-        phase='rotation';search(page,'Rotated PDF fixture');page.locator('.react-pdf__Page canvas').first.wait_for();page.wait_for_timeout(500)
+        phase='rotation';page.get_by_role('button',name='Exit focus',exact=True).click();search(page,'Rotated PDF fixture');page.locator('.react-pdf__Page canvas').first.wait_for();page.wait_for_timeout(500)
         canvas=page.locator('.react-pdf__Page canvas').first;before=canvas.bounding_box();page.get_by_role('button',name='Rotate 90 degrees',exact=True).click();page.wait_for_timeout(500);after=canvas.bounding_box();assert abs(before['height']/before['width']-after['height']/after['width'])>.1;record(phase)
         phase='outline';search(page,'PDF reading fixture');page.locator('.react-pdf__Page canvas').first.wait_for();page.get_by_role('button',name='Outline',exact=True).click();assert page.locator('.pdf-outline .react-pdf__Outline a').count()>0;record(phase)
-        phase='text';input_page(page,1);page.get_by_role('textbox',name='Find text in PDF',exact=True).fill('Atlas');page.get_by_role('button',name='Find',exact=True).click();page.locator('.pdf-search-results button').first.wait_for()
+        phase='text';input_page(page,1);page.get_by_role('button',name='Search PDF',exact=True).click();page.get_by_role('textbox',name='Find text in PDF',exact=True).fill('Atlas');page.get_by_role('button',name='Find',exact=True).click();page.locator('.pdf-search-results button').first.wait_for()
         text=page.locator('.react-pdf__Page__textContent').first
         assert len(text.inner_text().strip())>30
         selection=text.evaluate('(el)=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);return s.toString();}')
@@ -73,7 +73,7 @@ try:
         phase='image_only';more_action(page,'Workspace settings')
         page.get_by_label('Import local PDF',exact=True).set_input_files(str(ROOT/'tests/fixtures/atlas-image-only.pdf'))
         page.get_by_label('Document title',exact=True).fill('Image only runtime fixture');page.get_by_role('button',name='Import PDF locally',exact=True).click();page.locator('.react-pdf__Page canvas').first.wait_for()
-        page.get_by_role('textbox',name='Find text in PDF').fill('scan');page.get_by_role('button',name='Find',exact=True).click();page.get_by_text('No selectable text found.',exact=False).wait_for();record(phase)
+        page.get_by_role('button',name='Search PDF',exact=True).click();page.get_by_role('textbox',name='Find text in PDF').fill('scan');page.get_by_role('button',name='Find',exact=True).click();page.get_by_text('No selectable text found.',exact=False).wait_for();record(phase)
         phase='password';search(page,'Password-protected PDF fixture');field=page.get_by_label('PDF password',exact=True);field.fill('WRONG_PASSWORD_RUNTIME');page.get_by_role('button',name='Unlock PDF',exact=True).click();page.get_by_text('Incorrect password. Try again.',exact=False).wait_for()
         field.fill('atlas-demo');page.get_by_role('button',name='Unlock PDF',exact=True).click();page.locator('.react-pdf__Page canvas').first.wait_for();record(phase)
         phase='password_storage';page.wait_for_timeout(500);records=json.dumps(saved_records(page));assert 'WRONG_PASSWORD_RUNTIME' not in records and 'atlas-demo' not in records;record(phase)

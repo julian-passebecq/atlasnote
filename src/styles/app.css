@@ -280,3 +280,24 @@ input,select,textarea{border-color:var(--line)}
  .context-drawer{width:330px}.reader-popover{width:286px}.statusbar>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 }
 @media print{.reader-rail,.floating-panel{display:none!important}}
+
+/* 1.2.1: compact native fallback and shared, on-demand document provenance. */
+.atlas-app:fullscreen{width:100%;height:100dvh;background:var(--reader-canvas)}
+.pdf-reader{position:relative;display:flex;flex:1;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.pdf-fallback-strip{display:flex;align-items:center;gap:3px;min-height:34px;height:34px;flex:0 0 34px;padding:0 8px;border-bottom:1px solid var(--line);background:var(--surface);color:var(--muted);font-size:11px}
+.pdf-fallback-indicator{display:flex;align-items:center;gap:6px;min-width:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pdf-fallback-strip .icon-button{width:28px;height:28px;min-height:28px;flex:0 0 28px;padding:5px}
+.pdf-reader.has-preview .pdf-fallback{width:100%;height:100%;min-height:0;flex:1;margin:0;border:0}
+.pdf-document-info{font-size:12px;overflow-wrap:anywhere;min-width:0}
+.pdf-document-info h3{font-size:15px;line-height:1.4;margin:0 0 10px;color:var(--text)}
+.pdf-document-info p{line-height:1.55}.pdf-document-info dl{display:grid;grid-template-columns:105px minmax(0,1fr);gap:8px 12px;margin:14px 0}
+.pdf-document-info dt{font-weight:600;color:var(--muted)}.pdf-document-info dd{margin:0;min-width:0}.pdf-document-info code{font-size:10px;white-space:normal;word-break:break-word}
+.pdf-document-links{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}.pdf-document-links a{color:var(--accent);text-decoration:underline}
+.pdf-info-overlay{position:absolute;z-index:7;right:8px;top:40px;max-height:calc(100% - 48px);width:min(390px,calc(100% - 16px));padding:16px;overflow:auto;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:8px;box-shadow:0 6px 22px #0002}
+.pdf-info-overlay>.icon-button{float:right}.pdf-compact-error{color:var(--warning-text);background:var(--warning-bg);padding:8px;font-size:11px}
+.pdf-load-state{width:min(480px,calc(100% - 32px));margin:24px auto;padding:16px;line-height:1.6;font-size:13px;overflow-wrap:anywhere;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.pdf-load-state code{display:block;font-size:11px;margin:8px 0;overflow-wrap:anywhere}
+.focus-mode .pdf-fallback-strip{position:absolute;bottom:8px;left:50%;top:auto;transform:translateX(-50%);width:max-content;max-width:calc(100% - 16px);border:1px solid var(--line);border-radius:6px;z-index:8}
+@media(max-width:440px){.pdf-document-info dl{grid-template-columns:86px minmax(0,1fr);gap:7px 8px}.pdf-fallback-strip{padding:0 5px;font-size:10px}}
+
+.focus-mode:has(.integrated-pdf) .exit-focus,.focus-mode:has(.pdf-reader) .exit-focus{top:10px;bottom:auto;right:12px}

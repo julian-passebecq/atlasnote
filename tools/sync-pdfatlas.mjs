@@ -57,7 +57,7 @@ export async function syncPdfatlas(){
  const result=await readWorkspace(await readFiles('content'),schemas);
  const pack=result.packs.find(p=>p.manifest.id==='pdfatlas.public');if(!pack)throw Error('Generated pack missing');
  const review=JSON.parse(await fs.readFile('content/publication-review.json','utf8'));
- review.packs['pdfatlas.public']={metadataOnlyReferences:true,review:'Reviewed user-supplied public reference metadata only. No PDF binaries. Attribution and reference-only rights retained. Final external URL pin and hosting rights require coordinator review.',sha256:pack.hash};
+ review.packs['pdfatlas.public']={metadataOnlyReferences:true,review:'Reviewed user-supplied public reference metadata only. No PDF binaries. Attribution and reference-only rights retained. Exact reviewed public-library commit is pinned in config/pdfatlas.json; third-party attribution and reference-only rights remain unchanged.',sha256:pack.hash};
  await fs.writeFile('content/publication-review.json',JSON.stringify(review,null,2)+'\n');
  console.log(JSON.stringify({status:'PASS',entries:documents.length,baseUrl:config.baseUrl,hash:pack.hash,binaryAssets:0,staging:config.baseUrl.endsWith('/main/')},null,2));
 }

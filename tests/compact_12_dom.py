@@ -89,13 +89,13 @@ with sync_playwright() as pw:
   return {'canonicalOverlayUnchanged':True,'externalPDFLeaves':2}
  check('PDF mode is a recursive projection of the same canonical tree and collections',filtered)
  def pdf_fallback():
-  reset('page.atlas.pdf');assert page.get_by_text('Browser preview only in this offline build',exact=True).is_visible()
+  reset('page.atlas.pdf');assert page.get_by_text('Browser PDF fallback',exact=True).is_visible()
   panel=open_reading(page)
   for label in ['Single','Continuous','Spread']:assert panel.get_by_role('button',name=label,exact=True).is_disabled()
   assert panel.get_by_role('button',name='Book',exact=True).count()==0;page.keyboard.press('Escape')
-  page.get_by_role('button',name='Show browser PDF preview',exact=True).click();assert page.locator('.pdf-fallback').is_visible();shot('pdf-opened-native-fallback')
+  assert page.locator('.pdf-fallback').is_visible();shot('pdf-opened-native-fallback')
   page.get_by_role('button',name='Enter focus mode',exact=True).click();assert page.locator('.reader-rail:visible').count()==0;assert page.locator('.pdf-fallback').is_visible();page.keyboard.press('Escape')
-  page.get_by_role('button',name='Compare in two panes',exact=True).click();page.locator('[data-node-id="node.page.atlas.rotated"] .tree-target').click();assert page.locator('.pdf-reader').count()==2
+  page.get_by_role('button',name='Switch to PDF library',exact=True).click();page.get_by_role('button',name='Compare in two panes',exact=True).click();page.locator('[data-node-id="node.page.atlas.rotated"] .tree-target').click();assert page.locator('.pdf-reader').count()==2
   shot('pdf-pdf-compare-fallback');return {'engine':'honest browser fallback, no PDF.js certification','pdfPanes':2}
  check('Contextual PDF modes are honest when engine unavailable; PDF Focus and PDF/PDF shell work',pdf_fallback)
  def flags_bookmark():
@@ -114,7 +114,7 @@ with sync_playwright() as pw:
   }''',list((ROOT/'content/packs/atlas.reader-guide/assets/atlas-reader-fixture.pdf').read_bytes()))
   try:
    page.evaluate('testExternal(false)');page.get_by_role('button',name='Allow external PDF reference',exact=True).wait_for();assert page.evaluate('externalRequests.length')==0
-   page.evaluate('testExternal(true)');page.get_by_text('Verified public reference / SHA-256 checked / not stored offline',exact=True).wait_for();assert page.locator('.pdf-fallback').get_attribute('src').startswith('blob:');assert page.get_by_role('button',name='Allow external PDF reference',exact=True).count()==0
+   page.evaluate('testExternal(true)');page.locator('.pdf-fallback').wait_for();assert page.locator('.pdf-fallback').get_attribute('src').startswith('blob:');assert page.get_by_role('button',name='Allow external PDF reference',exact=True).count()==0
    assert page.evaluate('testStore.state.assets.length')==0
    requests=page.evaluate('externalRequests');assert requests[0]['credentials']=='omit' and requests[0]['redirect']=='error'
    page.evaluate('testExternal(true,true)');page.get_by_text('Public PDF could not be opened',exact=True).wait_for();assert page.locator('.pdf-fallback').count()==0;assert 'SHA-256' in page.locator('.pdf-external-status').inner_text()

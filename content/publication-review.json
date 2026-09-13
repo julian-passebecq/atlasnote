@@ -13,8 +13,8 @@
     },
     "pdfatlas.public": {
       "metadataOnlyReferences": true,
-      "review": "Reviewed user-supplied public reference metadata only. No PDF binaries. Attribution and reference-only rights retained. Final external URL pin and hosting rights require coordinator review.",
-      "sha256": "1dd9af9f4c7bb14b4bf4841953847336aba9091db6dec1b5fa7e10b2067a6c82"
+      "review": "Reviewed user-supplied public reference metadata only. No PDF binaries. Attribution and reference-only rights retained. Exact reviewed public-library commit is pinned in config/pdfatlas.json; third-party attribution and reference-only rights remain unchanged.",
+      "sha256": "c90a3406521453872d5e2f854478b56effe7c24d82be08183ebd85c2bf20029d"
     }
   }
 }

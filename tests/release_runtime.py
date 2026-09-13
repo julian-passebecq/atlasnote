@@ -1,7 +1,7 @@
 from browser_support import close_panels,more_action,open_more,open_settings,open_context,reader_action,open_reading,set_learning_flag
 """Release gate: real-origin app, actual IndexedDB, browser ZIP download and fresh-context restore.
 No route interception, storage mocks, database seeding or browser-policy changes.
-Exit 2 is BLOCKED, never success. Use the offline production build, not the DOM harness.
+Exit 2 is BLOCKED, never success. Uses exact hosted dist by default, never the DOM harness. ATLAS_DIST may explicitly select compatibility evidence only.
 """
 from pathlib import Path
 import hashlib
@@ -31,6 +31,11 @@ CASES = [
 ]
 results = []
 phase = 'real_origin'
+selected_dist=ROOT/os.environ.get('ATLAS_DIST','dist')
+if not os.environ.get('ATLAS_BASE_URL') and (not (selected_dist/'index.html').exists() or (selected_dist.name=='dist' and not (selected_dist/'pdf-assets/engine.json').exists())):
+    reason='The selected distribution is unavailable or is not the integrated production build: '+str(selected_dist)
+    report={'scope':'Actual normal-origin persistence gate; prerequisite not available','distribution':str(selected_dist),'hostedProduction':selected_dist.name=='dist','status':'BLOCKED','checks':[{'id':key,'name':name,'status':'BLOCKED','error':reason} for key,name in CASES]}
+    (OUT/'results.json').write_text(json.dumps(report,indent=2));print(reason,flush=True);raise SystemExit(2)
 base = start_server()
 errors = []
 fixtures = synthetic_data()
@@ -47,14 +52,19 @@ def record(case_id, detail=None):
 def snapshot(target):
     # Reads the actual production store and actual IndexedDB. It does not inject state.
     target.wait_for_timeout(400)
-    return target.evaluate('''async()=>{
-      const m=await import(new URL('app/storage/database.js',document.baseURI).href);
-      await m.store.flush();if(m.store.error)throw Error(m.store.error);
-      const ws=await m.loadWorkspace();
-      return {...ws,assets:await Promise.all(ws.assets.map(async a=>({
+    if target.locator('.integrated-pdf').count():
+        target.locator('.integrated-pdf[data-pdf-state="ready"]').first.wait_for()
+    result=target.evaluate('''async()=>{
+      const m=await import(new URL('app/storage/workspace-snapshot.js',document.baseURI).href);
+      const canonical=await m.captureWorkspaceSnapshot();
+      const ws=await m.readPersistedWorkspace();
+      return {canonicalPersonal:canonical.personal,persisted:{...ws,assets:await Promise.all(ws.assets.map(async a=>({
         key:a.key,sha256:a.sha256,mediaType:a.mediaType,bytes:Array.from(a.bytes),actualSha256:Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',a.bytes)),b=>b.toString(16).padStart(2,'0')).join('')
-      })))};
+      })))}};
     }''')
+    assert result['persisted']['personal']==result['canonicalPersonal'], 'Post-flush IndexedDB personal state must equal the canonical production snapshot exactly'
+    return result['persisted']
+
 
 
 def open_settings(target):
@@ -85,12 +95,14 @@ def save_session_diff(before, after, name='reload'):
     def walk(a,b,path):
         if type(a)!=type(b): diffs.append({'path':path,'before':a,'after':b})
         elif isinstance(a,dict):
-            for k in sorted(set(a)|set(b)): walk(a.get(k),b.get(k),path+'.'+k)
+            for k in sorted(set(a)|set(b)):
+                if k not in a or k not in b: diffs.append({'path':path+'.'+k,'before':a.get(k,'<ABSENT>'),'after':b.get(k,'<ABSENT>')})
+                else: walk(a[k],b[k],path+'.'+k)
         elif isinstance(a,list):
             if len(a)!=len(b): diffs.append({'path':path+'.length','before':len(a),'after':len(b)})
             for i in range(min(len(a),len(b))): walk(a[i],b[i],path+'['+str(i)+']')
         elif a!=b: diffs.append({'path':path,'before':a,'after':b})
-    walk(before['personal']['session'],after['personal']['session'],'session')
+    walk(before['personal'] if name=='backup' else before['personal']['session'],after['personal'] if name=='backup' else after['personal']['session'],'personal' if name=='backup' else 'session')
     (OUT/(name+'-structural-diff.json')).write_text(json.dumps(diffs,indent=2))
 
 
@@ -187,6 +199,9 @@ try:
             assert archive.testzip() is None
             members=archive.namelist();assert 'backup.json' in members
             package=json.loads(archive.read('backup.json'))
+            (OUT/'backup-before-personal.json').write_text(json.dumps(before_backup['personal'],indent=2))
+            (OUT/'backup-package-personal.json').write_text(json.dumps(package['workspace']['personal'],indent=2))
+            save_session_diff(before_backup,package['workspace'],'backup')
             assert package['workspace']['personal']==before_backup['personal']
             expected_backup=package['workspace']
             expected_backup['assets']=[{'key':a['key'],'sha256':a['sha256'],'mediaType':a['mediaType'],
@@ -225,7 +240,8 @@ except Exception as exc:
     for ident,name in CASES:
         if ident not in covered:
             results.append({'id':ident,'name':name,'status':'BLOCKED','error':'Prerequisite '+phase+' did not complete. No simulated pass is substituted.'})
-report={'scope':'Actual normal-origin production app / real IndexedDB / actual browser ZIP download / independent fresh browser context',
+report={'scope':'Actual normal-origin app / real IndexedDB / actual browser ZIP download / independent fresh browser context',
+        'distribution':os.environ.get('ATLAS_DIST','dist'),'hostedProduction':os.environ.get('ATLAS_DIST','dist')=='dist',
         'status':'FAIL' if any(r['status']=='FAIL' for r in results) else 'BLOCKED' if any(r['status']=='BLOCKED' for r in results) else 'PASS',
         'checks':results,'errors':errors}
 (OUT/'results.json').write_text(json.dumps(report,indent=2))

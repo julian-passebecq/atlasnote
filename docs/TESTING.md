@@ -1,47 +1,55 @@
-# AtlasNote 1.2 testing
+# AtlasNote 1.2.1 verification
 
-Run commands from the source root. The release report, acceptance JSON and evidence ZIP distinguish actual results from unavailable gates. A DOM harness result is never an IndexedDB/reload or integrated PDF pass.
+Consult `../FINAL_TEST_STATUS.md` for this execution, not an assumed green release.
 
-| Command | What it actually checks |
-|---|---|
-| `npm ci` | Complete dependency installation with the supplied lockfile; blocked here by registry DNS |
-| `npm run bootstrap:offline` | Supplied vendor bundles plus an already installed global TypeScript 5.8.3; not a full install attestation |
-| `npm run build` | Actual offline TypeScript compilation, public content validation and static build |
-| `npm run typecheck` | Application TypeScript typecheck |
-| `npm test` | Builds, then executes all Node tests (176 in this pass) |
-| `npm run check:release` | Exact reviewed public hashes and private/raw/font exclusion |
-| `npm run test:dom` | Real DOM pagination/layout/interaction regression suite; opaque origin and in-memory writes |
-| `npm run test:hardening:ui` | Real UI hardening, keyboard, tree, Compare, flags, remarks and CRUD tests |
-| `npm run test:reader:ui` | Reader contracts, five-theme contrasts, mixed collections, local PDF intake and actual export ZIPs; in-memory commit/SHA bridge explicitly labelled |
-| `npm run test:compact:ui` | Four viewport geometry, Context overlay, Compare identity, five themes, PDF filtering, active rail, controlled synthetic external transport |
-| `npm run test:startup:dom` | Twice repeated strict before/after App-mount session comparison; preloaded session, NOT browser reload |
-| `npm run test:runtime` | Unmodified normal-origin entry, actual IndexedDB/import/reload/backup/fresh-context/restore sequence, exact state equality |
-| `npm run test:pdf` | Actual optional React-PDF worker/canvas/search/password/Compare/download matrix, no fake renderer |
-| `npm run test:pdf:authoring` | Real PDF processing, safety, limits, source-byte/visual checks and authoring round-trip |
-| `npm run test:headers` | Actual local HTTP response headers and packaged hosting-header configuration |
-| `npm run test:online:syntax` | Optional-source syntax/isolated emit only; NOT installed-module typecheck or render certification |
-| `npm run audit:local` | Checked-in vendor integrity and installed dependency inventory; no remote vulnerability database claim |
+## Reproducible primary installation
 
-## Reproducible complete local run
+`npm ci` must use a committed, complete integrated lock. `npm run check:integrated-deps` checks exact installed/manifest/lock versions and the React-PDF/PDF.js pair. The explicit `enable:online` development command authors a missing lock once; it is deliberately absent from CI/deploy. Record `npm audit`; a registry failure is not zero vulnerabilities.
 
 ```sh
-python tools/run-release-gates.py --out docs/evidence/release-1.2
+npm ci
+npm run check:integrated-deps
+npm audit
+npm run typecheck
+npm test
+npm run check:release:offline
+npm run test:online:syntax
+npm run audit:local
+python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
+python -m playwright install --with-deps chromium
+npm run test:dom
+npm run test:hardening:ui
+npm run test:reader:ui
+npm run test:compact:ui
+npm run test:finish:ui
+npm run test:backup:diagnostic
+npm run test:pdf:authoring
+npm run typecheck:online
+npm run build
+npm run check:release
+npm run test:pdf
+npm run test:finish:integrated
+npm run test:runtime
+npm run test:headers
 ```
 
-The runner is offline and performs no connector or deployment operations. It intentionally tries `npm ci --offline`, then the documented bootstrap, before building. It returns **0 only when every gate passes, 1 for failures, 2 for blockers without failures**. It preserves command logs and individual statuses. It restores the fallback build last, even if an optional build was possible. Therefore, run `build:vite` separately after its installed prerequisites when preparing an integrated-engine distribution.
+`npm test` builds only `dist-offline/`. The final integrated build is `dist/` and must remain the exact distribution tested/deployed. Both contain only reviewed public content and synthetic examples. Missing worker/CMaps/WASM/fonts or a mismatched inventory rejects the integrated release check.
 
-An unrestricted coordinator must also run normal `npm ci` against the final lockfile. Optional dependencies require the separate `enable:online` installation and resulting reviewed lockfile. A syntax check is never a substitute for these gates.
+## Scope boundaries
 
-## Browser harness boundaries
+- Core unit tests exercise production pure/state/serializer logic; they do not prove IndexedDB.
+- DOM suites use the real compiled components in an `about:blank` harness and suppress write queues. They measure actual browser geometry/actions, not normal-origin durable storage. Some private-import checks use an explicitly documented digest bridge.
+- The reader suite reports actual Fullscreen API ownership where granted. The dedicated finish DOM tests deliberately simulate grant/rejection/exit paths; their screenshots must not be described as proof browser chrome was removed.
+- `test:pdf` has 17 actual React-PDF/worker acceptance cases. `test:finish:integrated` adds real canvas/geometry/fullscreen/fallback/build-asset cases. Both refuse to substitute a successful fake engine or native iframe.
+- `test:runtime` is the real entry, real origin, real IndexedDB, actual backup download and independent fresh restore/reload. It invokes the production snapshot flush, compares exact canonical/persisted personal state, records a structural backup diff, and retains strict downloaded/restored equality. Exit 2 is BLOCKED, not success.
+- `test:pdf:authoring` checks actual synthetic PDF bytes, page/text hashes and rendered before/after pixels, not viewer runtime.
+- `test:headers` uses a local HTTP server; it cannot certify remote hosting responses.
+- `audit:local` checks installed-version inventory and inherited vendor integrity, not live vulnerability advisories or a complete Mermaid SBOM.
 
-This execution environment denies Chromium navigation to normal HTTP origins with `ERR_BLOCKED_BY_ADMINISTRATOR`. No browser policy was changed. Existing opaque-origin DOM tests use real compiled components and CSS, with explicitly suppressed storage writes. The startup diagnostic reproduces and tests the actual App startup route behavior against preloaded state; it does not simulate a successful real reload.
+`ATLAS_EVIDENCE=/absolute/path` selects browser evidence output. `ATLAS_DIST=dist-offline` may explicitly test compatibility HTTP behavior; this is not hosted production evidence. The DOM harness always chooses `dist-offline`.
 
-The compact external-reference case uses **author-created synthetic PDF bytes and a mocked transport**. It makes zero remote repository calls. The UI consent/hash logic is real; hashing in the opaque-origin harness uses the labelled Python SHA-256 bridge when secure-context WebCrypto is unavailable. The live external host and normal-origin WebCrypto gates remain for independent verification.
+## Current environment boundaries
 
-Screenshots are actual test-run screenshots, not generated mockups. Native browser PDF frames are labelled fallback, not integrated-renderer evidence. Native/plugin pixels may be unavailable to headless Chromium; the fallback shell must not be reported as an actual PDF.js render.
+Registry and Debian-host DNS fail. Existing Python packages satisfy the pinned requirements, and system Chromium is available, but installing the Playwright-managed browser/dependencies did not complete. Normal HTTP page navigation is blocked by administrator policy. Do not change policy, seed/mock IndexedDB, weaken equality, serve a different renderer as proof, or mark missing prerequisites green.
 
-## Intentional regression-test updates
-
-Existing behavioral assertions were retained. Selectors now open the shared rail's Reading mode, More / Settings or Context drawer through actual UI clicks. The old top-ribbon order was replaced by the specified 1.2 rail order. Legacy `rightOpen` preference values remain in saved sessions, but the Context drawer is transient rather than a persistent restored column. Hidden flags retain their values; editing a flag is now available in More even when tree flags are hidden.
-
-The default catalog assertion is still exact: 10 pages/3 notebooks/1 term, including exactly the original 8 guide/example pages. The stale-publication-hash test retains the explicit metadata-review permission before deliberately corrupting hashes, so it still tests the stale-hash rejection rather than an earlier permission rejection. Three-theme assertions were extended to all five themes. Real-runtime exact equality and import/restore/download checks were not relaxed.
+Requested screenshot sizes are 390x844, 1366x768, 1440x900 and 1920x1080. Filename/report scopes distinguish Notes/PDF discovery, native fallback shell, actual note Focus and future integrated-only screenshots.

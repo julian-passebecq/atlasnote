@@ -4,7 +4,7 @@ import fs from 'node:fs/promises';
 import {readWorkspace,loadSchemas,planImport} from '../src/core/packs.mjs';
 import {sha256,stable} from '../src/core/validation.mjs';
 import {unzipBounded,zipFiles,makeBackup,readBackup} from '../src/storage/archives.mjs';
-import {blankWorkspace,newView,navigate,current,travel,compose,toggleCompare,locations,applyOperation,makeMarkdownPage,searchCatalog} from '../dist/app/core/workspace.js';
+import {blankWorkspace,newView,navigate,current,travel,compose,toggleCompare,locations,applyOperation,makeMarkdownPage,searchCatalog} from '../dist-offline/app/core/workspace.js';
 import {stepPhysicalPage,spreadPages} from '../src/pdf/physical-pages.mjs';
 const schemas=await loadSchemas(n=>fs.readFile('src/content/schemas/'+n,'utf8'));
 const fixtures=await Promise.all(['1.0.0','1.1.0'].map(async v=>readWorkspace((await unzipBounded(new Uint8Array(await fs.readFile('tests/fixtures/atlas-audit-stress-library-'+v+'.zip')))).files,schemas)));

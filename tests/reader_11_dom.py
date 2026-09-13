@@ -66,15 +66,16 @@ with sync_playwright() as pw:
             except Exception:pass
     def focus_geometry(mode):
         reset(mode=mode)
+        if mode=='book':page.wait_for_function('document.querySelector(".book-grid")?.dataset.ready==="true"');page.wait_for_timeout(180)
         host=page.locator('.note-scroller');host.evaluate('(e)=>{e.scrollTop=modeScroll=e.scrollHeight*.45}')
-        page.wait_for_timeout(400);before=active()['anchor'];preferences=[state()['leftOpen'],state()['rightOpen']]
+        page.wait_for_function('(()=>{const s=testStore.state.personal.session,p=s.panes.find(p=>p.id===s.activePane);return !!testCore.current(p.views.find(v=>v.id===p.active))?.anchor;})()');before=active()['anchor'];preferences=[state()['leftOpen'],state()['rightOpen']]
         page.get_by_role('button',name='Enter focus mode',exact=True).click();page.wait_for_timeout(900)
         assert active()['anchor']==before,(before,active()['anchor'])
         box=host.bounding_box();assert box['y']==0 and abs(box['height']-900)<=1,box
         for selector in ['.topbar','.utility-rail','.library-sidebar','.context-panel','.context-rail','.statusbar','.pane-tabbar','.pane-breadcrumb','.reader-toolbar','.book-status']:
             assert page.locator(selector+':visible').count()==0,selector
         assert page.get_by_role('button',name='Exit focus',exact=True).is_visible()
-        assert page.evaluate('document.fullscreenElement') is None
+        browser_fullscreen=page.evaluate('document.fullscreenElement===document.querySelector(".atlas-app")') # Real API may be policy-rejected; CSS Focus remains required.
         if mode=='book':assert len(page.locator('.book-grid').evaluate('(e)=>getComputedStyle(e).gridTemplateColumns').split())==2
         page.screenshot(path=str(OUT/('focus-'+mode+'.png')))
         page.keyboard.press('Escape');page.wait_for_timeout(800)
@@ -82,7 +83,7 @@ with sync_playwright() as pw:
         assert [state()['leftOpen'],state()['rightOpen']]==preferences
         page.get_by_role('button',name='Enter focus mode',exact=True).click();page.wait_for_timeout(450);page.get_by_role('button',name='Exit focus',exact=True).click();page.wait_for_timeout(450)
         assert active()['anchor']==before
-        return {'readingBounds':box,'anchorBeforeAfter':before,'browserFullscreen':False}
+        return {'readingBounds':box,'anchorBeforeAfter':before,'browserFullscreen':browser_fullscreen}
     for mode in ['continuous','book','parallel']:check('True Focus full-viewport geometry and exact semantic anchor: '+mode,list(range(11,27)),lambda m=mode:focus_geometry(m))
     def compare():
         reset('page.atlas.language','parallel');before=state()['panes'][0]
@@ -175,15 +176,14 @@ with sync_playwright() as pw:
         return ratios
     check('Normal and muted theme text tokens meet 4.5:1 and keyboard focus is visible',[69],token_contrast)
     def pdf_focus_combinations():
-        reset(mixed=True);page.locator('.collection-view').get_by_role('button',name='Alpha architecture PDF',exact=True).click();page.get_by_role('button',name='Compare in two panes').click();tree('Zebra pipeline PDF').click();page.wait_for_timeout(250)
+        reset(mixed=True);page.locator('.collection-view').get_by_role('button',name='Alpha architecture PDF',exact=True).click();page.get_by_role('button',name='Switch to PDF library',exact=True).click();page.get_by_role('button',name='Compare in two panes').click();tree('Zebra pipeline PDF').click();page.wait_for_timeout(250)
         assert page.locator('.pdf-reader').count()==2
-        assert page.get_by_text('Browser preview only in this offline build',exact=True).count()==2
-        for pane in page.locator('.document-pane').all():pane.get_by_role('button',name='Show browser PDF preview',exact=True).click()
+        assert page.get_by_text('Browser PDF fallback',exact=True).count()==2
         page.get_by_role('button',name='Enter focus mode').click();page.wait_for_timeout(350)
         for frame in page.locator('.pdf-fallback').all():
             box=frame.bounding_box();assert box['y']==0 and abs(box['height']-900)<=1,box
         assert page.locator('.pdf-intro:visible').count()==0;page.screenshot(path=str(OUT/'focus-pdf-pdf-fallback.png'))
-        page.keyboard.press('Escape');tree('Middle modeling note').click();assert page.locator('.pdf-reader').count()==1 and page.locator('.reader-body').count()==1
+        page.keyboard.press('Escape');page.get_by_role('button',name='Switch to notes',exact=True).click();tree('Middle modeling note').click();assert page.locator('.pdf-reader').count()==1 and page.locator('.reader-body').count()==1
         return {'PDFFrameBounds':'full viewport','engine':'Explicit native-browser fallback; physical-page engine NOT certified'}
     check('PDF/PDF then PDF/note Compare and maximum Focus preview frame',[28,41,44,45,46,150],pdf_focus_combinations)
     def intake():
@@ -202,7 +202,7 @@ with sync_playwright() as pw:
         assert page.evaluate('Array.from(testLastImport.assets[0].bytes)')==list(source)
         assert 'Intake batch' in page.locator('.pane-breadcrumb').inner_text()
         more_action(page,'Edit current page');page.get_by_label('Page title').fill('Renamed local PDF');page.get_by_label('Primary PDF language').fill('fr');page.get_by_label('Tags and facets (comma separated)').fill('doctype:guide, domain:data-engineering, tech:dbt, source:linkedin');page.get_by_role('button',name='Save page locally').click();page.wait_for_timeout(250)
-        assert page.locator('.pdf-intro h1').inner_text()=='Renamed local PDF'
+        page.get_by_role('button',name='Document info',exact=True).click();assert page.locator('.pdf-info-overlay h3').inner_text()=='Renamed local PDF';page.get_by_role('button',name='Close document info',exact=True).click()
         after=page.evaluate('testStore.state.overlays.documents.at(-1)');assert after['id']==doc['id'] and after['sha256']==doc['sha256'] and after['language']=='fr'
         count=page.evaluate('testStore.state.overlays.documents.length');more_action(page,'Workspace settings');page.get_by_label('Import local PDF').set_input_files({'name':'different-name.pdf','mimeType':'application/pdf','buffer':source});page.get_by_role('button',name='Open existing PDF').click();assert page.evaluate('testStore.state.overlays.documents.length')==count
         return {'sha256':doc['sha256'],'bytes':len(source),'originalAndRenameIdsSame':True,'storageScope':'Only actual intake output into in-memory adapter; real IDB gate separate'}

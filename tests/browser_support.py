@@ -20,7 +20,7 @@ def start_server(dom_only=False):
     with socket.socket() as s:
         s.bind(('127.0.0.1', 0))
         port = s.getsockname()[1]
-    env = {**os.environ, 'PORT': str(port), 'ATLAS_DOM_TESTS': '1' if dom_only else '0'}
+    env = {**os.environ, 'PORT': str(port), 'ATLAS_DOM_TESTS': '1' if dom_only else '0', 'ATLAS_DIST': 'dist-offline' if dom_only else os.environ.get('ATLAS_DIST','dist')}
     process = subprocess.Popen(['node', 'tools/serve.mjs'], cwd=ROOT, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     atexit.register(process.terminate)
     base = f'http://127.0.0.1:{port}/'

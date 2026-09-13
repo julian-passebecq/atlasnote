@@ -1,3 +1,4 @@
+import {captureWorkspaceSnapshot} from '../storage/workspace-snapshot.js';
 import React, { useEffect, useState } from '../vendor/react.mjs';
 import { Modal, Field } from './Modal.js';
 import { Icon } from './Icon.js';
@@ -38,7 +39,7 @@ export function SettingsDialog({ built, catalogue: c, assets, initialProject, in
         else
             overlays.groups!.push(group);
     } await store.importPacks(changed, preview.assets, overlays); setPreview(null); notify(changed.length ? 'Library imported. Your additions and personal state were retained.' : 'This library is already imported. No content changes were needed.'); }); }
-    async function backup() { await action('Preparing verified backup...', async () => { await store.flush(); const result = await makeBackup(store.state, built, assets.asset); download(result.bytes, 'knowledge-atlas-workspace.atlas-backup.zip'); setBackupMessage('Backup downloaded. It contains local content, attachments, remarks, flags, bookmarks and view state.' + (result.external.length ? ' ' + result.external.length + ' external image references remain links; their remote bytes are not included.' : '')); }); }
+    async function backup() { await action('Preparing verified backup...', async () => { const snapshot = await captureWorkspaceSnapshot(); const result = await makeBackup(snapshot, built, assets.asset); download(result.bytes, 'knowledge-atlas-workspace.atlas-backup.zip'); setBackupMessage('Backup downloaded. It contains local content, attachments, remarks, flags, bookmarks and view state.' + (store.error?' Browser saving failed; this backup captures current in-memory work. Keep this tab open until you verify restoration.':'') + (result.external.length ? ' ' + result.external.length + ' external image references remain links; their remote bytes are not included.' : '')); }); }
     async function previewRestore(file: File) { setRestore(null); setConfirmRestore(false); await action('Validating backup...', async () => { const { files } = await unzipBounded(file); setRestore(await readBackup(files, await schemas())); }); }
     async function commitRestore() { await action('Restoring workspace...', async () => { if (!confirmRestore)
         throw Error('Confirm replacement before restoring'); await store.restore(restore.workspace); notify('Workspace restored from verified bytes.'); setRestore(null); onClose(); }); }

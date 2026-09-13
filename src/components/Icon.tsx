@@ -1,5 +1,6 @@
 import React from '../vendor/react.mjs';
 const paths:Record<string,string>={
+ rotate:'M20 10a8 8 0 1 0-2 8M20 3v7h-7',
  theme:'M12 3a9 9 0 1 0 9 9c0-2-1-3-3-3h-2c-2 0-2-2-2-3s-1-3-2-3zM7 9h.01M7 14h.01M11 17h.01',
  book:'M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4zm0 12h15M8 4v12M11 8h5M11 11h5',
  home:'m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9',search:'M20 20l-5-5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',

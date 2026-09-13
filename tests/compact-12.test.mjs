@@ -2,18 +2,18 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {createHash} from 'node:crypto';
-import {blankWorkspace,newView,current,toggleCompare,compose} from '../dist/app/core/workspace.js';
-import {parseHashRoute,shouldOpenStartupRoute} from '../dist/app/core/startup-route.js';
-import {visibleLibraryNode} from '../dist/app/core/library-projection.js';
-import {THEME_LABELS} from '../dist/app/core/model.js';
-import {isPdfatlasUrl,isTrustedPdfatlasDocument,fetchTrustedPdf} from '../dist/app/pdf/external-policy.js';
+import {blankWorkspace,newView,current,toggleCompare,compose} from '../dist-offline/app/core/workspace.js';
+import {parseHashRoute,shouldOpenStartupRoute} from '../dist-offline/app/core/startup-route.js';
+import {visibleLibraryNode} from '../dist-offline/app/core/library-projection.js';
+import {THEME_LABELS} from '../dist-offline/app/core/model.js';
+import {isPdfatlasUrl,isTrustedPdfatlasDocument,fetchTrustedPdf} from '../dist-offline/app/pdf/external-policy.js';
 import {validateState} from '../src/storage/state-validation.mjs';
 import {loadSchemas,readWorkspace} from '../src/core/packs.mjs';
 import {makeBackup,readBackup,unzipBounded} from '../src/storage/archives.mjs';
 import {readFiles} from '../tools/fs.mjs';
 import {validateManifest} from '../tools/sync-pdfatlas.mjs';
 const schemas=await loadSchemas(n=>fs.readFile('src/content/schemas/'+n,'utf8'));
-const built=JSON.parse(await fs.readFile('dist/content.json','utf8'));
+const built=JSON.parse(await fs.readFile('dist-offline/content.json','utf8'));
 const files=await readFiles('content'), review=JSON.parse(await fs.readFile('content/publication-review.json','utf8')).packs;
 const manifest=JSON.parse(await fs.readFile('config/pdfatlas.library.json','utf8'));
 const base=JSON.parse(await fs.readFile('config/pdfatlas.json','utf8')).baseUrl;
@@ -28,16 +28,16 @@ test('1.2 collection startup route retains canonical identity and does not alias
 test('1.2 hash parser preserves block IDs and rejects malformed URI encodings',()=>{assert.deepEqual(parseHashRoute('#/page/page.atlas.pdf?block=a%2Eb'),{id:'page.atlas.pdf',collection:false,anchor:{blockId:'a.b'}});assert.deepEqual(parseHashRoute('#/collection/folder'),{id:'folder',collection:true});assert.equal(parseHashRoute('#/other/foo'),undefined);assert.throws(()=>parseHashRoute('#/page/%zz'));});
 const tree={id:'root',children:[{id:'note',pageId:'n'},{id:'empty',children:[{id:'nested-note',pageId:'n2'}]},{id:'deep',children:[{id:'pdf',pageId:'p'}]}]},pdfs=new Set(['p']);
 test('1.2 PDF projection recursively filters notes and empty branches without mutations',()=>{const before=structuredClone(tree),archived=new Set();assert(visibleLibraryNode(tree,pdfs,archived,'pdfs'));assert(!visibleLibraryNode(tree.children[0],pdfs,archived,'pdfs'));assert(!visibleLibraryNode(tree.children[1],pdfs,archived,'pdfs'));assert(visibleLibraryNode(tree.children[2],pdfs,archived,'pdfs'));assert.deepEqual(tree,before);});
-test('1.2 archived PDF leaf or ancestor disappears; Notes mode preserves mixed tree',()=>{for(const id of ['p','pdf','deep'])assert(!visibleLibraryNode(tree,pdfs,new Set([id]),'pdfs'));for(const n of tree.children)assert(visibleLibraryNode(n,pdfs,new Set(),'notes'));});
+test('1.2.1 archived PDF leaves remain absent; Notes excludes PDF-only branches',()=>{for(const id of ['p','pdf','deep'])assert(!visibleLibraryNode(tree,pdfs,new Set([id]),'pdfs'));assert(visibleLibraryNode(tree.children[0],pdfs,new Set(),'notes'));assert(visibleLibraryNode(tree.children[1],pdfs,new Set(),'notes'));assert(!visibleLibraryNode(tree.children[2],pdfs,new Set(),'notes'));});
 test('1.2 precisely five theme IDs and labels, old backups still accepted',()=>{assert.deepEqual(THEME_LABELS,{fluent:'Fluent Blue',neutral:'Neutral/Sage',academic:'Academic Paper',lavender:'Soft Lavender',slate:'Dark Slate'});for(const theme of ['fluent','neutral','academic']){const ws=blankWorkspace();ws.personal.session.theme=theme;delete ws.personal.session.libraryMode;assert(validateState(ws,schemas));}});
 for(const theme of Object.keys(THEME_LABELS))test('1.2 real backup serializer and parser roundtrip theme and PDF mode: '+theme,async()=>{
  const ws=blankWorkspace();ws.personal.session=session();ws.personal.session.theme=theme;ws.personal.session.libraryMode='pdfs';ws.personal.ratings['page.atlas.pdf']='green';ws.personal.notes['page.atlas.layouts']={pageId:'page.atlas.layouts',text:'private fixture',updatedAt:1};assert(validateState(ws,schemas));
- const out=await makeBackup(ws,built,async key=>{const a=built.assets.find(x=>x.key===key);return a?{...a,bytes:new Uint8Array(await fs.readFile('dist/'+a.path))}:undefined;});const restored=(await readBackup((await unzipBounded(out.bytes)).files,schemas)).workspace;assert.deepEqual(restored.personal,ws.personal);assert.deepEqual(restored.overlays,ws.overlays);
+ const out=await makeBackup(ws,built,async key=>{const a=built.assets.find(x=>x.key===key);return a?{...a,bytes:new Uint8Array(await fs.readFile('dist-offline/'+a.path))}:undefined;});const restored=(await readBackup((await unzipBounded(out.bytes)).files,schemas)).workspace;assert.deepEqual(restored.personal,ws.personal);assert.deepEqual(restored.overlays,ws.overlays);
 });
 test('1.2 invalid themes and mode values cannot enter restored state',()=>{for(const [k,v] of [['theme','solarized'],['theme',null],['libraryMode','all-pdf']]){const ws=blankWorkspace();ws.personal.session[k]=v;assert.throws(()=>validateState(ws,schemas));}});
 const url=base+'library/data-engineering/apache-spark/example.pdf';
 test('1.2 exact repo and pinned SHA are trusted URL forms',()=>{assert(isPdfatlasUrl(url));assert(isPdfatlasUrl(url.replace('/main/','/'+'a'.repeat(40)+'/')));});
-const hostile=[url.replace('https:','http:'),url.replace('raw.githubusercontent.com','raw.githubusercontent.com.evil.test'),url.replace('julian-passebecq','other-user'),url.replace('/pdfatlas/','/pdfatlas-evil/'),url.replace('/main/','/feature/'),url+'?token=x',url+'#page=3',url.replace('https://','https://u:p@'),url.replace('/library/','/library/../library/'),url.replace('example.pdf','%65xample.pdf'),url.replace('.pdf','.html'),'https://github.com/julian-passebecq/pdfatlas/blob/main/a.pdf',null];
+const hostile=[url.replace('https:','http:'),url.replace('raw.githubusercontent.com','raw.githubusercontent.com.evil.test'),url.replace('julian-passebecq','other-user'),url.replace('/pdfatlas/','/pdfatlas-evil/'),url.replace(/\/(main|[a-f0-9]{40})\//,'/feature/'),url+'?token=x',url+'#page=3',url.replace('https://','https://u:p@'),url.replace('/library/','/library/../library/'),url.replace('example.pdf','%65xample.pdf'),url.replace('.pdf','.html'),'https://github.com/julian-passebecq/pdfatlas/blob/main/a.pdf',null];
 for(const [i,bad]of hostile.entries())test('1.2 arbitrary external URL retains consent: hostile case '+i,()=>assert.equal(isPdfatlasUrl(bad),false));
 const bytes=new TextEncoder().encode('%PDF-1.7\nSynthetic unit-test bytes, not a rendered document.\n');
 const doc={id:'doc.unit',pageId:'page.unit',packId:'pdfatlas.public',visibility:'public',source:{kind:'https',url},bytes:bytes.length,sha256:createHash('sha256').update(bytes).digest('hex')};
@@ -59,7 +59,7 @@ test('1.2 generated catalog is metadata only, canonical hierarchy, exact externa
 test('1.2 metadata-only references need explicit publication opt-in, never relabel rights',async()=>{await readWorkspace(files,schemas,{publicOnly:true,reviewed:review});const noOpt=structuredClone(review);delete noOpt['pdfatlas.public'].metadataOnlyReferences;await assert.rejects(readWorkspace(files,schemas,{publicOnly:true,reviewed:noOpt}),/Unreviewed PDF/);assert(built.packs.find(p=>p.manifest.id==='pdfatlas.public').documents.every(d=>d.rights.status==='reference-only'));});
 test('1.2 reference-only binary documents remain blocked from public publication',async()=>{const input=new Map(files),key='packs/atlas.reader-guide/atlas-documents.json',index=JSON.parse(new TextDecoder().decode(input.get(key)));index.documents[0].rights.status='reference-only';input.set(key,new TextEncoder().encode(JSON.stringify(index)));const opt=structuredClone(review);opt['atlas.reader-guide'].metadataOnlyReferences=true;await assert.rejects(readWorkspace(input,schemas,{publicOnly:true,reviewed:opt}),/Unreviewed PDF/);});
 test('1.2 external metadata does not prevent an explicit private offline PDF intake',async()=>{
- const {prepareLocalPdf,emptyPdfMetadata}=await import('../dist/app/core/pdf-library.js');
+ const {prepareLocalPdf,emptyPdfMetadata}=await import('../dist-offline/app/core/pdf-library.js');
  const raw=new Uint8Array([...await fs.readFile('content/packs/atlas.reader-guide/assets/atlas-reader-fixture.pdf'),...new TextEncoder().encode('\n% explicit-private-copy\n')]);
  const hash=createHash('sha256').update(raw).digest('hex'),ws=blankWorkspace(),c=compose(built,ws);
  c.documents.push({...doc,id:'doc.external.reference',pageId:'page.external.reference',sha256:hash,bytes:raw.length});
@@ -67,7 +67,7 @@ test('1.2 external metadata does not prevent an explicit private offline PDF int
  assert(!out.duplicate);assert.equal(out.document.visibility,'private');assert.deepEqual(out.asset.bytes,raw);assert.equal(out.document.sha256,hash);assert.notEqual(out.document.id,'doc.external.reference');
 });
 test('1.2 importing local bytes is not blocked by a metadata-only remote SHA reference',async()=>{
- const {duplicatePdfImports}=await import('../dist/app/core/pdf-library.js');
+ const {duplicatePdfImports}=await import('../dist-offline/app/core/pdf-library.js');
  const c={documents:[{...doc,title:'Remote reference'}]},local={...doc,id:'local.copy',pageId:'local.copy.page',assetKey:'local/test.pdf',title:'Local copy'};
  assert.deepEqual(duplicatePdfImports(c,[{documents:[local]}]),[]);
  assert.equal(duplicatePdfImports({documents:[local]},[{documents:[{...local,id:'other',pageId:'other.page'}]}]).length,1);

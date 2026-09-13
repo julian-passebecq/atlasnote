@@ -253,34 +253,35 @@ with sync_playwright() as pw:
     def notebook_crud():
         reset(None)
         page.get_by_role('main').get_by_role('button',name='New notebook',exact=True).click();page.get_by_label('Title',exact=True).fill('Local test notebook');page.get_by_role('button',name='Create notebook',exact=True).click()
-        menu('Local test notebook','Rename');page.get_by_label('Title',exact=True).fill('Renamed local notebook');page.get_by_role('button',name='Save details',exact=True).click()
-        assert tree('Renamed local notebook').count()==1
-        menu('Renamed local notebook','Archive');page.get_by_role('button',name='Archive notebook',exact=True).click();assert tree('Renamed local notebook').count()==0
-        page.locator('.archive-list > summary').click();page.locator('.archive-row').filter(has_text='Renamed local notebook').get_by_role('button',name='Restore',exact=True).click()
-        assert tree('Renamed local notebook').count()==1
+        page.get_by_role('button',name='Manage notebook',exact=True).click();page.get_by_label('Title',exact=True).fill('Renamed local notebook');page.get_by_role('button',name='Save details',exact=True).click()
+        assert tree('Renamed local notebook').count()==0 # Strict discovery hides empty notebooks; management remains available.
+        page.get_by_role('button',name='Manage notebook',exact=True).click();page.get_by_role('button',name='Archive notebook',exact=True).click();assert tree('Renamed local notebook').count()==0
+        more_action(page,'Home');page.locator('.archive-list > summary').click();page.locator('.archive-row').filter(has_text='Renamed local notebook').get_by_role('button',name='Restore',exact=True).click()
+        assert tree('Renamed local notebook').count()==0 # Strict discovery hides empty notebooks; management remains available.
+        page.get_by_role('checkbox',name='Manage all notebooks',exact=True).check();assert page.locator('.project-card').filter(has_text='Renamed local notebook').count()==1
     check('Notebook create, rename, archive and restore through real controls',['A01','A02','A03'],notebook_crud)
     def folder_crud():
         reset()
         menu('Reader guide','Add folder');page.get_by_label('Title',exact=True).fill('First local folder');page.get_by_role('button',name='Create folder',exact=True).click()
         previous='First local folder'
         for depth in range(2,7):
-            menu(previous,'Add folder');name=f'Local depth {depth}';page.get_by_label('Title',exact=True).fill(name);page.get_by_role('button',name='Create folder',exact=True).click();previous=name
-        menu(previous,'Add page');page.get_by_label('Title',exact=True).fill('Deep local page');page.get_by_label('Page content (Markdown)').fill('DEEP_RETAINED_CONTENT');page.get_by_role('button',name='Create page',exact=True).click()
+            page.get_by_role('button',name='New folder',exact=True).click();name=f'Local depth {depth}';page.get_by_label('Title',exact=True).fill(name);page.get_by_role('button',name='Create folder',exact=True).click();previous=name
+        page.get_by_role('button',name='New note',exact=True).click();page.get_by_label('Title',exact=True).fill('Deep local page');page.get_by_label('Page content (Markdown)').fill('DEEP_RETAINED_CONTENT');page.get_by_role('button',name='Create page',exact=True).click()
         assert page.locator('h1').inner_text()=='Deep local page'
         menu('Deep local page','Rename');page.get_by_label('Title',exact=True).fill('Renamed deep page');page.get_by_role('button',name='Save details',exact=True).click()
         menu('Renamed deep page','Move');page.get_by_label('Destination notebook').select_option(label='Example project');page.get_by_role('button',name='Move here',exact=True).click()
-        menu('First local folder','Archive');page.get_by_role('button',name='Archive item',exact=True).click();assert tree('First local folder').count()==0
+        tree('Reader guide').click();page.get_by_role('button',name='Collection actions for First local folder',exact=True).click();page.get_by_role('menuitem',name='Archive',exact=True).click();page.get_by_role('button',name='Archive item',exact=True).click();assert tree('First local folder').count()==0
         more_action(page,'Home');page.locator('.archive-list > summary').click();page.locator('.archive-row').filter(has_text='First local folder').get_by_role('button',name='Restore',exact=True).click()
-        assert tree('First local folder').count()==1
+        assert tree('First local folder').count()==0;tree('Reader guide').click();assert page.get_by_role('button',name='First local folder',exact=True).count()==1
     check('Six-level folders, deep page, rename, move and folder archive/restore',['A04','A05','A07','A08','A09','A10','A11'],folder_crud)
     def groups():
         reset(None);page.get_by_role('button',name='Manage groups',exact=True).click();page.get_by_role('textbox',name='New group name').fill('My release group');page.get_by_role('button',name='Add',exact=True).click();page.get_by_role('button',name='Save groups',exact=True).click()
         assert any(g['title']=='My release group' for g in state('overlays.groups'))
     check('Manage project groups via Home',['A12'],groups)
     def note_pdf():
-        reset();page.get_by_role('button',name='Compare in two panes').click();tree('PDF reading fixture').click()
+        reset();page.get_by_role('button',name='Switch to PDF library',exact=True).click();page.get_by_role('button',name='Compare in two panes').click();tree('PDF reading fixture').click()
         assert page.locator('.pdf-reader').count()==1;assert page.locator('.reader-body').count()==1
-        assert page.get_by_text('Browser preview only in this offline build',exact=True).is_visible()
+        assert page.get_by_text('Browser PDF fallback',exact=True).is_visible()
         assert page.get_by_role('link',name='Open original PDF',exact=True).is_visible();assert page.get_by_role('link',name='Download original',exact=True).is_visible()
         page.screenshot(path=str(OUT/'04-note-pdf-fallback.png'))
     check('Note plus PDF Compare retains explicitly labelled fallback',[],note_pdf)

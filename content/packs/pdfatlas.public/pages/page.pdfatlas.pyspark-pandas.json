@@ -14,7 +14,7 @@
   "sources": [
     {
       "title": "PySpark and Pandas: DataFrame guide",
-      "url": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/library/data-engineering/apache-spark/pyspark-pandas-dataframe-guide.pdf",
+      "url": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/fa5e83f7825cdc837078f87c5e130cb012332195/library/data-engineering/apache-spark/pyspark-pandas-dataframe-guide.pdf",
       "note": "Nitya CloudTech is displayed on the cover. No individual author or redistribution licence established from the supplied PDF."
     }
   ],

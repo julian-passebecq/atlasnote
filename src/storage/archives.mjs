@@ -15,6 +15,8 @@ export async function unzipBounded(input){const bytes=input instanceof Uint8Arra
 export async function zipFiles(files,kind){const Zip=await zipClass(),zip=new Zip(),hashes={};for(const [name,value]of files){safePath(name);const bytes=typeof value==='string'?new TextEncoder().encode(value):value;zip.file(name,bytes);hashes[name]=await sha256(bytes);}zip.file('atlas-transfer.json',JSON.stringify({format:'atlas-transfer',schemaVersion:1,kind,createdAt:new Date().toISOString(),sha256:hashes},null,2));return zip.generateAsync({type:'uint8array',compression:'DEFLATE',compressionOptions:{level:6}});}
 export function download(bytes,name,type='application/zip'){const blob=bytes instanceof Blob?bytes:new Blob([bytes],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);}
 export async function makeBackup(ws,built,resolveAsset){
+ // Freeze all personal state and byte dependencies before asynchronous asset reads.
+ ws=structuredClone(ws);
  const packs=new Map(selectPacks(built.packs,ws.imports).packs.map(p=>[p.manifest.id,p]));
  const files=new Map(),allAssets=new Map(ws.assets.map(a=>[a.key,a]));
  // Imported packs and local PDFs are dependencies too, not just built-in assets.

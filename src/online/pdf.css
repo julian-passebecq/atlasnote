@@ -9,3 +9,41 @@
 .physical-label{background:var(--subtle);color:var(--muted)}
 .pdf-placeholder{background:var(--subtle);color:var(--muted)}
 .pdf-engine-empty{background:var(--surface);color:var(--text);overflow-wrap:anywhere}
+/* 1.2.1: compact integrated chrome and overlaid document/search/outline info.
+   PDF page artwork stays white and is never filtered, inverted or recolored. */
+.integrated-pdf{position:relative;min-width:0;overflow:hidden}
+.pdf-controls{min-height:40px;gap:4px;padding:4px 8px;flex-shrink:0}
+.pdf-controls .icon-button{width:28px;height:28px;min-height:28px;padding:4px;flex-shrink:0}
+.pdf-controls form{gap:3px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pdf-controls input[type=number]{width:48px;height:28px;padding:3px 2px 3px 6px}
+.pdf-controls select{width:auto;max-width:107px;min-height:28px;height:28px;padding:3px 5px;font-size:11px}
+.pdf-cover-toggle{display:inline-flex;align-items:center;gap:3px;white-space:nowrap;font-size:11px}
+.pdf-cover-toggle input{margin:0}
+.pdf-canvas-scroll{padding:12px 16px 20px;scroll-padding:12px;scrollbar-gutter:stable;outline-offset:-2px}
+.pdf-physical-pages{align-items:center;gap:16px;width:max-content;min-width:100%}
+.pdf-spread{align-items:flex-start;gap:16px}
+.physical-page{outline:1px solid #18294418;box-shadow:0 2px 8px #1829441a}
+.physical-label{height:24px;padding:4px 10px}
+.pdf-search-overlay,.pdf-info-overlay,.pdf-outline{z-index:20;box-shadow:0 6px 24px #17232f24;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text)}
+.pdf-search-overlay{position:absolute;top:48px;right:8px;width:min(420px,calc(100% - 16px));max-height:70%;overflow:auto;padding:8px}
+.pdf-search-overlay>.icon-button,.pdf-info-overlay>.icon-button,.pdf-outline>.icon-button{float:right}
+.pdf-find{border:0;padding:4px;gap:6px;clear:both}
+.pdf-find input{width:0;min-width:80px;height:30px}
+.pdf-find span{flex-basis:100%;line-height:1.5;overflow-wrap:anywhere}
+.pdf-search-results{max-height:none;padding:4px}
+.pdf-search-results button{line-height:1.5;white-space:normal;border-radius:4px}
+.pdf-outline{position:sticky;top:0;z-index:20;margin:0 0 -1px auto;max-width:380px;max-height:55vh;overflow:auto;padding:10px 14px}
+.pdf-outline h3{margin:4px 0 10px;font-size:13px}
+.pdf-outline ul{padding-left:18px}
+.pdf-narrow-indicator{position:absolute;right:18px;bottom:6px;z-index:2;pointer-events:none;background:var(--surface);color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:2px 6px;font-size:10px}
+.pdf-password,.pdf-engine-error{margin:8px;padding:12px;border-radius:6px;flex-shrink:0}
+.pdf-password input{max-width:100%;min-width:0}
+.pdf-engine-error p{overflow-wrap:anywhere}
+.focus-mode .integrated-pdf .pdf-controls{display:flex!important;position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 24px);border:1px solid var(--line);border-radius:10px;z-index:25;box-shadow:0 3px 16px #17232f2b;justify-content:center}
+.focus-mode .integrated-pdf .pdf-canvas-scroll{padding-bottom:74px}
+.focus-mode .integrated-pdf .pdf-find{display:flex!important}
+.focus-mode .integrated-pdf .pdf-search-results,.focus-mode .integrated-pdf .pdf-outline{display:block!important}
+.focus-mode .pdf-search-overlay,.focus-mode .pdf-info-overlay{top:auto;bottom:90px}
+@media(max-width:650px){.pdf-controls{gap:3px;padding:4px 6px}.pdf-controls select{max-width:92px}.pdf-canvas-scroll{padding:10px 16px 16px}.pdf-controls .icon-button{width:28px}.pdf-cover-toggle{font-size:10px}.pdf-password label{flex-wrap:wrap}.focus-mode .integrated-pdf .pdf-controls{bottom:10px}.focus-mode .integrated-pdf .pdf-canvas-scroll{padding-bottom:105px}.focus-mode .pdf-search-overlay,.focus-mode .pdf-info-overlay{bottom:112px}}
+
+.pdf-outline{position:absolute;top:8px;right:16px;width:min(380px,calc(100% - 32px));margin:0}

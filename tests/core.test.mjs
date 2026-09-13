@@ -3,7 +3,7 @@ import {safePath,safeUrl,stable,sha256,inspectObject,migratePage,walkBlocks,page
 import {readWorkspace,loadSchemas,selectPacks,planImport} from '../src/core/packs.mjs';
 import {readFiles} from '../tools/fs.mjs';import {unzipBounded,zipFiles,makeBackup,readBackup,inspectZip} from '../src/storage/archives.mjs';
 import {validateState} from '../src/storage/state-validation.mjs';import {exportRepositoryWorkspace} from '../src/core/export-pack.mjs';
-import {blankWorkspace,newView,newLocation,navigate,travel,current,applyOperation,compose,locations,searchCatalog,editPageLosslessly,exportText,makeMarkdownPage} from '../dist/app/core/workspace.js';
+import {blankWorkspace,newView,newLocation,navigate,travel,current,applyOperation,compose,locations,searchCatalog,editPageLosslessly,exportText,makeMarkdownPage} from '../dist-offline/app/core/workspace.js';
 const schemas=await loadSchemas(n=>fs.readFile('src/content/schemas/'+n,'utf8'));
 const seedFiles=await readFiles('content');const seed=await readWorkspace(seedFiles,schemas);const built={packs:seed.packs,groups:seed.workspace.groups,assets:seed.assets,releaseId:'test-release'};const clone=structuredClone;
 const asset=async key=>seed.assets.find(a=>a.key===key);

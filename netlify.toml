@@ -4,3 +4,4 @@
 [build.environment]
   NODE_VERSION = "22"
 # Response headers are in public/_headers and copied into dist/_headers.
+# build is the integrated Vite gate; never deploy dist-offline as its substitute.

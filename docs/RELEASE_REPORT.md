@@ -1,3 +1,5 @@
+> HISTORICAL ATLASNOTE 1.2 REPORT. For the current 1.2.1 source and execution, read `../WORKSPACE_READY_FOR_GITHUB.md` and `../FINAL_TEST_STATUS.md`. The statements below describe the earlier release only.
+
 # AtlasNote 1.2 - Release report
 
 Date: 12 September 2026. Delivered as local artifacts only.

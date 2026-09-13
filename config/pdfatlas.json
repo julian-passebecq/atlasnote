@@ -1,4 +1,4 @@
 {
-  "baseUrl": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/",
-  "stage": "Upload the organized repository, then replace main with its exact 40-character commit SHA and run npm run pdfatlas:sync. Never use a blob URL."
+  "baseUrl": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/fa5e83f7825cdc837078f87c5e130cb012332195/",
+  "stage": "Pinned to the reviewed organized library commit supplied in the 1.2.1 handoff. Original PDF hashes, sizes and page counts unchanged."
 }

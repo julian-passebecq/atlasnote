@@ -1,14 +1,14 @@
 {
   "name": "knowledge-atlas",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "type": "module",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
-    "build": "node tools/build.mjs",
-    "dev": "node tools/build.mjs && node tools/serve.mjs",
+    "build": "node tools/build-vite.mjs",
+    "dev": "npm run build && node tools/serve.mjs",
     "local": "npm run dev",
     "preview": "node tools/serve.mjs",
     "validate": "node tools/compile-content.mjs --check",
@@ -20,7 +20,7 @@
     "enable:online": "node tools/enable-online.mjs",
     "build:vite": "node tools/build-vite.mjs",
     "test:dom": "python tests/dom_test.py",
-    "pretest": "npm run build",
+    "pretest": "npm run build:offline",
     "test:hardening:ui": "python tests/hardening_dom.py",
     "test:runtime": "python tests/release_runtime.py",
     "test:pdf": "python tests/pdf_runtime.py",
@@ -35,11 +35,26 @@
     "pdf:library:build": "python templates/pdf-library/tools/build_atlas_library.py --root templates/pdf-library",
     "pdfatlas:sync": "node tools/sync-pdfatlas.mjs",
     "test:compact:ui": "python tests/compact_12_dom.py",
-    "test:startup:dom": "python tests/startup_diagnostic.py"
+    "test:startup:dom": "python tests/startup_diagnostic.py",
+    "build:offline": "node tools/build.mjs",
+    "dev:offline": "node tools/build.mjs && node tools/serve-offline.mjs",
+    "check:release:offline": "node tools/check-release.mjs dist-offline",
+    "test:finish:ui": "python tests/finish_121_dom.py",
+    "test:backup:diagnostic": "python tests/backup_diagnostic.py",
+    "test:finish:integrated": "python tests/finish_121_integrated.py",
+    "check:integrated-deps": "node tools/check-integrated-deps.mjs"
   },
   "dependencies": {
     "jszip": "3.10.1",
     "prismjs": "1.30.0",
-    "typescript": "5.8.3"
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-pdf": "10.5.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "typescript": "5.8.3",
+    "vite": "8.2.2"
   }
 }

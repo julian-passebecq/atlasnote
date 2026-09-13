@@ -12,7 +12,7 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],ac
  const expanded=new Set(ws.personal.session.expanded),archived=new Set<string>(ws.overlays.archived),query=normalize(filter);
  const mode=ws.personal.session.libraryMode??'notes',pdfPages=new Set<string>(c.documents.map((d:any)=>d.pageId));
  const visible=(n:TreeNode)=>visibleLibraryNode(n,pdfPages,archived,mode);
- const matches=(n:TreeNode):boolean=>!query||normalize(n.title).includes(query)||!!n.children?.some(matches);
+ const matches=(n:TreeNode):boolean=>visible(n)&&(!query||normalize(n.title).includes(query)||!!n.children?.some(matches));
  const hidden=(p:Project)=>ws.overlays.projectPrefs[p.id]?.hidden||archived.has(p.id);
  function dismiss(restoreFocus=true){const target=menu?.returnFocus;setMenu(null);if(restoreFocus&&target?.isConnected)target.focus();}
  function showMenu(e:any,project:Project,node?:TreeNode){
@@ -65,7 +65,7 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],ac
   });
  }
  function project(p:Project){
-  if(hidden(p)||mode==='pdfs'&&!p.nodes.some(visible))return null;const open=expanded.has(p.id)||!!query;
+  if(hidden(p)||!p.nodes.some(visible))return null;const open=expanded.has(p.id)||!!query;
   if(query&&!normalize(p.title).includes(query)&&!p.nodes.some(matches))return null;
   return <div className="tree-project" key={p.id}>
    <div className="tree-row project-row" onContextMenu={e=>showMenu(e,p)} onKeyDown={e=>keyboardMenu(e,p)}>
@@ -81,11 +81,11 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],ac
  const overview=menu&&!menuPage?firstPage(menu.node?.children??menu.project.nodes):undefined;
  const manage=(intent:string)=>{if(menu)action(()=>onItem({project:menu.project,node:menu.node,intent}));};
  return <aside className="library-sidebar" aria-label="Notebook library">
-  <div className="sidebar-heading"><strong>{mode==='pdfs'?'PDF Library':'My notebooks'}</strong><span className="secondary">{c.projects.filter((p:any)=>!hidden(p)&&(mode!=='pdfs'||p.nodes.some(visible))).length}</span></div>
+  <div className="sidebar-heading"><strong>{mode==='pdfs'?'PDF Library':'My notebooks'}</strong><span className="secondary">{c.projects.filter((p:any)=>!hidden(p)&&p.nodes.some(visible)).length}</span></div>
   <div className="tree-filter"><Icon name="search" size={15}/><input aria-label="Filter notebook tree" placeholder="Filter notebooks" value={filter} onChange={e=>setFilter(e.target.value)}/>{filter&&<IconButton name="close" label="Clear tree filter" onClick={()=>setFilter('')}/>}</div>
   <nav className="tree-scroll" aria-label="Projects and pages">
-   {c.groups.filter((g:any)=>g.projectIds.some((id:string)=>c.projects.some((p:Project)=>p.id===id&&!hidden(p)&&(mode!=='pdfs'||p.nodes.some(visible))))).map((g:any)=><section className="tree-group" key={g.id}><h3>{g.title}</h3>{g.projectIds.map((id:string)=>c.projects.find((p:any)=>p.id===id)).filter(Boolean).map(project)}</section>)}
-   {c.projects.filter((p:any)=>!grouped.has(p.id)).length>0&&<section className="tree-group"><h3>NOTEBOOKS</h3>{c.projects.filter((p:any)=>!grouped.has(p.id)).map(project)}</section>}
+   {c.groups.filter((g:any)=>g.projectIds.some((id:string)=>c.projects.some((p:Project)=>p.id===id&&!hidden(p)&&p.nodes.some(visible)))).map((g:any)=><section className="tree-group" key={g.id}><h3>{g.title}</h3>{g.projectIds.map((id:string)=>c.projects.find((p:any)=>p.id===id)).filter(Boolean).map(project)}</section>)}
+   {c.projects.some((p:Project)=>!grouped.has(p.id)&&!hidden(p)&&p.nodes.some(visible))&&<section className="tree-group"><h3>NOTEBOOKS</h3>{c.projects.filter((p:any)=>!grouped.has(p.id)).map(project)}</section>}
   </nav>
   <button className="sidebar-add" onClick={()=>onCreate('project')}><Icon name="plus" size={16}/> New notebook</button><div className="local-status"><span className="status-dot"/> Stored on this device</div>
   {menu&&<div ref={menuRef} className="tree-context-menu" role="menu" aria-label={'Actions for '+(menu.node?.title??menu.project.title)} style={{left:menu.x,top:menu.y}} onKeyDown={menuKey}>

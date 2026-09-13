@@ -1,3 +1,18 @@
+# AtlasNote 1.2.1 - Integrated PDF finishing source candidate
+
+- Make Notes/PDF discovery strictly recursive in both directions, including counts, archive/hidden handling, keyboard and rapid toggles. Preserve canonical IDs, open tabs and personal state.
+- Preserve empty-folder/notebook management through immediate collection opening and an explicit all-notebook management view.
+- Replace giant PDF intros with compact fallback controls; move rights/hash/provenance/actions to Document info and Context.
+- Preserve and polish the integrated engine: compact themed controls, centered physical pages, overlay search/outline/info, guarded user-owned continuous position updates and focus keyboard navigation.
+- Add per-pane renderer status and contained adapter-load/render failures; native fallback never advertises integrated reading controls.
+- Add owned browser Fullscreen API control in the user click, graceful CSS fallback, external-exit synchronization and no automatic fullscreen on restore.
+- Fix reproduced undefined optional remark-field backup mismatch at the writer/ownership boundary; capture/flush/freeze exact backup state without preventing emergency copies of unsaved work.
+- Pin public PDF metadata to reviewed organized commit fa5e83f7825cdc837078f87c5e130cb012332195 without altering PDF bytes.
+- Make integrated Vite the hosted build contract; isolate compatibility output in dist-offline. Add verified resource inventory and production read-only snapshot entry. Prepare strict CI, without pushing or deploying.
+- Expand strict unit and browser suites. Registry installation, integrated build/runtime and real-origin persistence remain unverified environment blockers, not claimed completion.
+
+---
+
 # AtlasNote 1.2.0 - 2026-09-12
 
 - Fix startup hash replay into a restored empty active Compare pane; keep hydration separate from later navigation. Preserve strict exact session assertions.
