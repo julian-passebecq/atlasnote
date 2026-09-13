@@ -20,7 +20,7 @@ export function PdfMetadataFields({value,onChange}: {value:PdfMetadata;onChange:
   <div className="field-wide">{field('sourceUrl','Original source URL (optional)')}</div>
   {field('author','Author / creator (only if known)')}{field('publisher','Publisher / company (only if known)')}
   <div className="field-wide">{field('attribution','Attribution (optional)')}</div>
-  <Field label="Rights status"><select aria-label="Rights status" value={value.rights} onChange={e=>onChange({...value,rights:e.target.value})}><option value="reference-only">Reference-only (private)</option><option value="unreviewed">Unreviewed (private)</option></select></Field>
+  <Field label="Rights status"><select aria-label="Rights status" value={value.rights} onChange={e=>onChange({...value,rights:e.target.value as PdfMetadata['rights']})}><option value="reference-only">Reference-only (private)</option><option value="unreviewed">Unreviewed (private)</option></select></Field>
   <Field label="Known page count (optional)"><input type="number" min="1" max="100000" value={value.pageCount} onChange={e=>onChange({...value,pageCount:e.target.value})}/></Field>
  </div>;
 }

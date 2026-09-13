@@ -1,6 +1,7 @@
 // One React instance for the app and React-PDF, including portals/flushSync.
-export {default} from 'react';
-export * from 'react';
-import * as ReactDOMBase from 'react-dom';
-import * as ReactDOMClient from 'react-dom/client';
-export const ReactDOM={...ReactDOMBase,...ReactDOMClient};
+import React,{createElement,Fragment,useCallback,useEffect,useLayoutEffect,useMemo,useRef,useState,useSyncExternalStore} from 'react';
+import {flushSync} from 'react-dom';
+import {createRoot} from 'react-dom/client';
+export default React;
+export {createElement,Fragment,useCallback,useEffect,useLayoutEffect,useMemo,useRef,useState,useSyncExternalStore};
+export const ReactDOM={createRoot,flushSync};
