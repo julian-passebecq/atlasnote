@@ -1,3 +1,4 @@
+import {activeSession} from '../core/workspace-slots.js';
 import React,{ReactDOM,useEffect,useLayoutEffect,useMemo,useRef,useState} from '../vendor/react.mjs';
 import type {Catalogue,Workspace} from '../core/model.js';
 import {visibleLibraryNode} from '../core/library-projection.js';
@@ -11,7 +12,7 @@ export function CollectionView({id,catalogue,workspace,onOpen,onOther,onManage,o
  const target=collectionTarget(catalogue,id);
  const [filter,setFilter]=useState(initial),[menu,setMenu]=useState<{item:CollectionItem;x:number;y:number;returnFocus:HTMLElement}|null>(null);
  const menuRef=useRef<HTMLDivElement|null>(null);
- const pdfMode=workspace.personal.session.libraryMode==='pdfs';
+ const pdfMode=activeSession(workspace.personal).libraryMode==='pdfs';
  const items=useMemo(()=>{const all=collectionItems(catalogue,workspace.overlays,id),pdfs=new Set(catalogue.documents.map(d=>d.pageId)),archived=new Set(workspace.overlays.archived);return pdfMode?all.filter(i=>visibleLibraryNode(i.node,pdfs,archived,'pdfs')):all;},[catalogue,workspace.overlays,id,pdfMode]);
  const shown=filterCollection(items,pdfMode?{...filter,type:'all'}:filter);
  const options=(key:'language'|'domains'|'technologies')=>[...new Set(items.flatMap(i=>key==='language'?[i.language]:i[key]))].sort();
@@ -41,7 +42,7 @@ export function CollectionView({id,catalogue,workspace,onOpen,onOther,onManage,o
    <button className="collection-open" title={title} onClick={e=>open(item,e.ctrlKey||e.metaKey)} onAuxClick={e=>{if(e.button===1){e.preventDefault();open(item,true);}}}>{title}</button>
    <p className="collection-summary">{item.summary||'No summary yet.'}</p>
    <div className="collection-facets">{(item.page?.tags??[]).filter(t=>/^(doctype|domain|tech|level|source):/.test(t)).map(tag=><span className="facet-chip" key={tag} title={tag}>{tag}</span>)}</div>
-   <footer className="collection-card-meta"><span>{item.language==='unknown'?'Language unknown':item.language.toUpperCase()}{item.document?.pageCount?' / '+item.document.pageCount+' pages':''}</span>{item.page&&workspace.personal.session.showFlags&&<span className="collection-flag"><span className={'flag-dot '+(workspace.personal.ratings[item.page.id]??'gray')}/>{FLAG_LABELS[workspace.personal.ratings[item.page.id]??'gray']}</span>}</footer>
+   <footer className="collection-card-meta"><span>{item.language==='unknown'?'Language unknown':item.language.toUpperCase()}{item.document?.pageCount?' / '+item.document.pageCount+' pages':''}</span>{item.page&&activeSession(workspace.personal).showFlags&&<span className="collection-flag"><span className={'flag-dot '+(workspace.personal.ratings[item.page.id]??'gray')}/>{FLAG_LABELS[workspace.personal.ratings[item.page.id]??'gray']}</span>}</footer>
   </article>;})}</div>
   {!shown.length&&<div className="empty-state"><Icon name="folder" size={34}/><h2>{items.length?'No matching items':'A place for notes and PDFs'}</h2><p>{items.length?'Change a filter to see more of this folder.':'Add a note, create a subfolder or import a private PDF. The tree stays the source of truth.'}</p></div>}
   {menu&&(ReactDOM as any).createPortal(<div ref={menuRef} className="tree-context-menu collection-context-menu" role="menu" aria-label={'Collection actions for '+(menu.item.page?.title??menu.item.node.title)} style={{left:menu.x,top:menu.y}} onKeyDown={menuKey}>

@@ -1,3 +1,4 @@
+import {activeSession,selectWorkspace,collapsePane,revealPane,toggleQuickLayout,categoryMatches} from '../core/workspace-slots.js';
 import {libraryProjectionCounts} from '../core/library-projection.js';
 import {createFullscreenController} from '../core/fullscreen.js';
 import React, { useState, useEffect, useMemo, useRef, useSyncExternalStore } from '../vendor/react.mjs';
@@ -24,14 +25,18 @@ import {ReaderRail} from '../components/ReaderRail.js';
 import type {RailPopover} from '../components/ReaderRail.js';
 import {FloatingPanel} from '../components/FloatingPanel.js';
 import { assetResolver } from './assets.js';
-export function App({ built }: any) {
-    const ws = useSyncExternalStore(store.subscribe, store.getSnapshot), session = ws.personal.session;
+export function App({built}:any){
+ const ws=useSyncExternalStore(store.subscribe,store.getSnapshot);
+ return <StudyWorkspace key={ws.personal.activeWorkspaceSlot??1} built={built}/>;
+}
+function StudyWorkspace({ built }: any) {
+    const ws = useSyncExternalStore(store.subscribe, store.getSnapshot), slotId=ws.personal.activeWorkspaceSlot??1, session = activeSession(ws.personal);
     const catalogue = useMemo(() => compose(built, ws), [built, ws.imports, ws.overlays]), catalogueRef = useRef(catalogue);
     catalogueRef.current = catalogue;
     useEffect(()=>{document.documentElement.dataset.theme=session.theme;},[session.theme]);
     const assets = useMemo(() => assetResolver(built, () => catalogueRef.current), [built]);
     const locs = useMemo(() => locations(catalogue), [catalogue]);
-    const discoveryCounts=useMemo(()=>libraryProjectionCounts(catalogue.projects,new Set(catalogue.documents.map(d=>d.pageId)),new Set(ws.overlays.archived),session.libraryMode??'notes',new Set(Object.entries(ws.overlays.projectPrefs).filter(([,p])=>p.hidden).map(([id])=>id))),[catalogue,ws.overlays,session.libraryMode]);
+    const discoveryCounts=useMemo(()=>libraryProjectionCounts(catalogue.projects.filter(p=>categoryMatches(p.id,session.categoryFilter,ws.overlays.categories)),new Set(catalogue.documents.map(d=>d.pageId)),new Set(ws.overlays.archived),session.libraryMode??'notes',new Set(Object.entries(ws.overlays.projectPrefs).filter(([,p])=>p.hidden).map(([id])=>id))),[catalogue,ws.overlays,session.libraryMode,session.categoryFilter]);
     const [pdfRenderers,setPdfRenderers]=useState<Record<string,string>>({});
     const activePane = session.panes.find(p => p.id === session.activePane) ?? session.panes[0], activeView = activePane?.views.find(v => v.id === activePane.active), activeLocation = current(activeView), activePage = catalogue.pages.find(p => p.id === activeLocation?.pageId);
     const [modal, setModal] = useState<any>(null), [toast, setToast] = useState({ text: '', error: false }), [printSelection, setPrintSelection] = useState<any>(null), [mobilePane, setMobilePane] = useState(session.activePane);
@@ -45,26 +50,38 @@ export function App({ built }: any) {
         return; const t = setTimeout(() => setToast({ text: '', error: false }), 6500); return () => clearTimeout(t); }, [toast]);
     const capturingReaders=useRef(false);
     function captureReaders(){if(capturingReaders.current)return;capturingReaders.current=true;try{document.dispatchEvent(new Event('atlas:before-reader-change'));}finally{capturingReaders.current=false;}}
-    function setSession(fn: (s: Session) => void) {captureReaders();store.personal(p => fn(p.session));}
-    function freshTab(paneId:string){const pane=store.state.personal.session.panes.find(p=>p.id===paneId);if(!pane)return;if(pane.views.length>=5){notify('Keep up to five tabs in each pane. Close a tab before opening another.');return;}setSession(s=>{const p=s.panes.find(p=>p.id===paneId)!;const v=newView();p.views.push(v);p.active=v.id;s.activePane=p.id;s.screen='reader';});}
+    function setSession(fn: (s: Session) => void) {
+ if((store.state.personal.activeWorkspaceSlot??1)!==slotId)return;
+ captureReaders();store.personal(p => fn(activeSession(p,slotId)));
+ syncHash(activeSession(store.state.personal,slotId));
+}
+function syncHash(s:Session){const pane=s.panes.find(p=>p.id===s.activePane),loc=current(pane?.views.find(v=>v.id===pane.active));history.replaceState(null,'',s.screen==='reader'&&loc?(loc.collectionId?'#/collection/':'#/page/')+encodeURIComponent(loc.pageId):'#/');}
+function switchWorkspace(n:import('../core/model.js').WorkspaceNumber){if(n===slotId)return;captureReaders();setContextOpen(false);setPopover(null);fullscreen.current?.exit();store.personal(p=>selectWorkspace(p,n));syncHash(activeSession(store.state.personal));}
+function followDocument(s:Session,id?:string){if(!id||collectionTarget(catalogueRef.current,id))return;s.libraryMode=catalogueRef.current.documents.some(d=>d.pageId===id)?'pdfs':'notes';exposePage(s,id);}
+function selectTab(paneId:string,viewId:string){setSession(s=>{const p=s.panes.find(p=>p.id===paneId);if(!p||!p.views.some(v=>v.id===viewId))return;revealPane(s,paneId);p.active=viewId;s.screen='reader';followDocument(s,current(p.views.find(v=>v.id===viewId))?.pageId);syncHash(s);});}
+function selectMarker(index:number){const p=activeSession(store.state.personal).panes[index];if(!p)return;setSession(s=>{revealPane(s,p.id);s.screen='reader';followDocument(s,current(p.views.find(v=>v.id===p.active))?.pageId);syncHash(s);});}
+function sidebar(){setSession(s=>{s.leftOpen=small?true:!leftVisible;});if(small)setMobileSide(mobileSide==='left'?'':'left');}
+function toggleChrome(paneId:string){document.dispatchEvent(new CustomEvent('atlas:reader-chrome',{detail:{paneId}}));setSession(s=>{const p=s.panes.find(p=>p.id===paneId);if(p)p.readerChromeCollapsed=!p.readerChromeCollapsed;});}
+
+    function freshTab(paneId:string){const pane=activeSession(store.state.personal).panes.find(p=>p.id===paneId);if(!pane)return;if(pane.views.length>=5){notify('Keep up to five tabs in each pane. Close a tab before opening another.');return;}setSession(s=>{const p=s.panes.find(p=>p.id===paneId)!;const v=newView();p.views.push(v);p.active=v.id;s.activePane=p.id;s.screen='reader';});}
     const fullscreen=useRef<ReturnType<typeof createFullscreenController>|null>(null);
     useEffect(()=>{if(!appRef.current)return;const controller=createFullscreenController(appRef.current,document,()=>{
-        if(store.state.personal.session.focus)setSession(s=>{s.focus=false;});
+        if(activeSession(store.state.personal).focus)setSession(s=>{s.focus=false;});
     });fullscreen.current=controller;return()=>{controller.dispose();fullscreen.current=null;};},[]);
     useEffect(()=>{if(!session.focus)fullscreen.current?.exit();},[session.focus]);
-    function toggleFocus(){const next=!store.state.personal.session.focus;setContextOpen(false);setPopover(null);setSession(s=>{s.focus=next;});
+    function toggleFocus(){const next=!activeSession(store.state.personal).focus;setContextOpen(false);setPopover(null);setSession(s=>{s.focus=next;});
         // Deliberately not an effect: requestFullscreen must retain the click activation.
         if(next){document.dispatchEvent(new Event('atlas:focus-enter'));fullscreen.current?.enter();}else fullscreen.current?.exit();
     }
 
     function updateView(paneId: string, viewId: string, fn: (v: View) => void) { setSession(s => { const v = s.panes.find(p => p.id === paneId)?.views.find(v => v.id === viewId); if (v)
         fn(v); }); }
-    function activate(paneId: string) { if (store.state.personal.session.activePane !== paneId)
-        setSession(s => { s.activePane = paneId; }); setMobilePane(paneId); }
+    function activate(paneId: string) { if (activeSession(store.state.personal).activePane !== paneId)
+ setSession(s => { revealPane(s,paneId);const pane=s.panes.find(p=>p.id===paneId);followDocument(s,current(pane?.views.find(v=>v.id===pane.active))?.pageId); }); setMobilePane(paneId); }
     function exposePage(s: Session, id: string) { const loc = locations(catalogueRef.current).get(id); for (const branch of loc?.ancestors ?? [])
         if (!s.expanded.includes(branch))
             s.expanded.push(branch); }
-    function openPage(id: string, anchor?: Anchor, newTab = false, paneId?: string, presentation?: Location['presentation']) { const target = paneId ?? store.state.personal.session.activePane; const c = catalogueRef.current; let blocked = false; setSession(s => { let pane = s.panes.find(p => p.id === target) ?? s.panes[0]; if (!pane) {
+    function openPage(id: string, anchor?: Anchor, newTab = false, paneId?: string, presentation?: Location['presentation']) { const target = paneId ?? activeSession(store.state.personal).activePane; const c = catalogueRef.current; let blocked = false; setSession(s => { let pane = s.panes.find(p => p.id === target) ?? s.panes[0]; if (!pane) {
         pane = { id: 'left', views: [], active: '' };
         s.panes.push(pane);
     } const existing = pane.views.find(v => v.id === pane.active); if (newTab && pane.views.length >= 5) {
@@ -78,7 +95,7 @@ export function App({ built }: any) {
     else {
         const index = pane.views.indexOf(existing);
         pane.views[index] = navigate(existing, id, anchor);
-    } s.activePane = pane.id; s.screen = 'reader'; exposePage(s, id); const view = pane.views.find(v => v.id === pane.active)!; if(collectionTarget(c,id))current(view)!.collectionId=id; if (presentation)
+    } revealPane(s,pane.id); s.screen = 'reader'; followDocument(s,id); exposePage(s, id); const view = pane.views.find(v => v.id === pane.active)!; if(anchor?.pdfPage&&c.documents.some(d=>d.pageId===id)){current(view)!.pdfPage=anchor.pdfPage;} if(collectionTarget(c,id))current(view)!.collectionId=id; if (presentation)
         current(view)!.presentation = presentation; if (anchor?.blockId) {
         const page = c.pages.find(p => p.id === id);
         if (page)
@@ -100,7 +117,7 @@ export function App({ built }: any) {
         } }); loc.anchor = { blockId }; }); }
     function historyStep(delta: number, paneId = activePane?.id) { setSession(s => { const pane = s.panes.find(p => p.id === paneId); if (!pane)
         return; const index = pane.views.findIndex(v => v.id === pane.active); if (index < 0)
-        return; pane.views[index] = travel(pane.views[index], delta); s.activePane = pane.id; s.screen = 'reader'; exposePage(s, current(pane.views[index])!.pageId); }); }
+        return; pane.views[index] = travel(pane.views[index], delta); s.activePane = pane.id; s.screen = 'reader'; followDocument(s,current(pane.views[index])?.pageId); }); }
     function closeTab(paneId: string, viewId: string) { setSession(s => { const pane = s.panes.find(p => p.id === paneId)!; const index = pane.views.findIndex(v => v.id === viewId); pane.views.splice(index, 1); if (pane.active === viewId)
         pane.active = pane.views[Math.min(index, pane.views.length - 1)]?.id ?? ''; if (s.panes.every(p => !p.views.length))
         s.screen = 'home'; }); }
@@ -110,10 +127,10 @@ export function App({ built }: any) {
         p.bookmarks = p.bookmarks.filter(b => b.id !== found.id);
     else
         p.bookmarks.push({ id: uid('bookmark'), pageId: id, title: page.title, createdAt: Date.now() }); }); notify('Document bookmark updated.'); }
-    function openOther(id: string) { const s = store.state.personal.session, other = s.panes.find(p => p.id !== s.activePane); if (other)
+    function openOther(id: string) { const s = activeSession(store.state.personal), other = s.panes.find(p => p.id !== s.activePane); if (other)
         openPage(id, undefined, false, other.id); }
     function closePane(id: string) { setSession(s => { if (s.panes.length === 1)
-        return; s.panes = s.panes.filter(p => p.id !== id); s.activePane = s.panes[0].id; if (!s.panes[0].views.length)
+        return; s.panes = s.panes.filter(p => p.id !== id); s.activePane = s.panes[0].id; s.collapsedPane=null; if (!s.panes[0].views.length)
         s.screen = 'home'; setMobilePane(s.activePane); }); }
     function bookmark(page: Page, view: View) { const loc = current(view)!, anchor = loc.anchor; store.personal(p => { const found = p.bookmarks.find(b => b.pageId === page.id && JSON.stringify(b.anchor ?? {}) === JSON.stringify(anchor ?? {})); if (found)
         p.bookmarks = p.bookmarks.filter(b => b.id !== found.id);
@@ -153,10 +170,10 @@ export function App({ built }: any) {
             setModal({ kind: 'figure', page: { ...page, blocks: [block] }, view });
     } }
     useEffect(() => {
-        const onHash=(initial=false)=>{try{const route=parseHashRoute(location.hash);if(route&&(!initial||shouldOpenStartupRoute(store.state.personal.session,route)))openPage(route.id,route.anchor);}catch{notify('This page link is malformed.',true);}};
+        const onHash=(initial=false)=>{try{const route=parseHashRoute(location.hash);if(route&&(!initial||shouldOpenStartupRoute(activeSession(store.state.personal),route)))openPage(route.id,route.anchor);}catch{notify('This page link is malformed.',true);}};
         onHash(true);const changed=()=>onHash(false);window.addEventListener('hashchange',changed);return()=>window.removeEventListener('hashchange',changed);
     }, []);
-    useEffect(() => { const key = (e: KeyboardEvent) => { const s = store.state.personal.session; if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    useEffect(() => { const key = (e: KeyboardEvent) => { const s = activeSession(store.state.personal); if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setModal({ kind: 'search' });
     } if (e.altKey && ['ArrowLeft', 'ArrowRight'].includes(e.key) && !document.querySelector('dialog[open]')) {
@@ -174,45 +191,67 @@ export function App({ built }: any) {
     const setModalCreate = (kind: string, project?: any, folder?: any) => setModal({ kind: 'create', itemKind: kind, project, folder });
     const settings = () => setModal({ kind: 'settings' }), onRestore = (id: string) => store.overlays(o => { o.archived = o.archived.filter(x => x !== id); });
     function renderPane(pane: Pane, index: number) {
-        const view = pane.views.find(v => v.id === pane.active), loc = current(view), page = catalogue.pages.find(p => p.id === loc?.pageId), doc = catalogue.documents.find(d => d.pageId === page?.id), crumb = page ? locs.get(page.id) : undefined, active = pane.id === session.activePane;
-        return <section key={pane.id} data-pane-id={pane.id} data-pane-slot={index===0?'a':'b'} className={'document-pane ' + (active ? 'active-pane ' : '') + (session.panes.length === 2 && pane.id !== mobilePane ? 'mobile-inactive' : '')} style={session.panes.length === 2 ? { flex: '0 0 ' + (index === 0 ? 'calc(var(--ratio,50%) - 4px)' : 'calc(100% - var(--ratio,50%) - 4px)') } : { flex: '1' }} onPointerDownCapture={() => activate(pane.id)} onFocusCapture={() => activate(pane.id)} aria-label={session.panes.length === 2 ? 'Reading pane ' + (index + 1) : 'Reading pane'}>
- <div className="pane-tabbar">{session.panes.length===2&&<span className={'pane-identity '+(active?'is-active':'')} title={'Pane '+(index===0?'A':'B')+(active?', active':'')} aria-label={'Pane '+(index===0?'A':'B')+(active?', active':'')}>{index===0?'A':'B'}{active&&<span aria-hidden="true">*</span>}</span>}<div className="tab-list" role="tablist" aria-label={'Document tabs in pane ' + (index + 1)}>{pane.views.map(v => { const route=current(v),p=catalogue.pages.find(p=>p.id===route?.pageId),pl=p?locs.get(p.id):undefined,collection=route?.collectionId?collectionTarget(catalogue,route.collectionId):undefined; return <div role="tab" aria-selected={v.id === pane.active} tabIndex={v.id === pane.active ? 0 : -1} className={'document-tab ' + (v.id === pane.active ? 'selected' : '')} key={v.id} title={pl?.path.join(' / ') ?? p?.title ?? current(v)?.pageId} onClick={() => setSession(s => { const p = s.panes.find(p => p.id === pane.id)!; p.active = v.id; s.activePane = pane.id; s.screen = 'reader'; })} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            setSession(s => { s.panes.find(p => p.id === pane.id)!.active = v.id; s.activePane = pane.id; });
-        } if (['ArrowLeft', 'ArrowRight'].includes(e.key)) {
-            e.preventDefault();
-            const i = pane.views.indexOf(v), next = pane.views[(i + (e.key === 'ArrowRight' ? 1 : -1) + pane.views.length) % pane.views.length];
-            setSession(s => { s.panes.find(p => p.id === pane.id)!.active = next.id; });
-        } }}><Icon name={catalogue.documents.some(d=>d.pageId===p?.id)?'pdf':pl?.project.icon ?? 'page'} size={15}/><span>{p?.title ?? collection?.title ?? (route?'Unavailable':'New tab')}</span><button className="tab-close" aria-label={'Close tab ' + (p?.title ?? collection?.title ?? 'new tab')} onClick={e => { e.stopPropagation(); closeTab(pane.id, v.id); }}><Icon name="close" size={13}/></button></div>; })}</div><IconButton name="plus" label={'New tab in pane ' + (index + 1)} onClick={() => freshTab(pane.id)}/>{session.panes.length === 2 && <IconButton name="close" label={'Close pane ' + (index + 1)} onClick={() => closePane(pane.id)}/>}</div>
- {view && loc?.collectionId ? <CollectionView key={view.id+loc.collectionId} id={loc.collectionId} catalogue={catalogue} workspace={ws} onOpen={(id:string,anchor?:Anchor,newTab=false)=>openPage(id,anchor,newTab,pane.id)} onOther={session.panes.length===2?(id:string)=>{const other=session.panes.find(p=>p.id!==pane.id);if(other)openPage(id,undefined,false,other.id);}:undefined} onManage={(item:any)=>setModal({kind:'manage',item})} onBookmark={bookmarkDocument} onCreate={setModalCreate} onImport={(projectId:string,folderId?:string)=>setModal({kind:'settings',projectId,folderId})}/> : view && loc ? <><div className="pane-breadcrumb" title={crumb?.path.join(' / ') ?? loc.pageId}><span>{crumb?.path.slice(0, -1).join(' / ') ?? 'Unfiled reference'}</span>{session.panes.length === 2 && <span className={'pane-active-tag ' + (active ? 'selected' : '')}>{(active?'Active pane ':'Pane ')+(index===0?'A':'B')}</span>}</div>{page ? isArchived(page.id, catalogue, ws.overlays) && <div className="archived-banner">This page or its folder is archived. Its content and remarks are retained.</div> : null}{page ? doc ? <PdfReader key={view.id + doc.id} document={doc} location={loc} resolve={assets.url} fetchBytes={assets.bytes} onRenderer={(mode:string)=>setPdfRenderers(prior=>prior[view.id+doc.id]===mode?prior:{...prior,[view.id+doc.id]:mode})} onLocation={(patch: any) => updateView(pane.id, view.id, v => Object.assign(current(v)!, patch))}/> : <NoteReader key={view.id + page.id} page={page} view={view} location={loc} resolveAsset={assets.inPage} fontSize={session.fontSize} layoutKey={session.theme+'|'+session.focus+'|'+session.panes.length} onAnchor={a => updateView(pane.id, view.id, v => { const entry = v.history[view.cursor]; if (entry?.pageId === page.id)
-            entry.anchor = a; })} onAction={(action: any, id: any, snippet: any) => blockAction(action, id, snippet, pane.id, view, page)} onLink={(id: string, anchor?: Anchor, newTab?: boolean) => openPage(id, anchor, newTab, pane.id)}/> : <div className="missing-page"><Icon name="page" size={36}/><h2>This page is not currently available</h2><code>{loc.pageId}</code><p>The view and its saved state have been retained. Import the owning pack, re-enable its content or go Back.</p><div className="button-row"><button onClick={() => historyStep(-1, pane.id)}>Back</button><button onClick={settings}>Import a library</button></div></div>}</> : <div className="empty-pane"><Icon name="book" size={35}/><h2>A new reading thread</h2><p>Choose a page from the notebook tree or search across your library.</p><div className="button-row"><button className="primary" onClick={() => {activate(pane.id);setModal({ kind: 'search', paneId: pane.id });}}>Find a page</button><button onClick={()=>{activate(pane.id);settings();}}>Import a library or PDF</button></div></div>}
+ const letter=index===0?'A':'B',view=pane.views.find(v=>v.id===pane.active),loc=current(view),page=catalogue.pages.find(p=>p.id===loc?.pageId),doc=catalogue.documents.find(d=>d.pageId===page?.id),crumb=page?locs.get(page.id):undefined,active=pane.id===session.activePane;
+ if(session.collapsedPane===pane.id)return <aside className="collapsed-pane" data-pane-id={pane.id} data-pane-slot={index===0?'a':'b'} key={pane.id}><button aria-label={'Restore pane '+letter} onClick={()=>setSession(s=>{revealPane(s,pane.id);followDocument(s,loc?.pageId);})}>{letter}<Icon name="chevron" size={14}/></button></aside>;
+ const paired=session.panes.length===2&&!session.collapsedPane;
+ return <section key={pane.id} data-pane-id={pane.id} data-pane-slot={index===0?'a':'b'} className={'document-pane '+(active?'active-pane ':'')+(pane.readerChromeCollapsed?'reader-chrome-hidden ':'')+(session.panes.length===2&&pane.id!==mobilePane?'mobile-inactive':'')} style={paired?{flex:'0 0 '+(index===0?'calc(var(--ratio,50%) - 4px)':'calc(100% - var(--ratio,50%) - 4px)')}:{flex:'1'}} onPointerDownCapture={()=>activate(pane.id)} onFocusCapture={()=>activate(pane.id)} aria-label={session.panes.length===2?'Reading pane '+(index+1):'Reading pane'}>
+ <div className="pane-tabbar">
+ {session.panes.length===2&&<button className={'pane-identity '+(active?'is-active':'')} aria-label={'Collapse pane '+letter} title={'Collapse pane '+letter+' without closing its tabs'} disabled={!!session.collapsedPane} onClick={()=>setSession(s=>{collapsePane(s,pane.id);const target=s.panes.find(p=>p.id===s.activePane);followDocument(s,current(target?.views.find(v=>v.id===target.active))?.pageId);})}>{letter}{active&&<span aria-hidden="true">*</span>}</button>}
+ <div className="tab-list" role="tablist" aria-label={'Document tabs in pane '+(index+1)}>{pane.views.map(v=>{
+ const route=current(v),p=catalogue.pages.find(p=>p.id===route?.pageId),collection=route?.collectionId?collectionTarget(catalogue,route.collectionId):undefined;
+ return <div role="tab" aria-selected={v.id===pane.active} tabIndex={v.id===pane.active?0:-1} className={'document-tab '+(v.id===pane.active?'selected':'')} key={v.id} title={p?.title??collection?.title??'New tab'} onClick={()=>selectTab(pane.id,v.id)} onKeyDown={e=>{
+ if(e.target!==e.currentTarget)return;
+ if(e.key==='Enter'||e.key===' '){e.preventDefault();selectTab(pane.id,v.id);}
+ if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();const next=pane.views[(pane.views.indexOf(v)+(e.key==='ArrowRight'?1:-1)+pane.views.length)%pane.views.length];selectTab(pane.id,next.id);const tabList=e.currentTarget.parentElement;requestAnimationFrame(()=>tabList?.querySelector<HTMLElement>('[aria-selected="true"]')?.focus());}
+ }}><Icon name={catalogue.documents.some(d=>d.pageId===p?.id)?'pdf':'page'} size={15}/><span>{p?.title??collection?.title??(route?'Unavailable':'New tab')}</span><button className="tab-close" aria-label={'Close tab '+(p?.title??collection?.title??'new tab')} onClick={e=>{e.stopPropagation();closeTab(pane.id,v.id);}}><Icon name="close" size={13}/></button></div>;
+ })}</div>
+ <div className="pane-header-actions">
+ <IconButton name="plus" label={'New tab in pane '+(index+1)} onClick={()=>freshTab(pane.id)}/>
+ <IconButton name={doc?'spread':'openbook'} label={doc?'Quick PDF Spread':'Quick Book mode'} disabled={!loc||!page} active={doc?loc?.pdfMode==='spread':loc?.presentation==='book'} onClick={()=>{if(view)updateView(pane.id,view.id,v=>toggleQuickLayout(v,!!doc));}}/>
+ {active&&<>
+ <IconButton name="down" label="Reading mode" disabled={!page||!view} aria-haspopup="dialog" aria-expanded={popover==='reading'} onClick={()=>{setContextOpen(false);setPopover(popover==='reading'?null:'reading');}}/>
+ <IconButton name="compare" label="Compare in two panes" active={session.panes.length===2} disabled={session.panes.length!==2&&!loc} onClick={compare}/>
+ <IconButton name="focus" label="Enter focus mode" onClick={toggleFocus}/>
+ </>}
+ <IconButton name="chrome" label={pane.readerChromeCollapsed?'Show reader controls':'Hide reader controls'} active={pane.readerChromeCollapsed} onClick={()=>toggleChrome(pane.id)}/>
+ {active&&<IconButton name="top" label={session.compactTop?'Show global topbar':'Hide global topbar'} active={session.compactTop} onClick={()=>setSession(s=>{s.compactTop=!s.compactTop;})}/>}
+ {session.panes.length===2&&<IconButton name="close" label={'Close pane '+(index+1)} onClick={()=>closePane(pane.id)}/>}
+ </div></div>
+ {view&&loc?.collectionId?<CollectionView key={view.id+loc.collectionId} id={loc.collectionId} catalogue={catalogue} workspace={ws} onOpen={(id:string,anchor?:Anchor,newTab=false)=>openPage(id,anchor,newTab,pane.id)} onOther={session.panes.length===2?(id:string)=>{const other=session.panes.find(p=>p.id!==pane.id);if(other)openPage(id,undefined,false,other.id);}:undefined} onManage={(item:any)=>setModal({kind:'manage',item})} onBookmark={bookmarkDocument} onCreate={setModalCreate} onImport={(projectId:string,folderId?:string)=>setModal({kind:'settings',projectId,folderId})}/>:
+ view&&loc?<><div className="pane-breadcrumb" title={crumb?.path.join(' / ')??loc.pageId}><span>{crumb?.path.slice(0,-1).join(' / ')??'Unfiled reference'}</span>{session.panes.length===2&&<span className={'pane-active-tag '+(active?'selected':'')}>{(active?'Active pane ':'Pane ')+letter}</span>}</div>
+ {page&&isArchived(page.id,catalogue,ws.overlays)&&<div className="archived-banner">This page or its folder is archived. Its content and remarks are retained.</div>}
+ {page?doc?<PdfReader key={view.id+doc.id} paneId={pane.id} slotId={slotId} document={doc} location={loc} resolve={assets.url} fetchBytes={assets.bytes} onRenderer={(mode:string)=>setPdfRenderers(prior=>prior[view.id+doc.id]===mode?prior:{...prior,[view.id+doc.id]:mode})} onLocation={(patch:any)=>updateView(pane.id,view.id,v=>{const entry=current(v);if(entry?.pageId===doc.pageId)Object.assign(entry,patch);})}/>:
+ <NoteReader key={view.id+page.id} page={page} view={view} location={loc} resolveAsset={assets.inPage} fontSize={session.fontSize} layoutKey={session.theme+'|'+session.focus+'|'+session.panes.length+'|'+session.compactTop+'|'+pane.readerChromeCollapsed+'|'+session.collapsedPane} onAnchor={a=>updateView(pane.id,view.id,v=>{const entry=current(v);if(entry?.pageId===page.id)entry.anchor=a;})} onAction={(action:any,id:any,snippet:any)=>blockAction(action,id,snippet,pane.id,view,page)} onLink={(id:string,anchor?:Anchor,newTab?:boolean)=>openPage(id,anchor,newTab,pane.id)}/>:
+ <div className="missing-page"><Icon name="page" size={36}/><h2>This page is not currently available</h2><code>{loc.pageId}</code><p>The view and its saved state have been retained. Import the owning pack, re-enable its content or go Back.</p><div className="button-row"><button onClick={()=>historyStep(-1,pane.id)}>Back</button><button onClick={settings}>Import a library</button></div></div>}</>:
+ <div className="empty-pane"><Icon name="book" size={35}/><h2>A new reading thread</h2><p>Choose a page from the notebook tree or search across your library.</p><div className="button-row"><button className="primary" onClick={()=>{activate(pane.id);setModal({kind:'search',paneId:pane.id});}}>Find a page</button><button onClick={()=>{activate(pane.id);settings();}}>Import a library or PDF</button></div></div>}
  </section>;
-    }
-    function resizeStart(e: any) { captureReaders(); e.currentTarget.setPointerCapture(e.pointerId); drag.current = true; ratioDraft.current = session.ratio; }
+ }
+    function resizeStart(e: any) { if((e.target as HTMLElement).closest('button'))return; captureReaders(); e.currentTarget.setPointerCapture(e.pointerId); drag.current = true; ratioDraft.current = session.ratio; }
     function resizeMove(e: any) { if (!drag.current || !paneArea.current)
         return; const r = paneArea.current.getBoundingClientRect(); const ratio = Math.max(28, Math.min(72, (e.clientX - r.left) / r.width * 100)); ratioDraft.current = ratio; paneArea.current.style.setProperty('--ratio', ratio + '%'); }
     function resizeEnd() { if (drag.current) {
         drag.current = false;
         setSession(s => { s.ratio = ratioDraft.current; });
     } }
-    return <><div className={'atlas-app theme-' + session.theme + (session.focus ? ' focus-mode' : '')} ref={appRef}>
+    return <><div className={'atlas-app theme-' + session.theme + (session.focus ? ' focus-mode' : '')+(session.compactTop?' compact-top':'')+(!leftVisible?' sidebar-collapsed':'')} ref={appRef}>
  <header className="topbar">
- <IconButton name={session.libraryMode==='pdfs'?'pdf':'book'} className="library-mode-switch" label={session.libraryMode==='pdfs'?'Switch to notes':'Switch to PDF library'} active={session.libraryMode==='pdfs'} onClick={()=>{store.personal(p=>{p.session.libraryMode=p.session.libraryMode==='pdfs'?'notes':'pdfs';p.session.leftOpen=true;});if(small)setMobileSide('left');}}/>
+ <IconButton name={session.libraryMode==='pdfs'?'pdf':'book'} className="library-mode-switch" label={session.libraryMode==='pdfs'?'Switch to notes':'Switch to PDF library'} active={session.libraryMode==='pdfs'} onClick={()=>{store.personal(p=>{activeSession(p).libraryMode=activeSession(p).libraryMode==='pdfs'?'notes':'pdfs';activeSession(p).leftOpen=true;});if(small)setMobileSide('left');}}/>
  <div className="topbar-history"><IconButton name="left" label="Back in active tab" disabled={!activeView||activeView.cursor<=0} onClick={()=>historyStep(-1)}/><IconButton name="right" label="Forward in active tab" disabled={!activeView||activeView.cursor>=activeView.history.length-1} onClick={()=>historyStep(1)}/></div>
  <button className="global-search" aria-label="Global search" title="Search all notes, PDFs and glossary (Ctrl K)" onClick={()=>setModal({kind:'search'})}><Icon name="search" size={17}/><span>Search your knowledge</span><kbd>Ctrl K</kbd></button>
- <IconButton name="export" className="export-button" label="Export to AI" disabled={!activePage} onClick={()=>setModal({kind:'export'})}/>
+ <span className="topbar-spacer"/><span className="workspace-caption">Workspace {slotId}</span>
  </header>
  {store.error && <div className="storage-banner" role="alert"><span>{store.error}</span><button onClick={settings}>Recovery settings</button></div>}{catalogue.warnings.length > 0 && <details className="catalogue-warning"><summary>{catalogue.warnings.length} retained content update warning(s)</summary>{catalogue.warnings.map((s, i) => <p key={i}>{s}</p>)}</details>}
  <div className="workspace-frame">
- {leftVisible && <ProjectTree catalogue={catalogue} workspace={ws} panePages={session.panes.map(p=>current(p.views.find(v=>v.id===p.active))?.pageId)} activePaneIndex={session.panes.findIndex(p=>p.id===session.activePane)} activePage={session.screen === 'reader' ? activeLocation?.pageId : undefined} onCollection={openPage} onOpen={openPage} onOther={session.panes.length === 2 ? openOther : undefined} onBookmark={bookmarkDocument} onToggle={(id: string) => setSession(s => { s.expanded = s.expanded.includes(id) ? s.expanded.filter(x => x !== id) : [...s.expanded, id]; })} onItem={(item: any) => setModal({ kind: 'manage', item })} onCreate={setModalCreate}/>}
- <div className="workspace-main">{session.screen === 'home' ? <Home catalogue={catalogue} workspace={ws} onOpen={openPage} onCreate={setModalCreate} onManage={(item: any) => setModal({ kind: 'manage', item })} onSettings={settings} onRestore={onRestore} onGroup={() => setModal({ kind: 'groups' })}/> : session.screen === 'bookmarks' ? <main className="bookmark-page"><div className="eyebrow">SAVED READING POSITIONS</div><h1>Your bookmarks</h1><p>Bookmarks point to source blocks, not generated Book sheet numbers.</p>{ws.personal.bookmarks.length ? ws.personal.bookmarks.map(b => <article key={b.id} className="bookmark-card"><button onClick={() => openPage(b.pageId, b.anchor)}><Icon name="bookmark"/><span><strong>{catalogue.pages.find(p => p.id === b.pageId)?.title ?? b.title}</strong><small>{locs.get(b.pageId)?.path.join(' / ') ?? 'Unresolved page - owning pack may be missing'}{b.anchor?.blockId ? ' / Block ' + b.anchor.blockId.slice(-10) : ''}{b.anchor?.pdfPage ? ' / PDF page ' + b.anchor.pdfPage : ''}</small></span></button><IconButton name="close" label={'Remove bookmark ' + b.title} onClick={() => store.personal(p => { p.bookmarks = p.bookmarks.filter(x => x.id !== b.id); })}/></article>) : <div className="empty-state"><Icon name="bookmark" size={40}/><h2>Keep a place for later.</h2><p>Open a page and use its bookmark button to save the current reading position.</p></div>}</main> : <>{session.panes.length === 2 && <div className="mobile-pane-switch">{session.panes.map((p, i) => <button key={p.id} className={p.id === mobilePane ? 'selected' : ''} onClick={() => activate(p.id)}>Pane {i + 1}</button>)}</div>}<div className="panes" ref={paneArea} style={({ '--ratio': session.ratio + '%' } as any)}>{session.panes.map((p, i) => <React.Fragment key={p.id}>{i === 1 && <div className="pane-divider" role="separator" aria-label="Resize comparison panes" aria-orientation="vertical" aria-valuemin={28} aria-valuemax={72} aria-valuenow={Math.round(session.ratio)} tabIndex={0} onPointerDown={resizeStart} onPointerMove={resizeMove} onPointerUp={resizeEnd} onPointerCancel={resizeEnd} onKeyDown={e => { if (['ArrowLeft', 'ArrowRight', 'Home'].includes(e.key)) {
+ {session.compactTop&&session.screen!=='reader'&&<IconButton className="compact-restore" name="top" label="Show global topbar" onClick={()=>setSession(s=>{s.compactTop=false;})}/>}
+ {leftVisible && <ProjectTree onWorkspace={switchWorkspace} onCategory={(category:any)=>setSession(s=>{s.categoryFilter=s.categoryFilter===category?null:category;})} onSidebar={sidebar} onPaneMarker={selectMarker} onGroupToggle={(id:string)=>setSession(s=>{s.collapsedGroups=s.collapsedGroups?.includes(id)?s.collapsedGroups.filter(x=>x!==id):[...(s.collapsedGroups??[]),id];})} catalogue={catalogue} workspace={ws} panePages={session.panes.map(p=>current(p.views.find(v=>v.id===p.active))?.pageId)} activePaneIndex={session.panes.findIndex(p=>p.id===session.activePane)} activePage={session.screen === 'reader' ? activeLocation?.pageId : undefined} onCollection={openPage} onOpen={openPage} onOther={session.panes.length === 2 ? openOther : undefined} onBookmark={bookmarkDocument} onToggle={(id: string) => setSession(s => { s.expanded = s.expanded.includes(id) ? s.expanded.filter(x => x !== id) : [...s.expanded, id]; })} onItem={(item: any) => setModal({ kind: 'manage', item })} onCreate={setModalCreate}/>}
+ <>{!leftVisible&&!session.focus&&<button className="sidebar-restore" aria-label="Open notebook sidebar" onClick={sidebar}><Icon name="panel" size={17}/></button>}</><div className="workspace-main">{session.screen === 'home' ? <Home catalogue={catalogue} workspace={ws} onOpen={openPage} onCreate={setModalCreate} onManage={(item: any) => setModal({ kind: 'manage', item })} onSettings={settings} onRestore={onRestore} onGroup={() => setModal({ kind: 'groups' })}/> : session.screen === 'bookmarks' ? <main className="bookmark-page"><div className="eyebrow">SAVED READING POSITIONS</div><h1>Your bookmarks</h1><p>Bookmarks point to source blocks, not generated Book sheet numbers.</p>{ws.personal.bookmarks.length ? ws.personal.bookmarks.map(b => <article key={b.id} className="bookmark-card"><button onClick={() => openPage(b.pageId, b.anchor)}><Icon name="bookmark"/><span><strong>{catalogue.pages.find(p => p.id === b.pageId)?.title ?? b.title}</strong><small>{locs.get(b.pageId)?.path.join(' / ') ?? 'Unresolved page - owning pack may be missing'}{b.anchor?.blockId ? ' / Block ' + b.anchor.blockId.slice(-10) : ''}{b.anchor?.pdfPage ? ' / PDF page ' + b.anchor.pdfPage : ''}</small></span></button><IconButton name="close" label={'Remove bookmark ' + b.title} onClick={() => store.personal(p => { p.bookmarks = p.bookmarks.filter(x => x.id !== b.id); })}/></article>) : <div className="empty-state"><Icon name="bookmark" size={40}/><h2>Keep a place for later.</h2><p>Open a page and use its bookmark button to save the current reading position.</p></div>}</main> : <>{session.panes.length === 2 && <div className="mobile-pane-switch">{session.panes.map((p, i) => <button key={p.id} className={p.id === mobilePane ? 'selected' : ''} onClick={() => activate(p.id)}>Pane {i + 1}</button>)}</div>}<div className="panes" ref={paneArea} style={({ '--ratio': session.ratio + '%' } as any)}>{session.panes.map((p, i) => <React.Fragment key={p.id}>{i === 1 && !session.collapsedPane && <div className="pane-divider" role="separator" aria-label="Resize comparison panes" aria-orientation="vertical" aria-valuemin={28} aria-valuemax={72} aria-valuenow={Math.round(session.ratio)} tabIndex={0} onPointerDown={resizeStart} onPointerMove={resizeMove} onPointerUp={resizeEnd} onPointerCancel={resizeEnd} onKeyDown={e => { if(e.target!==e.currentTarget)return; if (['ArrowLeft', 'ArrowRight', 'Home'].includes(e.key)) {
         e.preventDefault();
         setSession(s => { s.ratio = e.key === 'Home' ? 50 : Math.max(28, Math.min(72, s.ratio + (e.key === 'ArrowRight' ? 2 : -2))); });
-    } }}><span /></div>}{renderPane(p, i)}</React.Fragment>)}</div></>}
- </div><ReaderRail pdfRenderer={pdfRenderers[(activeView?.id??'')+(catalogue.documents.find(d=>d.pageId===activePage?.id)?.id??'')]} session={session} page={activePage} view={activeView} location={activeLocation} doc={catalogue.documents.find(d=>d.pageId===activePage?.id)} leftVisible={leftVisible} contextOpen={rightVisible} popover={popover} setPopover={(value:RailPopover)=>{if(value)setContextOpen(false);setPopover(value);}}
+    } }}><span /><button className="swap-panes" aria-label="Swap panes" onClick={()=>setSession(s=>{s.panes.reverse();s.ratio=100-s.ratio;})}><Icon name="swap" size={14}/></button></div>}{renderPane(p, i)}</React.Fragment>)}</div></>}
+ </div><ReaderRail onExport={()=>setModal({kind:'export'})} pdfRenderer={pdfRenderers[(activeView?.id??'')+(catalogue.documents.find(d=>d.pageId===activePage?.id)?.id??'')]} session={session} page={activePage} view={activeView} location={activeLocation} doc={catalogue.documents.find(d=>d.pageId===activePage?.id)} leftVisible={leftVisible} contextOpen={rightVisible} popover={popover} setPopover={(value:RailPopover)=>{if(value)setContextOpen(false);setPopover(value);}}
  onTree={()=>{setSession(s=>{s.leftOpen=small?true:!leftVisible;});if(small)setMobileSide(mobileSide==='left'?'':'left');}}
  onFocus={toggleFocus} onContext={()=>{setPopover(null);setContextOpen(!contextOpen);}} onCompare={compare} onSwap={()=>setSession(s=>{s.panes.reverse();s.ratio=100-s.ratio;})}
- onBookmark={()=>{if(activePage&&activeView){captureReaders();const fresh=store.state.personal.session.panes.find(p=>p.id===activePane.id)?.views.find(v=>v.id===activeView.id);if(fresh)bookmark(activePage,fresh);}}}
+ onBookmark={()=>{if(activePage&&activeView){captureReaders();const fresh=activeSession(store.state.personal).panes.find(p=>p.id===activePane.id)?.views.find(v=>v.id===activeView.id);if(fresh)bookmark(activePage,fresh);}}}
  onTheme={(theme:Session['theme'])=>setSession(s=>{s.theme=theme;})} onView={(fn:(v:View)=>void)=>{if(activePane&&activeView)updateView(activePane.id,activeView.id,fn);}}
  onSettings={settings} onHome={()=>setSession(s=>{s.screen='home';})} onBookmarks={()=>setSession(s=>{s.screen='bookmarks';})} onEdit={()=>setModal({kind:'edit',page:activePage})} onPrint={()=>setModal({kind:'print'})}
  onFlags={()=>setSession(s=>{s.showFlags=!s.showFlags;})} rating={activePage?ws.personal.ratings[activePage.id]:undefined} onRating={(rating:any)=>{if(activePage)store.personal(p=>{p.ratings[activePage.id]=rating;});}}/>

@@ -99,7 +99,7 @@ def open_context(page,tab=None):
 def open_reading(page,pane=None):
     if pane is not None:
         if page.locator('.popover-reading').count():page.keyboard.press('Escape')
-        pane.locator('.pane-tabbar').click(position={'x':1,'y':1})
+        pane.locator('.document-tab.selected').click() if pane.locator('.document-tab.selected').count() else pane.locator('.empty-pane').click()
     if not page.locator('.popover-reading').count():
         page.get_by_role('button',name='Reading mode',exact=True).click()
     return page.locator('.popover-reading')

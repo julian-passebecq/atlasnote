@@ -1,0 +1,254 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AtlasNote PDF Companion",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "documentId",
+    "pageCount",
+    "title",
+    "createdAt",
+    "categories",
+    "pages",
+    "terms"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "maxLength": 180
+    },
+    "documentId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+      "maxLength": 180
+    },
+    "documentSha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "pageCount": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10000
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 240
+    },
+    "generatedBy": {
+      "enum": [
+        "ai",
+        "manual"
+      ]
+    },
+    "createdAt": {
+      "type": "number",
+      "minimum": 0
+    },
+    "reviewed": {
+      "type": "boolean"
+    },
+    "categories": {
+      "type": "array",
+      "maxItems": 500,
+      "items": {
+        "$ref": "#/$defs/category"
+      }
+    },
+    "pages": {
+      "type": "object",
+      "maxProperties": 10000,
+      "patternProperties": {
+        "^[1-9][0-9]*$": {
+          "$ref": "#/$defs/page"
+        }
+      },
+      "additionalProperties": false
+    },
+    "terms": {
+      "type": "array",
+      "maxItems": 2000,
+      "items": {
+        "$ref": "#/$defs/term"
+      }
+    }
+  },
+  "$defs": {
+    "category": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "maxLength": 180
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 240
+        },
+        "pageRefs": {
+          "type": "array",
+          "maxItems": 10000,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000
+          }
+        },
+        "pageRanges": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            }
+          }
+        },
+        "children": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "$ref": "#/$defs/category"
+          }
+        }
+      }
+    },
+    "term": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "definition",
+        "pageRefs"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "maxLength": 180
+        },
+        "label": {
+          "type": "string",
+          "maxLength": 240
+        },
+        "definition": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "pageRefs": {
+          "type": "array",
+          "maxItems": 10000,
+          "uniqueItems": true,
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10000
+          }
+        },
+        "aliases": {
+          "type": "array",
+          "maxItems": 50,
+          "items": {
+            "type": "string",
+            "maxLength": 240
+          }
+        },
+        "translation": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "example": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "importance": {
+          "enum": [
+            "core",
+            "supporting",
+            "detail"
+          ]
+        },
+        "categoryIds": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+            "maxLength": 180
+          }
+        },
+        "globalTermId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "maxLength": 180
+        }
+      }
+    },
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "page"
+      ],
+      "properties": {
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 240
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 10000
+        },
+        "keyPoints": {
+          "type": "array",
+          "maxItems": 30,
+          "items": {
+            "type": "string",
+            "maxLength": 2000
+          }
+        },
+        "categoryIds": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+            "maxLength": 180
+          }
+        },
+        "termIds": {
+          "type": "array",
+          "maxItems": 2000,
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+            "maxLength": 180
+          }
+        }
+      }
+    }
+  }
+}

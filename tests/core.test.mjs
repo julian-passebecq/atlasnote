@@ -11,7 +11,13 @@ async function hashPack(p){p.hash=await sha256(stable({manifest:p.manifest,proje
 function bundle(page){return {schemaVersion:2,title:'Test',projects:[],pages:[page],glossary:[],groups:[]};}
 function personalWorkspace(){const ws=blankWorkspace();const page=makeMarkdownPage('My retained page','A personal addition.');const project={id:'project.personal',title:'Personal',icon:'book',description:'Personal notebook',nodes:[{id:'node.personal',title:page.title,pageId:page.id}]};ws.overlays.pages[page.id]={page};ws.overlays.projects.push(project);const view=newView('page.atlas.layouts',{blockId:'block.atlas.layouts.0',offset:6});view.history[0].presentation='book';ws.personal.session.panes[0].views=[view];ws.personal.session.panes[0].active=view.id;ws.personal.session.screen='reader';ws.personal.notes['page.atlas.layouts']={text:'My own remark, not source content.',pageId:'page.atlas.layouts',updatedAt:42};ws.personal.ratings['page.atlas.layouts']='green';ws.personal.bookmarks=[{id:'bookmark.test',pageId:'page.atlas.layouts',title:'Return here',anchor:{blockId:'block.atlas.layouts.0',offset:6},createdAt:40}];ws.overlays.archived.push(page.id);return ws;}
 
-test('public catalogue retains eight guide/example pages plus two external references',()=>{assert.equal(seed.validation.pages,10);assert.equal(seed.packs.filter(p=>p.manifest.id!=="pdfatlas.public").reduce((n,p)=>n+p.pages.length,0),8);assert.equal(seed.validation.terms,1);assert.equal(seed.validation.projects,3);assert.deepEqual(seed.validation.missing,[]);});
+test('public catalogue retains the 1.2.1 core plus ten original study samples',()=>{
+ const original=seed.packs.filter(p=>p.manifest.id!=='study.samples');
+ assert.equal(original.reduce((n,p)=>n+p.pages.length,0),10);
+ assert.equal(original.filter(p=>p.manifest.id!=='pdfatlas.public').reduce((n,p)=>n+p.pages.length,0),8);
+ assert.equal(original.reduce((n,p)=>n+p.projects.length,0),3);
+ assert.equal(seed.validation.pages,20);assert.equal(seed.validation.terms,1);assert.equal(seed.validation.projects,12);assert.deepEqual(seed.validation.missing,[]);
+});
 test('strict schemas refuse unknown page fields',()=>{const p=clone(seed.packs[0].pages[0]);p.quiz='not supported';assert.throws(()=>validateSchema(bundle(p),schemas.v2),/unsupported/);});
 test('strict @2 schema requires stable IDs on all blocks',()=>{const p=clone(seed.packs[0].pages[0]);delete p.blocks[0].id;assert.throws(()=>validateSchema(bundle(p),schemas.v2));});
 test('unknown payload versions cannot be guessed',async()=>{const files=new Map(seedFiles);const path=[...files.keys()].find(p=>p.endsWith('atlas-pack.json'));const p=JSON.parse(new TextDecoder().decode(files.get(path)));p.payloadSchema='atlas.bundle@99';files.set(path,new TextEncoder().encode(JSON.stringify(p)));await assert.rejects(readWorkspace(files,schemas));});

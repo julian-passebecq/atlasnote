@@ -1,5 +1,16 @@
 import React from '../vendor/react.mjs';
 const paths:Record<string,string>={
+ openbook:'M12 6C9 3 5 3 2 4v15c4-1 7 0 10 2m0-15c3-3 7-3 10-2v15c-4-1-7 0-10 2V6z',
+ spread:'M2 4h8v16H2V4zm12 0h8v16h-8V4zM5 8h2M17 8h2',
+ compare:'M2 3h8v18H2V3zm12 0h8v18h-8V3zM3 7h6M15 7h6',
+ chrome:'M3 3h18v18H3V3zM3 9h18m-13 7 4-4 4 4',
+ top:'M3 4h18v16H3V4zm0 4h18m-13 8 4-4 4 4',
+ briefcase:'M3 7h18v14H3V7zm5 0V3h8v4M3 12h18m-11 0v3h4v-3',
+ person:'M16 6a4 4 0 1 1-8 0 4 4 0 0 1 8 0M4 21v-3a8 8 0 0 1 16 0v3',
+ python:'M12 3H6v8h12v10h-6M12 3h6v10H6v8h6M8 6h.01M16 18h.01',
+ microsoft:'M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm11 0h7v7h-7v-7',
+ databricks:'m2 7 10-5 10 5-10 5L2 7zm0 5 10 5 10-5M2 17l10 5 10-5',
+
  rotate:'M20 10a8 8 0 1 0-2 8M20 3v7h-7',
  theme:'M12 3a9 9 0 1 0 9 9c0-2-1-3-3-3h-2c-2 0-2-2-2-3s-1-3-2-3zM7 9h.01M7 14h.01M11 17h.01',
  book:'M4 4h12a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4zm0 12h15M8 4v12M11 8h5M11 11h5',

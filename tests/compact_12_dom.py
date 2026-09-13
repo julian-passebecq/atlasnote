@@ -30,8 +30,8 @@ with sync_playwright() as pw:
   for w,h in [(1366,768),(1440,900),(1920,1080),(390,844)]:
    reset();page.set_viewport_size({'width':w,'height':h});page.wait_for_timeout(400)
    box=page.locator('.topbar').bounding_box();search=page.get_by_role('button',name='Global search',exact=True).bounding_box();rail=page.locator('.reader-rail').bounding_box()
-   assert box['height']<=50 and rail['width']==44,(box,rail)
-   assert search['width']>w*(.55 if w<500 else .8),search
+   assert box['height']<=36 and rail['width']==(36 if w<=540 else 44),(box,rail)
+   assert 28<=search['width']<=280,search # V3 deliberately compresses global search.
    assert page.evaluate('document.documentElement.scrollWidth-innerWidth')<=1
    assert 'Knowledge Atlas' not in page.locator('.topbar').inner_text() and 'LOCAL' not in page.locator('.topbar').inner_text()
    for label in ['Export to AI','Compare in two panes']:

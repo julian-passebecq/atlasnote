@@ -32,10 +32,21 @@ export function paginateDOM(source,probe,{height,width,title=''}){
  }
  const f=fallback(unit);fallbacks.push(unit.dataset.blockId);place(f);
  }
+ // Reserve the actual first semantic fragment, not a guessed 90px. Table
+ // headers plus their first row can be taller than that after a compact-shell
+ // resize, leaving a heading stranded at the foot of the previous sheet.
+ function firstPieceHeight(unit){
+  const kind=unit.dataset.kind,whole=measure(clone(unit));if(whole<=height)return whole;
+  const piece=clone(unit),selector=kind==='code'?'.code-line':kind==='table'?'tbody > tr':kind==='list'?'li':null;
+  if(selector){[...piece.querySelectorAll(selector)].slice(1).forEach(n=>n.remove());return (measure(piece)<=height?measure(piece):measure(fallback(unit)));}
+  if(kind==='paragraph'){const text=unit.textContent??'',end=wordCuts(text)[0]??text.length;piece.replaceChildren(sliceText(unit,0,end));return (measure(piece)<=height?measure(piece):measure(fallback(unit)));}
+  return measure(fallback(unit));
+ }
+ function followingMinimum(index){let total=0;for(let j=index+1;j<sourceUnits.length;j++){const next=sourceUnits[j];if(next.dataset.kind==='page_break')break;if(next.dataset.kind==='heading'||next.dataset.keepNext==='true'){total+=measure(clone(next));continue;}return total+firstPieceHeight(next);}return total;}
  for(let i=0;i<sourceUnits.length;i++){
   const unit=clone(sourceUnits[i]);if(unit.dataset.kind==='page_break'){flush();continue;}
   if(unit.dataset.breakBefore==='true')flush();const h=measure(unit);
-  if((unit.dataset.kind==='heading'||unit.dataset.keepNext==='true')&&sheet.length){const next=sourceUnits.slice(i+1).find(n=>n.dataset.kind!=='page_break');if(next){const nextH=measure(clone(next));const minimum=nextH+h<=height?nextH:Math.min(nextH,90);if(used+h+minimum>height)flush();}}
+  if((unit.dataset.kind==='heading'||unit.dataset.keepNext==='true')&&sheet.length){const minimum=followingMinimum(i);if(used+h+minimum>height)flush();}
   const preceding=sheet.at(-1);const headingWouldBeStranded=preceding&&(preceding.dataset.kind==='heading'||preceding.dataset.keepNext==='true')&&used+h>height;
   if(headingWouldBeStranded){if(['paragraph','code','table','list'].includes(unit.dataset.kind))splitUnit(unit);else {const f=fallback(unit);fallbacks.push(unit.dataset.blockId);place(f);}}else if(h<=height){place(unit);}else splitUnit(unit);
  }
