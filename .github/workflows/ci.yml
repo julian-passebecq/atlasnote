@@ -5,6 +5,7 @@ permissions:
 jobs:
   production-release:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -31,17 +32,23 @@ jobs:
       - run: npm run test:reader:ui
       - run: npm run test:compact:ui
       - run: npm run test:finish:ui
+      - run: npm run test:workspaces:ui
+      - run: npm run test:simplified:ui
       - run: npm run test:backup:diagnostic
       - run: npm run test:pdf:authoring
       # Build the exact hosted distribution after all compatibility suites.
       - run: npm run typecheck:online
       - run: npm run build
       - run: npm run check:release
+      - run: npm run build:test-harness
+      - run: npm run test:pdf:component
       - run: npm run test:pdf
       - run: npm run test:finish:integrated
       # Actual normal origin + IndexedDB + real browser download/fresh restore.
       # A FAIL or BLOCKED result deliberately prevents the release artifact.
       - run: npm run test:runtime
+      - run: npm run test:workspaces:runtime
+      - run: npm run test:savedstates:runtime
       - run: npm run test:headers
       - uses: actions/upload-artifact@v4
         if: always()

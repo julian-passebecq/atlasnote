@@ -1,68 +1,42 @@
-# AtlasNote 1.2.1 - Integrated PDF finishing pass
+# AtlasNote 1.2.3
 
-Continuation of the complete AtlasNote 1.2 source. The canonical content/storage model, note paginator, Compare ownership, stable IDs and existing React-PDF engine are preserved.
+Local-first notes and PDF reading, continuing the verified 1.2.2 application. Start with **[START_HERE.md](START_HERE.md)**. This delivered source has not been merged or deployed.
 
-**Current status: implemented source candidate, NOT production-certified.** The registry cannot resolve in this runtime, so the integrated dependencies/lockfile and hosted distribution have not been installed/built. Chromium also blocks normal HTTP-origin navigation. Read `FINAL_TEST_STATUS.md` for actual results; compatibility DOM checks are not integrated-renderer or IndexedDB certification.
+## Reader and navigation
 
-The live source is `/mnt/data/atlasnote-1.2.1-workspace/`. Start with `WORKSPACE_READY_FOR_GITHUB.md`; no download/re-upload is needed while this runtime remains available. Nothing was pushed or deployed. A secondary backup, when present, is recovery only.
+Five independent study workspaces retain their tabs, panes, history, positions, category filters and layout. The left library header contains Notes/PDF, sidebar toggle, Back, Forward and Search. There is no separate global topbar or redundant library-heading text. Search and history remain clickable in a narrow dock when the notebook sidebar is collapsed. Ctrl/Cmd+K still opens global search.
 
-## Product behavior
+Each reader starts with A/B, the small new-tab **+**, Show/Hide reader controls, then document tabs. Controls default to hidden; an explicitly saved visible preference is respected. Quick Book/PDF Spread is a document layout control. Compare and Focus are separate right-rail actions. The right rail begins Focus, Compare, separator, Swap, Context, separator, reading bookmark and Theme. Compare preserves independent panes rather than cloning the current document.
 
-**Notes** and **PDF Library** are strict recursive projections of the same tree. Notes excludes PDFs and emptied PDF-only projects; PDF Library excludes note-only branches. Counts follow the projection, including archived/hidden items. Switching mode preserves open tabs, reading state, private bytes, placements, bookmarks and remarks. Global search remains cross-content; Compare may combine either type.
+PDF study metadata is in the notebook tree below each PDF. Opening its title does not expand it. Its disclosure opens top-level categories and Glossary, while nested categories/pages remain collapsed until chosen. Physical-page links navigate the active reading pane; definitions and metadata editing are on demand. The former bottom PDF Companion panel no longer occupies reader space. Existing companion data, revision checks, JSON import/export, glossary promotion and local extraction are retained.
 
-Create an empty folder/notebook and its collection opens immediately. The strict discovery tree hides empty branches. Home's explicit **Manage all notebooks** option exposes empty/hidden projects for management, not as a second content store.
+Single-page wheel navigation scrolls the current physical page normally and turns at an edge. Slow mouse ticks accumulate, canvas padding is not treated as unread content, and sustained momentum does not skip multiple pages. Continuous mode retains native scrolling. Five themes, note Book pagination, native PDF fallback, Focus and private local intake remain supported.
 
-The compact ribbon and reader rail remain. Context overlays the reader. PDF rights, attribution, hash, size, provenance and source/open/download links live in Document info or Context. The PDF pane has no large intro block. The native failure/compatibility path has a compact labelled strip and a full-height frame; it does not pretend to provide physical-page controls.
+## Saved reading states
 
-**Focus** requests browser fullscreen in the click handler. Unsupported/rejected requests keep CSS Focus working; browser exit synchronizes app state. No fullscreen request is made automatically on reload. In the integrated engine the controls float, PDF artwork stays unchanged, and arrow keys navigate physical pages outside form controls.
+Five additional bottom-right buttons save/restore the current workspace, save/restore all five workspaces, and open a compact manager. Saves are immutable reading-session checkpoints with a date, editable title and optional progress/next-step note. The manager has scopes 1-5 and All, explicit deletion, an undo point before each restore, and the last 30 save/restore/rename/delete actions.
 
-Compare retains independent panes, blue/lavender identity, dual tree markers, exact survivor behavior, five tabs per pane and per-tab history/language/modes. Five themes remain: Fluent Blue, Neutral/Sage, Academic Paper, Soft Lavender and Dark Slate.
+A workspace save targets its original slot. Other slots are unchanged. An all-workspaces save also restores the active slot and preserves uninitialized-slot absence. Tabs, histories, note/PDF positions, layout, filters, theme and disclosure state are included. **Notes, library content, PDF files, imports, shared glossary, flags and reading-position bookmarks are not rolled back.** Use Settings > Download workspace backup for a portable full-library backup; that backup includes the new saved states and undo/history records too.
 
-## Build contracts
+There are 20 manual saves per scope (up to 120), one current undo point per scope, 30 recent activity events, and a 6 MiB saved-state budget. A limit produces an error rather than silently deleting manual saves. These saves are local to this browser profile and origin; they are not cloud sync or a replacement for an exported backup.
 
-Node 22.12 or later. On a fully provisioned checkout with a resolved integrated lockfile:
+## Build and test
+
+Node >=22.12.0; Python requirements are needed only for tests/optional PDF authoring.
 
 ```sh
 npm ci
-npm run check:integrated-deps
-npm run typecheck:online
-npm run build
-npm run check:release
-npm run preview
+python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
+python -m playwright install --with-deps chromium
+npm run test:release
 ```
 
-`build` and `build:vite` both target the integrated `dist/`. `netlify.toml` is prepared to run `npm ci && npm run build` and publish **only `dist`**. CI verifies the exact integrated distribution after the compatibility suites; there is no automatic dependency installation or silent fallback during deployment.
+The release runner retains logs and exits nonzero for failure or blocking. It includes clean install and npm audit, all existing compatibility and normal-origin tests, the new UI and saved-state runtime suites, and an isolated actual PDF-component harness. `.github/workflows/ci.yml` runs the same release-critical gates. No workflow writes source or deploys this delivery automatically.
 
-**This workspace still lacks the integrated dependency entries in the lockfile.** `npm ci` alone will not add them. The explicit one-time `npm run enable:online` command authors the lock on a registry-enabled runtime. It requests React/ReactDOM 18.3.1, React-PDF 10.5.0, React 18 types and Vite 8.2.2, saves exact installed versions and verifies React-PDF's own PDF.js 5.4.296. These are targets, not a claim that they installed here. Review both manifests, run a fresh `npm ci`, audit, typecheck, build and all hosted browser gates before release. Never independently force a newer PDF.js.
+For a local preview: `npm run build && npm run preview`. The build outputs `dist/`; `netlify.toml` remains configured for the existing integrated app. The test harness is built only by explicit `npm run build:test-harness` into `.build/engine-dom`, never `dist`. It is not a production entry point.
 
-### Separate compatibility build
+See [FINAL_TEST_STATUS.md](FINAL_TEST_STATUS.md) for the evidence scope. Normal-origin browser-policy failures in this environment must not be described as passing persistence tests.
 
-With registry installation or a preinstalled global TypeScript 5.8.3:
+## Provenance and privacy
 
-```sh
-npm run bootstrap:offline
-npm run build:offline
-npm run dev:offline
-```
-
-The bootstrap restores checked-in JSZip/Prism and the local compiler. It is **not equivalent to `npm ci`** and does not install React-PDF/Vite. Compatibility output is **`dist-offline/`**, never `dist/`. `npm test` rebuilds this compatibility output, so it cannot overwrite the hosted bundle. Do not publish it as an integrated release.
-
-## Backup ownership fix
-
-The reproduced 1.2 mismatch was an own `undefined` `anchor`/`revision` on note remarks: IndexedDB/in-memory objects can retain those keys but ZIP JSON cannot. New writers omit absent optional fields; a bounded ownership repair removes only those known absent optional keys from older personal state. Meaningful anchors, timestamps, histories and view state are preserved.
-
-The production `captureWorkspaceSnapshot()` flush point captures reader anchors, waits for queued writes and freezes a clone. Backup uses that snapshot and the serializer freezes its own input before asynchronous asset reads. Failed durable writes do not prevent an emergency copy of available in-memory work; Settings discloses that condition.
-
-The real-origin test compares the post-flush canonical state to persisted state, downloaded backup and fresh-context restored state without deleting or normalizing meaningful fields. Its equality assertions remain strict. This runtime has not completed that normal-origin gate.
-
-## Public/private PDF safety
-
-`config/pdfatlas.json` is pinned to reviewed commit `fa5e83f7825cdc837078f87c5e130cb012332195`; run `npm run pdfatlas:sync` after an intentional configuration change. The supplied metadata, sizes, page counts and SHA-256 values are retained. No public-library binaries or private corpus are copied into the application.
-
-Trusted one-click loads require the exact HTTPS host/owner/repository/path, known hash, byte cap and PDF magic, with credentials/referrers omitted and redirects rejected. Other external hosts retain consent. Public references back up metadata only; private local intake stores exact bytes, retains SHA dedupe and supports the existing private-library export.
-
-## Evidence and testing
-
-`FINAL_TEST_STATUS.md` separates unit, DOM, hardening, reader, compact, PDF authoring, integrated PDF, real-origin, build and header results. `docs/TESTING.md` lists the commands. `CHANGED_FILES.md` records file-level reasons. Earlier reports under `docs/release-1.2/` and `docs/RELEASE_REPORT.md` are historical 1.2 evidence, not 1.2.1 certification.
-
-All illustrated PDFs/test payloads bundled with the project are synthetic/author-created fixtures. A native frame can be blocked by the browser policy even when its shell is measurable; native-frame screenshots do not prove the PDF artwork rendered. No invented integrated screenshots or passing statuses are supplied.
+Based on remote `main` commit `476f327ae77eb9103f2e5d079b87b6a541ddc782`, tree `2d07e499cab9236f5a098e2d08513f98f3e1b4f3`. The baseline reconstructed from the downloaded verified GitHub source plus the two merged stylesheet changes was checked against that exact tree before editing. This pass does not include the private 137-page reference library, personal workspace backups or credentials. Public PDF links remain pinned to their existing reviewed references. Historical documents under `docs/history/` describe older releases, not current acceptance results.

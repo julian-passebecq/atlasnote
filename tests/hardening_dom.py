@@ -90,9 +90,9 @@ with sync_playwright() as pw:
     def top_order():
         reset()
         labels=page.locator('.reader-rail > button').evaluate_all('(xs)=>xs.map(x=>x.getAttribute("aria-label")||x.textContent.trim())')
-        assert labels==['Open context panel','Bookmark reading position','Theme','Export to AI','More / Settings'],labels
+        assert labels==['Enter focus mode','Compare in two panes','Swap panes','Open context panel','Bookmark reading position','Theme','Export to AI','More / Settings'],labels
         return labels
-    check('Compact rail follows the 1.2.2 product control order',['E01'],top_order)
+    check('Compact rail follows the 1.2.3 product control order',['E01'],top_order)
     for left in [False,True]:
         for right in [False,True]:
             def focus(left=left,right=right):
@@ -281,6 +281,7 @@ with sync_playwright() as pw:
     def note_pdf():
         reset();page.get_by_role('button',name='Switch to PDF library',exact=True).click();page.get_by_role('button',name='Compare in two panes').click();tree('PDF reading fixture').click()
         assert page.locator('.pdf-reader').count()==1;assert page.locator('.reader-body').count()==1
+        page.locator('.active-pane').get_by_role('button',name='Show reader controls',exact=True).click()
         assert page.get_by_text('Browser PDF fallback',exact=True).is_visible()
         assert page.get_by_role('link',name='Open original PDF',exact=True).is_visible();assert page.get_by_role('link',name='Download original',exact=True).is_visible()
         page.screenshot(path=str(OUT/'04-note-pdf-fallback.png'))

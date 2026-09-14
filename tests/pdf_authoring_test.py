@@ -78,8 +78,20 @@ with tempfile.TemporaryDirectory(prefix='atlas-authoring-tests-') as work:
         assert not r['before']['hasSelectableText'] and not r['after']['hasSelectableText'];assert r['after']['pageCount']==1
     check('Image-only PDF remains image-only: no invented OCR/text layer',[120,122,123],image_only)
     def kept_original():
-        r=run(WORK/'lossless.pdf',WORK/'second.pdf','lossless-second')
-        assert r['keptOriginalBecauseCandidateWasNotSmaller'];assert (WORK/'second.pdf').read_bytes()==(WORK/'lossless.pdf').read_bytes()
+        current=WORK/'lossless.pdf'
+        trials=[]
+        for i in range(12):
+            target=WORK/f'fixed-point-{i}.pdf'
+            r=run(current,target,f'lossless-fixed-point-{i}')
+            candidate=r['losslessCandidate']['bytes'];before=r['before']['bytes']
+            assert r['keptOriginalBecauseCandidateWasNotSmaller']==(candidate>=before)
+            trials.append({'before':before,'candidate':candidate})
+            if candidate>=before:
+                assert target.read_bytes()==current.read_bytes()
+                return {'iterations':trials,'originalBytesPreserved':True}
+            assert target.stat().st_size<current.stat().st_size
+            current=target
+        raise AssertionError('Synthetic optimizer fixture did not reach a non-smaller candidate: '+str(trials))
     check('A non-smaller candidate returns the original exact bytes',[124],kept_original)
     def duplicate():
         (WORK/'index.json').write_text(json.dumps({validator.sha(source):'pdf.canonical.existing'}))

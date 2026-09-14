@@ -13,14 +13,14 @@ import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
 
-def start_server(dom_only=False):
+def start_server(dom_only=False, dist=None):
     explicit = os.environ.get('ATLAS_BASE_URL')
     if explicit:
         return explicit.rstrip('/') + '/'
     with socket.socket() as s:
         s.bind(('127.0.0.1', 0))
         port = s.getsockname()[1]
-    env = {**os.environ, 'PORT': str(port), 'ATLAS_DOM_TESTS': '1' if dom_only else '0', 'ATLAS_DIST': 'dist-offline' if dom_only else os.environ.get('ATLAS_DIST','dist')}
+    env = {**os.environ, 'PORT': str(port), 'ATLAS_DOM_TESTS': '1' if dom_only else '0', 'ATLAS_DIST': dist or ('dist-offline' if dom_only else os.environ.get('ATLAS_DIST','dist'))}
     process = subprocess.Popen(['node', 'tools/serve.mjs'], cwd=ROOT, env=env, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
     atexit.register(process.terminate)
     base = f'http://127.0.0.1:{port}/'
@@ -47,11 +47,11 @@ def synthetic_data():
     """
     return json.loads(subprocess.check_output(['node', '--input-type=module', '-e', script], cwd=ROOT, text=True))
 
-def mount_dom(page, base):
+def mount_dom(page, base, controls_visible=True):
     page.set_content(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><base href="{base}"><link rel="stylesheet" href="styles/app.css"></head><body><div id="root"></div></body></html>')
     page.add_script_tag(url=base+'app/vendor/jszip.js')
     page.add_script_tag(url=base+'app/vendor/prism.js')
-    page.evaluate('''async({base,synthetic})=>{
+    page.evaluate('''async({base,synthetic,controlsVisible})=>{
       if(!crypto.randomUUID)crypto.randomUUID=()=>Array.from(crypto.getRandomValues(new Uint8Array(16)),x=>x.toString(16).padStart(2,'0')).join('');
       history.replaceState=()=>{};
       const [{default:React,ReactDOM},{store},{App},core]=await Promise.all([import(base+'app/vendor/react.mjs'),import(base+'app/storage/database.js'),import(base+'app/app/App.js'),import(base+'app/core/workspace.js')]);
@@ -59,12 +59,12 @@ def mount_dom(page, base):
       store.enqueue=async()=>{};window.testStore=store;window.testCore=core;
       const built=await(await fetch(base+'content.json')).json();window.testBuilt=built;
       window.testReset=(id='page.atlas.welcome',mode='continuous',useSynthetic=false)=>{
-        const ws=core.blankWorkspace();if(useSynthetic)ws.imports=structuredClone(synthetic[0].packs);
+        const ws=core.blankWorkspace();if(controlsVisible)ws.personal.session.panes[0].readerChromeCollapsed=false;if(useSynthetic)ws.imports=structuredClone(synthetic[0].packs);
         const c=core.compose(built,ws);ws.personal.session.expanded=c.projects.flatMap(p=>{const ids=[p.id];const walk=ns=>ns.forEach(n=>{if(n.children){ids.push(n.id);walk(n.children);}});walk(p.nodes);return ids;});
         if(id){const v=core.newView(id);v.history[0].presentation=mode;ws.personal.session.panes[0].views=[v];ws.personal.session.panes[0].active=v.id;ws.personal.session.screen='reader';}store.setLoaded(ws);
       };
       ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App,{built}));
-    }''', {'base': base, 'synthetic': synthetic_data()})
+    }''', {'base': base, 'synthetic': synthetic_data(), 'controlsVisible': controls_visible})
     page.wait_for_timeout(200)
 
 
@@ -111,3 +111,12 @@ def reader_action(page,name,pane=None):
 def set_learning_flag(page,flag):
     open_more(page).get_by_role('combobox',name='Learning flag',exact=True).select_option(flag)
     page.keyboard.press('Escape')
+
+
+def show_reader_controls(page, pane=None):
+    """Explicit UI fixture setup; production readers start with controls hidden."""
+    area = pane or page.locator('.active-pane')
+    button = area.get_by_role('button', name='Show reader controls', exact=True)
+    if button.count():
+        button.click()
+    return area

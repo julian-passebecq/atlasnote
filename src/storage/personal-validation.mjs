@@ -1,3 +1,4 @@
+import {validateSavedStates} from './saved-states-validation.mjs';
 import {inspectObject,ID} from '../core/validation.mjs';
 export function validatePersonal(p){
  inspectObject(p);
@@ -20,6 +21,7 @@ export function validatePersonal(p){
   for(const [key,s] of Object.entries(p.workspaceSlots)){if(!['2','3','4','5'].includes(key))fail('unknown workspace slot');sessions.push(s);}
   if(p.activeWorkspaceSlot!==1&&!p.workspaceSlots[p.activeWorkspaceSlot])fail('active workspace missing');
  }else if(p.workspaceSlots!==undefined||p.activeWorkspaceSlot!==undefined)fail('numbered workspaces require personal schema 3');
+ if(p.savedStates!==undefined){if(p.schemaVersion!==3)fail('saved states require personal schema 3');validateSavedStates(p.savedStates,sessions);}
  for(const s of sessions){
   obj(s,'session');arr(s.panes,'panes',2);if(!s.panes.length)fail('no pane');const paneIds=new Set(),viewIds=new Set();
   for(const pane of s.panes){
@@ -43,6 +45,7 @@ export function validatePersonal(p){
   if(!paneIds.has(s.activePane))fail('active pane missing');num(s.ratio,'split ratio',28,72);num(s.fontSize,'font size',14,22);if(!['home','reader','bookmarks'].includes(s.screen))fail('screen');if(!['fluent','neutral','academic','lavender','slate'].includes(s.theme))fail('theme');if(s.libraryMode!==undefined&&!['notes','pdfs'].includes(s.libraryMode))fail('library mode');
   for(const key of ['leftOpen','rightOpen','focus','showFlags'])bool(s[key],key);arr(s.expanded,'expanded IDs');s.expanded.forEach(x=>id(x,'expanded ID'));
   if(s.categoryFilter!==undefined&&s.categoryFilter!==null&&!['informatics','cloud','norsk','job','personal'].includes(s.categoryFilter))fail('category filter');
+  if(s.pdfTreeExpanded!==undefined){arr(s.pdfTreeExpanded,'PDF tree disclosures',2000);s.pdfTreeExpanded.forEach(x=>str(x,'PDF tree key',800));if(new Set(s.pdfTreeExpanded).size!==s.pdfTreeExpanded.length)fail('duplicate PDF tree key');}
   if(s.compactTop!==undefined)bool(s.compactTop,'compact top');if(s.collapsedGroups!==undefined){arr(s.collapsedGroups,'collapsed groups',1000);s.collapsedGroups.forEach(x=>id(x,'collapsed group'));}
   if(s.collapsedPane!=null&&(s.panes.length!==2||!paneIds.has(s.collapsedPane)||s.activePane===s.collapsedPane))fail('collapsed pane');
  }
