@@ -89,7 +89,7 @@
 /* Overlays must never intercept the newly relocated pane header controls. */
 .context-drawer,.reader-popover.popover-reading{top:38px}
 
-@media(max-width:540px){.atlas-app .reader-rail{min-width:36px}}
+@media(max-width:540px){.atlas-app .reader-rail{min-width:36px;flex-basis:36px}}
 @media(max-width:900px){.workspace-frame:has(.mobile-pane-switch) .context-drawer,.workspace-frame:has(.mobile-pane-switch) .reader-popover.popover-reading{top:76px}}
 
 /* Keep footer tools above common hosted-page corner badges. */

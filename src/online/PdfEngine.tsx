@@ -1,7 +1,7 @@
 /** Primary hosted PDF adapter. Worker, CMaps, WASM and standard fonts are copied
  * from React-PDF's resolved PDF.js package; the version gate is never bypassed.
  * The separate compatibility build uses the native renderer, not this adapter. */
-import React,{useState,useEffect,useMemo,useRef} from 'react';
+import React,{useState,useEffect,useLayoutEffect,useMemo,useRef} from 'react';
 import {Document,Page,Outline,pdfjs} from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
@@ -35,7 +35,9 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  const capturing=useRef(false),scrolling=useRef(false),restoreFrame=useRef(0),scrollFrame=useRef(0),settleTimer=useRef<ReturnType<typeof setTimeout>>();
  useEffect(()=>{let alive=true;setWorkerOK(false);setWorkerError('');fetch(new URL('pdf-assets/engine.json',document.baseURI),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('PDF worker metadata missing');return r.json();}).then(meta=>{if(meta.pdfjs!==pdfjs.version)throw Error('PDF worker version does not match React-PDF: '+meta.pdfjs+' vs '+pdfjs.version);if(alive)setWorkerOK(true);}).catch(e=>{if(alive)setWorkerError(e.message);});return()=>{alive=false;};},[retry]);
  useEffect(()=>{setPDF(null);setError('');setHits([]);setFindStatus('');setPassword('');setPasswordReason('');passwordCallback.current=null;job.current++;return()=>{job.current++;passwordCallback.current=null;};},[doc.id,doc.sha256,url,retry]);
- useEffect(()=>{setPageInput(String(loc.pdfPage));},[loc.pdfPage]);
+ // Companion and outline jumps must update the editable page control before
+ // paint, alongside the physical page and companion selection.
+ useLayoutEffect(()=>{setPageInput(String(loc.pdfPage));},[loc.pdfPage]);
  // Resize restoration uses a physical page plus a fractional intra-page anchor.
  // Persisting only a page number loses the user's place in a tall, zoomed page.
  const pendingRestore=useRef(true),lastCapture=useRef(''),restoring=useRef(false),wheelPager=useRef(createWheelPager());
