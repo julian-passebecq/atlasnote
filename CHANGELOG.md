@@ -1,3 +1,19 @@
+# AtlasNote changelog
+
+## 1.2.3 - simplified reading and saved workspace states
+
+- Removed the standalone global topbar and redundant library title; moved its actions to real sidebar navigation with a collapsed-state dock.
+- Put the new-tab plus and reader-control toggle immediately after A/B, before tabs; controls default to hidden, preserving explicit existing choices.
+- Moved Focus, Compare and Swap into the ordered shared right rail; kept document Spread separate.
+- Replaced the bottom PDF Companion surface with collapsed per-PDF categories, subcategories, physical-page and glossary links in the notebook tree. Retained on-demand metadata, local extraction, import/export and promotion.
+- Fixed slow wheel accumulation and canvas-inset edge detection for Single/Spread without momentum skipping or affecting Continuous scrolling.
+- Added single/all-workspace state saves, latest restore buttons, one undo point per scope, dated manager lists, optional progress notes and bounded activity history. State restores never roll back the content library.
+- Added shared-validator/backup support, transaction-aware success reporting and restore-revision protection against stale reader callbacks/URL replay.
+- Added dedicated core, browser UI, actual-PDF-component and real-origin saved-state acceptance tests; updated CI and old UI selectors for the new contract.
+- Delivery status and remaining environment-blocked normal-origin checks are recorded in FINAL_TEST_STATUS.md. This archive is not a deployed release.
+
+## Earlier history (retained)
+
 # AtlasNote 1.2.1 - Integrated PDF finishing source candidate
 
 - Make Notes/PDF discovery strictly recursive in both directions, including counts, archive/hidden handling, keyboard and rapid toggles. Preserve canonical IDs, open tabs and personal state.

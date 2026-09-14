@@ -1,5 +1,10 @@
 import React from '../vendor/react.mjs';
 const paths:Record<string,string>={
+ save:'M5 3h14v18l-7-4-7 4V3zM8 9h8M12 5v8',
+ 'save-all':'M8 6h13v16l-6-4-7 4V6zM4 18H2V2h14v2M11 11h7m-3.5-3.5v7',
+ restore:'M4 11a8 8 0 1 1 2 7M4 4v7h7M12 7v6l4 2',
+ 'restore-all':'M6 9a7 7 0 1 1 2 10M6 3v6h6M2 13v8h5M14 8v5l3 2',
+ 'saved-list':'M4 3h5v7L6.5 8 4 10V3zM12 5h9M12 9h9M4 15h17M4 20h17',
  openbook:'M12 6C9 3 5 3 2 4v15c4-1 7 0 10 2m0-15c3-3 7-3 10-2v15c-4-1-7 0-10 2V6z',
  spread:'M2 4h8v16H2V4zm12 0h8v16h-8V4zM5 8h2M17 8h2',
  compare:'M2 3h8v18H2V3zm12 0h8v18h-8V3zM3 7h6M15 7h6',

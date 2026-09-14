@@ -10,14 +10,14 @@ import {builtinCompanion,builtinRevisionMismatch} from './sample.js';
 import {companionTemplate,saveText} from './authoring.mjs';
 import {sha256} from '../core/validation.mjs';
 
-type Props={document:DocumentEntry;physicalPage:number;pageCount?:number;paneId?:string;slotId?:WorkspaceNumber;
+type Props={managerOnly?:boolean;onClose?:()=>void;document:DocumentEntry;physicalPage:number;pageCount?:number;paneId?:string;slotId?:WorkspaceNumber;
  onNavigate:(page:number)=>void;prepare?:(first:number,last:number,progress:(n:number,last:number)=>void,signal:AbortSignal)=>Promise<any>;nativeFallback?:boolean};
 function flattenCategories(categories:PdfCategory[],depth=0):{id:string;title:string;depth:number}[]{return categories.flatMap(c=>[{id:c.id,title:c.title,depth},...flattenCategories(c.children??[],depth+1)]);}
 function renameCategory(categories:PdfCategory[],id:string,title:string):PdfCategory[]{return categories.map(c=>({...c,...(c.id===id?{title}:{}),...(c.children?{children:renameCategory(c.children,id,title)}:{})}));}
 /** Document content is canonical, while this view's preferences are stored on
  * its original workspace/pane/revision. An inactive callback cannot write into
  * the next workspace's reader. Imported text is rendered as text, never HTML. */
-export function CompanionPanel({document:original,physicalPage,pageCount,paneId,slotId=1,onNavigate,prepare,nativeFallback=false}:Props){
+export function CompanionPanel({managerOnly=false,onClose,document:original,physicalPage,pageCount,paneId,slotId=1,onNavigate,prepare,nativeFallback=false}:Props){
  const ws=useSyncExternalStore(store.subscribe,store.getSnapshot);
  const doc={...original,...(pageCount?{pageCount}:{})},key=companionKey(doc);
  const candidate:PdfCompanion|undefined=ws.overlays.companions?.[key]??builtinCompanion(doc);
@@ -49,7 +49,7 @@ export function CompanionPanel({document:original,physicalPage,pageCount,paneId,
   await store.overlays(o=>{o.companions=next;});
   return valid;
  }
- async function importValue(value:unknown){setError('');setBusy(true);try{await persist(value);if(alive.current){preference({open:true,tab:'overview',term:''});setDialog(null);setStatus('Companion saved locally.');}}catch(e){if(alive.current)setError((e as Error).message);}finally{if(alive.current)setBusy(false);}}
+ async function importValue(value:unknown){setError('');setBusy(true);try{await persist(value);if(alive.current){if(!managerOnly)preference({open:true,tab:'overview',term:''});setDialog(null);onClose?.();setStatus('Companion saved locally.');}}catch(e){if(alive.current)setError((e as Error).message);}finally{if(alive.current)setBusy(false);}}
  async function readFile(file:File){setError('');if(file.size>COMPANION_LIMITS.bytes){setError('Companion JSON exceeds the 2 MiB limit.');return;}try{const text=await file.text();const valid=validateCompanion(text,doc) as PdfCompanion;setDraft(valid);setRaw('');setEditTerm(valid.terms[0]?.id??'');setEditCategory(valid.categories[0]?.id??'');setStatus('Validated preview. Review the content, then save.');}catch(e){setError((e as Error).message);}}
  async function promote(term:PdfTerm){setError('');try{
   if(!companion)return;
@@ -67,10 +67,11 @@ export function CompanionPanel({document:original,physicalPage,pageCount,paneId,
    <button className="text-button" disabled={!Number.isFinite(first)||nativeFallback} aria-current={selected?'location':undefined} onClick={()=>jump(first)}>{c.title}<small>{c.pageRanges?.map(([a,b])=>a===b?`p.${a}`:`p.${a}-${b}`).join(', ')||c.pageRefs?.map(n=>`p.${n}`).join(', ')}</small></button>
   </div>{c.children&&!collapsed&&categories(c.children,depth+1)}
  </div>;});}
+ useEffect(()=>{if(managerOnly)manage();},[]);
  const pages=companion?pageWindow(Math.min(mapCursor,companion.pageCount),companion.pageCount):[];
  const draftTerm=draft?.terms.find(t=>t.id===editTerm),draftCategories=draft?flattenCategories(draft.categories):[],draftCategory=draftCategories.find(c=>c.id===editCategory);
  function changeTerm(patch:Partial<PdfTerm>){setDraft(d=>d?{...d,terms:d.terms.map(t=>t.id===editTerm?{...t,...patch}:t)}:d);}
- return <><section className={'pdf-companion '+(open?'expanded':'collapsed')} data-companion-key={key} aria-label="PDF Companion">
+ return <>{!managerOnly&&<section className={'pdf-companion '+(open?'expanded':'collapsed')} data-companion-key={key} aria-label="PDF Companion">
   <div className="companion-header"><button className="companion-toggle" aria-label={open?'Collapse PDF Companion':'Expand PDF Companion'} aria-expanded={open} onClick={()=>preference({open:!open})}><Icon name="book" size={15}/><strong>PDF Companion</strong><span>Page {physicalPage}{companion?` / ${companion.pageCount}`:''}{currentTerms.length?` / ${currentTerms.length} concepts`:''}</span><Icon name={open?'down':'chevron'} size={14}/></button>
    <IconButton name="edit" label="Manage PDF Companion" onClick={manage}/>
   </div>
@@ -88,8 +89,8 @@ export function CompanionPanel({document:original,physicalPage,pageCount,paneId,
     </>}
    </div>
   </div>}
- </section>
- {dialog&&<Modal title={dialog==='manage'?'Manage PDF Companion':'Prepare AI companion'} wide onClose={()=>{cancel.current?.abort();setDialog(null);}}>
+ </section>}
+ {dialog&&<Modal title={dialog==='manage'?'Manage PDF Companion':'Prepare AI companion'} wide onClose={()=>{cancel.current?.abort();setDialog(null);onClose?.();}}>
   <p className="secondary">{doc.title} / {doc.pageCount??'Unknown'} physical pages</p><code className="companion-revision">{doc.id} / {doc.sha256??'Unversioned external reference'}</code>
   {dialog==='prepare'?<><p>Extract selectable text locally. AtlasNote does not send your PDF to an AI service. Review the exported text before sharing it. Your companion JSON can be imported here afterwards.</p><div className="companion-range"><Field label="First physical page"><input aria-label="First physical page" type="number" min={1} max={doc.pageCount} value={start} onChange={e=>setStart(Number(e.target.value))}/></Field><Field label="Last physical page (max 1,000 per batch)"><input aria-label="Last physical page (max 1,000 per batch)" type="number" min={start} max={doc.pageCount} value={end} onChange={e=>setEnd(Number(e.target.value))}/></Field></div><div className="button-row"><button className="primary" disabled={!prepare||busy} onClick={()=>void prepareInput()}>Extract locally</button>{busy&&<button onClick={()=>cancel.current?.abort()}>Cancel extraction</button>}</div>
    {prepared&&<><p>{prepared.coverage.first}-{prepared.coverage.last} of {prepared.coverage.documentPages} physical pages. Each part records missing text and any truncation.</p>{prepared.parts.map((part:any,i:number)=><div className="button-row" key={i}><button onClick={()=>saveText(`atlas-companion-input-${i+1}.json`,JSON.stringify(part,null,2))}>Download AI input part {i+1}</button><button onClick={()=>{navigator.clipboard.writeText(JSON.stringify(part,null,2)).then(()=>setStatus('Input copied. Nothing was uploaded.')).catch(()=>setError('Clipboard unavailable. Use the download button.'));}}>Copy part {i+1}</button></div>)}</>}

@@ -9,7 +9,7 @@ import os
 import traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_support import ROOT, start_server, launch
+from browser_support import ROOT, start_server, launch, show_reader_controls
 
 OUT=ROOT/os.environ.get('ATLAS_EVIDENCE','docs/evidence/hardening/pdf-runtime')
 OUT.mkdir(parents=True,exist_ok=True)
@@ -63,7 +63,7 @@ try:
         phase='page';page.get_by_role('combobox',name='PDF presentation').select_option('single');input_page(page,3);assert visible_pages(page)==[3];record(phase)
         phase='zoom';canvas=page.locator('.react-pdf__Page canvas').first;before=canvas.bounding_box()['width'];page.get_by_role('combobox',name='PDF zoom').select_option('1.5');page.wait_for_timeout(500);assert canvas.bounding_box()['width']>before*1.4;record(phase)
         phase='rotation';page.get_by_role('button',name='Exit focus',exact=True).click();search(page,'Rotated PDF fixture');page.locator('.react-pdf__Page canvas').first.wait_for();page.wait_for_timeout(500)
-        canvas=page.locator('.react-pdf__Page canvas').first;before=canvas.bounding_box();page.get_by_role('button',name='Rotate 90 degrees',exact=True).click();page.wait_for_timeout(500);after=canvas.bounding_box();assert abs(before['height']/before['width']-after['height']/after['width'])>.1;record(phase)
+        show_reader_controls(page);canvas=page.locator('.react-pdf__Page canvas').first;before=canvas.bounding_box();page.get_by_role('button',name='Rotate 90 degrees',exact=True).click();page.wait_for_timeout(500);after=canvas.bounding_box();assert abs(before['height']/before['width']-after['height']/after['width'])>.1;record(phase)
         phase='outline';search(page,'PDF reading fixture');page.locator('.react-pdf__Page canvas').first.wait_for();page.get_by_role('button',name='Outline',exact=True).click();assert page.locator('.pdf-outline .react-pdf__Outline a').count()>0;record(phase)
         phase='text';input_page(page,1);page.get_by_role('button',name='Search PDF',exact=True).click();page.get_by_role('textbox',name='Find text in PDF',exact=True).fill('Atlas');page.get_by_role('button',name='Find',exact=True).click();page.locator('.pdf-search-results button').first.wait_for()
         text=page.locator('.react-pdf__Page__textContent').first
@@ -78,12 +78,12 @@ try:
         field.fill('atlas-demo');page.get_by_role('button',name='Unlock PDF',exact=True).click();page.locator('.react-pdf__Page canvas').first.wait_for();record(phase)
         phase='password_storage';page.wait_for_timeout(500);records=json.dumps(saved_records(page));assert 'WRONG_PASSWORD_RUNTIME' not in records and 'atlas-demo' not in records;record(phase)
         phase='pdf_compare';search(page,'PDF reading fixture');page.locator('.react-pdf__Page canvas').first.wait_for();page.get_by_role('button',name='Compare in two panes',exact=True).click();search(page,'PDF reading fixture');page.locator('.integrated-pdf').nth(1).wait_for();assert page.locator('.integrated-pdf').count()==2
-        second=page.locator('.document-pane').last;second.get_by_role('spinbutton',name='Physical PDF page number').fill('3');second.get_by_role('spinbutton',name='Physical PDF page number').press('Enter');page.wait_for_timeout(350)
+        second=page.locator('.document-pane').last;show_reader_controls(page,second);second.get_by_role('spinbutton',name='Physical PDF page number').fill('3');second.get_by_role('spinbutton',name='Physical PDF page number').press('Enter');page.wait_for_timeout(350)
         assert page.locator('.document-pane').first.get_by_role('spinbutton',name='Physical PDF page number').input_value()=='1';record(phase)
         phase='note_compare';search(page,'One note, several ways to read');assert page.locator('.integrated-pdf').count()==1 and page.locator('.reader-body').count()==1;record(phase)
         page.screenshot(path=str(OUT/'01-integrated-note-pdf-compare.png'))
-        phase='original';pdfpane=page.locator('.integrated-pdf').first
-        with page.expect_download() as transfer: pdfpane.get_by_role('link',name='Download original',exact=True).click()
+        phase='original';pdfpane=page.locator('.document-pane').filter(has=page.locator('.integrated-pdf')).first;show_reader_controls(page,pdfpane);pdfpane.get_by_role('button',name='Document info',exact=True).click()
+        with page.expect_download() as transfer: pdfpane.locator('.pdf-info-overlay').get_by_role('link',name='Download original',exact=True).click()
         path=OUT/'downloaded-original.pdf';transfer.value.save_as(str(path))
         original=(ROOT/'content/packs/atlas.reader-guide/assets/atlas-reader-fixture.pdf').read_bytes();assert path.read_bytes()==original;record(phase,{'sha256':hashlib.sha256(original).hexdigest()})
         phase='worker_mismatch';page.route('**/pdf-assets/engine.json',lambda route:route.fulfill(status=200,content_type='application/json',body=json.dumps({**meta,'pdfjs':'0.0.0'})))

@@ -5,7 +5,7 @@ Those contracts are covered separately by workspace_122_runtime.py in CI.
 import json,os,traceback
 from pathlib import Path
 from playwright.sync_api import sync_playwright
-from browser_support import ROOT,start_server,launch,mount_dom,reader_action,open_context
+from browser_support import ROOT,start_server,launch,mount_dom,reader_action,open_context,open_more
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/1.2.2/dom'));OUT.mkdir(parents=True,exist_ok=True)
 results=[];errors=[];base=start_server(dom_only=True)
 with sync_playwright() as pw:
@@ -52,30 +52,31 @@ with sync_playwright() as pw:
   ids=[x['id'] for x in s()['panes']];p.get_by_role('button',name='Swap panes',exact=True).click();assert [x['id'] for x in s()['panes']]==list(reversed(ids));shot('pane-collapse-restore-and-swap')
  check('A/B collapse is non-destructive and tree markers restore existing panes; swap works',collapse)
  def chrome():
-  reset('page.atlas.pdf');p.locator('.pdf-fallback').wait_for();p.get_by_role('button',name='Collapse PDF Companion',exact=True).click();before=s()['panes'][0]['views'];old=p.locator('.pdf-fallback').bounding_box()['height']
+  reset('page.atlas.pdf');p.locator('.pdf-fallback').wait_for();assert p.locator('.pdf-companion').count()==0;before=s()['panes'][0]['views'];old=p.locator('.pdf-fallback').bounding_box()['height']
   p.get_by_role('button',name='Hide reader controls',exact=True).click();assert not p.locator('.pane-breadcrumb').is_visible();assert not p.locator('.pdf-fallback-strip').is_visible();assert p.locator('.pdf-fallback').bounding_box()['height']>old+40
-  p.get_by_role('button',name='Hide global topbar',exact=True).click();assert not p.locator('.topbar').is_visible();assert not p.evaluate('!!document.fullscreenElement');assert s()['panes'][0]['views']==before
-  p.get_by_role('button',name='Show reader controls',exact=True).click();p.get_by_role('button',name='Show global topbar',exact=True).click();assert s()['panes'][0]['views']==before
+  assert p.locator('.topbar').count()==0;assert not p.evaluate('!!document.fullscreenElement');assert s()['panes'][0]['views']==before
+  p.get_by_role('button',name='Show reader controls',exact=True).click();assert s()['panes'][0]['views']==before
   p.get_by_role('button',name='Collapse notebook sidebar',exact=True).click();assert p.locator('.library-sidebar').count()==0;p.get_by_role('button',name='Open notebook sidebar',exact=True).click();assert p.locator('.library-sidebar').count()==1
- check('Per-pane reader chrome, global top and sidebar hide independently without fullscreen',chrome)
+ check('Per-pane controls and sidebar hide independently; global topbar no longer exists',chrome)
  def companion_edit():
-  reset('page.atlas.pdf');p.locator('.pdf-companion.expanded').wait_for();before=s()['panes'][0]['views'];p.get_by_role('tab',name='Glossary',exact=True).click();p.get_by_role('textbox',name='Search this PDF companion',exact=True).fill('Selectable text');p.locator('.companion-glossary button').click();p.locator('.companion-term').wait_for();assert 'Text stored in a PDF' in p.locator('.companion-term').inner_text()
-  p.get_by_role('button',name='Manage PDF Companion',exact=True).click();p.get_by_label('Edit concept',exact=True).select_option('text-layer');p.get_by_label('Concept translation',exact=True).fill('Valgbar tekst');p.get_by_label('Page occurrences (comma separated)',exact=True).fill('2, 5');p.get_by_label('Category title',exact=True).fill('Reading a PDF - reviewed example');p.get_by_role('button',name='Save companion locally',exact=True).click();p.locator('dialog').wait_for(state='detached')
+  reset('page.atlas.pdf');p.get_by_role('button',name='Switch to PDF library',exact=True).click();before=s()['panes'][0]['views']
+  p.locator('[data-node-id="node.page.atlas.pdf"] .tree-expander').click();p.get_by_role('button',name='Expand PDF glossary',exact=True).click();p.get_by_role('button',name='Definition of Selectable text',exact=True).click();assert 'Text stored in a PDF' in p.locator('dialog').inner_text();p.keyboard.press('Escape')
+  open_more(p).get_by_role('button',name='Manage PDF details',exact=True).click();p.get_by_label('Edit concept',exact=True).select_option('text-layer');p.get_by_label('Concept translation',exact=True).fill('Valgbar tekst');p.get_by_label('Page occurrences (comma separated)',exact=True).fill('2, 5');p.get_by_label('Category title',exact=True).fill('Reading a PDF - reviewed example');p.get_by_role('button',name='Save companion locally',exact=True).click();p.locator('dialog').wait_for(state='detached')
   companions=snap()['overlays']['companions'];value=next(iter(companions.values()));assert next(t for t in value['terms'] if t['id']=='text-layer')['translation']=='Valgbar tekst';assert s()['panes'][0]['views']==before
-  p.get_by_role('button',name='Collapse PDF Companion',exact=True).click();p.get_by_role('button',name='Workspace 2',exact=True).click();p.keyboard.press('Control+k');p.get_by_role('textbox',name='Search all pages and glossary',exact=True).fill('PDF reading fixture');p.locator('.search-result').filter(has_text='PDF reading fixture').first.click();p.locator('.pdf-companion.expanded').wait_for();p.get_by_role('button',name='Workspace 1',exact=True).click();assert p.locator('.pdf-companion.collapsed').count()==1
-  shot('shared-companion-local-ui-preference')
- check('Companion term/category edits are shared; collapse state stays in its original workspace',companion_edit)
+  disclosures=s()['pdfTreeExpanded'];p.get_by_role('button',name='Workspace 2',exact=True).click();p.keyboard.press('Control+k');p.get_by_role('textbox',name='Search all pages and glossary',exact=True).fill('PDF reading fixture');p.locator('.search-result').filter(has_text='PDF reading fixture').first.click();assert p.locator('.pdf-study-tree').count()==0
+  p.get_by_role('button',name='Workspace 1',exact=True).click();assert s()['pdfTreeExpanded']==disclosures;assert p.locator('.pdf-study-tree').is_visible();assert p.locator('.pdf-companion').count()==0;shot('shared-companion-local-ui-preference')
+ check('Study term/category edits are shared; tree disclosures stay in their original workspace',companion_edit)
  def invalid_companion():
-  reset('page.atlas.pdf');p.get_by_role('button',name='Manage PDF Companion',exact=True).click();p.get_by_text('Paste or edit complete JSON',exact=True).click();before=snap()['overlays'];p.get_by_role('textbox',name='Companion JSON',exact=True).fill('{"schemaVersion":999,"script":"alert(1)"}');p.get_by_role('button',name='Validate preview',exact=True).click();assert p.locator('dialog [role=alert]').count()==1;assert snap()['overlays']==before;p.get_by_role('button',name='Close dialog',exact=True).click()
+  reset('page.atlas.pdf');open_more(p).get_by_role('button',name='Manage PDF details',exact=True).click();p.get_by_text('Paste or edit complete JSON',exact=True).click();before=snap()['overlays'];p.get_by_role('textbox',name='Companion JSON',exact=True).fill('{"schemaVersion":999,"script":"alert(1)"}');p.get_by_role('button',name='Validate preview',exact=True).click();assert p.locator('dialog [role=alert]').count()==1;assert snap()['overlays']==before;p.get_by_role('button',name='Close dialog',exact=True).click()
  check('Invalid companion input is rejected without a partial write',invalid_companion)
  def geometry():
   rows=[]
   for w,h in [(1366,768),(1440,900),(1920,1080),(390,844)]:
    reset('page.atlas.welcome');p.set_viewport_size({'width':w,'height':h});p.wait_for_timeout(200);assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1
-   for name in ['New tab in pane 1','Quick Book mode','Reading mode','Compare in two panes','Enter focus mode','Hide reader controls','Hide global topbar']:
+   for name in ['New tab in pane 1','Quick Book mode','Reading mode','Compare in two panes','Enter focus mode','Hide reader controls','Manage saved states']:
     box=p.get_by_role('button',name=name,exact=True).bounding_box();assert box and box['x']>=0 and box['x']+box['width']<=w,(w,name,box)
    rail=p.locator('.reader-rail');assert rail.evaluate('e=>e.scrollHeight<=e.clientHeight+1')
-   rows.append({'width':w,'height':h,'top':p.locator('.topbar').bounding_box()['height'],'reader':p.locator('.document-pane').bounding_box()});shot('shell-'+str(w))
+   rows.append({'width':w,'height':h,'globalTopbarRows':p.locator('.topbar').count(),'reader':p.locator('.document-pane').bounding_box()});shot('shell-'+str(w))
   p.set_viewport_size({'width':1440,'height':900});return rows
  check('Compact headers and relocated controls remain reachable in four viewports',geometry)
  check('No uncaught JavaScript errors in 1.2.2 interactions',lambda:None if not errors else (_ for _ in ()).throw(AssertionError(errors)))

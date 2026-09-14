@@ -14,3 +14,7 @@ __pycache__/
 .vite-public/
 
 dist-offline/
+
+# Generated release evidence and delivery-only patch/inventories.
+docs/evidence/
+handoff/

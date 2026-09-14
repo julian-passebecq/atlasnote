@@ -3,7 +3,6 @@ import {isTrustedPdfatlasDocument,fetchTrustedPdf} from './external-policy.js';
 import type {DocumentEntry,Location} from '../core/model.js';
 import {Icon,IconButton} from '../components/Icon.js';
 import {DocumentInfo} from './DocumentInfo.js';
-import {CompanionPanel} from '../companion/CompanionPanel.js';
 import {EngineBoundary} from './EngineBoundary.js';
 /** Hosted entry installs the integrated adapter. Native rendering is only the
  * failure/compatibility path; neither path puts provenance above the document. */
@@ -49,7 +48,6 @@ export function PdfReader({paneId,slotId,document:doc,location,onLocation,resolv
   {source?<iframe className="pdf-fallback" src={source} title={'Browser PDF preview: '+doc.title} referrerPolicy="no-referrer"/>:
    external&&!trusted&&!consent?<div className="pdf-load-state"><p>Opening this PDF contacts its external host. No document request is made before you allow it.</p><code>{doc.source.url}</code><button onClick={allow}>Allow external PDF reference</button></div>:
    <div className="pdf-load-state" role="alert"><strong>PDF bytes are unavailable</strong><p>Import the original PDF through Workspace settings. Its metadata and reading state have been retained.</p></div>}
- <CompanionPanel document={doc} physicalPage={location.pdfPage} paneId={paneId} slotId={slotId} onNavigate={()=>{}} nativeFallback/>
  </div>;}
  if(trusted&&!url)return <div className="pdf-reader"><div className="pdf-load-state pdf-external-status" role={externalError?'alert':'status'}>
   <strong>{externalError?'Public PDF could not be opened':'Opening verified public PDF...'}</strong><p>{externalError||'Checking the original byte count and SHA-256 before rendering.'}</p>

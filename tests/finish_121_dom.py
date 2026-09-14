@@ -24,7 +24,7 @@ with sync_playwright() as pw:
  def toggle():p.locator('.topbar .mode-switch').click() if p.locator('.topbar .mode-switch').count() else p.get_by_role('button',name='Switch to PDF library' if p.get_by_role('button',name='Switch to PDF library',exact=True).count() else 'Switch to notes',exact=True).click()
  def strict_modes():
   reset();before=nodes();assert 'node.pdfatlas.spark-concepts' not in before;assert 'node.page.atlas.pdf' not in before;assert p.locator('.tree-project').filter(has_text='PDF Atlas').count()==0
-  assert '11 notebooks' in p.locator('.statusbar').inner_text();assert 'notes' in p.locator('.statusbar').inner_text();heading=p.locator('.sidebar-heading').inner_text();toggle();p.get_by_text('PDF Library',exact=True).first.wait_for();pdf=nodes();assert 'PDFs' in p.locator('.statusbar').inner_text();assert 'node.page.atlas.layouts' not in pdf;assert 'node.pdfatlas.spark-concepts' in pdf;assert 'node.pdfatlas.pyspark-pandas' in pdf
+  assert '11 notebooks' in p.locator('.statusbar').inner_text();assert 'notes' in p.locator('.statusbar').inner_text();heading=p.locator('.sidebar-heading').inner_text();toggle();p.get_by_role('button',name='Switch to notes',exact=True).wait_for();assert p.locator('.sidebar-heading').inner_text().strip()=='';pdf=nodes();assert 'PDFs' in p.locator('.statusbar').inner_text();assert 'node.page.atlas.layouts' not in pdf;assert 'node.pdfatlas.spark-concepts' in pdf;assert 'node.pdfatlas.pyspark-pandas' in pdf
   toggle();assert nodes()==before;assert p.locator('.sidebar-heading').inner_text()==heading
   return {'noteNodeIds':before,'pdfNodeIds':pdf,'exactReturn':True}
  check('Strict two-way discovery and exact returned Notes projection/count',strict_modes)
@@ -53,12 +53,12 @@ with sync_playwright() as pw:
    shot('pdf-library-'+str(w))
    p.evaluate("testReset('page.atlas.pdf')");p.wait_for_timeout(250)
    if p.locator('.library-sidebar').is_visible() and w<900:p.get_by_role('button',name='Collapse notebook sidebar',exact=True).click()
-   frame=p.locator('.pdf-fallback');frame.wait_for();p.get_by_role('button',name='Collapse PDF Companion',exact=True).click();p.wait_for_timeout(100);pane=p.locator('.document-pane').bounding_box();box=frame.bounding_box();strip=p.locator('.pdf-fallback-strip').bounding_box()
+   frame=p.locator('.pdf-fallback');frame.wait_for();assert p.locator('.pdf-companion').count()==0;p.wait_for_timeout(100);pane=p.locator('.document-pane').bounding_box();box=frame.bounding_box();strip=p.locator('.pdf-fallback-strip').bounding_box()
    assert strip['height']<=36,strip;assert box['height']/pane['height']>=.75,(pane,box)
    assert p.locator('.pdf-intro').count()==0;assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1
    rows.append({'width':w,'height':h,'pane':pane,'fallbackFrame':box,'compactStrip':strip,'documentFraction':box['height']/pane['height'],'renderer':'native fallback, NOT integrated PDF evidence'});shot('fallback-normal-'+str(w))
   return rows
- check('Actual fallback geometry with Companion collapsed at all four viewports: no intro, compact strip, canvas >=75%',geometry)
+ check('Actual fallback geometry with sidebar study navigation at all four viewports: no intro, compact strip, canvas >=75%',geometry)
  def metadata():
   reset('page.atlas.pdf');p.get_by_role('button',name='Document info',exact=True).click();info=p.locator('.pdf-info-overlay');assert info.is_visible();assert 'SHA-256' in info.inner_text();assert 'Rights' in info.inner_text();assert 'Original bytes' in info.inner_text();assert info.get_by_role('link',name='Download original',exact=True).count()==1
   p.get_by_role('button',name='Close document info',exact=True).click();assert p.locator('.pdf-info-overlay').count()==0;open_context(p);assert p.locator('.context-panel .pdf-document-info').count()==1;shot('document-info-context')

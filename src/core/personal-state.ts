@@ -17,7 +17,9 @@ export function repairAbsentPersonalOptionals(personal:Personal):Personal {
  const anchor=(a:Anchor|undefined)=>absent(a,['blockId','offset','unit','viewportOffset','atStart','pdfPage','pdfRevision','pdfOffset']);
  for(const note of Object.values(out.notes)){absent(note,['anchor','revision']);anchor(note.anchor);}
  for(const mark of out.bookmarks){absent(mark,['anchor']);anchor(mark.anchor);}
- for(const session of allSessions(out)){absent(session,['libraryMode']);
+ const saved=out.savedStates?[...out.savedStates.entries,...Object.values(out.savedStates.safety)]:[];
+ const savedSessions=saved.flatMap(e=>e.scope==='all'?[e.session,...Object.values(e.workspaceSlots)]:[e.session]);
+ for(const session of [...allSessions(out),...savedSessions]){absent(session,['libraryMode']);
  for(const pane of session.panes)for(const view of pane.views)for(const loc of view.history){absent(loc,['anchor','scroll','collectionId']);anchor(loc.anchor);}
  }
  return out;

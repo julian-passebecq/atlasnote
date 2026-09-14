@@ -1,73 +1,66 @@
-# AtlasNote 1.2.1 changed files
+# AtlasNote 1.2.3 - changed source files
 
-67 added/modified implementation/config/test/documentation files relative to the supplied 1.2 source. 0 removed source files.
+Baseline: upstream main `476f327ae77eb9103f2e5d079b87b6a541ddc782`, exact tree `2d07e499cab9236f5a098e2d08513f98f3e1b4f3`.
 
-Build outputs, node_modules, generated test evidence and caches are not implementation-source entries. Generated evidence files are individually hashed in `docs/evidence/1.2.1/EVIDENCE_MANIFEST.json`; they remain in the workspace.
+The complete delta (new files and deletion included) is packaged as `handoff/changes.patch`. `src/styles/compact-topbar.css` is deleted, not just unused. Generated evidence, build outputs and package-only manifests are excluded from the patch.
 
-- `.github/workflows/ci.yml` (modified) - Gate PRs on exact integrated install/build/PDF/persistence output after compatibility checks.
-- `.github/workflows/pdf-runtime.yml` (modified) - Use committed dependencies for targeted integrated runtime; remove dynamic install from CI.
-- `.gitignore` (modified) - Ignore isolated compatibility build output.
-- `CHANGED_FILES.md` (added) - File-level implementation change inventory.
-- `CHANGELOG.md` (modified) - Record finishing changes and retain historical release history.
-- `FINAL_TEST_STATUS.md` (added) - Exact unblended suite results, failed commands, blocked gates and evidence scopes.
-- `README.md` (modified) - Current 1.2.1 behavior/builds, live source handoff and explicit release blockers.
-- `WORKSPACE_READY_FOR_GITHUB.md` (added) - Live path, base provenance, dependency/build state, scoped tests and integration blockers.
-- `config/pdfatlas.json` (modified) - Pin exact reviewed public-library commit without changing PDF bytes.
-- `content/packs/pdfatlas.public/atlas-documents.json` (modified) - Regenerate canonical public PDF metadata/tree with reviewed commit-pinned URLs and unchanged hashes/sizes/pages.
-- `content/packs/pdfatlas.public/pages/page.pdfatlas.pyspark-pandas.json` (modified) - Regenerate canonical public PDF metadata/tree with reviewed commit-pinned URLs and unchanged hashes/sizes/pages.
-- `content/packs/pdfatlas.public/pages/page.pdfatlas.spark-concepts.json` (modified) - Regenerate canonical public PDF metadata/tree with reviewed commit-pinned URLs and unchanged hashes/sizes/pages.
-- `content/publication-review.json` (modified) - Regenerate explicit publication review hash for the pinned public metadata.
-- `docs/RELEASE_REPORT.md` (modified) - Mark earlier 1.2 report historical and direct current readers to 1.2.1 status.
-- `docs/TESTING.md` (modified) - Separate compatibility DOM, real integrated runtime and exact persistence test scopes/commands.
-- `docs/release-1.2.1/IMPLEMENTATION_HANDOFF.md` (added) - Preserve the complete supplied authoritative finishing instructions.
-- `index.html` (modified) - Primary hosted application version/title.
-- `netlify.toml` (modified) - Document integrated build/publish contract; no deployment performed.
-- `package-lock.json` (modified) - Application version metadata only; no invented integrated dependency closure.
-- `package.json` (modified) - Version 1.2.1, integrated primary build, isolated compatibility and finish-gate scripts; unresolved dependencies explicitly remain uninstalled.
-- `public/START_HERE.txt` (modified) - Current integrated vs compatibility contracts, strict discovery, fullscreen and privacy instructions.
-- `public/serve.mjs` (modified) - Serve WASM with the correct MIME type.
-- `src/app/App.tsx` (modified) - Fullscreen lifecycle, non-destructive mode toggle, projection totals, renderer status and compact document context.
-- `src/components/CollectionView.tsx` (modified) - Retain direct empty-collection management after strict tree filtering.
-- `src/components/EditDialogs.tsx` (modified) - Open newly created empty notebook/folder collections for immediate management.
-- `src/components/Home.tsx` (modified) - Mode-correct notebook discovery plus explicit all-notebook management for hidden/empty content.
-- `src/components/Icon.tsx` (modified) - Add the compact PDF rotation icon using the existing icon vocabulary.
-- `src/components/ReaderRail.tsx` (modified) - Reflect the actual active-pane PDF renderer; do not enable integrated modes after failure.
-- `src/components/SearchContext.tsx` (modified) - Store defined optional remark fields and move PDF metadata into Context.
-- `src/components/SettingsDialog.tsx` (modified) - Capture/flush/freeze canonical backup state; disclose unsaved emergency snapshots.
-- `src/components/Tree.tsx` (modified) - Strict recursive type projection and search/count consistency.
-- `src/core/fullscreen.ts` (added) - Owned Fullscreen API controller with user-activation, rejection, exit and late-grant cleanup.
-- `src/core/library-projection.ts` (modified) - Shared note/PDF recursive visibility and unique visible-leaf/project totals.
-- `src/core/personal-state.ts` (added) - Defined optional remark/anchor writers and bounded legacy absence repair.
-- `src/online/PdfEngine.tsx` (modified) - Polish preserved physical-page engine, compact overlays/Focus controls and guard user-owned continuous anchors.
-- `src/online/pdf.css` (modified) - Compact semantic-theme canvas, centered paper, overlay panels, mobile and floating Focus controls.
-- `src/pdf/DocumentInfo.tsx` (added) - On-demand rights, attribution, hash, bytes, source and original-file actions.
-- `src/pdf/EngineBoundary.tsx` (added) - Contain a PDF adapter render failure without destroying notes/other pane.
-- `src/pdf/PdfReader.tsx` (modified) - Prefer integrated adapter; compact native fallback, explicit retry, consent/integrity and renderer-state feedback.
-- `src/storage/archives.mjs` (modified) - Freeze the canonical input before asynchronous backup asset reads.
-- `src/storage/database.ts` (modified) - Canonical personal-state ownership/repair and drain queued writes at flush.
-- `src/storage/workspace-snapshot.ts` (added) - Shared production read-only snapshot/flush and persisted-state diagnostic API.
-- `src/styles/app.css` (modified) - Compact fallback/info geometry, owned fullscreen shell and floating exit layout.
-- `tests/backup_diagnostic.py` (added) - Before/after actual handler/serializer personal-state dumps and exact structural diff.
-- `tests/browser_support.py` (modified) - Explicit compatibility output for DOM harness, production dist for normal-origin suites.
-- `tests/compact-12.test.mjs` (modified) - Target isolated dist-offline in existing regressions; update only obsolete projection/pin expectations where required.
-- `tests/compact_12_dom.py` (modified) - Verify strict library switch and compact fallback controls/integrity under current UI.
-- `tests/core.test.mjs` (modified) - Target isolated dist-offline in existing regressions; update only obsolete projection/pin expectations where required.
-- `tests/finish-121.test.mjs` (added) - 32 additional strict projection, backup, fullscreen, counts and build-contract unit regressions.
-- `tests/finish_121_dom.py` (added) - 14 executable finish UI cases plus four viewport screenshots; API simulations clearly scoped.
-- `tests/finish_121_integrated.py` (added) - 14 real-engine finish acceptance cases; missing engine remains BLOCKED.
-- `tests/hardening.test.mjs` (modified) - Target isolated dist-offline in existing regressions; update only obsolete projection/pin expectations where required.
-- `tests/hardening_dom.py` (modified) - Use new compact/type-filtered controls and explicit empty-collection management, retain CRUD/state assertions.
-- `tests/headers_test.py` (modified) - Verify selected output headers with explicit compatibility-vs-hosted scope.
-- `tests/pdf_runtime.py` (modified) - Preserve 17 actual-engine cases; adapt Focus/search controls without substituting native rendering.
-- `tests/reader-11.test.mjs` (modified) - Target isolated dist-offline in existing regressions; update only obsolete projection/pin expectations where required.
-- `tests/reader_11_dom.py` (modified) - Expect actual fullscreen/compact info UI and strict type discovery, retaining exact anchors.
-- `tests/release_runtime.py` (modified) - Production post-flush canonical/persisted/downloaded/restore equality; diagnostic dumps and explicit missing-build block.
-- `tools/build-vite.mjs` (modified) - Fail closed on real exact dependencies; package/verify local PDF resources and integrated output.
-- `tools/build.mjs` (modified) - Write compatibility build exclusively to dist-offline; never overwrite hosted dist.
-- `tools/check-integrated-deps.mjs` (added) - Verify real manifest/installed/lock pins and wrapper-resolved PDF.js compatibility.
-- `tools/check-release.mjs` (modified) - Validate correct output kind and integrated worker/resource inventory/public safety.
-- `tools/enable-online.mjs` (modified) - Explicit one-time exact lock authoring, bounded registry failures and compatibility gate.
-- `tools/serve-offline.mjs` (added) - Explicit local server for dist-offline, not an implicit production fallback.
-- `tools/serve.mjs` (modified) - Select explicit output root and correct WASM MIME type.
-- `tools/sync-pdfatlas.mjs` (modified) - Generate reviewed commit-pinned PDF metadata without staging assumptions.
-- `vite.config.mjs` (modified) - Emit stable read-only snapshot entry sharing the production store and normal hashed app bundles.
+- `.github/workflows/ci.yml`
+- `.gitignore`
+- `AGENTS.md`
+- `CHANGELOG.md`
+- `CODEX_HANDOFF.md`
+- `FINAL_TEST_STATUS.md`
+- `README.md`
+- `START_HERE.md`
+- `WORKSPACE_READY_FOR_GITHUB.md`
+- `docs/RELEASE_1.2.3.md`
+- `docs/history/1.2.2-delivery-docs/CHANGED_FILES.md`
+- `docs/history/1.2.2-delivery-docs/FINAL_TEST_STATUS.md`
+- `docs/history/1.2.2-delivery-docs/README.md`
+- `docs/history/1.2.2-delivery-docs/WORKSPACE_READY_FOR_GITHUB.md`
+- `index.html`
+- `package-lock.json`
+- `package.json`
+- `src/app/App.tsx`
+- `src/companion/CompanionPanel.tsx`
+- `src/companion/PdfStudyTree.tsx`
+- `src/companion/promote.ts`
+- `src/companion/tree.ts`
+- `src/components/Icon.tsx`
+- `src/components/ReaderRail.tsx`
+- `src/components/SavedStatesDialog.tsx`
+- `src/components/Tree.tsx`
+- `src/core/model.ts`
+- `src/core/personal-state.ts`
+- `src/core/saved-states-types.ts`
+- `src/core/saved-states.ts`
+- `src/online/PdfEngine.tsx`
+- `src/pdf/PdfReader.tsx`
+- `src/pdf/study-bridge.ts`
+- `src/pdf/wheel-navigation.mjs`
+- `src/storage/database.ts`
+- `src/storage/personal-validation.mjs`
+- `src/storage/saved-states-validation.mjs`
+- `src/styles/app.css`
+- `src/styles/compact-topbar.css` (deleted)
+- `src/styles/simplified-shell.css`
+- `tests/browser_support.py`
+- `tests/compact_12_dom.py`
+- `tests/engine_123_dom.py`
+- `tests/finish_121_dom.py`
+- `tests/finish_121_integrated.py`
+- `tests/fixtures/engine-dom-entry.tsx`
+- `tests/hardening_dom.py`
+- `tests/pdf_authoring_test.py`
+- `tests/pdf_runtime.py`
+- `tests/reader_11_dom.py`
+- `tests/saved-states-123.test.mjs`
+- `tests/saved_states_runtime.py`
+- `tests/simplified_123_dom.py`
+- `tests/workspace_122_dom.py`
+- `tests/workspace_122_runtime.py`
+- `tools/build-test-harness.mjs`
+- `tools/build.mjs`
+- `tools/run-release.mjs`
+
+See docs/RELEASE_1.2.3.md for the request-to-implementation map and test changes.

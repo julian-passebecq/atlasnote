@@ -1,75 +1,63 @@
-# AtlasNote 1.2.1 - Final executed test status
+# AtlasNote 1.2.3 - actual final validation
 
-**Overall: NOT production-ready.** Independent source changes and compatibility regressions pass. The integrated dependency lock/build and normal-origin browser gate have not completed. No successful integrated renderer, production dist or deployment is claimed.
+**Implementation and source packaging complete. Not deployed or production-certified.**
 
-Evidence root below: `docs/evidence/1.2.1/` (also `/mnt/data/atlasnote-1.2.1-evidence/` in this runtime). Results are intentionally not combined into an inflated single count.
+The final local command set has **21 PASS, 6 BLOCKED, 0 implementation/test failures**. Blocking results are not green release gates. A clean npm ci was not attempted in this network-restricted workspace; installed dependency closure was verified separately. See `docs/evidence/1.2.3/final/results.json` and its logs.
 
-## Executed functional/regression results
+## Executed successes
 
-| Category | Exact command | Result | Evidence |
-|---|---|---|---|
-| Core typecheck | `npm run typecheck` | PASS, exit 0 | `final-static/typecheck.log` |
-| Core unit | `npm test` | **208 PASS, 0 FAIL, 0 skipped**; baseline 176 -> 32 additional cases | `final-static/core.log` |
-| Public compatibility validation | `npm run check:release:offline` | PASS; 10 public pages, 3 stored projects, 1 glossary term; strict discovery counts are mode-specific | `final-static/release-offline.log` |
-| DOM | `npm run test:dom` | **14 PASS, 0 FAIL** | `final-dom/dom-tests.json` |
-| Hardening | `npm run test:hardening:ui` | **39 PASS, 0 FAIL** | `final-hardening/results.json` |
-| Reader | `npm run test:reader:ui` | **18 PASS, 0 FAIL** | `final-reader/reader-11-dom.json` |
-| Compact | `npm run test:compact:ui` | **11 PASS, 0 FAIL** | `final-compact/results.json` |
-| New 1.2.1 finish UI | `npm run test:finish:ui` | **14 PASS, 0 FAIL** | `final-finish-ui/results.json` |
-| PDF authoring | `npm run test:pdf:authoring` | **12 PASS, 0 FAIL**; real PDF byte/text/page/render comparisons | `pdf-authoring/pdf-authoring-tests.json` |
-| Backup equality diagnostic | `npm run test:backup:diagnostic` | PASS; exact personal equality, no undefined paths, empty structural diff | `final-backup/results.json` |
-| Online syntax only | `npm run test:online:syntax` | PASS for 3 source modules; NOT real React-PDF typecheck or runtime | `final-static/online-syntax.log` |
-| Clean compatibility build | Clean temporary source copy, `node tools/bootstrap-offline.mjs`, `npm run build:offline`, `npm run check:release:offline` | PASS; **176/176 generated files byte-identical** to live compatibility build | `clean-offline/results.json`, `sha256.json` |
-| Local headers | `ATLAS_DIST=dist-offline npm run test:headers` | PASS for 3 actual HTTP paths; NOT hosted integrated/remote headers | `headers-compatibility/headers.json` |
-| PDF metadata pin/bytes | `npm run pdfatlas:sync` plus local archive SHA/byte/page inspection | PASS, exact reviewed commit and both original PDFs unchanged | `public-pdf-originals.json` |
+- **339 core tests passed**, 0 failed, skipped or TODO. This includes immutable checkpoints, scope isolation, all five sessions, automatic undo, optional absence, safe limits, malformed data rejection, timestamp range checks and an exact full-backup ZIP serialize/parse round trip with saves/undo/history.
+- **10 new UI groups passed** using the actual App/actions with an explicitly in-memory store on about:blank. Default hidden controls, exact rail order, category/glossary navigation, save/restore, manager details, undo and responsive geometry were exercised.
+- **11 actual PDF-component groups passed** with real React-PDF/PDF.js canvases and shipped synthetic PDF bytes. Natural Single scrolling, slow forward/reverse turns, one-turn momentum, Spread versus Compare, physical-page links, saved intra-page positions, all-workspace pane restoration, local preparation, metadata edit/promotion and Continuous scroll were exercised. This is not a fake PDF renderer; it is also **not IndexedDB evidence**.
+- Existing DOM, hardening, reader, compact, finish and workspace UI regressions passed after their interaction selectors/setup were adapted to the requested interface.
+- Both TypeScript checks, offline/integrated build validation, pinned dependency/worker integrity, private-public exclusion, backup diagnostic, PDF-authoring tests and headers passed.
 
-DOM tests mount actual compiled components into the permitted about:blank harness and suppress IndexedDB writes. They are not durable-storage evidence. Private-import DOM paths retain their explicit test-only digest adapters. The core serializer tests operate on real ZIP bytes but do not prove browser IndexedDB.
+## Still blocked outside the implementation
 
-## Failed commands and blocked release gates
+Five normal-origin browser scripts stop at the first localhost navigation with **net::ERR_BLOCKED_BY_ADMINISTRATOR**: PDF runtime, integrated finish, release runtime, workspace runtime and saved-state runtime. No browser policy was bypassed. Their actual IndexedDB/reload/fresh-browser-context contracts are not claimed as passing. The scripts remain mandatory in CI; the new or changed normal-origin selectors need execution confirmation there.
 
-| Category | Command / attempted gate | Actual result | Evidence |
-|---|---|---|---|
-| Integrated installation | `npm run enable:online` | **FAILED, exit 1**: registry DNS `EAI_AGAIN`; no integrated dependencies installed/locked | `dependencies/run.log`, `npm-enable-debug.log` |
-| Clean npm install | `npm ci --fetch-retries=0 --fetch-timeout=5000` | **FAILED, exit 1** after failed registry fetches; npm also reports `Exit handler never called!` | `dependencies/run.log`, `npm-ci-debug.log` |
-| Live vulnerability audit | `npm audit --json --fetch-retries=0 --fetch-timeout=5000` | **FAILED, exit 1**: audit endpoint DNS; vulnerabilities UNKNOWN, not zero | `dependencies/run.log`, `npm-audit-debug.log` |
-| Local dependency inventory | `npm run audit:local` | **FAIL, exit 1**: 12/15 lockfile packages not separately installed. **113/113 vendor hashes PASS.** Bootstrap is not a complete npm installation | `final-static/audit-local.log`, `dependency-inventory.json` |
-| Integrated typecheck | `npm run typecheck:online` | **FAILED, exit 2 / validation BLOCKED**: React, React-PDF, ReactDOM and types unavailable; no full integrated typing certification | `final-static/typecheck-online.log` |
-| Hosted build | `npm run build`; also `npm run build:vite` | **FAILED, exit 1 / build BLOCKED** by exact dependency gate; no fallback silently emitted | `final-static/build-integrated.log`, `static-final/build-vite.log` |
-| Hosted release validation | `npm run check:release` | **FAILED, exit 1**: no integrated `dist/`; resource inventory cannot be verified without the real build | `final-static/release-integrated.log` |
-| Existing integrated PDF | `npm run test:pdf` | **0 PASS, 0 executed FAIL, 17 BLOCKED**, exit 2; no worker metadata/build | `integrated-pdf/results.json` |
-| New integrated finish | `npm run test:finish:integrated` | **0 PASS, 0 executed FAIL, 14 BLOCKED**, exit 2 | `integrated-finish/results.json` |
-| Real-origin production runtime | `npm run test:runtime` | **0 PASS, 13 BLOCKED**, exit 2; integrated distribution prerequisite absent | `runtime-production/results.json` |
-| Real-origin compatibility diagnostic | `ATLAS_DIST=dist-offline npm run test:runtime` | **0 PASS, 13 BLOCKED**, exit 2; `ERR_BLOCKED_BY_ADMINISTRATOR` before app load | `runtime-compatibility/results.json` |
-| Playwright-managed install | `python -m playwright install --with-deps chromium` | Did not finish; Debian DNS failed, explicitly bounded outer timeout exit 124 | `python-dependencies/run.log` |
+The current **npm vulnerability audit** could not contact the registry: **EAI_AGAIN registry.npmjs.org**. This is no claim of zero vulnerabilities. Run clean `npm ci`, `npm audit` and all release gates with registry access before promotion.
 
-The two real-origin runs are the same 13-phase gate under different explicit prerequisites, not 26 independent tests. A BLOCKED result does not satisfy the requested release gate. The full backup download/fresh context/restore/second reload remains unverified here.
+## Exact command results
 
-Pinned Python prerequisites are present: `python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt` returned 0, with Playwright 1.57.0, PyMuPDF 1.26.7 and Pillow 12.3.0 already satisfied. Browser tests used installed system Chromium, not a successfully installed Playwright-managed browser. Node is 22.16.0; compatibility compilation used TypeScript 5.8.3 via the explicit vendored bootstrap.
+| Command | Result | Exit | Log under docs/evidence/1.2.3/final |
+|---|---|---:|---|
+| `npm run check:integrated-deps` | PASS | `0` | `dependency-closure.log` |
+| `npm run typecheck` | PASS | `0` | `typecheck.log` |
+| `npm run typecheck:online` | PASS | `0` | `typecheck-online.log` |
+| `npm test` | PASS | `0` | `core.log` |
+| `npm run check:release:offline` | PASS | `0` | `offline-release.log` |
+| `npm run test:online:syntax` | PASS | `0` | `syntax.log` |
+| `npm run audit:local` | PASS | `0` | `local-audit.log` |
+| `npm run test:dom` | PASS | `0` | `dom.log` |
+| `npm run test:hardening:ui` | PASS | `0` | `hardening.log` |
+| `npm run test:reader:ui` | PASS | `0` | `reader.log` |
+| `npm run test:compact:ui` | PASS | `0` | `compact.log` |
+| `npm run test:finish:ui` | PASS | `0` | `finish-ui.log` |
+| `npm run test:workspaces:ui` | PASS | `0` | `workspace-ui.log` |
+| `npm run test:simplified:ui` | PASS | `0` | `new-ui.log` |
+| `npm run test:backup:diagnostic` | PASS | `0` | `backup-diagnostic.log` |
+| `npm run test:pdf:authoring` | PASS | `0` | `pdf-authoring.log` |
+| `npm run build` | PASS | `0` | `build.log` |
+| `npm run check:release` | PASS | `0` | `release.log` |
+| `npm run build:test-harness` | PASS | `0` | `component-build.log` |
+| `npm run test:pdf:component` | PASS | `0` | `pdf-component.log` |
+| `npm run test:pdf` | BLOCKED | `2` | `pdf-runtime.log` |
+| `npm run test:finish:integrated` | BLOCKED | `2` | `finish-integrated.log` |
+| `npm run test:runtime` | BLOCKED | `2` | `runtime.log` |
+| `npm run test:workspaces:runtime` | BLOCKED | `2` | `workspace-runtime.log` |
+| `npm run test:savedstates:runtime` | BLOCKED | `2` | `saved-state-runtime.log` |
+| `npm run test:headers` | PASS | `0` | `headers.log` |
+| `npm audit --json --fetch-timeout=10000 --fetch-retries=0` | BLOCKED | `1` | `npm-audit.log` |
 
-The inherited precompiled Mermaid dependency/license closure remains unverified; the local audit describes that limit. No vulnerability or complete-SBOM certification is inferred from byte integrity.
+## Environment and evidence scope
 
-## Backup diagnosis and test integrity
+Node v22.16.0, Python 3.13.5, system Chromium via Playwright. Dependencies were restored from the downloaded verified GitHub input artifact; `.bin` links lost by ZIP extraction were reconstructed from installed package manifests. No package versions or PDF/vendor byte baselines were rewritten.
 
-Before changing production logic, the diagnostic recorded exact personal objects and a structural diff. The 1.2 note remark writer created own `anchor: undefined` and `revision: undefined` fields; JSON omitted them. The baseline records are in `baseline/backup-diagnostic/`.
+A normal-origin test is not replaced by the about:blank harness. A full-backup serialization unit test is not described as persisted browser restoration. Historical earlier-release reports are retained only under clearly historical paths and are not this release's results. Generated private-style test backups are excluded from the delivery ZIP.
 
-The source fix is at writer/ownership boundaries, not a normalization in the equality assertion. Known absent optional keys alone are repaired. Backup freezes the input before asynchronous reads and shares an explicit production reader flush/snapshot point with the real-origin test. Meaningful state, timestamps, anchors and histories are not deleted. A failed save does not prevent a disclosed emergency in-memory backup.
+## Source provenance
 
-The final DOM diagnostic uses the actual remark handler and actual production backup/ZIP parser and now gives exact equality. It cannot establish that every possible CI mismatch is fixed until the complete production-origin test executes. That test retains exact post-flush canonical vs persisted equality, downloaded personal equality, fresh restored state and second-reload equality; failures write before/after/diff evidence.
-
-## Visual and fullscreen evidence
-
-Actual tree/note/native-shell screenshots cover **390x844, 1366x768, 1440x900, 1920x1080** in `final-finish-ui/`; theme/Compare/context captures are in the compact and reader folders.
-
-The fallback strip is at most 36px and its frame uses at least 75% of the pane in the four measured viewports. The native PDF content does not paint in this harness: captures show the grey/error placeholder. This is **frame geometry evidence, not readable artwork or integrated PDF evidence**.
-
-Reader tests observed actual owned browser fullscreen (`browserFullscreen: true`) for note modes. Dedicated finish tests explicitly simulate API grant/rejection/change and prove application behavior; their Focus screenshots do not certify visible browser-chrome removal. Integrated fullscreen/spread/canvas screenshots could not be obtained without the real engine.
-
-The obsolete mixed-tree assertion and old no-fullscreen assertion were updated to the new requested contracts. Empty-folder CRUD tests now use the explicit management/collection UI. No backup equality or meaningful saved-state fields were relaxed.
-
-## Distribution state
-
-- Live modified source remains `/mnt/data/atlasnote-1.2.1-workspace/`.
-- `dist-offline/` is a verified compatibility output, not the hosted candidate.
-- The stale earlier native `dist/` was removed; no deployable integrated `dist/` is present.
-- `package-lock.json` contains only the application version change, not a resolved React-PDF closure.
-- No GitHub, Netlify, deployment or public PDF modification was performed.
+Remote baseline commit: `476f327ae77eb9103f2e5d079b87b6a541ddc782`.
+Exact baseline tree checked before editing: `2d07e499cab9236f5a098e2d08513f98f3e1b4f3`.
+The delivered patch reproduces the complete source from that baseline; package verification and source checksums are in `handoff/`. No remote source write, merge or deployment was performed in this completion pass.
