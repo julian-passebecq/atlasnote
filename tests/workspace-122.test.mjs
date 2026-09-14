@@ -93,7 +93,7 @@ test('1.2.2 exact complete backup includes all five slots, companion and PDF byt
  for(const slot of [1,2,3,4,5]){selectWorkspace(ws.personal,slot);const s=activeSession(ws.personal);s.categoryFilter=slot<3?'informatics':'norsk';s.compactTop=slot===3;const v=newView('page.atlas.pdf',{pdfPage:slot,pdfRevision:doc.sha256,pdfOffset:slot*.1});s.panes[0].views=[v];s.panes[0].active=v.id;s.screen='reader';s.panes[0].companionUi={[companionKey(doc)]:{open:slot%2===0,tab:'pages',collapsed:['layouts']}};s.panes[0].readerChromeCollapsed=slot===4;}
  ws.overlays.companions={[companionKey(doc)]:copy(READER_COMPANION)};
  ws.overlays.categories={'project.atlas.guide':'personal'};
- ws.overlays.glossary=[{id:'term.promoted',label:'Physical page',definition:'An original study definition.',pageIds:['page.atlas.pdf'],pdfRefs:[{pageId:doc.pageId,documentId:doc.id,revision:doc.sha256,pages:[1,3]}]}];
+ ws.overlays.glossary=[{id:'term.promoted',label:'Physical page',definition:'An original study definition.',tags:['pdf-companion','document:'+doc.id],pageIds:['page.atlas.pdf'],pdfRefs:[{pageId:doc.pageId,documentId:doc.id,revision:doc.sha256,pages:[1,3]}]}];
  validateState(ws,schemas);const before=copy(ws);
  const backup=await makeBackup(ws,built,async key=>source.assets.find(a=>a.key===key));
  assert.equal(backup.snapshot.schemaVersion,3);const parsed=await readBackup((await unzipBounded(backup.bytes)).files,schemas);
@@ -102,6 +102,14 @@ test('1.2.2 exact complete backup includes all five slots, companion and PDF byt
  const store=new WorkspaceStore();store.setLoaded(parsed.workspace);assert.deepEqual(store.state.personal,before.personal);
 });
 test('1.2.2 legacy v2 backup is retained exactly by parser and migrated at load boundary',async()=>{const ws=blankWorkspace(),legacy=copy(ws.personal);const b=await makeBackup(ws,built,async k=>source.assets.find(a=>a.key===k));assert.equal(b.snapshot.schemaVersion,2);const parsed=await readBackup((await unzipBounded(b.bytes)).files,schemas);assert.deepEqual(parsed.workspace.personal,legacy);const store=new WorkspaceStore();store.setLoaded(parsed.workspace);assert.equal(store.state.personal.schemaVersion,3);assert.deepEqual(store.state.personal.session,legacy.session);});
+test('1.2.2 promoted glossary tags are validated without dropping metadata',()=>{
+ for(const tags of ['pdf-companion',[12],['x'.repeat(257)],Array(101).fill('tag')]){
+  const ws=blankWorkspace();ws.overlays.glossary=[{id:'term.promoted',label:'Term',definition:'Definition',pageIds:[],tags}];
+  assert.throws(()=>validateState(ws,schemas),/local term tag/);
+ }
+ const ws=blankWorkspace();ws.overlays.glossary=[{id:'term.promoted',label:'Term',definition:'Definition',pageIds:[],tags:[],unexpected:true}];
+ assert.throws(()=>validateState(ws,schemas),/unsupported field/);
+});
 test('1.2.2 invalid inactive slot is rejected before restore, not silently discarded',async()=>{const ws=blankWorkspace();ws.personal=setup();selectWorkspace(ws.personal,2);activeSession(ws.personal).panes=[];selectWorkspace(ws.personal,1);assert.throws(()=>validateState(ws,schemas));});
 test('1.2.2 companion revision keys and promoted page references validate',()=>{const ws=blankWorkspace();ws.personal=setup();ws.overlays.companions={'bad-key':copy(READER_COMPANION)};assert.throws(()=>validateState(ws,schemas),/revision key/);delete ws.overlays.companions;ws.overlays.glossary=[{id:'g',label:'g',definition:'g',pageIds:[],pdfRefs:[{pageId:doc.pageId,documentId:doc.id,pages:[-1]}]}];assert.throws(()=>validateState(ws,schemas));});
 test('1.2.2 all representative sample notebooks place canonical PDFs before reading',()=>{const samples=source.packs.find(p=>p.manifest.id==='study.samples');assert.equal(samples.projects.length,9);assert.equal(samples.pages.length,10);for(const p of samples.projects){assert.equal(p.nodes[0].title,'PDFs');assert.equal(p.nodes[1].title,'Start reading');}assert.equal(source.packs[0].projects[0].nodes[0].id,'node.atlas.documents');});
