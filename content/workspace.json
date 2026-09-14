@@ -6,6 +6,52 @@
   "disabledPackIds": [],
   "groups": [
     {
+      "id": "group.samples.programming",
+      "title": "Python & data",
+      "projectIds": [
+        "project.samples.python",
+        "project.samples.pandas",
+        "project.samples.pyspark",
+        "project.pdfatlas"
+      ]
+    },
+    {
+      "id": "group.samples.sql",
+      "title": "SQL",
+      "projectIds": [
+        "project.samples.sql"
+      ]
+    },
+    {
+      "id": "group.samples.cloud",
+      "title": "Cloud platforms",
+      "projectIds": [
+        "project.samples.azure",
+        "project.samples.databricks"
+      ]
+    },
+    {
+      "id": "group.samples.norsk",
+      "title": "Norsk",
+      "projectIds": [
+        "project.samples.norsk"
+      ]
+    },
+    {
+      "id": "group.samples.job",
+      "title": "Job",
+      "projectIds": [
+        "project.samples.job"
+      ]
+    },
+    {
+      "id": "group.samples.personal",
+      "title": "Personal",
+      "projectIds": [
+        "project.samples.personal"
+      ]
+    },
+    {
       "id": "group.atlas.start",
       "title": "GET STARTED",
       "projectIds": [

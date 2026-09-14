@@ -176,7 +176,7 @@ with sync_playwright() as pw:
         return ratios
     check('Normal and muted theme text tokens meet 4.5:1 and keyboard focus is visible',[69],token_contrast)
     def pdf_focus_combinations():
-        reset(mixed=True);page.locator('.collection-view').get_by_role('button',name='Alpha architecture PDF',exact=True).click();page.get_by_role('button',name='Switch to PDF library',exact=True).click();page.get_by_role('button',name='Compare in two panes').click();tree('Zebra pipeline PDF').click();page.wait_for_timeout(250)
+        reset(mixed=True);page.locator('.collection-view').get_by_role('button',name='Alpha architecture PDF',exact=True).click();assert page.get_by_role('button',name='Switch to notes',exact=True).count()==1;page.get_by_role('button',name='Compare in two panes').click();tree('Zebra pipeline PDF').click();page.wait_for_timeout(250)
         assert page.locator('.pdf-reader').count()==2
         assert page.get_by_text('Browser PDF fallback',exact=True).count()==2
         page.get_by_role('button',name='Enter focus mode').click();page.wait_for_timeout(350)

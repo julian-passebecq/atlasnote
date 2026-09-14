@@ -1,0 +1,20 @@
+{
+  "format": "atlas-content-pack",
+  "schemaVersion": 1,
+  "payloadSchema": "atlas.bundle@2",
+  "id": "study.samples",
+  "version": "1.0.0",
+  "title": "AtlasNote study starters",
+  "visibility": "public",
+  "files": {
+    "projects": "projects.json",
+    "pages": "pages",
+    "glossary": "glossary.json"
+  },
+  "requires": [],
+  "assets": [],
+  "provenance": {
+    "kind": "author-created",
+    "note": "Original small sample notebooks only. No private content, credentials or third-party PDF copies."
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedOn": "2026-09-12",
+  "reviewedOn": "2026-09-13",
   "policy": "Only explicitly reviewed public packs with exact semantic hashes may ship. PDF Atlas is a reference-only metadata catalog; supplied public PDF bytes are excluded from this application.",
   "packs": {
     "example.notes": {
@@ -8,13 +8,17 @@
       "sha256": "dfa80a12da4ead8cb9bc78a6b7ba69adf544437c9e6c5db68df8b7c393899d95"
     },
     "atlas.reader-guide": {
-      "review": "Original author-created guide and synthetic fixtures; 1.2 copy points to the Reading mode rail. Stable IDs unchanged.",
-      "sha256": "8719ba938e44cd14a6194bfe261cf2ef49ab006ea9c807e4a202bc8be651e0e1"
+      "review": "Existing author-created guide/fixtures, stable IDs retained. PDF folder ordered first and control wording revised for 1.2.2. PDF bytes unchanged.",
+      "sha256": "2cb407ea950bd2356629bf87504a99b3546d18e5f38bc8d180a9fb75fe1ca421"
     },
     "pdfatlas.public": {
       "metadataOnlyReferences": true,
       "review": "Reviewed user-supplied public reference metadata only. No PDF binaries. Attribution and reference-only rights retained. Exact reviewed public-library commit is pinned in config/pdfatlas.json; third-party attribution and reference-only rights remain unchanged.",
       "sha256": "c90a3406521453872d5e2f854478b56effe7c24d82be08183ebd85c2bf20029d"
+    },
+    "study.samples": {
+      "review": "Original miniature sample notes; no private data or third-party assets. Human-readable source reviewed for this UI exercise.",
+      "sha256": "5c26037dec7c26cd01f02fd870cbcc2316e13dd61ab5ebdfc46a964b5763edc1"
     }
   }
 }

@@ -90,9 +90,9 @@ with sync_playwright() as pw:
     def top_order():
         reset()
         labels=page.locator('.reader-rail > button').evaluate_all('(xs)=>xs.map(x=>x.getAttribute("aria-label")||x.textContent.trim())')
-        assert labels==['Collapse notebook sidebar','Enter focus mode','Reading mode','Open context panel','Compare in two panes','Bookmark reading position','Theme','More / Settings'],labels
+        assert labels==['Open context panel','Bookmark reading position','Theme','Export to AI','More / Settings'],labels
         return labels
-    check('Compact rail follows the 1.2 product control order',['E01'],top_order)
+    check('Compact rail follows the 1.2.2 product control order',['E01'],top_order)
     for left in [False,True]:
         for right in [False,True]:
             def focus(left=left,right=right):

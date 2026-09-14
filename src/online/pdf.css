@@ -47,3 +47,16 @@
 @media(max-width:650px){.pdf-controls{gap:3px;padding:4px 6px}.pdf-controls select{max-width:92px}.pdf-canvas-scroll{padding:10px 16px 16px}.pdf-controls .icon-button{width:28px}.pdf-cover-toggle{font-size:10px}.pdf-password label{flex-wrap:wrap}.focus-mode .integrated-pdf .pdf-controls{bottom:10px}.focus-mode .integrated-pdf .pdf-canvas-scroll{padding-bottom:105px}.focus-mode .pdf-search-overlay,.focus-mode .pdf-info-overlay{bottom:112px}}
 
 .pdf-outline{position:absolute;top:8px;right:16px;width:min(380px,calc(100% - 32px));margin:0}
+/* 1.2.2 compact controls and independent companion/chrome visibility. */
+.integrated-pdf{flex:1;height:auto;min-height:0}
+.pdf-controls{min-height:34px;padding:2px 6px;gap:3px;font-size:11px}
+.pdf-controls .icon-button{width:26px;height:27px;min-height:27px}
+.pdf-controls input[type=number],.pdf-controls select{height:27px;min-height:27px;font-size:11px}
+.pdf-canvas-scroll{padding:8px 16px 12px;scroll-padding:8px;flex:1}
+.pdf-physical-pages{gap:12px}.physical-label{height:20px;padding:3px 9px;font-size:10px}
+.reader-chrome-hidden .pdf-controls,.reader-chrome-hidden .pdf-fallback-strip{display:none}
+.reader-chrome-hidden .physical-label{display:none}
+.reader-chrome-hidden .physical-page{min-height:0!important}
+.focus-mode .integrated-pdf .pdf-controls{display:flex!important}
+.focus-mode .pdf-companion{display:none!important}
+@media(max-width:650px){.pdf-controls{padding:3px 5px;gap:2px}.pdf-controls select{max-width:97px}.pdf-controls .icon-button{width:25px}.pdf-canvas-scroll{padding:8px 16px 12px}}

@@ -3,10 +3,11 @@ import {isTrustedPdfatlasDocument,fetchTrustedPdf} from './external-policy.js';
 import type {DocumentEntry,Location} from '../core/model.js';
 import {Icon,IconButton} from '../components/Icon.js';
 import {DocumentInfo} from './DocumentInfo.js';
+import {CompanionPanel} from '../companion/CompanionPanel.js';
 import {EngineBoundary} from './EngineBoundary.js';
 /** Hosted entry installs the integrated adapter. Native rendering is only the
  * failure/compatibility path; neither path puts provenance above the document. */
-export function PdfReader({document:doc,location,onLocation,resolve,fetchBytes,onRenderer}: {document:DocumentEntry;location:Location;onLocation:any;resolve:(key:string)=>string|undefined;fetchBytes:(key:string)=>Promise<Uint8Array>;onRenderer?:(renderer:'loading'|'integrated'|'native-fallback')=>void}){
+export function PdfReader({paneId,slotId,document:doc,location,onLocation,resolve,fetchBytes,onRenderer}: {paneId?:string;slotId?:import('../core/model.js').WorkspaceNumber;document:DocumentEntry;location:Location;onLocation:any;resolve:(key:string)=>string|undefined;fetchBytes:(key:string)=>Promise<Uint8Array>;onRenderer?:(renderer:'loading'|'integrated'|'native-fallback')=>void}){
  const [adapter,setAdapter]=useState<any>(null),[engineError,setEngineError]=useState(''),[engineAttempt,setEngineAttempt]=useState(0);
  const [engineLoading,setEngineLoading]=useState(!!window.atlasPdfLoader),[native,setNative]=useState(false),[info,setInfo]=useState(false);
  const [consent,setConsent]=useState(false),[url,setUrl]=useState<string|undefined>(()=>doc.assetKey?resolve(doc.assetKey):undefined),[externalError,setExternalError]=useState(''),[retry,setRetry]=useState(0);
@@ -48,6 +49,7 @@ export function PdfReader({document:doc,location,onLocation,resolve,fetchBytes,o
   {source?<iframe className="pdf-fallback" src={source} title={'Browser PDF preview: '+doc.title} referrerPolicy="no-referrer"/>:
    external&&!trusted&&!consent?<div className="pdf-load-state"><p>Opening this PDF contacts its external host. No document request is made before you allow it.</p><code>{doc.source.url}</code><button onClick={allow}>Allow external PDF reference</button></div>:
    <div className="pdf-load-state" role="alert"><strong>PDF bytes are unavailable</strong><p>Import the original PDF through Workspace settings. Its metadata and reading state have been retained.</p></div>}
+ <CompanionPanel document={doc} physicalPage={location.pdfPage} paneId={paneId} slotId={slotId} onNavigate={()=>{}} nativeFallback/>
  </div>;}
  if(trusted&&!url)return <div className="pdf-reader"><div className="pdf-load-state pdf-external-status" role={externalError?'alert':'status'}>
   <strong>{externalError?'Public PDF could not be opened':'Opening verified public PDF...'}</strong><p>{externalError||'Checking the original byte count and SHA-256 before rendering.'}</p>
@@ -55,7 +57,7 @@ export function PdfReader({document:doc,location,onLocation,resolve,fetchBytes,o
  </div></div>;
  if(engineLoading)return <div className="pdf-reader"><div className="pdf-load-state" role="status">Opening integrated PDF reader...</div></div>;
  if(adapter&&!native){const Component=adapter;return <EngineBoundary key={engineAttempt+':'+doc.id} fallback={fallback} onError={(reason:string)=>{setEngineError(reason);setNative(true);}}>
-  <Component document={doc} location={location} onLocation={onLocation} url={source} requestExternal={allow} onFallback={(reason?:string)=>{setEngineError(reason??'Integrated PDF rendering failed.');setNative(true);}}/>
+  <Component paneId={paneId} slotId={slotId} document={doc} location={location} onLocation={onLocation} url={source} requestExternal={allow} onFallback={(reason?:string)=>{setEngineError(reason??'Integrated PDF rendering failed.');setNative(true);}}/>
  </EngineBoundary>;}
  return fallback();
 }

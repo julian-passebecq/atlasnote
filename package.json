@@ -1,6 +1,6 @@
 {
   "name": "knowledge-atlas",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "private": true,
   "type": "module",
   "engines": {
@@ -42,7 +42,9 @@
     "test:finish:ui": "python tests/finish_121_dom.py",
     "test:backup:diagnostic": "python tests/backup_diagnostic.py",
     "test:finish:integrated": "python tests/finish_121_integrated.py",
-    "check:integrated-deps": "node tools/check-integrated-deps.mjs"
+    "check:integrated-deps": "node tools/check-integrated-deps.mjs",
+    "test:workspaces:ui": "python tests/workspace_122_dom.py",
+    "test:workspaces:runtime": "python tests/workspace_122_runtime.py"
   },
   "dependencies": {
     "jszip": "3.10.1",

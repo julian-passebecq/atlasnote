@@ -1,0 +1,29 @@
+{
+  "id": "page.samples.norsk.sentences",
+  "title": "Explain what you are learning",
+  "summary": "A short bilingual sample, not a complete language course.",
+  "blocks": [
+    {
+      "id": "block.samples.norsk.sentences",
+      "type": "section",
+      "title": "Explain what you are learning",
+      "children": [
+        {
+          "type": "bilingual",
+          "no": "Jeg bruker Python for å behandle data, slik at jeg kan lage en rapport.",
+          "en": "I use Python to process data so that I can create a report.",
+          "hint": "slik at = so that; replace this sample with your own sentence.",
+          "id": "block.samples.norsk.sentences.example"
+        }
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "lang:nb"
+  ],
+  "provenance": "Original miniature study sample created for AtlasNote 1.2.2. Not official vendor documentation."
+}

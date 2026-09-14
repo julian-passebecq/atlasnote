@@ -1,56 +1,101 @@
 /** Primary hosted PDF adapter. Worker, CMaps, WASM and standard fonts are copied
  * from React-PDF's resolved PDF.js package; the version gate is never bypassed.
  * The separate compatibility build uses the native renderer, not this adapter. */
-import React,{useState,useEffect,useMemo,useRef} from 'react';
+import React,{useState,useEffect,useLayoutEffect,useMemo,useRef} from 'react';
 import {Document,Page,Outline,pdfjs} from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import type {DocumentEntry,Location} from '../core/model';
+import type {DocumentEntry,Location,WorkspaceNumber} from '../core/model';
 import {clampPage,spreadPages,combinedRotation,stepPhysicalPage} from '../pdf/physical-pages.mjs';
 import {pdfAnchor} from '../core/personal-state';
 import {DocumentInfo} from '../pdf/DocumentInfo';
 import {Icon,IconButton} from '../components/Icon';
+import {CompanionPanel} from '../companion/CompanionPanel';
+import {prepareCompanionParts} from '../companion/authoring.mjs';
+import {createWheelPager} from '../pdf/wheel-navigation.mjs';
 import './pdf.css';
 pdfjs.GlobalWorkerOptions.workerSrc=new URL('pdf-assets/pdf.worker.min.mjs',document.baseURI).href;
 const options={isEvalSupported:false,standardFontDataUrl:new URL('pdf-assets/standard_fonts/',document.baseURI).href,cMapUrl:new URL('pdf-assets/cmaps/',document.baseURI).href,cMapPacked:true,wasmUrl:new URL('pdf-assets/wasm/',document.baseURI).href};
 type PDF=Awaited<ReturnType<typeof pdfjs.getDocument>['promise']>;
-type Props={document:DocumentEntry;location:Location;onLocation:(l:Location)=>void;url?:string;requestExternal:()=>void;onFallback?:(reason?:string)=>void};
-function PhysicalPage({pdf,n,width,rotation,root,virtual,onVisible}:{pdf:PDF;n:number;width:number;rotation:number;root:HTMLDivElement|null;virtual:boolean;onVisible:(n:number)=>void}){
+type Props={paneId?:string;slotId?:WorkspaceNumber;document:DocumentEntry;location:Location;onLocation:(l:Location)=>void;url?:string;requestExternal:()=>void;onFallback?:(reason?:string)=>void};
+function PhysicalPage({pdf,n,width,rotation,root,virtual,onVisible,onRendered}:{pdf:PDF;n:number;width:number;rotation:number;root:HTMLDivElement|null;virtual:boolean;onVisible:(n:number)=>void;onRendered:()=>void}){
  const ref=useRef<HTMLDivElement>(null),[near,setNear]=useState(!virtual),[size,setSize]=useState({ratio:1.414,intrinsic:0});
  useEffect(()=>{if(!virtual){setNear(true);return;}const observer=new IntersectionObserver(entries=>{setNear(entries[0].isIntersecting);},{root,rootMargin:'900px 0px'});if(ref.current)observer.observe(ref.current);return()=>observer.disconnect();},[virtual,root]);
  useEffect(()=>{let alive=true;if(near)pdf.getPage(n).then(p=>{if(!alive)return;const v=p.getViewport({scale:1,rotation:combinedRotation(p.rotate,rotation)});setSize({ratio:v.height/v.width,intrinsic:p.rotate});}).catch(()=>{});return()=>{alive=false;};},[near,pdf,n,rotation]);
  useEffect(()=>{if(!virtual)return;const observer=new IntersectionObserver(entries=>{if(entries[0].isIntersecting)onVisible(n);},{root,rootMargin:'-10% 0px -75% 0px',threshold:0});if(ref.current)observer.observe(ref.current);return()=>observer.disconnect();},[root,virtual,n,onVisible]);
  const dpr=Math.max(0.5,Math.min(window.devicePixelRatio||1,2,Math.sqrt(5000000/(width*width*size.ratio))));
- return <section ref={ref} className="physical-page" data-physical-page={n} style={{width,minHeight:Math.ceil(width*size.ratio)+28}} aria-label={'Physical PDF page '+n}>
-  <div className="physical-label">Page {n}</div>{near?<Page pageNumber={n} width={width} rotate={combinedRotation(size.intrinsic,rotation)} devicePixelRatio={dpr} renderAnnotationLayer renderTextLayer error={<p role="alert">This physical page could not be rendered. The original PDF remains available.</p>} loading={<p>Rendering page {n}...</p>}/>:<div className="pdf-placeholder" style={{height:width*size.ratio}}>Page {n}</div>}
+ return <section ref={ref} className="physical-page" data-physical-page={n} style={{width,minHeight:Math.ceil(width*size.ratio)+20}} aria-label={'Physical PDF page '+n}>
+  <div className="physical-label">Page {n}</div>{near?<Page pageNumber={n} width={width} rotate={combinedRotation(size.intrinsic,rotation)} devicePixelRatio={dpr} renderAnnotationLayer renderTextLayer onRenderSuccess={()=>{ref.current?.setAttribute('data-page-rendered','true');onRendered();}} error={<p role="alert">This physical page could not be rendered. The original PDF remains available.</p>} loading={<p>Rendering page {n}...</p>}/>:<div className="pdf-placeholder" style={{height:width*size.ratio}}>Page {n}</div>}
  </section>;
 }
-export function PdfEngine({document:doc,location:loc,onLocation,url,requestExternal,onFallback}:Props){
- const [pdf,setPDF]=useState<PDF|null>(null),[error,setError]=useState(''),[workerOK,setWorkerOK]=useState(false),[workerError,setWorkerError]=useState(''),[loading,setLoading]=useState('Opening PDF...'),[retry,setRetry]=useState(0),[outline,setOutline]=useState(false),[searchOpen,setSearchOpen]=useState(false),[info,setInfo]=useState(false),[query,setQuery]=useState(''),[hits,setHits]=useState<{page:number;excerpt:string}[]>([]),[findStatus,setFindStatus]=useState(''),[password,setPassword]=useState(''),[passwordReason,setPasswordReason]=useState(''),[width,setWidth]=useState(700),[pageInput,setPageInput]=useState(String(loc.pdfPage));
+export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,url,requestExternal,onFallback}:Props){
+ const [pdf,setPDF]=useState<PDF|null>(null),[error,setError]=useState(''),[workerOK,setWorkerOK]=useState(false),[workerError,setWorkerError]=useState(''),[loading,setLoading]=useState('Opening PDF...'),[retry,setRetry]=useState(0),[outline,setOutline]=useState(false),[searchOpen,setSearchOpen]=useState(false),[info,setInfo]=useState(false),[query,setQuery]=useState(''),[hits,setHits]=useState<{page:number;excerpt:string}[]>([]),[findStatus,setFindStatus]=useState(''),[password,setPassword]=useState(''),[passwordReason,setPasswordReason]=useState(''),[width,setWidth]=useState(700),[height,setHeight]=useState(600),[pageInput,setPageInput]=useState(String(loc.pdfPage));
  const passwordCallback=useRef<((value:string)=>void)|null>(null),host=useRef<HTMLDivElement>(null),job=useRef(0),locationRef=useRef(loc),onLocationRef=useRef(onLocation);locationRef.current=loc;onLocationRef.current=onLocation;
  const source=useMemo(()=>url?{url}:null,[url]);
  const capturing=useRef(false),scrolling=useRef(false),restoreFrame=useRef(0),scrollFrame=useRef(0),settleTimer=useRef<ReturnType<typeof setTimeout>>();
  useEffect(()=>{let alive=true;setWorkerOK(false);setWorkerError('');fetch(new URL('pdf-assets/engine.json',document.baseURI),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('PDF worker metadata missing');return r.json();}).then(meta=>{if(meta.pdfjs!==pdfjs.version)throw Error('PDF worker version does not match React-PDF: '+meta.pdfjs+' vs '+pdfjs.version);if(alive)setWorkerOK(true);}).catch(e=>{if(alive)setWorkerError(e.message);});return()=>{alive=false;};},[retry]);
  useEffect(()=>{setPDF(null);setError('');setHits([]);setFindStatus('');setPassword('');setPasswordReason('');passwordCallback.current=null;job.current++;return()=>{job.current++;passwordCallback.current=null;};},[doc.id,doc.sha256,url,retry]);
- useEffect(()=>{setPageInput(String(loc.pdfPage));},[loc.pdfPage]);
- useEffect(()=>{const el=host.current;if(!el)return;const ro=new ResizeObserver(()=>setWidth(el.clientWidth));ro.observe(el);return()=>ro.disconnect();},[url]);
- const setPage=(n:number)=>{scrolling.current=false;const page=clampPage(n,pdf?.numPages??n);onLocationRef.current({...locationRef.current,pdfPage:page,anchor:pdfAnchor(page,doc.sha256)});if(locationRef.current.pdfMode==='continuous')requestAnimationFrame(()=>host.current?.querySelector<HTMLElement>('[data-physical-page="'+page+'"]')?.scrollIntoView({block:'start',behavior:'auto'}));};
- const seen=useMemo(()=>{let last=0;return (n:number)=>{if(last===n)return;last=n;const l=locationRef.current;if(scrolling.current&&l.pdfMode==='continuous'&&l.pdfPage!==n)onLocationRef.current({...l,pdfPage:n,anchor:pdfAnchor(n,doc.sha256)});};},[doc.id,doc.sha256]);
- // Only user scrolling owns physical-page updates. Loading, resize, reflow and
- // backup cannot silently replace the saved page with an observer's first page.
- useEffect(()=>{scrolling.current=false;if(pdf&&loc.pdfMode==='continuous')restoreFrame.current=requestAnimationFrame(()=>host.current?.querySelector<HTMLElement>('[data-physical-page="'+clampPage(locationRef.current.pdfPage,pdf.numPages)+'"]')?.scrollIntoView({block:'start',behavior:'auto'}));return()=>cancelAnimationFrame(restoreFrame.current);},[loc.pdfMode,loc.zoom,loc.rotation,loc.cover,width,pdf]);
- function captureScroll(){
-  const el=host.current,l=locationRef.current;if(capturing.current||!el||!scrolling.current||l.pdfMode!=='continuous')return;
-  const line=el.getBoundingClientRect().top+Math.min(80,el.clientHeight*.12);
-  const nodes=Array.from(el.querySelectorAll<HTMLElement>('[data-physical-page]'));
-  const node=nodes.find(n=>n.getBoundingClientRect().bottom>line)??nodes[nodes.length-1];
-  const n=Number(node?.dataset.physicalPage);if(n&&n!==l.pdfPage){capturing.current=true;try{onLocationRef.current({...l,pdfPage:n,anchor:pdfAnchor(n,doc.sha256)});}finally{capturing.current=false;}}
+ // Companion and outline jumps must update the editable page control before
+ // paint, alongside the physical page and companion selection.
+ useLayoutEffect(()=>{setPageInput(String(loc.pdfPage));},[loc.pdfPage]);
+ // Resize restoration uses a physical page plus a fractional intra-page anchor.
+ // Persisting only a page number loses the user's place in a tall, zoomed page.
+ const pendingRestore=useRef(true),lastCapture=useRef(''),restoring=useRef(false),wheelPager=useRef(createWheelPager());
+ const positionKey=(l:Location)=>JSON.stringify([l.pdfPage,l.anchor?.pdfOffset??0,l.anchor?.pdfRevision]);
+ function restorePosition(force=false){
+  if((!pendingRestore.current&&!force)||scrolling.current)return;
+  const el=host.current,l=locationRef.current;if(!el||!pdf)return;
+  const target=el.querySelector<HTMLElement>('[data-physical-page="'+clampPage(l.pdfPage,pdf.numPages)+'"]');if(!target)return;
+  restoring.current=true;
+  const offset=l.anchor?.pdfOffset??0;
+  el.scrollTop+=target.getBoundingClientRect().top-el.getBoundingClientRect().top+offset*target.getBoundingClientRect().height;
+  if(target.dataset.pageRendered==='true')pendingRestore.current=false;
+  cancelAnimationFrame(restoreFrame.current);restoreFrame.current=requestAnimationFrame(()=>{restoring.current=false;});
  }
+ function queueRestore(){scrolling.current=false;pendingRestore.current=true;cancelAnimationFrame(restoreFrame.current);restoreFrame.current=requestAnimationFrame(()=>restorePosition());}
+ useEffect(()=>{const el=host.current;if(!el)return;const ro=new ResizeObserver(()=>{setWidth(el.clientWidth);setHeight(el.clientHeight);});ro.observe(el);return()=>ro.disconnect();},[url,pdf]);
+ const setPage=(n:number,bottom=false)=>{
+  if(!pdf||!Number.isFinite(n))return;
+  const next=clampPage(Math.round(n),pdf.numPages);scrolling.current=false;pendingRestore.current=true;lastCapture.current='';
+  onLocationRef.current({...locationRef.current,pdfPage:next,anchor:{...pdfAnchor(next,doc.sha256),...(bottom?{pdfOffset:1}:{})}});
+ };
+ function captureScroll(){
+  const el=host.current,l=locationRef.current;if(capturing.current||!el||!scrolling.current||restoring.current)return;
+  const nodes=Array.from(el.querySelectorAll<HTMLElement>('[data-physical-page]'));
+  const line=el.getBoundingClientRect().top+2;
+  const node=l.pdfMode==='continuous'?(nodes.find(n=>n.getBoundingClientRect().bottom>line)??nodes.at(-1)):(nodes.find(n=>Number(n.dataset.physicalPage)===l.pdfPage)??nodes[0]);
+  if(!node)return;const n=Number(node.dataset.physicalPage),rect=node.getBoundingClientRect();
+  if(!rect.height)return;
+  const offset=Math.round(Math.max(-10,Math.min(10,(el.getBoundingClientRect().top-rect.top)/rect.height))*1000000)/1000000;
+  if(n!==l.pdfPage||Math.abs((l.anchor?.pdfOffset??0)-offset)>0.00001){
+   const next={...l,pdfPage:n,anchor:{...pdfAnchor(n,doc.sha256),pdfOffset:offset}};
+   capturing.current=true;lastCapture.current=positionKey(next);try{onLocationRef.current(next);}finally{capturing.current=false;}
+  }
+ }
+ const seen=useMemo(()=>captureScroll,[doc.id,doc.sha256]);
+ useEffect(()=>{queueRestore();return()=>cancelAnimationFrame(restoreFrame.current);},[loc.pdfMode,loc.zoom,loc.rotation,loc.cover,width,height,pdf]);
+ useEffect(()=>{if(positionKey(loc)!==lastCapture.current)queueRestore();},[loc.pdfPage,loc.anchor?.pdfOffset]);
  useEffect(()=>{const capture=()=>captureScroll();document.addEventListener('atlas:before-reader-change',capture);return()=>{document.removeEventListener('atlas:before-reader-change',capture);cancelAnimationFrame(scrollFrame.current);clearTimeout(settleTimer.current);};},[doc.id,doc.sha256]);
+ useEffect(()=>{
+  const el=host.current;if(!el)return;
+  const wheel=(e:WheelEvent)=>{
+   const target=e.target as HTMLElement;
+   const blocked=e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||!!target.closest('input,textarea,select,button,a,[contenteditable="true"],.pdf-outline,.pdf-info-overlay,.pdf-search-overlay,[role="dialog"]');
+   if(blocked)return;
+   scrolling.current=true;pendingRestore.current=false;
+   const l=locationRef.current,turn=wheelPager.current({deltaY:e.deltaY,deltaX:e.deltaX,deltaMode:e.deltaMode,now:performance.now(),mode:l.pdfMode,top:el.scrollTop<=2,bottom:el.scrollTop+el.clientHeight>=el.scrollHeight-2,blocked});
+   if(turn&&pdf){const paired=l.pdfMode==='spread'&&el.clientWidth>=650;const next=stepPhysicalPage(l.pdfPage,pdf.numPages,turn,paired,l.cover);if(next!==l.pdfPage){e.preventDefault();setPage(next,turn<0);}}
+  };
+  el.addEventListener('wheel',wheel,{passive:false});return()=>el.removeEventListener('wheel',wheel);
+ },[pdf,url]);
+ useEffect(()=>{
+  const close=(event:Event)=>{if((event as CustomEvent).detail?.paneId===paneId){setOutline(false);setSearchOpen(false);setInfo(false);}};
+  document.addEventListener('atlas:reader-chrome',close);return()=>document.removeEventListener('atlas:reader-chrome',close);
+ },[paneId]);
  useEffect(()=>{
   function keys(e:KeyboardEvent){
    const root=host.current?.closest('.document-pane');
-   if(!root?.classList.contains('active-pane')||!root.closest('.focus-mode')||e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey)return;
+   if(!root?.classList.contains('active-pane')||(!root.closest('.focus-mode')&&document.activeElement!==host.current)||e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey)return;
    const target=e.target as HTMLElement;if(target?.closest('input,textarea,select,button,a,[contenteditable="true"],[role="textbox"]'))return;
    if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const l=locationRef.current;setPage(stepPhysicalPage(l.pdfPage,pdf?.numPages??1,e.key==='ArrowRight'?1:-1,l.pdfMode==='spread'&&width>=650,l.cover));}
   }
@@ -88,14 +133,14 @@ export function PdfEngine({document:doc,location:loc,onLocation,url,requestExter
   {passwordCallback.current&&<form className="pdf-password" onSubmit={e=>{e.preventDefault();const callback=passwordCallback.current;passwordCallback.current=null;callback?.(password);setPassword('');setPasswordReason('');}}><p>{passwordReason} Passwords are used in memory only and are never backed up.</p><label>PDF password<input type="password" autoComplete="off" value={password} onChange={e=>setPassword(e.target.value)}/></label><button>Unlock PDF</button><button type="button" onClick={()=>{passwordCallback.current=null;setPassword('');setPasswordReason('');setError('Password entry cancelled. The original bytes remain intact.');}}>Cancel</button></form>}
   {(error||workerError)&&<div className="pdf-engine-error" role="alert"><strong>PDF could not be opened</strong><p>{workerError||error}</p><button onClick={()=>{setError('');setRetry(x=>x+1);}}>Retry PDF</button>{onFallback&&<button onClick={()=>onFallback(workerError||error)}>Use browser PDF fallback</button>}<a href={url} target="_blank" rel="noopener noreferrer">Open original</a></div>}
   <div className="pdf-canvas-scroll" ref={host} tabIndex={0} aria-label="PDF document canvas"
-   onWheel={()=>{scrolling.current=true;}} onTouchStart={()=>{scrolling.current=true;}} onPointerDown={()=>{scrolling.current=true;}}
+   onTouchStart={()=>{scrolling.current=true;pendingRestore.current=false;}} onPointerDown={()=>{scrolling.current=true;pendingRestore.current=false;}}
    onKeyDown={e=>{if(['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].includes(e.key))scrolling.current=true;}}
    onScroll={()=>{cancelAnimationFrame(scrollFrame.current);scrollFrame.current=requestAnimationFrame(captureScroll);clearTimeout(settleTimer.current);settleTimer.current=setTimeout(()=>{captureScroll();scrolling.current=false;},180);}}>
-   {workerOK&&!error&&!workerError?<Document key={doc.id+':'+doc.sha256+':'+retry} file={source} options={options} externalLinkTarget="_blank" externalLinkRel="noopener noreferrer" onLoadSuccess={async p=>{setPDF(p);setLoading('');const n=clampPage(locationRef.current.pdfPage,p.numPages);const l=locationRef.current;if(l.pdfPage!==n||l.anchor?.pdfPage!==n||l.anchor?.pdfRevision!==doc.sha256)onLocationRef.current({...l,pdfPage:n,anchor:pdfAnchor(n,doc.sha256)});requestAnimationFrame(()=>{if(locationRef.current.pdfMode==='continuous')host.current?.querySelector<HTMLElement>('[data-physical-page="'+n+'"]')?.scrollIntoView({block:'start'});});}} onLoadError={e=>setError(e.message)} onSourceError={e=>setError(e.message)} onLoadProgress={({loaded,total})=>setLoading(total?'Loading '+Math.round(loaded/total*100)+'%':'Loading PDF bytes...')} onPassword={(callback,reason)=>{passwordCallback.current=callback;setPasswordReason(reason===2?'Incorrect password. Try again.':'This PDF is password protected.');}} onItemClick={({pageNumber})=>{if(pageNumber)setPage(pageNumber);}} loading={<p role="status">{loading}</p>}>
+   {workerOK&&!error&&!workerError?<Document key={doc.id+':'+doc.sha256+':'+retry} file={source} options={options} externalLinkTarget="_blank" externalLinkRel="noopener noreferrer" onLoadSuccess={async p=>{setPDF(p);setLoading('');const n=clampPage(locationRef.current.pdfPage,p.numPages);const l=locationRef.current;if(l.pdfPage!==n||l.anchor?.pdfPage!==n||l.anchor?.pdfRevision!==doc.sha256)onLocationRef.current({...l,pdfPage:n,anchor:pdfAnchor(n,doc.sha256)});queueRestore();}} onLoadError={e=>setError(e.message)} onSourceError={e=>setError(e.message)} onLoadProgress={({loaded,total})=>setLoading(total?'Loading '+Math.round(loaded/total*100)+'%':'Loading PDF bytes...')} onPassword={(callback,reason)=>{passwordCallback.current=callback;setPasswordReason(reason===2?'Incorrect password. Try again.':'This PDF is password protected.');}} onItemClick={({pageNumber})=>{if(pageNumber)setPage(pageNumber);}} loading={<p role="status">{loading}</p>}>
     {pdf&&<aside className="pdf-outline" hidden={!outline}><IconButton name="close" label="Close PDF outline" onClick={()=>setOutline(false)}/><h3>Document outline</h3><Outline onItemClick={({pageNumber})=>{if(pageNumber)setPage(pageNumber);}}/></aside>}
-    <div className={'pdf-physical-pages '+(paired?'pdf-spread':'')}>{pdf&&pages.map(n=><PhysicalPage key={n} pdf={pdf} n={n} width={pageWidth} rotation={loc.rotation} root={host.current} virtual={loc.pdfMode==='continuous'} onVisible={seen}/>)}</div>
+    <div className={'pdf-physical-pages '+(paired?'pdf-spread':'')}>{pdf&&pages.map(n=><PhysicalPage key={n} pdf={pdf} n={n} width={pageWidth} rotation={loc.rotation} root={host.current} virtual={loc.pdfMode==='continuous'} onVisible={seen} onRendered={()=>restorePosition(true)}/>)}</div>
    </Document>:!error&&!workerError&&<p>Checking compatible local PDF worker...</p>}
   </div>
-
+  <CompanionPanel document={doc} physicalPage={loc.pdfPage} pageCount={pdf?.numPages} paneId={paneId} slotId={slotId} onNavigate={n=>setPage(n)} prepare={pdf?(first,last,onProgress,signal)=>prepareCompanionParts(pdf,doc,{startPage:first,endPage:last,onProgress,signal}):undefined}/>
  </div>;
 }

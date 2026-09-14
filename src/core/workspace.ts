@@ -7,8 +7,8 @@ export function blankPersonal():Personal{return {schemaVersion:2,notes:{},rating
 export function blankWorkspace():Workspace{return {imports:[],overlays:blankOverlays(),personal:blankPersonal(),assets:[],generation:0};}
 export function current(view:View|undefined){return view?.history[view.cursor];}
 export function newLocation(pageId:string):Location{return {pageId,presentation:'continuous',pdfMode:'single',pdfPage:1,zoom:1,rotation:0,cover:false};}
-export function newView(pageId?:string,anchor?:any):View{return {id:uid('view'),history:pageId?[{...newLocation(pageId),...(anchor?{anchor}:{})}]:[],cursor:0,collapsed:{},revealed:{},english:true};}
-export function navigate(view:View,pageId:string,anchor?:any):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;const prefix=view.history.slice(0,view.cursor+1);return {...view,history:[...prefix,{...newLocation(pageId),...(anchor?{anchor}:{})}],cursor:prefix.length};}
+export function newView(pageId?:string,anchor?:any):View{return {id:uid('view'),history:pageId?[{...newLocation(pageId),...(anchor?{anchor,...(anchor.pdfPage?{pdfPage:anchor.pdfPage}:{})}:{})}]:[],cursor:0,collapsed:{},revealed:{},english:true};}
+export function navigate(view:View,pageId:string,anchor?:any):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;const prefix=view.history.slice(0,view.cursor+1);return {...view,history:[...prefix,{...newLocation(pageId),...(anchor?{anchor,...(anchor.pdfPage?{pdfPage:anchor.pdfPage}:{})}:{})}],cursor:prefix.length};}
 export function travel(view:View,delta:number):View{return {...view,cursor:Math.max(0,Math.min(view.history.length-1,view.cursor+delta))};}
 export function findNode(projects:Project[],id:string):{node:TreeNode;list:TreeNode[];index:number;project:Project;ancestors:string[]}|undefined{
  function walk(ns:TreeNode[],p:Project,ancestors:string[]):any{for(let i=0;i<ns.length;i++){if(ns[i].id===id)return {node:ns[i],list:ns,index:i,project:p,ancestors};const r=walk(ns[i].children??[],p,[...ancestors,ns[i].id]);if(r)return r;}}
@@ -33,7 +33,7 @@ export function compose(built:{packs:Pack[];groups:Group[]},ws:Workspace):Catalo
  for(const {page,baseHash}of Object.values(ws.overlays.pages)){if(baseHash){const pack=chosen.packs.find(p=>p.manifest.id===owners[page.id]);if(pack&&pack.hash!==baseHash)warnings.push('Local overlay '+page.id+' is retained over an updated source. Review the rebase in Settings.');}pages.set(page.id,page);owners[page.id]??='local';}
  for(const p of ws.overlays.projects)owners[p.id]='local';
  const docs=[...chosen.packs.flatMap(p=>p.documents??[]),...ws.overlays.documents];
- return {projects,pages:[...pages.values()],glossary:chosen.packs.flatMap(p=>p.glossary),groups:ws.overlays.groups??built.groups,packs:chosen.packs,owners,documents:docs.map(d=>({...d,title:pages.get(d.pageId)?.title??d.title})),warnings};
+ return {projects,pages:[...pages.values()],glossary:[...chosen.packs.flatMap(p=>p.glossary),...(ws.overlays.glossary??[]).filter(t=>!chosen.packs.some(p=>p.glossary.some(x=>x.id===t.id)))],groups:ws.overlays.groups??built.groups,packs:chosen.packs,owners,documents:docs.map(d=>({...d,title:pages.get(d.pageId)?.title??d.title})),warnings};
 }
 export function locations(c:Catalogue){const result=new Map<string,{project:Project;ancestors:string[];path:string[];nodeId:string}>();function walk(p:Project,ns:TreeNode[],path:string[],ancestors:string[]){for(const n of ns){if(n.pageId)result.set(n.pageId,{project:p,ancestors,path:[...path,n.title],nodeId:n.id});if(n.children)walk(p,n.children,[...path,n.title],[...ancestors,n.id]);}}for(const p of c.projects)walk(p,p.nodes,[p.title],[p.id]);return result;}
 export function isArchived(pageId:string,c:Catalogue,overlays:Overlays){const loc=locations(c).get(pageId);return overlays.archived.includes(pageId)||!!loc&&[loc.nodeId,...loc.ancestors].some(id=>overlays.archived.includes(id));}
@@ -48,6 +48,7 @@ export function exportText(page:Page,opts:{english:boolean;answers:boolean;notes
  * The ratio is a durable preference, even while a single pane is visible.
  */
 export function toggleCompare(session:Session):boolean {
+ session.collapsedPane=null;
  const active=session.panes.find(p=>p.id===session.activePane)??session.panes[0];
  if(!active)return false;
  if(session.panes.length===2){

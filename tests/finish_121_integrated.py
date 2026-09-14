@@ -30,7 +30,7 @@ try:
   for prefix in ['pdf.worker.min.mjs','cmaps/','wasm/','standard_fonts/']:assert any(n.startswith(prefix) for n in inventory['files'])
   record(phase,{'verifiedAssets':len(inventory['files'])})
   phase='normal';search('PDF reading fixture');p.locator('.integrated-pdf[data-pdf-state="ready"] canvas').first.wait_for();assert p.locator('.pdf-intro,.pdf-fallback').count()==0;assert p.locator('.integrated-pdf').get_attribute('data-worker-status')=='compatible';record(phase)
-  phase='geometry';measurements=[]
+  phase='geometry';p.get_by_role('button',name='Collapse PDF Companion',exact=True).click();measurements=[]
   for w,h in [(1366,768),(1440,900),(1920,1080),(390,844)]:
    p.set_viewport_size({'width':w,'height':h});p.wait_for_timeout(500);pane=p.locator('.document-pane').bounding_box();canvas=p.locator('.pdf-canvas-scroll').bounding_box();controls=p.locator('.pdf-controls').bounding_box();assert canvas['height']/pane['height']>=.70,(pane,canvas);assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1;assert p.locator('.pdf-canvas-scroll').evaluate('e=>e.scrollWidth-e.clientWidth')<=1
    measurements.append({'width':w,'height':h,'pane':pane,'canvas':canvas,'controls':controls,'canvasFraction':canvas['height']/pane['height']});shot('integrated-normal-'+str(w))
