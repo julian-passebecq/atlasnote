@@ -144,7 +144,8 @@ try:
   page.reload(wait_until='networkidle');assert snapshot(page)['personal']==migrated;record({'legacyEnvelope':2,'migratedPersonal':3,'exactSlot1':True,'actualFreshContextReload':True})
   phase='public_spark_companion';search(page,'Apache Spark: 30 concepts');wait_pdf(page);show_reader_controls(page);assert page.locator('.pdf-companion').count()==0
   assert page.locator('.active-pane').get_by_label('Physical page count',exact=True).inner_text().strip()=='/ 6'
-  goto(page,6);tree=page.locator('.tree-node').filter(has=page.get_by_role('button',name='Expand PDF Apache Spark: 30 concepts',exact=True)).last
+  # Keep the scope stable when the PDF expander changes its label to Collapse.
+  goto(page,6);tree=page.locator('[data-node-id="node.pdfatlas.spark-concepts"]').locator('..')
   tree.get_by_role('button',name='Expand PDF Apache Spark: 30 concepts',exact=True).click();assert tree.locator('.pdf-study-page').count()==0
   tree.get_by_role('button',name='Expand PDF glossary',exact=True).click();assert tree.locator('.pdf-study-term').filter(has_text='memory').count()>0;shot(page,'actual-public-spark-study-tree');record({'physicalPages':6,'concepts':30,'reviewed':False,'source':'Pinned byte-verified public PDF, not a substituted renderer'})
   phase='no_errors';assert errors==[],errors;record();browser.close()

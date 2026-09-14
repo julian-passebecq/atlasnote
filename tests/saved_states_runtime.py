@@ -31,6 +31,12 @@ def action(p,label,message):
  p.get_by_role('button',name=label,exact=True).click();p.locator('.toast').filter(has_text=message).wait_for();assert not p.locator('.toast.error').count()
 def read_last(p,scope):
  return next(e for e in p['savedStates']['entries'] if (e['scope']=='all' if scope=='all' else e['scope']=='workspace' and e['slot']==scope))
+
+def open_manager(p):
+ # Dismiss the previous action's toast before the modal makes it inert.
+ dismiss=p.get_by_role('button',name='Dismiss message',exact=True)
+ if dismiss.count():dismiss.click()
+ p.get_by_role('button',name='Manage saved states',exact=True).click()
 try:
  base=start_server()
  with sync_playwright() as pw:
@@ -43,13 +49,13 @@ try:
   workspace(page,2);search(page,'Read in Norwegian, keep English nearby');two=session(durable(page)['personal'],2)
   workspace(page,1);search(page,'PDF reading fixture');changed=durable(page);action(page,'Restore last workspace save','Saved state restored.');restored=durable(page)
   assert session(restored['personal'],1)==one['session'];assert session(restored['personal'],2)==two;assert restored['personal']['notes']==changed['personal']['notes'];assert restored['overlays']==changed['overlays']
-  page.get_by_role('button',name='Manage saved states',exact=True).click();action(page,'Undo last restore','Saved state restored.');assert session(durable(page)['personal'],1)==session(changed['personal'],1);record()
+  open_manager(page);action(page,'Undo last restore','Saved state restored.');assert session(durable(page)['personal'],1)==session(changed['personal'],1);record()
   phase='all_workspaces_restore'
   for n in [3,4,5]:workspace(page,n);search(page,'Explain what you are learning')
   workspace(page,4);action(page,'Save all workspace states','All workspaces saved.');all_save=read_last(durable(page)['personal'],'all')
   workspace(page,2);search(page,'One note, several ways to read');workspace(page,5);action(page,'Restore last all-workspaces save','Saved state restored.');all_restored=durable(page)['personal']
   assert all_restored['activeWorkspaceSlot']==all_save['activeWorkspaceSlot']==4;assert all_restored['session']==all_save['session'];assert all_restored['workspaceSlots']==all_save['workspaceSlots'];assert len(all_restored['savedStates']['entries'])==2;record()
-  phase='manager_progress_history';page.get_by_role('button',name='Manage saved states',exact=True).click();page.get_by_role('tab',name='All workspaces saves',exact=True).click();page.get_by_role('button',name='Rename / note',exact=True).click();page.get_by_role('textbox',name='Save title',exact=True).fill('Week 1 - all workspaces');page.get_by_role('textbox',name='Progress / next step',exact=True).fill('Continue at the saved reading position tomorrow.');action(page,'Save details','Save details updated.');close_panels(page)
+  phase='manager_progress_history';open_manager(page);page.get_by_role('tab',name='All workspaces saves',exact=True).click();page.get_by_role('button',name='Rename / note',exact=True).click();page.get_by_role('textbox',name='Save title',exact=True).fill('Week 1 - all workspaces');page.get_by_role('textbox',name='Progress / next step',exact=True).fill('Continue at the saved reading position tomorrow.');action(page,'Save details','Save details updated.');close_panels(page)
   prior=durable(page)['personal'];assert read_last(prior,'all')['title']=='Week 1 - all workspaces';assert 'tomorrow' in read_last(prior,'all')['note'];assert prior['savedStates']['history'][0]['action']=='rename'
   page.reload(wait_until='networkidle');assert durable(page)['personal']==prior;record()
   phase='backup_fresh_context';open_settings(page);before=durable(page)
