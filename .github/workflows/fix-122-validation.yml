@@ -1,40 +1,22 @@
-name: Correct and verify AtlasNote 1.2.2 acceptance
+name: Verify AtlasNote 1.2.2 acceptance
 on:
   push:
-    branches: [release/atlasnote-1.2.2-workspaces-pdf-companion]
-    paths: [.github/workflows/fix-122-validation.yml]
+    branches: [release/atlasnote-1.2.2-workspaces-pdf-companion, fix/atlasnote-1.2.2-release-gates]
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: release/atlasnote-1.2.2-workspaces-pdf-companion
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Correct harness variable and assert user-visible zoom dimensions
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          p=Path('tests/workspace_122_runtime.py');s=p.read_text();assert s.count('if new_tab:')==1;s=s.replace('if new_tab:','if new:');p.write_text(s)
-          p=Path('tests/pdf_runtime.py');s=p.read_text()
-          old="phase='zoom';w=p.locator('canvas').first.evaluate('e=>e.width');p.get_by_role('combobox',name='PDF zoom',exact=True).select_option('1.5');p.wait_for_timeout(300);assert p.locator('canvas').first.evaluate('e=>e.width')>=w*1.3;record(phase)"
-          new="phase='zoom';w=p.locator('canvas').first.evaluate('e=>e.getBoundingClientRect().width');p.get_by_role('combobox',name='PDF zoom',exact=True).select_option('1.5');p.wait_for_function('(w)=>document.querySelector(\"canvas\").getBoundingClientRect().width>=w*1.3',arg=w,timeout=10000);after=p.locator('canvas').first.evaluate('e=>e.getBoundingClientRect().width');assert after>=w*1.3,(w,after);record(phase,{'displayWidthBefore':w,'displayWidthAfter':after})"
-          assert old in s;s=s.replace(old,new);p.write_text(s)
-          PY
-          git config user.name 'AtlasNote implementation'
-          git config user.email '64646018+julian-passebecq@users.noreply.github.com'
-          git add tests/workspace_122_runtime.py tests/pdf_runtime.py
-          git commit -m 'Fix workspace acceptance parameter and measure actual visible PDF zoom'
-          git push origin HEAD:release/atlasnote-1.2.2-workspaces-pdf-companion
       - run: npm ci
       - run: python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
       - run: python -m playwright install --with-deps chromium
