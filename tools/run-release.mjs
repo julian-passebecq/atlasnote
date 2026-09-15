@@ -4,7 +4,7 @@
 import {spawnSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-const out=path.resolve('docs/evidence/1.2.5/release-gates');fs.mkdirSync(out,{recursive:true});
+const out=path.resolve('docs/evidence/1.2.6/release-gates');fs.mkdirSync(out,{recursive:true});
 const commands=[
  ['clean-install',['ci']], ['integrated-deps',['run','check:integrated-deps']], ['npm-audit',['audit']],
  ['core-typecheck',['run','typecheck']], ['unit',['test']], ['offline-release',['run','check:release:offline']],
@@ -17,7 +17,8 @@ const commands=[
  ['component-harness',['run','build:test-harness']], ['pdf-component',['run','test:pdf:component']], ['pdf-grid',['run','test:pdf:grid']], ['pdf-wheel',['run','test:pdf:wheel']],
  ['pdf-runtime',['run','test:pdf']], ['finish-integrated',['run','test:finish:integrated']],
  ['runtime',['run','test:runtime']], ['workspaces-runtime',['run','test:workspaces:runtime']],
- ['saved-states-runtime',['run','test:savedstates:runtime']], ['reading-runtime',['run','test:reading:runtime']], ['headers',['run','test:headers']]
+ ['saved-states-runtime',['run','test:savedstates:runtime']], ['reading-runtime',['run','test:reading:runtime']], ['headers',['run','test:headers']],
+ ['cheatsheets-content',['run','test:cheatsheets']], ['cheatsheets-ui',['run','test:cheatsheets:ui']], ['cheatsheets-runtime',['run','test:cheatsheets:runtime']]
 ];
 // Invoke npm's JavaScript entry point through Node; npm.cmd is not directly
 // executable by spawnSync on Windows. See nodejs.org/api/child_process.html.

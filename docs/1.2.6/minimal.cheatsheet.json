@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "1.1",
+  "id": "my-study-sheet",
+  "title": "My study sheet",
+  "pageSize": {
+    "width": 1200,
+    "height": 1600
+  },
+  "meta": {
+    "audience": "My study notes",
+    "goal": "Keep one reusable pattern visible"
+  },
+  "pages": [
+    {
+      "id": "my-study-page-1",
+      "title": "Dictionary grouping",
+      "blocks": [
+        {
+          "id": "my-study-title",
+          "type": "text",
+          "role": "title",
+          "text": "Dictionary grouping"
+        },
+        {
+          "id": "my-study-explanation",
+          "type": "text",
+          "text": [
+            {
+              "text": "Pattern: ",
+              "marks": [
+                "key"
+              ]
+            },
+            {
+              "text": "create or find a group, then append the current row."
+            }
+          ]
+        },
+        {
+          "id": "my-study-code",
+          "type": "code",
+          "language": "python",
+          "title": "Example - group rows by customer",
+          "code": "groups = {}\nfor row in rows:\n    groups.setdefault(row[\"customer_id\"], []).append(row)"
+        }
+      ],
+      "frames": {
+        "my-study-title": {
+          "x": 94,
+          "y": 52,
+          "width": 1038,
+          "height": 70
+        },
+        "my-study-explanation": {
+          "x": 94,
+          "y": 210,
+          "width": 1038,
+          "height": 90
+        },
+        "my-study-code": {
+          "x": 94,
+          "y": 360,
+          "width": 1038,
+          "height": 220
+        }
+      },
+      "outline": [
+        {
+          "id": "my-study-pattern",
+          "label": "Grouping pattern",
+          "blockId": "my-study-explanation"
+        },
+        {
+          "id": "my-study-example",
+          "label": "Python example",
+          "blockId": "my-study-code"
+        }
+      ]
+    }
+  ]
+}

@@ -44,6 +44,7 @@ export function toggleQuickLayout(view:View,pdf:boolean):void {
 }
 /** Classification is explicit data, never inferred from user titles. */
 export const BUILTIN_CATEGORIES:Record<string,CategoryId>={
+ 'project.cheatsheets':'informatics',
  'project.interview-preparation':'job',
  'project.atlas.guide':'personal','example.project':'personal','project.pdfatlas':'informatics',
  ...Object.fromEntries(['python','sql','pandas','pyspark'].map(n=>['project.samples.'+n,'informatics' as const])),

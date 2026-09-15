@@ -1,0 +1,20 @@
+/* Native fixed pages only. No global notebook/PDF typography overrides. */
+.cheatsheet-reader{display:flex;flex-direction:column;flex:1;min-height:0;min-width:0;overflow:hidden;background:var(--subtle)}
+.sheet-toolbar{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:6px;padding:5px 10px;flex-shrink:0}
+.sheet-toolbar button,.sheet-toolbar select,.sheet-toolbar input{font-size:11px;min-height:28px}
+.sheet-modes{display:flex;gap:2px}.sheet-modes button{padding:4px 7px}.sheet-modes button[aria-pressed=true]{background:var(--accent-soft,#e6edf4);color:var(--accent,#183f68);border-color:var(--accent,#183f68)}
+.sheet-navigation{display:flex;align-items:center;gap:3px;margin:0}.sheet-navigation input{width:49px;padding:4px}.sheet-navigation span{white-space:nowrap;font-size:11px}
+.sheet-fit,.sheet-zoom{display:flex;align-items:center;gap:4px;font-size:10px}.sheet-fit select,.sheet-zoom select{width:auto;padding:3px 5px}
+.sheet-viewport{position:relative;min-height:0;min-width:0;flex:1;overflow:auto;padding:12px;overscroll-behavior:contain;scrollbar-gutter:stable}
+.sheet-page-grid{display:grid;gap:14px;width:max-content;margin:0 auto;align-items:start}
+.sheet-figure{margin:0;min-width:0;outline:1px solid #cbd5df;background:#fbfcfd;box-shadow:0 2px 10px #172b4212;border-radius:2px;overflow:hidden}
+.sheet-figure.is-current{outline:2px solid #476d91}.sheet-figure:focus-visible{outline:3px solid #183f68}
+.sheet-figure figcaption{height:26px;display:flex;align-items:center;justify-content:space-between;padding:0 6px;background:#edf2f5;color:#183f68}
+.sheet-figure figcaption button{border:0;background:transparent;color:#183f68;min-height:22px;height:22px;padding:2px 6px;font-size:10px;line-height:1}
+.sheet-figure figcaption .icon-button{width:25px}.sheet-figure figcaption svg{width:14px;height:14px}
+.sheet-page-select[aria-pressed=true]{font-weight:700}.sheet-svg>svg{display:block;width:100%;height:auto;max-width:none;user-select:text;-webkit-user-select:text}.sheet-svg text{cursor:text;white-space:pre}
+.sheet-error{font-size:12px;padding:8px 12px;margin:0;background:#fbf0f1;color:#713044;flex-shrink:0}
+.sheet-sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.cheatsheet-source-editor{font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.5;tab-size:2;resize:vertical}
+.sheet-print-page>svg{display:block;width:100%;height:auto}.sheet-print-page{break-after:page;page-break-after:always}
+@media print{.print-page.native-cheatsheet-print{padding:0!important;break-after:page}.native-cheatsheet-print>h1,.native-cheatsheet-print>p{display:none}.sheet-print-page{width:100%;max-height:none}.sheet-print-page>svg{max-height:260mm;object-fit:contain}.sheet-print-page:last-of-type{break-after:auto}}

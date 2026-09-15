@@ -1,15 +1,17 @@
 # AtlasNote implementation guardrails
 
-Read START_HERE.md, CODEX_HANDOFF.md and FINAL_TEST_STATUS.md first. They supersede older archived implementation prompts.
+Read START_HERE.md, CODEX_HANDOFF.md and FINAL_TEST_STATUS.md first. They supersede archived implementation prompts.
 
-Continue this source; do not restart, redesign, replace the PDF engine, or reimplement completed UI changes. Keep source IDs, imported content ownership, IndexedDB name/version and the existing backup format. State saves are reading-session checkpoints, not content/library rollback. Bookmarks and Read later are shared subject-category lists, not workspace-scoped lists. Four-page Grid is separate from two-page Spread. Preserve newer notes/PDFs and separate reading-position bookmarks.
+Continue this source; do not restart, redesign, replace the PDF engine, or reimplement completed UI changes. Keep source IDs, imported content ownership, IndexedDB name/version and the existing backup format. State saves are reading-session checkpoints, not content/library rollback. Bookmarks and Read Later are shared subject-category lists, not workspace-scoped lists. Four-page Grid is separate from two-page Spread. Preserve newer notes/PDFs and separate reading-position bookmarks.
 
-Never weaken meaningful state equality, private-data, asset-integrity or PDF assertions to obtain green CI. Update only a demonstrably obsolete UI selector/setup for the documented new interface and retain its behavioral assertion. Treat a blocked normal-origin test or unavailable registry audit as unverified, not passed.
+Never weaken meaningful state equality, private-data, asset-integrity, SVG-safety or PDF assertions to obtain green CI. Update only a demonstrably obsolete selector/fixture setup and retain its behavioral assertion. A blocked normal-origin test or unavailable registry audit is unverified, not passed. The about:blank compatibility tests intentionally suppress writes; they cannot certify IndexedDB or integrated React-PDF.
 
-Use the committed package lock and pinned React-PDF/PDF.js pairing. Do not ship `.build/engine-dom`, `dist-offline`, node_modules, source archives, private libraries or workspace backups. Test artifacts belong outside tracked source and must clearly state their environment.
+Use the committed package lock and pinned React-PDF/PDF.js pairing. Do not publish `.build/engine-dom`, `dist-offline`, node_modules, source archives, private libraries, font files or workspace backups in the hosted app. Evidence belongs outside tracked source and must state its environment. Preserve dirty local work; do not force-push, reset main, merge or deploy without authorization and the release gates.
 
-Preserve dirty local work; create a clean work branch. Do not force-push, reset main, merge or deploy without the release gates and user authorization.
+## Current 1.2.6 boundary
 
-## Current 1.2.5 boundary
+Native cheatsheets are now explicitly in scope. The older 1.2.5 prohibition on new cheatsheet types is superseded by this implementation. Canonical sources are in `content/cheatsheets`; JSON validation, fixed-page SVG rendering and content integration are in `src/cheatsheets`. Read `docs/1.2.6/ARCHITECTURE.md`, `AUTHORING.md` and `FIXTURE_PROVENANCE.md` before changes. Do not replace structured sources with raster pages, arbitrary SVG, remote assets or many new diagram types. Re-run the generator and review its semantic publication hash after source changes.
 
-Use per-pane toolbar visibility, separate document Context and Workspace States, and the non-destructive PDF projection. The 15 interview references use existing notebook blocks; no cheatsheet/content type, runner, scoring or analytics is permitted. Read docs/1.2.5/INTERVIEW_CONTENT.md before altering samples; regenerate the pack and explicitly review its content hash. The PDF wheel gate must use real wheel events and physical canvases, not a page-input substitute.
+The 15 interview pages remain ordinary notebook references. Keep the canonical SQL sequence and related-link integration; no scoring, code execution or LeetCode UI. The PDF wheel gate must use actual wheel events and rendered physical canvases, not page-input-only substitutes. Preserve per-pane controls, separate document Context/Workspace States and the non-destructive PDF tree.
+
+The remaining job is integration verification, not another redesign. Do not treat recovery-mode green checks as a production release certificate.

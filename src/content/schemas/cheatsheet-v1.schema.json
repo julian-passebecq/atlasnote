@@ -1,0 +1,928 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:atlasnote:cheatsheet:1.1",
+  "$comment": "Geometry, exact row cardinality, anchor integrity and asset-registry checks also require validateCheatsheet. No remote schema fetch is used.",
+  "$ref": "#/$defs/csDocument",
+  "$defs": {
+    "csRich": {
+      "oneOf": [
+        {
+          "type": "string",
+          "maxLength": 20000
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "maxLength": 20000
+              },
+              "marks": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "bold",
+                    "italic",
+                    "underline",
+                    "code",
+                    "key",
+                    "highlight"
+                  ]
+                },
+                "minItems": 0,
+                "maxItems": 6,
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 300
+        }
+      ]
+    },
+    "csFrame": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1200
+        },
+        "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1600
+        },
+        "width": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 1200
+        },
+        "height": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 1600
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false
+    },
+    "csStyle": {
+      "type": "object",
+      "properties": {
+        "fontSize": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 72
+        },
+        "lineHeight": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 2.5
+        },
+        "minFontSize": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 72
+        },
+        "overflow": {
+          "type": "string",
+          "enum": [
+            "shrink",
+            "clip",
+            "error"
+          ]
+        },
+        "align": {
+          "type": "string",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "csBlock": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "text"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            },
+            "text": {
+              "$ref": "#/$defs/csRich"
+            },
+            "role": {
+              "type": "string",
+              "enum": [
+                "body",
+                "title",
+                "section",
+                "example",
+                "caption",
+                "key",
+                "warning"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "text"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "list"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/csRich"
+              },
+              "minItems": 1,
+              "maxItems": 60
+            },
+            "ordered": {
+              "type": "boolean"
+            },
+            "gap": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 60
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "items"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "box"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "note",
+                "warning"
+              ]
+            },
+            "title": {
+              "$ref": "#/$defs/csRich"
+            },
+            "text": {
+              "$ref": "#/$defs/csRich"
+            },
+            "children": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/csBlock"
+              },
+              "minItems": 0,
+              "maxItems": 60
+            }
+          },
+          "required": [
+            "id",
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "table"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/csRich"
+              },
+              "minItems": 1,
+              "maxItems": 16
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/csRich"
+                },
+                "minItems": 1,
+                "maxItems": 16
+              },
+              "minItems": 1,
+              "maxItems": 60
+            },
+            "widths": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0.01,
+                "maximum": 1
+              },
+              "minItems": 1,
+              "maxItems": 16
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "columns",
+            "rows"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "code"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            },
+            "code": {
+              "type": "string",
+              "maxLength": 100000
+            },
+            "language": {
+              "type": "string",
+              "maxLength": 40
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 200
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "code",
+            "language"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "divider"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            }
+          },
+          "required": [
+            "id",
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "diagram"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            },
+            "family": {
+              "const": "graph"
+            },
+            "layout": {
+              "type": "string",
+              "enum": [
+                "tree",
+                "manual"
+              ]
+            },
+            "preset": {
+              "type": "string",
+              "enum": [
+                "tree",
+                "dag",
+                "flow"
+              ]
+            },
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "label": {
+                    "$ref": "#/$defs/csRich"
+                  },
+                  "shape": {
+                    "type": "string",
+                    "enum": [
+                      "roundedRect",
+                      "rect",
+                      "circle",
+                      "diamond"
+                    ]
+                  },
+                  "assetKey": {
+                    "type": "string",
+                    "maxLength": 100
+                  }
+                },
+                "required": [
+                  "id",
+                  "label"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1,
+              "maxItems": 80
+            },
+            "nodeFrames": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/$defs/csFrame"
+              }
+            },
+            "edges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "to": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "label": {
+                    "type": "string",
+                    "maxLength": 100
+                  },
+                  "dashed": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "from",
+                  "to"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0,
+              "maxItems": 240
+            },
+            "caption": {
+              "type": "string",
+              "maxLength": 300
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "family",
+            "layout",
+            "nodes",
+            "nodeFrames",
+            "edges"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "diagram"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            },
+            "family": {
+              "const": "sequence"
+            },
+            "preset": {
+              "type": "string",
+              "enum": [
+                "steps",
+                "array",
+                "stack",
+                "queue",
+                "linked_list"
+              ]
+            },
+            "direction": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ]
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/csRich"
+              },
+              "minItems": 1,
+              "maxItems": 20
+            },
+            "link": {
+              "type": "string",
+              "enum": [
+                "arrow",
+                "none"
+              ]
+            },
+            "caption": {
+              "type": "string",
+              "maxLength": 300
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "family",
+            "preset",
+            "direction",
+            "items"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "drawing"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            },
+            "shapes": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "line"
+                      },
+                      "x1": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1200
+                      },
+                      "y1": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1600
+                      },
+                      "x2": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1200
+                      },
+                      "y2": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1600
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "x1",
+                      "y1",
+                      "x2",
+                      "y2"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "rect",
+                          "ellipse"
+                        ]
+                      },
+                      "x": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1200
+                      },
+                      "y": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1600
+                      },
+                      "width": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 1200
+                      },
+                      "height": {
+                        "type": "number",
+                        "minimum": 1,
+                        "maximum": 1600
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "x",
+                      "y",
+                      "width",
+                      "height"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "minItems": 1,
+              "maxItems": 200
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "shapes"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "icon"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            },
+            "assetKey": {
+              "type": "string",
+              "enum": [
+                "atlas.database",
+                "atlas.pipeline",
+                "atlas.table",
+                "atlas.cloud"
+              ]
+            },
+            "alt": {
+              "type": "string",
+              "maxLength": 300
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "assetKey",
+            "alt"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            },
+            "type": {
+              "const": "image"
+            },
+            "style": {
+              "$ref": "#/$defs/csStyle"
+            },
+            "assetKey": {
+              "type": "string",
+              "enum": [
+                "atlas.brand"
+              ]
+            },
+            "alt": {
+              "type": "string",
+              "maxLength": 300
+            }
+          },
+          "required": [
+            "id",
+            "type",
+            "assetKey",
+            "alt"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "csPage": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 240
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/csBlock"
+          },
+          "minItems": 1,
+          "maxItems": 2000
+        },
+        "frames": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/csFrame"
+          }
+        },
+        "outline": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+              },
+              "label": {
+                "type": "string",
+                "maxLength": 240
+              },
+              "blockId": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "blockId"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 200
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "blocks",
+        "frames",
+        "outline"
+      ],
+      "additionalProperties": false
+    },
+    "csDocument": {
+      "type": "object",
+      "properties": {
+        "schemaVersion": {
+          "type": "string",
+          "enum": [
+            "1.0",
+            "1.1"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 240,
+          "minLength": 1
+        },
+        "subtitle": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "pageSize": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "const": 1200
+            },
+            "height": {
+              "const": 1600
+            }
+          },
+          "required": [
+            "width",
+            "height"
+          ],
+          "additionalProperties": false
+        },
+        "meta": {
+          "type": "object",
+          "properties": {
+            "audience": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "goal": {
+              "type": "string",
+              "maxLength": 2000
+            },
+            "difficulty": {
+              "type": "string",
+              "enum": [
+                "intro",
+                "intermediate",
+                "advanced"
+              ]
+            },
+            "provenance": {
+              "type": "string",
+              "maxLength": 2000
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        },
+        "theme": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "const": "atlas-calm"
+            },
+            "tokens": {
+              "type": "object",
+              "properties": {
+                "paper": {
+                  "type": "string",
+                  "pattern": "^#[a-fA-F0-9]{6}$"
+                },
+                "ink": {
+                  "type": "string",
+                  "pattern": "^#[a-fA-F0-9]{6}$"
+                },
+                "primary": {
+                  "type": "string",
+                  "pattern": "^#[a-fA-F0-9]{6}$"
+                },
+                "secondary": {
+                  "type": "string",
+                  "pattern": "^#[a-fA-F0-9]{6}$"
+                },
+                "line": {
+                  "type": "string",
+                  "pattern": "^#[a-fA-F0-9]{6}$"
+                },
+                "code": {
+                  "type": "string",
+                  "pattern": "^#[a-fA-F0-9]{6}$"
+                },
+                "warning": {
+                  "type": "string",
+                  "pattern": "^#[a-fA-F0-9]{6}$"
+                },
+                "warningFill": {
+                  "type": "string",
+                  "pattern": "^#[a-fA-F0-9]{6}$"
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "pages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/csPage"
+          },
+          "minItems": 1,
+          "maxItems": 64
+        }
+      },
+      "required": [
+        "schemaVersion",
+        "id",
+        "title",
+        "pageSize",
+        "pages"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": "1.0"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "meta": {
+            "type": "object",
+            "properties": {
+              "difficulty": {
+                "type": "string",
+                "enum": [
+                  "intro",
+                  "intermediate",
+                  "advanced"
+                ]
+              },
+              "provenance": {
+                "type": "string",
+                "maxLength": 2000
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  }
+}

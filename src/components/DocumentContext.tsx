@@ -1,3 +1,5 @@
+import {cheatsheetOutline} from '../cheatsheets/text-layout.mjs';
+import {sheetPosition} from '../cheatsheets/content.mjs';
 import React,{useState,useMemo,useEffect,useRef} from '../vendor/react.mjs';
 import {Icon,IconButton} from './Icon.js';
 import {TermCard} from './SearchContext.js';
@@ -20,9 +22,10 @@ export function ContextPanel({catalogue:c,page,location,workspace:ws,paneId,onOp
  // only document-specific search/link drafts and cancel the old PDF search.
  useEffect(()=>{searchJob.current?.abort();setQuery('');setLinkQuery('');setLinkId('');setPdfResult(null);setSearchStatus('');return()=>searchJob.current?.abort();},[page?.id,paneId]);
  const doc=c.documents.find((d:any)=>d.pageId===page?.id),physical=doc&&(location?.anchor?.pdfPage??location?.pdfPage);
- const remarkKey=page?physical?`${page.id}::pdf:${physical}@${doc.sha256??'external'}`:doc?`${page.id}::document@${doc.sha256??'external'}`:page.id:'';
+ const sheet=page?.cheatsheet,sheetPage=sheet?sheetPosition(sheet,location).page:undefined,sheetId=sheet?.pages[(sheetPage??1)-1]?.id;
+ const remarkKey=sheetId?`${page.id}::sheet:${sheetId}`:page?physical?`${page.id}::pdf:${physical}@${doc.sha256??'external'}`:doc?`${page.id}::document@${doc.sha256??'external'}`:page.id:'';
  const terms=useMemo(()=>c.glossary.filter((t:any)=>page?.terms.includes(t.id)||t.pageIds.includes(page?.id)),[c,page]);
- const outline:any[]=[];if(page)walkBlocks(page.blocks,(b:any,parents:any)=>{if(b.type==='section')outline.push({id:b.id,title:b.title,depth:parents.length});});
+ const outline:any[]=sheet?cheatsheetOutline(sheet).map(a=>({id:a.id,title:(a.depth===0?'p.'+a.sheetPage+' - ':'')+a.label,depth:a.depth})):[];if(page&&!sheet)walkBlocks(page.blocks,(b:any,parents:any)=>{if(b.type==='section')outline.push({id:b.id,title:b.title,depth:parents.length});});
  const backlinks=useMemo(()=>page?c.pages.filter((p:any)=>p.id!==page.id&&pageLinks(p).includes(page.id)):[],[c,page]);
  const oldNotes=doc?Object.entries(ws.personal.notes).filter(([key,n]:any)=>n.pageId===page?.id&&n.revision&&n.revision!==doc.sha256):[];
  const note=ws.personal.notes[remarkKey],interview=page?.tags.includes('interview');
@@ -30,7 +33,7 @@ export function ContextPanel({catalogue:c,page,location,workspace:ws,paneId,onOp
  const pageHits=useMemo(()=>{if(!doc||!query.trim())return [];const companion=resolveStudy(doc,ws).companion;if(!companion)return [];const needle=query.toLocaleLowerCase();return companion.categories.flatMap(category=>categoryPageRows(category,companion).filter(row=>(category.title+' '+row.title).toLocaleLowerCase().includes(needle)).map(row=>({...row,id:category.id+row.id}))).slice(0,80);},[doc,ws.overlays.companions,query]);
  const matchingTerms=terms.filter((t:any)=>(t.label+' '+t.definition).toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
  const visit=ws.personal.documentVisits?.find((v:any)=>v.pageId===page?.id);
- function saveRemark(text:string){if(!page)return;void store.personal(p=>{p.notes[remarkKey]=makeRemark(text,page.id,Date.now(),doc?.sha256,physical?pdfAnchor(physical,doc?.sha256):undefined);}).catch(()=>{});}
+ function saveRemark(text:string){if(!page)return;void store.personal(p=>{p.notes[remarkKey]=makeRemark(text,page.id,Date.now(),doc?.sha256,physical?pdfAnchor(physical,doc?.sha256):sheetId?{sheetPage,sheetId}:undefined);}).catch(()=>{});}
  async function findPdf(){
   searchJob.current?.abort();const job=new AbortController();searchJob.current=job;setPdfResult(null);setSearchStatus('Searching this PDF...');
   try{const result=await searchOpenPdf(ws.personal.activeWorkspaceSlot??1,paneId,doc.id,query,job.signal);if(job.signal.aborted)return;setPdfResult(result);setSearchStatus(result.hasText?`${result.hits.length} matching physical pages. Searched ${result.searched} / ${result.total} pages.`:'No selectable text found. This may be an image-only PDF; OCR is not included.');}
@@ -67,7 +70,7 @@ export function ContextPanel({catalogue:c,page,location,workspace:ws,paneId,onOp
     {!query&&<p className="context-empty">Only this document and its linked glossary are searched. Global search is in the top-left navigation.</p>}
    </>}
    {tab==='remarks'&&<>
-    <div className="remarks-target"><Icon name="lock" size={15}/><strong>{interview?'Interview reflection':page.title}</strong>{doc&&<small>{physical?'Physical PDF page '+physical:'Document-level remark; no physical page selected.'}</small>}</div>
+    <div className="remarks-target"><Icon name="lock" size={15}/><strong>{interview?'Interview reflection':page.title}</strong>{sheet&&<small>Physical cheatsheet page {sheetPage}</small>}{doc&&<small>{physical?'Physical PDF page '+physical:'Document-level remark; no physical page selected.'}</small>}</div>
     {interview&&<button className="reflection-prompts" onClick={()=>saveRemark((note?.text?note.text+'\n\n':'')+reflection)}>Insert reflection prompts</button>}
     <textarea className="remarks-input" aria-label="Personal remarks" placeholder={interview?'What pattern did you recognize? Where did you get stuck?':'Your understanding, a question to revisit, a connection to another idea...'} value={note?.text??''} onChange={e=>saveRemark(e.target.value)}/>
     <div className="autosave-status">{store.error?'Storage needs attention':store.saving?'Saving locally...':'Saved locally'}<span>{(note?.text??'').length} characters</span></div>
@@ -75,12 +78,12 @@ export function ContextPanel({catalogue:c,page,location,workspace:ws,paneId,onOp
     {oldNotes.length>0&&<details className="revision-warning"><summary>Remarks on another PDF revision ({oldNotes.length})</summary><p>The document hash changed. These notes have not been silently reassigned to different physical pages.</p>{oldNotes.map(([key,n]:any)=><article key={key}><code>{n.revision.slice(0,12)}</code><p>{n.text}</p><button onClick={()=>{saveRemark(n.text);notify('Old remark copied to the current revision.');}}>Copy to current revision</button></article>)}</details>}
    </>}
    {tab==='related'&&<>
-    <p className="context-empty">Link a PDF and a notebook page, or two useful references. These are explicit local links, not recommendations.</p>
+    <p className="context-empty">Link notebooks, interviews, PDFs and cheatsheets. These are explicit local links, not recommendations.</p>
     {page.related.map((id:string)=><div className="related-document-row" key={id}><button className="context-link" onClick={()=>onOpen(id)}><Icon name={c.documents.some((d:any)=>d.pageId===id)?'pdf':'page'} size={15}/><span>{c.pages.find((p:any)=>p.id===id)?.title??id}</span></button><IconButton name="close" label={'Remove relationship to '+(c.pages.find((p:any)=>p.id===id)?.title??id)} disabled={linkBusy} onClick={()=>void link(id,true)}/></div>)}
     {!page.related.length&&<p className="context-empty">No explicit related documents.</p>}
     <form className="related-document-form" onSubmit={e=>{e.preventDefault();if(linkId)void link(linkId);}}>
      <label>Find a document<input aria-label="Filter related documents" value={linkQuery} onChange={e=>{setLinkQuery(e.target.value);setLinkId('');}}/></label>
-     <label>Related document<select aria-label="Related document" value={linkId} onChange={e=>setLinkId(e.target.value)}><option value="">Choose a document</option>{c.pages.filter((p:any)=>p.id!==page.id&&!page.related.includes(p.id)&&p.title.toLocaleLowerCase().includes(linkQuery.toLocaleLowerCase())).slice(0,80).map((p:any)=><option key={p.id} value={p.id}>{c.documents.some((d:any)=>d.pageId===p.id)?'PDF: ':'Note: '}{p.title}</option>)}</select></label>
+     <label>Related document<select aria-label="Related document" value={linkId} onChange={e=>setLinkId(e.target.value)}><option value="">Choose a document</option>{c.pages.filter((p:any)=>p.id!==page.id&&!page.related.includes(p.id)&&p.title.toLocaleLowerCase().includes(linkQuery.toLocaleLowerCase())).slice(0,80).map((p:any)=><option key={p.id} value={p.id}>{c.documents.some((d:any)=>d.pageId===p.id)?'PDF: ':p.cheatsheet?'Cheatsheet: ':'Note: '}{p.title}</option>)}</select></label>
      <button disabled={!linkId||linkBusy}>Link document</button>
     </form>
     {!!backlinks.length&&<><h3 className="context-section-label">Linked from</h3>{backlinks.map((p:any)=><button className="context-link" key={p.id} onClick={()=>onOpen(p.id)}><Icon name="link" size={15}/><span>{p.title}</span></button>)}</>}
