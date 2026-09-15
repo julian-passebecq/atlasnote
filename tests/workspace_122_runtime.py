@@ -148,7 +148,16 @@ try:
   assert page.locator('.active-pane').get_by_label('Physical page count',exact=True).inner_text().strip()=='/ 6'
   goto(page,6);tree=page.locator('[data-node-id="node.pdfatlas.spark-concepts"]').locator('..')
   tree.get_by_role('button',name='Expand PDF Apache Spark: 30 concepts',exact=True).click();assert tree.locator('.pdf-study-page').count()==0
-  tree.get_by_role('button',name='Expand PDF category 1. From MapReduce to Spark',exact=True).click();assert tree.locator('.pdf-study-page').count()>0;assert tree.locator('.pdf-study-term').count()==0;shot(page,'actual-public-spark-study-tree')
+  # Scope to the authored category in the flattened category -> page projection.
+  # Prove its link changes the reader from page 6 to the actual rendered page 1.
+  category=tree.locator('[data-pdf-category="foundations"]')
+  category.get_by_role('button',name='Expand PDF category 1. From MapReduce to Spark',exact=True).click()
+  authored_page=category.locator('.pdf-study-page[data-pdf-page="1"]')
+  expect(authored_page).to_have_count(1);assert tree.locator('.pdf-study-term').count()==0
+  authored_page.get_by_role('button',name='Go to PDF page 1 in Apache Spark: 30 concepts',exact=True).click()
+  expect(page.locator('.active-pane').get_by_role('spinbutton',name='Physical PDF page number')).to_have_value('1')
+  expect(page.locator('.active-pane [data-physical-page="1"][data-page-rendered=true] canvas')).to_be_visible()
+  shot(page,'actual-public-spark-study-tree')
   close_panels(page);open_more(page).get_by_role('button',name='Manage PDF details',exact=True).click()
   # The details manager initializes its draft in an effect after mounting.
   # Wait for its exact content, retaining both the count and semantic assertion.

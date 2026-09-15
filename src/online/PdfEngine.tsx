@@ -93,7 +93,9 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
    // A momentum tail must not cancel the pending restore and leave the next
    // page at the previous page's bottom. Consume only the completed gesture;
    // deliberate slow ticks resume after the existing idle gate and rendering.
-   if(wheelTurnPending.current&&(wheelPager.current.isLatched()||pendingRestore.current)){e.preventDefault();return;}
+   // Switching to Continuous ends discrete paging: its native wheel must not
+   // be swallowed by a pending page restore from the previous presentation.
+   if(l.pdfMode!=='continuous'&&wheelTurnPending.current&&(wheelPager.current.isLatched()||pendingRestore.current)){e.preventDefault();return;}
    wheelTurnPending.current=false;scrolling.current=true;pendingRestore.current=false;
   };
   el.addEventListener('wheel',wheel,{passive:false});return()=>el.removeEventListener('wheel',wheel);
