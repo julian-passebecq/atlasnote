@@ -28,6 +28,7 @@ jobs:
           BASE = 'd1ecfd70c2f9d72c374a1c1c897d10a05d718dc5'
           BASE_TREE = '54c81ded491a3b75ec2c0a4650ab585245a7fff6'
           FINAL_TREE = '88194444e421fa9c0fa515a83aac80ebd030c780'
+          SOURCE_ONLY_TREE = '3478d015c53d1328a649bc94acae53cd1ad15fb5'
           REPO = 'julian-passebecq/atlasnote'
           root = pathlib.Path.cwd()
           def run(args, cwd=None, **kw):
@@ -59,15 +60,20 @@ jobs:
           subprocess.run(['git','apply',str(patch_path)],cwd=work,check=True)
           subprocess.run(['git','add','-A'],cwd=work,check=True)
           assert run(['git','write-tree'],cwd=work).decode().strip() == FINAL_TREE
-          changed = run(['git','diff','--cached','--name-only','-z',BASE],cwd=work).decode().split('\0')
-          elements = [{'path':p,'mode':'100644','type':'blob','content':(work/p).read_text(encoding='utf-8')} for p in changed if p]
-          assert len(elements) == 75
+          print('VERIFIED_FULL_LOCAL_TREE='+FINAL_TREE, flush=True)
+          changed = [p for p in run(['git','diff','--cached','--name-only','-z',BASE],cwd=work).decode().split('\0') if p]
+          assert len(changed) == 75
+          # This token cannot modify workflow paths. Those are handled separately
+          # by the connected user account, not by escalating runner permissions.
+          source_paths = [p for p in changed if not p.startswith('.github/workflows/')]
+          assert len(source_paths) == 74
+          elements = [{'path':p,'mode':'100644','type':'blob','content':(work/p).read_text(encoding='utf-8')} for p in source_paths]
           tree_request = temp/'tree.json'
           tree_request.write_text(json.dumps({'base_tree':BASE_TREE,'tree':elements}),encoding='utf-8')
           remote = run(['gh','api','--method','POST',f'repos/{REPO}/git/trees','--input',str(tree_request),'--jq','.sha']).decode().strip()
-          assert remote == FINAL_TREE, f'Remote tree mismatch: {remote}'
-          print('VERIFIED_SOURCE_TREE='+remote)
-          print('SOURCE_FILES=458; CHANGED_FILES=75; BRANCHES_NOT_UPDATED')
+          assert remote == SOURCE_ONLY_TREE, f'Remote tree mismatch: {remote}'
+          print('VERIFIED_SOURCE_ONLY_TREE='+remote)
+          print('SOURCE_FILES=458; SOURCE_CHANGES=74; WORKFLOW_CHANGES_DEFERRED=1; BRANCHES_NOT_UPDATED')
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
-              f.write(f'Exact delivered source materialized: `{remote}`.\n\n75 changed files; 458 total. No branch ref, production site, or release changed by this workflow.\n')
+              f.write(f'Exact full local source verified: `{FINAL_TREE}`.\n\nUploaded source-only tree: `{remote}`. The workflow change requires the connected user account. No branch ref or deployment changed.\n')
           PY
