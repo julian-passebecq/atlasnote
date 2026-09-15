@@ -1,0 +1,73 @@
+name: Materialize exact AtlasNote 1.2.6 source
+on:
+  push:
+    branches: [feature/atlasnote-1.2.6-native-cheatsheets]
+    paths: [.atlasnote-upload/ready.json]
+permissions:
+  contents: read
+jobs:
+  source-transfer:
+    if: github.repository == 'julian-passebecq/atlasnote' && github.ref == 'refs/heads/feature/atlasnote-1.2.6-native-cheatsheets'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Reconstruct and validate exact delivered source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess, tempfile
+          BASE = 'd1ecfd70c2f9d72c374a1c1c897d10a05d718dc5'
+          BASE_TREE = '54c81ded491a3b75ec2c0a4650ab585245a7fff6'
+          FINAL_TREE = '88194444e421fa9c0fa515a83aac80ebd030c780'
+          REPO = 'julian-passebecq/atlasnote'
+          root = pathlib.Path.cwd()
+          def run(args, cwd=None, **kw):
+              return subprocess.check_output(args, cwd=cwd or root, **kw)
+          assert os.environ['GITHUB_REPOSITORY'] == REPO
+          assert os.environ['GITHUB_REF'] == 'refs/heads/feature/atlasnote-1.2.6-native-cheatsheets'
+          assert run(['git','rev-parse',BASE+'^{tree}']).decode().strip() == BASE_TREE
+          manifest = json.loads((root/'.atlasnote-upload/ready.json').read_text())
+          compressed = b''
+          for i, part in enumerate(manifest['parts']):
+              data = (root/f'.atlasnote-upload/part{i:02d}').read_bytes()
+              blob = hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+              assert blob == part['sha'], f'Part {i} integrity mismatch'
+              compressed += data
+          assert hashlib.sha256(compressed).hexdigest() == '6236de9f66959ebc5f1bd6a5fdbbcd9f42ed5565ede65ebcfde60bed1fbbebea'
+          temp = pathlib.Path(tempfile.mkdtemp(prefix='atlasnote126-'))
+          work = temp/'source'
+          subprocess.run(['git','worktree','add','--detach',str(work),BASE],check=True)
+          paths = run(['git','ls-files','-z'],cwd=work).decode().split('\0')
+          dictionary = b''.join((work/p).read_bytes() for p in paths if p)
+          assert hashlib.sha256(dictionary).hexdigest() == '2b35afb70f49aac292cd01950ce183d80ed8f86773830a8a994702dde147d3e8'
+          (temp/'baseline.dict').write_bytes(dictionary)
+          (temp/'implementation.zst').write_bytes(compressed)
+          patch = run(['zstd','-q','-d','-D',str(temp/'baseline.dict'),'-c',str(temp/'implementation.zst')])
+          assert hashlib.sha256(patch).hexdigest() == 'd7c90539be59f7a826997f936109efa192f7d02b0b41ee6759ce70c5c8f1fafc'
+          patch_path = temp/'implementation.patch'
+          patch_path.write_bytes(patch)
+          subprocess.run(['git','apply','--check',str(patch_path)],cwd=work,check=True)
+          subprocess.run(['git','apply',str(patch_path)],cwd=work,check=True)
+          subprocess.run(['git','add','-A'],cwd=work,check=True)
+          assert run(['git','write-tree'],cwd=work).decode().strip() == FINAL_TREE
+          changed = run(['git','diff','--cached','--name-only','-z',BASE],cwd=work).decode().split('\0')
+          elements = [{'path':p,'mode':'100644','type':'blob','content':(work/p).read_text(encoding='utf-8')} for p in changed if p]
+          assert len(elements) == 75
+          tree_request = temp/'tree.json'
+          tree_request.write_text(json.dumps({'base_tree':BASE_TREE,'tree':elements}),encoding='utf-8')
+          remote = run(['gh','api','--method','POST',f'repos/{REPO}/git/trees','--input',str(tree_request),'--jq','.sha']).decode().strip()
+          assert remote == FINAL_TREE, f'Remote tree mismatch: {remote}'
+          print('VERIFIED_SOURCE_TREE='+remote)
+          print('SOURCE_FILES=458; CHANGED_FILES=75; BRANCHES_NOT_UPDATED')
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write(f'Exact delivered source materialized: `{remote}`.\n\n75 changed files; 458 total. No branch ref, production site, or release changed by this workflow.\n')
+          PY
