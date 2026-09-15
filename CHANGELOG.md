@@ -1,3 +1,9 @@
+# 1.2.6 - native structured cheatsheets; integrated acceptance pending
+
+Continue exact released 1.2.5. Add canonical JSON validation, a safe fixed 1200 x 1600 SVG renderer with live text and graph/sequence diagrams, four two-page reference reconstructions, and a restrained scoped paper theme. Integrate native content into existing tabs, five workspaces, independent panes, Single/two/four-page views, physical-page reading actions, outline/search/remarks/Related, local JSON import/edit/export and the unchanged exact backup mechanism. Stable physical page/block identity survives source reordering; unavailable targets are retained. Add 94 unit regressions, a 26-case real-DOM compatibility suite, and a nine-case actual-origin persistence/restore/PDF Compare gate. Preserve all previous release gates and record blocked integrated acceptance explicitly. See FINAL_TEST_STATUS.md and docs/1.2.6/FIXTURE_PROVENANCE.md.
+
+The entries below are historical implementation records, not the current release certificate. The authoritative starting 1.2.5 is the released commit named in START_HERE.md.
+
 # 1.2.5 - local implementation, release acceptance pending
 
 Independent per-pane reader toolbars; compact top-left navigation; flatter, non-destructive PDF taxonomy; momentum-safe page restoration and terminal-group selection; active-document Context with scoped search, explicit related links, reflections and bounded history; dedicated Workspace States panel; 15 native interview references (5 SQL, 4 Theory, 3 Hybrid, 3 Coding). No cheatsheets, runner or scoring. Added focused regressions and real-wheel acceptance gate. See FINAL_TEST_STATUS.md for actual execution and environment blockers.

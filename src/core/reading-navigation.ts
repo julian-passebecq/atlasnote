@@ -1,3 +1,4 @@
+import {sheetPosition} from '../cheatsheets/content.mjs';
 import type {Personal,Catalogue,Overlays,WorkspaceNumber,Session} from './model.js';
 import type {ReadingTarget,ReadingDestination} from './reading-types.js';
 import {activeSession,selectWorkspace,revealPane} from './workspace-slots.js';
@@ -11,6 +12,9 @@ export function openReadingTarget(p:Personal,c:Catalogue,o:Overlays,target:Readi
  if(target.kind==='collection'){if(!c.projects.some(x=>x.id===id)&&!findNode(c.projects,id))throw Error('The saved collection is unavailable. Import its library first.');}
  else if(!c.pages.some(x=>x.id===id))throw Error('The saved page is unavailable. Import its library first.');
  if(isArchived(id,c,o))throw Error('This saved item is archived. Restore it from library management first.');
+ const sheet=c.pages.find(p=>p.id===id)?.cheatsheet;
+ if(target.kind==='cheatsheet-page'&&(!sheet||sheet.id!==target.documentId||!sheetPosition(sheet,{sheetPage:target.sheetPage,anchor:target.anchor}).available))throw Error('The saved physical cheatsheet page is unavailable. Your saved entry was retained.');
+ if(target.kind==='page'&&(target.anchor?.sheetPage||target.anchor?.sheetId)&&(!sheet||!sheetPosition(sheet,{anchor:target.anchor}).available))throw Error('The saved cheatsheet page is unavailable.');
  const doc=c.documents.find(d=>d.pageId===id);
  if(target.kind==='page'&&target.anchor?.pdfRevision&&doc?.sha256!==target.anchor.pdfRevision)throw Error('This bookmark belongs to another PDF revision.');
  if(target.kind==='collection'){const node=findNode(c.projects,id);if(node&&[node.node.id,...node.ancestors].some(x=>o.archived.includes(x)))throw Error('The saved collection is archived.');}
@@ -27,7 +31,7 @@ export function openReadingTarget(p:Personal,c:Catalogue,o:Overlays,target:Readi
  selectWorkspace(p,slot);const live=activeSession(p,slot);
  let dest=live.panes.find(x=>x.id===(other??pane).id)!;
  if(createPane){dest={id:live.panes[0].id==='left'?'right':'left',views:[],active:''};live.panes.push(dest);}
- const anchor=target.kind==='pdf-page'?{...target.anchor,pdfPage:target.pdfPage,...(target.revision?{pdfRevision:target.revision}:{})}:target.kind==='pdf-category'?{pdfPage:target.pdfPage,...(target.revision?{pdfRevision:target.revision}:{})}:target.kind==='page'?target.anchor:undefined;
+ const anchor=target.kind==='cheatsheet-page'?{...target.anchor,sheetPage:sheetPosition(sheet,{sheetPage:target.sheetPage,anchor:target.anchor}).page}:target.kind==='pdf-page'?{...target.anchor,pdfPage:target.pdfPage,...(target.revision?{pdfRevision:target.revision}:{})}:target.kind==='pdf-category'?{pdfPage:target.pdfPage,...(target.revision?{pdfRevision:target.revision}:{})}:target.kind==='page'?target.anchor:undefined;
  const v=dest.views.find(v=>v.id===dest.active),reuse=!newTab||!!v&&!current(v);
  if(v&&reuse){dest.views[dest.views.indexOf(v)]=navigate(v,id,anchor);}else {const fresh=newView(id,anchor);dest.views.push(fresh);dest.active=fresh.id;}
  const loc=current(dest.views.find(v=>v.id===dest.active))!;if(target.kind==='collection')loc.collectionId=id;

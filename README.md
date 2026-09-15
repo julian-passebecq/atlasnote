@@ -1,16 +1,20 @@
-# AtlasNote 1.2.5
+# AtlasNote 1.2.6
 
-Local-first notebook and PDF reading, continuing the released 1.2.4 source. Read [START_HERE.md](START_HERE.md) and [FINAL_TEST_STATUS.md](FINAL_TEST_STATUS.md) before integration. This source has not been merged or deployed; integrated release acceptance is not yet certified in this environment.
+Local-first notebook, PDF, interview-reference and native cheatsheet reading. This implementation continues released 1.2.5, commit `d1ecfd70c2f9d72c374a1c1c897d10a05d718dc5`. Read [START_HERE.md](START_HERE.md) and [FINAL_TEST_STATUS.md](FINAL_TEST_STATUS.md) before integrating. It has not been merged or deployed, and integrated release acceptance is not certified here.
 
-Five independent workspaces preserve tabs, reading positions, Compare, Focus, Book, PDF Spread and four-page Grid. Each pane controls its own toolbar. The compact navigation strip opens search/history, sidebar, document Context, Focus and Compare. Bookmarks and Read Later remain independent shared lists.
+Five independent workspaces preserve tabs, reading positions, Compare, Focus, notebook Book, PDF Spread and four-page Grid. Each pane controls its own toolbar. Bookmarks, Read Later and Workspace States remain separate existing systems. Document Context provides outline/search, private remarks, explicit Related links and bounded local visit history.
 
-PDF navigation intentionally uses fewer visible levels than notebook navigation, without modifying stored taxonomy. Physical-page links keep their actions and revision-aware targets. Context provides a document outline/glossary, scoped search, private remarks/reflection, explicit related links and bounded local visit history. Saved workspace checkpoints have a separate Workspace States panel, with all existing save/restore/progress/history/undo behavior.
+## Native cheatsheets
 
-The new Interview Preparation reference notebook contains five canonical SQL questions, four theory samples, three hybrid samples and three Python dictionary-pattern variants. They are ordinary editable notebook pages with safe code blocks, not executable exercises. The semantic authoring model and generation procedure are documented in [docs/1.2.5/INTERVIEW_CONTENT.md](docs/1.2.5/INTERVIEW_CONTENT.md).
+**Study references / Cheatsheets** contains SQL for Analytics, PySpark Execution Model, Azure Data Factory and pandas Essentials: four canonical JSON documents, eight physical pages. Their 1200 x 1600 pages render as scoped, safe SVG with live text, code, tables and structured graph/sequence diagrams. No reference PNG is used to render a page. Geometry is fixed; the viewport scales it uniformly. Single, two-page and four-page modes are independent of Compare and independent per pane.
+
+Private JSON import/edit/export uses the existing local overlay and backup mechanisms. Context navigation and physical-page reading actions retain stable page/anchor IDs. Related backlinks connect the unchanged interview references and cheatsheets. No runner, scoring, analytics service, new grammar family or new PDF engine is included.
+
+See [architecture](docs/1.2.6/ARCHITECTURE.md), [authoring](docs/1.2.6/AUTHORING.md), and [fixture provenance](docs/1.2.6/FIXTURE_PROVENANCE.md). The supplied handoff lacked original JSON and ADF page 1's preview. These are disclosed reconstructions, not independent verification of every educational claim in the references.
 
 ## Build and test
 
-Node >=22.12.0; use the exact committed lockfile. Python is for tests and optional PDF authoring.
+Node >=22.12.0; use the exact lockfile. Python is used by the existing tests and optional PDF authoring tools.
 
 ```sh
 npm ci
@@ -19,12 +23,12 @@ python -m playwright install --with-deps chromium
 npm run test:release
 ```
 
-Preview the integrated production build with `npm run build && npm run preview`. `dist-offline` is only a compatibility fallback and must not be deployed. The actual PDF component test harness is opt-in at `.build/engine-dom`, not part of the hosted app.
+Preview the integrated build with `npm run build && npm run preview`. Never deploy `dist-offline` or the opt-in `.build/engine-dom` component harness. The release runner preserves all 34 previous gates and adds three native gates, writes each result/log under `docs/evidence/1.2.6/release-gates`, and exits nonzero if any gate fails or is blocked.
 
-The release runner records every gate and exits nonzero for any failure or blocked result. Missing registry dependencies or browser-policy blocks are not passing tests. See the current status document and external evidence, not historical reports, for exactly what was verified.
+Regenerate the native content pack with `node tools/generate-cheatsheets.mjs`; check committed fixture/schema/render/hash consistency with `npm run test:cheatsheets`. All diagrams are authored data; no runtime force layout or remote font download is used.
 
-## Privacy and provenance
+## Privacy and compatibility
 
-Starting main is `b5e63f71185bcf525e985dfad1260d38ed3c4918`, with exact baseline tree `72a8ea2ca18944a3c897d86f39579c7a347e3c37`. No GitHub writes, merge or Netlify deployment were made. Source integration instructions are in [CODEX_HANDOFF.md](CODEX_HANDOFF.md).
+No IndexedDB version/name or backup envelope changed. Native fields are additive; old pages, bookmarks, imports and reading state retain their old interpretation. New native state requires 1.2.6-aware readers: backwards compatibility means old data opens safely in 1.2.6, not that 1.2.5 understands the new type.
 
-Personal remarks, explicit links and up to 50 document timestamps stay in the existing local workspace/backup. There is no analytics service, cloud sync or automatic PDF fetch for Context. Source added/modified dates are shown as unknown when not available. This delivery contains no private 137-page reference library or credentials. The inherited precompiled Mermaid bundle still has its documented transitive SBOM/license-closure limitation.
+Remarks, related links and private sources stay in the local workspace and its explicit backups. This delivery contains no private 137-page library, credentials, user workspace or font files. The inherited precompiled Mermaid bundle still has its previously documented transitive SBOM/license-closure limitation; this pass neither replaces it nor claims a new complete dependency audit.

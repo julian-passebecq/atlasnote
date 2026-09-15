@@ -2,6 +2,7 @@ import type {Anchor,CategoryId} from './model.js';
 /** Targets retain source identity, not a rendered sheet index or DOM selector. */
 export type ReadingTarget =
  | {kind:'url';url:string}
+ | {kind:'cheatsheet-page';pageId:string;documentId:string;sheetPage:number;anchor?:Anchor}
  | {kind:'page';pageId:string;anchor?:Anchor}
  | {kind:'collection';collectionId:string}
  | {kind:'pdf-page';pageId:string;documentId:string;revision?:string;pdfPage:number;anchor?:Anchor}

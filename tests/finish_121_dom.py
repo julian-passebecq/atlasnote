@@ -27,7 +27,11 @@ with sync_playwright() as pw:
   p.get_by_role('button',name='Switch to PDF library' if p.get_by_role('button',name='Switch to PDF library',exact=True).count() else 'Switch to notes',exact=True).click()
  def strict_modes():
   reset();before=nodes();assert 'node.pdfatlas.spark-concepts' not in before;assert 'node.page.atlas.pdf' not in before;assert p.locator('.tree-project').filter(has_text='PDF Atlas').count()==0
-  assert '12 notebooks' in p.locator('.statusbar').inner_text();assert 'notes' in p.locator('.statusbar').inner_text();heading=p.locator('.sidebar-heading').inner_text();toggle();p.get_by_role('button',name='Switch to notes',exact=True).wait_for();assert p.locator('.sidebar-heading').inner_text().strip()=='';pdf=nodes();assert 'PDFs' in p.locator('.statusbar').inner_text();assert 'node.page.atlas.layouts' not in pdf;assert 'node.pdfatlas.spark-concepts' in pdf;assert 'node.pdfatlas.pyspark-pandas' in pdf
+  # The new native sample project adds one non-PDF notebook projection (12 -> 13).
+  # Keep exact two-way filtering and explicitly prove native documents do not leak into PDFs.
+  assert 'node.cheatsheet.sql-analytics' in before
+  assert '13 notebooks' in p.locator('.statusbar').inner_text();assert 'notes' in p.locator('.statusbar').inner_text();heading=p.locator('.sidebar-heading').inner_text();toggle();p.get_by_role('button',name='Switch to notes',exact=True).wait_for();assert p.locator('.sidebar-heading').inner_text().strip()=='';pdf=nodes();assert 'PDFs' in p.locator('.statusbar').inner_text();assert 'node.page.atlas.layouts' not in pdf;assert 'node.pdfatlas.spark-concepts' in pdf;assert 'node.pdfatlas.pyspark-pandas' in pdf
+  assert 'node.cheatsheet.sql-analytics' not in pdf
   toggle();assert nodes()==before;assert p.locator('.sidebar-heading').inner_text()==heading
   return {'noteNodeIds':before,'pdfNodeIds':pdf,'exactReturn':True}
  check('Strict two-way discovery and exact returned Notes projection/count',strict_modes)

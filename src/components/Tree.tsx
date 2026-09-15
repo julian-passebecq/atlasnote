@@ -60,7 +60,7 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],ac
       onMouseDown={e=>{if(e.button===1)e.preventDefault();}}
       onAuxClick={e=>{if(e.button===1){e.preventDefault();onOpen(n.pageId??n.id,undefined,true);}}}>
       {!n.children&&!doc&&<span className="tree-indent"/>}
-      <Icon name={n.children?'folder':c.documents.some((d:any)=>d.pageId===n.pageId)?'pdf':'page'} size={15}/><span>{page?.title??n.title}</span>
+      <Icon name={n.children?'folder':c.documents.some((d:any)=>d.pageId===n.pageId)?'pdf':page?.cheatsheet?'grid':'page'} size={15}/><span>{page?.title??n.title}</span>
      </button></>
      {owners.length>0&&<span className="tree-pane-markers" aria-label={owners.length===2?'Open in panes A and B':'Open in pane '+(owners[0]===0?'A':'B')}>{owners.map(i=><button key={i} title={'Reveal pane '+(i===0?'A':'B')} aria-label={'Reveal pane '+(i===0?'A':'B')+' for '+n.title} onClick={()=>onPaneMarker(i)} className={'tree-pane-marker marker-'+(i===0?'a':'b')+(i===activePaneIndex?' is-active':'')}>{i===0?'A':'B'}</button>)}</span>}
      {n.pageId&&activeSession(ws.personal).showFlags&&ws.personal.ratings[n.pageId]&&<span className={'flag-dot '+ws.personal.ratings[n.pageId]} title={ws.personal.ratings[n.pageId]}/>}

@@ -1,3 +1,4 @@
+import type {CheatsheetDocument} from '../cheatsheets/model.js';
 export type Source = {title:string;url?:string;publisher?:string;note?:string};
 export type LayoutHint = {keepWithNext?:boolean;avoidBreakInside?:boolean;pageBreakBefore?:boolean;preferredSize?:'compact'|'normal'|'large'|'full-page'};
 export type Block = {id:string;layout?:LayoutHint} & (
@@ -9,7 +10,7 @@ export type Block = {id:string;layout?:LayoutHint} & (
  {type:'image';src:string;alt:string;caption:string;source:Source;official?:boolean} |
  {type:'diagram';src?:string;code?:string;caption:string;source:Source;format:'mermaid'|'svg'} |
  {type:'link';pageId:string;label?:string;description?:string} | {type:'separator'|'page_break'});
-export type Page={id:string;title:string;summary:string;blocks:Block[];related:string[];terms:string[];sources:Source[];tags:string[];provenance?:string};
+export type Page={kind?:'cheatsheet';cheatsheet?:CheatsheetDocument;id:string;title:string;summary:string;blocks:Block[];related:string[];terms:string[];sources:Source[];tags:string[];provenance?:string};
 export type TreeNode={id:string;title:string;pageId?:string;children?:TreeNode[]};
 export type Project={id:string;title:string;icon:string;description:string;nodes:TreeNode[]};
 export type Group={id:string;title:string;projectIds:string[]};
@@ -20,8 +21,8 @@ export type Catalogue={projects:Project[];pages:Page[];glossary:Term[];groups:Gr
 export type CategoryId='informatics'|'cloud'|'norsk'|'job'|'personal';
 export type WorkspaceNumber=1|2|3|4|5;
 export type CompanionUI={open?:boolean;collapsed?:string[];tab?:'overview'|'pages'|'glossary'|'search';term?:string;query?:string};
-export type Anchor={pdfOffset?:number;blockId?:string;offset?:number;unit?:string;viewportOffset?:number;atStart?:boolean;pdfPage?:number;pdfRevision?:string};
-export type Location={previousPresentation?:'continuous'|'parallel';previousPdfMode?:'single'|'continuous'|'spread'|'grid';previousGridMode?:'single'|'continuous'|'spread';previousGridZoom?:number;pageId:string;collectionId?:string;anchor?:Anchor;scroll?:number;presentation:'continuous'|'book'|'parallel';pdfMode:'single'|'continuous'|'spread'|'grid';pdfPage:number;zoom:number;rotation:number;cover:boolean};
+export type Anchor={sheetId?:string;sheetPage?:number;pdfOffset?:number;blockId?:string;offset?:number;unit?:string;viewportOffset?:number;atStart?:boolean;pdfPage?:number;pdfRevision?:string};
+export type Location={sheetPage?:number;sheetMode?:'single'|'spread'|'grid';sheetZoom?:number;sheetFit?:'page'|'width';previousPresentation?:'continuous'|'parallel';previousPdfMode?:'single'|'continuous'|'spread'|'grid';previousGridMode?:'single'|'continuous'|'spread';previousGridZoom?:number;pageId:string;collectionId?:string;anchor?:Anchor;scroll?:number;presentation:'continuous'|'book'|'parallel';pdfMode:'single'|'continuous'|'spread'|'grid';pdfPage:number;zoom:number;rotation:number;cover:boolean};
 export type View={id:string;history:Location[];cursor:number;collapsed:Record<string,boolean>;revealed:Record<string,boolean>;english:boolean};
 export type Pane={readerChromeCollapsed?:boolean;companionUi?:Record<string,CompanionUI>;id:string;views:View[];active:string};
 export type Session={pdfTreeExpanded?:string[];categoryFilter?:CategoryId|null;compactTop?:boolean;collapsedPane?:string|null;collapsedGroups?:string[];panes:Pane[];activePane:string;ratio:number;screen:'home'|'reader'|'bookmarks';leftOpen:boolean;rightOpen:boolean;focus:boolean;theme:'fluent'|'neutral'|'academic'|'lavender'|'slate';libraryMode?:'notes'|'pdfs';showFlags:boolean;expanded:string[];fontSize:number};

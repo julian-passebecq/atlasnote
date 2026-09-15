@@ -13,6 +13,7 @@ export function inferReadingCategory(c:Catalogue,ws:Workspace,target:ReadingTarg
 }
 export function targetForPage(c:Catalogue,id:string,anchor?:Anchor):ReadingTarget{
  if(c.projects.some(p=>p.id===id)||!c.pages.some(p=>p.id===id))return {kind:'collection',collectionId:id};
+ const sheet=c.pages.find(p=>p.id===id)?.cheatsheet;if(sheet&&anchor?.sheetPage)return {kind:'cheatsheet-page',pageId:id,documentId:sheet.id,sheetPage:anchor.sheetPage,anchor:structuredClone(anchor)};
  const doc=c.documents.find(d=>d.pageId===id);
  if(doc&&anchor?.pdfPage)return {kind:'pdf-page',pageId:id,documentId:doc.id,pdfPage:anchor.pdfPage,...(doc.sha256?{revision:doc.sha256}:{}),anchor:structuredClone(anchor)};
  return {kind:'page',pageId:id,...(anchor?{anchor:structuredClone(anchor)}:{})};

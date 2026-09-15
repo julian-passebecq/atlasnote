@@ -1,19 +1,31 @@
-# Integration and release verification - AtlasNote 1.2.5
+# AtlasNote 1.2.6 - integration and release verification
 
-Do not implement this pass again. The source already contains the reader/Context/PDF navigation/interview changes. Review and verify it, fixing only actual regressions. Do not merge or deploy.
+## Exact destination
 
-Repository: julian-passebecq/atlasnote.
-Starting released main: b5e63f71185bcf525e985dfad1260d38ed3c4918.
-Branch: feature/atlasnote-1.2.5-reader-interview-polish.
-The uploaded source was verified against that exact Git tree. The delivery's local Git ancestry is synthetic because the source ZIP did not include history; do not push that synthetic history over the real repository.
+Repository: `julian-passebecq/atlasnote`.
+Released starting commit: `d1ecfd70c2f9d72c374a1c1c897d10a05d718dc5`.
+Branch: `feature/atlasnote-1.2.6-native-cheatsheets`.
+Final local implementation SHA: see the external delivery manifest. It is not an upstream commit unless separately pushed after delivery.
 
-## Apply without losing local work
+This is completed source implementation. Do not restart the application, re-code the four fixtures, change the grammar direction, remove native features, merge main or deploy Netlify. Read FINAL_TEST_STATUS.md before interpreting green compatibility tests.
 
-In a clean checkout, fetch and inspect main. Preserve dirty work using a separate worktree or explicit safety copy. Start the named feature branch from the starting commit above. If main moved, stop and reconcile the newer changes explicitly; do not reset or overwrite them.
+## Integrate the source safely
 
-Extract the complete source outside the checkout, then copy its contents into the branch root, preserving .git, credentials and private/user files. Alternatively, check and apply the supplied tree patch with `git apply --check` and `git apply`. The patch and the complete source describe the same implementation; do not apply both. Never force-push the local delivery history.
+Use either the complete source ZIP or the binary patch, never both. Preserve the target repository's `.git` directory and unrelated local work. Do not extract a nested ZIP root into the repository as a subfolder. The source root is the folder containing package.json, src, content and tests.
 
-Review `git diff`, then run:
+On a clean local repository at the specified baseline, the patch route is:
+
+```sh
+git fetch origin
+git switch -c feature/atlasnote-1.2.6-native-cheatsheets d1ecfd70c2f9d72c374a1c1c897d10a05d718dc5
+git apply --check /path/to/AtlasNote_1.2.6_changes.patch
+git apply /path/to/AtlasNote_1.2.6_changes.patch
+git status --short
+```
+
+If that branch already exists, inspect it first; do not force-reset it. If main has moved, keep the supplied exact baseline until reviewing the intervening changes rather than blindly replacing newer files. A source ZIP creates a new local integration commit, which need not have the same SHA as the implementation workspace commit.
+
+## Required full verification on a normal developer machine
 
 ```sh
 npm ci
@@ -22,20 +34,24 @@ python -m playwright install --with-deps chromium
 npm run test:release
 ```
 
-Use npm run, not direct node tools/run-release.mjs: the runner reuses npm's JavaScript entry point for Windows compatibility. The runner and CI retain all 31 previous release gates and add interview-content consistency, reader-polish UI and real PDF-wheel tests (34 total).
+The runner attempts all 37 gates and preserves logs even after a failure. Do not skip failed gates, force npm installs around the lockfile, relax exact backup equality, mock IndexedDB in the runtime gate, or replace actual PDF canvas/wheel assertions with page-number updates.
 
-## Most important external gates
+The old 34 gates remain. New commands are `test:cheatsheets`, `test:cheatsheets:ui`, and `test:cheatsheets:runtime`. The last uses the real app entry, reload and an empty browser context for backup restore. `ATLAS_DIST=dist-offline` is only a diagnostic: it cannot clear the real PDF Compare case or production bundle.
 
-Install the exact lockfile, audit current dependencies, run `typecheck:online`, build the integrated app and component harness, and run the real-engine PDF tests. `test:pdf:wheel` must demonstrate slow 30-pixel wheel ticks, rendered physical-page progression, one-turn momentum behavior, reverse scrolling and independent Compare panes. Neither page-number input changes nor a fake PDF renderer can replace that evidence.
+## Priority acceptance checks
 
-Run all real-origin tests with actual IndexedDB and fresh-context backup restore. The implementation environment explicitly hit `ERR_BLOCKED_BY_ADMINISTRATOR`; no policy bypass was attempted. The optional history list records genuine document visits; validate the complete persisted state and any intentional last-open timestamps rather than blindly deleting fields from comparisons. Preserve current source/overlay/remark/reading-list and saved-session equality assertions.
+First obtain the pinned integrated dependencies and a successful `typecheck:online` / `build` / `check:release`. Then run the real PDF component/grid/wheel and existing runtime suites plus the native runtime suite. Verify a native cheatsheet beside a genuinely rendered PDF canvas, not the compatibility fallback. Verify existing 1.2.5 state reload, local native JSON edits, stable physical anchors/remarks through a page reorder, full saved-workspace state, and exact backup restoration into a fresh browser profile.
 
-Inspect Context on an actual notebook and PDF, add/remove a related link, write a reflection, reload, export a real backup and restore it into a fresh profile. Confirm source references are unchanged and personal edits persist. Test both panes with opposite toolbar visibility and all five workspaces.
+The compatibility tests already exercise 1200 x 1600 SVG geometry, live text, the full eight-page content, a synthetic four-page 2x2, independent panes and controls, actual interview Compare, reading actions, Context/search/Related, source validation/edit/export, saved state and backup decoding. Do not call this durable browser persistence evidence.
 
-## Contracts
+Inspect the four required documents at fit-page/fit-width/zoom and 390/1024/1440 widths. Fixed pages intentionally do not become responsive articles. Source-dialog editing should retain the current stable page rather than reopen page 1. In normal use, test real OS text selection/copy in addition to the existing synthetic copy-event checks.
 
-No cheatsheets, new content types, code execution, game/scoring or analytics. Do not replace the PDF engine. No metadata-flattening migration: only the PDF navigation projection is flatter. Different headings can point to the same physical page. Bookmarks, Read Later and Workspace States remain distinct. Reading-state restore is not content rollback. The existing database name/version and backup envelope remain unchanged. Do not publish private PDF libraries, credentials, build caches or synthetic backup fixtures.
+## Content and security review
 
-## Finish
+Read docs/1.2.6/FIXTURE_PROVENANCE.md. The original JSON was not supplied and ADF page 1's preview was absent. Count differences are documented; do not fabricate a claim that the missing 153-block/564-fragment originals were reproduced. Technical claims are inherited from user references, not independently vendor-verified. The pack has no raster or drawing fallback. Native code is a string, not executable content.
 
-After all gates pass, commit the integrated source on the named feature branch and report the real repository starting/final SHAs and evidence. Push only when authorized. Do not merge main, deploy or create another Netlify site in this pass. The final local delivery SHA in the external report is provenance, not a remotely published commit.
+Keep the unchanged PDF engine and 15 interview reference files. Existing IndexedDB/database version and backup envelope are unchanged. Never erase personal data as a migration shortcut. Do not publish source archives, compatibility builds, test backups, font files or private libraries.
+
+## Report back
+
+Return the actual branch/commit, all 37 gate outcomes and logs, the new nine-case normal-origin result, and any fixes as explicit diffs. Separate application defects from unavailable environment prerequisites. Only after successful gates and explicit user authorization should production promotion be considered.
