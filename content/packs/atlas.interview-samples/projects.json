@@ -1,0 +1,283 @@
+[
+  {
+    "id": "project.interview-preparation",
+    "title": "Interview Preparation",
+    "icon": "code",
+    "description": "Reasoning-first SQL, theory, hybrid and coding references. No execution or scoring.",
+    "nodes": [
+      {
+        "id": "node.interview.sql",
+        "title": "SQL",
+        "children": [
+          {
+            "id": "node.interview.sql.aggregation",
+            "title": "Aggregation",
+            "children": [
+              {
+                "id": "node.interview.sql.aggregation.row-filters-and-group-filters",
+                "title": "Row filters and group filters",
+                "children": [
+                  {
+                    "id": "node.interview.sql-q1",
+                    "title": "Q1 - WHERE / GROUP BY / HAVING",
+                    "pageId": "page.interview.sql-q1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "node.interview.sql.joins",
+            "title": "Joins",
+            "children": [
+              {
+                "id": "node.interview.sql.joins.cardinality-and-preservation",
+                "title": "Cardinality and preservation",
+                "children": [
+                  {
+                    "id": "node.interview.sql-q2",
+                    "title": "Q2 - LEFT JOIN and revenue grain",
+                    "pageId": "page.interview.sql-q2"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "node.interview.sql.window-functions",
+            "title": "Window functions",
+            "children": [
+              {
+                "id": "node.interview.sql.window-functions.ties-and-partitions",
+                "title": "Ties and partitions",
+                "children": [
+                  {
+                    "id": "node.interview.sql-q3",
+                    "title": "Q3 - Second-highest distinct salary",
+                    "pageId": "page.interview.sql-q3"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "node.interview.sql.ctes",
+            "title": "CTEs",
+            "children": [
+              {
+                "id": "node.interview.sql.ctes.composition",
+                "title": "Composition",
+                "children": [
+                  {
+                    "id": "node.interview.sql-q4",
+                    "title": "Q4 - Aggregate, then rank with a CTE",
+                    "pageId": "page.interview.sql-q4"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "node.interview.sql.temporal-logic",
+            "title": "Temporal logic",
+            "children": [
+              {
+                "id": "node.interview.sql.temporal-logic.deterministic-ordering",
+                "title": "Deterministic ordering",
+                "children": [
+                  {
+                    "id": "node.interview.sql-q5",
+                    "title": "Q5 - Previous observed row: LAG or self-join",
+                    "pageId": "page.interview.sql-q5"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "node.interview.data-modeling",
+        "title": "Data Modeling",
+        "children": [
+          {
+            "id": "node.interview.data-modeling.physical-layout",
+            "title": "Physical layout",
+            "children": [
+              {
+                "id": "node.interview.data-modeling.physical-layout.workload-led-choices",
+                "title": "Workload-led choices",
+                "children": [
+                  {
+                    "id": "node.interview.theory-layout",
+                    "title": "Partitioning vs clustering / indexing",
+                    "pageId": "page.interview.theory-layout"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "node.interview.data-modeling.join-grain",
+            "title": "Join grain",
+            "children": [
+              {
+                "id": "node.interview.data-modeling.join-grain.slowly-changing-dimensions",
+                "title": "Slowly changing dimensions",
+                "children": [
+                  {
+                    "id": "node.interview.hybrid-fanout",
+                    "title": "SQL fan-out: debug the model, not the SUM",
+                    "pageId": "page.interview.hybrid-fanout"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "node.interview.etl-elt-pipelines",
+        "title": "ETL / ELT & Pipelines",
+        "children": [
+          {
+            "id": "node.interview.etl-elt-pipelines.processing-modes",
+            "title": "Processing modes",
+            "children": [
+              {
+                "id": "node.interview.etl-elt-pipelines.processing-modes.latency-and-correctness",
+                "title": "Latency and correctness",
+                "children": [
+                  {
+                    "id": "node.interview.theory-batch",
+                    "title": "Batch vs streaming: choose the freshness budget",
+                    "pageId": "page.interview.theory-batch"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "node.interview.modern-data-stack-governance",
+        "title": "Modern Data Stack & Governance",
+        "children": [
+          {
+            "id": "node.interview.modern-data-stack-governance.layered-architecture",
+            "title": "Layered architecture",
+            "children": [
+              {
+                "id": "node.interview.modern-data-stack-governance.layered-architecture.quality-and-ownership",
+                "title": "Quality and ownership",
+                "children": [
+                  {
+                    "id": "node.interview.theory-medallion",
+                    "title": "Bronze / Silver / Gold: define the contracts",
+                    "pageId": "page.interview.theory-medallion"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "node.interview.python",
+        "title": "Python",
+        "children": [
+          {
+            "id": "node.interview.python.pyspark",
+            "title": "PySpark",
+            "children": [
+              {
+                "id": "node.interview.python.pyspark.lazy-evaluation",
+                "title": "Lazy evaluation",
+                "children": [
+                  {
+                    "id": "node.interview.hybrid-lazy",
+                    "title": "PySpark: when does this chain run?",
+                    "pageId": "page.interview.hybrid-lazy"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "node.interview.python.dictionaries",
+            "title": "Dictionaries",
+            "children": [
+              {
+                "id": "node.interview.python.dictionaries.grouping-and-state",
+                "title": "Grouping and state",
+                "children": [
+                  {
+                    "id": "node.interview.coding-group",
+                    "title": "Dictionary pattern A - Group rows by customer",
+                    "pageId": "page.interview.coding-group"
+                  },
+                  {
+                    "id": "node.interview.coding-errors",
+                    "title": "Dictionary pattern B - Count errors by code",
+                    "pageId": "page.interview.coding-errors"
+                  },
+                  {
+                    "id": "node.interview.coding-latest",
+                    "title": "Dictionary pattern C - Latest record per entity",
+                    "pageId": "page.interview.coding-latest"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "node.interview.system-design",
+        "title": "System Design",
+        "children": [
+          {
+            "id": "node.interview.system-design.pipeline-reliability",
+            "title": "Pipeline reliability",
+            "children": [
+              {
+                "id": "node.interview.system-design.pipeline-reliability.failure-and-replay",
+                "title": "Failure and replay",
+                "children": [
+                  {
+                    "id": "node.interview.hybrid-retry",
+                    "title": "Retries and idempotency at a pipeline boundary",
+                    "pageId": "page.interview.hybrid-retry"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "node.interview.behavioral",
+        "title": "Behavioral",
+        "children": [
+          {
+            "id": "node.interview.behavioral.communication",
+            "title": "Communication",
+            "children": [
+              {
+                "id": "node.interview.behavioral.communication.incident-reasoning",
+                "title": "Incident reasoning",
+                "children": [
+                  {
+                    "id": "node.interview.theory-behavioral",
+                    "title": "Explain a pipeline incident without hiding uncertainty",
+                    "pageId": "page.interview.theory-behavioral"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,3 +1,4 @@
+import {pdfNavigationSections} from '../core/pdf-navigation.js';
 import {PdfStudyTree} from '../companion/PdfStudyTree.js';
 import {studyTreeKey} from '../companion/tree.js';
 import {activeSession,WORKSPACE_NUMBERS,CATEGORIES,categoryMatches} from '../core/workspace-slots.js';
@@ -9,7 +10,7 @@ import {normalize} from '../core/workspace.js';
 
 type MenuState={project:Project;node?:TreeNode;x:number;y:number;returnFocus:HTMLElement};
 /** All tree actions also have an ordinary, keyboard-focusable Actions button. */
-export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],activePaneIndex=0,navigation,onReadingActions,onReadLater,onPdfToggle,onPdfNavigate,onPdfTerm,onPdfManage,onWorkspace,onCategory,onSidebar,onPaneMarker,onGroupToggle,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
+export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],activePaneIndex=0,navigation,onLibraryMode,onReadingActions,onReadLater,onPdfToggle,onPdfNavigate,onPdfTerm,onPdfManage,onWorkspace,onCategory,onSidebar,onPaneMarker,onGroupToggle,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
  const [filterOpen,setFilterOpen]=useState(false),[filter,setFilter]=useState(''),[menu,setMenu]=useState<MenuState|null>(null);
  const menuRef=useRef<HTMLDivElement|null>(null);
  const expanded=new Set(activeSession(ws.personal).expanded),archived=new Set<string>(ws.overlays.archived),query=normalize(filter);
@@ -48,12 +49,12 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],ac
    e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?buttons.length-1:(i+(e.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length;buttons[next]?.focus();
   }
  }
- function nodes(ns:TreeNode[],p:Project,depth:number):any{
-  return ns.filter(n=>visible(n)&&matches(n)).map(n=>{
+ function nodes(ns:TreeNode[],p:Project,depth:number,matchedPath=false):any{
+  return ns.filter(n=>visible(n)&&(matchedPath||matches(n))).map(n=>{
    const doc=c.documents.find((d:any)=>d.pageId===n.pageId),pdfKey=doc?studyTreeKey(doc,'document'):'',pdfOpen=doc&&(activeSession(ws.personal).pdfTreeExpanded??[]).includes(pdfKey);
    const owners=[0,1].filter(i=>n.pageId&&panePages[i]===n.pageId);const open=expanded.has(n.id)||!!query,page=c.pages.find((p:any)=>p.id===n.pageId);
    return <div className="tree-node" key={n.id}>
-    <div className={'tree-row '+(n.pageId===activePage?'active ':'')+owners.map(i=>'pane-owner-'+(i===0?'a':'b')).join(' ')} data-node-id={n.id} data-pane-owners={owners.map(i=>i===0?'a':'b').join(' ')} style={{paddingLeft:(10+depth*14)+'px'}} onContextMenu={e=>showMenu(e,p,n)} onKeyDown={e=>keyboardMenu(e,p,n)}>
+    <div className={'tree-row '+(n.pageId===activePage?'active ':'')+owners.map(i=>'pane-owner-'+(i===0?'a':'b')).join(' ')} data-node-id={n.id} data-pane-owners={owners.map(i=>i===0?'a':'b').join(' ')} style={{paddingLeft:(mode==='pdfs'?4+depth*8:10+depth*14)+'px'}} onContextMenu={e=>showMenu(e,p,n)} onKeyDown={e=>keyboardMenu(e,p,n)}>
      <>{doc?<button className="tree-expander" aria-label={(pdfOpen?'Collapse PDF ':'Expand PDF ')+n.title} aria-expanded={pdfOpen} onClick={()=>onPdfToggle(pdfKey)}><Icon name={pdfOpen?'down':'chevron'} size={12}/></button>:n.children&&<button className="tree-expander" aria-label={(open?'Collapse ':'Expand ')+n.title} aria-expanded={open} onClick={()=>onToggle(n.id)}><Icon name={open?'down':'chevron'} size={12}/></button>}<button className="tree-target" title={n.title} aria-expanded={n.children?open:undefined} aria-current={n.pageId===activePage?'page':undefined}
       onClick={e=>n.pageId?onOpen(n.pageId,undefined,e.ctrlKey||e.metaKey):(onCollection(n.id,undefined,e.ctrlKey||e.metaKey),!open&&onToggle(n.id))}
       onMouseDown={e=>{if(e.button===1)e.preventDefault();}}
@@ -86,15 +87,30 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],ac
  const firstPage=(ns:TreeNode[]):string|undefined=>{for(const n of ns){if(!visible(n))continue;if(n.pageId&&!archived.has(n.pageId))return n.pageId;const id=n.children&&firstPage(n.children);if(id)return id;}};
  const overview=menu&&!menuPage?firstPage(menu.node?.children??menu.project.nodes):undefined;
  const manage=(intent:string)=>{if(menu)action(()=>onItem({project:menu.project,node:menu.node,intent}));};
- return <aside className="library-sidebar" aria-label="Notebook library">
+ return <aside className={"library-sidebar "+(mode==='pdfs'?'pdf-library-sidebar':'')} aria-label={mode==='pdfs'?'PDF library':'Notebook library'}>
   <div className="sidebar-heading">{navigation}</div>
   <div className="workspace-slots" role="group" aria-label="Study workspaces">{WORKSPACE_NUMBERS.map(n=><button key={n} aria-label={'Workspace '+n} aria-pressed={(ws.personal.activeWorkspaceSlot??1)===n} className={(ws.personal.activeWorkspaceSlot??1)===n?'current-workspace':''} onClick={()=>onWorkspace(n)}>{n}</button>)}</div>
   <div className="category-filters" role="group" aria-label="Notebook category filters">{CATEGORIES.map(category=><IconButton key={category.id} name={category.icon} label={category.label+' filter'} active={activeSession(ws.personal).categoryFilter===category.id} onClick={()=>onCategory(category.id)}/>)}</div>
-  <div className="filter-status"><span>{CATEGORIES.find(c=>c.id===activeSession(ws.personal).categoryFilter)?.label??'All categories'}</span><IconButton name="search" label="Filter tree" active={filterOpen} onClick={()=>setFilterOpen(!filterOpen)}/></div>
+  <div className="filter-status"><button className="library-mode-switch" aria-label={mode==='pdfs'?'Switch to notes':'Switch to PDF library'} onClick={onLibraryMode}><Icon name={mode==='pdfs'?'pdf':'book'} size={14}/>{mode==='pdfs'?'PDFs':'Notes'}</button><span>{CATEGORIES.find(c=>c.id===activeSession(ws.personal).categoryFilter)?.label??'All categories'}</span><IconButton name="search" label="Filter tree" active={filterOpen} onClick={()=>setFilterOpen(!filterOpen)}/></div>
   {filterOpen&&<div className="tree-filter"><Icon name="search" size={15}/><input aria-label="Filter notebook tree" placeholder="Filter notebooks" value={filter} onChange={e=>setFilter(e.target.value)}/>{filter&&<IconButton name="close" label="Clear tree filter" onClick={()=>setFilter('')}/>}</div>}
   <nav className="tree-scroll" aria-label="Projects and pages">
+   {mode==='pdfs'?pdfNavigationSections(c.projects.filter((p:Project)=>!hidden(p)),c.documents,archived).map(section=>{
+     const entryMatches=(entry:any)=>!query||normalize(entry.path.join(' ')+' '+entry.document.title).includes(query);
+     const entries=section.entries.filter(entryMatches),subjects=section.subjects.map(subject=>({...subject,entries:subject.entries.filter(entryMatches)})).filter(subject=>subject.entries.length);
+     if(!entries.length&&!subjects.length)return null;
+     const open=expanded.has(section.id)||!!query;
+     return <section className="pdf-nav-section" key={section.id} data-pdf-section={section.id}>
+       <button className="pdf-section-heading" aria-label={(open?'Collapse PDF section ':'Expand PDF section ')+section.title} aria-expanded={open} onClick={()=>onToggle(section.id)}><Icon name={open?'down':'chevron'} size={12}/><strong>{section.title}</strong></button>
+       {open&&<>{entries.map(entry=>nodes([entry.node],entry.project,0,true))}{subjects.map(subject=>{const subjectOpen=expanded.has(subject.id)||!!query;return <div className="pdf-nav-subject" key={subject.id}>
+         <button className="pdf-subject-heading" aria-expanded={subjectOpen} aria-label={(subjectOpen?'Collapse ':'Expand ')+subject.title} onClick={()=>onToggle(subject.id)}><Icon name={subjectOpen?'down':'chevron'} size={12}/><span>{subject.title}</span></button>
+         {subjectOpen&&subject.entries.map(entry=>nodes([entry.node],entry.project,0,true))}
+       </div>;})}</>}
+     </section>;
+   }):<>
    {c.groups.filter((g:any)=>g.projectIds.some((id:string)=>c.projects.some((p:Project)=>p.id===id&&!hidden(p)&&p.nodes.some(visible)))).map((g:any)=><section className="tree-group" key={g.id}><h3><button aria-expanded={!activeSession(ws.personal).collapsedGroups?.includes(g.id)} aria-label={(activeSession(ws.personal).collapsedGroups?.includes(g.id)?'Expand group ':'Collapse group ')+g.title} onClick={()=>onGroupToggle(g.id)}><Icon name={g.id.includes('cloud')?'cloud':g.id.includes('program')?'python':g.id.includes('norsk')?'language':'book'} size={21}/><span>{g.title}</span><Icon name={activeSession(ws.personal).collapsedGroups?.includes(g.id)?'chevron':'down'} size={12}/></button></h3>{!activeSession(ws.personal).collapsedGroups?.includes(g.id)&&g.projectIds.map((id:string)=>c.projects.find((p:any)=>p.id===id)).filter(Boolean).map(project)}</section>)}
    {c.projects.some((p:Project)=>!grouped.has(p.id)&&!hidden(p)&&p.nodes.some(visible))&&<section className="tree-group"><h3><button aria-expanded={!activeSession(ws.personal).collapsedGroups?.includes('group.ungrouped')} aria-label={(activeSession(ws.personal).collapsedGroups?.includes('group.ungrouped')?'Expand group ':'Collapse group ')+'NOTEBOOKS'} onClick={()=>onGroupToggle('group.ungrouped')}><Icon name="folder" size={21}/><span>NOTEBOOKS</span><Icon name="down" size={12}/></button></h3>{!activeSession(ws.personal).collapsedGroups?.includes('group.ungrouped')&&c.projects.filter((p:any)=>!grouped.has(p.id)).map(project)}</section>}
+   </>}
+
   </nav>
   <div className="sidebar-footer-row"><button className="sidebar-add" onClick={()=>onCreate('project')}><Icon name="plus" size={16}/> New notebook</button></div><div className="local-status"><span className="status-dot"/> Stored on this device</div>
   {menu&&<div ref={menuRef} className="tree-context-menu" role="menu" aria-label={'Actions for '+(menu.node?.title??menu.project.title)} style={{left:menu.x,top:menu.y}} onKeyDown={menuKey}>

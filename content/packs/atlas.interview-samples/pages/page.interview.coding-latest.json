@@ -1,0 +1,165 @@
+{
+  "id": "page.interview.coding-latest",
+  "title": "Dictionary pattern C - Latest record per entity",
+  "summary": "Coding / Python / Dictionaries / Grouping and state",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "page.interview.coding-latest.prompt",
+      "title": "Question",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-latest.question",
+          "text": "Keep the latest record for each entity_id. Input is not sorted. updated_at values are comparable timestamps in one time basis. On equal timestamps, keep the last input record."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-latest.reasoning",
+      "title": "Reasoning",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.coding-latest.reasoning-points",
+          "ordered": true,
+          "items": [
+            "Choose entity_id as key.",
+            "Store the first record for an unseen key.",
+            "Compare candidate and stored timestamps.",
+            "Use >= to implement the stated last-input-wins tie rule."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-latest.answer",
+      "title": "Answer / mental model",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-latest.explanation",
+          "text": "The dictionary stores the best record seen so far for each key. Update only when the candidate wins under the defined timestamp and tie policy. The sample uses numeric timestamps; arbitrary date strings must be parsed and normalized before comparison."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-latest.example",
+      "title": "Example",
+      "children": [
+        {
+          "type": "code",
+          "id": "page.interview.coding-latest.code",
+          "language": "python",
+          "code": "def latest_records(rows):\n    latest = {}\n    for row in rows:\n        key = row[\"entity_id\"]\n        previous = latest.get(key)\n        if previous is None or row[\"updated_at\"] >= previous[\"updated_at\"]:\n            latest[key] = row\n    return latest"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-latest.alternatives",
+      "title": "Alternative / tradeoff",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-latest.alternative-0",
+          "text": "Stable sorting then overwriting gives the same tie behavior, but costs O(n log n) time and O(n) temporary storage."
+        },
+        {
+          "type": "code",
+          "id": "page.interview.coding-latest.alternative-code-0",
+          "language": "python",
+          "code": "def latest_records_alternative(rows):\n    ordered = sorted(rows, key=lambda row: row[\"updated_at\"])\n    return {row[\"entity_id\"]: row for row in ordered}"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-latest.complexity",
+      "title": "Complexity / tradeoff",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-latest.cost",
+          "text": "Single pass: expected O(n) time and O(k) retained references for k entities. Missing or incomparable timestamps require an explicit validation policy."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-latest.trap",
+      "title": "Common mistake / trap",
+      "children": [
+        {
+          "type": "callout",
+          "id": "page.interview.coding-latest.trap-note",
+          "tone": "warning",
+          "title": "Watch for this",
+          "text": "Unconditionally overwriting the value works only when input ordering guarantees the newest record comes last."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-latest.followup",
+      "title": "Follow-up",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.coding-latest.followups",
+          "items": [
+            "How would you change the policy to break ties using a stable sequence_id instead of input order?"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-latest.intent",
+      "title": "Interviewer intent",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.coding-latest.intent-points",
+          "items": [
+            "Transfer keyed accumulation to conditional state.",
+            "Make ordering and tie assumptions explicit."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-latest.reflection",
+      "title": "Reflection",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-latest.reflection-prompt",
+          "text": "What pattern did I recognize, where did I get stuck, and what would I change in my first approach?\n\nUse Context > Remarks for your personal reflection. It is saved separately from this reference."
+        }
+      ]
+    }
+  ],
+  "related": [
+    "page.interview.coding-group",
+    "page.interview.coding-errors"
+  ],
+  "terms": [],
+  "sources": [
+    {
+      "title": "Python - collections",
+      "url": "https://docs.python.org/3/library/collections.html"
+    }
+  ],
+  "tags": [
+    "interview",
+    "coding",
+    "pattern:dictionary-grouping",
+    "series:dictionary-transfer"
+  ],
+  "provenance": "Original educational prototype. Prompts Q1-Q5 preserve the user-provided canonical SQL sequence. Examples are reference code, not executable tasks."
+}

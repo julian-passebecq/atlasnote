@@ -1,3 +1,4 @@
+from persistence_assertions import assert_personal_after_open
 from browser_support import bookmark_position,open_saved_manager,inspect_pdf_term,show_reader_controls
 """1.2.3 real-origin saved-state release gate.
 Actual production UI, IndexedDB, reload, full backup and fresh browser context.
@@ -29,6 +30,7 @@ def workspace(p,n):
 def action(p,label,message):
  dismiss=p.get_by_role('button',name='Dismiss message',exact=True)
  if dismiss.count():dismiss.click()
+ if label in ['Save current workspace state','Restore last workspace save','Save all workspace states','Restore last all-workspaces save']:open_saved_manager(p)
  p.get_by_role('button',name=label,exact=True).click();p.locator('.toast').filter(has_text=message).wait_for();assert not p.locator('.toast.error').count()
 def read_last(p,scope):
  return next(e for e in p['savedStates']['entries'] if (e['scope']=='all' if scope=='all' else e['scope']=='workspace' and e['slot']==scope))
@@ -44,7 +46,7 @@ try:
   page.goto(base,wait_until='networkidle');page.get_by_role('button',name='Workspace 1',exact=True).wait_for();initial=durable(page);assert initial['personal']['schemaVersion']==3;record({'origin':base,'storage':'actual IndexedDB'})
   phase='workspace_durable_save';search(page,'One note, several ways to read');page.locator('.note-scroller').evaluate('e=>{e.scrollTop=350;e.dispatchEvent(new Event("scroll"))}');page.wait_for_timeout(400)
   action(page,'Save current workspace state','Workspace 1 saved.');saved=durable(page)['personal'];one=read_last(saved,1);assert one['session']==session(saved,1)
-  page.reload(wait_until='networkidle');reloaded=durable(page)['personal'];assert reloaded==saved;assert page.locator('.note-scroller').evaluate('e=>e.scrollTop')>250;record()
+  page.reload(wait_until='networkidle');reloaded=durable(page)['personal'];assert_personal_after_open(reloaded,saved);assert page.locator('.note-scroller').evaluate('e=>e.scrollTop')>250;record()
   phase='workspace_restore_undo_isolation';open_context(page,'Remarks');page.locator('.remarks-input').fill('Synthetic progress written AFTER the checkpoint. Must survive restore.');page.wait_for_timeout(400);close_panels(page)
   workspace(page,2);search(page,'Read in Norwegian, keep English nearby');two=session(durable(page)['personal'],2)
   workspace(page,1);search(page,'PDF reading fixture');changed=durable(page);action(page,'Restore last workspace save','Saved state restored.');restored=durable(page)
@@ -55,9 +57,9 @@ try:
   workspace(page,4);action(page,'Save all workspace states','All workspaces saved.');all_save=read_last(durable(page)['personal'],'all')
   workspace(page,2);search(page,'One note, several ways to read');workspace(page,5);action(page,'Restore last all-workspaces save','Saved state restored.');all_restored=durable(page)['personal']
   assert all_restored['activeWorkspaceSlot']==all_save['activeWorkspaceSlot']==4;assert all_restored['session']==all_save['session'];assert all_restored['workspaceSlots']==all_save['workspaceSlots'];assert len(all_restored['savedStates']['entries'])==2;record()
-  phase='manager_progress_history';open_manager(page);page.get_by_role('tab',name='All-workspace saves',exact=True).click();page.get_by_role('button',name='Rename / note',exact=True).click();page.get_by_role('textbox',name='Save title',exact=True).fill('Week 1 - all workspaces');page.get_by_role('textbox',name='Progress / next step',exact=True).fill('Continue at the saved reading position tomorrow.');action(page,'Save details','Save details updated.');close_panels(page)
+  phase='manager_progress_history';open_manager(page);page.get_by_role('tab',name='All workspaces saves',exact=True).click();page.get_by_role('button',name='Rename / note',exact=True).click();page.get_by_role('textbox',name='Save title',exact=True).fill('Week 1 - all workspaces');page.get_by_role('textbox',name='Progress / next step',exact=True).fill('Continue at the saved reading position tomorrow.');action(page,'Save details','Save details updated.');close_panels(page)
   prior=durable(page)['personal'];assert read_last(prior,'all')['title']=='Week 1 - all workspaces';assert 'tomorrow' in read_last(prior,'all')['note'];assert prior['savedStates']['history'][0]['action']=='rename'
-  page.reload(wait_until='networkidle');assert durable(page)['personal']==prior;record()
+  page.reload(wait_until='networkidle');assert_personal_after_open(durable(page)['personal'],prior);record()
   phase='backup_fresh_context';open_settings(page);before=durable(page)
   with page.expect_download() as download:page.get_by_role('button',name='Download workspace backup',exact=True).click()
   backup=OUT/'saved-state-roundtrip.atlas-backup.zip';download.value.save_as(str(backup))
@@ -65,7 +67,7 @@ try:
    payload=json.loads(z.read('backup.json'));assert payload['workspace']['personal']==before['personal'];assert payload['workspace']['overlays']==before['overlays']
   expected=payload['workspace'];ctx.close();ctx=browser.new_context(viewport={'width':1440,'height':900},accept_downloads=True);page=ctx.new_page();page.set_default_timeout(15000);page.on('pageerror',lambda e:errors.append(str(e)));page.goto(base,wait_until='networkidle');assert not durable(page)['personal'].get('savedStates')
   open_settings(page);page.get_by_label('Restore workspace backup',exact=True).set_input_files(str(backup));page.get_by_role('checkbox',name='I understand that this replaces the current local workspace.',exact=True).check();page.get_by_role('button',name='Restore verified backup',exact=True).click();page.locator('dialog').wait_for(state='detached')
-  new=durable(page);assert new['personal']==expected['personal'];assert new['overlays']==expected['overlays'];page.reload(wait_until='networkidle');assert durable(page)['personal']==expected['personal'];record({'savesAndUndoAndHistoryExact':True,'freshContext':True})
+  new=durable(page);assert_personal_after_open(new['personal'],expected['personal']);assert new['overlays']==expected['overlays'];page.reload(wait_until='networkidle');assert_personal_after_open(durable(page)['personal'],expected['personal']);record({'savesAndUndoAndHistoryExact':True,'freshContext':True})
   phase='restored_checkpoint_usable';workspace(page,1);action(page,'Restore last workspace save','Saved state restored.');out=durable(page)['personal'];assert session(out,1)==one['session'];assert out['notes']==expected['personal']['notes'];page.screenshot(path=str(OUT/'checkpoint-restored-after-backup.png'));record()
   phase='no_errors';assert errors==[],errors;record();browser.close()
 except Exception as e:

@@ -12,7 +12,11 @@ export function combinedRotation(intrinsic,viewer){return ((intrinsic+viewer)%36
  * @param {boolean|number} paired */
 export function stepPhysicalPage(page,total,direction,paired=false,cover=false){
  const size=paired===4?4:paired?2:1,shown=groupedPages(page,Math.max(1,total),size,cover&&size>1);
- const requested=direction>0?shown[shown.length-1]+1:shown[0]-1,next=clampPage(requested,total);
+ const requested=direction>0?shown[shown.length-1]+1:shown[0]-1;
+ // At a terminal spread/grid, retain the selected physical page, not the first
+ // page of its group. A boundary wheel event is not a selection command.
+ if(requested<1||requested>total)return clampPage(page,total);
+ const next=clampPage(requested,total);
  return size>1?groupedPages(next,Math.max(1,total),size,cover)[0]:next;
 }
 /** Largest uniform width that fits two columns and two rows, using actual

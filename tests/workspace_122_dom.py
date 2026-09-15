@@ -36,7 +36,7 @@ with sync_playwright() as pw:
  def domain_groups():
   reset();before=s()['panes'];overlays=snap()['overlays'];p.get_by_role('button',name='Norsk filter',exact=True).click();assert p.locator('.tree-project').count()==1
   button=p.get_by_role('button',name='Collapse group Norsk',exact=True);button.click();assert p.locator('.tree-project').count()==0;p.get_by_role('button',name='Expand group Norsk',exact=True).click();assert p.locator('.tree-project').count()==1
-  assert s()['panes']==before and snap()['overlays']==overlays;p.get_by_role('button',name='Norsk filter',exact=True).click();assert p.locator('.tree-project').count()==11
+  assert s()['panes']==before and snap()['overlays']==overlays;p.get_by_role('button',name='Norsk filter',exact=True).click();assert p.locator('.tree-project').count()==12
  check('Category/group filtering never changes canonical content or open tabs',domain_groups)
  def book():
   reset('page.atlas.language','parallel');before=s()['panes'][0]['views'][0]

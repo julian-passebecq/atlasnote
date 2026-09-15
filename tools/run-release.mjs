@@ -4,7 +4,7 @@
 import {spawnSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-const out=path.resolve('docs/evidence/1.2.4/release-gates');fs.mkdirSync(out,{recursive:true});
+const out=path.resolve('docs/evidence/1.2.5/release-gates');fs.mkdirSync(out,{recursive:true});
 const commands=[
  ['clean-install',['ci']], ['integrated-deps',['run','check:integrated-deps']], ['npm-audit',['audit']],
  ['core-typecheck',['run','typecheck']], ['unit',['test']], ['offline-release',['run','check:release:offline']],
@@ -12,9 +12,9 @@ const commands=[
  ['dom',['run','test:dom']], ['hardening',['run','test:hardening:ui']], ['reader',['run','test:reader:ui']],
  ['compact',['run','test:compact:ui']], ['finish-ui',['run','test:finish:ui']],
  ['backup-diagnostic',['run','test:backup:diagnostic']], ['pdf-authoring',['run','test:pdf:authoring']],
- ['workspaces-ui',['run','test:workspaces:ui']], ['simplified-ui',['run','test:simplified:ui']], ['reading-ui',['run','test:reading:ui']], ['integrated-typecheck',['run','typecheck:online']],
+ ['workspaces-ui',['run','test:workspaces:ui']], ['simplified-ui',['run','test:simplified:ui']], ['reading-ui',['run','test:reading:ui']], ['interview-content',['run','test:interviews']], ['polish-ui',['run','test:polish:ui']], ['integrated-typecheck',['run','typecheck:online']],
  ['integrated-build',['run','build']], ['public-release',['run','check:release']],
- ['component-harness',['run','build:test-harness']], ['pdf-component',['run','test:pdf:component']], ['pdf-grid',['run','test:pdf:grid']],
+ ['component-harness',['run','build:test-harness']], ['pdf-component',['run','test:pdf:component']], ['pdf-grid',['run','test:pdf:grid']], ['pdf-wheel',['run','test:pdf:wheel']],
  ['pdf-runtime',['run','test:pdf']], ['finish-integrated',['run','test:finish:integrated']],
  ['runtime',['run','test:runtime']], ['workspaces-runtime',['run','test:workspaces:runtime']],
  ['saved-states-runtime',['run','test:savedstates:runtime']], ['reading-runtime',['run','test:reading:runtime']], ['headers',['run','test:headers']]

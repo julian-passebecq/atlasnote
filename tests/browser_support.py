@@ -89,20 +89,27 @@ def open_settings(page):
     more_action(page,'Workspace settings')
 
 def open_context(page,tab=None):
-    if not page.locator('.management-context').count():
+    if not page.locator('.document-context').count():
         page.get_by_role('button',name='Open context panel',exact=True).click()
-    page.get_by_role('tab',name='Remarks' if tab=='Remarks' else 'Page details',exact=True).click()
-    panel=page.locator('.context-panel')
-    if tab:
-        panel.locator('.context-tabs').get_by_role('button',name=tab,exact=True).click()
+    panel=page.locator('.document-context')
+    target={'Context':'Outline / Glossary','Outline':'Outline / Glossary'}.get(tab,tab or 'Outline / Glossary')
+    panel.get_by_role('tab',name=target,exact=True).click()
     return panel
 
 
 def open_saved_manager(page, all_workspaces=False):
-    if not page.locator('.management-context').count():
-        page.get_by_role('button',name='Open context panel',exact=True).click()
-    page.get_by_role('tab',name='All-workspace saves' if all_workspaces else 'Workspace saves',exact=True).click()
+    if not page.locator('.workspace-states-panel').count():
+        close_panels(page)
+        page.get_by_role('button',name='Workspace States',exact=True).click()
+    if all_workspaces:
+        page.get_by_role('tab',name='All workspaces saves',exact=True).click()
     return page.locator('.state-saves-manager')
+
+
+def state_action(page,name):
+    open_saved_manager(page)
+    page.get_by_role('button',name=name,exact=True).click()
+    close_panels(page)
 
 
 def bookmark_position(page):
@@ -137,10 +144,8 @@ def set_learning_flag(page,flag):
 
 
 def show_reader_controls(page, pane=None):
-    """The shared top-left control operates on the active pane in 1.2.4."""
+    """Each pane owns its toggle in 1.2.5; no active-pane/global proxy."""
     area=pane or page.locator('.active-pane')
-    if pane is not None and 'active-pane' not in (pane.get_attribute('class') or ''):
-        pane.locator('.document-tab.selected').click() if pane.locator('.document-tab.selected').count() else pane.locator('.empty-pane').click()
-    button=page.get_by_role('button',name='Show reader controls',exact=True)
+    button=area.get_by_role('button',name='Show reader controls',exact=True)
     if button.count():button.click()
     return area

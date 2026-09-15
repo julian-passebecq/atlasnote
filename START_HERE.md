@@ -1,38 +1,39 @@
-# AtlasNote 1.2.4 - complete implementation checkpoint
+# AtlasNote 1.2.5 - reader polish and native interview references
 
-Read this file, CODEX_HANDOFF.md and FINAL_TEST_STATUS.md first. They supersede old delivery prompts and archived release reports.
+This is the complete modified source, not instructions instead of an implementation. Start with this file, FINAL_TEST_STATUS.md and CODEX_HANDOFF.md. They supersede older delivery prompts; original 1.2.4 delivery documents are preserved under docs/history/1.2.4-delivery-docs.
 
-## What this package is
+## Baseline and delivery
 
-The complete application source for the 1.2.4 reading-managers and four-page PDF pass. It is not a patch-only handoff and is not a certified production deployment. Source, lockfile, tests, release-gate changes and documentation are included. Generated application bundles and node_modules are intentionally excluded.
+Upstream starting main: `b5e63f71185bcf525e985dfad1260d38ed3c4918` (released 1.2.4).
+Verified tree: `72a8ea2ca18944a3c897d86f39579c7a347e3c37`.
+Target/local branch: `feature/atlasnote-1.2.5-reader-interview-polish`.
+GitHub has not been written to. Nothing has been merged or deployed.
 
-1.2.4 was not pushed, merged or deployed by this pass. The reference release is main at `f82c336464e3faafa12e8ad888f9415c2e23f5e2` (1.2.3). The prior chat's unzipped 1.2.4 source was not present in the active runtime: only screenshots and reports survived. This checkpoint reconstructs the requested 1.2.4 implementation on the complete supplied 1.2.3 archive plus the published runtime-test corrections. Old 1.2.4 screenshots are not used as current test evidence.
+The complete source ZIP has no .git or dependency/generated build caches. The optional patch applies to the exact starting tree above. Do not delete .git or replace unrelated local/private files when integrating. The local delivery commit is distinct from an upstream GitHub commit; see the external delivery report for final SHA.
 
-## Included behavior
+## What changed
 
-- Top-left: PDF/Notes, Search, Back, Forward, notebook sidebar, active-pane reader controls. Reader controls start hidden; explicit saved visibility is retained.
-- Right rail: paired Focus/Compare, Swap/Context, Bookmarks/Read later, workspace Save/Restore, all-workspaces Save/Restore, Theme/Export, then More.
-- Separate Bookmarks and Read later panels, each with All / Informatics / Cloud / Norsk / Job / Personal tabs. Lists are shared across workspaces.
-- Pasted HTTP(S) links, editable titles/notes/categories, read status and confirmed removal. Links are not fetched automatically.
-- Context contains Workspace saves (1-5), All-workspace saves, Remarks and Page details. Restoring reading states does not roll back newer library content or reading lists.
-- PDF -> top-level category -> short page-heading links. Subcategory headings become page rows; concept/glossary branches no longer clutter the tree. Metadata and definitions remain on demand.
-- Page action menus open here, in a new tab, the other pane or a selected workspace, or save to Bookmarks/Read later. Full panes are not overwritten.
-- Actual four-page PDF.js 2x2 grid with physical-page selection, fit, rotation, partial final groups, keyboard/wheel navigation and independent Compare. Existing two-page Spread remains separate.
+Each pane now has **+ / A-B / its own toolbar toggle**, with independent saved visibility and no star. The compact top-left strip is app, search, back, forward, sidebar, Context, Focus, Compare, Swap. Notes/PDF switching is in the library filter row.
 
-## Start locally
+The PDF tree is a non-destructive domain/subject/PDF/category/page projection, without the generic PDF Atlas wrapper or notebook group levels. Existing physical-page action menus remain. Slow-wheel and momentum restoration logic was corrected without changing the previous gesture thresholds; real-engine verification is a separate release gate.
 
-Use Node 22 (>=22.12). Preserve the exact committed package-lock.json.
+Context now describes the active document through Outline/Glossary, scoped Search, Remarks, explicit Related links and lightweight History. Workspace States has its own right-rail button and retains the existing 1-5/All manager and quick save/restore actions. Bookmarks and Read Later remain separate.
+
+The new code-icon **Interview Preparation** notebook in the Job group contains 15 native references: SQL 5, Theory 4, Hybrid 3, Coding 3. All canonical SQL Q1-Q5 prompts are retained. Three coding variants teach the same dictionary pattern. Personal reflections use Context > Remarks. No code runner, scoring, game or cheatsheet work is included.
+
+## Local build and acceptance
+
+Use Node >=22.12 with the committed lockfile:
 
 ```sh
 npm ci
-npm run build
-npm run preview
+python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
+python -m playwright install --with-deps chromium
+npm run test:release
 ```
 
-Do not open index.html directly. Use the local URL printed by the server. `npm run build` produces the hosted integrated React-PDF distribution in `dist/`; `dist-offline/` is compatibility-only and must not be deployed.
+The runner tries every gate and records its actual exit code. A failure or BLOCKED is not a pass. The integrated app is built by `npm run build` into `dist`; preview with `npm run preview`. Never deploy `dist-offline` or `.build/engine-dom`.
 
-## Integration
+`npm run bootstrap:offline` plus `npm run build:offline` remains the existing compatibility-only path when a matching TypeScript is already installed. It cannot install or certify React-PDF/Vite. The chat environment could not install those dependencies and blocked normal-origin browser navigation; do not promote this source on the strength of offline UI/unit results alone.
 
-Prefer Codex with a clean worktree on a new branch, `feature/atlasnote-1.2.4-reading-managers`, based on the main reference above. Follow CODEX_HANDOFF.md. Do not overwrite uncommitted work or delete .git. The package-only handoff directory includes a diff against the recovered local baseline and inventories; the complete source remains authoritative.
-
-Run the normal-origin suites and clean registry checks in an unrestricted local/CI environment before merging or deployment. See FINAL_TEST_STATUS.md for what was actually run here.
+Implementation details: docs/1.2.5/IMPLEMENTATION.md. Authoring model: docs/1.2.5/INTERVIEW_CONTENT.md. Exact test results: FINAL_TEST_STATUS.md and the accompanying evidence archive.

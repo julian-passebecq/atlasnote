@@ -1,0 +1,48 @@
+/* 1.2.5: compact navigation; reader visibility remains a pane preference. */
+.sidebar-heading{padding:0 4px}
+.sidebar-navigation{gap:1px;width:100%;justify-content:space-between}
+.sidebar-navigation .icon-button,.sidebar-navigation .global-search{width:25px;min-width:25px;max-width:25px;flex:0 0 25px;padding:4px}
+.sidebar-navigation .app-home{color:var(--accent)}
+.navigation-dock .sidebar-navigation{justify-content:flex-start;gap:5px}
+.filter-status .library-mode-switch{display:inline-flex;gap:4px;align-items:center;padding:3px 6px;min-height:25px;min-width:58px;font-size:11px;background:var(--surface);border:1px solid var(--line);color:var(--text)}
+.filter-status>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.pane-tabbar>.pane-identity{flex:0 0 23px;min-width:23px}
+.pane-tabbar>.pane-chrome-toggle{flex-shrink:0;margin-right:3px}
+.pane-chrome-toggle.selected{background:var(--tint);color:var(--accent)}
+.atlas-app .reader-rail{gap:6px}
+.pdf-library-sidebar .tree-row{margin:1px 4px}
+.pdf-library-sidebar .tree-target{font-size:11px;gap:4px}
+.pdf-library-sidebar .tree-row>.tree-target>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.pdf-nav-section{padding:3px 0 7px}
+.pdf-section-heading,.pdf-subject-heading{display:flex;align-items:center;gap:6px;width:100%;text-align:left;border:0;background:transparent;color:var(--text);padding:5px 8px;min-height:29px;font-size:11px;line-height:1.4}
+.pdf-section-heading strong,.pdf-subject-heading span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.pdf-section-heading{border-bottom:1px solid var(--line)}
+.pdf-subject-heading{padding-left:12px;color:var(--muted);font-weight:600}
+.pdf-study-tree .tree-target{font-size:11px}
+.pdf-study-tree .tree-row{margin-left:2px;margin-right:2px}
+.pdf-study-page .study-actions{width:21px;min-width:21px;padding:2px}
+.study-page-link{font-size:10px}
+.workspace-states-panel{padding:10px 12px;overflow:auto;max-height:100%;min-height:0}
+.state-quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
+.state-quick-actions button{padding:6px;font-size:11px;min-height:32px}
+.context-drawer .document-context>.context-heading{display:flex;gap:8px;min-height:36px;height:36px;padding:6px 12px;border-bottom:1px solid var(--line)}
+.context-drawer .document-context>.context-heading .icon-button{display:none}
+.document-context .context-heading strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.document-context .context-tabs{display:flex;flex-wrap:wrap;gap:3px;padding:5px 8px;flex-shrink:0}
+.document-context .context-tabs button{font-size:11px;min-height:29px;padding:5px 7px;flex:0 1 auto}
+.document-context .context-scroll{min-height:0;overflow:auto;padding:10px 12px}
+.document-context .context-section-label{font-size:11px;margin:15px 0 7px}
+.document-context .pdf-study-tree{margin:0 -8px}
+.document-search-form,.related-document-form{display:grid;gap:8px;margin:4px 0 12px;font-size:12px}
+.document-search-form label,.related-document-form label{display:grid;gap:5px}
+.document-search-form input,.related-document-form input,.related-document-form select{width:100%;min-width:0;max-width:100%;font-size:12px}
+.document-search-form button,.related-document-form button,.reflection-prompts{font-size:11px;min-height:29px;padding:5px 8px}
+.document-search-hit{display:flex;flex-direction:column;align-items:stretch;gap:4px;text-align:left;overflow-wrap:anywhere;white-space:normal;width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;padding:9px 3px;font-size:12px;line-height:1.5}
+.document-search-hit>span,.document-search-hit small{color:var(--muted);font-size:11px;font-weight:400}
+.related-document-row{display:flex;align-items:center;gap:3px}
+.related-document-row>.context-link{flex:1;min-width:0}
+.document-history{font-size:12px;line-height:1.6}
+.document-history dt{font-weight:600;margin-top:9px}
+.document-history dd{margin:2px 0;color:var(--muted)}
+.reflection-prompts{margin:5px 0 8px}
+@media(max-width:540px){.sidebar-navigation .icon-button,.sidebar-navigation .global-search{width:24px;min-width:24px;max-width:24px;flex-basis:24px}.document-context .context-tabs button{padding:4px 5px}.state-quick-actions{grid-template-columns:1fr}}

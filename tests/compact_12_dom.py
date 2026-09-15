@@ -32,7 +32,7 @@ with sync_playwright() as pw:
    reset();page.set_viewport_size({'width':w,'height':h});page.wait_for_timeout(400)
    box=page.locator('.sidebar-navigation').bounding_box();search=page.get_by_role('button',name='Global search',exact=True).bounding_box();rail=page.locator('.reader-rail').bounding_box()
    assert (box['height']<=36 if w>900 else box['width']<=36) and rail['width']==(36 if w<=540 else 44),(box,rail)
-   assert 28<=search['width']<=280,search # V3 deliberately compresses global search.
+   assert 24<=search['width']<=28,search # 1.2.5 has nine explicitly compact, icon-only controls.
    assert page.evaluate('document.documentElement.scrollWidth-innerWidth')<=1
    assert page.locator('.topbar').count()==0
    if page.locator('.sidebar-heading').count():assert page.locator('.sidebar-heading').inner_text().strip()==''
@@ -82,14 +82,14 @@ with sync_playwright() as pw:
   reset('page.atlas.welcome');before=page.evaluate('JSON.stringify(testStore.state.overlays)');page.get_by_role('button',name='Switch to PDF library',exact=True).click()
   assert page.locator('[data-node-id="node.page.atlas.language"]').count()==0
   assert page.locator('[data-node-id="node.page.atlas.pdf"]').count()==1
-  assert page.locator('[data-node-id="node.pdfatlas.apache-spark"]').count()==1
+  assert page.locator('.pdf-subject-heading').filter(has_text='Apache Spark').count()==1
   assert page.locator('[data-node-id="node.pdfatlas.spark-concepts"]').count()==1
   assert page.evaluate('JSON.stringify(testStore.state.overlays)')==before
-  page.locator('[data-node-id="node.pdfatlas.apache-spark"] .tree-target').click();assert page.locator('.collection-view').is_visible();assert page.locator('.collection-card').count()==2
+  subject=page.locator('.pdf-subject-heading').filter(has_text='Apache Spark');subject.click();assert page.locator('[data-node-id="node.pdfatlas.spark-concepts"]').count()==0;subject.click();assert page.locator('.pdf-nav-subject .tree-row[data-node-id]').count()==2;assert page.locator('.pdf-library-sidebar .tree-group').count()==0
   shot('pdf-library-tree');page.get_by_role('button',name='Switch to notes',exact=True).click();assert page.locator('[data-node-id="node.page.atlas.language"]').count()==1
   assert page.evaluate('JSON.stringify(testStore.state.overlays)')==before
   return {'canonicalOverlayUnchanged':True,'externalPDFLeaves':2}
- check('PDF mode is a recursive projection of the same canonical tree and collections',filtered)
+ check('PDF mode is a flat, collapsible projection retaining the canonical document leaves',filtered)
  def pdf_fallback():
   reset('page.atlas.pdf');assert page.get_by_text('Browser PDF fallback',exact=True).is_visible()
   panel=open_reading(page)

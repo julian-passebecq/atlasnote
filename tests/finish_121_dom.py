@@ -21,10 +21,13 @@ with sync_playwright() as pw:
   p.keyboard.press('Escape');p.evaluate('''id=>{window.atlasPdfLoader=undefined;testReset(id);}''',id);p.set_viewport_size({'width':1440,'height':900});p.wait_for_timeout(350)
  def shot(name):p.screenshot(path=str(OUT/(name+'.png')))
  def nodes():return p.locator('.tree-scroll [data-node-id]').evaluate_all('(es)=>es.map(e=>e.dataset.nodeId)')
- def toggle():p.locator('.topbar .mode-switch').click() if p.locator('.topbar .mode-switch').count() else p.get_by_role('button',name='Switch to PDF library' if p.get_by_role('button',name='Switch to PDF library',exact=True).count() else 'Switch to notes',exact=True).click()
+ def toggle():
+  # The mode switch intentionally moved out of prime navigation into the library.
+  if not p.locator('.library-sidebar:visible').count():p.get_by_role('button',name='Open notebook sidebar',exact=True).click()
+  p.get_by_role('button',name='Switch to PDF library' if p.get_by_role('button',name='Switch to PDF library',exact=True).count() else 'Switch to notes',exact=True).click()
  def strict_modes():
   reset();before=nodes();assert 'node.pdfatlas.spark-concepts' not in before;assert 'node.page.atlas.pdf' not in before;assert p.locator('.tree-project').filter(has_text='PDF Atlas').count()==0
-  assert '11 notebooks' in p.locator('.statusbar').inner_text();assert 'notes' in p.locator('.statusbar').inner_text();heading=p.locator('.sidebar-heading').inner_text();toggle();p.get_by_role('button',name='Switch to notes',exact=True).wait_for();assert p.locator('.sidebar-heading').inner_text().strip()=='';pdf=nodes();assert 'PDFs' in p.locator('.statusbar').inner_text();assert 'node.page.atlas.layouts' not in pdf;assert 'node.pdfatlas.spark-concepts' in pdf;assert 'node.pdfatlas.pyspark-pandas' in pdf
+  assert '12 notebooks' in p.locator('.statusbar').inner_text();assert 'notes' in p.locator('.statusbar').inner_text();heading=p.locator('.sidebar-heading').inner_text();toggle();p.get_by_role('button',name='Switch to notes',exact=True).wait_for();assert p.locator('.sidebar-heading').inner_text().strip()=='';pdf=nodes();assert 'PDFs' in p.locator('.statusbar').inner_text();assert 'node.page.atlas.layouts' not in pdf;assert 'node.pdfatlas.spark-concepts' in pdf;assert 'node.pdfatlas.pyspark-pandas' in pdf
   toggle();assert nodes()==before;assert p.locator('.sidebar-heading').inner_text()==heading
   return {'noteNodeIds':before,'pdfNodeIds':pdf,'exactReturn':True}
  check('Strict two-way discovery and exact returned Notes projection/count',strict_modes)
@@ -61,7 +64,7 @@ with sync_playwright() as pw:
  check('Actual fallback geometry with sidebar study navigation at all four viewports: no intro, compact strip, canvas >=75%',geometry)
  def metadata():
   reset('page.atlas.pdf');p.get_by_role('button',name='Document info',exact=True).click();info=p.locator('.pdf-info-overlay');assert info.is_visible();assert 'SHA-256' in info.inner_text();assert 'Rights' in info.inner_text();assert 'Original bytes' in info.inner_text();assert info.get_by_role('link',name='Download original',exact=True).count()==1
-  p.get_by_role('button',name='Close document info',exact=True).click();assert p.locator('.pdf-info-overlay').count()==0;open_context(p);assert p.locator('.context-panel .pdf-document-info').count()==1;shot('document-info-context')
+  p.get_by_role('button',name='Close document info',exact=True).click();assert p.locator('.pdf-info-overlay').count()==0;open_context(p);assert p.locator('.document-context [role=tab]').all_text_contents()==['Outline / Glossary','Search','Remarks','Related','History'];assert p.locator('.pdf-study-tree').count()>=1;shot('document-context-outline')
  check('Rights, exact hash, size, provenance and original actions remain in on-demand info',metadata)
  def install_fullscreen():
   reset();p.evaluate('''()=>{

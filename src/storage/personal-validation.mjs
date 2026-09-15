@@ -17,6 +17,8 @@ export function validatePersonal(p){
  obj(p.ratings,'ratings');for(const [key,value] of Object.entries(p.ratings)){id(key,'rated page');if(!['gray','red','orange','green'].includes(value))fail('rating');}
  arr(p.bookmarks,'bookmarks');const bookmarks=new Set();for(const b of p.bookmarks){id(b.id,'bookmark ID');if(bookmarks.has(b.id))fail('duplicate bookmark');bookmarks.add(b.id);id(b.pageId,'bookmark page');str(b.title,'bookmark title',10000);num(b.createdAt,'bookmark timestamp');anchor(b.anchor);validateBookmarkReading(b);}
  if(p.readLater!==undefined)validateReadingLists(p.readLater);
+ if(p.documentVisits!==undefined){arr(p.documentVisits,'document visits',50);const seen=new Set();for(const visit of p.documentVisits){obj(visit,'document visit');id(visit.pageId,'visited page');if(seen.has(visit.pageId))fail('duplicate document visit');seen.add(visit.pageId);num(visit.firstOpenedAt,'first opened');num(visit.lastOpenedAt,'last opened');if(visit.lastOpenedAt<visit.firstOpenedAt)fail('visit chronology');}}
+
  const sessions=[p.session];
  if(p.schemaVersion===3){
   int(p.activeWorkspaceSlot,'workspace number',1,5);obj(p.workspaceSlots,'workspace slots');

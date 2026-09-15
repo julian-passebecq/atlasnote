@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewedOn": "2026-09-13",
+  "reviewedOn": "2026-09-15",
   "policy": "Only explicitly reviewed public packs with exact semantic hashes may ship. PDF Atlas is a reference-only metadata catalog; supplied public PDF bytes are excluded from this application.",
   "packs": {
     "example.notes": {
@@ -19,6 +19,10 @@
     "study.samples": {
       "review": "Original miniature sample notes; no private data or third-party assets. Human-readable source reviewed for this UI exercise.",
       "sha256": "5c26037dec7c26cd01f02fd870cbcc2316e13dd61ab5ebdfc46a964b5763edc1"
+    },
+    "atlas.interview-samples": {
+      "review": "Original educational prototype: 5 canonical SQL prompts, 4 theory, 3 hybrid and 3 coding variants. Public reference examples; no private data. Existing renderer blocks only.",
+      "sha256": "2c59bc3b152ed0899bd9151c10e78d12312881f1c5b7d91d02d27f28a7a4343c"
     }
   }
 }

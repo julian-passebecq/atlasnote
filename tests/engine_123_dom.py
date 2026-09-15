@@ -1,3 +1,4 @@
+from browser_support import state_action
 from browser_support import bookmark_position,open_saved_manager,inspect_pdf_term,show_reader_controls
 """Actual React-PDF canvases and interactions on about:blank; in-memory store.
 Does not claim real-origin IndexedDB, deployment or persisted restore coverage.
@@ -71,13 +72,13 @@ with sync_playwright() as pw:
  check('Sidebar page headings and on-demand definitions navigate actual physical PDF pages',tree_links)
  def state_restore():
   reset();goto(2);wheel(260);p.wait_for_timeout(300)
-  button('Save current workspace state').click();p.wait_for_timeout(240);saved=p.evaluate('testStore.state.personal.savedStates.entries[0].session');before=canvas().evaluate('(e)=>e.scrollTop');assert before>50
-  goto(4);button('Restore last workspace save').click();wait();assert number()==2;assert session()==saved;after=canvas().evaluate('(e)=>e.scrollTop');assert abs(before-after)<=3,(before,after)
+  state_action(p,'Save current workspace state');p.wait_for_timeout(240);saved=p.evaluate('testStore.state.personal.savedStates.entries[0].session');before=canvas().evaluate('(e)=>e.scrollTop');assert before>50
+  goto(4);state_action(p,'Restore last workspace save');wait();assert number()==2;assert session()==saved;after=canvas().evaluate('(e)=>e.scrollTop');assert abs(before-after)<=3,(before,after)
   return {'savedPage':2,'restoredPage':number(),'scrollBefore':before,'scrollAfter':after,'exactSession':True}
  check('Workspace state save/restore retains actual PDF intra-page scroll and all session fields',state_restore)
  def comparesave():
   reset();goto(2);a=session()['panes'][0];button('Compare in two panes').click();p.locator('[data-node-id="node.page.atlas.rotated"] .tree-target').click();wait();goto(4)
-  button('Save all workspace states').click();p.wait_for_timeout(200);expected=session();button('Swap panes').click();button('Collapse pane A').click();p.wait_for_timeout(200);button('Restore last all-workspaces save').click();wait();assert session()==expected;assert session()['panes'][0]==a;assert p.locator('.integrated-pdf').count()==2
+  state_action(p,'Save all workspace states');p.wait_for_timeout(200);expected=session();button('Swap panes').click();button('Collapse pane A').click();p.wait_for_timeout(200);state_action(p,'Restore last all-workspaces save');wait();assert session()==expected;assert session()['panes'][0]==a;assert p.locator('.integrated-pdf').count()==2
  check('All-state restore preserves two independent PDFs, pane order and collapse state',comparesave)
  def extract():
   reset();open_more(p).get_by_role('button',name='Manage PDF details',exact=True).click();button('Prepare AI companion').click();button('Extract locally').click();button('Download AI input part 1').wait_for();assert 'Nothing has been uploaded' in p.locator('dialog').inner_text();p.keyboard.press('Escape')

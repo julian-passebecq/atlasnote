@@ -9,28 +9,17 @@ export function ReaderRail({slotId=1,stateBusy=false,hasWorkspaceSave,hasAppSave
  const choose=(fn:()=>void)=>{fn();setPopover(null);};
  const integrated=pdfRenderer==='integrated';
  return <><nav className="reader-rail" aria-label="Reader tools">
- <IconButton name="focus" label="Enter focus mode" onClick={onFocus}/>
- <IconButton name="compare" label="Compare in two panes" active={session.panes.length===2} disabled={session.panes.length!==2&&!loc} onClick={onCompare}/>
- <span className="rail-separator"/>
- <IconButton name="swap" label="Swap panes" disabled={session.panes.length!==2} onClick={onSwap}/>
- <IconButton name="context" label="Open context panel" className="context-primary" active={contextOpen} aria-haspopup="dialog" aria-expanded={contextOpen} onClick={onContext}/>
+ <IconButton name="context" label="Open context panel" className="context-primary" active={managerMode==='context'} aria-haspopup="dialog" aria-expanded={contextOpen&&managerMode==='context'} onClick={onContext}/>
+ <IconButton name="save-all" label="Workspace States" active={managerMode==='states'} aria-haspopup="dialog" aria-expanded={contextOpen&&managerMode==='states'} onClick={onSavedStates}/>
  <span className="rail-separator"/>
  <IconButton name="bookmark" label="Open bookmarks" active={managerMode==='bookmark'} onClick={onBookmarks}/>
  <IconButton name="clock" label="Open read later" active={managerMode==='later'} onClick={onReadLater}/>
  <span className="rail-separator"/>
- <div className="state-save-tools" role="group" aria-label="Saved workspace states">
- <button className="icon-button state-tool" aria-label="Save current workspace state" title={'Save Workspace '+slotId} disabled={stateBusy} onClick={onSaveWorkspace}><Icon name="save"/><span className="scope-badge">{slotId}</span></button>
- <button className="icon-button state-tool" aria-label="Restore last workspace save" title={'Restore last save for Workspace '+slotId} disabled={stateBusy||!hasWorkspaceSave} onClick={onRestoreWorkspace}><Icon name="restore"/><span className="scope-badge">{slotId}</span></button>
- <span className="rail-separator"/>
- <button className="icon-button state-tool" aria-label="Save all workspace states" title="Save all five workspaces" disabled={stateBusy} onClick={onSaveApp}><Icon name="save-all"/></button>
- <button className="icon-button state-tool" aria-label="Restore last all-workspaces save" title="Restore last save of all five workspaces" disabled={stateBusy||!hasAppSave} onClick={onRestoreApp}><Icon name="restore-all"/></button>
-
- </div>
- <span className="rail-separator"/>
- <IconButton name="theme" label="Theme" active={popover==='theme'} aria-haspopup="dialog" aria-expanded={popover==='theme'} onClick={()=>toggle('theme')}/>
  <IconButton name="export" label="Export to AI" disabled={!page} onClick={onExport}/>
+ <IconButton name="theme" label="Theme" active={popover==='theme'} aria-haspopup="dialog" aria-expanded={popover==='theme'} onClick={()=>toggle('theme')}/>
+ <span className="rail-separator"/>
+ <IconButton name="settings" label="More / Settings" title="Settings and document actions" active={popover==='more'} aria-haspopup="dialog" aria-expanded={popover==='more'} onClick={()=>toggle('more')}/>
  <span className="rail-spacer"/>
- <IconButton name="more" label="More / Settings" active={popover==='more'} aria-haspopup="dialog" aria-expanded={popover==='more'} onClick={()=>toggle('more')}/>
  </nav>
  {popover&&<FloatingPanel key={popover} title={popover==='reading'?'Reading mode':popover==='theme'?'Theme':'More / Settings'} className={'reader-popover popover-'+popover} onClose={()=>setPopover(null)}>
  {popover==='theme'&&<div className="theme-options">{Object.entries(THEME_LABELS).map(([id,label])=><button key={id} className={'theme-option '+(session.theme===id?'selected':'')} aria-pressed={session.theme===id} onClick={()=>choose(()=>onTheme(id))}><span className={'theme-swatch swatch-'+id} aria-hidden="true"/><span>{label}</span>{session.theme===id&&<Icon name="check" size={15}/>}</button>)}</div>}
@@ -43,7 +32,7 @@ export function ReaderRail({slotId=1,stateBusy=false,hasWorkspaceSave,hasAppSave
   <hr/>{doc&&<button onClick={()=>choose(onPdfManage)}><Icon name="list"/>Manage PDF details</button>}<button disabled={!page} onClick={()=>choose(onEdit)}><Icon name="edit"/>Edit current page</button><button disabled={!page} onClick={()=>choose(onPrint)}><Icon name="print"/>Print or Save as PDF</button>
   <hr/><label className="inline-check"><input type="checkbox" checked={session.showFlags} onChange={onFlags}/>Show learning flags</label>
   {page&&<label className="popover-field">Learning flag<select aria-label="Learning flag" value={rating??'gray'} onChange={e=>onRating(e.target.value)}>{Object.entries(FLAG_LABELS).map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>}
-  <hr/><button onClick={()=>choose(onSettings)}><Icon name="settings"/>Workspace settings</button><small className="secondary">AtlasNote 1.2.4 <span aria-hidden="true">/</span> Local-first workspace</small>
+  <hr/><button onClick={()=>choose(onSettings)}><Icon name="settings"/>Workspace settings</button><small className="secondary">AtlasNote 1.2.5 <span aria-hidden="true">/</span> Local-first workspace</small>
  </div>}
  </FloatingPanel>}
  </>;

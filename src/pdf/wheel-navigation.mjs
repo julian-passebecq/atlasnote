@@ -3,7 +3,7 @@
  * debounce; a continuous momentum burst still turns at most one page. */
 export function createWheelPager({threshold=90,idle=220,cooldown=500,accumulationWindow=1200}={}){
  let sum=0,direction=0,last=-Infinity,turned=false,lastTurn=-Infinity;
- return function step({deltaY,deltaX=0,deltaMode=0,now,mode,top,bottom,blocked=false}){
+ const step=function({deltaY,deltaX=0,deltaMode=0,now,mode,top,bottom,blocked=false}){
   if(!Number.isFinite(now)||!Number.isFinite(deltaY)||!Number.isFinite(deltaX))return 0;
   const gap=now-last;
   if(gap>idle)turned=false;
@@ -20,4 +20,8 @@ export function createWheelPager({threshold=90,idle=220,cooldown=500,accumulatio
   if(sum<threshold)return 0;
   sum=0;turned=true;lastTurn=now;return sign;
  };
+ // The engine consumes the remainder of a completed gesture while restoring
+ // the new physical page. The idle/cooldown thresholds above are unchanged.
+ step.isLatched=()=>turned;
+ return step;
 }
