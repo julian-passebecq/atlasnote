@@ -6,7 +6,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright,expect
 from browser_support import ROOT,start_server,launch,close_panels,open_settings,show_reader_controls
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/1.2.4/reading-runtime'));OUT.mkdir(parents=True,exist_ok=True)
-CASES=['normal_origin','bookmark_category','queue_url','pdf_category_page_queue','grid_and_workspace_routing','reload_exact','fresh_backup_restore','restored_links','no_errors']
+CASES=['normal_origin','bookmark_category','queue_url','pdf_category_page_queue','grid_and_workspace_routing','checkpoint_shared_lists','reload_exact','fresh_backup_restore','restored_links','no_errors']
 results=[];errors=[];phase='normal_origin';page=None
 
 def durable(p):
@@ -26,6 +26,25 @@ try:
   phase='queue_url';close_panels(page);page.get_by_role('button',name='Open read later',exact=True).click();page.locator('.category-tabs').get_by_role('tab',name='Cloud',exact=True).click();requests=[];page.on('request',lambda r:requests.append(r.url));page.get_by_label('Web address to read later',exact=True).fill('https://example.org/reading');page.get_by_role('button',name='Add web address to Read later',exact=True).click();expect(page.locator('.reading-item')).to_have_count(1);v=settle(page);assert v['personal']['readLater'][0]['category']=='cloud';assert not any('example.org' in u for u in requests);record()
   phase='pdf_category_page_queue';search(page,'PDF reading fixture');page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();page.locator('[data-node-id="node.page.atlas.pdf"] .tree-expander').click();page.get_by_role('button',name='Expand PDF category Reading a PDF',exact=True).click();page.locator('.pdf-study-page[data-pdf-page="3"] .study-actions').first.click();page.get_by_role('menuitem',name='Add to Read later',exact=True).click();settle(page);page.get_by_role('button',name='Actions for PDF category Reading a PDF',exact=True).click();page.get_by_role('menuitem',name='Add to Read later',exact=True).click();v=settle(page);assert {e['target']['kind'] for e in v['personal']['readLater']}=={'url','pdf-page','pdf-category'};record()
   phase='grid_and_workspace_routing';page.get_by_role('button',name='Quick four-page PDF grid',exact=True).click();expect(page.locator('.active-pane .pdf-grid canvas')).to_have_count(4);v=settle(page);first=session(v['personal']);assert first['panes'][0]['views'][0]['history'][-1]['pdfMode']=='grid';page.locator('.pdf-study-page[data-pdf-page="4"] .study-actions').first.click();page.get_by_role('menuitem',name='Open in workspace...',exact=True).click();page.get_by_role('menuitem',name='Open in Workspace 2',exact=True).click();page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();v=settle(page);assert session(v['personal'],1)==first;assert session(v['personal'],2)['panes'][0]['views'][0]['history'][0]['pdfPage']==4;record()
+  phase='checkpoint_shared_lists'
+  page.get_by_role('button',name='Save current workspace state',exact=True).click();settle(page)
+  page.get_by_role('button',name='Save all workspace states',exact=True).click();checkpoint=settle(page)['personal']
+  page.get_by_role('button',name='Open bookmarks',exact=True).click();page.get_by_role('button',name='Bookmark current position',exact=True).click();close_panels(page)
+  page.get_by_role('button',name='Open read later',exact=True).click();page.get_by_label('Web address to read later',exact=True).fill('http://example.org/after-checkpoint');page.get_by_role('button',name='Add web address to Read later',exact=True).click();newer=settle(page)['personal'];close_panels(page)
+  assert len(newer['bookmarks'])==len(checkpoint['bookmarks'])+1
+  assert len(newer['readLater'])==len(checkpoint['readLater'])+1
+  shared={key:newer[key] for key in ['bookmarks','readLater']}
+  search(page,'Read in Norwegian, keep English nearby')
+  assert session(settle(page)['personal'],2)!=session(checkpoint,2)
+  page.get_by_role('button',name='Restore last workspace save',exact=True).click();restored=settle(page)['personal']
+  assert session(restored,2)==session(checkpoint,2)
+  assert {key:restored[key] for key in shared}==shared
+  page.get_by_role('button',name='Workspace 3',exact=True).click();search(page,'Read in Norwegian, keep English nearby')
+  page.get_by_role('button',name='Restore last all-workspaces save',exact=True).click();restored=settle(page)['personal']
+  assert restored['activeWorkspaceSlot']==checkpoint['activeWorkspaceSlot']
+  assert restored['session']==checkpoint['session'] and restored['workspaceSlots']==checkpoint['workspaceSlots']
+  assert {key:restored[key] for key in shared}==shared
+  page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();record({'workspaceAndAllRestore':'exact sessions; newer shared lists retained'})
   phase='reload_exact';before=durable(page);page.reload(wait_until='networkidle');page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();assert durable(page)==before;record()
   phase='fresh_backup_restore';close_panels(page);open_settings(page);before=durable(page)
   with page.expect_download() as transfer:page.get_by_role('button',name='Download workspace backup',exact=True).click()

@@ -56,6 +56,7 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],ac
     <div className={'tree-row '+(n.pageId===activePage?'active ':'')+owners.map(i=>'pane-owner-'+(i===0?'a':'b')).join(' ')} data-node-id={n.id} data-pane-owners={owners.map(i=>i===0?'a':'b').join(' ')} style={{paddingLeft:(10+depth*14)+'px'}} onContextMenu={e=>showMenu(e,p,n)} onKeyDown={e=>keyboardMenu(e,p,n)}>
      <>{doc?<button className="tree-expander" aria-label={(pdfOpen?'Collapse PDF ':'Expand PDF ')+n.title} aria-expanded={pdfOpen} onClick={()=>onPdfToggle(pdfKey)}><Icon name={pdfOpen?'down':'chevron'} size={12}/></button>:n.children&&<button className="tree-expander" aria-label={(open?'Collapse ':'Expand ')+n.title} aria-expanded={open} onClick={()=>onToggle(n.id)}><Icon name={open?'down':'chevron'} size={12}/></button>}<button className="tree-target" title={n.title} aria-expanded={n.children?open:undefined} aria-current={n.pageId===activePage?'page':undefined}
       onClick={e=>n.pageId?onOpen(n.pageId,undefined,e.ctrlKey||e.metaKey):(onCollection(n.id,undefined,e.ctrlKey||e.metaKey),!open&&onToggle(n.id))}
+      onMouseDown={e=>{if(e.button===1)e.preventDefault();}}
       onAuxClick={e=>{if(e.button===1){e.preventDefault();onOpen(n.pageId??n.id,undefined,true);}}}>
       {!n.children&&!doc&&<span className="tree-indent"/>}
       <Icon name={n.children?'folder':c.documents.some((d:any)=>d.pageId===n.pageId)?'pdf':'page'} size={15}/><span>{page?.title??n.title}</span>

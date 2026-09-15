@@ -6,7 +6,7 @@ sets scroll positions only to reach exact edge cases, then sends real wheels.
 """
 import json,os,traceback,zipfile,hashlib,subprocess
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright,expect
 from browser_support import ROOT,start_server,launch,open_settings,open_context,reader_action,close_panels,open_more,show_reader_controls
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/1.2.2/runtime'));OUT.mkdir(parents=True,exist_ok=True)
 CASES=['normal_origin','independent_slots','duplicate_categories','workspace_position','quick_layouts','pdf_engine','wheel_single','wheel_middle','wheel_gesture','wheel_spread','continuous_position','companion_navigation','companion_edit','companion_import_validation','local_ai_input','companion_promotion','pane_collapse_markers','compact_controls','geometry_themes','all_slot_reload','backup_download','fresh_restore','restored_reload','legacy_v2_restore','public_spark_companion','no_errors']
@@ -148,7 +148,13 @@ try:
   goto(page,6);tree=page.locator('[data-node-id="node.pdfatlas.spark-concepts"]').locator('..')
   tree.get_by_role('button',name='Expand PDF Apache Spark: 30 concepts',exact=True).click();assert tree.locator('.pdf-study-page').count()==0
   tree.get_by_role('button',name='Expand PDF category 1. From MapReduce to Spark',exact=True).click();assert tree.locator('.pdf-study-page').count()>0;assert tree.locator('.pdf-study-term').count()==0;shot(page,'actual-public-spark-study-tree')
-  close_panels(page);open_more(page).get_by_role('button',name='Manage PDF details',exact=True).click();options=page.get_by_label('Edit concept',exact=True).locator('option').all_text_contents();assert len(options)==30 and any('memory' in x.lower() for x in options);page.get_by_role('button',name='Close dialog',exact=True).click();record({'physicalPages':6,'conceptsPreservedOnDemand':30,'source':'Pinned byte-verified public PDF, not a substituted renderer'})
+  close_panels(page);open_more(page).get_by_role('button',name='Manage PDF details',exact=True).click()
+  # The details manager initializes its draft in an effect after mounting.
+  # Wait for its exact content, retaining both the count and semantic assertion.
+  concept_options=page.get_by_label('Edit concept',exact=True).locator('option')
+  expect(concept_options).to_have_count(30)
+  options=concept_options.all_text_contents();assert len(options)==30 and any('memory' in x.lower() for x in options),options
+  page.get_by_role('button',name='Close dialog',exact=True).click();record({'physicalPages':6,'conceptsPreservedOnDemand':30,'source':'Pinned byte-verified public PDF, not a substituted renderer'})
   phase='no_errors';assert errors==[],errors;record();browser.close()
 except Exception as exc:
  status='BLOCKED' if 'ERR_BLOCKED_BY_ADMINISTRATOR' in str(exc) or "Executable doesn't exist" in str(exc) else 'FAIL'
