@@ -91,9 +91,9 @@ with sync_playwright() as pw:
     def top_order():
         reset()
         labels=page.locator('.reader-rail > button').evaluate_all('(xs)=>xs.map(x=>x.getAttribute("aria-label")||x.textContent.trim())')
-        assert labels==['Enter focus mode','Compare in two panes','Swap panes','Open context panel','Open bookmarks','Open read later','Theme','Export to AI','More / Settings'],labels
+        assert labels==['Open context panel','Workspace States','Open bookmarks','Open read later','Export to AI','Theme','More / Settings'],labels
         return labels
-    check('Compact rail follows the 1.2.4 paired control order',['E01'],top_order)
+    check('Compact rail follows the 1.2.5 separate paired actions',['E01'],top_order)
     for left in [False,True]:
         for right in [False,True]:
             def focus(left=left,right=right):
@@ -238,10 +238,12 @@ with sync_playwright() as pw:
         reset('audit.page.long',synthetic=True)
         open_context(page,'Context')
         assert page.locator('.term-card').count()==2
-        page.get_by_role('textbox',name='Search glossary').fill('GlossaryDefinitionOnlyToken_7319');assert page.locator('.term-card').count()==1
-        page.get_by_role('button',name='Clear glossary search').click()
-        assert page.locator('.context-panel').get_by_text('RELATED PAGES',exact=True).is_visible()
-        assert page.locator('.context-panel').get_by_text('LINKED FROM',exact=True).is_visible()
+        open_context(page,'Search');page.get_by_role('textbox',name='Search this document',exact=True).fill('GlossaryDefinitionOnlyToken_7319');assert page.locator('.term-card').count()==0 # This term belongs to a DIFFERENT document.
+        page.get_by_role('textbox',name='Search this document',exact=True).fill('repagination');assert page.locator('.term-card').count()==1
+        page.get_by_role('textbox',name='Search this document',exact=True).fill('');open_context(page,'Outline');assert page.locator('.term-card').count()==2
+        open_context(page,'Related');assert page.locator('.related-document-row').count()>0
+        assert page.locator('.context-panel').get_by_text('Linked from',exact=True).is_visible()
+        close_panels(page);page.keyboard.press('Control+k');page.get_by_role('textbox',name='Search all pages and glossary',exact=True).fill('GlossaryDefinitionOnlyToken_7319');assert page.locator('dialog .term-card').count()==1;page.keyboard.press('Escape')
     check('Contextual glossary, global glossary, related pages and backlinks',['F01','F02','F03','F04'],context_glossary)
     def flags():
         reset()

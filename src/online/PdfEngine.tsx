@@ -1,3 +1,4 @@
+import {registerPdfTextSearch,searchPdfText} from '../pdf/text-search';
 import {registerStudyPreparer} from '../pdf/study-bridge';
 /** Primary hosted PDF adapter. Worker, CMaps, WASM and standard fonts are copied
  * from React-PDF's resolved PDF.js package; the version gate is never bypassed.
@@ -32,6 +33,7 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  const [pdf,setPDF]=useState<PDF|null>(null),[error,setError]=useState(''),[workerOK,setWorkerOK]=useState(false),[workerError,setWorkerError]=useState(''),[loading,setLoading]=useState('Opening PDF...'),[retry,setRetry]=useState(0),[outline,setOutline]=useState(false),[searchOpen,setSearchOpen]=useState(false),[info,setInfo]=useState(false),[query,setQuery]=useState(''),[hits,setHits]=useState<{page:number;excerpt:string}[]>([]),[findStatus,setFindStatus]=useState(''),[password,setPassword]=useState(''),[passwordReason,setPasswordReason]=useState(''),[width,setWidth]=useState(700),[height,setHeight]=useState(600),[pageInput,setPageInput]=useState(String(loc.pdfPage)),[gridRatios,setGridRatios]=useState<Record<number,number>>({});
  const passwordCallback=useRef<((value:string)=>void)|null>(null),host=useRef<HTMLDivElement>(null),job=useRef(0),locationRef=useRef(loc),onLocationRef=useRef(onLocation);locationRef.current=loc;onLocationRef.current=onLocation;
  useEffect(()=>{if(!pdf||!paneId)return;return registerStudyPreparer(slotId??1,paneId,doc.id,(first,last,onProgress,signal)=>prepareCompanionParts(pdf,doc,{startPage:first,endPage:last,onProgress,signal}));},[pdf,doc.id,doc.sha256,paneId,slotId]);
+ useEffect(()=>{if(!pdf||!paneId)return;return registerPdfTextSearch(slotId??1,paneId,doc.id,(query,signal)=>searchPdfText(pdf,query,signal));},[pdf,doc.id,doc.sha256,paneId,slotId]);
  const source=useMemo(()=>url?{url}:null,[url]);
  const capturing=useRef(false),scrolling=useRef(false),restoreFrame=useRef(0),scrollFrame=useRef(0),settleTimer=useRef<ReturnType<typeof setTimeout>>();
  useEffect(()=>{let alive=true;setWorkerOK(false);setWorkerError('');fetch(new URL('pdf-assets/engine.json',document.baseURI),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('PDF worker metadata missing');return r.json();}).then(meta=>{if(meta.pdfjs!==pdfjs.version)throw Error('PDF worker version does not match React-PDF: '+meta.pdfjs+' vs '+pdfjs.version);if(alive)setWorkerOK(true);}).catch(e=>{if(alive)setWorkerError(e.message);});return()=>{alive=false;};},[retry]);
@@ -41,7 +43,7 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  useLayoutEffect(()=>{setPageInput(String(loc.pdfPage));},[loc.pdfPage]);
  // Resize restoration uses a physical page plus a fractional intra-page anchor.
  // Persisting only a page number loses the user's place in a tall, zoomed page.
- const pendingRestore=useRef(true),lastCapture=useRef(''),restoring=useRef(false),wheelPager=useRef(createWheelPager());
+ const pendingRestore=useRef(true),lastCapture=useRef(''),restoring=useRef(false),wheelPager=useRef(createWheelPager()),wheelTurnPending=useRef(false);
  const positionKey=(l:Location)=>JSON.stringify([l.pdfPage,l.anchor?.pdfOffset??0,l.anchor?.pdfRevision]);
  function restorePosition(force=false){
   if((!pendingRestore.current&&!force)||scrolling.current)return;
@@ -83,12 +85,16 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
    const target=e.target as HTMLElement;
    const blocked=e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||!!target.closest('input,textarea,select,button,a,[contenteditable="true"],.pdf-outline,.pdf-info-overlay,.pdf-search-overlay,[role="dialog"]');
    if(blocked)return;
-   scrolling.current=true;pendingRestore.current=false;
    // Canvas padding is not unread PDF content. A restored page starts aligned
    // with the viewport after that padding; allow a reverse turn there too.
    const style=getComputedStyle(el),topInset=parseFloat(style.paddingTop)||0,bottomInset=parseFloat(style.paddingBottom)||0;
    const l=locationRef.current,turn=wheelPager.current({deltaY:e.deltaY,deltaX:e.deltaX,deltaMode:e.deltaMode,now:performance.now(),mode:l.pdfMode,top:el.scrollTop<=topInset+2,bottom:el.scrollTop+el.clientHeight>=el.scrollHeight-bottomInset-2,blocked});
-   if(turn&&pdf){const paired=l.pdfMode==='grid'?4:l.pdfMode==='spread'&&el.clientWidth>=650;const next=stepPhysicalPage(l.pdfPage,pdf.numPages,turn,paired,l.cover);if(next!==l.pdfPage){e.preventDefault();setPage(next,turn<0);}}
+   if(turn&&pdf){const paired=l.pdfMode==='grid'?4:l.pdfMode==='spread'&&el.clientWidth>=650;const next=stepPhysicalPage(l.pdfPage,pdf.numPages,turn,paired,l.cover);if(next!==l.pdfPage){e.preventDefault();wheelTurnPending.current=true;setPage(next,turn<0);return;}}
+   // A momentum tail must not cancel the pending restore and leave the next
+   // page at the previous page's bottom. Consume only the completed gesture;
+   // deliberate slow ticks resume after the existing idle gate and rendering.
+   if(wheelTurnPending.current&&(wheelPager.current.isLatched()||pendingRestore.current)){e.preventDefault();return;}
+   wheelTurnPending.current=false;scrolling.current=true;pendingRestore.current=false;
   };
   el.addEventListener('wheel',wheel,{passive:false});return()=>el.removeEventListener('wheel',wheel);
  },[pdf,url]);

@@ -1,0 +1,633 @@
+Work on repository:
+
+julian-passebecq/atlasnote
+
+Start from the current `main`, which contains the released AtlasNote 1.2.4.
+
+Create a new branch:
+
+feature/atlasnote-1.2.5-reader-interview-polish
+
+Do NOT start from an old feature branch.
+
+Do NOT merge to main.
+Do NOT deploy Netlify.
+Do NOT redesign or restart AtlasNote.
+
+This is a bounded reader-polish + lightweight interview-content pass.
+
+IMPORTANT:
+There is NO cheatsheet work in this pass.
+Do not create a cheatsheet content type.
+Do not add PNG/SVG cheatsheet functionality.
+Another agent is separately designing that format.
+
+Read the existing repository documentation and tests first. Preserve the current:
+- five workspaces
+- PDF reader
+- Spread
+- four-page grid
+- Compare
+- Bookmarks
+- Read Later
+- workspace saved states
+- backup/restore
+- persistence
+- current notebook functionality
+
+==================================================
+A. PER-PANE READER CONTROLS
+==================================================
+
+The current global "show/hide reader controls" button in the top-left navigation is no longer wanted.
+
+Remove that global reader-control toggle from the top-left ribbon.
+
+Instead, each reader / visualization pane must control its own reader toolbar independently.
+
+For each pane header use this order:
+
+    +    A/B    show/hide reader controls
+
+So:
+1. `+` first
+2. pane identifier `A` or `B`
+3. per-pane show/hide reader-controls button
+
+Pane A and pane B must be independent.
+
+Example:
+- Pane A may have its PDF controls hidden
+- Pane B may keep its PDF controls visible
+
+Persist this as part of the pane/workspace reading state.
+
+Do not make this a new global setting.
+
+Also remove the `*` character currently used to indicate the selected pane.
+The existing visual highlighting is enough.
+
+==================================================
+B. TOP-LEFT MINI NAVIGATION
+==================================================
+
+Simplify and reorder the top-left navigation.
+
+Target conceptual order:
+
+    App icon
+    Search
+    Back
+    Forward
+    Collapse/open left sidebar
+    Context/right panel
+    Focus
+    Two-pane / Compare
+    Swap panes
+
+The existing PDF/notebook-mode button should not occupy the prime position currently used in the navigation strip.
+
+The collapse/open-left-sidebar action should become the obvious control for the left panel.
+
+Keep the strip compact.
+
+Do not create another global reader-controls button there.
+
+==================================================
+C. PDF SCROLLING
+==================================================
+
+Investigate and correct inconsistent PDF scrolling.
+
+The user reports that depending on mode, scrolling to the bottom of a PDF page does not reliably continue to the next physical page.
+
+Test actual user-like wheel scrolling in:
+- Single
+- Spread
+- four-page/grid where scrolling is applicable
+- Compare with two independent panes
+
+Do not fake page transitions by only changing a page-number field in tests.
+
+A normal slow mouse wheel should work.
+
+Trackpad/momentum behavior should not accidentally skip several pages.
+
+Preserve the previous page-scroll protections that were added in 1.2.3/1.2.4 unless there is a proven defect.
+
+==================================================
+D. FLATTEN THE PDF TREE
+==================================================
+
+The current PDF hierarchy wastes too much horizontal space.
+
+Notebook hierarchy may remain richer.
+
+PDF hierarchy should intentionally be flatter than notebook hierarchy.
+
+For PDFs, remove one visible taxonomy level and reduce indentation.
+
+Current style is too deep, conceptually like:
+
+Python & Data
+  PDF Atlas
+    Data Engineering
+      Apache Spark
+        PDF
+          category
+            page
+
+This is too much.
+
+Target something closer to:
+
+Data Engineering
+  Apache Spark
+    Apache Spark: 30 concepts
+      1. From MapReduce to Spark
+      2. Cluster architecture
+      3. Deployment modes
+      ...
+
+or equivalent depending on the real metadata.
+
+Key rules:
+
+- Remove `PDF Atlas` as a redundant visible nesting level.
+- Avoid making every PDF inherit all notebook taxonomy levels.
+- A domain such as `Data Engineering` may be a high-level PDF section.
+- A subject such as `Apache Spark` may contain several PDFs.
+- Each PDF then contains its main categories/page entries.
+- Reduce PDF indentation/padding substantially.
+- Slightly reduce PDF-tree typography if needed.
+- Maximize readable title width.
+
+Do NOT flatten the underlying stored metadata destructively.
+This is primarily a navigation/view-model simplification.
+
+==================================================
+E. PDF CATEGORY / PAGE GRANULARITY
+==================================================
+
+For PDF navigation, keep approximately:
+
+PDF
+  category
+    page/topic entry
+
+Do not restore the old deep Companion concept tree.
+
+Do not expose every individual concept as an extra indentation level.
+
+A physical PDF page may appear several times when it contains several useful subjects.
+
+Example:
+
+Transformations
+  Lazy transformations                         p.3
+  Actions                                      p.3
+  Job / stage relationship                     p.3
+
+These may all point to physical page 3.
+
+Keep displayed labels relatively short.
+
+The page number should remain visible.
+
+Existing page actions must remain usable:
+- open here
+- open in new tab
+- open in other pane
+- open in workspace
+- bookmark
+- read later
+
+==================================================
+F. CONTEXT PANEL — KEEP IT, BUT GIVE IT A PURPOSE
+==================================================
+
+Do not remove Context.
+
+The Context panel should now describe the ACTIVE DOCUMENT, not workspace snapshots.
+
+Use the existing right-side panel infrastructure.
+
+Keep this bounded.
+
+Suggested sections/tabs:
+
+1. Outline / Glossary
+2. Search
+3. Remarks
+4. Related
+5. History
+
+Outline / Glossary:
+- For PDF: expose the same useful category/page navigation model as the left tree, adapted to the panel width.
+- For notebook: reuse the richer notebook outline where appropriate.
+- It can be interactive: selecting an item navigates to it.
+
+Search:
+- Search inside / relevant to the current document.
+
+Remarks:
+- Current remark/note functionality.
+
+Related:
+- Allow lightweight relationships such as:
+  - related PDF for a notebook page
+  - related notebook page for a PDF
+- Do not build a recommendation engine.
+
+History:
+Keep this very lightweight:
+- added date if known
+- last opened
+- last modified if known
+- recent document visits if already feasible from current local state
+
+Do not overbuild analytics or activity tracking.
+
+Page details can remain only if genuinely useful, but it is not a priority.
+
+==================================================
+G. WORKSPACE SAVES GET THEIR OWN BUTTON
+==================================================
+
+Workspace-state management must no longer live inside Context.
+
+Create a dedicated sidebar entry/button for Workspace States.
+
+Reuse the existing working saved-state UI and persistence:
+- Workspace 1–5 saves
+- Save current workspace
+- Restore
+- Save all workspaces
+- Restore all
+- notes/progress
+- history
+- undo
+
+Do not rewrite that system.
+
+Move/present it cleanly.
+
+==================================================
+H. RIGHT SIDEBAR ORGANIZATION
+==================================================
+
+Keep separate actions for:
+
+- Context
+- Workspace States
+- Bookmarks
+- Read Later
+- Export to AI
+- Theme
+- Settings
+
+Use small visual spacing/separators to make related pairs obvious.
+
+Preferred grouping:
+
+Context
+Workspace States
+
+[small gap]
+
+Bookmarks
+Read Later
+
+[small gap]
+
+Export to AI
+Theme
+
+[small gap]
+
+Settings
+
+Do not merge Bookmarks and Read Later.
+Do not merge Workspace States into Bookmarks.
+They solve different problems.
+
+==================================================
+I. LIGHTWEIGHT INTERVIEW CONTENT PROTOTYPE
+==================================================
+
+Do not build an interview game.
+Do not build LeetCode.
+Do not build code execution.
+Do not build scoring complexity.
+
+We only need a small native AtlasNote content/navigation prototype.
+
+Interview material benefits from deeper granularity than ordinary notebook pages.
+
+Support a hierarchy approximately like:
+
+Interview Preparation
+  SQL
+    Aggregation
+      WHERE / GROUP BY / HAVING
+      ...
+    Joins
+    Window functions
+    CTEs
+  Python
+  Data Modeling
+  ETL / ELT & Pipelines
+  System Design
+  Modern Data Stack & Governance
+  Behavioral
+
+The exact hierarchy may vary, but category → subcategory → sub-subcategory must work well.
+
+The user may later have categories such as:
+
+- SQL Interview Questions
+- Python Interview Questions
+- Data Modeling Questions
+- ETL/ELT and Pipeline Questions
+- System Design
+- Modern Data Stack & Governance
+- Behavioral Questions
+
+==================================================
+J. INTERVIEW QUESTION PRESENTATION
+==================================================
+
+A question item should be able to contain:
+
+- title
+- prompt
+- category
+- subcategory
+- optional deeper topic
+- explanation
+- reasoning points
+- optional short code/query example
+- optional diagram / architecture image already supported by AtlasNote
+- follow-up question(s)
+- interviewer's likely intent
+- common mistake / trap
+- optional reflection prompt
+
+This is educational reference material, not an executable environment.
+
+A code block is enough for coding examples.
+
+==================================================
+K. FOUR INTERVIEW STYLES
+==================================================
+
+Prototype these four styles:
+
+1. SQL
+2. Theory
+3. Hybrid
+4. Coding
+
+Create at least THREE sample question items for each style so the user can test the UX.
+
+Keep samples practical and data-engineering focused.
+
+--------------------------------------------------
+SQL
+--------------------------------------------------
+
+SQL questions should train reasoning, not just syntax.
+
+Preserve this canonical progression in the content model/documentation so later questions can follow it:
+
+1. filter / aggregate
+2. joins + cardinality
+3. windows + ties
+4. compose logic with CTEs
+5. alternative techniques + deeper reasoning
+6–8. onsite/deeper reasoning families
+
+The user's canonical Q1–Q5 template is:
+
+Q1 — WHERE + GROUP BY
+
+Main:
+"Classic SQL screener: filter to PAID orders in 2026 and return total net_amount per customer. What clauses do you need, and what is the output grain?"
+
+Follow-up:
+"How would you keep only customers whose total paid revenue exceeds 1000?"
+
+Intent:
+WHERE filters rows.
+GROUP BY changes the output grain.
+HAVING filters aggregated groups.
+
+Q2 — JOIN + aggregation
+
+Main:
+"Classic SQL screener: return total paid revenue for every customer, including customers with no paid orders. Which join do you use and where should the paid-order filter go?"
+
+Follow-up:
+"What happens if one customer has multiple matching dimension rows before you SUM revenue?"
+
+Intent:
+LEFT JOIN preservation.
+Predicate placement.
+Join cardinality.
+Fan-out / duplicated revenue.
+
+Q3 — second-highest salary
+
+Main:
+"Classic SQL screener: how would you return the second-highest distinct salary, and how do ROW_NUMBER, RANK and DENSE_RANK differ?"
+
+Follow-up:
+"How would you return the second-highest distinct salary within each department?"
+
+Intent:
+ranking
+ties
+distinct rank
+PARTITION BY
+
+Q4 — CTE + composition
+
+Main:
+"Classic SQL screener: when a problem needs aggregation followed by ranking/filtering, why might you use a CTE, and is a CTE automatically faster than a subquery?"
+
+Follow-up:
+"Write a CTE that aggregates customer revenue, then ranks customers by revenue."
+
+Intent:
+decompose logic.
+Do not teach that WITH is automatically faster.
+
+Q5 — previous row
+
+Main:
+"Classic SQL screener: how can a self-join reproduce previous/next-row logic, when would you prefer LAG/LEAD, and how would you respond if the interviewer restricts available SQL features?"
+
+Follow-up:
+"Given daily account balances, return each balance and the previous observed balance using both LAG and a self-join."
+
+Intent:
+alternative techniques
+deterministic ordering
+row multiplication
+feature restrictions
+reasoning rather than memorized syntax
+
+Also preserve these harder families for future expansion:
+
+- Compositional SQL
+- Temporal / relational logic
+- Optimization reasoning
+
+For this bounded prototype, minimum THREE visible SQL items are enough, but structure the data so the full Q1–Q5 sequence can be added without changing components.
+
+--------------------------------------------------
+THEORY
+--------------------------------------------------
+
+Add at least 3 theory samples.
+
+Examples:
+- Explain partitioning vs clustering/indexing.
+- Explain batch vs streaming and when each is appropriate.
+- Explain medallion/layered data architecture and what belongs in Bronze/Silver/Gold.
+
+Theory questions may include:
+- concise answer
+- mental model
+- architecture diagram/image if existing AtlasNote rendering supports it
+- common misconception
+- interviewer follow-up
+
+--------------------------------------------------
+HYBRID
+--------------------------------------------------
+
+Add at least 3 hybrid samples.
+
+Hybrid = conceptual reasoning plus a small technical snippet.
+
+Examples:
+- Given a Spark transformation chain, explain lazy evaluation and what triggers execution, with a short PySpark example.
+- Given a pipeline architecture, identify failure/retry/idempotency considerations and show a small configuration/query example.
+- Explain join fan-out using a small SQL snippet and then reason about the data-model issue.
+
+--------------------------------------------------
+CODING
+--------------------------------------------------
+
+Add at least 3 coding-reference samples.
+
+No code runner.
+
+The purpose is to teach the logic of interview coding.
+
+A coding question should support:
+- prompt
+- expected reasoning steps
+- code snippet
+- alternative solution
+- complexity / tradeoff explanation where useful
+- common mistake
+- follow-up variant
+
+The user specifically wants several variants of the SAME pattern to learn transfer.
+
+Example family:
+
+Pattern: dictionary/grouping
+
+Variant A:
+Group rows by customer.
+
+Variant B:
+Count errors by error code.
+
+Variant C:
+Keep the latest record per entity.
+
+The point is:
+"same mental pattern, different interview wording."
+
+Do the same idea for one practical Python/Pandas/PySpark family if convenient.
+
+==================================================
+L. INTERVIEW REFLECTION
+==================================================
+
+Keep this lightweight.
+
+A question/series may optionally include:
+
+- What pattern did I recognize?
+- Where did I get stuck?
+- Was the problem syntax, join grain, window choice, decomposition, architecture, etc.?
+- Did I rewrite the first approach?
+- What interviewer signal did I miss?
+
+Do not build statistics dashboards.
+
+A simple notes/reflection area is enough.
+
+==================================================
+M. TESTING
+==================================================
+
+Preserve all current meaningful tests.
+
+Add focused tests for:
+
+- independent per-pane reader-controls visibility
+- removing `*` does not break active-pane selection
+- top-left controls still function
+- PDF slow-wheel page progression
+- PDF flattened navigation
+- PDF page actions after flattening
+- Context navigation
+- Workspace States moved out of Context
+- interview hierarchy navigation
+- code blocks/examples render safely
+- interview content survives persistence/backup if stored in personal content
+
+Run the complete current release suite.
+
+Do not simply modify tests to hide regressions.
+
+==================================================
+N. DELIVERABLE
+==================================================
+
+At completion report:
+
+Branch:
+Starting SHA:
+Final SHA:
+
+Files changed:
+
+Reader polish implemented:
+
+PDF navigation changes:
+
+Context/Workspace changes:
+
+Interview prototype:
+- SQL samples:
+- Theory samples:
+- Hybrid samples:
+- Coding samples:
+
+Tests added/changed:
+
+Full test results:
+
+Known limitations:
+
+Remaining blockers:
+
+Do NOT merge.
+Do NOT deploy.

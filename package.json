@@ -1,6 +1,6 @@
 {
   "name": "knowledge-atlas",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "private": true,
   "type": "module",
   "engines": {
@@ -52,7 +52,10 @@
     "test:release": "node tools/run-release.mjs",
     "test:reading:ui": "python tests/reading_124_dom.py",
     "test:pdf:grid": "python tests/grid_124_dom.py",
-    "test:reading:runtime": "python tests/reading_124_runtime.py"
+    "test:reading:runtime": "python tests/reading_124_runtime.py",
+    "test:polish:ui": "python tests/reader_polish_125_dom.py",
+    "test:pdf:wheel": "python tests/wheel_125_dom.py",
+    "test:interviews": "node tools/generate-interviews.mjs --check"
   },
   "dependencies": {
     "jszip": "3.10.1",

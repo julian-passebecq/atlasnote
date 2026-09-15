@@ -1,3 +1,7 @@
+# 1.2.5 - local implementation, release acceptance pending
+
+Independent per-pane reader toolbars; compact top-left navigation; flatter, non-destructive PDF taxonomy; momentum-safe page restoration and terminal-group selection; active-document Context with scoped search, explicit related links, reflections and bounded history; dedicated Workspace States panel; 15 native interview references (5 SQL, 4 Theory, 3 Hybrid, 3 Coding). No cheatsheets, runner or scoring. Added focused regressions and real-wheel acceptance gate. See FINAL_TEST_STATUS.md for actual execution and environment blockers.
+
 # 1.2.4 - reading managers and four-page PDF overview
 
 Complete reconstructed implementation checkpoint. Separate category-based Bookmarks/Read later panels; session managers embedded in Context; simplified PDF category/page tree and page routing menus; actual four-page PDF grid; shared hidden-by-default controls and paired rail. Extended validation and exact-backup tests; existing runtime assertions retained. No production deployment by this pass. See FINAL_TEST_STATUS.md for evidence and blockers.

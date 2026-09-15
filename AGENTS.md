@@ -9,3 +9,7 @@ Never weaken meaningful state equality, private-data, asset-integrity or PDF ass
 Use the committed package lock and pinned React-PDF/PDF.js pairing. Do not ship `.build/engine-dom`, `dist-offline`, node_modules, source archives, private libraries or workspace backups. Test artifacts belong outside tracked source and must clearly state their environment.
 
 Preserve dirty local work; create a clean work branch. Do not force-push, reset main, merge or deploy without the release gates and user authorization.
+
+## Current 1.2.5 boundary
+
+Use per-pane toolbar visibility, separate document Context and Workspace States, and the non-destructive PDF projection. The 15 interview references use existing notebook blocks; no cheatsheet/content type, runner, scoring or analytics is permitted. Read docs/1.2.5/INTERVIEW_CONTENT.md before altering samples; regenerate the pack and explicitly review its content hash. The PDF wheel gate must use real wheel events and physical canvases, not a page-input substitute.

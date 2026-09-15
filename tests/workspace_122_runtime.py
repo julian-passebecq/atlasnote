@@ -1,3 +1,4 @@
+from persistence_assertions import assert_personal_after_open
 from browser_support import bookmark_position,open_saved_manager,inspect_pdf_term,show_reader_controls
 """1.2.3 release acceptance, retaining all 1.2.2 persistence contracts: real HTTP origin, integrated PDF.js canvases, actual
 IndexedDB, downloads and a new browser context. No injected store, fake renderer,
@@ -56,7 +57,7 @@ def shot(p,name):p.screenshot(path=str(OUT/(name+'.png')))
 def equal_personal(a,b,name):
  if a['personal']!=b['personal']:
   (OUT/(name+'-before.json')).write_text(json.dumps(b['personal'],indent=2));(OUT/(name+'-after.json')).write_text(json.dumps(a['personal'],indent=2))
- assert a['personal']==b['personal'],name+' exact personal state'
+ assert_personal_after_open(a['personal'],b['personal'])
 try:
  base=start_server()
  with sync_playwright() as pw:

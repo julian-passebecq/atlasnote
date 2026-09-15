@@ -8,7 +8,7 @@ export function FloatingPanel({title,className='',onClose,children}:any){
  useEffect(()=>{
   function close(restore:boolean){closeRef.current();if(restore&&origin.current?.isConnected)origin.current.focus();}
   function key(e:KeyboardEvent){if(e.key==='Escape'&&!document.querySelector('dialog[open]')){e.preventDefault();e.stopImmediatePropagation();close(true);}}
-  function outside(e:PointerEvent){const t=e.target as Element;if(!ref.current?.contains(t)&&!t.closest('.reader-rail')&&!t.closest('dialog')&&!t.closest('.reading-action-menu'))close(false);}
+  function outside(e:PointerEvent){const t=e.target as Element;if(!ref.current?.contains(t)&&!t.closest('.reader-rail,[data-panel-toggle]')&&!t.closest('dialog')&&!t.closest('.reading-action-menu'))close(false);}
   document.addEventListener('keydown',key,true);document.addEventListener('pointerdown',outside);
   return()=>{document.removeEventListener('keydown',key,true);document.removeEventListener('pointerdown',outside);if((ref.current?.contains(document.activeElement)||document.activeElement===document.body)&&origin.current?.isConnected)origin.current.focus();};
  },[]);

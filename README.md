@@ -1,30 +1,16 @@
-> **Current checkpoint: AtlasNote 1.2.4.** Read START_HERE.md and FINAL_TEST_STATUS.md before integration. The implementation includes category-based reading managers and a four-page PDF grid; it is not deployed by this pass.
+# AtlasNote 1.2.5
 
-# AtlasNote 1.2.3
+Local-first notebook and PDF reading, continuing the released 1.2.4 source. Read [START_HERE.md](START_HERE.md) and [FINAL_TEST_STATUS.md](FINAL_TEST_STATUS.md) before integration. This source has not been merged or deployed; integrated release acceptance is not yet certified in this environment.
 
-Local-first notes and PDF reading, continuing the verified 1.2.2 application. Start with **[START_HERE.md](START_HERE.md)**. This delivered source has not been merged or deployed.
+Five independent workspaces preserve tabs, reading positions, Compare, Focus, Book, PDF Spread and four-page Grid. Each pane controls its own toolbar. The compact navigation strip opens search/history, sidebar, document Context, Focus and Compare. Bookmarks and Read Later remain independent shared lists.
 
-## Reader and navigation
+PDF navigation intentionally uses fewer visible levels than notebook navigation, without modifying stored taxonomy. Physical-page links keep their actions and revision-aware targets. Context provides a document outline/glossary, scoped search, private remarks/reflection, explicit related links and bounded local visit history. Saved workspace checkpoints have a separate Workspace States panel, with all existing save/restore/progress/history/undo behavior.
 
-Five independent study workspaces retain their tabs, panes, history, positions, category filters and layout. The left library header contains Notes/PDF, sidebar toggle, Back, Forward and Search. There is no separate global topbar or redundant library-heading text. Search and history remain clickable in a narrow dock when the notebook sidebar is collapsed. Ctrl/Cmd+K still opens global search.
-
-Each reader starts with A/B, the small new-tab **+**, Show/Hide reader controls, then document tabs. Controls default to hidden; an explicitly saved visible preference is respected. Quick Book/PDF Spread is a document layout control. Compare and Focus are separate right-rail actions. The right rail begins Focus, Compare, separator, Swap, Context, separator, reading bookmark and Theme. Compare preserves independent panes rather than cloning the current document.
-
-PDF study metadata is in the notebook tree below each PDF. Opening its title does not expand it. Its disclosure opens top-level categories and Glossary, while nested categories/pages remain collapsed until chosen. Physical-page links navigate the active reading pane; definitions and metadata editing are on demand. The former bottom PDF Companion panel no longer occupies reader space. Existing companion data, revision checks, JSON import/export, glossary promotion and local extraction are retained.
-
-Single-page wheel navigation scrolls the current physical page normally and turns at an edge. Slow mouse ticks accumulate, canvas padding is not treated as unread content, and sustained momentum does not skip multiple pages. Continuous mode retains native scrolling. Five themes, note Book pagination, native PDF fallback, Focus and private local intake remain supported.
-
-## Saved reading states
-
-Five additional bottom-right buttons save/restore the current workspace, save/restore all five workspaces, and open a compact manager. Saves are immutable reading-session checkpoints with a date, editable title and optional progress/next-step note. The manager has scopes 1-5 and All, explicit deletion, an undo point before each restore, and the last 30 save/restore/rename/delete actions.
-
-A workspace save targets its original slot. Other slots are unchanged. An all-workspaces save also restores the active slot and preserves uninitialized-slot absence. Tabs, histories, note/PDF positions, layout, filters, theme and disclosure state are included. **Notes, library content, PDF files, imports, shared glossary, flags and reading-position bookmarks are not rolled back.** Use Settings > Download workspace backup for a portable full-library backup; that backup includes the new saved states and undo/history records too.
-
-There are 20 manual saves per scope (up to 120), one current undo point per scope, 30 recent activity events, and a 6 MiB saved-state budget. A limit produces an error rather than silently deleting manual saves. These saves are local to this browser profile and origin; they are not cloud sync or a replacement for an exported backup.
+The new Interview Preparation reference notebook contains five canonical SQL questions, four theory samples, three hybrid samples and three Python dictionary-pattern variants. They are ordinary editable notebook pages with safe code blocks, not executable exercises. The semantic authoring model and generation procedure are documented in [docs/1.2.5/INTERVIEW_CONTENT.md](docs/1.2.5/INTERVIEW_CONTENT.md).
 
 ## Build and test
 
-Node >=22.12.0; Python requirements are needed only for tests/optional PDF authoring.
+Node >=22.12.0; use the exact committed lockfile. Python is for tests and optional PDF authoring.
 
 ```sh
 npm ci
@@ -33,12 +19,12 @@ python -m playwright install --with-deps chromium
 npm run test:release
 ```
 
-The release runner retains logs and exits nonzero for failure or blocking. It includes clean install and npm audit, all existing compatibility and normal-origin tests, the new UI and saved-state runtime suites, and an isolated actual PDF-component harness. `.github/workflows/ci.yml` runs the same release-critical gates. No workflow writes source or deploys this delivery automatically.
+Preview the integrated production build with `npm run build && npm run preview`. `dist-offline` is only a compatibility fallback and must not be deployed. The actual PDF component test harness is opt-in at `.build/engine-dom`, not part of the hosted app.
 
-For a local preview: `npm run build && npm run preview`. The build outputs `dist/`; `netlify.toml` remains configured for the existing integrated app. The test harness is built only by explicit `npm run build:test-harness` into `.build/engine-dom`, never `dist`. It is not a production entry point.
+The release runner records every gate and exits nonzero for any failure or blocked result. Missing registry dependencies or browser-policy blocks are not passing tests. See the current status document and external evidence, not historical reports, for exactly what was verified.
 
-See [FINAL_TEST_STATUS.md](FINAL_TEST_STATUS.md) for the evidence scope. Normal-origin browser-policy failures in this environment must not be described as passing persistence tests.
+## Privacy and provenance
 
-## Provenance and privacy
+Starting main is `b5e63f71185bcf525e985dfad1260d38ed3c4918`, with exact baseline tree `72a8ea2ca18944a3c897d86f39579c7a347e3c37`. No GitHub writes, merge or Netlify deployment were made. Source integration instructions are in [CODEX_HANDOFF.md](CODEX_HANDOFF.md).
 
-Based on remote `main` commit `476f327ae77eb9103f2e5d079b87b6a541ddc782`, tree `2d07e499cab9236f5a098e2d08513f98f3e1b4f3`. The baseline reconstructed from the downloaded verified GitHub source plus the two merged stylesheet changes was checked against that exact tree before editing. This pass does not include the private 137-page reference library, personal workspace backups or credentials. Public PDF links remain pinned to their existing reviewed references. Historical documents under `docs/history/` describe older releases, not current acceptance results.
+Personal remarks, explicit links and up to 50 document timestamps stay in the existing local workspace/backup. There is no analytics service, cloud sync or automatic PDF fetch for Context. Source added/modified dates are shown as unknown when not available. This delivery contains no private 137-page reference library or credentials. The inherited precompiled Mermaid bundle still has its documented transitive SBOM/license-closure limitation.

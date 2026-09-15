@@ -1,3 +1,4 @@
+from browser_support import state_action,open_context
 """Real React-PDF/PDF.js four-page geometry and routing. In-memory store only."""
 import os,json,traceback
 from pathlib import Path
@@ -58,7 +59,7 @@ with sync_playwright() as pw:
   reset();grid();rendered([1,2,3,4]);r=p.locator('.active-pane .pdf-canvas-scroll').bounding_box();p.mouse.move(r['x']+r['width']/2,r['y']+r['height']/2);p.mouse.wheel(0,120);ready();rendered([5]);p.wait_for_timeout(600);p.mouse.wheel(0,-120);ready();rendered([1,2,3,4])
  check('Deliberate wheel gestures navigate groups forward and backward in grid mode',wheel)
  def compare():
-  reset();p.set_viewport_size({'width':1920,'height':1080});ready();grid();rendered([1,2,3,4]);a=session()['panes'][0];btn('Compare in two panes').click();p.locator('[data-node-id="node.page.atlas.rotated"] .tree-target').click();ready();btn('Quick PDF Spread').last.click();ready();before=session();assert before['panes'][0]==a;assert p.locator('.pdf-grid').count()==1;assert p.locator('.pdf-spread').count()==1;btn('Save all workspace states').click();p.wait_for_timeout(200);expected=session();btn('Swap panes').click();btn('Restore last all-workspaces save').click();ready();assert session()==expected;p.screenshot(path=str(OUT/'grid-and-spread-compare.png'))
+  reset();p.set_viewport_size({'width':1920,'height':1080});ready();grid();rendered([1,2,3,4]);a=session()['panes'][0];btn('Compare in two panes').click();p.locator('[data-node-id="node.page.atlas.rotated"] .tree-target').click();ready();btn('Quick PDF Spread').last.click();ready();before=session();assert before['panes'][0]==a;assert p.locator('.pdf-grid').count()==1;assert p.locator('.pdf-spread').count()==1;state_action(p,'Save all workspace states');p.wait_for_timeout(200);expected=session();btn('Swap panes').click();state_action(p,'Restore last all-workspaces save');ready();assert session()==expected;p.screenshot(path=str(OUT/'grid-and-spread-compare.png'))
  check('Grid and Spread coexist in independent Compare panes and survive all-workspace restore',compare)
  def bookmark_grid():
   reset();grid();goto(3);btn('Open bookmarks').click();btn('Bookmark current position').click();p.wait_for_timeout(200);entry=p.evaluate('testStore.state.personal.bookmarks[0]');assert entry['target']['pdfPage']==3;close_panels(p);goto(5);btn('Open bookmarks').click();p.locator('.reading-open').first.click();ready();assert loc()['pdfPage']==3

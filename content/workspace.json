@@ -41,7 +41,8 @@
       "id": "group.samples.job",
       "title": "Job",
       "projectIds": [
-        "project.samples.job"
+        "project.samples.job",
+        "project.interview-preparation"
       ]
     },
     {

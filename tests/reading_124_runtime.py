@@ -1,3 +1,5 @@
+from persistence_assertions import assert_workspace_after_open
+from browser_support import state_action,open_context
 """1.2.4 normal-origin gate: real production UI, IndexedDB and fresh backup restore.
 Never loads the about:blank harness or replaces storage/network implementations.
 """
@@ -27,8 +29,8 @@ try:
   phase='pdf_category_page_queue';search(page,'PDF reading fixture');page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();page.locator('[data-node-id="node.page.atlas.pdf"] .tree-expander').click();page.get_by_role('button',name='Expand PDF category Reading a PDF',exact=True).click();page.locator('.pdf-study-page[data-pdf-page="3"] .study-actions').first.click();page.get_by_role('menuitem',name='Add to Read later',exact=True).click();settle(page);page.get_by_role('button',name='Actions for PDF category Reading a PDF',exact=True).click();page.get_by_role('menuitem',name='Add to Read later',exact=True).click();v=settle(page);assert {e['target']['kind'] for e in v['personal']['readLater']}=={'url','pdf-page','pdf-category'};record()
   phase='grid_and_workspace_routing';page.get_by_role('button',name='Quick four-page PDF grid',exact=True).click();expect(page.locator('.active-pane .pdf-grid canvas')).to_have_count(4);v=settle(page);first=session(v['personal']);assert first['panes'][0]['views'][0]['history'][-1]['pdfMode']=='grid';page.locator('.pdf-study-page[data-pdf-page="4"] .study-actions').first.click();page.get_by_role('menuitem',name='Open in workspace...',exact=True).click();page.get_by_role('menuitem',name='Open in Workspace 2',exact=True).click();page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();v=settle(page);assert session(v['personal'],1)==first;assert session(v['personal'],2)['panes'][0]['views'][0]['history'][0]['pdfPage']==4;record()
   phase='checkpoint_shared_lists'
-  page.get_by_role('button',name='Save current workspace state',exact=True).click();settle(page)
-  page.get_by_role('button',name='Save all workspace states',exact=True).click();checkpoint=settle(page)['personal']
+  state_action(page,'Save current workspace state');settle(page)
+  state_action(page,'Save all workspace states');checkpoint=settle(page)['personal']
   page.get_by_role('button',name='Open bookmarks',exact=True).click();page.get_by_role('button',name='Bookmark current position',exact=True).click();close_panels(page)
   page.get_by_role('button',name='Open read later',exact=True).click();page.get_by_label('Web address to read later',exact=True).fill('http://example.org/after-checkpoint');page.get_by_role('button',name='Add web address to Read later',exact=True).click();newer=settle(page)['personal'];close_panels(page)
   assert len(newer['bookmarks'])==len(checkpoint['bookmarks'])+1
@@ -36,21 +38,21 @@ try:
   shared={key:newer[key] for key in ['bookmarks','readLater']}
   search(page,'Read in Norwegian, keep English nearby')
   assert session(settle(page)['personal'],2)!=session(checkpoint,2)
-  page.get_by_role('button',name='Restore last workspace save',exact=True).click();restored=settle(page)['personal']
+  state_action(page,'Restore last workspace save');restored=settle(page)['personal']
   assert session(restored,2)==session(checkpoint,2)
   assert {key:restored[key] for key in shared}==shared
   page.get_by_role('button',name='Workspace 3',exact=True).click();search(page,'Read in Norwegian, keep English nearby')
-  page.get_by_role('button',name='Restore last all-workspaces save',exact=True).click();restored=settle(page)['personal']
+  state_action(page,'Restore last all-workspaces save');restored=settle(page)['personal']
   assert restored['activeWorkspaceSlot']==checkpoint['activeWorkspaceSlot']
   assert restored['session']==checkpoint['session'] and restored['workspaceSlots']==checkpoint['workspaceSlots']
   assert {key:restored[key] for key in shared}==shared
   page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();record({'workspaceAndAllRestore':'exact sessions; newer shared lists retained'})
-  phase='reload_exact';before=durable(page);page.reload(wait_until='networkidle');page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();assert durable(page)==before;record()
+  phase='reload_exact';before=durable(page);page.reload(wait_until='networkidle');page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();assert_workspace_after_open(durable(page),before);record()
   phase='fresh_backup_restore';close_panels(page);open_settings(page);before=durable(page)
   with page.expect_download() as transfer:page.get_by_role('button',name='Download workspace backup',exact=True).click()
   archive=OUT/'reading-managers.atlas-backup.zip';transfer.value.save_as(str(archive))
   with zipfile.ZipFile(archive) as z:payload=json.loads(z.read('backup.json'))['workspace'];assert payload['personal']==before['personal'];assert payload['overlays']==before['overlays']
-  ctx.close();ctx=browser.new_context(viewport={'width':1440,'height':900},accept_downloads=True);page=ctx.new_page();page.set_default_timeout(15000);page.on('pageerror',lambda e:errors.append(str(e)));page.goto(base,wait_until='networkidle');assert not durable(page)['personal'].get('readLater');open_settings(page);page.get_by_label('Restore workspace backup',exact=True).set_input_files(str(archive));page.get_by_role('checkbox',name='I understand that this replaces the current local workspace.',exact=True).check();page.get_by_role('button',name='Restore verified backup',exact=True).click();page.locator('dialog').wait_for(state='detached');page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();assert durable(page)==before;page.reload(wait_until='networkidle');page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();assert durable(page)==before;record({'readingListsAndSessions':'exact','freshContext':True})
+  ctx.close();ctx=browser.new_context(viewport={'width':1440,'height':900},accept_downloads=True);page=ctx.new_page();page.set_default_timeout(15000);page.on('pageerror',lambda e:errors.append(str(e)));page.goto(base,wait_until='networkidle');assert not durable(page)['personal'].get('readLater');open_settings(page);page.get_by_label('Restore workspace backup',exact=True).set_input_files(str(archive));page.get_by_role('checkbox',name='I understand that this replaces the current local workspace.',exact=True).check();page.get_by_role('button',name='Restore verified backup',exact=True).click();page.locator('dialog').wait_for(state='detached');page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();assert_workspace_after_open(durable(page),before);page.reload(wait_until='networkidle');page.locator('.active-pane .integrated-pdf[data-pdf-state=ready] canvas').first.wait_for();assert_workspace_after_open(durable(page),before);record({'readingListsAndSessions':'exact','freshContext':True})
   phase='restored_links';page.get_by_role('button',name='Open read later',exact=True).click();page.locator('.reading-item').filter(has_text='Landscape table').locator('.reading-open').click();page.locator('.active-pane [data-physical-page="3"] canvas').wait_for();v=settle(page);s=session(v['personal']);pane=next(x for x in s['panes'] if x['id']==s['activePane']);view=next(x for x in pane['views'] if x['id']==pane['active']);assert view['history'][view['cursor']]['pdfPage']==3;record()
   phase='no_errors';assert not errors,errors;record();browser.close()
 except Exception as e:

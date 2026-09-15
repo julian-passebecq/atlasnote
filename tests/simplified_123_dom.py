@@ -1,3 +1,4 @@
+from browser_support import state_action,open_context
 from browser_support import bookmark_position,open_saved_manager,inspect_pdf_term,show_reader_controls
 """Real browser UI with in-memory state on about:blank. NOT IndexedDB evidence."""
 import json,os,traceback
@@ -23,13 +24,13 @@ with sync_playwright() as pw:
    results.append({'name':name,'status':'FAIL','error':str(e)});print('FAIL',name,str(e),flush=True);traceback.print_exc();p.screenshot(path=str(OUT/('failure-'+str(len(results))+'.png')))
  def chrome():
   reset();assert p.locator('.topbar').count()==0;assert button('Hide global topbar').count()==0;assert p.locator('.sidebar-heading').inner_text().strip()==''
-  nav=p.locator('.sidebar-navigation button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert nav==['Switch to PDF library','Global search','Back in active tab','Forward in active tab','Collapse notebook sidebar','Show reader controls'],nav
-  names=p.locator('.reader-rail>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert names[:4]==['Enter focus mode','Compare in two panes','Swap panes','Open context panel'],names
-  classes=p.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-identity' in classes[0] and 'pane-new-tab' in classes[1] and classes[2]=='tab-list',classes
+  nav=p.locator('.sidebar-navigation button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert nav==['AtlasNote home','Global search','Back in active tab','Forward in active tab','Collapse notebook sidebar','Toggle document context','Enter focus mode','Compare in two panes','Swap panes'],nav
+  names=p.locator('.reader-rail>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert names[:4]==['Open context panel','Workspace States','Open bookmarks','Open read later'],names
+  classes=p.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-new-tab' in classes[0] and 'pane-identity' in classes[1] and 'pane-chrome-toggle' in classes[2] and classes[3]=='tab-list',classes
   assert p.locator('.reader-chrome-hidden').count()==1;assert not p.locator('.pane-breadcrumb').is_visible()
   button('Show reader controls').click();assert p.locator('.pane-breadcrumb').is_visible();assert session()['panes'][0]['readerChromeCollapsed']==False
   button('Hide reader controls').click();assert session()['panes'][0]['readerChromeCollapsed']==True
-  assert p.locator('.state-save-tools button').count()==4
+  open_saved_manager(p);assert p.locator('.state-quick-actions button').count()==4;close_panels(p)
   p.screenshot(path=str(OUT/'compact-note-reader.png'));return {'navigation':nav,'rightRailStart':names[:4],'paneControlOrder':classes}
  check('No global topbar; exact navigation/rail order; plus and hidden controls precede tabs',chrome)
  def side():
@@ -38,9 +39,9 @@ with sync_playwright() as pw:
  def compare():
   reset();before=session()['panes'][0];button('Compare in two panes').click();assert session()['panes'][0]==before;assert session()['panes'][1]['views']==[]
   for pane in p.locator('.document-pane').all():
-   names=pane.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-new-tab' in names[1] and names[2]=='tab-list'
+   names=pane.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-new-tab' in names[0] and 'pane-chrome-toggle' in names[2] and names[3]=='tab-list'
   button('Swap panes').click();assert session()['panes'][1]==before
- check('Compare and swap live only in the rail, preserving independent panes',compare)
+ check('Compare and swap in the compact navigation, preserving independent panes',compare)
  def tree():
   reset(True);row=p.locator('[data-node-id="node.page.atlas.pdf"]');row.locator('.tree-target').click();assert p.locator('.pdf-study-tree').count()==0
   row.locator('.tree-expander').click();root=p.locator('.pdf-study-tree');assert root.is_visible();assert button('Expand PDF category Reading a PDF').is_visible();assert button('Expand PDF category Layouts and navigation').count()==0;assert p.locator('.pdf-companion').count()==0
@@ -51,32 +52,32 @@ with sync_playwright() as pw:
   p.screenshot(path=str(OUT/'sidebar-pdf-study-tree.png'));return {'readerCompanionPanels':0,'physicalPageState':4,'categoriesCollapsedByDefault':True}
  check('PDF title opens without expanding; flat category/page links and on-demand definitions',tree)
  def workspace_save():
-  reset();expected=session();button('Save current workspace state').click();p.wait_for_timeout(250);assert len(state()['savedStates']['entries'])==1
+  reset();expected=session();state_action(p,'Save current workspace state');p.wait_for_timeout(250);assert len(state()['savedStates']['entries'])==1
   search('Read in Norwegian, keep English nearby');assert session()!=expected
-  button('Restore last workspace save').click();p.wait_for_timeout(400);assert session()==expected
+  state_action(p,'Restore last workspace save');p.wait_for_timeout(400);assert session()==expected
   assert len(state()['savedStates']['entries'])==1;assert '1' in state()['savedStates']['safety']
   open_saved_manager(p);button('Undo last restore').click();p.wait_for_timeout(300);assert session()!=expected
-  button('Restore last workspace save').click();p.wait_for_timeout(250);assert session()==expected
+  state_action(p,'Restore last workspace save');p.wait_for_timeout(250);assert session()==expected
  check('One-click workspace save, last restore and automatic undo point work through real buttons',workspace_save)
  def manager():
-  reset();button('Save current workspace state').click();p.wait_for_timeout(150);open_saved_manager(p);button('Rename / note').click();p.get_by_role('textbox',name='Save title',exact=True).fill('Spark - after chapter 2');p.get_by_role('textbox',name='Progress / next step',exact=True).fill('Next: deployment modes.\nKeep going tomorrow.');button('Save details').click();p.wait_for_timeout(200)
+  reset();state_action(p,'Save current workspace state');p.wait_for_timeout(150);open_saved_manager(p);button('Rename / note').click();p.get_by_role('textbox',name='Save title',exact=True).fill('Spark - after chapter 2');p.get_by_role('textbox',name='Progress / next step',exact=True).fill('Next: deployment modes.\nKeep going tomorrow.');button('Save details').click();p.wait_for_timeout(200)
   assert state()['savedStates']['entries'][0]['title']=='Spark - after chapter 2';assert 'Keep going tomorrow.' in state()['savedStates']['entries'][0]['note'];assert len(state()['savedStates']['history'])==2
   p.screenshot(path=str(OUT/'saved-state-manager.png'));button('Delete').click();button('Cancel').click();assert len(state()['savedStates']['entries'])==1;button('Delete').click();button('Confirm delete').click();p.wait_for_timeout(200);assert len(state()['savedStates']['entries'])==0
  check('Small manager supports scope tabs, rename, progress note, history and confirmed deletion',manager)
  def allsave():
-  reset();button('Save all workspace states').click();p.wait_for_timeout(150);expected=state()['savedStates']['entries'][0]
-  button('Workspace 2').click();p.wait_for_timeout(150);search('Read in Norwegian, keep English nearby');other=session();button('Save current workspace state').click();p.wait_for_timeout(150)
-  button('Restore last all-workspaces save').click();p.wait_for_timeout(350);out=state();assert out['activeWorkspaceSlot']==expected['activeWorkspaceSlot'];assert out['session']==expected['session'];assert out['workspaceSlots']==expected['workspaceSlots'];assert len(out['savedStates']['entries'])==2
-  open_saved_manager(p);p.get_by_role('tab',name='All-workspace saves',exact=True).click();button('Undo last restore').click();p.wait_for_timeout(300);assert state()['activeWorkspaceSlot']==2;assert session()==other
+  reset();state_action(p,'Save all workspace states');p.wait_for_timeout(150);expected=state()['savedStates']['entries'][0]
+  button('Workspace 2').click();p.wait_for_timeout(150);search('Read in Norwegian, keep English nearby');other=session();state_action(p,'Save current workspace state');p.wait_for_timeout(150)
+  state_action(p,'Restore last all-workspaces save');p.wait_for_timeout(350);out=state();assert out['activeWorkspaceSlot']==expected['activeWorkspaceSlot'];assert out['session']==expected['session'];assert out['workspaceSlots']==expected['workspaceSlots'];assert len(out['savedStates']['entries'])==2
+  open_saved_manager(p);p.get_by_role('tab',name='All workspaces saves',exact=True).click();button('Undo last restore').click();p.wait_for_timeout(300);assert state()['activeWorkspaceSlot']==2;assert session()==other
  check('All-workspace last restore and undo restore the active slot without removing manual saves',allsave)
  def isolated():
-  reset();button('Save current workspace state').click();p.wait_for_timeout(150);one=session();button('Workspace 2').click();p.wait_for_timeout(150);search('Read in Norwegian, keep English nearby');two=session();open_saved_manager(p);p.get_by_role('tab',name='Workspace 1 saves',exact=True).click();button('Restore').click();p.wait_for_timeout(250);assert state()['activeWorkspaceSlot']==1;assert session()==one;assert state()['workspaceSlots']['2']==two
+  reset();state_action(p,'Save current workspace state');p.wait_for_timeout(150);one=session();button('Workspace 2').click();p.wait_for_timeout(150);search('Read in Norwegian, keep English nearby');two=session();open_saved_manager(p);p.get_by_role('tab',name='Workspace 1 saves',exact=True).click();button('Restore').click();p.wait_for_timeout(250);assert state()['activeWorkspaceSlot']==1;assert session()==one;assert state()['workspaceSlots']['2']==two
  check('Restoring Workspace 1 from the manager preserves Workspace 2 exactly',isolated)
  def responsive():
   reset();rows=[]
   for w,h in [(1366,768),(1440,900),(1920,1080),(390,844)]:
    p.set_viewport_size({'width':w,'height':h});p.wait_for_timeout(300);assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1
-   for name in ['Enter focus mode','Compare in two panes','Open context panel','Save current workspace state','Restore last workspace save','Save all workspace states','Restore last all-workspaces save']:
+   for name in ['Enter focus mode','Compare in two panes','Open context panel','Workspace States']:
     rect=button(name).bounding_box();assert rect and rect['x']>=0 and rect['x']+rect['width']<=w+1 and rect['y']>=0 and rect['y']+rect['height']<=h,(w,name,rect)
    rows.append({'width':w,'height':h,'rail':p.locator('.reader-rail').bounding_box()});p.screenshot(path=str(OUT/('responsive-'+str(w)+'.png')))
   return rows

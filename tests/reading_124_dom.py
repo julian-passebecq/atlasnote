@@ -1,3 +1,4 @@
+from browser_support import state_action,open_context
 """1.2.4 real compiled UI interactions; intentionally in-memory, NOT IndexedDB."""
 import json,os,traceback
 from pathlib import Path
@@ -27,10 +28,10 @@ with sync_playwright() as pw:
  def action(n,name):row(n).locator('.study-actions').click();p.get_by_role('menuitem',name=name,exact=True).click();settle()
  def nav():
   reset();names=p.locator('.sidebar-navigation button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))')
-  assert names==['Switch to PDF library','Global search','Back in active tab','Forward in active tab','Collapse notebook sidebar','Show reader controls'],names
-  assert p.locator('.reader-chrome-hidden').count()==1 and p.locator('.pane-chrome-toggle').count()==0
+  assert names==['AtlasNote home','Global search','Back in active tab','Forward in active tab','Collapse notebook sidebar','Toggle document context','Enter focus mode','Compare in two panes','Swap panes'],names
+  assert p.locator('.reader-chrome-hidden').count()==1 and p.locator('.pane-chrome-toggle').count()==1
   labels=p.locator('.reader-rail button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))')
-  assert labels==['Enter focus mode','Compare in two panes','Swap panes','Open context panel','Open bookmarks','Open read later','Save current workspace state','Restore last workspace save','Save all workspace states','Restore last all-workspaces save','Theme','Export to AI','More / Settings'],labels
+  assert labels==['Open context panel','Workspace States','Open bookmarks','Open read later','Export to AI','Theme','More / Settings'],labels
   btn('Show reader controls').click();assert session()['panes'][0]['readerChromeCollapsed']==False
   btn('Hide reader controls').click();assert session()['panes'][0]['readerChromeCollapsed']==True
   btn('Collapse notebook sidebar').click();assert btn('Global search').is_visible() and btn('Show reader controls').is_visible();btn('Open notebook sidebar').click();shot('paired-navigation');return {'navigation':names,'rail':labels}
@@ -73,10 +74,10 @@ with sync_playwright() as pw:
   before=session();action(3,'Open in new tab');assert session()==before;expect(p.locator('.toast.error')).to_be_visible()
  check('Full pane refuses a sixth tab without losing or replacing existing work',cap)
  def state_managers():
-  reset();btn('Save current workspace state').click();settle();saved=session();btn('Open read later').click();btn('Read current item later').click();settle();queue=data()['readLater'];close_panels(p)
-  btn('Workspace 2').click();btn('Save all workspace states').click();settle();open_saved_manager(p);assert p.locator('.save-scope-tabs [role=tab]').all_text_contents()==['1','2','3','4','5'];p.get_by_role('tab',name='Workspace 1 saves',exact=True).click();btn('Rename / note').click();p.get_by_label('Save title',exact=True).fill('Start of language review');btn('Save details').click();settle();btn('Restore').click();settle();assert session(1)==saved and data()['readLater']==queue
-  open_saved_manager(p,True);assert p.locator('.save-scope-tabs').count()==0;assert len(data()['savedStates']['entries'])==2;shot('workspace-states-panel');p.get_by_role('tab',name='Remarks',exact=True).click();assert p.locator('.remarks-input').count()==1
- check('Context houses workspace/all managers and remarks; checkpoint restore retains newer queue',state_managers)
+  reset();state_action(p,'Save current workspace state');settle();saved=session();btn('Open read later').click();btn('Read current item later').click();settle();queue=data()['readLater'];close_panels(p)
+  btn('Workspace 2').click();state_action(p,'Save all workspace states');settle();open_saved_manager(p);assert p.locator('.save-scope-tabs [role=tab]').all_text_contents()==['1','2','3','4','5','All'];p.get_by_role('tab',name='Workspace 1 saves',exact=True).click();btn('Rename / note').click();p.get_by_label('Save title',exact=True).fill('Start of language review');btn('Save details').click();settle();btn('Restore').click();settle();assert session(1)==saved and data()['readLater']==queue
+  open_saved_manager(p,True);assert p.get_by_role('tab',name='All workspaces saves',exact=True).get_attribute('aria-selected')=='true';assert len(data()['savedStates']['entries'])==2;shot('workspace-states-panel');open_context(p,'Remarks');assert p.locator('.remarks-input').count()==1
+ check('Separate Workspace States and document Context; checkpoint restore retains newer queue',state_managers)
  def keyboard():
   reset(True);tree();r=row(2);r.locator('.tree-target').click(button='right');expect(p.get_by_role('menu')).to_be_visible();p.keyboard.press('End');assert p.evaluate('document.activeElement.textContent').strip()=='Bookmark';p.keyboard.press('Escape');assert not p.get_by_role('menu').count()
   btn('Open read later').click();category('All');p.locator('.category-tabs').get_by_role('tab',name='All',exact=True).focus();p.keyboard.press('ArrowRight');assert p.locator('.category-tabs [aria-selected=true]').inner_text()=='Informatics';p.keyboard.press('End');assert p.locator('.category-tabs [aria-selected=true]').inner_text()=='Personal'
@@ -86,7 +87,7 @@ with sync_playwright() as pw:
   for w,h in [(1366,768),(1440,900),(1920,1080),(390,844)]:
    close_panels(p);p.set_viewport_size({'width':w,'height':h});btn('Open read later').click();settle();assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1
    box=p.locator('.manager-drawer').bounding_box();assert box and box['x']>=0 and box['x']+box['width']<=w+1 and box['y']>=0 and box['y']+box['height']<=h+1,(w,box)
-   for n in ['Open read later','Save all workspace states','More / Settings']:
+   for n in ['Open read later','Workspace States','More / Settings']:
     rect=btn(n).bounding_box();assert rect['x']>=0 and rect['y']>=0 and rect['y']+rect['height']<=h+1,(w,n,rect)
    rows.append({'width':w,'drawer':box});shot('manager-'+str(w))
   return rows

@@ -1,10 +1,11 @@
-# AtlasNote 1.2.4 workspace handoff
+# 1.2.5 source workspace ready for integration, not promotion
 
-The complete source is in this directory and in the accompanying AtlasNote_1.2.4_Source.zip. Do not rely on a future chat retaining this temporary directory.
+The complete modified source is present. The named branch was created **locally only**:
+`feature/atlasnote-1.2.5-reader-interview-polish`.
 
-Reference main: f82c336464e3faafa12e8ad888f9415c2e23f5e2 (1.2.3).
-Suggested branch: feature/atlasnote-1.2.4-reading-managers (not created by this pass).
+Upstream start: `b5e63f71185bcf525e985dfad1260d38ed3c4918`.
+Exact upstream/archive tree: `72a8ea2ca18944a3c897d86f39579c7a347e3c37`.
+Synthetic local baseline: `f7ccc64b9ee3c1c1dc82f10bfbbe6c522b2c4225`.
+The actual final local implementation SHA is recorded in the external delivery report and manifest, avoiding a self-referential commit identifier inside the committed tree.
 
-Read START_HERE.md, CODEX_HANDOFF.md and FINAL_TEST_STATUS.md. This is a complete source checkpoint, not permission to skip pending release checks or deploy a compatibility build. No remote write, merge or deployment was performed.
-
-The extracted package must have package.json, src/, tests/ and .github/ at the repository root. Preserve .git and local/private data. Do not upload node_modules, .build, dist-offline, generated backups or private library files.
+Use the full source or its patch on a clean feature branch based on the real upstream commit. Do not push synthetic local ancestry. Preserve dirty work, .git and private files. Read CODEX_HANDOFF.md and FINAL_TEST_STATUS.md. No remote write, merge or deployment has been performed.
