@@ -1,3 +1,4 @@
+import {validateReadingLists,validateBookmarkReading} from './reading-validation.mjs';
 import {validateSavedStates} from './saved-states-validation.mjs';
 import {inspectObject,ID} from '../core/validation.mjs';
 export function validatePersonal(p){
@@ -14,7 +15,8 @@ export function validatePersonal(p){
  obj(p,'personal');if(![2,3].includes(p.schemaVersion))fail('schema version');
  obj(p.notes,'notes');for(const [key,n] of Object.entries(p.notes)){str(key,'remark key',600);obj(n,'remark');str(n.text,'remark text');id(n.pageId,'remark page');num(n.updatedAt,'remark timestamp');anchor(n.anchor);if(n.revision!==undefined)str(n.revision,'remark revision',256);}
  obj(p.ratings,'ratings');for(const [key,value] of Object.entries(p.ratings)){id(key,'rated page');if(!['gray','red','orange','green'].includes(value))fail('rating');}
- arr(p.bookmarks,'bookmarks');const bookmarks=new Set();for(const b of p.bookmarks){id(b.id,'bookmark ID');if(bookmarks.has(b.id))fail('duplicate bookmark');bookmarks.add(b.id);id(b.pageId,'bookmark page');str(b.title,'bookmark title',10000);num(b.createdAt,'bookmark timestamp');anchor(b.anchor);}
+ arr(p.bookmarks,'bookmarks');const bookmarks=new Set();for(const b of p.bookmarks){id(b.id,'bookmark ID');if(bookmarks.has(b.id))fail('duplicate bookmark');bookmarks.add(b.id);id(b.pageId,'bookmark page');str(b.title,'bookmark title',10000);num(b.createdAt,'bookmark timestamp');anchor(b.anchor);validateBookmarkReading(b);}
+ if(p.readLater!==undefined)validateReadingLists(p.readLater);
  const sessions=[p.session];
  if(p.schemaVersion===3){
   int(p.activeWorkspaceSlot,'workspace number',1,5);obj(p.workspaceSlots,'workspace slots');
@@ -35,8 +37,9 @@ export function validatePersonal(p){
    for(const v of pane.views){id(v.id,'view ID');if(viewIds.has(v.id))fail('duplicate view');viewIds.add(v.id);arr(v.history,'history',10000);int(v.cursor,'history cursor',0,Math.max(0,v.history.length-1));bool(v.english,'English visibility');
     for(const key of ['collapsed','revealed']){obj(v[key],key);for(const [bid,state] of Object.entries(v[key])){id(bid,'disclosure block');bool(state,'disclosure');}}
     for(const l of v.history){id(l.pageId,'history page');if(l.collectionId!==undefined){id(l.collectionId,'collection ID');if(l.pageId!==l.collectionId)fail('collection navigation identity');}
-     if(!['continuous','book','parallel'].includes(l.presentation))fail('presentation');if(!['single','continuous','spread'].includes(l.pdfMode))fail('PDF mode');
-     if(l.previousPresentation!==undefined&&!['continuous','parallel'].includes(l.previousPresentation))fail('previous note layout');if(l.previousPdfMode!==undefined&&!['single','continuous'].includes(l.previousPdfMode))fail('previous PDF layout');
+     if(!['continuous','book','parallel'].includes(l.presentation))fail('presentation');if(!['single','continuous','spread','grid'].includes(l.pdfMode))fail('PDF mode');
+     if(l.previousPresentation!==undefined&&!['continuous','parallel'].includes(l.previousPresentation))fail('previous note layout');if(l.previousPdfMode!==undefined&&!['single','continuous','spread','grid'].includes(l.previousPdfMode))fail('previous PDF layout');
+     if(l.previousGridMode!==undefined&&!['single','continuous','spread'].includes(l.previousGridMode))fail('previous grid layout');if(l.previousGridZoom!==undefined)num(l.previousGridZoom,'previous grid zoom',0.1,10);
      int(l.pdfPage,'PDF page',1,1000000);num(l.zoom,'zoom',0.1,10);if(![0,90,180,270].includes(l.rotation))fail('rotation');bool(l.cover,'cover');anchor(l.anchor);if(l.scroll!==undefined)num(l.scroll,'scroll');
     }
    }

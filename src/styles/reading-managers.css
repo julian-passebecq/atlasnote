@@ -1,0 +1,34 @@
+/* 1.2.4: paired rail actions and compact nonmodal managers. */
+.atlas-app .reader-rail{gap:3px;padding:6px 4px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.reader-rail .rail-separator{flex-shrink:0;height:1px;min-height:1px;margin:6px 0;width:20px;background:var(--line)}
+.reader-rail .rail-spacer{min-height:8px}
+.state-save-tools{gap:3px}.state-save-tools .rail-separator{margin:6px 0}
+.global-chrome-toggle.selected{background:var(--tint);color:var(--accent)}
+.pdf-study-tree .study-actions{width:21px;height:25px;min-height:25px;flex:0 0 21px;padding:3px;opacity:.72}
+.pdf-study-tree .study-actions:focus-visible,.pdf-study-tree .tree-row:hover .study-actions{opacity:1}
+.pdf-study-tree .tree-row{margin-left:0;margin-right:4px}
+.pdf-study-tree .tree-target{min-width:0;font-size:11px}
+.pdf-study-tree .pdf-study-page .tree-target{gap:5px}
+.manager-drawer.context-drawer{width:min(480px,calc(100vw - 56px));max-width:calc(100vw - 56px);display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.management-context,.reading-manager{display:flex;flex-direction:column;min-height:0;flex:1;overflow:hidden}
+.management-tabs,.category-tabs{display:flex;flex:0 0 auto;gap:2px;padding:7px 8px 0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:thin}
+.management-tabs button,.category-tabs button{flex:1;min-width:max-content;white-space:nowrap;padding:8px 5px;font-size:11px;border:0;border-radius:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted)}
+.management-tabs button[aria-selected=true],.category-tabs button[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent);background:var(--tint);font-weight:650}
+.management-body,.reading-manager-body{min-height:0;overflow:auto;flex:1;padding:12px;scrollbar-width:thin}
+.management-body .context-panel{position:static;width:100%;border:0;display:flex;min-height:360px}
+.management-body .context-heading{display:none}.management-body .context-scroll{overflow:visible}.management-body .remarks-input{min-height:220px}
+.management-body .saved-state-list{max-height:none}.management-body .state-saves-manager{padding:0}.management-body .save-scope-tabs{margin-top:6px}
+.reading-list-tools{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.reading-list-tools input{min-width:120px;flex:1;width:120px}.reading-list-tools button{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:6px 8px}
+.read-later-url{display:flex;gap:5px;margin-bottom:10px}.read-later-url input{flex:1;min-width:0;font-size:12px}.read-later-url button{flex:0 0 32px;padding:4px}
+.reading-unread{font-size:11px;margin-bottom:8px}.reading-item{padding:11px 0;border-bottom:1px solid var(--line);min-width:0}
+.reading-item-heading{display:flex;align-items:start;gap:4px;min-width:0}.reading-item-heading>a,.reading-open{display:flex;align-items:center;gap:6px;flex:1;min-width:0;text-align:left;line-height:1.45;padding:3px 0;border:0;background:transparent;color:var(--accent);font-size:12px;text-decoration:none}
+.reading-item-heading strong{overflow-wrap:anywhere;flex:1;min-width:0}.reading-item-heading svg{flex-shrink:0}.reading-item-heading>.icon-button{width:25px;min-height:25px;height:25px;padding:4px}.reading-item-heading small{white-space:nowrap}
+.reading-item-meta,.reading-url-label{display:block;color:var(--muted);font-size:10px;overflow-wrap:anywhere;margin:4px 0}
+.reading-item-note{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.5;margin:6px 0}.reading-item.is-read .reading-open strong{font-weight:400}
+.reading-item-actions{display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-top:6px;font-size:11px}.reading-item-actions button{font-size:10px;min-height:25px;padding:4px 6px}
+.reading-item form>label{display:flex;flex-direction:column;gap:4px;font-size:11px;margin:7px 0}.reading-item form input,.reading-item form textarea,.reading-item form select{width:100%;min-width:0;font-size:12px}.reading-local-note{display:block;font-size:10px;line-height:1.5;color:var(--muted);padding-top:14px}
+.reading-action-menu{position:fixed;z-index:250;width:250px;max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px);overflow:auto;border:1px solid var(--line);box-shadow:0 5px 24px #17232f33;border-radius:7px;background:var(--surface);color:var(--text);padding:6px}
+.reading-action-menu>strong,.reading-action-menu>small{display:block;font-size:11px;overflow-wrap:anywhere;padding:7px 8px}.reading-action-menu>small{color:var(--muted)}
+.reading-action-menu button{display:flex;align-items:center;gap:8px;width:100%;border:0;background:transparent;border-radius:4px;min-height:32px;font-size:12px;padding:6px 8px;text-align:left}.reading-action-menu button:hover,.reading-action-menu button:focus-visible{background:var(--tint);color:var(--accent)}
+@media(max-width:540px){.manager-drawer.context-drawer{right:38px;width:calc(100vw - 44px);max-width:calc(100vw - 44px)}.management-tabs button,.category-tabs button{font-size:10px;padding:7px 4px}.management-body,.reading-manager-body{padding:9px}.reader-rail .rail-separator{margin:4px 0}.state-save-tools .rail-separator{margin:4px 0}}

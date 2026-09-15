@@ -1,22 +1,25 @@
-# Codex handoff - validate and integrate AtlasNote 1.2.3
+# Codex handoff - AtlasNote 1.2.4
 
-## Goal
+## Mission
 
-Use this complete implementation. Do not rebuild the app or redo the simplified UI. Finish independent normal-origin release acceptance and integrate the delivered source safely. The new saved-state feature is separate from reading-position bookmarks and intentionally does not roll back notes/PDF contents.
+Validate and integrate this complete 1.2.4 source. Do not restart the app or create another feature pass. Correct actual regressions while preserving assertions and the user-approved interface. Do not merge or deploy until the entire release pipeline passes and the coordinating user authorizes promotion.
 
-## Exact baseline
+Repository: `julian-passebecq/atlasnote`
+Reference main: `f82c336464e3faafa12e8ad888f9415c2e23f5e2`
+Suggested work branch: `feature/atlasnote-1.2.4-reading-managers`
+Existing site: `atlasnotej` / https://atlasnotej.netlify.app
+Netlify site ID: `dee9eb09-5dbb-4a3a-ba33-97e26b872c51`
+Do not create a new Netlify site. This pass has not changed the remote branch or deployed the app.
 
-Repository: `julian-passebecq/atlasnote`.
-Upstream baseline: `main` at `476f327ae77eb9103f2e5d079b87b6a541ddc782`.
-Baseline tree: `2d07e499cab9236f5a098e2d08513f98f3e1b4f3`.
-Proposed working branch: `feature/atlasnote-1.2.3-saved-states` (not created remotely by this delivery).
+## Preserve work and integrate
 
-1. Inspect the local working directory and preserve all uncommitted/untracked work. Never delete the .git directory or apply an older stash on top of this source. Prefer a separate clean worktree.
-2. Fetch origin and inspect its current main. If it has moved, compare rather than resetting it. Do not force-push.
-3. From the verified baseline create the new work branch. `handoff/changes.patch` is the complete source/documentation delta, including deletions and new files. Run `git apply --check <absolute-path-to-patch>` before `git apply <absolute-path-to-patch>` in that worktree. Alternatively use the complete ZIP source in a clean worktree and compare its changed-file manifest; do not overlay blindly onto unrelated work.
-4. Verify delivered source hashes in `handoff/source-files.sha256` or compare source files. Build/test dependencies and generated output are intentionally not in the archive. The lockfile already includes the integrated PDF dependencies; **do not run enable:online** or independently upgrade PDF.js.
+1. Inspect git status and remote main. Preserve dirty work in a separate worktree or explicit safety copy; do not reset it. Do not apply a stale stash to this release.
+2. Create a new work branch from the reference commit, or explicitly reconcile newer main commits if main moved.
+3. Extract the full source ZIP outside the checkout. Copy its contents to the branch root, not a nested AtlasNote_1.2.4 directory. Preserve .git, local credentials and user/private libraries. Never commit dependency caches, generated bundles, private backups or raw PDF libraries.
+4. Review the diff. The recovered baseline includes the two already published 1.2.3 test fixes in commit `43d08255...`; do not remove them. The included `handoff/changes.patch` is relative to the local recovery baseline, not a claim of byte-for-byte equality to every remote documentation file. Check it before applying; use the full source when reconciling docs.
+5. Verify package and lock versions are 1.2.4. Use the existing pinned dependency versions.
 
-## Acceptance commands
+## Install and run gates
 
 ```sh
 npm ci
@@ -25,22 +28,44 @@ python -m playwright install --with-deps chromium
 npm run test:release
 ```
 
-The runner includes npm ci, audit, both typechecks, all core/compatibility suites, the production build, component PDF tests, existing normal-origin PDF/runtime/finish/workspace tests, the new saved-state normal-origin suite and headers. It writes command results and logs to `docs/evidence/1.2.3/release-gates`. A failed or blocked command must not be marked green.
+The release runner executes all existing gates plus the new suites and retains every exit code. Start it with `npm run test:release`, not a direct Node invocation: it reuses npm's JavaScript entry point to avoid Windows `.cmd` launch problems. A BLOCKED is not a pass. The CI workflow also requires the new suites before allowing a production artifact.
 
-The isolated component harness needs the production build's prepared assets: `npm run build && npm run build:test-harness && npm run test:pdf:component`. Never deploy the harness or dist-offline. `.github/workflows/ci.yml` already contains the new required checks.
+New commands:
 
-## Focus independent verification here
+```sh
+npm run test:reading:ui
+npm run test:pdf:grid
+npm run test:reading:runtime
+```
 
-- Use the actual hosted entry on HTTP, not the about:blank/in-memory test helper. Confirm saves survive reload in IndexedDB.
-- Save a workspace at a real PDF intra-page position, change its tabs/layout/position, restore, and compare all session fields. Verify another workspace is unchanged.
-- Save all five while workspace 4 is active; alter several workspaces and activate another; restore exactly, including active slot and A/B state.
-- Verify the automatic undo point, rename/progress note, scope lists and 30-event history. Save-limit errors must not remove older manual saves.
-- Download a full workspace backup containing the state saves, progress notes, undo and history. Restore in a fresh browser context, reload, compare personal state exactly and then use a restored checkpoint. New notes/PDFs and ordinary reading bookmarks must not disappear during a state-only restore.
-- Confirm Single wheel page turning at both edges with slow ticks, no repeated skips on momentum, and native Continuous scroll. Validate glossary/page hyperlinks against physical pages without any bottom Companion module.
-- Verify all five themes, desktop/narrow rail geometry, hidden controls defaults, restoring explicit visible controls, Focus and independent Compare.
+`test:pdf:grid` and `test:pdf:component` require `npm run build:test-harness`. UI suites use `dist-offline` from `npm run build:offline`. Real-origin suites use `dist` from `npm run build`. Never substitute the component harness for real storage/reload evidence.
 
-If a legacy test fails, diagnose it against the new UI contract. Do not weaken state equality/security/integrity assertions. The local final status explicitly separates in-memory/component successes from administrator-blocked normal-origin checks. Normal-origin test selectors were updated in this pass but cannot be execution-certified here; fix a concrete harness mismatch or real regression in your connected environment and record the reason.
+## Highest-priority external checks
 
-## Publishing
+Run `test:pdf`, `test:finish:integrated`, `test:runtime`, `test:workspaces:runtime`, `test:savedstates:runtime` and `test:reading:runtime` on real HTTP origin with actual IndexedDB. This chat environment blocked normal-origin navigation by administrator policy. Verify exact reload/fresh-context backup restoration including new reading lists, grid mode, old 1.2.3 checkpoints and all five sessions.
 
-Commit implementation and necessary verified fixes on the new work branch and return exact commit/test results. **Do not automatically merge to main or deploy solely because the archive was delivered.** Promotion needs green normal-origin acceptance and the user's go-ahead. Existing Netlify project: `atlasnotej`, site ID `dee9eb09-5dbb-4a3a-ba33-97e26b872c51`; do not create another site. Publish only integrated `dist/`, never private libraries, backups, harness assets or the source ZIP itself.
+The new runtime test covers categorized bookmarks, safe URL queues, PDF page/category queues, cross-workspace PDF routing, grid-state persistence, actual backup download and fresh-context restore. Diagnose any failed assertion; do not suppress it.
+
+Run clean `npm ci` and current `npm audit`. Local dependency-version and vendored-byte checks are not substitutes for registry security review. The inherited precompiled Mermaid bundle still has a documented SBOM/license-closure limitation; do not claim a complete transitive license audit.
+
+## Design contracts
+
+- Bookmarks and Read later are category-based shared lists, NOT per-workspace queues.
+- Reading-state saves remain session checkpoints, not library/content rollback. Restore must retain newer bookmarks, Read later items, remarks/content and PDF bytes.
+- Workspace routing adds a tab, uses an empty picker, or reports capacity; never replace existing work silently.
+- A PDF category can refer to the same physical page several times under different short headings. Do not deduplicate distinct named page references.
+- No PDF concept/subcategory/glossary branches. Definitions, edits and promotion still work through Manage PDF details.
+- Four-page grid renders actual PDF.js pages and honors physical page/revision identities. Spread remains two-page mode and narrow Spread still degrades to one visible page while retaining preference.
+- Default reader controls are hidden. Preserve explicit existing visibility choices.
+- Subject tabs and action menus are keyboard-accessible. Pasted URLs are explicit HTTP(S) links, never fetched for previews.
+- Do not change IndexedDB name/version, source ownership, private-public safeguards, or existing backup envelope merely to fix a test.
+
+## Test corrections already made
+
+Legacy UI tests now use the shared reader-controls button and Context managers. PDF tests verify flattened page rows and open saved definitions on demand rather than looking for a removed glossary branch. The Spark test retains a stable data-node-id scope. Bookmark navigation tests use the new manager instead of the retired main-screen entry point. These are intended product-contract updates, not removal of equality/backup/physical-page checks.
+
+During validation, an additional document-bookmark collision was corrected: toggling a whole-document bookmark no longer deletes a distinct PDF-category bookmark for the same document. The reading-manager UI suite covers this case. Restored legacy bookmark screens also use typed targets when reopening new entries.
+
+## Finish
+
+Commit scoped corrections to the feature branch, push it, and report starting/final SHA, changed files, exact commands/results, unreproduced intermittent failures and anything still blocked. Do not mark transient failures resolved merely because a rerun passed. Do not merge main or deploy without authorization.

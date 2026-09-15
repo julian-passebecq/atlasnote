@@ -1,31 +1,29 @@
 import React,{useState} from '../vendor/react.mjs';
 import type {DocumentEntry,Workspace} from '../core/model.js';
-import type {PdfCategory,PdfTerm} from './model.js';
+import type {ReadingTarget} from '../core/reading-types.js';
 import {activeSession} from '../core/workspace-slots.js';
-import {resolveStudy,studyTreeKey,directCategoryPages} from './tree.js';
-import {categoryFirstPage} from './validation.mjs';
+import {resolveStudy,studyTreeKey,categoryPageRows,shortPageTitle} from './tree.js';
 import {Icon,IconButton} from '../components/Icon.js';
-type Props={doc:DocumentEntry;workspace:Workspace;depth:number;onToggle:(key:string)=>void;onNavigate:(pageId:string,n:number,newTab?:boolean)=>void;onTerm:(doc:DocumentEntry,term:PdfTerm)=>void;onManage:(doc:DocumentEntry)=>void};
-export function PdfStudyTree({doc,workspace,depth,onToggle,onNavigate,onTerm,onManage}:Props){
- const {companion,stale}=resolveStudy(doc,workspace),expanded=new Set(activeSession(workspace.personal).pdfTreeExpanded??[]);
- const [limits,setLimits]=useState<Record<string,number>>({});
- const key=(kind:string,id='')=>studyTreeKey(doc,kind,id);
- const isOpen=(kind:string,id='')=>expanded.has(key(kind,id));
- const jump=(n:number,e:any)=>{if(Number.isFinite(n))onNavigate(doc.pageId,n,e.ctrlKey||e.metaKey);};
- function pages(numbers:number[],level:number,parent:string){const limit=limits[parent]??80;return <>{numbers.slice(0,limit).map(n=><div key={n} className="tree-row pdf-study-page" style={{paddingLeft:10+level*14}}><span className="tree-indent"/><button className="tree-target" aria-label={'Go to PDF page '+n+' in '+doc.title} onClick={e=>jump(n,e)}><Icon name="page" size={14}/><span>{companion?.pages[String(n)]?.title??'Page '+n}</span><small>p.{n}</small></button></div>)}{numbers.length>limit&&<button className="text-button study-load-more" onClick={()=>setLimits({...limits,[parent]:limit+80})}>Show next pages ({numbers.length-limit} remaining)</button>}</>;}
- function term(t:PdfTerm,level:number){return <div className="tree-row pdf-study-term" key={t.id} style={{paddingLeft:10+level*14}}><span className="tree-indent"/><button className="tree-target" title={t.definition} aria-label={'Definition of '+t.label} onClick={()=>onTerm(doc,t)}><Icon name="link" size={13}/><span>{t.label}</span></button>{t.pageRefs.length>0&&<button className="study-page-link" aria-label={t.label+' on PDF page '+t.pageRefs[0]} onClick={e=>jump(t.pageRefs[0],e)}>p.{t.pageRefs[0]}</button>}</div>;}
- function categories(list:PdfCategory[],level:number):any{return list.map(c=>{const open=isOpen('category',c.id),n=categoryFirstPage(c);return <div className="pdf-study-category" key={c.id}>
-  <div className="tree-row" style={{paddingLeft:10+level*14}}><button className="tree-expander" aria-label={(open?'Collapse PDF category ':'Expand PDF category ')+c.title} aria-expanded={open} onClick={()=>onToggle(key('category',c.id))}><Icon name={open?'down':'chevron'} size={12}/></button><button className="tree-target" onClick={()=>onToggle(key('category',c.id))} aria-expanded={open}><Icon name="folder" size={14}/><span>{c.title}</span></button>{Number.isFinite(n)&&<button className="study-page-link" aria-label={'Open '+c.title+' at PDF page '+n} onClick={e=>jump(n,e)}>p.{n}</button>}</div>
-  {open&&<div className="tree-children">{categories(c.children??[],level+1)}{companion&&pages(directCategoryPages(c,companion),level+1,c.id)}{companion?.terms.filter(t=>t.categoryIds?.includes(c.id)).map(t=>term(t,level+1))}</div>}
- </div>;});}
- const glossaryOpen=isOpen('glossary'),pageListOpen=isOpen('pages');
+type Props={doc:DocumentEntry;workspace:Workspace;depth:number;onToggle:(key:string)=>void;onNavigate:(pageId:string,n:number,newTab?:boolean)=>void;onTerm?:any;onManage:(doc:DocumentEntry)=>void;onActions?:(target:ReadingTarget,title:string,event:any)=>void};
+export function PdfStudyTree({doc,workspace,depth,onToggle,onNavigate,onManage,onActions}:Props){
+ const {companion,stale}=resolveStudy(doc,workspace),expanded=new Set(activeSession(workspace.personal).pdfTreeExpanded??[]),[limits,setLimits]=useState<Record<string,number>>({});
+ const key=(id:string)=>studyTreeKey(doc,'category',id),revision=doc.sha256?{revision:doc.sha256}:{};
+ const jump=(n:number,e:any)=>{e.preventDefault();onNavigate(doc.pageId,n,e.ctrlKey||e.metaKey||e.button===1);};
+ const groups=companion?.categories.length?companion.categories.map(c=>({id:c.id,title:c.title,rows:categoryPageRows(c,companion)})):[{id:'pages',title:'Pages',rows:Array.from({length:Math.min(doc.pageCount??0,10000)},(_,i)=>({id:String(i+1),page:i+1,title:'Page '+(i+1)}))}];
  return <div className="pdf-study-tree" aria-label={'Study index for '+doc.title}>
-  {companion?categories(companion.categories,depth):<>
-   <div className="tree-row" style={{paddingLeft:10+depth*14}}><button className="tree-expander" aria-label={(pageListOpen?'Collapse':'Expand')+' PDF pages'} aria-expanded={pageListOpen} onClick={()=>onToggle(key('pages'))}><Icon name={pageListOpen?'down':'chevron'} size={12}/></button><button className="tree-target" onClick={()=>onToggle(key('pages'))}><Icon name="folder" size={14}/><span>Pages</span></button></div>
-   {pageListOpen&&(doc.pageCount?pages(Array.from({length:Math.min(doc.pageCount,10000)},(_,i)=>i+1),depth+1,'pages'):<p className="study-tree-note">Page count is not available yet.</p>)}
-  </>}
-  {companion&&<><div className="tree-row" style={{paddingLeft:10+depth*14}}><button className="tree-expander" aria-label={(glossaryOpen?'Collapse':'Expand')+' PDF glossary'} aria-expanded={glossaryOpen} onClick={()=>onToggle(key('glossary'))}><Icon name={glossaryOpen?'down':'chevron'} size={12}/></button><button className="tree-target" onClick={()=>onToggle(key('glossary'))} aria-expanded={glossaryOpen}><Icon name="book" size={14}/><span>Glossary</span><small>{companion.terms.length}</small></button></div>{glossaryOpen&&<div className="tree-children">{companion.terms.slice(0,limits.glossary??80).map(t=>term(t,depth+1))}{companion.terms.length>(limits.glossary??80)&&<button className="text-button study-load-more" onClick={()=>setLimits({...limits,glossary:(limits.glossary??80)+80})}>Show more terms</button>}</div>}</>}
-  {stale&&<p className="study-tree-note" role="status">A study index for another file revision was retained, but its links are not reused.</p>}
-  <button className="text-button study-manage" onClick={()=>onManage(doc)}><Icon name="edit" size={13}/>Manage PDF details</button>
+ {groups.map(c=>{const open=expanded.has(key(c.id)),first=c.rows[0]?.page??1;const categoryTarget:ReadingTarget={kind:'pdf-category',pageId:doc.pageId,documentId:doc.id,...revision,pdfCategoryId:c.id,pdfPage:first};return <div className="pdf-study-category" key={c.id} data-pdf-category={c.id}>
+  <div className="tree-row" style={{paddingLeft:10+depth*14}} onContextMenu={e=>onActions?.(categoryTarget,c.title,e)}>
+   <button className="tree-expander" aria-label={(open?'Collapse PDF category ':'Expand PDF category ')+c.title} aria-expanded={open} onClick={()=>onToggle(key(c.id))}><Icon name={open?'down':'chevron'} size={12}/></button>
+   <button className="tree-target" title={c.title} onClick={()=>onToggle(key(c.id))} aria-expanded={open}><Icon name="folder" size={14}/><span>{shortPageTitle(c.title)}</span></button>
+   {onActions&&<IconButton name="more" className="study-actions" label={'Actions for PDF category '+c.title} onClick={(e:any)=>onActions(categoryTarget,c.title,e)}/>}
+  </div>
+  {open&&<div className="tree-children">{c.rows.slice(0,limits[c.id]??80).map(row=>{const target:ReadingTarget={kind:'pdf-page',pageId:doc.pageId,documentId:doc.id,...revision,pdfPage:row.page};return <div key={row.id} data-pdf-page={row.page} className="tree-row pdf-study-page" style={{paddingLeft:10+(depth+1)*14}} onContextMenu={e=>onActions?.(target,row.title,e)}>
+    {onActions?<IconButton name="more" className="study-actions" label={'Actions for '+row.title+' on PDF page '+row.page} onClick={(e:any)=>onActions(target,row.title,e)}/>:<span className="tree-indent"/>}
+    <button className="tree-target" title={row.title} aria-label={'Go to PDF page '+row.page+' in '+doc.title} onClick={e=>jump(row.page,e)} onAuxClick={e=>{if(e.button===1)jump(row.page,e);}}><Icon name="page" size={14}/><span>{shortPageTitle(row.title)}</span></button>
+    <button className="study-page-link" title={row.title} aria-label={'Open '+row.title+' at PDF page '+row.page} onClick={e=>jump(row.page,e)} onAuxClick={e=>{if(e.button===1)jump(row.page,e);}}>p.{row.page}</button>
+   </div>;})}{c.rows.length>(limits[c.id]??80)&&<button className="text-button study-load-more" onClick={()=>setLimits({...limits,[c.id]:(limits[c.id]??80)+80})}>Show next pages</button>}{!c.rows.length&&<p className="study-tree-note">No physical pages mapped yet.</p>}</div>}
+ </div>;})}
+ {stale&&<p className="study-tree-note" role="status">A study index for another file revision was retained; its links are not reused.</p>}
+ <button className="text-button study-manage" onClick={()=>onManage(doc)}><Icon name="edit" size={13}/>Manage PDF details</button>
  </div>;
 }

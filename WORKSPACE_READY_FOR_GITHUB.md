@@ -1,9 +1,10 @@
-# AtlasNote 1.2.3 source handoff
+# AtlasNote 1.2.4 workspace handoff
 
-The complete modified source is this repository tree and the delivered source ZIP. Start at `START_HERE.md`, then read `CODEX_HANDOFF.md` and `FINAL_TEST_STATUS.md`.
+The complete source is in this directory and in the accompanying AtlasNote_1.2.4_Source.zip. Do not rely on a future chat retaining this temporary directory.
 
-Based on upstream `main` commit `476f327ae77eb9103f2e5d079b87b6a541ddc782`, verified tree `2d07e499cab9236f5a098e2d08513f98f3e1b4f3`. It contains the simplified UI/PDF tree pass plus lightweight single/all-workspace saved states, undo and mini history. No remote branch, merge or deployment was performed in this completion pass.
+Reference main: f82c336464e3faafa12e8ad888f9415c2e23f5e2 (1.2.3).
+Suggested branch: feature/atlasnote-1.2.4-reading-managers (not created by this pass).
 
-The complete patch is `handoff/changes.patch` in the packaged delivery. Use a clean branch/worktree and check before applying. Do not restart from an older release branch, reset main, delete .git, or reapply unrelated local changes. Generated build/test assets and node_modules are not source and are not packaged.
+Read START_HERE.md, CODEX_HANDOFF.md and FINAL_TEST_STATUS.md. This is a complete source checkpoint, not permission to skip pending release checks or deploy a compatibility build. No remote write, merge or deployment was performed.
 
-The source builds the integrated distribution, but normal-origin/IndexedDB release acceptance is not certified in this browser-policy-restricted runtime. Codex/local CI must run those gates before promotion. See the current results; historical documents archived under docs/history are not current instructions.
+The extracted package must have package.json, src/, tests/ and .github/ at the repository root. Preserve .git and local/private data. Do not upload node_modules, .build, dist-offline, generated backups or private library files.

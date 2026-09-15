@@ -1,3 +1,4 @@
+from browser_support import close_panels
 from browser_support import close_panels,more_action,open_more,open_settings,open_context,reader_action,open_reading,set_learning_flag
 """Actual Chromium DOM/layout tests on an opaque-origin harness.
 
@@ -132,6 +133,7 @@ with sync_playwright() as p:
         assert page.locator('.active-pane h1').inner_text()=='One note, several ways to read'
     check('global search matches code content and navigates within active pane',search)
     def reveal():
+        close_panels(page)
         pane=page.locator('.active-pane');assert pane.locator('.answer').count()==0
         pane.get_by_role('button',name='Reveal answer').click();page.wait_for_timeout(250);assert pane.locator('.answer').count()==1
         page.get_by_role('button',name='Export to AI').click();page.wait_for_timeout(200)

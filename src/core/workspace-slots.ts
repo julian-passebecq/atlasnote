@@ -39,7 +39,7 @@ export function revealPane(session:Session,id:string):void {
 }
 export function toggleQuickLayout(view:View,pdf:boolean):void {
  const loc=view.history[view.cursor];if(!loc)return;
- if(pdf){if(loc.pdfMode==='spread')loc.pdfMode=loc.previousPdfMode??'single';else {loc.previousPdfMode=loc.pdfMode;loc.pdfMode='spread';}}
+ if(pdf){if(loc.pdfMode==='grid'){loc.pdfMode='spread';loc.zoom=loc.previousGridZoom??loc.zoom;delete loc.previousGridMode;delete loc.previousGridZoom;return;}if(loc.pdfMode==='spread')loc.pdfMode=loc.previousPdfMode??'single';else {loc.previousPdfMode=loc.pdfMode;loc.pdfMode='spread';}}
  else {if(loc.presentation==='book')loc.presentation=loc.previousPresentation??'continuous';else {loc.previousPresentation=loc.presentation;loc.presentation='book';}}
 }
 /** Classification is explicit data, never inferred from user titles. */
@@ -51,4 +51,10 @@ export const BUILTIN_CATEGORIES:Record<string,CategoryId>={
 };
 export function categoryMatches(projectId:string,filter:CategoryId|null|undefined,overrides:Record<string,CategoryId|null>={}):boolean {
  return !filter||(Object.hasOwn(overrides,projectId)?overrides[projectId]:BUILTIN_CATEGORIES[projectId])===filter;
+}
+
+export function togglePdfGrid(view:View):void{
+ const l=view.history[view.cursor];if(!l)return;
+ if(l.pdfMode==='grid'){l.pdfMode=l.previousGridMode??'single';l.zoom=l.previousGridZoom??1;delete l.previousGridMode;delete l.previousGridZoom;}
+ else {l.previousGridMode=l.pdfMode;l.previousGridZoom=l.zoom;l.pdfMode='grid';l.zoom=1;}
 }

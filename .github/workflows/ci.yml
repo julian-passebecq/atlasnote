@@ -34,6 +34,7 @@ jobs:
       - run: npm run test:finish:ui
       - run: npm run test:workspaces:ui
       - run: npm run test:simplified:ui
+      - run: npm run test:reading:ui
       - run: npm run test:backup:diagnostic
       - run: npm run test:pdf:authoring
       # Build the exact hosted distribution after all compatibility suites.
@@ -42,6 +43,7 @@ jobs:
       - run: npm run check:release
       - run: npm run build:test-harness
       - run: npm run test:pdf:component
+      - run: npm run test:pdf:grid
       - run: npm run test:pdf
       - run: npm run test:finish:integrated
       # Actual normal origin + IndexedDB + real browser download/fresh restore.
@@ -49,6 +51,7 @@ jobs:
       - run: npm run test:runtime
       - run: npm run test:workspaces:runtime
       - run: npm run test:savedstates:runtime
+      - run: npm run test:reading:runtime
       - run: npm run test:headers
       - uses: actions/upload-artifact@v4
         if: always()

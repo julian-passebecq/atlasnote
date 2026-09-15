@@ -60,3 +60,8 @@
 .focus-mode .integrated-pdf .pdf-controls{display:flex!important}
 .focus-mode .pdf-companion{display:none!important}
 @media(max-width:650px){.pdf-controls{padding:3px 5px;gap:2px}.pdf-controls select{max-width:97px}.pdf-controls .icon-button{width:25px}.pdf-canvas-scroll{padding:8px 16px 12px}}
+
+/* Four real physical pages. Fit uses actual rotated page geometry in JS. */
+.pdf-physical-pages.pdf-grid{display:grid;grid-template-columns:repeat(2,max-content);grid-auto-rows:max-content;justify-content:center;align-items:start;align-content:start;gap:12px;width:max-content;min-width:100%}
+.pdf-physical-pages.pdf-grid.grid-single{grid-template-columns:max-content}
+.pdf-grid .physical-page{min-height:0!important}
