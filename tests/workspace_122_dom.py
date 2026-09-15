@@ -1,3 +1,4 @@
+from browser_support import bookmark_position,open_saved_manager,inspect_pdf_term,show_reader_controls
 """1.2.2 shell/companion interaction regression in the inherited opaque-origin
 DOM harness. Real components only; no claim of PDF rendering or persistence.
 Those contracts are covered separately by workspace_122_runtime.py in CI.
@@ -60,7 +61,7 @@ with sync_playwright() as pw:
  check('Per-pane controls and sidebar hide independently; global topbar no longer exists',chrome)
  def companion_edit():
   reset('page.atlas.pdf');p.get_by_role('button',name='Switch to PDF library',exact=True).click();before=s()['panes'][0]['views']
-  p.locator('[data-node-id="node.page.atlas.pdf"] .tree-expander').click();p.get_by_role('button',name='Expand PDF glossary',exact=True).click();p.get_by_role('button',name='Definition of Selectable text',exact=True).click();assert 'Text stored in a PDF' in p.locator('dialog').inner_text();p.keyboard.press('Escape')
+  p.locator('[data-node-id="node.page.atlas.pdf"] .tree-expander').click();inspect_pdf_term(p,'Selectable text');assert 'Text stored in a PDF' in p.locator('dialog').inner_text();p.keyboard.press('Escape')
   open_more(p).get_by_role('button',name='Manage PDF details',exact=True).click();p.get_by_label('Edit concept',exact=True).select_option('text-layer');p.get_by_label('Concept translation',exact=True).fill('Valgbar tekst');p.get_by_label('Page occurrences (comma separated)',exact=True).fill('2, 5');p.get_by_label('Category title',exact=True).fill('Reading a PDF - reviewed example');p.get_by_role('button',name='Save companion locally',exact=True).click();p.locator('dialog').wait_for(state='detached')
   companions=snap()['overlays']['companions'];value=next(iter(companions.values()));assert next(t for t in value['terms'] if t['id']=='text-layer')['translation']=='Valgbar tekst';assert s()['panes'][0]['views']==before
   disclosures=s()['pdfTreeExpanded'];p.get_by_role('button',name='Workspace 2',exact=True).click();p.keyboard.press('Control+k');p.get_by_role('textbox',name='Search all pages and glossary',exact=True).fill('PDF reading fixture');p.locator('.search-result').filter(has_text='PDF reading fixture').first.click();assert p.locator('.pdf-study-tree').count()==0
@@ -73,7 +74,7 @@ with sync_playwright() as pw:
   rows=[]
   for w,h in [(1366,768),(1440,900),(1920,1080),(390,844)]:
    reset('page.atlas.welcome');p.set_viewport_size({'width':w,'height':h});p.wait_for_timeout(200);assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1
-   for name in ['New tab in pane 1','Quick Book mode','Reading mode','Compare in two panes','Enter focus mode','Hide reader controls','Manage saved states']:
+   for name in ['New tab in pane 1','Quick Book mode','Reading mode','Compare in two panes','Enter focus mode','Hide reader controls','Open context panel']:
     box=p.get_by_role('button',name=name,exact=True).bounding_box();assert box and box['x']>=0 and box['x']+box['width']<=w,(w,name,box)
    rail=p.locator('.reader-rail');assert rail.evaluate('e=>e.scrollHeight<=e.clientHeight+1')
    rows.append({'width':w,'height':h,'globalTopbarRows':p.locator('.topbar').count(),'reader':p.locator('.document-pane').bounding_box()});shot('shell-'+str(w))

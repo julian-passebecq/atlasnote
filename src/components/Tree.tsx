@@ -9,7 +9,7 @@ import {normalize} from '../core/workspace.js';
 
 type MenuState={project:Project;node?:TreeNode;x:number;y:number;returnFocus:HTMLElement};
 /** All tree actions also have an ordinary, keyboard-focusable Actions button. */
-export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],activePaneIndex=0,navigation,onPdfToggle,onPdfNavigate,onPdfTerm,onPdfManage,onWorkspace,onCategory,onSidebar,onPaneMarker,onGroupToggle,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
+export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],activePaneIndex=0,navigation,onReadingActions,onReadLater,onPdfToggle,onPdfNavigate,onPdfTerm,onPdfManage,onWorkspace,onCategory,onSidebar,onPaneMarker,onGroupToggle,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
  const [filterOpen,setFilterOpen]=useState(false),[filter,setFilter]=useState(''),[menu,setMenu]=useState<MenuState|null>(null);
  const menuRef=useRef<HTMLDivElement|null>(null);
  const expanded=new Set(activeSession(ws.personal).expanded),archived=new Set<string>(ws.overlays.archived),query=normalize(filter);
@@ -56,6 +56,7 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],ac
     <div className={'tree-row '+(n.pageId===activePage?'active ':'')+owners.map(i=>'pane-owner-'+(i===0?'a':'b')).join(' ')} data-node-id={n.id} data-pane-owners={owners.map(i=>i===0?'a':'b').join(' ')} style={{paddingLeft:(10+depth*14)+'px'}} onContextMenu={e=>showMenu(e,p,n)} onKeyDown={e=>keyboardMenu(e,p,n)}>
      <>{doc?<button className="tree-expander" aria-label={(pdfOpen?'Collapse PDF ':'Expand PDF ')+n.title} aria-expanded={pdfOpen} onClick={()=>onPdfToggle(pdfKey)}><Icon name={pdfOpen?'down':'chevron'} size={12}/></button>:n.children&&<button className="tree-expander" aria-label={(open?'Collapse ':'Expand ')+n.title} aria-expanded={open} onClick={()=>onToggle(n.id)}><Icon name={open?'down':'chevron'} size={12}/></button>}<button className="tree-target" title={n.title} aria-expanded={n.children?open:undefined} aria-current={n.pageId===activePage?'page':undefined}
       onClick={e=>n.pageId?onOpen(n.pageId,undefined,e.ctrlKey||e.metaKey):(onCollection(n.id,undefined,e.ctrlKey||e.metaKey),!open&&onToggle(n.id))}
+      onMouseDown={e=>{if(e.button===1)e.preventDefault();}}
       onAuxClick={e=>{if(e.button===1){e.preventDefault();onOpen(n.pageId??n.id,undefined,true);}}}>
       {!n.children&&!doc&&<span className="tree-indent"/>}
       <Icon name={n.children?'folder':c.documents.some((d:any)=>d.pageId===n.pageId)?'pdf':'page'} size={15}/><span>{page?.title??n.title}</span>
@@ -64,7 +65,7 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],ac
      {n.pageId&&activeSession(ws.personal).showFlags&&ws.personal.ratings[n.pageId]&&<span className={'flag-dot '+ws.personal.ratings[n.pageId]} title={ws.personal.ratings[n.pageId]}/>}
      <IconButton name="more" label={'Actions for '+n.title} className="tree-more" aria-haspopup="menu" onClick={e=>showMenu(e,p,n)}/>
     </div>
-    {doc&&pdfOpen&&<PdfStudyTree key={pdfKey} doc={doc} workspace={ws} depth={depth+1} onToggle={onPdfToggle} onNavigate={onPdfNavigate} onTerm={onPdfTerm} onManage={onPdfManage}/>}
+    {doc&&pdfOpen&&<PdfStudyTree onActions={onReadingActions} key={pdfKey} doc={doc} workspace={ws} depth={depth+1} onToggle={onPdfToggle} onNavigate={onPdfNavigate} onTerm={onPdfTerm} onManage={onPdfManage}/>}
     {n.children&&open&&<div className="tree-children">{n.children.length?nodes(n.children,p,depth+1):<button className="empty-folder" style={{marginLeft:(30+depth*14)+'px'}} onClick={()=>onCreate('page',p,n)}>Add a page</button>}</div>}
    </div>;
   });
@@ -108,6 +109,7 @@ export function ProjectTree({catalogue:c,workspace:ws,activePage,panePages=[],ac
     <button role="menuitem" onClick={()=>action(()=>onCreate('page',menu.project,menu.node))}><Icon name="plus"/>Add page</button>
     <button role="menuitem" onClick={()=>action(()=>onCreate('folder',menu.project,menu.node))}><Icon name="folder"/>Add folder</button>
    </>}
+   {onReadLater&&<button role="menuitem" onClick={()=>action(()=>onReadLater(menuPage??menu.node?.id??menu.project.id,menu.node?.title??menu.project.title))}><Icon name="clock"/>Add to Read later</button>}
    <div role="separator"/>
    <button role="menuitem" onClick={()=>manage('rename')}><Icon name="edit"/>Rename</button>
    <button role="menuitem" onClick={()=>manage('move')}><Icon name="folder"/>{menu.node?'Move':'Move / group notebook'}</button>

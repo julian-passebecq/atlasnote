@@ -7,7 +7,7 @@ import {Document,Page,Outline,pdfjs} from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import type {DocumentEntry,Location,WorkspaceNumber} from '../core/model';
-import {clampPage,spreadPages,combinedRotation,stepPhysicalPage} from '../pdf/physical-pages.mjs';
+import {clampPage,spreadPages,gridPages,gridPageWidth,combinedRotation,stepPhysicalPage} from '../pdf/physical-pages.mjs';
 import {pdfAnchor} from '../core/personal-state';
 import {DocumentInfo} from '../pdf/DocumentInfo';
 import {Icon,IconButton} from '../components/Icon';
@@ -29,7 +29,7 @@ function PhysicalPage({pdf,n,width,rotation,root,virtual,onVisible,onRendered}:{
  </section>;
 }
 export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,url,requestExternal,onFallback}:Props){
- const [pdf,setPDF]=useState<PDF|null>(null),[error,setError]=useState(''),[workerOK,setWorkerOK]=useState(false),[workerError,setWorkerError]=useState(''),[loading,setLoading]=useState('Opening PDF...'),[retry,setRetry]=useState(0),[outline,setOutline]=useState(false),[searchOpen,setSearchOpen]=useState(false),[info,setInfo]=useState(false),[query,setQuery]=useState(''),[hits,setHits]=useState<{page:number;excerpt:string}[]>([]),[findStatus,setFindStatus]=useState(''),[password,setPassword]=useState(''),[passwordReason,setPasswordReason]=useState(''),[width,setWidth]=useState(700),[height,setHeight]=useState(600),[pageInput,setPageInput]=useState(String(loc.pdfPage));
+ const [pdf,setPDF]=useState<PDF|null>(null),[error,setError]=useState(''),[workerOK,setWorkerOK]=useState(false),[workerError,setWorkerError]=useState(''),[loading,setLoading]=useState('Opening PDF...'),[retry,setRetry]=useState(0),[outline,setOutline]=useState(false),[searchOpen,setSearchOpen]=useState(false),[info,setInfo]=useState(false),[query,setQuery]=useState(''),[hits,setHits]=useState<{page:number;excerpt:string}[]>([]),[findStatus,setFindStatus]=useState(''),[password,setPassword]=useState(''),[passwordReason,setPasswordReason]=useState(''),[width,setWidth]=useState(700),[height,setHeight]=useState(600),[pageInput,setPageInput]=useState(String(loc.pdfPage)),[gridRatios,setGridRatios]=useState<Record<number,number>>({});
  const passwordCallback=useRef<((value:string)=>void)|null>(null),host=useRef<HTMLDivElement>(null),job=useRef(0),locationRef=useRef(loc),onLocationRef=useRef(onLocation);locationRef.current=loc;onLocationRef.current=onLocation;
  useEffect(()=>{if(!pdf||!paneId)return;return registerStudyPreparer(slotId??1,paneId,doc.id,(first,last,onProgress,signal)=>prepareCompanionParts(pdf,doc,{startPage:first,endPage:last,onProgress,signal}));},[pdf,doc.id,doc.sha256,paneId,slotId]);
  const source=useMemo(()=>url?{url}:null,[url]);
@@ -46,11 +46,11 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  function restorePosition(force=false){
   if((!pendingRestore.current&&!force)||scrolling.current)return;
   const el=host.current,l=locationRef.current;if(!el||!pdf)return;
-  const target=el.querySelector<HTMLElement>('[data-physical-page="'+clampPage(l.pdfPage,pdf.numPages)+'"]');if(!target)return;
+  const target=l.pdfMode==='grid'?el.querySelector<HTMLElement>('.pdf-physical-pages'):el.querySelector<HTMLElement>('[data-physical-page="'+clampPage(l.pdfPage,pdf.numPages)+'"]');if(!target)return;
   restoring.current=true;
   const offset=l.anchor?.pdfOffset??0;
   el.scrollTop+=target.getBoundingClientRect().top-el.getBoundingClientRect().top+offset*target.getBoundingClientRect().height;
-  if(target.dataset.pageRendered==='true')pendingRestore.current=false;
+  if(target.dataset.pageRendered==='true'||l.pdfMode==='grid'&&target.querySelector('canvas'))pendingRestore.current=false;
   cancelAnimationFrame(restoreFrame.current);restoreFrame.current=requestAnimationFrame(()=>{restoring.current=false;});
  }
  function queueRestore(){scrolling.current=false;pendingRestore.current=true;cancelAnimationFrame(restoreFrame.current);restoreFrame.current=requestAnimationFrame(()=>restorePosition());}
@@ -64,8 +64,8 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
   const el=host.current,l=locationRef.current;if(capturing.current||!el||!scrolling.current||restoring.current)return;
   const nodes=Array.from(el.querySelectorAll<HTMLElement>('[data-physical-page]'));
   const line=el.getBoundingClientRect().top+2;
-  const node=l.pdfMode==='continuous'?(nodes.find(n=>n.getBoundingClientRect().bottom>line)??nodes.at(-1)):(nodes.find(n=>Number(n.dataset.physicalPage)===l.pdfPage)??nodes[0]);
-  if(!node)return;const n=Number(node.dataset.physicalPage),rect=node.getBoundingClientRect();
+  const node=l.pdfMode==='grid'?el.querySelector<HTMLElement>('.pdf-physical-pages'):l.pdfMode==='continuous'?(nodes.find(n=>n.getBoundingClientRect().bottom>line)??nodes.at(-1)):(nodes.find(n=>Number(n.dataset.physicalPage)===l.pdfPage)??nodes[0]);
+  if(!node)return;const n=l.pdfMode==='grid'?l.pdfPage:Number(node.dataset.physicalPage),rect=node.getBoundingClientRect();
   if(!rect.height)return;
   const offset=Math.round(Math.max(-10,Math.min(10,(el.getBoundingClientRect().top-rect.top)/rect.height))*1000000)/1000000;
   if(n!==l.pdfPage||Math.abs((l.anchor?.pdfOffset??0)-offset)>0.00001){
@@ -88,7 +88,7 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
    // with the viewport after that padding; allow a reverse turn there too.
    const style=getComputedStyle(el),topInset=parseFloat(style.paddingTop)||0,bottomInset=parseFloat(style.paddingBottom)||0;
    const l=locationRef.current,turn=wheelPager.current({deltaY:e.deltaY,deltaX:e.deltaX,deltaMode:e.deltaMode,now:performance.now(),mode:l.pdfMode,top:el.scrollTop<=topInset+2,bottom:el.scrollTop+el.clientHeight>=el.scrollHeight-bottomInset-2,blocked});
-   if(turn&&pdf){const paired=l.pdfMode==='spread'&&el.clientWidth>=650;const next=stepPhysicalPage(l.pdfPage,pdf.numPages,turn,paired,l.cover);if(next!==l.pdfPage){e.preventDefault();setPage(next,turn<0);}}
+   if(turn&&pdf){const paired=l.pdfMode==='grid'?4:l.pdfMode==='spread'&&el.clientWidth>=650;const next=stepPhysicalPage(l.pdfPage,pdf.numPages,turn,paired,l.cover);if(next!==l.pdfPage){e.preventDefault();setPage(next,turn<0);}}
   };
   el.addEventListener('wheel',wheel,{passive:false});return()=>el.removeEventListener('wheel',wheel);
  },[pdf,url]);
@@ -101,29 +101,34 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
    const root=host.current?.closest('.document-pane');
    if(!root?.classList.contains('active-pane')||(!root.closest('.focus-mode')&&document.activeElement!==host.current)||e.defaultPrevented||e.ctrlKey||e.metaKey||e.altKey||e.shiftKey)return;
    const target=e.target as HTMLElement;if(target?.closest('input,textarea,select,button,a,[contenteditable="true"],[role="textbox"]'))return;
-   if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const l=locationRef.current;setPage(stepPhysicalPage(l.pdfPage,pdf?.numPages??1,e.key==='ArrowRight'?1:-1,l.pdfMode==='spread'&&width>=650,l.cover));}
+   if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const l=locationRef.current;setPage(stepPhysicalPage(l.pdfPage,pdf?.numPages??1,e.key==='ArrowRight'?1:-1,l.pdfMode==='grid'?4:l.pdfMode==='spread'&&width>=650,l.cover));}
   }
   const close=()=>{setOutline(false);setSearchOpen(false);setInfo(false);};
   document.addEventListener('keydown',keys);document.addEventListener('atlas:focus-enter',close);
   return()=>{document.removeEventListener('keydown',keys);document.removeEventListener('atlas:focus-enter',close);};
  },[pdf,width,doc.id]);
- const count=pdf?.numPages??0,page=clampPage(loc.pdfPage,count||1),paired=loc.pdfMode==='spread'&&width>=650,pages=loc.pdfMode==='continuous'?Array.from({length:count},(_,i)=>i+1):paired?spreadPages(page,count,loc.cover):[page];
- const pageWidth=Math.max(64,Math.floor((width-32-(paired?16:0))/(paired?2:1)*loc.zoom));
+ const count=pdf?.numPages??0,page=clampPage(loc.pdfPage,count||1),grid=loc.pdfMode==='grid',paired=loc.pdfMode==='spread'&&width>=650,pages=loc.pdfMode==='continuous'?Array.from({length:count},(_,i)=>i+1):grid?gridPages(page,count,loc.cover):paired?spreadPages(page,count,loc.cover):[page];
+ const shownKey=pages.join(',');
+ useEffect(()=>{let alive=true;if(grid&&pdf){Promise.all(pages.map(async n=>{const p=await pdf.getPage(n),v=p.getViewport({scale:1,rotation:combinedRotation(p.rotate,loc.rotation)});return [n,v.height/v.width] as const;})).then(pairs=>{if(alive)setGridRatios(Object.fromEntries(pairs));}).catch(()=>{});}return()=>{alive=false;};},[pdf,grid,shownKey,loc.rotation]);
+ const labels=!host.current?.closest('.reader-chrome-hidden'),pageWidth=grid?gridPageWidth(width,height,pages.map(n=>gridRatios[n]??1.414),labels)*loc.zoom:Math.max(64,Math.floor((width-32-(paired?16:0))/(paired?2:1)*loc.zoom));
+ const groupSize=grid?4:paired;
+ function changeMode(mode:Location['pdfMode']){onLocation({...loc,pdfMode:mode,...(mode==='grid'?{zoom:1}:{})});}
+
  async function find(){const text=query.trim().toLocaleLowerCase();const currentJob=++job.current;setHits([]);if(!pdf||!text){setFindStatus('Enter text present in the PDF.');return;}setFindStatus('Searching selectable PDF text...');const found:{page:number;excerpt:string}[]=[];let characters=0;const limit=Math.min(pdf.numPages,1000);
   try{for(let n=1;n<=limit;n++){if(currentJob!==job.current)return;const p=await pdf.getPage(n),content=await p.getTextContent();const value=content.items.map(item=>'str'in item?item.str:'').join(' ');characters+=value.length;const at=value.toLocaleLowerCase().indexOf(text);if(at>=0)found.push({page:n,excerpt:value.slice(Math.max(0,at-45),at+text.length+100)});if(n%10===0){setFindStatus('Searched '+n+' / '+limit+' pages');setHits([...found]);await new Promise(r=>setTimeout(r,0));}}if(currentJob!==job.current)return;setHits(found);setFindStatus((characters?found.length+' matching pages.':'No selectable text found. This may be an image-only PDF; OCR is not included.')+(limit<pdf.numPages?' Search bounded to the first 1,000 physical pages.':''));}catch(e){if(currentJob===job.current)setFindStatus('Text search failed: '+(e as Error).message);}
  }
  if(!url)return <div className="pdf-engine-empty"><h1>{doc.title}</h1>{doc.source.url?<><p>Allow the external PDF host before any document request.</p><code>{doc.source.url}</code><button onClick={requestExternal}>Allow external PDF reference</button></>:<p role="alert">PDF bytes are unavailable. Import the original PDF through Workspace settings.</p>}</div>;
  return <div className="integrated-pdf" data-pdf-state={error||workerError?'error':pdf?'ready':'loading'} data-pdf-engine-version={pdfjs.version} data-worker-status={workerOK?'compatible':workerError?'error':'checking'}>
   <div className="pdf-controls" aria-label="Physical PDF controls">
-   <IconButton name="left" label="Previous PDF page" disabled={!pdf||page<=1} onClick={()=>setPage(stepPhysicalPage(page,count,-1,paired,loc.cover))}/>
+   <IconButton name="left" label="Previous PDF page" disabled={!pdf||(grid||paired?pages[0]:page)<=1} onClick={()=>setPage(stepPhysicalPage(page,count,-1,groupSize,loc.cover))}/>
    <form onSubmit={e=>{e.preventDefault();setPage(Number(pageInput));}}><input aria-label="Physical PDF page number" type="number" min="1" max={count||1} value={pageInput} onChange={e=>setPageInput(e.target.value)}/><span aria-label="Physical page count"> / {count||'...'}</span></form>
-   <IconButton name="right" label="Next" disabled={!pdf||(paired?pages[pages.length-1]:page)>=count} onClick={()=>setPage(stepPhysicalPage(page,count,1,paired,loc.cover))}/>
-   <select aria-label="PDF presentation" value={loc.pdfMode} onChange={e=>onLocation({...loc,pdfMode:e.target.value as Location['pdfMode']})}><option value="single">Single</option><option value="continuous">Continuous</option><option value="spread">Spread</option></select>
-   <select aria-label="PDF zoom" value={loc.zoom} onChange={e=>onLocation({...loc,zoom:Number(e.target.value)})}>{[0.5,0.75,1,1.25,1.5,2].map(z=><option key={z} value={z}>{z===1?'Fit width':Math.round(z*100)+'%'}</option>)}</select>
+   <IconButton name="right" label="Next" disabled={!pdf||((grid||paired)?pages[pages.length-1]:page)>=count} onClick={()=>setPage(stepPhysicalPage(page,count,1,groupSize,loc.cover))}/>
+   <select aria-label="PDF presentation" value={loc.pdfMode} onChange={e=>changeMode(e.target.value as Location['pdfMode'])}><option value="single">Single</option><option value="continuous">Continuous</option><option value="spread">Spread</option><option value="grid">Four pages</option></select>
+   <select aria-label="PDF zoom" value={loc.zoom} onChange={e=>onLocation({...loc,zoom:Number(e.target.value)})}>{[0.5,0.75,1,1.25,1.5,2].map(z=><option key={z} value={z}>{z===1?(grid?'Fit grid':'Fit width'):Math.round(z*100)+'%'}</option>)}</select>
    <IconButton name="rotate" label="Rotate 90 degrees" onClick={()=>onLocation({...loc,rotation:(loc.rotation+90)%360})}/>
    <IconButton name="search" label="Search PDF" active={searchOpen} onClick={()=>{setSearchOpen(!searchOpen);setOutline(false);setInfo(false);}}/>
    <IconButton name="list" label="Outline" active={outline} onClick={()=>{setOutline(!outline);setSearchOpen(false);setInfo(false);}}/>
-   {loc.pdfMode==='spread'&&<label className="pdf-cover-toggle" title="Show the cover alone"><input type="checkbox" checked={loc.cover} onChange={e=>onLocation({...loc,cover:e.target.checked})}/> Cover alone</label>}
+   {(loc.pdfMode==='spread'||grid)&&<label className="pdf-cover-toggle" title="Show the cover alone"><input type="checkbox" checked={loc.cover} onChange={e=>onLocation({...loc,cover:e.target.checked})}/> Cover alone</label>}
    <a className="icon-button" aria-label="Download original" title="Download original" href={url} download={doc.title+'.pdf'}><Icon name="download"/></a>
    <IconButton name="more" label="Document info" active={info} onClick={()=>{setInfo(!info);setSearchOpen(false);setOutline(false);}}/>
   </div>
@@ -142,7 +147,7 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
    onScroll={()=>{cancelAnimationFrame(scrollFrame.current);scrollFrame.current=requestAnimationFrame(captureScroll);clearTimeout(settleTimer.current);settleTimer.current=setTimeout(()=>{captureScroll();scrolling.current=false;},180);}}>
    {workerOK&&!error&&!workerError?<Document key={doc.id+':'+doc.sha256+':'+retry} file={source} options={options} externalLinkTarget="_blank" externalLinkRel="noopener noreferrer" onLoadSuccess={async p=>{setPDF(p);setLoading('');const n=clampPage(locationRef.current.pdfPage,p.numPages);const l=locationRef.current;if(l.pdfPage!==n||l.anchor?.pdfPage!==n||l.anchor?.pdfRevision!==doc.sha256)onLocationRef.current({...l,pdfPage:n,anchor:pdfAnchor(n,doc.sha256)});queueRestore();}} onLoadError={e=>setError(e.message)} onSourceError={e=>setError(e.message)} onLoadProgress={({loaded,total})=>setLoading(total?'Loading '+Math.round(loaded/total*100)+'%':'Loading PDF bytes...')} onPassword={(callback,reason)=>{passwordCallback.current=callback;setPasswordReason(reason===2?'Incorrect password. Try again.':'This PDF is password protected.');}} onItemClick={({pageNumber})=>{if(pageNumber)setPage(pageNumber);}} loading={<p role="status">{loading}</p>}>
     {pdf&&<aside className="pdf-outline" hidden={!outline}><IconButton name="close" label="Close PDF outline" onClick={()=>setOutline(false)}/><h3>Document outline</h3><Outline onItemClick={({pageNumber})=>{if(pageNumber)setPage(pageNumber);}}/></aside>}
-    <div className={'pdf-physical-pages '+(paired?'pdf-spread':'')}>{pdf&&pages.map(n=><PhysicalPage key={n} pdf={pdf} n={n} width={pageWidth} rotation={loc.rotation} root={host.current} virtual={loc.pdfMode==='continuous'} onVisible={seen} onRendered={()=>restorePosition(true)}/>)}</div>
+    <div className={'pdf-physical-pages '+(grid?'pdf-grid '+(pages.length===1?'grid-single':''):paired?'pdf-spread':'')} data-grid={grid?'four-pages':undefined} onPointerDown={e=>{if(!grid||(e.target as HTMLElement).closest('a'))return;const n=Number((e.target as HTMLElement).closest<HTMLElement>('[data-physical-page]')?.dataset.physicalPage);if(n&&n!==loc.pdfPage)setPage(n);}}>{pdf&&pages.map(n=><PhysicalPage key={n} pdf={pdf} n={n} width={pageWidth} rotation={loc.rotation} root={host.current} virtual={loc.pdfMode==='continuous'} onVisible={seen} onRendered={()=>restorePosition(true)}/>)}</div>
    </Document>:!error&&!workerError&&<p>Checking compatible local PDF worker...</p>}
   </div>
  </div>;

@@ -16,3 +16,14 @@ export function directCategoryPages(c:PdfCategory,companion:PdfCompanion):number
  for(const p of Object.values(companion.pages))if(p.categoryIds?.includes(c.id))numbers.add(p.page);
  return [...numbers].filter(n=>n>=1&&n<=companion.pageCount).sort((a,b)=>a-b);
 }
+
+/** Flatten the old category hierarchy into exactly category -> physical-page rows.
+ * A repeated physical page under a different heading is an intentional link. */
+export function categoryPageRows(category:PdfCategory,companion:PdfCompanion):{id:string;page:number;title:string}[]{
+ const rows:{id:string;page:number;title:string}[]=[],seen=new Set<string>();
+ const add=(page:number,title:string)=>{const key=JSON.stringify([page,title]);if(!seen.has(key)){seen.add(key);rows.push({id:key,page,title});}};
+ for(const n of directCategoryPages(category,companion))add(n,companion.pages[String(n)]?.title??'Page '+n);
+ const walk=(children:PdfCategory[])=>{for(const child of children){for(const n of directCategoryPages(child,companion))add(n,child.title);walk(child.children??[]);}};walk(category.children??[]);
+ return rows.sort((a,b)=>a.page-b.page);
+}
+export function shortPageTitle(title:string,max=52):string{const clean=title.replace(/\s+/g,' ').trim();return clean.length>max?clean.slice(0,max-1).trimEnd()+'\u2026':clean;}

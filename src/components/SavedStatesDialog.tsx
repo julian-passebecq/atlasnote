@@ -4,16 +4,16 @@ import type {SaveScope,StateSave} from '../core/saved-states-types.js';
 import {saveScope,scopeLabel,sessionSummary,STATE_SAVE_LIMITS} from '../core/saved-states.js';
 import {Modal,Field} from './Modal.js';
 import {Icon} from './Icon.js';
-type Props={personal:Personal;busy:boolean;onClose:()=>void;onSave:(scope:SaveScope)=>Promise<void>;onRestore:(id:string)=>Promise<void>;onRename:(id:string,title:string,note:string)=>Promise<void>;onDelete:(id:string)=>Promise<void>};
+type Props={embedded?:boolean;initialScope?:SaveScope;onlyWorkspaces?:boolean;personal:Personal;busy:boolean;onClose:()=>void;onSave:(scope:SaveScope)=>Promise<void>;onRestore:(id:string)=>Promise<void>;onRename:(id:string,title:string,note:string)=>Promise<void>;onDelete:(id:string)=>Promise<void>};
 const date=(n:number)=>{const d=new Date(n);return Number.isFinite(d.getTime())?d.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'}):'Unknown time';};
-export function SavedStatesDialog({personal,busy,onClose,onSave,onRestore,onRename,onDelete}:Props){
- const [scope,setScope]=useState<SaveScope>(personal.activeWorkspaceSlot??1),[editing,setEditing]=useState<string|null>(null),[title,setTitle]=useState(''),[note,setNote]=useState(''),[deleting,setDeleting]=useState<string|null>(null);
+export function SavedStatesDialog({embedded=false,initialScope,onlyWorkspaces=false,personal,busy,onClose,onSave,onRestore,onRename,onDelete}:Props){
+ const [scope,setScope]=useState<SaveScope>(initialScope??personal.activeWorkspaceSlot??1),[editing,setEditing]=useState<string|null>(null),[title,setTitle]=useState(''),[note,setNote]=useState(''),[deleting,setDeleting]=useState<string|null>(null);
  const data=personal.savedStates,entries=data?.entries.filter(e=>saveScope(e)===scope)??[],undo=data?.safety[scope];
  const edit=(e:StateSave)=>{setEditing(e.id);setTitle(e.title);setNote(e.note);setDeleting(null);};
- return <Modal title="Saved workspace states" onClose={onClose}>
+ const body=<>
   <div className="state-saves-manager">
    <p className="secondary">Resume tabs, panes, reading positions, filters and layout. Notes and PDF files are not rolled back. Use Settings for a full library backup.</p>
-   <div className="save-scope-tabs" role="tablist" aria-label="Saved-state scopes">{([1,2,3,4,5,'all'] as SaveScope[]).map(n=><button key={n} role="tab" aria-selected={scope===n} aria-label={scopeLabel(n)+' saves'} onClick={()=>{setScope(n);setEditing(null);setDeleting(null);}}>{n==='all'?'All':n}</button>)}</div>
+   {!(embedded&&initialScope==='all')&&<div className="save-scope-tabs" role="tablist" aria-label="Saved-state scopes">{((onlyWorkspaces?[1,2,3,4,5]:initialScope==='all'?['all']:[1,2,3,4,5,'all']) as SaveScope[]).map(n=><button key={n} role="tab" aria-selected={scope===n} aria-label={scopeLabel(n)+' saves'} onClick={()=>{setScope(n);setEditing(null);setDeleting(null);}}>{n==='all'?'All':n}</button>)}</div>}
    <div className="save-list-heading"><strong>{scopeLabel(scope)}</strong><span>{entries.length} / {STATE_SAVE_LIMITS.perScope}</span><button disabled={busy||entries.length>=STATE_SAVE_LIMITS.perScope} onClick={()=>void onSave(scope)}><Icon name="plus" size={14}/>Save state</button></div>
    {undo&&<div className="save-undo"><span><strong>Before last restore</strong><small>{date(undo.createdAt)}</small></span><button disabled={busy} onClick={()=>void onRestore(undo.id)}>Undo last restore</button></div>}
    <div className="saved-state-list" role="tabpanel" aria-label={scopeLabel(scope)+' saved states'}>
@@ -33,5 +33,5 @@ export function SavedStatesDialog({personal,busy,onClose,onSave,onRestore,onRena
    </details>
    <small className="secondary">Local to this browser. Each restore creates an undo point for its scope. Manual saves are never silently replaced.</small>
   </div>
- </Modal>;
+ </>;return embedded?body:<Modal title="Saved workspace states" onClose={onClose}>{body}</Modal>;
 }

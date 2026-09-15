@@ -1,3 +1,7 @@
+# 1.2.4 - reading managers and four-page PDF overview
+
+Complete reconstructed implementation checkpoint. Separate category-based Bookmarks/Read later panels; session managers embedded in Context; simplified PDF category/page tree and page routing menus; actual four-page PDF grid; shared hidden-by-default controls and paired rail. Extended validation and exact-backup tests; existing runtime assertions retained. No production deployment by this pass. See FINAL_TEST_STATUS.md for evidence and blockers.
+
 # AtlasNote changelog
 
 ## 1.2.3 - simplified reading and saved workspace states

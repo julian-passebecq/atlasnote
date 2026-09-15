@@ -1,3 +1,4 @@
+from browser_support import bookmark_position,open_saved_manager,inspect_pdf_term,show_reader_controls
 """1.2 actual UI/geometry suite on the permitted opaque-origin DOM harness.
 No IndexedDB/reload or integrated-renderer claim. External transport is synthetic
 and mocked (zero remote access); SHA-256 uses a test-only Python bridge if needed.
@@ -103,7 +104,7 @@ with sync_playwright() as pw:
   reset();before=state();open_more(page).get_by_role('combobox',name='Learning flag').select_option('green');open_more(page).get_by_role('checkbox',name='Show learning flags').check();page.keyboard.press('Escape')
   assert page.evaluate('testStore.state.personal.ratings["page.atlas.layouts"]')=='green'
   open_more(page).get_by_role('checkbox',name='Show learning flags').uncheck();page.keyboard.press('Escape');assert page.evaluate('testStore.state.personal.ratings["page.atlas.layouts"]')=='green'
-  page.get_by_role('button',name='Compare in two panes',exact=True).click();page.locator('[data-node-id="node.page.atlas.language"] .tree-target').click();page.get_by_role('button',name='Bookmark reading position',exact=True).click();assert page.evaluate('testStore.state.personal.bookmarks.at(-1).pageId')=='page.atlas.language'
+  page.get_by_role('button',name='Compare in two panes',exact=True).click();page.locator('[data-node-id="node.page.atlas.language"] .tree-target').click();bookmark_position(page);assert page.evaluate('testStore.state.personal.bookmarks.at(-1).pageId')=='page.atlas.language'
  check('Hidden learning flags retain values; shared Bookmark targets active Compare page',flags_bookmark)
  def external():
   reset();page.evaluate('''async fixture=>{

@@ -1,3 +1,4 @@
+from browser_support import bookmark_position,open_saved_manager,inspect_pdf_term,show_reader_controls
 from browser_support import close_panels,more_action,open_more,open_settings,open_context,reader_action,open_reading,set_learning_flag
 """Real Chromium UI, DOM measurement and interaction tests.
 Explicit about:blank harness: no claim of IndexedDB, reload, PDF.js or restore certification.
@@ -90,9 +91,9 @@ with sync_playwright() as pw:
     def top_order():
         reset()
         labels=page.locator('.reader-rail > button').evaluate_all('(xs)=>xs.map(x=>x.getAttribute("aria-label")||x.textContent.trim())')
-        assert labels==['Enter focus mode','Compare in two panes','Swap panes','Open context panel','Bookmark reading position','Theme','Export to AI','More / Settings'],labels
+        assert labels==['Enter focus mode','Compare in two panes','Swap panes','Open context panel','Open bookmarks','Open read later','Theme','Export to AI','More / Settings'],labels
         return labels
-    check('Compact rail follows the 1.2.3 product control order',['E01'],top_order)
+    check('Compact rail follows the 1.2.4 paired control order',['E01'],top_order)
     for left in [False,True]:
         for right in [False,True]:
             def focus(left=left,right=right):
@@ -281,7 +282,7 @@ with sync_playwright() as pw:
     def note_pdf():
         reset();page.get_by_role('button',name='Switch to PDF library',exact=True).click();page.get_by_role('button',name='Compare in two panes').click();tree('PDF reading fixture').click()
         assert page.locator('.pdf-reader').count()==1;assert page.locator('.reader-body').count()==1
-        page.locator('.active-pane').get_by_role('button',name='Show reader controls',exact=True).click()
+        show_reader_controls(page)
         assert page.get_by_text('Browser PDF fallback',exact=True).is_visible()
         assert page.get_by_role('link',name='Open original PDF',exact=True).is_visible();assert page.get_by_role('link',name='Download original',exact=True).is_visible()
         page.screenshot(path=str(OUT/'04-note-pdf-fallback.png'))
@@ -350,11 +351,11 @@ with sync_playwright() as pw:
     def bookmark_update():
         reset('audit.page.long',synthetic=True)
         page.locator('.note-scroller').evaluate('(e)=>{e.scrollTop=700;e.dispatchEvent(new Event("scroll"));}');page.wait_for_timeout(350)
-        page.get_by_role('button',name='Bookmark reading position',exact=True).click()
+        bookmark_position(page)
         bookmark=state('personal.bookmarks')[0];assert bookmark['anchor']['blockId']
         from browser_support import synthetic_data
         page.evaluate('(packs)=>{testStore.setLoaded({...testStore.state,imports:packs});}',synthetic_data()[1]['packs'])
-        more_action(page,'Bookmarks');page.locator('.bookmark-card > button').first.click();page.wait_for_timeout(350)
+        more_action(page,'Bookmarks');page.locator('.reading-open').first.click();page.wait_for_timeout(350)
         view=state()['panes'][0]['views'][0];assert view['history'][view['cursor']]['pageId']=='audit.page.long'
         assert state('personal.bookmarks')[0]==bookmark
     check('Position bookmark resolves stable page ID after source relocation',['H04','H06'],bookmark_update)

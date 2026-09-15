@@ -1,3 +1,4 @@
+from browser_support import show_reader_controls
 from browser_support import close_panels,more_action,open_more,open_settings,open_context,reader_action,open_reading,set_learning_flag
 """AtlasNote 1.1 real browser DOM/layout tests; NOT normal-origin persistence.
 The existing policy-respecting about:blank harness is used. A clearly labeled
@@ -203,7 +204,7 @@ with sync_playwright() as pw:
         assert 'Intake batch' in page.locator('.pane-breadcrumb').inner_text()
         more_action(page,'Edit current page');page.get_by_label('Page title').fill('Renamed local PDF');page.get_by_label('Primary PDF language').fill('fr');page.get_by_label('Tags and facets (comma separated)').fill('doctype:guide, domain:data-engineering, tech:dbt, source:linkedin');page.get_by_role('button',name='Save page locally').click();page.wait_for_timeout(250)
         if page.locator('.active-pane').get_by_role('button',name='Show reader controls',exact=True).count():page.locator('.active-pane').get_by_role('button',name='Show reader controls',exact=True).click()
-        page.get_by_role('button',name='Document info',exact=True).click();assert page.locator('.pdf-info-overlay h3').inner_text()=='Renamed local PDF';page.get_by_role('button',name='Close document info',exact=True).click()
+        show_reader_controls(page);page.get_by_role('button',name='Document info',exact=True).click();assert page.locator('.pdf-info-overlay h3').inner_text()=='Renamed local PDF';page.get_by_role('button',name='Close document info',exact=True).click()
         after=page.evaluate('testStore.state.overlays.documents.at(-1)');assert after['id']==doc['id'] and after['sha256']==doc['sha256'] and after['language']=='fr'
         count=page.evaluate('testStore.state.overlays.documents.length');more_action(page,'Workspace settings');page.get_by_label('Import local PDF').set_input_files({'name':'different-name.pdf','mimeType':'application/pdf','buffer':source});page.get_by_role('button',name='Open existing PDF').click();assert page.evaluate('testStore.state.overlays.documents.length')==count
         return {'sha256':doc['sha256'],'bytes':len(source),'originalAndRenameIdsSame':True,'storageScope':'Only actual intake output into in-memory adapter; real IDB gate separate'}

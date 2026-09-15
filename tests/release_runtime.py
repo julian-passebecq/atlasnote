@@ -1,3 +1,4 @@
+from browser_support import bookmark_position,open_saved_manager,inspect_pdf_term,show_reader_controls
 from browser_support import close_panels,more_action,open_more,open_settings,open_context,reader_action,open_reading,set_learning_flag
 """Release gate: real-origin app, actual IndexedDB, browser ZIP download and fresh-context restore.
 No route interception, storage mocks, database seeding or browser-policy changes.
@@ -138,7 +139,7 @@ try:
         set_learning_flag(page,'green')
         page.locator('.active-pane .note-scroller').evaluate('(e)=>{e.scrollTop=800;e.dispatchEvent(new Event("scroll"));}')
         page.wait_for_timeout(450)
-        page.get_by_role('button',name='Bookmark reading position',exact=True).click()
+        bookmark_position(page)
         reader_action(page,'Book',page.locator('.active-pane'))
         page.wait_for_timeout(500)
         # Root page creation uses the same normal modal as a reader would use.

@@ -1,3 +1,5 @@
+> **Current checkpoint: AtlasNote 1.2.4.** Read START_HERE.md and FINAL_TEST_STATUS.md before integration. The implementation includes category-based reading managers and a four-page PDF grid; it is not deployed by this pass.
+
 # AtlasNote 1.2.3
 
 Local-first notes and PDF reading, continuing the verified 1.2.2 application. Start with **[START_HERE.md](START_HERE.md)**. This delivered source has not been merged or deployed.

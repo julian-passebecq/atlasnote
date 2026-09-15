@@ -1,3 +1,4 @@
+from browser_support import bookmark_position,open_saved_manager,inspect_pdf_term,show_reader_controls
 """1.2.3 release acceptance, retaining all 1.2.2 persistence contracts: real HTTP origin, integrated PDF.js canvases, actual
 IndexedDB, downloads and a new browser context. No injected store, fake renderer,
 request interception, seeded local database or policy bypass. DOM interaction
@@ -5,7 +6,7 @@ sets scroll positions only to reach exact edge cases, then sends real wheels.
 """
 import json,os,traceback,zipfile,hashlib,subprocess
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright,expect
 from browser_support import ROOT,start_server,launch,open_settings,open_context,reader_action,close_panels,open_more,show_reader_controls
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/1.2.2/runtime'));OUT.mkdir(parents=True,exist_ok=True)
 CASES=['normal_origin','independent_slots','duplicate_categories','workspace_position','quick_layouts','pdf_engine','wheel_single','wheel_middle','wheel_gesture','wheel_spread','continuous_position','companion_navigation','companion_edit','companion_import_validation','local_ai_input','companion_promotion','pane_collapse_markers','compact_controls','geometry_themes','all_slot_reload','backup_download','fresh_restore','restored_reload','legacy_v2_restore','public_spark_companion','no_errors']
@@ -86,15 +87,15 @@ try:
   phase='companion_navigation';page.get_by_role('combobox',name='PDF presentation').select_option('single');assert page.locator('.pdf-companion').count()==0
   tree=page.locator('[data-node-id="node.page.atlas.pdf"]').locator('..')
   tree.get_by_role('button',name='Expand PDF PDF reading fixture',exact=True).click();assert tree.locator('.pdf-study-page').count()==0
-  tree.get_by_role('button',name='Expand PDF category Reading a PDF',exact=True).click();tree.get_by_role('button',name='Go to PDF page 2 in PDF reading fixture',exact=True).click();assert number(page)==2
-  tree.get_by_role('button',name='Expand PDF glossary',exact=True).click();tree.get_by_role('button',name='Definition of Selectable text',exact=True).click();page.get_by_role('button',name='Go to PDF page 5',exact=True).click();assert number(page)==5;record()
+  tree.get_by_role('button',name='Expand PDF category Reading a PDF',exact=True).click();tree.locator('.pdf-study-page[data-pdf-page="2"] .tree-target').first.click();assert number(page)==2
+  inspect_pdf_term(page,'Selectable text');page.get_by_role('button',name='Go to PDF page 5',exact=True).click();assert number(page)==5;record()
   phase='companion_edit';open_more(page).get_by_role('button',name='Manage PDF details',exact=True).click();page.get_by_label('Edit concept',exact=True).select_option('text-layer');page.get_by_label('Concept translation',exact=True).fill('Valgbar tekst');page.get_by_label('Page occurrences (comma separated)',exact=True).fill('2, 5');page.get_by_label('Category title',exact=True).fill('Verified reading category');page.get_by_role('button',name='Save companion locally',exact=True).click();page.locator('dialog').wait_for(state='detached');saved=snapshot(page);comp=next(iter(saved['overlays']['companions'].values()));assert next(t for t in comp['terms'] if t['id']=='text-layer')['translation']=='Valgbar tekst';record()
   phase='companion_import_validation';open_more(page).get_by_role('button',name='Manage PDF details',exact=True).click();bad={**comp,'documentSha256':'0'*64};page.get_by_label('Import companion JSON',exact=True).set_input_files({'name':'bad-companion.json','mimeType':'application/json','buffer':json.dumps(bad).encode()});page.locator('dialog [role=alert]').wait_for();assert snapshot(page)['overlays']['companions']==saved['overlays']['companions']
   valid={**comp,'title':'Imported and reviewed companion'};page.get_by_label('Import companion JSON',exact=True).set_input_files({'name':'valid-companion.json','mimeType':'application/json','buffer':json.dumps(valid).encode()});page.get_by_role('button',name='Save companion locally',exact=True).click();page.locator('dialog').wait_for(state='detached');assert next(iter(snapshot(page)['overlays']['companions'].values()))['title']==valid['title'];record()
   phase='local_ai_input';requests=[];page.on('request',lambda r:requests.append({'method':r.method,'url':r.url}));open_more(page).get_by_role('button',name='Manage PDF details',exact=True).click();page.get_by_role('button',name='Prepare AI companion',exact=True).click();page.get_by_role('button',name='Extract locally',exact=True).click();page.get_by_role('button',name='Download AI input part 1',exact=True).wait_for()
   with page.expect_download() as transfer:page.get_by_role('button',name='Download AI input part 1',exact=True).click()
   path=OUT/'ai-input.json';transfer.value.save_as(str(path));data=json.loads(path.read_text());assert data['document']['pageCount']==5;assert data['schema']['additionalProperties'] is False;assert [p['page'] for p in data['pages']]==[1,2,3,4,5];assert data['pages'][4]['hasSelectableText'] is False;assert any('QA-ANCHOR-BRAVO' in p['text'] for p in data['pages']);assert not [r for r in requests if r['method'] not in ['GET','HEAD']];page.get_by_role('button',name='Close dialog',exact=True).click();record({'parts':1,'physicalPages':5,'uploadRequests':0})
-  phase='companion_promotion';tree.get_by_role('button',name='Definition of Selectable text',exact=True).click();page.get_by_role('button',name='Promote to global glossary',exact=True).click();page.wait_for_timeout(250);promoted=snapshot(page)['overlays']['glossary'];assert len(promoted)==1;assert promoted[0]['pdfRefs'][0]['pages']==[2,5];page.locator('dialog').wait_for(state='detached');tree.get_by_role('button',name='Definition of Selectable text',exact=True).click();assert page.get_by_role('button',name='In global glossary',exact=True).is_disabled();page.get_by_role('button',name='Close dialog',exact=True).click();record()
+  phase='companion_promotion';inspect_pdf_term(page,'Selectable text');page.get_by_role('button',name='Promote to global glossary',exact=True).click();page.wait_for_timeout(250);promoted=snapshot(page)['overlays']['glossary'];assert len(promoted)==1;assert promoted[0]['pdfRefs'][0]['pages']==[2,5];page.locator('dialog').wait_for(state='detached');inspect_pdf_term(page,'Selectable text');assert page.get_by_role('button',name='In global glossary',exact=True).is_disabled();page.get_by_role('button',name='Close dialog',exact=True).click();record()
   phase='pane_collapse_markers';goto(page,2);page.get_by_role('button',name='Compare in two panes',exact=True).click();search(page,'PDF reading fixture');wait_pdf(page);goto(page,4);before=snapshot(page);a=slot(before)['panes'][0];ratio=slot(before)['ratio'];page.get_by_role('button',name='Collapse pane A',exact=True).click();assert slot(snapshot(page))['panes'][0]==a
   page.get_by_role('button',name='Reveal pane A for PDF reading fixture',exact=True).click();wait_pdf(page);restored=snapshot(page);assert slot(restored)['ratio']==ratio;assert slot(restored)['panes'][0]==a;assert len(slot(restored)['panes'][0]['views'])==len(a['views']);assert number(page)==2
   page.get_by_role('button',name='Collapse pane B',exact=True).click();page.get_by_role('button',name='Restore pane B',exact=True).click();wait_pdf(page);assert number(page)==4;record()
@@ -103,7 +104,7 @@ try:
   phase='geometry_themes';measurements=[]
   for w,h,target in [(1366,768,.80),(1440,900,.84),(1920,1080,.87),(390,844,0)]:
    page.set_viewport_size({'width':w,'height':h});page.wait_for_timeout(450);pane=page.locator('.active-pane').bounding_box();c=canvas(page).bounding_box();assert c['height']/pane['height']>=target,(w,pane,c);assert page.evaluate('document.documentElement.scrollWidth-innerWidth')<=1
-   for name in ['Quick PDF Spread','Hide reader controls','Manage saved states']:
+   for name in ['Quick PDF Spread','Hide reader controls','Open context panel']:
     rect=page.get_by_role('button',name=name,exact=True).bounding_box();assert rect and 0<=rect['x'] and rect['x']+rect['width']<=w
    measurements.append({'width':w,'height':h,'companion':'sidebar tree','globalTopbarRows':0,'canvasFraction':c['height']/pane['height'],'pane':pane,'canvas':c});shot(page,'integrated-'+str(w))
   page.set_viewport_size({'width':1440,'height':900});page.wait_for_timeout(200)
@@ -144,10 +145,16 @@ try:
   page.reload(wait_until='networkidle');assert snapshot(page)['personal']==migrated;record({'legacyEnvelope':2,'migratedPersonal':3,'exactSlot1':True,'actualFreshContextReload':True})
   phase='public_spark_companion';search(page,'Apache Spark: 30 concepts');wait_pdf(page);show_reader_controls(page);assert page.locator('.pdf-companion').count()==0
   assert page.locator('.active-pane').get_by_label('Physical page count',exact=True).inner_text().strip()=='/ 6'
-  # Keep the scope stable when the PDF expander changes its label to Collapse.
   goto(page,6);tree=page.locator('[data-node-id="node.pdfatlas.spark-concepts"]').locator('..')
   tree.get_by_role('button',name='Expand PDF Apache Spark: 30 concepts',exact=True).click();assert tree.locator('.pdf-study-page').count()==0
-  tree.get_by_role('button',name='Expand PDF glossary',exact=True).click();assert tree.locator('.pdf-study-term').filter(has_text='memory').count()>0;shot(page,'actual-public-spark-study-tree');record({'physicalPages':6,'concepts':30,'reviewed':False,'source':'Pinned byte-verified public PDF, not a substituted renderer'})
+  tree.get_by_role('button',name='Expand PDF category 1. From MapReduce to Spark',exact=True).click();assert tree.locator('.pdf-study-page').count()>0;assert tree.locator('.pdf-study-term').count()==0;shot(page,'actual-public-spark-study-tree')
+  close_panels(page);open_more(page).get_by_role('button',name='Manage PDF details',exact=True).click()
+  # The details manager initializes its draft in an effect after mounting.
+  # Wait for its exact content, retaining both the count and semantic assertion.
+  concept_options=page.get_by_label('Edit concept',exact=True).locator('option')
+  expect(concept_options).to_have_count(30)
+  options=concept_options.all_text_contents();assert len(options)==30 and any('memory' in x.lower() for x in options),options
+  page.get_by_role('button',name='Close dialog',exact=True).click();record({'physicalPages':6,'conceptsPreservedOnDemand':30,'source':'Pinned byte-verified public PDF, not a substituted renderer'})
   phase='no_errors';assert errors==[],errors;record();browser.close()
 except Exception as exc:
  status='BLOCKED' if 'ERR_BLOCKED_BY_ADMINISTRATOR' in str(exc) or "Executable doesn't exist" in str(exc) else 'FAIL'

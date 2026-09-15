@@ -1,3 +1,4 @@
+from browser_support import bookmark_position,open_saved_manager,inspect_pdf_term,show_reader_controls
 """Actual React-PDF canvases and interactions on about:blank; in-memory store.
 Does not claim real-origin IndexedDB, deployment or persisted restore coverage.
 """
@@ -30,8 +31,7 @@ with sync_playwright() as pw:
   p.locator('.active-pane .integrated-pdf[data-pdf-state="ready"] [data-page-rendered="true"] canvas').first.wait_for();p.wait_for_timeout(220);assert p.locator('.pdf-fallback').count()==0
  def reset():
   close_panels(p);p.set_viewport_size({'width':1440,'height':900});p.evaluate('testReset()');wait()
- def show():
-  if p.locator('.active-pane').get_by_role('button',name='Show reader controls',exact=True).count():p.locator('.active-pane').get_by_role('button',name='Show reader controls',exact=True).click()
+ def show():show_reader_controls(p)
  def goto(n):
   show();field().fill(str(n));field().press('Enter');wait();assert number()==n
  def wheel(delta):
@@ -66,9 +66,9 @@ with sync_playwright() as pw:
  check('Quick PDF Spread controls one document, separately from Compare',spread)
  def tree_links():
   reset();row=p.locator('[data-node-id="node.page.atlas.pdf"]');row.locator('.tree-expander').click();button('Expand PDF category Reading a PDF').click();p.locator('.pdf-study-page .tree-target').filter(has_text='Links, page state and notes').click();wait();assert number()==4
-  button('Expand PDF glossary').click();button('Displayed snippet on PDF page 2').click();wait();assert number()==2;assert p.locator('.active-pane .react-pdf__Page__textContent').inner_text().find('QA-ANCHOR-BRAVO')>=0
-  button('Definition of Displayed snippet').click();assert p.locator('dialog[open]').is_visible();p.keyboard.press('Escape');p.locator('.tree-scroll').evaluate('(e)=>e.scrollTop=0');p.screenshot(path=str(OUT/'integrated-tree-reader.png'))
- check('Sidebar category and glossary hyperlinks navigate actual physical PDF pages',tree_links)
+  p.locator('.pdf-study-page .tree-target').filter(has_text='Selectable text and language pairs').click();wait();assert number()==2;assert p.locator('.active-pane .react-pdf__Page__textContent').inner_text().find('QA-ANCHOR-BRAVO')>=0
+  inspect_pdf_term(p,'Displayed snippet');assert p.locator('dialog[open]').is_visible();p.keyboard.press('Escape');p.locator('.tree-scroll').evaluate('(e)=>e.scrollTop=0');p.screenshot(path=str(OUT/'integrated-tree-reader.png'))
+ check('Sidebar page headings and on-demand definitions navigate actual physical PDF pages',tree_links)
  def state_restore():
   reset();goto(2);wheel(260);p.wait_for_timeout(300)
   button('Save current workspace state').click();p.wait_for_timeout(240);saved=p.evaluate('testStore.state.personal.savedStates.entries[0].session');before=canvas().evaluate('(e)=>e.scrollTop');assert before>50
@@ -84,7 +84,7 @@ with sync_playwright() as pw:
  check('Local text preparation remains available on demand, without a reader module',extract)
  def edit():
   reset();open_more(p).get_by_role('button',name='Manage PDF details',exact=True).click();field=p.get_by_role('textbox',name='Concept label',exact=True);field.fill('Physical page - reviewed');button('Save companion locally').click();p.locator('dialog').wait_for(state='detached');assert p.evaluate('Object.values(testStore.state.overlays.companions)[0].terms[0].label')=='Physical page - reviewed';assert number()==1
-  p.locator('[data-node-id="node.page.atlas.pdf"] .tree-expander').click();button('Expand PDF glossary').click();button('Definition of Physical page - reviewed').click();button('Promote to global glossary').click();p.locator('dialog').wait_for(state='detached');assert p.evaluate('testStore.state.overlays.glossary.length')==1;assert number()==1;button('Definition of Physical page - reviewed').click();assert button('In global glossary').is_disabled();p.keyboard.press('Escape')
+  p.locator('[data-node-id="node.page.atlas.pdf"] .tree-expander').click();inspect_pdf_term(p,'Physical page - reviewed');button('Promote to global glossary').click();p.locator('dialog').wait_for(state='detached');assert p.evaluate('testStore.state.overlays.glossary.length')==1;assert number()==1;inspect_pdf_term(p,'Physical page - reviewed');assert button('In global glossary').is_disabled();p.keyboard.press('Escape')
  check('On-demand metadata editing and promotion preserve PDF content and physical position',edit)
  def continuous():
   reset();show();p.get_by_role('combobox',name='PDF presentation',exact=True).select_option('continuous');wait();wheel(1600);p.wait_for_timeout(600);assert number()>=2

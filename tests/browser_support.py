@@ -89,12 +89,35 @@ def open_settings(page):
     more_action(page,'Workspace settings')
 
 def open_context(page,tab=None):
-    if not page.locator('.context-drawer').count():
+    if not page.locator('.management-context').count():
         page.get_by_role('button',name='Open context panel',exact=True).click()
+    page.get_by_role('tab',name='Remarks' if tab=='Remarks' else 'Page details',exact=True).click()
     panel=page.locator('.context-panel')
     if tab:
-        panel.get_by_role('button',name=tab,exact=True).click()
+        panel.locator('.context-tabs').get_by_role('button',name=tab,exact=True).click()
     return panel
+
+
+def open_saved_manager(page, all_workspaces=False):
+    if not page.locator('.management-context').count():
+        page.get_by_role('button',name='Open context panel',exact=True).click()
+    page.get_by_role('tab',name='All-workspace saves' if all_workspaces else 'Workspace saves',exact=True).click()
+    return page.locator('.state-saves-manager')
+
+
+def bookmark_position(page):
+    page.get_by_role('button',name='Open bookmarks',exact=True).click()
+    page.get_by_role('button',name='Bookmark current position',exact=True).click()
+    close_panels(page)
+
+
+def inspect_pdf_term(page,label):
+    close_panels(page)
+    open_more(page).get_by_role('button',name='Manage PDF details',exact=True).click()
+    page.get_by_role('combobox',name='Edit concept',exact=True).select_option(label=label)
+    page.get_by_role('button',name='Open saved definition',exact=True).click()
+    return page.locator('dialog[open]')
+
 
 def open_reading(page,pane=None):
     if pane is not None:
@@ -114,9 +137,10 @@ def set_learning_flag(page,flag):
 
 
 def show_reader_controls(page, pane=None):
-    """Explicit UI fixture setup; production readers start with controls hidden."""
-    area = pane or page.locator('.active-pane')
-    button = area.get_by_role('button', name='Show reader controls', exact=True)
-    if button.count():
-        button.click()
+    """The shared top-left control operates on the active pane in 1.2.4."""
+    area=pane or page.locator('.active-pane')
+    if pane is not None and 'active-pane' not in (pane.get_attribute('class') or ''):
+        pane.locator('.document-tab.selected').click() if pane.locator('.document-tab.selected').count() else pane.locator('.empty-pane').click()
+    button=page.get_by_role('button',name='Show reader controls',exact=True)
+    if button.count():button.click()
     return area

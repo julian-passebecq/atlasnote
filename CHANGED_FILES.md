@@ -1,11 +1,8 @@
-# AtlasNote 1.2.3 - changed source files
+# AtlasNote 1.2.4 - changed source files
 
-Baseline: upstream main `476f327ae77eb9103f2e5d079b87b6a541ddc782`, exact tree `2d07e499cab9236f5a098e2d08513f98f3e1b4f3`.
-
-The complete delta (new files and deletion included) is packaged as `handoff/changes.patch`. `src/styles/compact-topbar.css` is deleted, not just unused. Generated evidence, build outputs and package-only manifests are excluded from the patch.
+Reference main: `f82c336...` (1.2.3). See handoff/baseline.json for recovery provenance. Generated evidence and handoff manifests are not application changes. No remote changes were made.
 
 - `.github/workflows/ci.yml`
-- `.gitignore`
 - `AGENTS.md`
 - `CHANGELOG.md`
 - `CODEX_HANDOFF.md`
@@ -13,54 +10,52 @@ The complete delta (new files and deletion included) is packaged as `handoff/cha
 - `README.md`
 - `START_HERE.md`
 - `WORKSPACE_READY_FOR_GITHUB.md`
-- `docs/RELEASE_1.2.3.md`
-- `docs/history/1.2.2-delivery-docs/CHANGED_FILES.md`
-- `docs/history/1.2.2-delivery-docs/FINAL_TEST_STATUS.md`
-- `docs/history/1.2.2-delivery-docs/README.md`
-- `docs/history/1.2.2-delivery-docs/WORKSPACE_READY_FOR_GITHUB.md`
-- `index.html`
+- `docs/RELEASE_1.2.4.md`
+- `docs/history/1.2.3-delivery-docs/CHANGED_FILES.md`
+- `docs/history/1.2.3-delivery-docs/CODEX_HANDOFF.md`
+- `docs/history/1.2.3-delivery-docs/FINAL_TEST_STATUS.md`
+- `docs/history/1.2.3-delivery-docs/START_HERE.md`
+- `docs/history/1.2.3-delivery-docs/WORKSPACE_READY_FOR_GITHUB.md`
 - `package-lock.json`
 - `package.json`
 - `src/app/App.tsx`
 - `src/companion/CompanionPanel.tsx`
 - `src/companion/PdfStudyTree.tsx`
-- `src/companion/promote.ts`
 - `src/companion/tree.ts`
+- `src/components/FloatingPanel.tsx`
 - `src/components/Icon.tsx`
 - `src/components/ReaderRail.tsx`
+- `src/components/ReadingActions.tsx`
+- `src/components/ReadingManager.tsx`
 - `src/components/SavedStatesDialog.tsx`
+- `src/components/SearchContext.tsx`
 - `src/components/Tree.tsx`
 - `src/core/model.ts`
-- `src/core/personal-state.ts`
-- `src/core/saved-states-types.ts`
-- `src/core/saved-states.ts`
+- `src/core/reading-lists.ts`
+- `src/core/reading-navigation.ts`
+- `src/core/reading-types.ts`
+- `src/core/workspace-slots.ts`
 - `src/online/PdfEngine.tsx`
-- `src/pdf/PdfReader.tsx`
-- `src/pdf/study-bridge.ts`
-- `src/pdf/wheel-navigation.mjs`
-- `src/storage/database.ts`
+- `src/online/pdf.css`
+- `src/pdf/physical-pages.mjs`
 - `src/storage/personal-validation.mjs`
-- `src/storage/saved-states-validation.mjs`
+- `src/storage/reading-validation.mjs`
 - `src/styles/app.css`
-- `src/styles/compact-topbar.css` (deleted)
-- `src/styles/simplified-shell.css`
+- `src/styles/reading-managers.css`
 - `tests/browser_support.py`
 - `tests/compact_12_dom.py`
+- `tests/dom_test.py`
 - `tests/engine_123_dom.py`
-- `tests/finish_121_dom.py`
-- `tests/finish_121_integrated.py`
-- `tests/fixtures/engine-dom-entry.tsx`
+- `tests/engine_dom_support.py`
+- `tests/grid_124_dom.py`
 - `tests/hardening_dom.py`
-- `tests/pdf_authoring_test.py`
-- `tests/pdf_runtime.py`
 - `tests/reader_11_dom.py`
-- `tests/saved-states-123.test.mjs`
+- `tests/reading-124.test.mjs`
+- `tests/reading_124_dom.py`
+- `tests/reading_124_runtime.py`
+- `tests/release_runtime.py`
 - `tests/saved_states_runtime.py`
 - `tests/simplified_123_dom.py`
 - `tests/workspace_122_dom.py`
 - `tests/workspace_122_runtime.py`
-- `tools/build-test-harness.mjs`
-- `tools/build.mjs`
 - `tools/run-release.mjs`
-
-See docs/RELEASE_1.2.3.md for the request-to-implementation map and test changes.
