@@ -26,7 +26,7 @@
   </header>
   <main id="workspace" class="workspace">
     <section class="left" aria-label="Problem pane">
-      <div class="problem-head"><div class="eyebrow">SQL interview arena · shell prototype</div><h1>Reasoning progression</h1><p>AtlasNote content on the left, Deepnote execution surface on the right.</p></div>
+      <div class="problem-head"><div class="eyebrow">SQL interview arena · shell prototype</div><h1>Reasoning progression</h1><p>AtlasNote owns the problem pane; Deepnote is tested as the execution pane.</p></div>
       <div class="content">
         <article class="card"><h2>1 · WHERE + GROUP BY</h2><p>Filter to PAID orders in 2026 and return total revenue per customer. State the output grain.</p><p class="follow"><strong>Follow-up:</strong> Keep only customers whose total paid revenue exceeds 1000.</p><div class="reason">Reasoning: WHERE filters rows → GROUP BY changes grain → HAVING filters aggregated groups.</div></article>
         <article class="card"><h2>2 · JOIN + aggregation</h2><p>Return paid revenue for every customer, including customers with no paid orders.</p><p class="follow"><strong>Follow-up:</strong> What happens if one customer has multiple matching dimension rows before SUM?</p><div class="reason">Reasoning: preservation semantics, predicate placement, join cardinality and fan-out.</div></article>
@@ -38,7 +38,7 @@
     <div id="divider" class="divider" role="separator" aria-orientation="vertical" aria-label="Resize panes"></div>
     <section class="right" aria-label="Deepnote pane">
       <div class="frame-wrap"><iframe id="deepnote" class="frame" title="Deepnote notebook"></iframe></div>
-      <div id="notice" class="notice"><button class="close" aria-label="Dismiss notice" onclick="this.parentElement.remove()">×</button><strong>What this experiment can prove:</strong> AtlasNote can own the left/right LeetCode shell. A normal Deepnote notebook URL may refuse iframe embedding. Deepnote officially supports iframe embedding for published Data Apps and individually shared blocks after embedding/sharing is enabled. AtlasNote cannot restyle or rearrange the DOM inside a cross-origin Deepnote iframe; layout changes inside Deepnote must be done in Deepnote or by embedding selected blocks/apps instead.</div>
+      <div id="notice" class="notice"><button class="close" aria-label="Dismiss notice" onclick="this.parentElement.remove()">×</button><strong>Embedding test:</strong> this starts with your normal Deepnote notebook share URL. If Deepnote refuses to render it in the right pane, paste a Deepnote <strong>Data App Embed URL</strong> or individually <strong>shared block URL</strong> above. AtlasNote can control this outer split layout, but browser same-origin rules prevent AtlasNote from restyling or rearranging Deepnote's internal iframe UI.</div>
     </section>
   </main>
 </div>
