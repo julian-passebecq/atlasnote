@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AtlasNote · Deepnote split prototype</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172033;background:#f5f7fb;--line:#dce2ea;--muted:#687387;--accent:#2756c5;--surface:#fff;--soft:#f1f4f8}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{overflow:hidden}
+.shell{height:100%;display:grid;grid-template-rows:46px 1fr}.topbar{display:flex;align-items:center;gap:10px;padding:7px 10px;border-bottom:1px solid var(--line);background:var(--surface)}
+.brand{font-weight:750;white-space:nowrap}.pill{font-size:12px;border:1px solid var(--line);background:var(--soft);padding:5px 8px;border-radius:6px;color:var(--muted)}
+.url{flex:1;min-width:120px;height:30px;border:1px solid var(--line);border-radius:6px;padding:0 9px;font-size:12px}.button{height:30px;border:1px solid var(--line);border-radius:6px;background:#fff;padding:0 10px;font-weight:650;color:#25324a;cursor:pointer}.button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.workspace{display:grid;grid-template-columns:minmax(300px,38%) 7px minmax(0,1fr);min-height:0}.left{background:var(--surface);overflow:auto}.divider{cursor:col-resize;background:#eef1f5;border-left:1px solid var(--line);border-right:1px solid var(--line);position:relative}.divider:after{content:"";position:absolute;width:2px;height:42px;background:#aeb7c5;left:2px;top:calc(50% - 21px);border-radius:2px}
+.problem-head{position:sticky;top:0;background:rgba(255,255,255,.97);z-index:2;border-bottom:1px solid var(--line);padding:14px 18px 12px}.eyebrow{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:750}.problem-head h1{font-size:18px;margin:5px 0 3px}.problem-head p{margin:0;color:var(--muted);font-size:12px}.content{padding:12px 18px 40px}.card{border-bottom:1px solid var(--line);padding:13px 0}.card h2{font-size:14px;margin:0 0 8px}.card p{font-size:13px;line-height:1.55;margin:5px 0}.follow{border-left:3px solid #4c8c66;padding-left:9px;margin-top:9px;color:#33423a}.reason{font-size:12px;color:var(--muted);background:var(--soft);padding:8px 10px;border-radius:6px;margin-top:8px}.right{position:relative;min-width:0;background:#eef1f5}.frame-wrap{position:absolute;inset:0;background:white}.frame{border:0;width:100%;height:100%;display:block;background:white}.notice{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(20,27,40,.92);color:white;border-radius:8px;padding:9px 12px;font-size:11px;line-height:1.45;z-index:3}.notice strong{color:#fff}.notice a{color:#b9d1ff}.close{float:right;background:transparent;border:0;color:#fff;font-size:16px;cursor:pointer}
+@media(max-width:850px){body{overflow:auto}.shell{height:auto;min-height:100%}.topbar{flex-wrap:wrap}.url{order:3;flex-basis:100%}.workspace{grid-template-columns:1fr;grid-template-rows:auto 8px 70vh}.divider{cursor:row-resize}.divider:after{width:42px;height:2px;top:2px;left:calc(50% - 21px)}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">AtlasNote · Deepnote experiment</div>
+    <span class="pill">LeetCode-style split</span>
+    <input id="embedUrl" class="url" aria-label="Deepnote URL" />
+    <button id="load" class="button primary">Load</button>
+    <button id="open" class="button">Open original</button>
+  </header>
+  <main id="workspace" class="workspace">
+    <section class="left" aria-label="Problem pane">
+      <div class="problem-head"><div class="eyebrow">SQL interview arena · shell prototype</div><h1>Reasoning progression</h1><p>AtlasNote content on the left, Deepnote execution surface on the right.</p></div>
+      <div class="content">
+        <article class="card"><h2>1 · WHERE + GROUP BY</h2><p>Filter to PAID orders in 2026 and return total revenue per customer. State the output grain.</p><p class="follow"><strong>Follow-up:</strong> Keep only customers whose total paid revenue exceeds 1000.</p><div class="reason">Reasoning: WHERE filters rows → GROUP BY changes grain → HAVING filters aggregated groups.</div></article>
+        <article class="card"><h2>2 · JOIN + aggregation</h2><p>Return paid revenue for every customer, including customers with no paid orders.</p><p class="follow"><strong>Follow-up:</strong> What happens if one customer has multiple matching dimension rows before SUM?</p><div class="reason">Reasoning: preservation semantics, predicate placement, join cardinality and fan-out.</div></article>
+        <article class="card"><h2>3 · Window function</h2><p>Return the second-highest distinct salary. Compare ROW_NUMBER, RANK and DENSE_RANK.</p><p class="follow"><strong>Follow-up:</strong> Return the second-highest distinct salary per department.</p><div class="reason">Reasoning: ranking → ties → distinct rank → PARTITION BY.</div></article>
+        <article class="card"><h2>4 · CTE composition</h2><p>Aggregate customer revenue, then rank/filter the result. Do not assume WITH is automatically faster.</p><div class="reason">Reasoning: decomposition and readable multi-stage logic.</div></article>
+        <article class="card"><h2>5 · LAG / self-join</h2><p>Return each account balance with the previous observed balance using LAG and a self-join alternative.</p><div class="reason">Reasoning: deterministic ordering, row multiplication risk and alternative techniques.</div></article>
+      </div>
+    </section>
+    <div id="divider" class="divider" role="separator" aria-orientation="vertical" aria-label="Resize panes"></div>
+    <section class="right" aria-label="Deepnote pane">
+      <div class="frame-wrap"><iframe id="deepnote" class="frame" title="Deepnote notebook"></iframe></div>
+      <div id="notice" class="notice"><button class="close" aria-label="Dismiss notice" onclick="this.parentElement.remove()">×</button><strong>What this experiment can prove:</strong> AtlasNote can own the left/right LeetCode shell. A normal Deepnote notebook URL may refuse iframe embedding. Deepnote officially supports iframe embedding for published Data Apps and individually shared blocks after embedding/sharing is enabled. AtlasNote cannot restyle or rearrange the DOM inside a cross-origin Deepnote iframe; layout changes inside Deepnote must be done in Deepnote or by embedding selected blocks/apps instead.</div>
+    </section>
+  </main>
+</div>
+<script>
+const DEFAULT='https://deepnote.com/workspace/Test-5ab9ceee-08ec-42dd-9dbc-41ea8cad09cf/project/A-LEET-052eb753-b897-478a-9ab6-25d846c98395/notebook/01-SQL-Arena-ad1c323432ee4e50ae8b9af37aa41cd5?utm_source=share-modal&utm_medium=product-shared-content&utm_campaign=notebook&utm_content=052eb753-b897-478a-9ab6-25d846c98395';
+const input=document.getElementById('embedUrl'),frame=document.getElementById('deepnote');input.value=DEFAULT;
+function load(){const value=input.value.trim();if(!/^https:\/\/deepnote\.com\//i.test(value)){alert('Use a https://deepnote.com/ URL for this prototype.');return}frame.src=value;localStorage.setItem('atlas-deepnote-prototype-url',value)}
+input.value=localStorage.getItem('atlas-deepnote-prototype-url')||DEFAULT;document.getElementById('load').onclick=load;document.getElementById('open').onclick=()=>window.open(input.value,'_blank','noopener,noreferrer');load();
+const workspace=document.getElementById('workspace'),divider=document.getElementById('divider');let drag=false;divider.addEventListener('pointerdown',e=>{drag=true;divider.setPointerCapture(e.pointerId)});divider.addEventListener('pointerup',()=>drag=false);divider.addEventListener('pointercancel',()=>drag=false);divider.addEventListener('pointermove',e=>{if(!drag||innerWidth<851)return;const r=workspace.getBoundingClientRect();const pct=Math.max(24,Math.min(68,(e.clientX-r.left)/r.width*100));workspace.style.gridTemplateColumns=`minmax(300px,${pct}%) 7px minmax(0,1fr)`});
+</script>
+</body>
+</html>
