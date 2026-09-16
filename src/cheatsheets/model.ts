@@ -20,4 +20,4 @@ export type CheatsheetBlock=BaseBlock & (
  {type:'icon'|'image';assetKey:string;alt:string}
 );
 export type CheatsheetPage={id:string;title:string;blocks:CheatsheetBlock[];frames:Record<string,Frame>;outline:{id:string;label:string;blockId:string}[]};
-export type CheatsheetDocument={schemaVersion:'1.0'|'1.1';id:string;title:string;subtitle?:string;pageSize:{width:1200;height:1600};meta?:{audience?:string;goal?:string;difficulty?:'intro'|'intermediate'|'advanced';provenance?:string};theme?:{name:'atlas-calm';tokens?:Partial<Record<'paper'|'ink'|'primary'|'secondary'|'line'|'code'|'warning'|'warningFill',string>>};pages:CheatsheetPage[]};
+export type CheatsheetDocument={schemaVersion:'1.0'|'1.1';id:string;title:string;subtitle?:string;pageSize:{width:1200;height:1600};meta?:{preset?:'summary'|'architecture'|'bilingual'|'vocabulary';audience?:string;goal?:string;difficulty?:'intro'|'intermediate'|'advanced';provenance?:string};theme?:{name:'atlas-calm';tokens?:Partial<Record<'paper'|'ink'|'primary'|'secondary'|'line'|'code'|'warning'|'warningFill',string>>};pages:CheatsheetPage[]};

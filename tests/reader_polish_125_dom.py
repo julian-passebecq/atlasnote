@@ -4,7 +4,7 @@ The harness uses an in-memory store and test-only real SHA-256 bridge: this is N
 import json,os,traceback,hashlib
 from pathlib import Path
 from playwright.sync_api import sync_playwright,expect
-from browser_support import ROOT,start_server,launch,mount_dom,close_panels,open_context,open_saved_manager,state_action
+from browser_support import open_more,ROOT,start_server,launch,mount_dom,close_panels,open_context,open_saved_manager,state_action
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/1.2.5/polish-ui'));OUT.mkdir(parents=True,exist_ok=True)
 base=start_server(dom_only=True);results=[]
 with sync_playwright() as pw:
@@ -30,7 +30,7 @@ with sync_playwright() as pw:
   b.get_by_role('button',name='Show reader controls',exact=True).click();a.get_by_role('button',name='Hide reader controls',exact=True).click()
   assert session()['panes'][0]['readerChromeCollapsed']==True and session()['panes'][1]['readerChromeCollapsed']==False
   for pane in [a,b]:
-   classes=pane.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-new-tab' in classes[0] and 'pane-identity' in classes[1] and 'pane-chrome-toggle' in classes[2] and classes[3]=='tab-list'
+   classes=pane.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-identity' in classes[0] and 'pane-new-tab' in classes[1] and classes[2]=='tab-list' and 'pane-chrome-toggle' in classes[3]
    assert '*' not in pane.locator('.pane-identity').inner_text()
   b.locator('.document-tab.selected').click();assert session()['activePane']==session()['panes'][1]['id'];expected=session();state_action(p,'Save current workspace state');button('Workspace 4').click();button('Workspace 1').click();assert session()==expected
   b=panes().nth(1);b.get_by_role('button',name='Hide reader controls',exact=True).click();state_action(p,'Restore last workspace save');assert session()==expected
@@ -39,8 +39,8 @@ with sync_playwright() as pw:
  def navigation():
   reset();select('sql-q2');button('Back in active tab').click();assert session()['panes'][0]['views'][0]['history'][session()['panes'][0]['views'][0]['cursor']]['pageId']=='page.interview.sql-q1'
   button('Forward in active tab').click();assert session()['panes'][0]['views'][0]['history'][session()['panes'][0]['views'][0]['cursor']]['pageId']=='page.interview.sql-q2'
-  button('Collapse notebook sidebar').click();assert button('Global search').is_visible();button('Open notebook sidebar').click();button('Toggle document context').click();expect(p.locator('.document-context')).to_be_visible();button('Toggle document context').click();expect(p.locator('.document-context')).to_have_count(0)
-  button('Enter focus mode').click();assert session()['focus'];button('Exit focus').click();assert not session()['focus'];button('AtlasNote home').click();assert session()['screen']=='home'
+  button('Collapse notebook sidebar').click();assert button('Global search').is_visible();button('Open notebook sidebar').click();button('Open context panel').click();expect(p.locator('.document-context')).to_be_visible();button('Close context').click();expect(p.locator('.document-context')).to_have_count(0)
+  button('Enter focus mode').click();assert session()['focus'];button('Exit focus').click();assert not session()['focus'];open_more(p).get_by_role('button',name='Home',exact=True).click();assert session()['screen']=='home'
  check('Compact home/search/history/sidebar/context/focus controls still navigate',navigation)
  def hierarchy():
   reset();project=p.locator('[data-project-id="project.interview-preparation"]')
@@ -68,7 +68,7 @@ with sync_playwright() as pw:
   open_context(p,'Search');p.get_by_label('Search this document',exact=True).fill('language');assert p.locator('.document-search-hit').count()>=1;button('Search selectable PDF text').click();expect(p.locator('.document-context [role=status]')).to_contain_text('integrated reader')
  check('PDF Context reuses category/physical-page navigation; fallback text search is honest',pdf_outline)
  def pdf_taxonomy():
-  reset('page.atlas.pdf');button('Switch to PDF library').click();tree=p.locator('.pdf-library-sidebar .tree-scroll');assert tree.locator('.tree-group').count()==0;assert 'PDF Atlas' not in tree.inner_text();button('Filter tree').click();p.get_by_label('Filter notebook tree',exact=True).fill('Data Engineering');expect(tree.locator('[data-node-id="node.pdfatlas.spark-concepts"]')).to_be_visible();expect(tree.locator('[data-node-id="node.pdfatlas.pyspark-pandas"]')).to_be_visible();assert p.evaluate('testBuilt.packs.flatMap(p=>p.projects).find(p=>p.id==="project.pdfatlas").title')=='PDF Atlas';p.screenshot(path=str(OUT/'flattened-public-pdf-taxonomy.png'))
+  reset('page.atlas.pdf');button('PDF content').click();tree=p.locator('.pdf-library-sidebar .tree-scroll');assert 'PDF Atlas' not in tree.inner_text();assert not tree.locator('[data-node-id="node.cheatsheet.sql-analytics"]').count();button('Filter tree').click();p.get_by_label('Filter notebook tree',exact=True).fill('Data Engineering');expect(tree.locator('[data-node-id="node.pdfatlas.spark-concepts"]')).to_be_visible();expect(tree.locator('[data-node-id="node.pdfatlas.pyspark-pandas"]')).to_be_visible();assert p.evaluate('testBuilt.packs.flatMap(p=>p.projects).find(p=>p.id==="project.pdfatlas").title')=='PDF Atlas';p.screenshot(path=str(OUT/'flattened-public-pdf-taxonomy.png'))
  check('Actual public PDF taxonomy is flat, searchable by domain, and keeps original metadata',pdf_taxonomy)
 
  def states():

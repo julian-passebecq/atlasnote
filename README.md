@@ -1,34 +1,43 @@
-# AtlasNote 1.2.6
+# AtlasNote 1.2.7
 
-Local-first notebook, PDF, interview-reference and native cheatsheet reading. This implementation continues released 1.2.5, commit `d1ecfd70c2f9d72c374a1c1c897d10a05d718dc5`. Read [START_HERE.md](START_HERE.md) and [FINAL_TEST_STATUS.md](FINAL_TEST_STATUS.md) before integrating. It has not been merged or deployed, and integrated release acceptance is not certified here.
+A local-first knowledge reader with notebooks, PDFs, structured SVG cheatsheets, native Articles and QCM reference/practice sets. The existing five reading workspaces, Compare, Book/Spread/Grid, bookmarks, Read Later, saved workspace states and portable backups remain in place.
 
-Five independent workspaces preserve tabs, reading positions, Compare, Focus, notebook Book, PDF Spread and four-page Grid. Each pane controls its own toolbar. Bookmarks, Read Later and Workspace States remain separate existing systems. Document Context provides outline/search, private remarks, explicit Related links and bounded local visit history.
+**Implementation source, not a production-release claim.** Read [START_HERE.md](START_HERE.md), [FINAL_TEST_STATUS.md](FINAL_TEST_STATUS.md) and [REQUIREMENTS_COVERAGE.md](REQUIREMENTS_COVERAGE.md).
 
-## Native cheatsheets
+## Local development
 
-**Study references / Cheatsheets** contains SQL for Analytics, PySpark Execution Model, Azure Data Factory and pandas Essentials: four canonical JSON documents, eight physical pages. Their 1200 x 1600 pages render as scoped, safe SVG with live text, code, tables and structured graph/sequence diagrams. No reference PNG is used to render a page. Geometry is fixed; the viewport scales it uniformly. Single, two-page and four-page modes are independent of Compare and independent per pane.
-
-Private JSON import/edit/export uses the existing local overlay and backup mechanisms. Context navigation and physical-page reading actions retain stable page/anchor IDs. Related backlinks connect the unchanged interview references and cheatsheets. No runner, scoring, analytics service, new grammar family or new PDF engine is included.
-
-See [architecture](docs/1.2.6/ARCHITECTURE.md), [authoring](docs/1.2.6/AUTHORING.md), and [fixture provenance](docs/1.2.6/FIXTURE_PROVENANCE.md). The supplied handoff lacked original JSON and ADF page 1's preview. These are disclosed reconstructions, not independent verification of every educational claim in the references.
-
-## Build and test
-
-Node >=22.12.0; use the exact lockfile. Python is used by the existing tests and optional PDF authoring tools.
+Node 22.12 or newer is required. Use the committed dependency lockfile; this pass introduces no dependency.
 
 ```sh
 npm ci
+npm run typecheck
+npm run typecheck:online
+npm run build
+npm run preview
+```
+
+`npm run preview` serves the integrated `dist` directory on the address printed by the server. A separately named compatibility build is available via `npm run bootstrap:offline && npm run build:offline`; it is not an integrated PDF release.
+
+## Testing
+
+```sh
 python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
 python -m playwright install --with-deps chromium
 npm run test:release
 ```
 
-Preview the integrated build with `npm run build && npm run preview`. Never deploy `dist-offline` or the opt-in `.build/engine-dom` component harness. The release runner preserves all 34 previous gates and adds three native gates, writes each result/log under `docs/evidence/1.2.6/release-gates`, and exits nonzero if any gate fails or is blocked.
+The release runner executes all 39 gates, including the new content-hub UI and normal-origin suites. It records a log and exit code for every command. Failure or BLOCKED means the release is not cleared. GitHub CI retains all prior gates and adds both new suites.
 
-Regenerate the native content pack with `node tools/generate-cheatsheets.mjs`; check committed fixture/schema/render/hash consistency with `npm run test:cheatsheets`. All diagrams are authored data; no runtime force layout or remote font download is used.
+## New in this pass
 
-## Privacy and compatibility
+- Independent content types and shared subject/folder taxonomy; explicit Notebook references rather than source copies.
+- Specialized library management, safe native Article/transcript import/edit/export, and local single/multiple-answer QCM with explanations, reflections and attempt history.
+- Global and scoped Dashboard, fast five-row Link/Task/Note capture and optional exact reading context.
+- Typed links shared by Notebook, Related, Dashboard, QCM, bookmarks and reading actions.
+- Summary, Architecture, Bilingual concept and Vocabulary authoring presets on the existing SVG grammar.
 
-No IndexedDB version/name or backup envelope changed. Native fields are additive; old pages, bookmarks, imports and reading state retain their old interpretation. New native state requires 1.2.6-aware readers: backwards compatibility means old data opens safely in 1.2.6, not that 1.2.5 understands the new type.
+Use `examples/content-hub/article-sample.json` and `qcm-sample.json` through their visible import dialogs. These are the supplied synthetic test fixtures, not remotely fetched articles or a generated course. Existing eight cheatsheet pages and fifteen interview sources are unchanged.
 
-Remarks, related links and private sources stay in the local workspace and its explicit backups. This delivery contains no private 137-page library, credentials, user workspace or font files. The inherited precompiled Mermaid bundle still has its previously documented transitive SBOM/license-closure limitation; this pass neither replaces it nor claims a new complete dependency audit.
+Private imports and learning records stay in this browser. Export a full backup before changing versions or moving to another origin. A saved **reading state** restores session/layout, not newer shared content or attempts. A **full backup restore** is explicitly destructive and restores the whole selected payload after confirmation.
+
+Source license and notices remain in `LICENSE`, `THIRD_PARTY_NOTICES.md` and `docs/licenses/`.

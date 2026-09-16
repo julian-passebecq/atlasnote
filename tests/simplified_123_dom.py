@@ -24,9 +24,10 @@ with sync_playwright() as pw:
    results.append({'name':name,'status':'FAIL','error':str(e)});print('FAIL',name,str(e),flush=True);traceback.print_exc();p.screenshot(path=str(OUT/('failure-'+str(len(results))+'.png')))
  def chrome():
   reset();assert p.locator('.topbar').count()==0;assert button('Hide global topbar').count()==0;assert p.locator('.sidebar-heading').inner_text().strip()==''
-  nav=p.locator('.sidebar-navigation button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert nav==['AtlasNote home','Global search','Back in active tab','Forward in active tab','Collapse notebook sidebar','Toggle document context','Enter focus mode','Compare in two panes','Swap panes'],nav
-  names=p.locator('.reader-rail>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert names[:4]==['Open context panel','Workspace States','Open bookmarks','Open read later'],names
-  classes=p.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-new-tab' in classes[0] and 'pane-identity' in classes[1] and 'pane-chrome-toggle' in classes[2] and classes[3]=='tab-list',classes
+  nav=p.locator('.sidebar-navigation button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert nav==['Collapse notebook sidebar','Global search','Back in active tab','Forward in active tab','Enter focus mode','Compare in two panes'],nav
+  names=p.locator('.reader-rail>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert names[:4]==['Open context panel','Open bookmarks','Open read later','Export to AI'],names
+  classes=p.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert len(classes)==3 and 'pane-new-tab' in classes[0] and classes[1]=='tab-list' and 'pane-chrome-toggle' in classes[2],classes
+  assert p.locator('.workspace-dock').get_by_role('button',name='Workspace States',exact=True).is_visible()
   assert p.locator('.reader-chrome-hidden').count()==1;assert not p.locator('.pane-breadcrumb').is_visible()
   button('Show reader controls').click();assert p.locator('.pane-breadcrumb').is_visible();assert session()['panes'][0]['readerChromeCollapsed']==False
   button('Hide reader controls').click();assert session()['panes'][0]['readerChromeCollapsed']==True
@@ -39,7 +40,7 @@ with sync_playwright() as pw:
  def compare():
   reset();before=session()['panes'][0];button('Compare in two panes').click();assert session()['panes'][0]==before;assert session()['panes'][1]['views']==[]
   for pane in p.locator('.document-pane').all():
-   names=pane.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-new-tab' in names[0] and 'pane-chrome-toggle' in names[2] and names[3]=='tab-list'
+   names=pane.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-identity' in names[0] and 'pane-new-tab' in names[1] and names[2]=='tab-list' and 'pane-chrome-toggle' in names[3]
   button('Swap panes').click();assert session()['panes'][1]==before
  check('Compare and swap in the compact navigation, preserving independent panes',compare)
  def tree():

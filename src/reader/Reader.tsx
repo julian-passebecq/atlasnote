@@ -96,10 +96,10 @@ export function NoteReader({ page, view, location, resolveAsset, onAnchor, onAct
         const original = [...measure.current!.querySelectorAll<HTMLElement>('[data-action="load-image"]')].find(n => n.dataset.block === target.dataset.block);
         original?.click();
         return;
-    } onAction(action, target.dataset.block, target.dataset.snippet); }
+    } onAction(action, target.dataset.block, target.dataset.snippet,{currentTarget:target,clientX:e.clientX,clientY:e.clientY,ctrlKey:e.ctrlKey,metaKey:e.metaKey,button:e.button,preventDefault:()=>e.preventDefault(),stopPropagation:()=>e.stopPropagation()}); }
     function scrollRow(delta: number) { const el = host.current!, currentSheet = book.current + delta * book.columns, target = el.querySelector<HTMLElement>(`[data-sheet="${Math.max(1, Math.min(book.count, currentSheet))}"]`); if (target)
         el.scrollTo({ top: target.offsetTop - 20, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
-    const title = <header className="note-heading"><div className="eyebrow">{page.tags.slice(0, 3).join(' / ') || 'NOTEBOOK'}</div><h1>{page.title}</h1><p>{page.summary}</p></header>;
+    const title = <header className="note-heading"><div className="eyebrow">{page.tags.slice(0, 3).join(' / ') || (page.article?'ARTICLE':'NOTEBOOK')}</div><h1>{page.title}</h1><p>{page.summary}</p>{page.article&&<div className="article-metadata"><span>{page.article.sourceType??'article'} / {page.article.publisher??'Publisher not supplied'} / {page.article.status??'inbox'}</span>{page.article.url&&<a href={page.article.url} target="_blank" rel="noopener noreferrer">Open original link</a>}{page.article.note&&<p>{page.article.note}</p>}{!page.blocks.length&&<p>Link-only article. Open the original link or paste its text in the article editor.</p>}</div>}</header>;
     return <div className={'reader-body ' + mode} style={{ fontSize: fontSize + 'px' }} onClick={click} onAuxClick={e => { if (e.button === 1)
         click(e); }}>
  <div className={'note-scroller ' + (bookMode ? 'book-scroller' : '')} ref={host} onScroll={() => updatePosition()} tabIndex={0} aria-label={bookMode ? 'Book sheets' : 'Note reading area'} onKeyDown={e => { if (!bookMode || ['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement).tagName))

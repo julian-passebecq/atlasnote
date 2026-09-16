@@ -24,7 +24,7 @@ export function validateCheatsheet(doc){
  if(new TextEncoder().encode(JSON.stringify(doc)).length>CHEATSHEET_LIMITS.bytes)fail('document','4 MiB limit');
  keys(doc,['schemaVersion','id','title','subtitle','pageSize','meta','theme','pages'],'document');choice(doc.schemaVersion,['1.0','1.1'],'version');id(doc.id,'document');text(doc.title,'title',240);if(!doc.title.trim())fail('title','empty');if(doc.subtitle!==undefined)text(doc.subtitle,'subtitle',500);
  keys(doc.pageSize,['width','height'],'pageSize');if(doc.pageSize.width!==1200||doc.pageSize.height!==1600)fail('pageSize','1200 x 1600 required');
- if(doc.meta!==undefined){keys(doc.meta,doc.schemaVersion==='1.1'?['audience','goal','difficulty','provenance']:['difficulty','provenance'],'meta');for(const [k,v] of Object.entries(doc.meta))text(v,'meta.'+k,2000);if(doc.meta.difficulty!==undefined)choice(doc.meta.difficulty,['intro','intermediate','advanced'],'difficulty');}
+ if(doc.meta!==undefined){keys(doc.meta,doc.schemaVersion==='1.1'?['audience','goal','difficulty','provenance','preset']:['difficulty','provenance','preset'],'meta');for(const [k,v] of Object.entries(doc.meta))text(v,'meta.'+k,2000);if(doc.meta.preset!==undefined)choice(doc.meta.preset,['summary','architecture','bilingual','vocabulary'],'preset');if(doc.meta.difficulty!==undefined)choice(doc.meta.difficulty,['intro','intermediate','advanced'],'difficulty');}
  if(doc.theme!==undefined){keys(doc.theme,['name','tokens'],'theme');choice(doc.theme.name,['atlas-calm'],'theme');if(doc.theme.tokens!==undefined){keys(doc.theme.tokens,['paper','ink','primary','secondary','line','code','warning','warningFill'],'tokens');for(const v of Object.values(doc.theme.tokens))if(typeof v!=='string'||!/^#[a-f0-9]{6}$/i.test(v))fail('theme','six-digit hex colors only');}}
  array(doc.pages,'pages',1,CHEATSHEET_LIMITS.pages);const allIds=new Set(),outlineIds=new Set();let count=0,characters=0;
  function unique(v,at){id(v,at);if(allIds.has(v))fail(at,'duplicate ID '+v);allIds.add(v);}
@@ -57,7 +57,7 @@ export function validateCheatsheet(doc){
  if(characters>CHEATSHEET_LIMITS.text)fail('document','text budget');return doc;
 }
 export function validateCheatsheetPage(page){
- if(page.kind===undefined&&page.cheatsheet===undefined)return;
+ if(page.kind!=='cheatsheet'&&page.cheatsheet===undefined)return;
  if(page.kind!=='cheatsheet'||!page.cheatsheet||page.blocks?.length)fail('page','cheatsheet kind, structured document and empty notebook blocks required together');
  validateCheatsheet(page.cheatsheet);
 }

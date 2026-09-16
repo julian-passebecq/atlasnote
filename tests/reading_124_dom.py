@@ -28,16 +28,16 @@ with sync_playwright() as pw:
  def action(n,name):row(n).locator('.study-actions').click();p.get_by_role('menuitem',name=name,exact=True).click();settle()
  def nav():
   reset();names=p.locator('.sidebar-navigation button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))')
-  assert names==['AtlasNote home','Global search','Back in active tab','Forward in active tab','Collapse notebook sidebar','Toggle document context','Enter focus mode','Compare in two panes','Swap panes'],names
+  assert names==['Collapse notebook sidebar','Global search','Back in active tab','Forward in active tab','Enter focus mode','Compare in two panes'],names
   assert p.locator('.reader-chrome-hidden').count()==1 and p.locator('.pane-chrome-toggle').count()==1
-  labels=p.locator('.reader-rail button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))')
-  assert labels==['Open context panel','Workspace States','Open bookmarks','Open read later','Export to AI','Theme','More / Settings'],labels
+  labels=p.locator('.reader-rail > button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))')
+  assert labels==['Open context panel','Open bookmarks','Open read later','Export to AI','Theme','More / Settings'],labels
   btn('Show reader controls').click();assert session()['panes'][0]['readerChromeCollapsed']==False
   btn('Hide reader controls').click();assert session()['panes'][0]['readerChromeCollapsed']==True
   btn('Collapse notebook sidebar').click();assert btn('Global search').is_visible() and btn('Show reader controls').is_visible();btn('Open notebook sidebar').click();shot('paired-navigation');return {'navigation':names,'rail':labels}
  check('Shared top-left controls and paired rail order; new readers hidden by default',nav)
  def bookmark():
-  reset();btn('Open bookmarks').click();assert p.locator('.category-tabs [role=tab]').all_text_contents()==['All','Informatics','Cloud','Norsk','Job','Personal']
+  reset();btn('Open bookmarks').click();assert p.locator('.category-tabs [role=tab]').all_text_contents()==['All','IT','Cloud','Job','KPI','Norsk']
   btn('Bookmark current position').click();expect(p.locator('.reading-item')).to_have_count(1);btn('Edit').click();p.get_by_label('Reading item title',exact=True).fill('Norwegian review');p.get_by_label('Reading item note',exact=True).fill('Resume the language example');p.get_by_label('Reading item category',exact=True).select_option('norsk');btn('Save reading details').click();settle()
   category('Cloud');expect(p.locator('.reading-item')).to_have_count(0);category('Norsk');expect(p.locator('.reading-item')).to_have_count(1);assert data()['bookmarks'][0]['category']=='norsk';shot('bookmarks')
   close_panels(p);btn('Workspace 3').click();btn('Open bookmarks').click();category('Norsk');expect(p.locator('.reading-item')).to_have_count(1);assert data()['bookmarks'][0]['title']=='Norwegian review'
@@ -80,7 +80,7 @@ with sync_playwright() as pw:
  check('Separate Workspace States and document Context; checkpoint restore retains newer queue',state_managers)
  def keyboard():
   reset(True);tree();r=row(2);r.locator('.tree-target').click(button='right');expect(p.get_by_role('menu')).to_be_visible();p.keyboard.press('End');assert p.evaluate('document.activeElement.textContent').strip()=='Bookmark';p.keyboard.press('Escape');assert not p.get_by_role('menu').count()
-  btn('Open read later').click();category('All');p.locator('.category-tabs').get_by_role('tab',name='All',exact=True).focus();p.keyboard.press('ArrowRight');assert p.locator('.category-tabs [aria-selected=true]').inner_text()=='Informatics';p.keyboard.press('End');assert p.locator('.category-tabs [aria-selected=true]').inner_text()=='Personal'
+  btn('Open read later').click();category('All');p.locator('.category-tabs').get_by_role('tab',name='All',exact=True).focus();p.keyboard.press('ArrowRight');assert p.locator('.category-tabs [aria-selected=true]').inner_text()=='IT';p.keyboard.press('End');assert p.locator('.category-tabs [aria-selected=true]').inner_text()=='Norsk'
  check('Page context menu and subject tabs are keyboard-operable',keyboard)
  def responsive():
   reset();rows=[]

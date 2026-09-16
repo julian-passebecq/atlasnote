@@ -25,18 +25,18 @@ with sync_playwright() as pw:
   reset();assert p.locator('.workspace-slots button').all_text_contents()==['1','2','3','4','5'];assert p.locator('.category-filters [aria-pressed=true]').count()==0
   first=snap()['personal']['session'];p.get_by_role('button',name='Workspace 2',exact=True).click();assert s()['panes'][0]['views']==[];assert snap()['personal']['session']==first
   for n in [1,2]:
-   p.get_by_role('button',name=f'Workspace {n}',exact=True).click();p.get_by_role('button',name='Informatics filter',exact=True).click()
+   p.get_by_role('button',name=f'Workspace {n}',exact=True).click();p.get_by_role('button',name='IT filter',exact=True).click()
   for n in [3,4,5]:
    p.get_by_role('button',name=f'Workspace {n}',exact=True).click();assert s().get('categoryFilter') is None;p.get_by_role('button',name='Norsk filter',exact=True).click()
   personal=snap()['personal'];assert [personal['session']['categoryFilter'],personal['workspaceSlots']['2']['categoryFilter']]==['informatics']*2
   assert [personal['workspaceSlots'][str(i)]['categoryFilter'] for i in [3,4,5]]==['norsk']*3
-  p.get_by_role('button',name='Workspace 1',exact=True).click();p.get_by_role('button',name='Informatics filter',exact=True).click();assert s()['categoryFilter'] is None
+  p.get_by_role('button',name='Workspace 1',exact=True).click();p.get_by_role('button',name='IT filter',exact=True).click();assert s()['categoryFilter'] is None
   assert p.get_by_role('button',name='Workspace 1',exact=True).get_attribute('aria-pressed')=='true';shot('independent-numbers-all-categories')
  check('Five workspace numbers are independent from optional category filters; duplicates allowed',slots)
  def domain_groups():
   reset();before=s()['panes'];overlays=snap()['overlays'];p.get_by_role('button',name='Norsk filter',exact=True).click();assert p.locator('.tree-project').count()==1
   button=p.get_by_role('button',name='Collapse group Norsk',exact=True);button.click();assert p.locator('.tree-project').count()==0;p.get_by_role('button',name='Expand group Norsk',exact=True).click();assert p.locator('.tree-project').count()==1
-  assert s()['panes']==before and snap()['overlays']==overlays;p.get_by_role('button',name='Norsk filter',exact=True).click();assert p.locator('.tree-project').count()==13;assert p.locator('[data-node-id="node.cheatsheet.sql-analytics"]').count()==1  # Four native sheets share one added project; keep the exact all-domain projection.
+  assert s()['panes']==before and snap()['overlays']==overlays;p.get_by_role('button',name='Norsk filter',exact=True).click();expected=p.evaluate('''async()=>{const {projectLibrary}=await import(new URL('app/content-hub/taxonomy.js',document.baseURI));return projectLibrary(testCore.compose(testBuilt,testStore.state),testStore.state.overlays,'notes').map(p=>p.id);}''');assert set(p.locator('.tree-project').evaluate_all('(es)=>es.map(e=>e.dataset.projectId)'))==set(expected);assert p.locator('[data-node-id="node.cheatsheet.sql-analytics"]').count()==0  # Four native sheets share one added project; keep the exact all-domain projection.
  check('Category/group filtering never changes canonical content or open tabs',domain_groups)
  def book():
   reset('page.atlas.language','parallel');before=s()['panes'][0]['views'][0]
@@ -60,7 +60,7 @@ with sync_playwright() as pw:
   p.get_by_role('button',name='Collapse notebook sidebar',exact=True).click();assert p.locator('.library-sidebar').count()==0;p.get_by_role('button',name='Open notebook sidebar',exact=True).click();assert p.locator('.library-sidebar').count()==1
  check('Per-pane controls and sidebar hide independently; global topbar no longer exists',chrome)
  def companion_edit():
-  reset('page.atlas.pdf');p.get_by_role('button',name='Switch to PDF library',exact=True).click();before=s()['panes'][0]['views']
+  reset('page.atlas.pdf');p.get_by_role('button',name='PDF content',exact=True).click();before=s()['panes'][0]['views']
   p.locator('[data-node-id="node.page.atlas.pdf"] .tree-expander').click();inspect_pdf_term(p,'Selectable text');assert 'Text stored in a PDF' in p.locator('dialog').inner_text();p.keyboard.press('Escape')
   open_more(p).get_by_role('button',name='Manage PDF details',exact=True).click();p.get_by_label('Edit concept',exact=True).select_option('text-layer');p.get_by_label('Concept translation',exact=True).fill('Valgbar tekst');p.get_by_label('Page occurrences (comma separated)',exact=True).fill('2, 5');p.get_by_label('Category title',exact=True).fill('Reading a PDF - reviewed example');p.get_by_role('button',name='Save companion locally',exact=True).click();p.locator('dialog').wait_for(state='detached')
   companions=snap()['overlays']['companions'];value=next(iter(companions.values()));assert next(t for t in value['terms'] if t['id']=='text-layer')['translation']=='Valgbar tekst';assert s()['panes'][0]['views']==before

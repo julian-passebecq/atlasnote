@@ -1,3 +1,4 @@
+import {validateHubOverlays,validateHubPersonal} from '../content-hub/validation.mjs';
 import {migratePersonal} from '../core/workspace-slots.js';
 import {validatePersonal} from './personal-validation.mjs';
 import {repairAbsentPersonalOptionals} from '../core/personal-state.js';
@@ -21,8 +22,8 @@ export class WorkspaceStore{
  setLoaded(ws:Workspace){this.state={...ws,personal:preparePersonal(ws.personal)};this.emit();}
  fail=(e:any)=>{this.error=`Changes could not be saved: ${e?.message??e}. Keep this tab open. Free browser storage, then retry, or download an emergency backup.`;this.state={...this.state};this.emit();};
  private enqueue(fn:()=>Promise<void>){this.saving++;this.state={...this.state};this.emit();const result=this.queue.then(fn);this.queue=result.catch(this.fail).finally(()=>{this.saving--;this.state={...this.state};this.emit();});return result;}
- personal(fn:(p:Personal)=>void){const p=structuredClone(this.state.personal);fn(p);const canonical=repairAbsentPersonalOptionals(p);this.state={...this.state,personal:canonical,generation:this.state.generation+1};this.emit();return this.enqueue(()=>writePersonal(canonical));}
- overlays(fn:(o:Overlays)=>void){const o=structuredClone(this.state.overlays);fn(o);this.state={...this.state,overlays:o,generation:this.state.generation+1};this.emit();return this.enqueue(()=>writeOverlays(o));}
+ personal(fn:(p:Personal)=>void){const p=structuredClone(this.state.personal);fn(p);validateHubPersonal(p);const canonical=repairAbsentPersonalOptionals(p);this.state={...this.state,personal:canonical,generation:this.state.generation+1};this.emit();return this.enqueue(()=>writePersonal(canonical));}
+ overlays(fn:(o:Overlays)=>void){const o=structuredClone(this.state.overlays);fn(o);validateHubOverlays(o);this.state={...this.state,overlays:o,generation:this.state.generation+1};this.emit();return this.enqueue(()=>writeOverlays(o));}
  async importPacks(imports:Pack[],assets:Asset[],overlays:Overlays){await this.flush();await commitImport(imports,assets,overlays);const byPack=new Map(this.state.imports.map(p=>[p.manifest.id,p]));imports.forEach(p=>byPack.set(p.manifest.id,p));const byAsset=new Map(this.state.assets.map(a=>[a.key,a]));assets.forEach(a=>byAsset.set(a.key,a));this.state={...this.state,imports:[...byPack.values()],assets:[...byAsset.values()],overlays,generation:this.state.generation+1};this.emit();}
  async restore(ws:Workspace){ws={...ws,personal:preparePersonal(ws.personal)};await this.flush();await restoreWorkspace(ws);this.state={...ws,generation:this.state.generation+1};this.error='';this.emit();}
  async addAsset(asset:Asset){await this.flush();const db=await openDatabase(),tx=db.transaction('assets','readwrite'),done=complete(tx);tx.objectStore('assets').put(asset,asset.key);await done;this.state={...this.state,assets:[...this.state.assets.filter(a=>a.key!==asset.key),asset]};this.emit();}

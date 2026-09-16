@@ -1,57 +1,30 @@
-# AtlasNote 1.2.6 - integration and release verification
+# Integrating the completed AtlasNote 1.2.7 source
 
-## Exact destination
+## Exact starting point
 
 Repository: `julian-passebecq/atlasnote`.
-Released starting commit: `d1ecfd70c2f9d72c374a1c1c897d10a05d718dc5`.
-Branch: `feature/atlasnote-1.2.6-native-cheatsheets`.
-Final local implementation SHA: see the external delivery manifest. It is not an upstream commit unless separately pushed after delivery.
+Baseline: `f9345c11d98f13d33032666d5148a55a27805742`, corrected 1.2.6 feature head, not old main.
+Working branch: `feature/atlasnote-1.2.7-content-dashboard-qcm`.
+No push, PR, merge or deployment was performed for this delivery.
 
-This is completed source implementation. Do not restart the application, re-code the four fixtures, change the grammar direction, remove native features, merge main or deploy Netlify. Read FINAL_TEST_STATUS.md before interpreting green compatibility tests.
-
-## Integrate the source safely
-
-Use either the complete source ZIP or the binary patch, never both. Preserve the target repository's `.git` directory and unrelated local work. Do not extract a nested ZIP root into the repository as a subfolder. The source root is the folder containing package.json, src, content and tests.
-
-On a clean local repository at the specified baseline, the patch route is:
+The full source ZIP is the application, not a patch and not a handoff-only package. Preserve the local `.git` directory. Start from the exact baseline, extract the ZIP to a temporary folder, then copy its source contents into the repository root. Do not place the ZIP's enclosing folder inside the repository as another application. Do not restore a stale dist/node_modules from another pass.
 
 ```sh
 git fetch origin
-git switch -c feature/atlasnote-1.2.6-native-cheatsheets d1ecfd70c2f9d72c374a1c1c897d10a05d718dc5
-git apply --check /path/to/AtlasNote_1.2.6_changes.patch
-git apply /path/to/AtlasNote_1.2.6_changes.patch
+git switch -c feature/atlasnote-1.2.7-content-dashboard-qcm f9345c11d98f13d33032666d5148a55a27805742
+# Copy the delivered source contents into this checkout, preserving .git.
+git diff --check
 git status --short
-```
-
-If that branch already exists, inspect it first; do not force-reset it. If main has moved, keep the supplied exact baseline until reviewing the intervening changes rather than blindly replacing newer files. A source ZIP creates a new local integration commit, which need not have the same SHA as the implementation workspace commit.
-
-## Required full verification on a normal developer machine
-
-```sh
 npm ci
 python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
 python -m playwright install --with-deps chromium
 npm run test:release
 ```
 
-The runner attempts all 37 gates and preserves logs even after a failure. Do not skip failed gates, force npm installs around the lockfile, relax exact backup equality, mock IndexedDB in the runtime gate, or replace actual PDF canvas/wheel assertions with page-number updates.
+An existing branch needs inspection before checkout; never use a force reset to bypass local changes. Check FINAL_TEST_STATUS.md before making any release claim. The runner executes all 39 old/new gates and keeps failure logs. The default per-gate timeout is ten minutes; the shorter recorded offline diagnostic is not release approval. Normal-origin and integrated PDF tests are mandatory.
 
-The old 34 gates remain. New commands are `test:cheatsheets`, `test:cheatsheets:ui`, and `test:cheatsheets:runtime`. The last uses the real app entry, reload and an empty browser context for backup restore. `ATLAS_DIST=dist-offline` is only a diagnostic: it cannot clear the real PDF Compare case or production bundle.
+After successful integration, verify all 30 new browser checks plus the original suites, durable reload of Articles/QCM/captures, a full backup's exact downloaded payload, fresh browser-context restoration, independent QCM/PDF Compare and saved-state isolation. Check desktop and 390px screenshots. Do not change the dependency lockfile merely because an installation is unavailable.
 
-## Priority acceptance checks
+Current app data remains private per browser origin. Do not delete or migrate by resetting IndexedDB. The eight cheatsheet sources, fifteen interview pages, PDF engine and corrected 1.2.6 runtime test are unchanged. No requirement to build a new service, render cheatsheets as screenshots, duplicate Bookmark/Read Later stores, or create workspace 6.
 
-First obtain the pinned integrated dependencies and a successful `typecheck:online` / `build` / `check:release`. Then run the real PDF component/grid/wheel and existing runtime suites plus the native runtime suite. Verify a native cheatsheet beside a genuinely rendered PDF canvas, not the compatibility fallback. Verify existing 1.2.5 state reload, local native JSON edits, stable physical anchors/remarks through a page reorder, full saved-workspace state, and exact backup restoration into a fresh browser profile.
-
-The compatibility tests already exercise 1200 x 1600 SVG geometry, live text, the full eight-page content, a synthetic four-page 2x2, independent panes and controls, actual interview Compare, reading actions, Context/search/Related, source validation/edit/export, saved state and backup decoding. Do not call this durable browser persistence evidence.
-
-Inspect the four required documents at fit-page/fit-width/zoom and 390/1024/1440 widths. Fixed pages intentionally do not become responsive articles. Source-dialog editing should retain the current stable page rather than reopen page 1. In normal use, test real OS text selection/copy in addition to the existing synthetic copy-event checks.
-
-## Content and security review
-
-Read docs/1.2.6/FIXTURE_PROVENANCE.md. The original JSON was not supplied and ADF page 1's preview was absent. Count differences are documented; do not fabricate a claim that the missing 153-block/564-fragment originals were reproduced. Technical claims are inherited from user references, not independently vendor-verified. The pack has no raster or drawing fallback. Native code is a string, not executable content.
-
-Keep the unchanged PDF engine and 15 interview reference files. Existing IndexedDB/database version and backup envelope are unchanged. Never erase personal data as a migration shortcut. Do not publish source archives, compatibility builds, test backups, font files or private libraries.
-
-## Report back
-
-Return the actual branch/commit, all 37 gate outcomes and logs, the new nine-case normal-origin result, and any fixes as explicit diffs. Separate application defects from unavailable environment prerequisites. Only after successful gates and explicit user authorization should production promotion be considered.
+Only after user-authorized manual upload and a passing integrated suite should a separate preview/release decision be made. This document is not authorization to merge or deploy.

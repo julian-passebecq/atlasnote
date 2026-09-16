@@ -31,12 +31,13 @@ with sync_playwright() as p:
       const [{default:React,ReactDOM},{store},{App},core]=await Promise.all([import(base+'app/vendor/react.mjs'),import(base+'app/storage/database.js'),import(base+'app/app/App.js'),import(base+'app/core/workspace.js')]);
       store.enqueue=async()=>{};window.testStore=store;window.testCore=core;
       const built=await(await fetch(base+'content.json')).json();window.testBuilt=built;
-      window.testOpen=(id,mode='continuous')=>{store.personal(p=>{const pane=p.session.panes.find(x=>x.id===p.session.activePane);const v=core.newView(id);v.history[0].presentation=mode;pane.views=[v];pane.active=v.id;p.session.screen='reader';});};
+      window.testOpen=(id,mode='continuous')=>{store.personal(p=>{const pane=p.session.panes.find(x=>x.id===p.session.activePane);const v=core.newView(id);v.history[0].presentation=mode;pane.views=[v];pane.active=v.id;p.session.screen='reader';delete p.session.surface;});};
       window.testReset=()=>store.setLoaded(core.blankWorkspace());
       ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App,{built}));
     }''',BASE)
     page.wait_for_timeout(800)
     def home():
+        more_action(page,'Home')
         assert page.get_by_role('heading',name='Make room for a clear thought.').count()==1
         page.screenshot(path=str(OUT/'01-home-desktop.png'));return {'viewport':'1440x900'}
     check('desktop Home renders reviewed public starter',home)
@@ -84,12 +85,13 @@ with sync_playwright() as p:
         page.screenshot(path=str(OUT/'04-book-paired-focus.png'));return {'gridColumns':columns}
     check('wide Focus mode creates consecutive same-note sheet pairs',focus)
     def reflow():
+        # Focus is edge-to-edge: intersect the actual scroller, not a fixed 100px toolbar guess.
         page.locator('.book-scroller').evaluate('(e)=>e.scrollTop=e.scrollHeight*0.55');page.wait_for_timeout(500)
         before=page.evaluate('window.testCore.current(window.testStore.state.personal.session.panes[0].views[0]).anchor')
         assert before and before.get('blockId')
         page.evaluate('window.testStore.personal(p=>p.session.fontSize=20)');page.wait_for_timeout(1100)
         after=page.evaluate('window.testCore.current(window.testStore.state.personal.session.panes[0].views[0]).anchor')
-        assert after==before,(before,after);visible=page.locator('.book-grid [data-block-id="'+before['blockId']+'"]').evaluate_all('(es)=>es.some(e=>{const r=e.getBoundingClientRect();return r.top<innerHeight&&r.bottom>100;})');assert visible,(before,after)
+        assert after==before,(before,after);visible=page.locator('.book-grid [data-block-id="'+before['blockId']+'"]').evaluate_all('(es)=>es.some(e=>{const r=e.getBoundingClientRect(),s=e.closest(".book-scroller").getBoundingClientRect();return r.top<s.bottom&&r.bottom>s.top;})');assert visible,(before,after)
         assert max(page.locator('.sheet-body').evaluate_all('(es)=>es.map(e=>e.scrollHeight-e.clientHeight)'))<=1
         page.evaluate('window.testStore.personal(p=>p.session.fontSize=16)');page.wait_for_timeout(800)
         return {'before':before,'after':after}

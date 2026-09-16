@@ -820,6 +820,14 @@
             "provenance": {
               "type": "string",
               "maxLength": 2000
+            },
+            "preset": {
+              "enum": [
+                "summary",
+                "architecture",
+                "bilingual",
+                "vocabulary"
+              ]
             }
           },
           "required": [],
@@ -916,6 +924,14 @@
               "provenance": {
                 "type": "string",
                 "maxLength": 2000
+              },
+              "preset": {
+                "enum": [
+                  "summary",
+                  "architecture",
+                  "bilingual",
+                  "vocabulary"
+                ]
               }
             },
             "required": [],

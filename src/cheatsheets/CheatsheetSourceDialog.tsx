@@ -1,3 +1,5 @@
+import {CHEATSHEET_PRESETS,makeCheatsheetPreset} from './presets.js';
+import type {CheatsheetPreset} from './presets.js';
 import React,{useState} from '../vendor/react.mjs';
 import type {Page,Catalogue} from '../core/model.js';
 import {Modal,Field} from '../components/Modal.js';
@@ -11,6 +13,7 @@ import {CHEATSHEET_LIMITS} from './validation.mjs';
 type Props={page?:Page;catalogue:Catalogue;onClose:()=>void;onOpen:(id:string)=>void;notify:(text:string,error?:boolean)=>void};
 /** Bounded source editing. No executable SVG, layout designer or code runner. */
 export function CheatsheetSourceDialog({page,catalogue,onClose,onOpen,notify}:Props){
+ const [preset,setPreset]=useState<CheatsheetPreset>('summary');
  const [source,setSource]=useState(page?.cheatsheet?JSON.stringify(page.cheatsheet,null,2):'');
  const [error,setError]=useState(''),[busy,setBusy]=useState(false),[status,setStatus]=useState('');
  async function file(input:File|undefined){if(!input)return;try{if(input.size>CHEATSHEET_LIMITS.bytes)throw Error('Cheatsheet JSON must be at most 4 MiB.');setSource(await input.text());setError('');setStatus('Loaded locally. Validate and save to import.');}catch(e){setError((e as Error).message);}}
@@ -35,6 +38,8 @@ export function CheatsheetSourceDialog({page,catalogue,onClose,onOpen,notify}:Pr
  return <Modal wide title={page?'Edit cheatsheet source':'Import cheatsheet JSON'} onClose={onClose}>
   <p className="secondary">Canonical structured JSON only. Pages stay 1200 x 1600. No scripts, raw SVG, remote images, fonts or code execution. Imports are private local copies.</p>
   <form onSubmit={save}>
+   {!page&&<div className="cheatsheet-presets"><Field label="Cheatsheet preset"><select aria-label="Cheatsheet preset" value={preset} onChange={e=>setPreset(e.target.value as CheatsheetPreset)}>{CHEATSHEET_PRESETS.map(p=><option value={p.id} key={p.id}>{p.label}</option>)}</select></Field><button type="button" onClick={()=>{try{if(source.trim()&&!confirm('Replace this unsaved source with the selected template?'))return;setSource(JSON.stringify(makeCheatsheetPreset(preset,uid('sheet')),null,2));setStatus('Template only: review the content, then import your local copy.');setError('');}catch(e){setError((e as Error).message);}}}>Use preset template</button></div>}
+
    <Field label="Choose a JSON source file"><input type="file" accept=".json,application/json" aria-label="Cheatsheet JSON file" onChange={e=>void file(e.target.files?.[0])}/></Field>
    <Field label="Structured cheatsheet JSON"><textarea className="cheatsheet-source-editor" aria-label="Structured cheatsheet JSON" rows={16} spellCheck={false} value={source} onChange={e=>{setSource(e.target.value);setStatus('');setError('');}}/></Field>
    {error&&<p className="error-message" role="alert">{error}</p>}{status&&<p role="status">{status}</p>}

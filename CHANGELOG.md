@@ -1,3 +1,15 @@
+# AtlasNote 1.2.7 - local implementation, pending integrated release verification
+
+- Separate five content types, five shared subjects and five independent workspaces.
+- Add shared-folder specialized management and explicit typed Notebook references.
+- Add safe native Articles/transcripts, local QCM questions/attempts/reflections/exports, and shared Dashboard captures.
+- Preserve reading-state restoration boundaries and exact full-backup payload support.
+- Add four authoring presets on the unchanged native SVG grammar and exact typed links across surfaces.
+- Add content-hub data/UI/runtime tests and retain every previous release command.
+- See FINAL_TEST_STATUS.md for actual results; no remote integration or deployment in this pass.
+
+## Prior implementation history
+
 # 1.2.6 - native structured cheatsheets; integrated acceptance pending
 
 Continue exact released 1.2.5. Add canonical JSON validation, a safe fixed 1200 x 1600 SVG renderer with live text and graph/sequence diagrams, four two-page reference reconstructions, and a restrained scoped paper theme. Integrate native content into existing tabs, five workspaces, independent panes, Single/two/four-page views, physical-page reading actions, outline/search/remarks/Related, local JSON import/edit/export and the unchanged exact backup mechanism. Stable physical page/block identity survives source reordering; unavailable targets are retained. Add 94 unit regressions, a 26-case real-DOM compatibility suite, and a nine-case actual-origin persistence/restore/PDF Compare gate. Preserve all previous release gates and record blocked integrated acceptance explicitly. See FINAL_TEST_STATUS.md and docs/1.2.6/FIXTURE_PROVENANCE.md.
