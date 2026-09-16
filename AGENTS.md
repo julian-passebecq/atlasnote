@@ -1,11 +1,13 @@
-# AtlasNote implementation rules - 1.2.7
+# AtlasNote V2 working agreement
 
-Read START_HERE.md, FINAL_TEST_STATUS.md and REQUIREMENTS_COVERAGE.md first. The v2 content-dashboard-qcm handoff supersedes the old library-reader-capture plan.
+This repository continues the completed 1.2.7 application. Read START_HERE.md, V2_REFERENCE_MODEL.md, REQUIREMENTS_COVERAGE.md and FINAL_TEST_STATUS.md before editing.
 
-The exact baseline is f9345c11d98f13d33032666d5148a55a27805742, not main. The requested integration branch is feature/atlasnote-1.2.7-content-dashboard-qcm. This delivery is local source for manual upload: no remote push, merge or deployment has been performed.
+- Notebook structural folders/pages and manual pins remain user-owned. Concept Index and exact semantic links are separate optional personal state.
+- Use the existing ResourceTarget and ReadingDestination union. Do not introduce competing target stores or persisted backlink mirrors.
+- Reference Lens rows are virtual. Explorer is a closable system tab, not a fake content Page or sixth content type.
+- Keep the existing database `knowledge-atlas` version 2 and full-backup envelope. Workspace checkpoints must not rewind newer semantic state, captures or QCM attempts.
+- AI review is local export/import only. Validate the entire batch and stale source/semantic revisions before mutation; preview and accept are distinct.
+- Preserve real PDF canvas/wheel/restore assertions and independent panes. A compatibility harness is never evidence of durable storage or integrated PDF behavior.
+- No automatic GitHub writes, merge, deployment, cloud sync, scraping, secret keys or private library publication.
 
-Preserve the existing PDF engine, native SVG grammar, stable content IDs, five workspace slots, saved-state boundary, database name/version and backup format. Do not solve migration by resetting personal data. New personal learning/capture data is shared; reading checkpoints cannot erase it. Specialized libraries share Notebook folder identities and create explicit references, not copied content.
-
-Use the exact lockfile. Do not substitute the offline compatibility renderer for the integrated build or normal-origin tests. Do not bypass browser/network policy, weaken CSP, fake IndexedDB, or reinterpret a BLOCKED gate as passing. The component harness is useful but intentionally not durable-storage certification.
-
-Run the complete test:release suite on a supported environment. Keep every failure log. Diagnose any failures with the narrowest change; preserve the intent of older tests when adapting navigation selectors to v2. Read docs/1.2.7/TEST_CHANGES.md before editing regression assertions. No extra capture, learning, exam, cloud-sync or application redesign scope.
+Run `npm ci`, `npm run test:release` in a normal environment for release verification. `npm run bootstrap:offline` is only the documented compatibility fallback; label its results accordingly. Keep failures and blockers visible and attach actual evidence rather than changing assertions to manufacture a pass.

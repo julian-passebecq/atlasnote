@@ -25,3 +25,14 @@ export function createWheelPager({threshold=90,idle=220,cooldown=500,accumulatio
  step.isLatched=()=>turned;
  return step;
 }
+
+/** Consume only the unfinished physical-page restore, never a rendered page's
+ * remaining scroll range. The pager's latch separately prevents a second turn. */
+export function consumeWheelRestore({mode,pendingTurn,pendingRestore}){
+ return mode!=='continuous'&&pendingTurn&&pendingRestore;
+}
+/** Physical content boundary, measured BEFORE this wheel event. A large delta
+ * may reach the edge natively; it cannot also turn a page during that event. */
+export function wheelBoundaries(scrollTop,clientHeight,scrollHeight){
+ return {top:scrollTop<=2,bottom:scrollTop+clientHeight>=scrollHeight-2};
+}

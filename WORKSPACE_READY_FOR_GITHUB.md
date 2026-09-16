@@ -1,37 +1,31 @@
-# AtlasNote 1.2.7 workspace ready for manual integration
+# Workspace ready for manual V2 integration
 
-## Identity
+The complete editable source directory is `/mnt/data/atlasnote-v2` in the delivery workspace. The full source ZIP contains one root folder; copy its **contents** into your existing repository working directory. Preserve `.git` and any untracked private files/backups. Do not upload the ZIP file as if it were application source, and do not nest the root folder one level below the repository root.
 
-- Repository: `julian-passebecq/atlasnote`
-- Starting SHA: `f9345c11d98f13d33032666d5148a55a27805742`
-- Starting tree: `201e3b9c5034b5e275850337aa7dfb437aa599bb`
-- Local branch: `feature/atlasnote-1.2.7-content-dashboard-qcm`
-- Complete editable source directory in this chat: `/mnt/data/atlasnote-1.2.7`
-- Source artifact: `AtlasNote_1.2.7_Content_Dashboard_QCM_Source.zip`
-- Final local SHA, final tree and SHA-256 checksums: external `AtlasNote_1.2.7_Manifest.json` (also use `git rev-parse HEAD` in the live source tree).
+## Exact identities
 
-**This is the completed implementation, not a handoff-only package. It is not release-cleared.** No remote writes occurred. The requested branch exists locally only. No production distribution is represented as verified.
+- Input archive: AtlasNote_1.2.7_Content_Dashboard_QCM_Source.zip.
+- Input SHA-256: `4b5659990b128b307aac23016d9836d1c7208891a6674a5def1813af2daeeb71`.
+- Starting source tree: `4217bc24a2719f5849fdbd894bd464b329dd6ae7` (483 files).
+- Upstream matching source commit: `0c4455f8ca25eb16c882287a4dc61ddfc32f5b89`.
+- Upstream corrected 1.2.6 parent: `f9345c11d98f13d33032666d5148a55a27805742`.
+- Local tracking baseline: `206c0e88d478171edefe9600907dd7866146d6f0`. This synthetic local snapshot is not an upstream branch head.
+- Requested V2 branch: `feature/atlasnote-v2-reference-knowledge-system`, created locally only.
+- Final commit, full source tree and artifact SHA-256: see the external delivery manifest. They are not embedded recursively into their own commit.
 
-## Manual upload
+## Safe route in an existing clone
 
-Start from the corrected 1.2.6 commit above, not an old 1.2.7 branch and not an assumed current main. Save/commit unrelated local work and export your current application's full backup first. Create/select the requested feature branch in your own clone. Extract the source ZIP and copy the **contents of its single root directory** into the repository root. Preserve the clone's `.git` directory; do not add an extra nested project directory. Review the diff against the baseline before committing/pushing it yourself.
+Save current local changes first. Fetch, verify the intended 1.2.7 source, then create a new test branch. Do not reset or overwrite an existing branch containing other work.
 
-The ZIP contains all tracked application sources, public assets, existing vendor assets, lockfile, tests and current documentation. It excludes `.git`, installed dependencies, generated distributions, private browser data, screenshots and test-run scratch files. Evidence is delivered separately. No font files or new private reference library are included.
+```sh
+git fetch origin
+git switch -c feature/atlasnote-v2-reference-knowledge-system 0c4455f8ca25eb16c882287a4dc61ddfc32f5b89
+# Copy the contents of the delivered source root into this repository root.
+git status --short
+git diff --check
+# Review CHANGED_FILES.md and the actual diff before staging/committing.
+```
 
-## Integration checks
+If this branch already exists, inspect it rather than force-resetting it. All delivered changes are tracked source/docs/tests; generated dependencies/builds and private state are excluded. Review the resulting source diff before committing and pushing your test branch yourself.
 
-Read `START_HERE.md`, `REQUIREMENTS_COVERAGE.md`, `FINAL_TEST_STATUS.md` and `docs/1.2.7/TEST_CHANGES.md`. Prepare Python test/PDF requirements and Playwright Chromium as in `.github/workflows/ci.yml`, then run the existing default release suite on a normal supported developer/CI environment. Do not reuse compatibility output as `dist`, weaken missing-origin tests, or reconstruct this implementation from an older prompt.
-
-Local final results: 597 unit; 193 component/browser; 12 synthetic PDF authoring checks passed. All 39 full release commands were attempted separately: 3 PASS, 28 FAIL, 8 BLOCKED. True-origin 1.2.7 runtime: 0/12, BLOCKED by browser policy. Dependency/license review and integrated release checks remain outstanding.
-
-## Test the new UX
-
-Content types are top-left; subjects are independent below them. Dashboard, Quick Capture and five workspace controls are bottom-right. Samples are in `examples/content-hub`; import the Article and QCM JSON through their real editors. `docs/1.2.7/USER_GUIDE.md` gives the UI sequence for exact typed links, references, all four presets and capture.
-
-## State boundary
-
-This implementation extends the existing local stores; it does not introduce a new database or destructive migration. Workspace reading-state restoration must never rewind newer shared content/captures/QCM attempts. Full backup restoration remains a separate confirmed replace operation. Do not test a different origin assuming it shares the production origin's IndexedDB.
-
-Pushed: NO
-Merged: NO
-Deployed: NO
+The next release action is an integrated test run, not an immediate main merge or production deployment. FINAL_TEST_STATUS.md records unresolved production/PDF/persistence verification. Nothing in this delivery changed GitHub, Netlify, a production origin or user personal state.

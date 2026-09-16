@@ -11,6 +11,6 @@ export function selectLibrary(s:Session,mode:LibraryMode){
 }
 /** Never create slot 6, silently reset a used slot, or overwrite its reading state. */
 export function firstUnusedWorkspace(p:Personal):WorkspaceNumber|undefined {
- return WORKSPACE_NUMBERS.find(n=>{const s=n===1?p.session:p.workspaceSlots?.[n];return !s||s.panes.every(p=>p.views.every(v=>!v.history.length));});
+ return WORKSPACE_NUMBERS.find(n=>{const s=n===1?p.session:p.workspaceSlots?.[n];return !s||s.panes.every(p=>p.views.every(v=>!v.history.length&&!v.referenceExplorer));});
 }
 export function openEmptyWorkspace(p:Personal):WorkspaceNumber|undefined {const slot=firstUnusedWorkspace(p);if(slot){selectWorkspace(p,slot);const s=slot===1?p.session:p.workspaceSlots![slot]!;s.surface='dashboard';}return slot;}

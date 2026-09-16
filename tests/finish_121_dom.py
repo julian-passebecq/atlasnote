@@ -70,7 +70,7 @@ with sync_playwright() as pw:
  check('Actual fallback geometry with sidebar study navigation at all four viewports: no intro, compact strip, canvas >=75%',geometry)
  def metadata():
   reset('page.atlas.pdf');p.get_by_role('button',name='Document info',exact=True).click();info=p.locator('.pdf-info-overlay');assert info.is_visible();assert 'SHA-256' in info.inner_text();assert 'Rights' in info.inner_text();assert 'Original bytes' in info.inner_text();assert info.get_by_role('link',name='Download original',exact=True).count()==1
-  p.get_by_role('button',name='Close document info',exact=True).click();assert p.locator('.pdf-info-overlay').count()==0;open_context(p);assert p.locator('.document-context [role=tab]').all_text_contents()==['Outline / Glossary','Search','Remarks','Related','History'];assert p.locator('.pdf-study-tree').count()>=1;shot('document-context-outline')
+  p.get_by_role('button',name='Close document info',exact=True).click();assert p.locator('.pdf-info-overlay').count()==0;open_context(p);assert p.locator('.document-context [role=tab]').all_text_contents()==['Outline / Glossary','Search','Remarks','Related','References','History'];assert p.locator('.pdf-study-tree').count()>=1;shot('document-context-outline')
  check('Rights, exact hash, size, provenance and original actions remain in on-demand info',metadata)
  def install_fullscreen():
   reset();p.evaluate('''()=>{

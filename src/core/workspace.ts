@@ -8,9 +8,9 @@ export function blankOverlays():Overlays{return {schemaVersion:2,pages:{},projec
 export function blankPersonal():Personal{return {schemaVersion:2,notes:{},ratings:{},bookmarks:[],session:{panes:[{id:'left',views:[],active:''}],activePane:'left',ratio:50,screen:'home',surface:'dashboard',leftOpen:true,rightOpen:false,focus:false,theme:'fluent',libraryMode:'notes',showFlags:true,expanded:[],fontSize:16}};}
 export function blankWorkspace():Workspace{return {imports:[],overlays:blankOverlays(),personal:blankPersonal(),assets:[],generation:0};}
 export function current(view:View|undefined){return view?.history[view.cursor];}
-export function newLocation(pageId:string):Location{return {pageId,presentation:'continuous',pdfMode:'single',pdfPage:1,zoom:1,rotation:0,cover:false};}
-export function newView(pageId?:string,anchor?:any):View{return {id:uid('view'),history:pageId?[{...newLocation(pageId),...(anchor?{anchor,...(anchor.pdfPage?{pdfPage:anchor.pdfPage}:{}),...(anchor.sheetPage?{sheetPage:anchor.sheetPage}:{})}:{})}]:[],cursor:0,collapsed:{},revealed:{},english:true};}
-export function navigate(view:View,pageId:string,anchor?:any):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;const prefix=view.history.slice(0,view.cursor+1);return {...view,history:[...prefix,{...newLocation(pageId),...(anchor?{anchor,...(anchor.pdfPage?{pdfPage:anchor.pdfPage}:{}),...(anchor.sheetPage?{sheetPage:anchor.sheetPage}:{})}:{})}],cursor:prefix.length};}
+export function newLocation(pageId:string,pdf=false):Location{return {pageId,presentation:'continuous',pdfMode:pdf?'spread':'single',pdfPage:1,zoom:1,rotation:0,cover:false};}
+export function newView(pageId?:string,anchor?:any,pdf=false):View{return {id:uid('view'),history:pageId?[{...newLocation(pageId,pdf),...(anchor?{anchor,...(anchor.pdfPage?{pdfPage:anchor.pdfPage}:{}),...(anchor.sheetPage?{sheetPage:anchor.sheetPage}:{})}:{})}]:[],cursor:0,collapsed:{},revealed:{},english:true};}
+export function navigate(view:View,pageId:string,anchor?:any,pdf=false):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;const prefix=view.history.slice(0,view.cursor+1);const {referenceExplorer,...reader}=view;const defaults=newLocation(pageId,pdf);const same=here?.pageId===pageId?{presentation:here.presentation,pdfMode:here.pdfMode,zoom:here.zoom,rotation:here.rotation,cover:here.cover,...(here.sheetMode?{sheetMode:here.sheetMode}:{}),...(here.sheetZoom?{sheetZoom:here.sheetZoom}:{}),...(here.sheetFit?{sheetFit:here.sheetFit}:{})}:{};return {...reader,history:[...prefix,{...defaults,...same,...(anchor?{anchor,...(anchor.pdfPage?{pdfPage:anchor.pdfPage}:{}),...(anchor.sheetPage?{sheetPage:anchor.sheetPage}:{})}:{})}],cursor:prefix.length};}
 export function travel(view:View,delta:number):View{return {...view,cursor:Math.max(0,Math.min(view.history.length-1,view.cursor+delta))};}
 export function findNode(projects:Project[],id:string):{node:TreeNode;list:TreeNode[];index:number;project:Project;ancestors:string[]}|undefined{
  function walk(ns:TreeNode[],p:Project,ancestors:string[]):any{for(let i=0;i<ns.length;i++){if(ns[i].id===id)return {node:ns[i],list:ns,index:i,project:p,ancestors};const r=walk(ns[i].children??[],p,[...ancestors,ns[i].id]);if(r)return r;}}
@@ -55,7 +55,7 @@ export function toggleCompare(session:Session):boolean {
  const active=session.panes.find(p=>p.id===session.activePane)??session.panes[0];
  if(!active)return false;
  if(session.panes.length===2){
-  const hasContent=(pane:typeof active)=>pane.views.some(v=>v.history.length>0);
+  const hasContent=(pane:typeof active)=>pane.views.some(v=>v.history.length>0||!!v.referenceExplorer);
   const survivor=hasContent(active)?active:session.panes.find(hasContent)??active;
   session.panes=[survivor];session.activePane=survivor.id;
   session.screen='reader';return true;

@@ -1,43 +1,38 @@
-# AtlasNote 1.2.7
+# AtlasNote V2 - exact references and knowledge navigation
 
-A local-first knowledge reader with notebooks, PDFs, structured SVG cheatsheets, native Articles and QCM reference/practice sets. The existing five reading workspaces, Compare, Book/Spread/Grid, bookmarks, Read Later, saved workspace states and portable backups remain in place.
+Unreleased implementation built directly on the bundled completed AtlasNote 1.2.7 source. **Not production-cleared:** see [FINAL_TEST_STATUS.md](FINAL_TEST_STATUS.md). No GitHub push, merge or deployment is part of this delivery.
 
-**Implementation source, not a production-release claim.** Read [START_HERE.md](START_HERE.md), [FINAL_TEST_STATUS.md](FINAL_TEST_STATUS.md) and [REQUIREMENTS_COVERAGE.md](REQUIREMENTS_COVERAGE.md).
+AtlasNote remains a local-first Notebook/PDF/native SVG Cheatsheet/Article/QCM reader with Dashboard, Quick Capture, five subjects, five reader workspaces, bookmarks, Read Later and full backups. V2 adds a separate stable Concept Index, exact references and derived backlinks. The Notebook folder tree remains freely editable and manual resource pins remain independent.
 
-## Local development
+## Start
 
-Node 22.12 or newer is required. Use the committed dependency lockfile; this pass introduces no dependency.
+Use Node >=22.12 with the committed lockfile:
 
 ```sh
 npm ci
-npm run typecheck
-npm run typecheck:online
 npm run build
 npm run preview
 ```
 
-`npm run preview` serves the integrated `dist` directory on the address printed by the server. A separately named compatibility build is available via `npm run bootstrap:offline && npm run build:offline`; it is not an integrated PDF release.
+The integrated build is the real application with React-PDF. Run `npm run test:release` for the full release command matrix. Development and runtime requirements are described in the existing package scripts and `requirements-test.txt` / `requirements-pdf-authoring.txt`.
 
-## Testing
+When package access is unavailable, `npm run bootstrap:offline && npm run build:offline` restores the documented compatibility toolchain using existing checked-in vendor bundles and TypeScript 5.8.3. That build does **not** certify or replace React-PDF/Vite, native persistence, or production release checks.
 
-```sh
-python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
-python -m playwright install --with-deps chromium
-npm run test:release
-```
+## V2 features
 
-The release runner executes all 39 gates, including the new content-hub UI and normal-origin suites. It records a log and exit code for every command. Failure or BLOCKED means the release is not cleared. GitHub CI retains all prior gates and adds both new suites.
+Open **Context > References** while reading an exact page/section/question. Link concepts, add explicit references, inspect outgoing/incoming/shared-concept results, and open a target here, in a new tab, in the other pane or Workspace 1-5. **Show references in tree** optionally inserts virtual expandable references without changing Notebook structure. **Reference Explorer** is a closable system tab with a Concept Index and Unlinked / Needs review queue.
 
-## New in this pass
+Local reviewed JSON/Markdown handoffs let an external AI propose exact assignments/links; preview, stage, accept and reject are explicit user operations. Nothing calls an AI service or uploads personal library data automatically.
 
-- Independent content types and shared subject/folder taxonomy; explicit Notebook references rather than source copies.
-- Specialized library management, safe native Article/transcript import/edit/export, and local single/multiple-answer QCM with explanations, reflections and attempt history.
-- Global and scoped Dashboard, fast five-row Link/Task/Note capture and optional exact reading context.
-- Typed links shared by Notebook, Related, Dashboard, QCM, bookmarks and reading actions.
-- Summary, Architecture, Bilingual concept and Vocabulary authoring presets on the existing SVG grammar.
+PDFs newly opened without saved presentation request Spread; saved preferences are preserved. Persistent pane-header shortcuts sit beside the per-pane detailed-toolbar toggle. Native PDF/runtime clearance remains a release requirement, not a claim of this compatibility-tested delivery.
 
-Use `examples/content-hub/article-sample.json` and `qcm-sample.json` through their visible import dialogs. These are the supplied synthetic test fixtures, not remotely fetched articles or a generated course. Existing eight cheatsheet pages and fifteen interview sources are unchanged.
+## Documents
 
-Private imports and learning records stay in this browser. Export a full backup before changing versions or moving to another origin. A saved **reading state** restores session/layout, not newer shared content or attempts. A **full backup restore** is explicitly destructive and restores the whole selected payload after confirmation.
+- [START_HERE.md](START_HERE.md): baseline and continuation route.
+- [V2_REFERENCE_MODEL.md](V2_REFERENCE_MODEL.md): schema, targets, link derivation, review transactions and storage boundary.
+- [docs/v2/USER_GUIDE.md](docs/v2/USER_GUIDE.md): using the reference system and reader controls.
+- [docs/v2/TEST_CHANGES.md](docs/v2/TEST_CHANGES.md): inherited PDF prerequisite and meaningful test changes.
+- [REQUIREMENTS_COVERAGE.md](REQUIREMENTS_COVERAGE.md): complete handoff acceptance mapping.
+- [WORKSPACE_READY_FOR_GITHUB.md](WORKSPACE_READY_FOR_GITHUB.md): manual integration instructions.
 
-Source license and notices remain in `LICENSE`, `THIRD_PARTY_NOTICES.md` and `docs/licenses/`.
+Private sources and personal state belong in the existing local import/backup workflow, never in GitHub. The supplied public content remains unchanged; V2 does not silently invent a Spark ontology or assign concepts to your documents.

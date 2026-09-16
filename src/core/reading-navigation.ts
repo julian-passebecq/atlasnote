@@ -36,14 +36,14 @@ export function openReadingTarget(p:Personal,c:Catalogue,o:Overlays,target:Readi
  const pane=other??s.panes.find(x=>x.id===s.activePane)??s.panes[0];
  const createPane=destination==='pane'&&!other;
  const newTab=destination==='tab'||destination==='pane'||typeof destination==='number';
- const empty=pane.views.find(v=>v.id===pane.active&&!current(v));
+ const empty=pane.views.find(v=>v.id===pane.active&&!current(v)&&!v.referenceExplorer);
  if(!createPane&&newTab&&!empty&&pane.views.length>=5)throw Error('That pane already has five tabs. Close a tab or choose another workspace.');
  selectWorkspace(p,slot);const live=activeSession(p,slot);
  let dest=live.panes.find(x=>x.id===(other??pane).id)!;
  if(createPane){dest={id:live.panes[0].id==='left'?'right':'left',views:[],active:''};live.panes.push(dest);}
  const anchor=target.kind==='cheatsheet-page'?{...target.anchor,sheetPage:sheetPosition(sheet,{sheetPage:target.sheetPage,anchor:target.anchor}).page}:target.kind==='pdf-page'?{...target.anchor,pdfPage:target.pdfPage,...(target.revision?{pdfRevision:target.revision}:{})}:target.kind==='pdf-category'?{pdfPage:target.pdfPage,...(target.revision?{pdfRevision:target.revision}:{})}:target.kind==='page'||target.kind==='article'?target.anchor:target.kind==='qcm'&&target.questionId?{questionId:target.questionId}:undefined;
- const v=dest.views.find(v=>v.id===dest.active),reuse=!newTab||!!v&&!current(v);
- if(v&&reuse){dest.views[dest.views.indexOf(v)]=navigate(v,id,anchor);}else {const fresh=newView(id,anchor);dest.views.push(fresh);dest.active=fresh.id;}
+ const v=dest.views.find(v=>v.id===dest.active),reuse=!newTab||!!v&&!current(v)&&!v.referenceExplorer;
+ if(v&&reuse){dest.views[dest.views.indexOf(v)]=navigate(v,id,anchor,!!doc);}else {const fresh=newView(id,anchor,!!doc);dest.views.push(fresh);dest.active=fresh.id;}
  const loc=current(dest.views.find(v=>v.id===dest.active))!;if(target.kind==='collection')loc.collectionId=id;
  live.screen='reader';delete live.surface;revealPane(live,dest.id);if(target.kind!=='collection')live.libraryMode=libraryModeForPage(c,id);
  for(const branch of locations(c).get(id)?.ancestors??[])if(!live.expanded.includes(branch))live.expanded.push(branch);

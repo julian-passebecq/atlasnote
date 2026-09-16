@@ -4,7 +4,7 @@
 import {spawnSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-const out=path.resolve(process.env.ATLAS_RELEASE_EVIDENCE??'docs/evidence/1.2.7/release-gates');fs.mkdirSync(out,{recursive:true});
+const out=path.resolve(process.env.ATLAS_RELEASE_EVIDENCE??'docs/evidence/v2/release-gates');fs.mkdirSync(out,{recursive:true});
 // A bounded offline diagnostic may use a shorter timeout, never a passing skip.
 // CI/default release runs retain the original ten-minute limit per gate.
 const timeoutMs=Number(process.env.ATLAS_GATE_TIMEOUT_MS??600000);
@@ -25,7 +25,7 @@ const commands=[
  ['runtime',['run','test:runtime']], ['workspaces-runtime',['run','test:workspaces:runtime']],
  ['saved-states-runtime',['run','test:savedstates:runtime']], ['reading-runtime',['run','test:reading:runtime']], ['headers',['run','test:headers']],
  ['cheatsheets-content',['run','test:cheatsheets']], ['cheatsheets-ui',['run','test:cheatsheets:ui']], ['cheatsheets-runtime',['run','test:cheatsheets:runtime']],
- ['content-hub-ui',['run','test:content-hub:ui']], ['content-hub-runtime',['run','test:content-hub:runtime']]
+ ['content-hub-ui',['run','test:content-hub:ui']], ['content-hub-runtime',['run','test:content-hub:runtime']], ['references-unit',['run','test:references']], ['references-ui',['run','test:references:ui']], ['references-runtime',['run','test:references:runtime']]
 ];
 // Invoke npm's JavaScript entry point through Node; npm.cmd is not directly
 // executable by spawnSync on Windows. See nodejs.org/api/child_process.html.

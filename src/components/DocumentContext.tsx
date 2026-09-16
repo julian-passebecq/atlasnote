@@ -1,3 +1,5 @@
+import {ReferenceContext} from '../references/ReferenceUI.js';
+import {currentResourceTarget} from '../content-hub/content.js';
 import {ResourcePicker,ResourceLink} from '../content-hub/ResourcePicker.js';
 import {addRelatedTarget} from '../content-hub/content.js';
 import {targetForPage} from '../core/reading-lists.js';
@@ -15,10 +17,10 @@ import {documentBlockMatches,relatedPageOverlay} from '../core/document-context.
 import {searchOpenPdf} from '../pdf/text-search.js';
 import type {PdfTextResult} from '../pdf/text-search.js';
 import {store} from '../storage/database.js';
-const tabs=[['outline','Outline / Glossary'],['search','Search'],['remarks','Remarks'],['related','Related'],['history','History']] as const;
+const tabs=[['outline','Outline / Glossary'],['search','Search'],['remarks','Remarks'],['related','Related'],['references','References'],['history','History']] as const;
 const time=(n?:number)=>n?new Date(n).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'}):'Not recorded';
 const reflection='What pattern did I recognize?\nWhere did I get stuck?\nWas it syntax, grain, windows, decomposition or architecture?\nDid I rewrite my first approach?\nWhat interviewer signal did I miss?\n';
-export function ContextPanel({catalogue:c,page,location,workspace:ws,paneId,onTarget,onOpen,onJump,onClose,notify,onPdfNavigate,onPdfToggle,onPdfManage,onReadingActions}:any){
+export function ContextPanel({references,catalogue:c,page,location,workspace:ws,paneId,onTarget,onOpen,onJump,onClose,notify,onPdfNavigate,onPdfToggle,onPdfManage,onReadingActions}:any){
  const [tab,setTab]=useState('outline'),[query,setQuery]=useState(''),[linkQuery,setLinkQuery]=useState(''),[linkId,setLinkId]=useState(''),[linkBusy,setLinkBusy]=useState(false);
  const [typedTarget,setTypedTarget]=useState<ReadingTarget|undefined>(undefined),[typedLabel,setTypedLabel]=useState('');
  const [pdfResult,setPdfResult]=useState<PdfTextResult|null>(null),[searchStatus,setSearchStatus]=useState('');
@@ -51,7 +53,7 @@ export function ContextPanel({catalogue:c,page,location,workspace:ws,paneId,onTa
  return <aside className="context-panel document-context" aria-label="Active document context">
   <div className="context-heading"><strong title={page?.title}>{page?.title??'Active document'}</strong><IconButton name="context" label="Collapse context panel" onClick={onClose}/></div>
   <div className="context-tabs" role="tablist" aria-label="Document context sections">{tabs.map(([id,label],i)=><button key={id} id={'context-tab-'+id} role="tab" aria-selected={tab===id} aria-controls={'context-body-'+id} tabIndex={tab===id?0:-1} className={tab===id?'selected':''} onClick={()=>setTab(id)} onKeyDown={e=>tabKey(e,i)}>{label}</button>)}</div>
-  {page?<div className="context-scroll" id={'context-body-'+tab} role="tabpanel" aria-labelledby={'context-tab-'+tab}>
+  {tab==='references'&&references?<div className="context-scroll" id="context-body-references" role="tabpanel" aria-labelledby="context-tab-references"><ReferenceContext {...references} target={currentResourceTarget(c,location)}/></div>:page?<div className="context-scroll" id={'context-body-'+tab} role="tabpanel" aria-labelledby={'context-tab-'+tab}>
    {tab==='outline'&&<>
     {doc?<PdfStudyTree doc={doc} workspace={ws} depth={0} onToggle={onPdfToggle} onNavigate={onPdfNavigate} onManage={onPdfManage} onActions={onReadingActions}/>:<>
      {outline.map(x=><button key={x.id} className="outline-link" style={{paddingLeft:8+x.depth*10}} onClick={()=>jumpTarget(x.id)}>{x.title}</button>)}

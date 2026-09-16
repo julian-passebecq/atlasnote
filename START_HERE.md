@@ -1,26 +1,20 @@
-# AtlasNote 1.2.7 - content libraries, Dashboard and QCM
+# Start here - AtlasNote V2
 
-This is the implemented application source. Do not restart it or replay an older 1.2.7 handoff.
+This is the implemented V2 source tree, not a task-only archive. It supersedes the old 1.2.7 root-level continuation instructions for this delivery, but preserves the completed 1.2.7 application/content.
 
-| Identity | Value |
-|---|---|
-| Authoritative scope | `AtlasNote_1.2.7_Pro_Handoff_v2_SOURCE_OF_TRUTH` only |
-| Exact starting commit | `f9345c11d98f13d33032666d5148a55a27805742` |
-| Verified starting Git tree | `201e3b9c5034b5e275850337aa7dfb437aa599bb` |
-| Local implementation branch | `feature/atlasnote-1.2.7-content-dashboard-qcm` |
-| Final local commit | Read the delivery manifest or run `git rev-parse HEAD` in the preserved working tree. A ZIP has no Git history. |
-| Remote changes | None: no push, pull request, merge or deployment |
-| Release status | Implementation delivered; production certification remains gated by `FINAL_TEST_STATUS.md` |
+## Exact starting source
 
-## Start here
+Bundled `AtlasNote_1.2.7_Content_Dashboard_QCM_Source.zip` SHA-256:
+`4b5659990b128b307aac23016d9836d1c7208891a6674a5def1813af2daeeb71`
 
-1. Read `FINAL_TEST_STATUS.md` for measured results and environment blockers.
-2. Read `REQUIREMENTS_COVERAGE.md` for every v2 acceptance area and its evidence.
-3. Read `docs/1.2.7/ARCHITECTURE.md` for storage, identity, routing and security boundaries.
-4. Read `docs/1.2.7/USER_GUIDE.md` to test the features, and `CODEX_HANDOFF.md` for integration.
+Its 483-file Git tree is `4217bc24a2719f5849fdbd894bd464b329dd6ae7`, matching the manually uploaded 1.2.7 source at remote `0c4455f8ca25eb16c882287a4dc61ddfc32f5b89`. Its predecessor is corrected 1.2.6 `f9345c11d98f13d33032666d5148a55a27805742`. A local snapshot commit was used only to track the bundled baseline; it is not an upstream release commit.
 
-The five subjects are **IT / Cloud / Job / KPI / Norsk**. The five independent content selectors are **Notebook / PDF / Cheatsheet / Article / QCM**. Workspaces 1-5 are now at the bottom right. A new empty workspace opens Dashboard; opening Dashboard or a manager never replaces the underlying reading tabs.
+Working branch: `feature/atlasnote-v2-reference-knowledge-system` (local only).
 
-The Notebook is curated: PDFs, cheatsheets, Articles and QCM remain in their own libraries until explicitly referenced in Notebook. Existing source IDs, bytes, placements and metadata are preserved. A legacy specialized resource without a shared folder appears under its subject's **Unfiled** bucket; a resource with no subject remains **Unclassified**.
+Read V2_REFERENCE_MODEL.md, REQUIREMENTS_COVERAGE.md, FINAL_TEST_STATUS.md, then docs/v2/USER_GUIDE.md. The separate delivery manifest records the final local commit/source ZIP hashes; the ZIP does not contain `.git`.
 
-Do not use `dist-offline` as a hosted replacement for the production bundle. Its browser-PDF fallback and in-memory test harness are deliberately distinct from React-PDF, durable IndexedDB and normal-origin tests.
+## Do not restart or publish automatically
+
+Preserve the independent Notebook structure, manual pins, content types/subjects, current raw IndexedDB database, full-backup envelope, workspace snapshot boundary and all meaningful tests. Do not infer native release approval from compatibility tests. Do not merge to main or deploy until the integrated gates actually pass and release is authorized.
+
+The remaining work is release verification in a normal dependency/browser environment, plus any defects those tests demonstrate. It is not another application rewrite.

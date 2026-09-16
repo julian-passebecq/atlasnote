@@ -30,12 +30,13 @@ with sync_playwright() as pw:
   b.get_by_role('button',name='Show reader controls',exact=True).click();a.get_by_role('button',name='Hide reader controls',exact=True).click()
   assert session()['panes'][0]['readerChromeCollapsed']==True and session()['panes'][1]['readerChromeCollapsed']==False
   for pane in [a,b]:
-   classes=pane.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-identity' in classes[0] and 'pane-new-tab' in classes[1] and classes[2]=='tab-list' and 'pane-chrome-toggle' in classes[3]
+   classes=pane.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,5).map(x=>x.className)');assert 'pane-identity' in classes[0] and 'pane-new-tab' in classes[1] and classes[2]=='tab-list' and classes[3]=='pane-header-actions' and 'pane-chrome-toggle' in classes[4],classes
+   assert pane.locator('.pane-tabbar .pane-header-actions').get_by_role('button',name='Reading mode',exact=True).is_visible()
    assert '*' not in pane.locator('.pane-identity').inner_text()
   b.locator('.document-tab.selected').click();assert session()['activePane']==session()['panes'][1]['id'];expected=session();state_action(p,'Save current workspace state');button('Workspace 4').click();button('Workspace 1').click();assert session()==expected
   b=panes().nth(1);b.get_by_role('button',name='Hide reader controls',exact=True).click();state_action(p,'Restore last workspace save');assert session()==expected
   p.screenshot(path=str(OUT/'independent-pane-controls.png'))
- check('Per-pane + / A-B / toolbar order; no star; independent selection, workspace switch and restore',independent)
+ check('Per-pane A-B / + / tabs / persistent shortcuts / toolbar toggle; no star; independent selection, workspace switch and restore',independent)
  def navigation():
   reset();select('sql-q2');button('Back in active tab').click();assert session()['panes'][0]['views'][0]['history'][session()['panes'][0]['views'][0]['cursor']]['pageId']=='page.interview.sql-q1'
   button('Forward in active tab').click();assert session()['panes'][0]['views'][0]['history'][session()['panes'][0]['views'][0]['cursor']]['pageId']=='page.interview.sql-q2'
@@ -50,7 +51,7 @@ with sync_playwright() as pw:
   assert p.locator('.document-pane pre code').count()>=1;select('sql-q1');p.screenshot(path=str(OUT/'sql-question.png'));return {'nativeQuestionPagesOpened':15}
  check('Deep interview hierarchy opens all fifteen SQL/Theory/Hybrid/Coding native references',hierarchy)
  def context():
-  reset('page.atlas.layouts');select('sql-q1');panel=open_context(p);assert panel.get_by_role('tab').all_text_contents()==['Outline / Glossary','Search','Remarks','Related','History'];assert not panel.locator('.state-saves-manager').count();panel.get_by_role('button',name='Example',exact=True).click();p.wait_for_timeout(200)
+  reset('page.atlas.layouts');select('sql-q1');panel=open_context(p);assert panel.get_by_role('tab').all_text_contents()==['Outline / Glossary','Search','Remarks','Related','References','History'];assert not panel.locator('.state-saves-manager').count();panel.get_by_role('button',name='Example',exact=True).click();p.wait_for_timeout(200)
   open_context(p,'Search');p.get_by_label('Search this document',exact=True).fill('GROUP BY');expect(p.locator('.document-search-hit').first).to_be_visible();assert 'GROUP BY' in p.locator('.document-context').inner_text();p.get_by_label('Search this document',exact=True).fill('QA-ANCHOR-BRAVO');expect(p.locator('.document-search-hit')).to_have_count(0)
   open_context(p,'Remarks');p.get_by_label('Personal remarks',exact=True).fill('My initial reflection.');button('Insert reflection prompts').click();text=p.get_by_label('Personal remarks',exact=True).input_value();assert text.startswith('My initial reflection.');assert 'What pattern did I recognize?' in text
   open_context(p,'History');assert 'First opened on this device' in p.locator('.document-context').inner_text();assert p.evaluate('testStore.state.personal.documentVisits.some(v=>v.pageId==="page.interview.sql-q1")');assert 'Q1' in p.locator('.document-context').inner_text();p.screenshot(path=str(OUT/'document-history.png'))

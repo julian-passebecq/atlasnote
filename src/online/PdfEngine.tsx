@@ -13,7 +13,7 @@ import {pdfAnchor} from '../core/personal-state';
 import {DocumentInfo} from '../pdf/DocumentInfo';
 import {Icon,IconButton} from '../components/Icon';
 import {prepareCompanionParts} from '../companion/authoring.mjs';
-import {createWheelPager} from '../pdf/wheel-navigation.mjs';
+import {createWheelPager,consumeWheelRestore,wheelBoundaries} from '../pdf/wheel-navigation.mjs';
 import './pdf.css';
 pdfjs.GlobalWorkerOptions.workerSrc=new URL('pdf-assets/pdf.worker.min.mjs',document.baseURI).href;
 const options={isEvalSupported:false,standardFontDataUrl:new URL('pdf-assets/standard_fonts/',document.baseURI).href,cMapUrl:new URL('pdf-assets/cmaps/',document.baseURI).href,cMapPacked:true,wasmUrl:new URL('pdf-assets/wasm/',document.baseURI).href};
@@ -85,17 +85,17 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
    const target=e.target as HTMLElement;
    const blocked=e.ctrlKey||e.metaKey||e.altKey||e.shiftKey||!!target.closest('input,textarea,select,button,a,[contenteditable="true"],.pdf-outline,.pdf-info-overlay,.pdf-search-overlay,[role="dialog"]');
    if(blocked)return;
-   // Canvas padding is not unread PDF content. A restored page starts aligned
-   // with the viewport after that padding; allow a reverse turn there too.
-   const style=getComputedStyle(el),topInset=parseFloat(style.paddingTop)||0,bottomInset=parseFloat(style.paddingBottom)||0;
-   const l=locationRef.current,turn=wheelPager.current({deltaY:e.deltaY,deltaX:e.deltaX,deltaMode:e.deltaMode,now:performance.now(),mode:l.pdfMode,top:el.scrollTop<=topInset+2,bottom:el.scrollTop+el.clientHeight>=el.scrollHeight-bottomInset-2,blocked});
+   // Scroll the full current surface first. Only a subsequent edge gesture
+   // can turn the physical group, even for a large trackpad delta.
+   const bounds=wheelBoundaries(el.scrollTop,el.clientHeight,el.scrollHeight);
+   const l=locationRef.current,turn=wheelPager.current({deltaY:e.deltaY,deltaX:e.deltaX,deltaMode:e.deltaMode,now:performance.now(),mode:l.pdfMode,top:bounds.top,bottom:bounds.bottom,blocked});
    if(turn&&pdf){const paired=l.pdfMode==='grid'?4:l.pdfMode==='spread'&&el.clientWidth>=650;const next=stepPhysicalPage(l.pdfPage,pdf.numPages,turn,paired,l.cover);if(next!==l.pdfPage){e.preventDefault();wheelTurnPending.current=true;setPage(next,turn<0);return;}}
-   // A momentum tail must not cancel the pending restore and leave the next
-   // page at the previous page's bottom. Consume only the completed gesture;
-   // deliberate slow ticks resume after the existing idle gate and rendering.
+   // Keep the initial next-page restoration atomic. Once rendered, momentum
+   // may scroll naturally inside that page; the pager latch still prevents
+   // another physical turn during the same uninterrupted gesture.
    // Switching to Continuous ends discrete paging: its native wheel must not
    // be swallowed by a pending page restore from the previous presentation.
-   if(l.pdfMode!=='continuous'&&wheelTurnPending.current&&(wheelPager.current.isLatched()||pendingRestore.current)){e.preventDefault();return;}
+   if(consumeWheelRestore({mode:l.pdfMode,pendingTurn:wheelTurnPending.current,pendingRestore:pendingRestore.current})){e.preventDefault();return;}
    wheelTurnPending.current=false;scrolling.current=true;pendingRestore.current=false;
   };
   el.addEventListener('wheel',wheel,{passive:false});return()=>el.removeEventListener('wheel',wheel);

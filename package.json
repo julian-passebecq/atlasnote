@@ -1,6 +1,6 @@
 {
   "name": "knowledge-atlas",
-  "version": "1.2.7",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -60,7 +60,10 @@
     "test:cheatsheets:ui": "python tests/cheatsheets_126_dom.py",
     "test:cheatsheets:runtime": "python tests/cheatsheets_126_runtime.py",
     "test:content-hub:ui": "python tests/content_hub_127_dom.py",
-    "test:content-hub:runtime": "python tests/content_hub_127_runtime.py"
+    "test:content-hub:runtime": "python tests/content_hub_127_runtime.py",
+    "test:references": "node --test tests/references-v2.test.mjs",
+    "test:references:ui": "python tests/references_v2_dom.py",
+    "test:references:runtime": "python tests/references_v2_runtime.py"
   },
   "dependencies": {
     "jszip": "3.10.1",

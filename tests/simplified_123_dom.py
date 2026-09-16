@@ -26,21 +26,26 @@ with sync_playwright() as pw:
   reset();assert p.locator('.topbar').count()==0;assert button('Hide global topbar').count()==0;assert p.locator('.sidebar-heading').inner_text().strip()==''
   nav=p.locator('.sidebar-navigation button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert nav==['Collapse notebook sidebar','Global search','Back in active tab','Forward in active tab','Enter focus mode','Compare in two panes'],nav
   names=p.locator('.reader-rail>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert names[:4]==['Open context panel','Open bookmarks','Open read later','Export to AI'],names
-  classes=p.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert len(classes)==3 and 'pane-new-tab' in classes[0] and classes[1]=='tab-list' and 'pane-chrome-toggle' in classes[2],classes
+  classes=p.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert len(classes)==4 and 'pane-new-tab' in classes[0] and classes[1]=='tab-list' and classes[2]=='pane-header-actions' and 'pane-chrome-toggle' in classes[3],classes
+  assert p.locator('.pane-tabbar .pane-header-actions').get_by_role('button',name='Quick Book mode',exact=True).is_visible();assert p.locator('.pane-tabbar .pane-header-actions').get_by_role('button',name='Reading mode',exact=True).is_visible()
   assert p.locator('.workspace-dock').get_by_role('button',name='Workspace States',exact=True).is_visible()
   assert p.locator('.reader-chrome-hidden').count()==1;assert not p.locator('.pane-breadcrumb').is_visible()
   button('Show reader controls').click();assert p.locator('.pane-breadcrumb').is_visible();assert session()['panes'][0]['readerChromeCollapsed']==False
   button('Hide reader controls').click();assert session()['panes'][0]['readerChromeCollapsed']==True
   open_saved_manager(p);assert p.locator('.state-quick-actions button').count()==4;close_panels(p)
   p.screenshot(path=str(OUT/'compact-note-reader.png'));return {'navigation':nav,'rightRailStart':names[:4],'paneControlOrder':classes}
- check('No global topbar; exact navigation/rail order; plus and hidden controls precede tabs',chrome)
+ check('No global topbar; exact navigation/rail order; persistent header shortcuts beside toolbar toggle',chrome)
  def side():
   reset();button('Collapse notebook sidebar').click();assert p.locator('.library-sidebar').count()==0;assert p.locator('.navigation-dock').is_visible();button('Global search').click();assert p.locator('dialog[open]').count()==1;p.keyboard.press('Escape');button('Open notebook sidebar').click();assert p.locator('.library-sidebar').is_visible()
  check('Search and history controls remain reachable with the sidebar collapsed',side)
  def compare():
   reset();before=session()['panes'][0];button('Compare in two panes').click();assert session()['panes'][0]==before;assert session()['panes'][1]['views']==[]
-  for pane in p.locator('.document-pane').all():
-   names=pane.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert 'pane-identity' in names[0] and 'pane-new-tab' in names[1] and names[2]=='tab-list' and 'pane-chrome-toggle' in names[3]
+  for index,pane in enumerate(p.locator('.document-pane').all()):
+   names=pane.locator('.pane-tabbar').evaluate('(e)=>[...e.children].map(x=>x.className)');assert 'pane-identity' in names[0] and 'pane-new-tab' in names[1] and names[2]=='tab-list',names
+   # V2 keeps contextual shortcuts in this header even when details are hidden.
+   # The second pane is genuinely empty and must not pretend to own book modes.
+   if index==0:assert names[3]=='pane-header-actions' and 'pane-chrome-toggle' in names[4] and len(names)==6,names
+   else:assert 'pane-chrome-toggle' in names[3] and len(names)==5,names
   button('Swap panes').click();assert session()['panes'][1]==before
  check('Compare and swap in the compact navigation, preserving independent panes',compare)
  def tree():

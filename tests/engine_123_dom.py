@@ -54,7 +54,10 @@ with sync_playwright() as pw:
  def slow():
   reset();goto(1);to_bottom();assert number()==1;p.wait_for_timeout(600)
   for _ in range(3):wheel(30);p.wait_for_timeout(350)
-  wait();assert number()==2;assert p.locator('.active-pane [data-physical-page="2"]').is_visible();p.wait_for_timeout(600);wheel(-120);p.wait_for_timeout(300);wait();assert number()==1
+  wait();assert number()==2;assert p.locator('.active-pane [data-physical-page="2"]').is_visible();p.wait_for_timeout(600);wheel(-120);p.wait_for_timeout(300)
+  # V2: first reverse intent consumes any remaining top padding natively.
+  if number()==2:wheel(-120);p.wait_for_timeout(300)
+  wait();assert number()==1
   return {'forward':2,'back':1,'gesture':'3 x 30 pixels at 350ms intervals; no synthetic scrollTop'}
  check('Natural single-page scroll reaches edge; slow wheel ticks advance and reverse correctly',slow)
  def burst():

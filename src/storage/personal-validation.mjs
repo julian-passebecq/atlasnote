@@ -1,9 +1,10 @@
+import {validateKnowledge,validateExplorer} from '../references/validation.mjs';
 import {validateHubPersonal,validateTaxonomy} from '../content-hub/validation.mjs';
 import {validateReadingLists,validateBookmarkReading} from './reading-validation.mjs';
 import {validateSavedStates} from './saved-states-validation.mjs';
 import {inspectObject,ID} from '../core/validation.mjs';
 export function validatePersonal(p){
- inspectObject(p);validateHubPersonal(p);
+ inspectObject(p);validateHubPersonal(p);validateKnowledge(p.knowledge);
  const fail=m=>{throw Error('Invalid saved workspace: '+m);};
  const obj=(x,n)=>{if(!x||typeof x!=='object'||Array.isArray(x))fail(n);};
  const str=(x,n,max=1000000)=>{if(typeof x!=='string'||x.length>max)fail(n);};
@@ -13,7 +14,7 @@ export function validatePersonal(p){
  const id=(x,n)=>{if(typeof x!=='string'||!ID.test(x))fail(n);};
  const arr=(x,n,max=100000)=>{if(!Array.isArray(x)||x.length>max)fail(n);};
  const anchor=a=>{if(a===undefined)return;obj(a,'anchor');if(a.questionId!==undefined)id(a.questionId,'QCM question');if(a.blockId!==undefined)id(a.blockId,'anchor block');if(a.offset!==undefined)num(a.offset,'anchor offset');if(a.unit!==undefined)str(a.unit,'source unit',256);if(a.viewportOffset!==undefined)num(a.viewportOffset,'anchor viewport offset',-1000000,1000000);if(a.atStart!==undefined)bool(a.atStart,'anchor start');if(a.sheetId!==undefined)id(a.sheetId,'cheatsheet page ID');if(a.sheetPage!==undefined)int(a.sheetPage,'physical cheatsheet page',1,64);if(a.pdfPage!==undefined)int(a.pdfPage,'physical PDF page',1,1000000);if(a.pdfRevision!==undefined)str(a.pdfRevision,'PDF revision',256);if(a.pdfOffset!==undefined)num(a.pdfOffset,'PDF page offset',-10,10);};
- obj(p,'personal');if(![2,3].includes(p.schemaVersion))fail('schema version');
+ if(p.referenceLens!==undefined)bool(p.referenceLens,'reference lens');obj(p,'personal');if(![2,3].includes(p.schemaVersion))fail('schema version');
  obj(p.notes,'notes');for(const [key,n] of Object.entries(p.notes)){str(key,'remark key',600);obj(n,'remark');str(n.text,'remark text');id(n.pageId,'remark page');num(n.updatedAt,'remark timestamp');anchor(n.anchor);if(n.revision!==undefined)str(n.revision,'remark revision',256);}
  obj(p.ratings,'ratings');for(const [key,value] of Object.entries(p.ratings)){id(key,'rated page');if(!['gray','red','orange','green'].includes(value))fail('rating');}
  arr(p.bookmarks,'bookmarks');const bookmarks=new Set();for(const b of p.bookmarks){id(b.id,'bookmark ID');if(bookmarks.has(b.id))fail('duplicate bookmark');bookmarks.add(b.id);id(b.pageId,'bookmark page');str(b.title,'bookmark title',10000);num(b.createdAt,'bookmark timestamp');anchor(b.anchor);validateBookmarkReading(b);}
@@ -37,7 +38,7 @@ export function validatePersonal(p){
     if(ui.open!==undefined)bool(ui.open,'companion open');if(ui.collapsed!==undefined){arr(ui.collapsed,'companion collapsed categories',500);ui.collapsed.forEach(x=>id(x,'companion category'));}
     if(ui.tab!==undefined&&!['overview','pages','glossary','search'].includes(ui.tab))fail('companion tab');if(ui.term!==undefined)str(ui.term,'companion term',180);if(ui.query!==undefined)str(ui.query,'companion query',300);
    }}
-   for(const v of pane.views){id(v.id,'view ID');if(viewIds.has(v.id))fail('duplicate view');viewIds.add(v.id);arr(v.history,'history',10000);int(v.cursor,'history cursor',0,Math.max(0,v.history.length-1));bool(v.english,'English visibility');
+   for(const v of pane.views){validateExplorer(v.referenceExplorer);if(v.referenceExplorer&&v.history.length)fail('system tab with content history');id(v.id,'view ID');if(viewIds.has(v.id))fail('duplicate view');viewIds.add(v.id);arr(v.history,'history',10000);int(v.cursor,'history cursor',0,Math.max(0,v.history.length-1));bool(v.english,'English visibility');
     for(const key of ['collapsed','revealed']){obj(v[key],key);for(const [bid,state] of Object.entries(v[key])){id(bid,'disclosure block');bool(state,'disclosure');}}
     for(const l of v.history){id(l.pageId,'history page');if(l.collectionId!==undefined){id(l.collectionId,'collection ID');if(l.pageId!==l.collectionId)fail('collection navigation identity');}
      if(!['continuous','book','parallel'].includes(l.presentation))fail('presentation');if(!['single','continuous','spread','grid'].includes(l.pdfMode))fail('PDF mode');

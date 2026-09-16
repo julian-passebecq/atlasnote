@@ -60,6 +60,9 @@ jobs:
       - run: npm run test:reading:runtime
       - run: npm run test:cheatsheets:runtime
       - run: npm run test:content-hub:runtime
+      - run: npm run test:references
+      - run: npm run test:references:ui
+      - run: npm run test:references:runtime
       - run: npm run test:headers
       - uses: actions/upload-artifact@v4
         if: always()

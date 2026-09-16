@@ -1,3 +1,14 @@
+# V2 (2.0.0) - unreleased
+
+- Continue the bundled completed 1.2.7 source; retain its content hub, readers, workspaces and backup systems.
+- Persistent pane-header Book/Spread, Four-page and Mode shortcuts; independent detailed-toolbar toggles and corrected menu scope.
+- First-open PDF Spread without overwriting saved choices; true-boundary wheel guard and a correction to the integrated test harness Dashboard reset.
+- Optional stable Concept Index, exact assignments and directed references; derived backlinks/shared-concept results with provenance and safe missing-anchor fallback.
+- Context References, optional virtual Notebook Reference Lens, closable Reference Explorer and Unlinked / Needs review queue.
+- Local bounded JSON/Markdown AI-reference handoff, atomic preview/staging/selected decisions, stale checks and bounded audit history; no network AI or cloud storage.
+- Additive validated Personal state, full-backup round trips and unchanged workspace-checkpoint boundary.
+- Release verification remains open for the actual integrated PDF/runtime/dependency gates. See FINAL_TEST_STATUS.md.
+
 # AtlasNote 1.2.7 - local implementation, pending integrated release verification
 
 - Separate five content types, five shared subjects and five independent workspaces.
