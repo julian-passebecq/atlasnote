@@ -7,7 +7,7 @@ import {KnowledgeEditor} from '../references/KnowledgeEditor.js';
 import {createReferenceIndex} from '../references/knowledge.js';
 import {resolveTarget} from '../references/targets.js';
 import {openReferenceExplorer} from '../references/explorer.js';
-import {Dashboard} from '../content-hub/Dashboard.js';
+import {Dashboard} from '../content-hub/DashboardView.js';
 import {LibraryManager} from '../content-hub/LibraryManager.js';
 import {QuickCapture,ContentEditor,ReferenceEditor,CaptureEditor} from '../content-hub/Editors.js';
 import {QcmReader} from '../content-hub/QcmReader.js';

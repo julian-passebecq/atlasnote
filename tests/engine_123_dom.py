@@ -62,8 +62,15 @@ with sync_playwright() as pw:
  check('Natural single-page scroll reaches edge; slow wheel ticks advance and reverse correctly',slow)
  def burst():
   reset();goto(1);to_bottom();p.wait_for_timeout(600)
-  for _ in range(70):wheel(15);p.wait_for_timeout(20)
-  wait();assert number()==2
+  # Pointer geometry is stable here. Repeated bounding-box/move RPCs can split
+  # the intended burst into separate gestures on a busy browser.
+  box=canvas().bounding_box();p.mouse.move(box['x']+box['width']/2,box['y']+box['height']/2)
+  canvas().evaluate('e=>{window.componentWheelTimes=[];e.addEventListener("wheel",()=>componentWheelTimes.push(performance.now()),{passive:true});}')
+  for _ in range(70):p.mouse.wheel(0,15);p.wait_for_timeout(20)
+  wait();times=p.evaluate('componentWheelTimes');gaps=[b-a for a,b in zip(times,times[1:])]
+  (OUT/'momentum-timing.json').write_text(json.dumps({'times':times,'gaps':gaps,'physicalPage':number()},indent=2))
+  assert len(times)==70 and max(gaps)<=220,{'error':'Browser did not deliver one continuous wheel gesture','maxGap':max(gaps) if gaps else None}
+  assert number()==2
  check('One continuous momentum burst does not skip multiple physical pages',burst)
  def spread():
   reset();button('Quick PDF Spread').click();wait();assert p.locator('.active-pane [data-physical-page]').count()==2;assert session()['panes'][0]['views'][0]['history'][0]['pdfMode']=='spread';button('Quick PDF Spread').click();wait();assert p.locator('.active-pane [data-physical-page]').count()==1

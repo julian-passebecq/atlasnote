@@ -9,7 +9,7 @@ from browser_support import ROOT,start_server,launch,mount_dom,close_panels,open
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/1.2.6/cheatsheets-ui'));OUT.mkdir(parents=True,exist_ok=True)
 base=start_server(dom_only=True);results=[];errors=[]
 IDS=['sql-analytics','pyspark-execution','azure-data-factory','pandas-essentials']
-DOCS={id:json.loads((ROOT/'content/cheatsheets'/f'{id}.json').read_text()) for id in IDS}
+DOCS={id:json.loads((ROOT/'content/cheatsheets'/f'{id}.json').read_text(encoding='utf-8')) for id in IDS}
 four={'schemaVersion':'1.1','id':'test-four-pages','title':'Four-page UI fixture','pageSize':{'width':1200,'height':1600},'pages':[{'id':f'four.p{i}','title':f'Physical test page {i}','blocks':[{'id':f'four.b{i}','type':'text','text':f'Distinct physical page {i}','role':'title'}],'frames':{f'four.b{i}':{'x':100,'y':150,'width':1000,'height':200}},'outline':[{'id':f'four.a{i}','label':f'Page {i}','blockId':f'four.b{i}'}]} for i in range(1,5)]}
 with sync_playwright() as pw:
  browser=launch(pw);ctx=browser.new_context(viewport={'width':1440,'height':1000},accept_downloads=True);p=ctx.new_page();p.set_default_timeout(6000);p.on('pageerror',lambda e:errors.append(str(e)));mount_dom(p,base)
@@ -142,13 +142,15 @@ with sync_playwright() as pw:
  check('Markup-like code remains selectable inert text in the actual reader DOM',safe_text)
  def exact_backup():
   reset();id=import_doc(four);go(3);open_context(p,'Remarks');p.get_by_label('Personal remarks',exact=True).fill('Private native reflection\nKeep exactly.');close_panels(p);action(3,'Bookmark');action(3,'Add to Read later');state_action(p,'Save all workspace states');open_settings(p);before=p.evaluate('structuredClone(testStore.state)')
-  with p.expect_download() as download:btn('Download workspace backup').click()
+  # Verified backup preparation includes the real opaque-origin SHA-256 bridge;
+  # allow it to finish while keeping the exact payload/decoder checks below.
+  with p.expect_download(timeout=30000) as download:btn('Download workspace backup').click()
   backup=OUT/'native-workspace-roundtrip.atlas-backup.zip';download.value.save_as(str(backup))
   with zipfile.ZipFile(backup) as z:payload=json.loads(z.read('backup.json'))['workspace']
   assert payload['personal']==before['personal'];assert payload['overlays']==before['overlays']
   decoded=p.evaluate("""async bytes=>{const [{unzipBounded,readBackup},{schemas}]=await Promise.all([import(new URL('app/storage/archives.mjs',document.baseURI)),import(new URL('app/app/load.js',document.baseURI))]);const data=await readBackup((await unzipBounded(new Uint8Array(bytes))).files,await schemas());return {personal:data.workspace.personal,overlays:data.workspace.overlays};}""",list(backup.read_bytes()))
   assert decoded['personal']==payload['personal'];assert decoded['overlays']==payload['overlays']
-  close_panels(p);reset();open_settings(p);unchanged=p.evaluate('({personal:testStore.state.personal,overlays:testStore.state.overlays})');p.get_by_label('Restore workspace backup',exact=True).set_input_files(str(backup));expect(p.locator('.import-preview')).to_contain_text('verified attachments');p.get_by_role('checkbox',name='I understand that this replaces the current local workspace.',exact=True).check();btn('Restore verified backup').click();expect(p.locator('dialog .error-message')).to_contain_text('Indexed Database API is denied');assert p.evaluate('({personal:testStore.state.personal,overlays:testStore.state.overlays})')==unchanged
+  close_panels(p);reset();open_settings(p);unchanged=p.evaluate('({personal:testStore.state.personal,overlays:testStore.state.overlays})');p.get_by_label('Restore workspace backup',exact=True).set_input_files(str(backup));expect(p.locator('.import-preview')).to_contain_text('verified attachments',timeout=30000);p.get_by_role('checkbox',name='I understand that this replaces the current local workspace.',exact=True).check();btn('Restore verified backup').click();expect(p.locator('dialog .error-message')).to_contain_text('Indexed Database API is denied');assert p.evaluate('({personal:testStore.state.personal,overlays:testStore.state.overlays})')==unchanged
   shot('native-restore-preview-storage-denied');return {'exactArchivePayload':True,'productionDecoderExact':True,'restorePreviewValidated':True,'deniedStorageLeavesStateIntact':True,'successfulPersistentRestore':'separate normal-origin runtime gate'}
  check('Exact backup download/decoder and verified restore preview; denied opaque-origin storage never loses state',exact_backup)
  def clean_errors():assert not errors,errors

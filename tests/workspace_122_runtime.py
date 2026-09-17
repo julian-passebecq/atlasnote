@@ -67,19 +67,29 @@ try:
   workspace(page,2);empty=snapshot(page);assert slot(empty)['panes'][0]['views']==[];assert slot(empty,1)==slot(one,1);assert slot(empty).get('categoryFilter') is None
   record()
   phase='duplicate_categories'
-  for n in [1,2]:workspace(page,n);page.get_by_role('button',name='Informatics filter',exact=True).click()
+  for n in [1,2]:workspace(page,n);page.get_by_role('button',name='IT filter',exact=True).click()
   search(page,'Loops');search(page,'Lists and dictionaries',True)
   for n in [3,4,5]:workspace(page,n);page.get_by_role('button',name='Norsk filter',exact=True).click();search(page,'Explain what you are learning')
   ws=snapshot(page);assert [slot(ws,n)['categoryFilter'] for n in [1,2]]==['informatics']*2;assert [slot(ws,n)['categoryFilter'] for n in [3,4,5]]==['norsk']*3;record()
-  phase='workspace_position';workspace(page,1);restored=snapshot(page);assert slot(restored,1)['panes']==slot(one,1)['panes'];assert page.locator('.note-scroller').evaluate('e=>e.scrollTop')>300;page.get_by_role('button',name='Informatics filter',exact=True).click();assert slot(snapshot(page),1)['categoryFilter'] is None
+  phase='workspace_position';workspace(page,1);restored=snapshot(page);assert slot(restored,1)['panes']==slot(one,1)['panes'];assert page.locator('.note-scroller').evaluate('e=>e.scrollTop')>300;page.get_by_role('button',name='IT filter',exact=True).click();assert slot(snapshot(page),1)['categoryFilter'] is None
   record()
   phase='quick_layouts';before=snapshot(page);page.get_by_role('button',name='Quick Book mode',exact=True).click();page.locator('.book-grid .book-sheet').first.wait_for();page.get_by_role('button',name='Quick Book mode',exact=True).click();after=snapshot(page)
   bv=slot(before)['panes'][0]['views'][0];av=slot(after)['panes'][0]['views'][0];assert av['id']==bv['id'] and av['cursor']==bv['cursor'] and len(av['history'])==len(bv['history']);assert location(slot(after))['presentation']=='continuous';assert len(slot(after)['panes'])==1;record()
-  phase='pdf_engine';workspace(page,2);page.get_by_role('button',name='Informatics filter',exact=True).click();search(page,'PDF reading fixture',True);wait_pdf(page);assert page.locator('.pdf-companion').count()==0;assert page.locator('.pdf-study-tree').count()==0;assert slot(snapshot(page))['libraryMode']=='pdfs';record()
-  phase='wheel_single';assert page.locator('.pdf-companion').count()==0;goto(page,1);wheel(page,150,'bottom');assert number(page)==2;page.wait_for_timeout(600);wheel(page,-150,'top');assert number(page)==1;record()
+  phase='pdf_engine';workspace(page,2);page.get_by_role('button',name='IT filter',exact=True).click();search(page,'PDF reading fixture',True);wait_pdf(page);assert page.locator('.pdf-companion').count()==0;assert page.locator('.pdf-study-tree').count()==0;assert slot(snapshot(page))['libraryMode']=='pdfs';record()
+  phase='wheel_single';assert page.locator('.pdf-companion').count()==0
+  # New PDFs default to Spread; these first three wheel cases require Single.
+  show_reader_controls(page);page.get_by_role('combobox',name='PDF presentation').select_option('single');wait_pdf(page)
+  goto(page,1);wheel(page,150,'bottom');assert number(page)==2;page.wait_for_timeout(600);wheel(page,-150,'top');assert number(page)==1;record()
   phase='wheel_middle';goto(page,1);page.wait_for_timeout(600);assert canvas(page).evaluate('e=>e.scrollHeight-e.clientHeight')>200;wheel(page,100,'middle');assert number(page)==1;record()
   phase='wheel_gesture';goto(page,1);page.wait_for_timeout(600)
-  for _ in range(5):wheel(page,800,'bottom')
+  # Set the edge once, then send actual wheel events without per-event RPCs,
+  # forced scrolling and 130ms waits turning this into separate gestures.
+  c=canvas(page);c.evaluate('e=>e.scrollTop=e.scrollHeight');box=c.bounding_box();page.mouse.move(box['x']+box['width']/2,box['y']+box['height']/2)
+  c.evaluate('e=>{window.workspaceWheelTimes=[];e.addEventListener("wheel",()=>workspaceWheelTimes.push(performance.now()),{passive:true});}')
+  for _ in range(5):page.mouse.wheel(0,800)
+  page.wait_for_timeout(300);times=page.evaluate('workspaceWheelTimes');gaps=[b-a for a,b in zip(times,times[1:])]
+  (OUT/'gesture-timing.json').write_text(json.dumps({'times':times,'gaps':gaps,'physicalPage':number(page)},indent=2))
+  assert len(times)==5 and max(gaps)<=220,{'error':'Browser did not deliver one continuous wheel gesture','gaps':gaps}
   assert number(page)==2,'One continuous gesture must not skip multiple pages';page.wait_for_timeout(600);wheel(page,150,'bottom');assert number(page)==3;record()
   phase='wheel_spread';page.set_viewport_size({'width':1920,'height':1080});page.wait_for_timeout(250);goto(page,1);page.get_by_role('button',name='Quick PDF Spread',exact=True).click();page.wait_for_timeout(300);assert page.locator('.active-pane .physical-page').count()==2;page.wait_for_timeout(600);wheel(page,160,'bottom');assert number(page)==3
   page.locator('.active-pane').get_by_role('checkbox',name='Cover alone').check();goto(page,1);page.wait_for_timeout(600);wheel(page,160,'bottom');assert number(page)==2;page.wait_for_timeout(600);wheel(page,160,'bottom');assert number(page)==4

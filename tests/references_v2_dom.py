@@ -104,7 +104,9 @@ with sync_playwright() as pw:
   p.expose_function('atlasV2SHA',lambda a:list(hashlib.sha256(bytes(a)).digest()))
   p.evaluate("""()=>{if(!crypto.subtle)Object.defineProperty(crypto,'subtle',{value:{digest:async(_,data)=>new Uint8Array(await window.atlasV2SHA(Array.from(new Uint8Array(data.buffer??data,data.byteOffset??0,data.byteLength)))).buffer}})}""")
   close_panels(p);open_settings(p);before=state()
-  with p.expect_download() as dl:click('Download workspace backup')
+  # Opaque-origin real SHA-256 bridging and verified ZIP preparation can exceed
+  # the short UI-action timeout. Payload equality below remains exact.
+  with p.expect_download(timeout=30000) as dl:click('Download workspace backup')
   path=OUT/'references-component-backup.atlas-backup.zip';dl.value.save_as(str(path))
   with zipfile.ZipFile(path) as z:payload=json.loads(z.read('backup.json'))['workspace']
   assert payload['personal']['knowledge']==before['personal']['knowledge'];assert payload['personal']['referenceLens'] is True;assert payload['overlays']==before['overlays'];close_panels(p)

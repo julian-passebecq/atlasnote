@@ -3,7 +3,7 @@ An unavailable integrated distribution or browser policy block is exit 2.
 """
 import os,json,traceback,hashlib
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright,expect
 from browser_support import ROOT,start_server,launch,show_reader_controls
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/1.2.1/finish-integrated'));OUT.mkdir(parents=True,exist_ok=True)
 CASES=[('projection','Strict two-way tree discovery'),('pinned','Exact pinned public references'),('assets','Verified worker, CMaps, WASM and standard fonts'),('normal','Actual integrated canvas, no native toolbar or intro'),('geometry','Four viewport document-space measurements'),('info','On-demand provenance and original actions'),('focus','Focus requests the actual browser Fullscreen API when available'),('arrows','Focus arrows navigate physical pages outside inputs'),('exit','Fullscreen/CSS Focus exit restores the shell'),('spread','Physical-page spread screenshot'),('compare','PDF/note independent Compare screenshot'),('slate','Dark Slate integrated PDF screenshot'),('fallback','Intentional worker failure exposes usable compact native fallback'),('errors','No uncaught errors')]
@@ -38,7 +38,13 @@ try:
   phase='info';p.get_by_role('button',name='Document info',exact=True).click();assert 'SHA-256' in p.locator('.pdf-info-overlay').inner_text();assert p.locator('.pdf-info-overlay').get_by_role('link',name='Open original PDF',exact=True).count()==1;p.get_by_role('button',name='Close document info',exact=True).click();record(phase)
   phase='focus';p.get_by_role('button',name='Enter focus mode',exact=True).click();p.wait_for_timeout(500);assert p.locator('.focus-mode').count()==1;assert p.locator('.sidebar-navigation:visible,.navigation-dock:visible,.pane-tabbar:visible,.reader-rail:visible,.context-drawer:visible').count()==0;assert p.locator('.pdf-controls').is_visible();assert p.locator('.pdf-fallback').count()==0
   calls=p.evaluate('fs121Actual');available=p.evaluate('!!Element.prototype.requestFullscreen');assert not available or len(calls)==1 and calls[0]['activation'];granted=p.evaluate('!!document.fullscreenElement');shot('integrated-focus');record(phase,{'nativeApiAvailable':available,'requests':calls,'actualFullscreenGranted':granted,'browserChromeRemovalNotVisuallyCertified':True})
-  phase='arrows';p.locator('.pdf-canvas-scroll').focus();p.keyboard.press('ArrowRight');p.wait_for_timeout(300);assert p.get_by_role('spinbutton',name='Physical PDF page number').input_value()=='2';field=p.get_by_role('spinbutton',name='Physical PDF page number');field.focus();p.keyboard.press('ArrowLeft');assert field.input_value()=='2';record(phase)
+  phase='arrows'
+  # New PDFs default to Spread, whose ArrowRight correctly advances to page 3.
+  # This check exercises single-page navigation and input-key isolation.
+  p.get_by_role('combobox',name='PDF presentation').select_option('single')
+  field=p.get_by_role('spinbutton',name='Physical PDF page number');field.fill('1');field.press('Enter');expect(field).to_have_value('1')
+  p.locator('.pdf-canvas-scroll').focus();p.keyboard.press('ArrowRight');expect(field).to_have_value('2')
+  field.focus();p.keyboard.press('ArrowLeft');expect(field).to_have_value('2');record(phase)
   phase='exit';p.keyboard.press('Escape');p.wait_for_timeout(400);assert p.locator('.focus-mode').count()==0;assert not p.evaluate('!!document.fullscreenElement');assert p.locator('.topbar').count()==0;assert p.locator('.sidebar-navigation').is_visible();record(phase)
   phase='spread';p.set_viewport_size({'width':1920,'height':1080});p.get_by_role('combobox',name='PDF presentation').select_option('spread');p.wait_for_timeout(500);assert p.locator('.physical-page').count()==2;shot('integrated-spread');record(phase)
   phase='compare';p.get_by_role('button',name='Compare in two panes',exact=True).click();search('One note, several ways to read');assert p.locator('.integrated-pdf').count()==1;assert p.locator('.reader-body').count()==1;shot('integrated-note-pdf-compare');record(phase)
