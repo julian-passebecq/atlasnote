@@ -1,30 +1,35 @@
-# AtlasNote 1.2.5
+# AtlasNote V2 - local-first knowledge reader
 
-Local-first notebook and PDF reading, continuing the released 1.2.4 source. Read [START_HERE.md](START_HERE.md) and [FINAL_TEST_STATUS.md](FINAL_TEST_STATUS.md) before integration. This source has not been merged or deployed; integrated release acceptance is not yet certified in this environment.
+AtlasNote combines freely editable Notebooks, PDFs, native structured SVG Cheatsheets, Articles/transcripts and QCM question sets. It includes five subjects, five independent reader workspaces, Dashboard, Quick Capture, bookmarks, Read Later, saved workspace states and complete local backups.
 
-Five independent workspaces preserve tabs, reading positions, Compare, Focus, Book, PDF Spread and four-page Grid. Each pane controls its own toolbar. The compact navigation strip opens search/history, sidebar, document Context, Focus and Compare. Bookmarks and Read Later remain independent shared lists.
+A separate stable Concept Index connects exact pages, sections and questions without imposing a rigid hierarchy on the Notebook tree. Context, derived backlinks, the optional virtual Reference Lens and a closable Reference Explorer provide cross-library navigation. AI-reference review is explicit local export/import, not a background service.
 
-PDF navigation intentionally uses fewer visible levels than notebook navigation, without modifying stored taxonomy. Physical-page links keep their actions and revision-aware targets. Context provides a document outline/glossary, scoped search, private remarks/reflection, explicit related links and bounded local visit history. Saved workspace checkpoints have a separate Workspace States panel, with all existing save/restore/progress/history/undo behavior.
+## Current delivery: V2 stabilization, version 2.0.0
 
-The new Interview Preparation reference notebook contains five canonical SQL questions, four theory samples, three hybrid samples and three Python dictionary-pattern variants. They are ordinary editable notebook pages with safe code blocks, not executable exercises. The semantic authoring model and generation procedure are documented in [docs/1.2.5/INTERVIEW_CONTENT.md](docs/1.2.5/INTERVIEW_CONTENT.md).
+Implemented on the audited V2 application, preserving its reference model and PDF/SVG engines. This pass adds five compact Dashboard tables, lossless Capture/Article back-navigation, tree-first resource management, validated Visual/JSON editing, clearer pane controls, and an optional deterministic demo.
 
-## Build and test
+**Not production-cleared.** Actual integrated builds, type checks, 705 unit tests, 237 DOM UI checks and 34 real PDF component checks pass. Normal-origin browser policy blocks durable reload/fresh-profile verification in the delivery environment. Clean install/security/license review remains incomplete. See `FINAL_TEST_STATUS.md` rather than older historical delivery reports.
 
-Node >=22.12.0; use the exact committed lockfile. Python is for tests and optional PDF authoring.
+## Run
 
 ```sh
 npm ci
-python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
-python -m playwright install --with-deps chromium
-npm run test:release
+npm run build
+npm run preview
 ```
 
-Preview the integrated production build with `npm run build && npm run preview`. `dist-offline` is only a compatibility fallback and must not be deployed. The actual PDF component test harness is opt-in at `.build/engine-dom`, not part of the hosted app.
+Use Node >=22.12 and the committed lockfile. `npm run test:release` is the full release matrix; Python test requirements and Playwright Chromium must already be installed. `npm run test:stabilization:ui` runs the new focused in-memory UI suite. `npm run test:stabilization:runtime` exercises the actual production entry and IndexedDB on a normal HTTP origin.
 
-The release runner records every gate and exits nonzero for any failure or blocked result. Missing registry dependencies or browser-policy blocks are not passing tests. See the current status document and external evidence, not historical reports, for exactly what was verified.
+The offline bootstrap/build remains a labelled compatibility fallback, not a replacement for the integrated application or durability tests.
 
-## Privacy and provenance
+## Explore the app
 
-Starting main is `b5e63f71185bcf525e985dfad1260d38ed3c4918`, with exact baseline tree `72a8ea2ca18944a3c897d86f39579c7a347e3c37`. No GitHub writes, merge or Netlify deployment were made. Source integration instructions are in [CODEX_HANDOFF.md](CODEX_HANDOFF.md).
+The top-left ribbon is Sidebar, Search, Back, Forward, Quick Capture, Dashboard, Compare. Focus is at the top of the right rail. Clicking Dashboard again returns to the underlying reader layout.
 
-Personal remarks, explicit links and up to 50 document timestamps stay in the existing local workspace/backup. There is no analytics service, cloud sync or automatic PDF fetch for Context. Source added/modified dates are shown as unknown when not available. This delivery contains no private 137-page reference library or credentials. The inherited precompiled Mermaid bundle still has its documented transitive SBOM/license-closure limitation.
+Open Dashboard's **Demo / test data** disclosure and choose **Load demo data** to populate realistic optional examples. Nothing loads automatically. **Reset/remove demo data** removes unchanged demo-owned records while retaining user-modified or user-referenced items; it is not an erase-all command.
+
+Select PDF, Cheatsheet, Article or QCM and drag a source from the left tree into the management workspace, or use **Choose resource**. **Add to Notebook** creates a reference, never a source copy. **Visual | JSON** exposes validated source editing; PDF JSON contains metadata only, never its binary.
+
+See `START_HERE.md`, `docs/stabilization/USER_GUIDE.md`, `V2_REFERENCE_MODEL.md`, `REQUIREMENTS_COVERAGE.md` and `WORKSPACE_READY_FOR_GITHUB.md`.
+
+Private library sources, captures, attempts, and backups stay in local import/export workflows. Never commit them as application source.

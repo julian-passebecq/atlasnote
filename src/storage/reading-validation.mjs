@@ -13,24 +13,27 @@ export function normaliseReadingUrl(input){
  if(!['http:','https:'].includes(u.protocol)||!u.hostname||u.username||u.password)fail('Only credential-free HTTP/HTTPS addresses are allowed.');return u.href;
 }
 function anchor(a){
- keys(a,['blockId','offset','unit','viewportOffset','atStart','pdfPage','pdfRevision','pdfOffset']);
- if(a.blockId!==undefined)id(a.blockId);if(a.unit!==undefined)text(a.unit,256);if(a.pdfRevision!==undefined)text(a.pdfRevision,256);
- if(a.pdfPage!==undefined)integer(a.pdfPage,1,1000000);if(a.atStart!==undefined&&typeof a.atStart!=='boolean')fail('anchor start');
+ keys(a,['blockId','offset','unit','viewportOffset','atStart','pdfPage','pdfRevision','pdfOffset','sheetPage','sheetId','questionId']);
+ if(a.questionId!==undefined)id(a.questionId);if(a.blockId!==undefined)id(a.blockId);if(a.unit!==undefined)text(a.unit,256);if(a.pdfRevision!==undefined)text(a.pdfRevision,256);
+ if(a.sheetId!==undefined)id(a.sheetId);if(a.sheetPage!==undefined)integer(a.sheetPage,1,64);if(a.pdfPage!==undefined)integer(a.pdfPage,1,1000000);if(a.atStart!==undefined&&typeof a.atStart!=='boolean')fail('anchor start');
  for(const k of ['offset','viewportOffset','pdfOffset'])if(a[k]!==undefined&&(!Number.isFinite(a[k])||Math.abs(a[k])>1000000))fail('anchor offset');
  if(a.pdfOffset!==undefined&&(a.pdfOffset < -10||a.pdfOffset>10))fail('PDF offset');
 }
 export function validateReadingTarget(t){
  obj(t);
- const allowed={url:['kind','url'],page:['kind','pageId','anchor'],collection:['kind','collectionId'],'pdf-page':['kind','pageId','documentId','revision','pdfPage','anchor'],'pdf-category':['kind','pageId','documentId','revision','pdfPage','pdfCategoryId']};
+ const allowed={article:['kind','articleId','pageId','anchor'],qcm:['kind','setId','pageId','questionId'],'dashboard-item':['kind','itemId'],'cheatsheet-page':['kind','pageId','documentId','sheetPage','anchor'],url:['kind','url'],page:['kind','pageId','anchor'],collection:['kind','collectionId'],'pdf-page':['kind','pageId','documentId','revision','pdfPage','anchor'],'pdf-category':['kind','pageId','documentId','revision','pdfPage','pdfCategoryId']};
  if(!Object.hasOwn(allowed,t.kind))fail('target kind');keys(t,allowed[t.kind]);
  if(t.kind==='url'){normaliseReadingUrl(t.url);return;}
  if(t.kind==='collection'){id(t.collectionId);return;}
- id(t.pageId);if(t.anchor!==undefined)anchor(t.anchor);
+ if(t.kind==='dashboard-item'){id(t.itemId);return;}
+ if(t.kind==='article'){id(t.articleId);if(t.pageId!==undefined)id(t.pageId);if(t.anchor!==undefined)anchor(t.anchor);return;}
+ if(t.kind==='qcm'){id(t.setId);if(t.pageId!==undefined)id(t.pageId);if(t.questionId!==undefined)id(t.questionId);return;}
+ id(t.pageId);if(t.anchor!==undefined)anchor(t.anchor);if(t.kind==='cheatsheet-page'){id(t.documentId);integer(t.sheetPage,1,64);if(t.anchor?.sheetPage!==undefined&&t.anchor.sheetPage!==t.sheetPage)fail('cheatsheet anchor identity');if(t.anchor?.pdfPage!==undefined||t.anchor?.pdfRevision!==undefined||t.anchor?.pdfOffset!==undefined)fail('PDF anchor on cheatsheet');}
  if(t.kind.startsWith('pdf-')){id(t.documentId);integer(t.pdfPage,1,1000000);if(t.revision!==undefined&&!/^[a-f0-9]{64}$/.test(t.revision))fail('PDF revision');if(t.kind==='pdf-category')id(t.pdfCategoryId);if(t.anchor?.pdfPage!==undefined&&t.anchor.pdfPage!==t.pdfPage)fail('PDF anchor identity');}
 }
 export function validateBookmarkReading(b){
  if(b.category!==undefined&&b.category!==null&&!cats.includes(b.category))fail('bookmark category');if(b.note!==undefined)text(b.note,1000);
- if(b.target!==undefined){validateReadingTarget(b.target);if(b.target.kind==='url')fail('URL bookmark');if((b.target.kind==='collection'?b.target.collectionId:b.target.pageId)!==b.pageId)fail('bookmark identity');}
+ if(b.target!==undefined){validateReadingTarget(b.target);if(b.target.kind==='url')fail('URL bookmark');if((b.target.kind==='collection'?b.target.collectionId:b.target.kind==='article'?b.target.pageId??b.target.articleId:b.target.kind==='qcm'?b.target.pageId??b.target.setId:b.target.kind==='dashboard-item'?b.target.itemId:b.target.pageId)!==b.pageId)fail('bookmark identity');}
 }
 export function validateReadingLists(entries){
  if(!Array.isArray(entries)||entries.length>READING_LIMITS.items)fail('500-item limit');if(new TextEncoder().encode(JSON.stringify(entries)).length>READING_LIMITS.bytes)fail('2 MiB limit');

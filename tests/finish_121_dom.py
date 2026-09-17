@@ -24,17 +24,23 @@ with sync_playwright() as pw:
  def toggle():
   # The mode switch intentionally moved out of prime navigation into the library.
   if not p.locator('.library-sidebar:visible').count():p.get_by_role('button',name='Open notebook sidebar',exact=True).click()
-  p.get_by_role('button',name='Switch to PDF library' if p.get_by_role('button',name='Switch to PDF library',exact=True).count() else 'Switch to notes',exact=True).click()
+  p.get_by_role('button',name='Notebook content' if p.evaluate('testStore.state.personal.session.libraryMode')=='pdfs' else 'PDF content',exact=True).click()
  def strict_modes():
   reset();before=nodes();assert 'node.pdfatlas.spark-concepts' not in before;assert 'node.page.atlas.pdf' not in before;assert p.locator('.tree-project').filter(has_text='PDF Atlas').count()==0
-  assert '12 notebooks' in p.locator('.statusbar').inner_text();assert 'notes' in p.locator('.statusbar').inner_text();heading=p.locator('.sidebar-heading').inner_text();toggle();p.get_by_role('button',name='Switch to notes',exact=True).wait_for();assert p.locator('.sidebar-heading').inner_text().strip()=='';pdf=nodes();assert 'PDFs' in p.locator('.statusbar').inner_text();assert 'node.page.atlas.layouts' not in pdf;assert 'node.pdfatlas.spark-concepts' in pdf;assert 'node.pdfatlas.pyspark-pandas' in pdf
+  # 1.2.7 deliberately requires explicit Notebook references for specialized content.
+  # Keep exact two-way filtering and explicitly prove native documents do not leak into PDFs.
+  assert 'node.cheatsheet.sql-analytics' not in before
+  assert 'notebooks' in p.locator('.statusbar').inner_text();assert 'Notebook resources' in p.locator('.statusbar').inner_text();heading=p.locator('.sidebar-heading').inner_text();toggle();p.get_by_role('button',name='Notebook content',exact=True).wait_for();assert p.locator('.sidebar-heading').inner_text().strip()=='';p.get_by_role('button',name='Expand IT / Unfiled',exact=True).click();pdf=nodes();assert 'PDF resources' in p.locator('.statusbar').inner_text();assert 'node.page.atlas.layouts' not in pdf;assert 'node.pdfatlas.spark-concepts' in pdf;assert 'node.pdfatlas.pyspark-pandas' in pdf
+  assert 'node.cheatsheet.sql-analytics' not in pdf
   toggle();assert nodes()==before;assert p.locator('.sidebar-heading').inner_text()==heading
   return {'noteNodeIds':before,'pdfNodeIds':pdf,'exactReturn':True}
  check('Strict two-way discovery and exact returned Notes projection/count',strict_modes)
  def keyboard_toggle():
-  reset();before=nodes();button=p.get_by_role('button',name='Switch to PDF library',exact=True);button.focus();p.keyboard.press('Enter');p.get_by_role('button',name='Switch to notes',exact=True).wait_for();p.keyboard.press('Space');assert nodes()==before
-  p.get_by_role('button',name='Switch to PDF library',exact=True).dblclick();assert nodes()==before;assert p.evaluate('testStore.state.personal.session.libraryMode')=='notes'
- check('Keyboard activation and rapid double click deterministically return Notes',keyboard_toggle)
+  reset();before=nodes();panes=p.evaluate('structuredClone(testStore.state.personal.session.panes)');button=p.get_by_role('button',name='PDF content',exact=True);button.focus();p.keyboard.press('Enter');assert p.evaluate('testStore.state.personal.session.libraryMode')=='pdfs'
+  p.get_by_role('button',name='Notebook content',exact=True).focus();p.keyboard.press('Space');assert nodes()==before
+  p.get_by_role('button',name='PDF content',exact=True).dblclick();assert p.evaluate('testStore.state.personal.session.libraryMode')=='pdfs';assert p.evaluate('testStore.state.personal.session.panes')==panes
+  p.get_by_role('button',name='Notebook content',exact=True).click();assert nodes()==before
+ check('Keyboard content switching and re-click preserve pane data and exact Notebook projection',keyboard_toggle)
  def open_pdf_preserved():
   reset('page.atlas.pdf');p.locator('.pdf-fallback').wait_for();p.evaluate('''()=>{testStore.personal(s=>{const v=s.session.panes[0].views[0],l=testCore.current(v);l.pdfPage=3;l.zoom=1.5;l.rotation=90;l.cover=true;l.pdfMode='spread';s.notes['page.atlas.pdf']={pageId:'page.atlas.pdf',text:'EXACT_PDF_REMARK',updatedAt:1};});}''')
   before=p.evaluate('structuredClone(testStore.state)');toggle();toggle();after=p.evaluate('structuredClone(testStore.state)')
@@ -64,7 +70,7 @@ with sync_playwright() as pw:
  check('Actual fallback geometry with sidebar study navigation at all four viewports: no intro, compact strip, canvas >=75%',geometry)
  def metadata():
   reset('page.atlas.pdf');p.get_by_role('button',name='Document info',exact=True).click();info=p.locator('.pdf-info-overlay');assert info.is_visible();assert 'SHA-256' in info.inner_text();assert 'Rights' in info.inner_text();assert 'Original bytes' in info.inner_text();assert info.get_by_role('link',name='Download original',exact=True).count()==1
-  p.get_by_role('button',name='Close document info',exact=True).click();assert p.locator('.pdf-info-overlay').count()==0;open_context(p);assert p.locator('.document-context [role=tab]').all_text_contents()==['Outline / Glossary','Search','Remarks','Related','History'];assert p.locator('.pdf-study-tree').count()>=1;shot('document-context-outline')
+  p.get_by_role('button',name='Close document info',exact=True).click();assert p.locator('.pdf-info-overlay').count()==0;open_context(p);assert p.locator('.document-context [role=tab]').all_text_contents()==['Outline / Glossary','Search','Remarks','Related','References','History'];assert p.locator('.pdf-study-tree').count()>=1;shot('document-context-outline')
  check('Rights, exact hash, size, provenance and original actions remain in on-demand info',metadata)
  def install_fullscreen():
   reset();p.evaluate('''()=>{
@@ -98,7 +104,7 @@ with sync_playwright() as pw:
   reset('page.atlas.pdf');toggle();p.get_by_role('button',name='Compare in two panes',exact=True).click();p.locator('[data-node-id="node.page.atlas.rotated"] .tree-target').click();assert p.locator('.pdf-fallback').count()==2;shot('fallback-pdf-pdf-compare');toggle();p.locator('[data-node-id="node.page.atlas.language"] .tree-target').click();assert p.locator('.pdf-fallback').count()==1;assert p.locator('.reader-body').count()==1;shot('fallback-note-pdf-compare');p.get_by_role('button',name='Theme',exact=True).click();p.get_by_role('button',name='Dark Slate',exact=True).click();shot('dark-slate-fallback-compare')
  check('Native fallback retains independent PDF/PDF and PDF/note Compare plus Dark Slate',theme_compare)
  def home_counts():
-  reset();open_more(p).get_by_role('button',name='Home',exact=True).click();assert p.locator('.project-card').filter(has_text='PDF Atlas').count()==0;p.get_by_role('checkbox',name='Manage all notebooks',exact=True).check();assert p.locator('.project-card').filter(has_text='PDF Atlas').count()==1;p.get_by_role('checkbox',name='Manage all notebooks',exact=True).uncheck();toggle();assert p.locator('.project-card').filter(has_text='PDF Atlas').count()==1;assert p.locator('.project-card').filter(has_text='Example project').count()==0
+  reset();open_more(p).get_by_role('button',name='Home',exact=True).click();assert p.locator('.project-card').filter(has_text='PDF Atlas').count()==0;p.get_by_role('checkbox',name='Manage all notebooks',exact=True).check();assert p.locator('.project-card').filter(has_text='PDF Atlas').count()==1;p.get_by_role('checkbox',name='Manage all notebooks',exact=True).uncheck();toggle();assert p.locator('.library-management').is_visible();assert p.locator('.project-card').count()==0;assert p.locator('.library-management h1').inner_text()=='PDF library'
  check('Home discovery counts match mode, with an explicit separate all-notebook management option',home_counts)
  check('No uncaught JavaScript errors in finish-pass scenarios',lambda:None if not errors else (_ for _ in ()).throw(AssertionError(errors)))
  report={'scope':'Actual offline-compatibility DOM; in-memory storage; simulated Fullscreen API; no integrated renderer or normal-origin certification','checks':results,'passed':sum(x['status']=='PASS' for x in results),'failed':sum(x['status']=='FAIL' for x in results),'errors':errors}

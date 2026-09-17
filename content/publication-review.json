@@ -23,6 +23,10 @@
     "atlas.interview-samples": {
       "review": "Original educational prototype: 5 canonical SQL prompts, 4 theory, 3 hybrid and 3 coding variants. Public reference examples; no private data. Existing renderer blocks only.",
       "sha256": "2c59bc3b152ed0899bd9151c10e78d12312881f1c5b7d91d02d27f28a7a4343c"
+    },
+    "atlas.cheatsheet-samples": {
+      "review": "User-supplied reference previews reconstructed as canonical JSON. Reference terminology retained; this is renderer acceptance content, not independently vendor-verified guidance. ADF page 1 reconstruction is disclosed in its metadata and page caption.",
+      "sha256": "79cb4a1da1faf3c65f84df209b1b31ad71b136f2b7b9abfd3972ef461778b051"
     }
   }
 }

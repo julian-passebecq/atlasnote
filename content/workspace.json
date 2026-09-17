@@ -6,6 +6,13 @@
   "disabledPackIds": [],
   "groups": [
     {
+      "id": "group.cheatsheets",
+      "title": "Study references",
+      "projectIds": [
+        "project.cheatsheets"
+      ]
+    },
+    {
       "id": "group.samples.programming",
       "title": "Python & data",
       "projectIds": [

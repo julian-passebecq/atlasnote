@@ -1,3 +1,50 @@
+# AtlasNote V2.1.0 - 2026-09-18
+
+- Finalize the stabilized V2 architecture and UX with compact Dashboard tables, pane-owned reader controls, typed Notebook references, local-first Content Hub authoring, Quick Capture, Reference Lens/Explorer and five independent workspaces.
+- Add visual Article/QCM authoring polish, readable exact context labels, denser reference surfaces, clearer drag/resize affordances and consistent AtlasNote V2.1 user-facing naming.
+- Repair three browser-confirmed release blockers: canonical Article classification synchronization, author-owned Multiple-answer QCM mode, and embedded PDF internal-destination navigation.
+- Preserve IndexedDB version 2 and the existing full-backup envelope; no persistence schema migration or new runtime storage authority.
+- Final local release gate: 46/46 commands; 715/715 unit tests. Push and PR production-release CI completed successfully on the repaired release candidate.
+
+# V2 stabilization (2.0.0) - unreleased
+
+- Diagnose and correct the inherited Grid/Spread Compare test setup without changing the PDF engine or weakening all-workspace restore equality.
+- Replace the sparse Dashboard matrix with five compact derived tables, three-row empty slots, canonical plus actions and a true return-to-reader toggle.
+- Move Focus to the right rail; place Capture/Dashboard/Compare in the specified ribbon; improve A/B collapsed-strip direction and hit area.
+- Add validated tree resource drag/drop and keyboard alternatives, left-side Add to Notebook and coherent staged Visual/JSON source editing for all four libraries.
+- Preserve three-to-five-row capture drafts across content-first Article/Transcript back-navigation; simplify secondary metadata into Advanced.
+- Add deterministic optional demo Articles, QCM, captures and overlapping references with guarded non-destructive cleanup.
+- Retain all five theme tokens and V2 branding. Integrated type/build, unit, UI and real-PDF component checks pass; normal-origin persistence and dependency review remain release blockers.
+
+# V2 (2.0.0) - unreleased
+
+- Continue the bundled completed 1.2.7 source; retain its content hub, readers, workspaces and backup systems.
+- Persistent pane-header Book/Spread, Four-page and Mode shortcuts; independent detailed-toolbar toggles and corrected menu scope.
+- First-open PDF Spread without overwriting saved choices; true-boundary wheel guard and a correction to the integrated test harness Dashboard reset.
+- Optional stable Concept Index, exact assignments and directed references; derived backlinks/shared-concept results with provenance and safe missing-anchor fallback.
+- Context References, optional virtual Notebook Reference Lens, closable Reference Explorer and Unlinked / Needs review queue.
+- Local bounded JSON/Markdown AI-reference handoff, atomic preview/staging/selected decisions, stale checks and bounded audit history; no network AI or cloud storage.
+- Additive validated Personal state, full-backup round trips and unchanged workspace-checkpoint boundary.
+- Release verification remains open for the actual integrated PDF/runtime/dependency gates. See FINAL_TEST_STATUS.md.
+
+# AtlasNote 1.2.7 - local implementation, pending integrated release verification
+
+- Separate five content types, five shared subjects and five independent workspaces.
+- Add shared-folder specialized management and explicit typed Notebook references.
+- Add safe native Articles/transcripts, local QCM questions/attempts/reflections/exports, and shared Dashboard captures.
+- Preserve reading-state restoration boundaries and exact full-backup payload support.
+- Add four authoring presets on the unchanged native SVG grammar and exact typed links across surfaces.
+- Add content-hub data/UI/runtime tests and retain every previous release command.
+- See FINAL_TEST_STATUS.md for actual results; no remote integration or deployment in this pass.
+
+## Prior implementation history
+
+# 1.2.6 - native structured cheatsheets; integrated acceptance pending
+
+Continue exact released 1.2.5. Add canonical JSON validation, a safe fixed 1200 x 1600 SVG renderer with live text and graph/sequence diagrams, four two-page reference reconstructions, and a restrained scoped paper theme. Integrate native content into existing tabs, five workspaces, independent panes, Single/two/four-page views, physical-page reading actions, outline/search/remarks/Related, local JSON import/edit/export and the unchanged exact backup mechanism. Stable physical page/block identity survives source reordering; unavailable targets are retained. Add 94 unit regressions, a 26-case real-DOM compatibility suite, and a nine-case actual-origin persistence/restore/PDF Compare gate. Preserve all previous release gates and record blocked integrated acceptance explicitly. See FINAL_TEST_STATUS.md and docs/1.2.6/FIXTURE_PROVENANCE.md.
+
+The entries below are historical implementation records, not the current release certificate. The authoritative starting 1.2.5 is the released commit named in START_HERE.md.
+
 # 1.2.5 - local implementation, release acceptance pending
 
 Independent per-pane reader toolbars; compact top-left navigation; flatter, non-destructive PDF taxonomy; momentum-safe page restoration and terminal-group selection; active-document Context with scoped search, explicit related links, reflections and bounded history; dedicated Workspace States panel; 15 native interview references (5 SQL, 4 Theory, 3 Hybrid, 3 Coding). No cheatsheets, runner or scoring. Added focused regressions and real-wheel acceptance gate. See FINAL_TEST_STATUS.md for actual execution and environment blockers.

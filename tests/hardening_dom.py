@@ -29,6 +29,7 @@ with sync_playwright() as pw:
         page.set_viewport_size({'width':1440,'height':900})
         page.evaluate('(x)=>testReset(...x)', [id,mode,synthetic])
         page.wait_for_timeout(250)
+        if id is None:more_action(page,'Home')
         if page.get_by_role('button',name='Dismiss message',exact=True).count():page.get_by_role('button',name='Dismiss message',exact=True).click()
     def tree(title):
         return page.locator('.tree-target').filter(has_text=title).last
@@ -91,7 +92,7 @@ with sync_playwright() as pw:
     def top_order():
         reset()
         labels=page.locator('.reader-rail > button').evaluate_all('(xs)=>xs.map(x=>x.getAttribute("aria-label")||x.textContent.trim())')
-        assert labels==['Open context panel','Workspace States','Open bookmarks','Open read later','Export to AI','Theme','More / Settings'],labels
+        assert labels==['Enter focus mode','Open context panel','Open bookmarks','Open read later','Export to AI','Theme','More / Settings'],labels
         return labels
     check('Compact rail follows the 1.2.5 separate paired actions',['E01'],top_order)
     for left in [False,True]:
@@ -257,10 +258,10 @@ with sync_playwright() as pw:
         reset(None)
         page.get_by_role('main').get_by_role('button',name='New notebook',exact=True).click();page.get_by_label('Title',exact=True).fill('Local test notebook');page.get_by_role('button',name='Create notebook',exact=True).click()
         page.get_by_role('button',name='Manage notebook',exact=True).click();page.get_by_label('Title',exact=True).fill('Renamed local notebook');page.get_by_role('button',name='Save details',exact=True).click()
-        assert tree('Renamed local notebook').count()==0 # Strict discovery hides empty notebooks; management remains available.
+        assert tree('Renamed local notebook').count()==1 # Native empty folders remain available for shared classification.
         page.get_by_role('button',name='Manage notebook',exact=True).click();page.get_by_role('button',name='Archive notebook',exact=True).click();assert tree('Renamed local notebook').count()==0
         more_action(page,'Home');page.locator('.archive-list > summary').click();page.locator('.archive-row').filter(has_text='Renamed local notebook').get_by_role('button',name='Restore',exact=True).click()
-        assert tree('Renamed local notebook').count()==0 # Strict discovery hides empty notebooks; management remains available.
+        assert tree('Renamed local notebook').count()==1 # Native empty folders remain available for shared classification.
         page.get_by_role('checkbox',name='Manage all notebooks',exact=True).check();assert page.locator('.project-card').filter(has_text='Renamed local notebook').count()==1
     check('Notebook create, rename, archive and restore through real controls',['A01','A02','A03'],notebook_crud)
     def folder_crud():
@@ -275,14 +276,14 @@ with sync_playwright() as pw:
         menu('Renamed deep page','Move');page.get_by_label('Destination notebook').select_option(label='Example project');page.get_by_role('button',name='Move here',exact=True).click()
         tree('Reader guide').click();page.get_by_role('button',name='Collection actions for First local folder',exact=True).click();page.get_by_role('menuitem',name='Archive',exact=True).click();page.get_by_role('button',name='Archive item',exact=True).click();assert tree('First local folder').count()==0
         more_action(page,'Home');page.locator('.archive-list > summary').click();page.locator('.archive-row').filter(has_text='First local folder').get_by_role('button',name='Restore',exact=True).click()
-        assert tree('First local folder').count()==0;tree('Reader guide').click();assert page.get_by_role('button',name='First local folder',exact=True).count()==1
+        assert tree('First local folder').count()==1;tree('Reader guide').click();assert page.locator('.collection-open').filter(has_text='First local folder').count()==1
     check('Six-level folders, deep page, rename, move and folder archive/restore',['A04','A05','A07','A08','A09','A10','A11'],folder_crud)
     def groups():
         reset(None);page.get_by_role('button',name='Manage groups',exact=True).click();page.get_by_role('textbox',name='New group name').fill('My release group');page.get_by_role('button',name='Add',exact=True).click();page.get_by_role('button',name='Save groups',exact=True).click()
         assert any(g['title']=='My release group' for g in state('overlays.groups'))
     check('Manage project groups via Home',['A12'],groups)
     def note_pdf():
-        reset();page.get_by_role('button',name='Switch to PDF library',exact=True).click();page.get_by_role('button',name='Compare in two panes').click();tree('PDF reading fixture').click()
+        reset();page.get_by_role('button',name='PDF content',exact=True).click();page.get_by_role('button',name='Compare in two panes').click();tree('PDF reading fixture').click()
         assert page.locator('.pdf-reader').count()==1;assert page.locator('.reader-body').count()==1
         show_reader_controls(page)
         assert page.get_by_text('Browser PDF fallback',exact=True).is_visible()

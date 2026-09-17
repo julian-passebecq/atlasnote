@@ -12,14 +12,14 @@ function bundle(page){return {schemaVersion:2,title:'Test',projects:[],pages:[pa
 function personalWorkspace(){const ws=blankWorkspace();const page=makeMarkdownPage('My retained page','A personal addition.');const project={id:'project.personal',title:'Personal',icon:'book',description:'Personal notebook',nodes:[{id:'node.personal',title:page.title,pageId:page.id}]};ws.overlays.pages[page.id]={page};ws.overlays.projects.push(project);const view=newView('page.atlas.layouts',{blockId:'block.atlas.layouts.0',offset:6});view.history[0].presentation='book';ws.personal.session.panes[0].views=[view];ws.personal.session.panes[0].active=view.id;ws.personal.session.screen='reader';ws.personal.notes['page.atlas.layouts']={text:'My own remark, not source content.',pageId:'page.atlas.layouts',updatedAt:42};ws.personal.ratings['page.atlas.layouts']='green';ws.personal.bookmarks=[{id:'bookmark.test',pageId:'page.atlas.layouts',title:'Return here',anchor:{blockId:'block.atlas.layouts.0',offset:6},createdAt:40}];ws.overlays.archived.push(page.id);return ws;}
 
 test('public catalogue retains the 1.2.1 core plus ten original study samples',()=>{
- const original=seed.packs.filter(p=>!['study.samples','atlas.interview-samples'].includes(p.manifest.id));
+ const original=seed.packs.filter(p=>!['study.samples','atlas.interview-samples','atlas.cheatsheet-samples'].includes(p.manifest.id));
  assert.equal(original.reduce((n,p)=>n+p.pages.length,0),10);
  assert.equal(original.filter(p=>p.manifest.id!=='pdfatlas.public').reduce((n,p)=>n+p.pages.length,0),8);
  assert.equal(original.reduce((n,p)=>n+p.projects.length,0),3);
- assert.equal(seed.validation.pages,35);assert.equal(seed.validation.terms,1);assert.equal(seed.validation.projects,13);assert.deepEqual(seed.validation.missing,[]);
+ assert.equal(seed.packs.find(p=>p.manifest.id==='atlas.cheatsheet-samples').pages.length,4);assert.equal(seed.validation.pages,39);assert.equal(seed.validation.terms,1);assert.equal(seed.validation.projects,14);assert.deepEqual(seed.validation.missing,[]);
 });
 test('strict schemas refuse unknown page fields',()=>{const p=clone(seed.packs[0].pages[0]);p.quiz='not supported';assert.throws(()=>validateSchema(bundle(p),schemas.v2),/unsupported/);});
-test('strict @2 schema requires stable IDs on all blocks',()=>{const p=clone(seed.packs[0].pages[0]);delete p.blocks[0].id;assert.throws(()=>validateSchema(bundle(p),schemas.v2));});
+test('strict @2 schema requires stable IDs on all blocks',()=>{const p=clone(seed.packs.flatMap(p=>p.pages).find(p=>p.id==='page.atlas.layouts'));delete p.blocks[0].id;assert.throws(()=>validateSchema(bundle(p),schemas.v2));});
 test('unknown payload versions cannot be guessed',async()=>{const files=new Map(seedFiles);const path=[...files.keys()].find(p=>p.endsWith('atlas-pack.json'));const p=JSON.parse(new TextDecoder().decode(files.get(path)));p.payloadSchema='atlas.bundle@99';files.set(path,new TextEncoder().encode(JSON.stringify(p)));await assert.rejects(readWorkspace(files,schemas));});
 for(const path of ['../secret','/absolute','a/../b','a//b','a\\b','x:evil','a/./b','bad\u0000name'])test('path rejected '+JSON.stringify(path),()=>assert.throws(()=>safePath(path)));
 test('safe relative nested file accepted',()=>assert.equal(safePath('packs/demo/pages/a.json'),'packs/demo/pages/a.json'));

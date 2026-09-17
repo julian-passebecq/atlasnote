@@ -37,6 +37,10 @@ jobs:
       - run: npm run test:reading:ui
       - run: npm run test:interviews
       - run: npm run test:polish:ui
+      - run: npm run test:cheatsheets
+      - run: npm run test:cheatsheets:ui
+      - run: npm run test:content-hub:ui
+      - run: npm run test:stabilization:ui
       - run: npm run test:backup:diagnostic
       - run: npm run test:pdf:authoring
       # Build the exact hosted distribution after all compatibility suites.
@@ -55,6 +59,14 @@ jobs:
       - run: npm run test:workspaces:runtime
       - run: npm run test:savedstates:runtime
       - run: npm run test:reading:runtime
+      - run: npm run test:cheatsheets:runtime
+      - run: npm run test:content-hub:runtime
+      - run: npm run test:references
+      - run: npm run test:references:ui
+      - run: npm run test:references:runtime
+      - run: npm run test:stabilization:runtime
+      - run: npm run test:final-polish:runtime
+      - run: npm run test:release-blockers:runtime
       - run: npm run test:headers
       - uses: actions/upload-artifact@v4
         if: always()

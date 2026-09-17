@@ -1,90 +1,62 @@
-# AtlasNote 1.2.5 changed files
+# Changed files - V2 stabilization
 
-Compared with the exact uploaded/upstream 1.2.4 tree. This list includes generated native interview pages and archived delivery documents, not dependency/build caches.
+Comparison is against the exact audited application source tree of upstream `fc41a5a5ac843f228175194b6a679867843530d8`. Four diagnostic-only files already on remote `f366f015` are explicitly retained. No source files are deleted. The source ZIP and external manifest identify the final local commit/tree.
 
-84 changed or added files.
+M = modified; A = added. Earlier reports are preserved under `docs/stabilization/historical-v2-delivery/`, not used as current evidence.
 
-- `.github/workflows/ci.yml`
-- `AGENTS.md`
-- `CHANGED_FILES.md`
-- `CHANGELOG.md`
-- `CODEX_HANDOFF.md`
-- `FINAL_TEST_STATUS.md`
-- `README.md`
-- `START_HERE.md`
-- `WORKSPACE_READY_FOR_GITHUB.md`
-- `content/interviews/questions.json`
-- `content/packs/atlas.interview-samples/atlas-pack.json`
-- `content/packs/atlas.interview-samples/glossary.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.coding-errors.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.coding-group.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.coding-latest.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.hybrid-fanout.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.hybrid-lazy.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.hybrid-retry.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.sql-q1.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.sql-q2.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.sql-q3.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.sql-q4.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.sql-q5.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.theory-batch.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.theory-behavioral.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.theory-layout.json`
-- `content/packs/atlas.interview-samples/pages/page.interview.theory-medallion.json`
-- `content/packs/atlas.interview-samples/projects.json`
-- `content/packs/atlas.interview-samples/sql-progression.json`
-- `content/publication-review.json`
-- `content/workspace.json`
-- `docs/1.2.5/IMPLEMENTATION.md`
-- `docs/1.2.5/INTERVIEW_CONTENT.md`
-- `docs/1.2.5/REQUEST.txt`
-- `docs/history/1.2.4-delivery-docs/CHANGED_FILES.md`
-- `docs/history/1.2.4-delivery-docs/CODEX_HANDOFF.md`
-- `docs/history/1.2.4-delivery-docs/FINAL_TEST_STATUS.md`
-- `docs/history/1.2.4-delivery-docs/README.md`
-- `docs/history/1.2.4-delivery-docs/START_HERE.md`
-- `docs/history/1.2.4-delivery-docs/WORKSPACE_READY_FOR_GITHUB.md`
-- `index.html`
-- `package-lock.json`
-- `package.json`
-- `src/app/App.tsx`
-- `src/companion/PdfStudyTree.tsx`
-- `src/components/DocumentContext.tsx`
-- `src/components/FloatingPanel.tsx`
-- `src/components/ReaderRail.tsx`
-- `src/components/SearchContext.tsx`
-- `src/components/Tree.tsx`
-- `src/core/document-context.ts`
-- `src/core/model.ts`
-- `src/core/pdf-navigation.ts`
-- `src/core/workspace-slots.ts`
-- `src/interview/content.mjs`
-- `src/online/PdfEngine.tsx`
-- `src/pdf/physical-pages.mjs`
-- `src/pdf/text-search.ts`
-- `src/pdf/wheel-navigation.mjs`
-- `src/storage/personal-validation.mjs`
-- `src/styles/app.css`
-- `src/styles/reader-polish.css`
-- `tests/browser_support.py`
-- `tests/compact_12_dom.py`
-- `tests/core.test.mjs`
-- `tests/engine_123_dom.py`
-- `tests/finish_121_dom.py`
-- `tests/grid_124_dom.py`
-- `tests/hardening_dom.py`
-- `tests/persistence_assertions.py`
-- `tests/persistence_assertions_test.py`
-- `tests/reader-polish-125.test.mjs`
-- `tests/reader_polish_125_dom.py`
-- `tests/reading_124_dom.py`
-- `tests/reading_124_runtime.py`
-- `tests/saved_states_runtime.py`
-- `tests/simplified_123_dom.py`
-- `tests/wheel_125_dom.py`
-- `tests/workspace-122.test.mjs`
-- `tests/workspace_122_dom.py`
-- `tests/workspace_122_runtime.py`
-- `tools/build.mjs`
-- `tools/generate-interviews.mjs`
-- `tools/run-release.mjs`
+| Change | Path |
+| --- | --- |
+| M | `CHANGED_FILES.md` |
+| M | `.github/workflows/ci.yml` |
+| A | `.github/workflows/stabilization-diagnostic.yml` |
+| A | `.github/workflows/theme-preview-diagnostic.yml` |
+| M | `CHANGELOG.md` |
+| M | `CODEX_HANDOFF.md` |
+| M | `FINAL_TEST_STATUS.md` |
+| M | `README.md` |
+| M | `REQUIREMENTS_COVERAGE.md` |
+| M | `START_HERE.md` |
+| M | `V2_REFERENCE_MODEL.md` |
+| M | `WORKSPACE_READY_FOR_GITHUB.md` |
+| A | `docs/stabilization/PDF_RESTORE_DIAGNOSIS.md` |
+| A | `docs/stabilization/PRO_IMPROVEMENT_PASS.md` |
+| A | `docs/stabilization/TEST_CHANGES.md` |
+| A | `docs/stabilization/USER_GUIDE.md` |
+| A | `docs/stabilization/historical-v2-delivery/CHANGED_FILES.md` |
+| A | `docs/stabilization/historical-v2-delivery/CODEX_HANDOFF.md` |
+| A | `docs/stabilization/historical-v2-delivery/FINAL_TEST_STATUS.md` |
+| A | `docs/stabilization/historical-v2-delivery/REQUIREMENTS_COVERAGE.md` |
+| A | `docs/stabilization/historical-v2-delivery/START_HERE.md` |
+| A | `docs/stabilization/historical-v2-delivery/WORKSPACE_READY_FOR_GITHUB.md` |
+| M | `package.json` |
+| M | `src/app/App.tsx` |
+| M | `src/components/ReaderRail.tsx` |
+| M | `src/components/Tree.tsx` |
+| M | `src/content-hub/Dashboard.tsx` |
+| M | `src/content-hub/Editors.tsx` |
+| M | `src/content-hub/LibraryManager.tsx` |
+| M | `src/content-hub/surfaces.ts` |
+| A | `src/stabilization/ReadingTargetDialog.tsx` |
+| A | `src/stabilization/capture-draft.ts` |
+| A | `src/stabilization/demo.ts` |
+| A | `src/stabilization/resource-drag.ts` |
+| A | `src/stabilization/resource-source.ts` |
+| M | `src/storage/database.ts` |
+| M | `src/styles/app.css` |
+| A | `src/styles/stabilization.css` |
+| M | `tests/browser_support.py` |
+| M | `tests/content_hub_127_dom.py` |
+| M | `tests/content_hub_127_runtime.py` |
+| A | `tests/diagnose_pdf_grid.py` |
+| M | `tests/grid_124_dom.py` |
+| M | `tests/hardening_dom.py` |
+| M | `tests/reader_11_dom.py` |
+| M | `tests/reading_124_dom.py` |
+| M | `tests/references_v2_dom.py` |
+| M | `tests/simplified_123_dom.py` |
+| A | `tests/stabilization-v2.test.mjs` |
+| A | `tests/stabilization_v2_dom.py` |
+| A | `tests/stabilization_v2_runtime.py` |
+| A | `tests/theme_stabilization_preview.py` |
+| M | `tests/workspace_122_dom.py` |
+| M | `tools/run-release.mjs` |

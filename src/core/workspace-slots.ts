@@ -2,8 +2,8 @@ import type {Personal,Session,WorkspaceNumber,CategoryId,View} from './model.js'
 import {blankPersonal} from './workspace.js';
 export const WORKSPACE_NUMBERS:WorkspaceNumber[]=[1,2,3,4,5];
 export const CATEGORIES:{id:CategoryId;label:string;icon:string}[]=[
- {id:'informatics',label:'Informatics',icon:'code'}, {id:'cloud',label:'Cloud',icon:'cloud'},
- {id:'norsk',label:'Norsk',icon:'language'}, {id:'job',label:'Job',icon:'briefcase'}, {id:'personal',label:'Personal',icon:'person'}
+ {id:'informatics',label:'IT',icon:'code'}, {id:'cloud',label:'Cloud',icon:'cloud'},
+ {id:'job',label:'Job',icon:'briefcase'}, {id:'personal',label:'KPI',icon:'person'}, {id:'norsk',label:'Norsk',icon:'language'}
 ];
 /** Normalized backward-compatible storage: `session` is always slot 1, not the
  * currently active session. Other slots are durable records, never snapshots
@@ -44,6 +44,7 @@ export function toggleQuickLayout(view:View,pdf:boolean):void {
 }
 /** Classification is explicit data, never inferred from user titles. */
 export const BUILTIN_CATEGORIES:Record<string,CategoryId>={
+ 'project.cheatsheets':'informatics',
  'project.interview-preparation':'job',
  'project.atlas.guide':'personal','example.project':'personal','project.pdfatlas':'informatics',
  ...Object.fromEntries(['python','sql','pandas','pyspark'].map(n=>['project.samples.'+n,'informatics' as const])),

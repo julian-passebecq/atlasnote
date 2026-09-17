@@ -11,7 +11,7 @@ from engine_dom_support import mount_engine
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/1.2.5/pdf-wheel'));OUT.mkdir(parents=True,exist_ok=True)
 results=[];errors=[]
 if not list((ROOT/'.build/engine-dom/assets').glob('harness-*.js')):
- report={'scope':__doc__,'status':'BLOCKED','checks':[{'name':name,'status':'BLOCKED','error':'The actual React-PDF component harness is not built. Install the locked dependencies and build:test-harness.'} for name in ['single slow wheel','spread slow wheel','grid slow wheel','compare independence','momentum restore','reverse progression']]}
+ report={'scope':__doc__,'status':'BLOCKED','checks':[{'name':name,'status':'BLOCKED','error':'The actual React-PDF component harness is not built. Install the locked dependencies and build:test-harness.'} for name in ['single slow wheel','spread slow wheel','grid slow wheel','compare independence','momentum restore','reverse progression','V2 tall single native range','V2 tall spread native range','V2 tall grid native range','V2 first-open Spread and narrow preference','no browser errors']]}
  (OUT/'results.json').write_text(json.dumps(report,indent=2));print('BLOCKED: actual React-PDF harness missing');raise SystemExit(2)
 base=start_server(dom_only=True,dist='.build/engine-dom')
 with sync_playwright() as pw:
@@ -52,12 +52,26 @@ with sync_playwright() as pw:
    if loc()['pdfPage']!=old:break
   assert loc()['pdfPage']==2
   for _ in range(15):p.mouse.wheel(0,45);p.wait_for_timeout(30)
-  ready();assert loc()['pdfPage']==2;assert shown()==[2];assert area().locator('.pdf-canvas-scroll').evaluate('e=>e.scrollTop')<40
+  ready();assert loc()['pdfPage']==2;assert shown()==[2]
+  # V2 permits native movement inside the rendered next page while the latch
+  # still prevents another turn. A tail must not cancel initial restoration.
+  assert area().locator('.pdf-canvas-scroll').evaluate('e=>e.scrollTop>=0&&e.scrollTop+e.clientHeight<=e.scrollHeight+2')
   p.wait_for_timeout(650);hover();p.mouse.wheel(0,30);p.wait_for_timeout(160);assert area().locator('.pdf-canvas-scroll').evaluate('e=>e.scrollTop')>10;return {'sameBurstDoesNotSkip':True,'newGestureScrolls':True}
  check('Momentum tail cannot skip pages or cancel the new-page top restoration',momentum)
  def compare():
   reset('single');first=loc();btn('Compare in two panes').click();p.locator('[data-node-id="node.page.atlas.pdf"] .tree-target').click();ready(1);show_reader_controls(p,area(1));area(1).get_by_label('PDF presentation',exact=True).select_option('grid');ready(1);a=loc(0);slow_to_turn(1);assert loc(1)['pdfPage']==5;assert loc(0)==a;right=loc(1);slow_to_turn(0);assert loc(0)['pdfPage']==2 and loc(1)==right;assert shown(0)==[2] and shown(1)==[5];p.screenshot(path=str(OUT/'independent-wheel-compare.png'))
  check('Wheel scrolling affects only the pane under the pointer in Compare',compare)
+ # V2: measure actual content movement BEFORE a continued boundary gesture.
+ def tall_content(mode):
+  reset(mode);area().get_by_label('PDF zoom',exact=True).select_option('2');ready();p.wait_for_timeout(550);hover();host=area().locator('.pdf-canvas-scroll');start=host.evaluate('(e)=>({y:e.scrollTop,max:e.scrollHeight-e.clientHeight})');assert start['max']-start['y']>90,start;physical=loc()['pdfPage'];p.mouse.wheel(0,40);p.wait_for_timeout(120);middle=host.evaluate('(e)=>e.scrollTop');assert middle>start['y'];assert loc()['pdfPage']==physical
+  # A single large event may reach the edge but must NOT also turn the group.
+  p.mouse.wheel(0,50000);p.wait_for_timeout(180);assert loc()['pdfPage']==physical;assert host.evaluate('(e)=>e.scrollTop+e.clientHeight>=e.scrollHeight-2');p.wait_for_timeout(550);slow_to_turn();assert loc()['pdfPage']>physical;ready();return {'mode':mode,'innerScrollBefore':start['y'],'innerScrollAfter':middle,'boundaryBeforeTurn':True,'physicalAfterContinuedWheel':loc()['pdfPage']}
+ for mode in ['single','spread','grid']:check('V2 tall '+mode+' consumes native range before a continued boundary turn',lambda mode=mode:tall_content(mode))
+ def first_open_and_narrow():
+  reset();btn('New tab in pane 1').click();p.keyboard.press('Control+k');p.get_by_label('Search all pages and glossary',exact=True).fill('PDF reading fixture');p.locator('.search-result').filter(has_text='PDF reading fixture').first.click();ready();assert loc()['pdfMode']=='spread';assert shown()==[1,2]
+  p.set_viewport_size({'width':580,'height':900});ready();assert loc()['pdfMode']=='spread';assert len(shown())==1
+  p.set_viewport_size({'width':1920,'height':1080});ready();assert shown()==[1,2];show_reader_controls(p);area().get_by_label('PDF presentation',exact=True).select_option('single');ready();btn('Open Dashboard').click();btn('Return to reader').click();ready();assert loc()['pdfMode']=='single';return {'firstMode':'spread','narrowRender':1,'savedSingleRetained':True}
+ check('V2 new PDF defaults Spread, narrow render retains preference and saved Single survives Dashboard',first_open_and_narrow)
  check('No uncaught React-PDF errors',lambda:None if not errors else (_ for _ in ()).throw(AssertionError(errors)))
  report={'scope':__doc__,'status':'PASS' if all(r['status']=='PASS' for r in results) else 'FAIL','checks':results,'errors':errors,'passed':sum(r['status']=='PASS' for r in results),'failed':sum(r['status']=='FAIL' for r in results)};(OUT/'results.json').write_text(json.dumps(report,indent=2));browser.close()
 raise SystemExit(0 if report['status']=='PASS' else 1)

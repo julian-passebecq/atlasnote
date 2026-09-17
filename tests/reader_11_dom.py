@@ -1,3 +1,4 @@
+from browser_support import choose_library_resource
 from browser_support import show_reader_controls
 from browser_support import close_panels,more_action,open_more,open_settings,open_context,reader_action,open_reading,set_learning_flag
 """AtlasNote 1.1 real browser DOM/layout tests; NOT normal-origin persistence.
@@ -25,20 +26,20 @@ with sync_playwright() as pw:
       if(!crypto.subtle)Object.defineProperty(crypto,'subtle',{value:{digest:async(algorithm,data)=>{if(algorithm!=='SHA-256')throw Error('Only SHA-256 is implemented in the DOM harness');return new Uint8Array(await window.atlasTestSHA256(Array.from(new Uint8Array(data.buffer??data,data.byteOffset??0,data.byteLength)))).buffer;}}});
       const lib=await import(base+'app/core/pdf-library.js');
       const {store}=await import(base+'app/storage/database.js');
-      const core=window.testCore;
+      const core=window.testCore;const {addNotebookReference}=await import(base+'app/content-hub/content.js');
       window.testPdfBytes=new Uint8Array(await (await fetch(base+testBuilt.assets[0].path)).arrayBuffer());
       window.testSeedMixed=async()=>{
         const ws=core.blankWorkspace(),note=core.makeMarkdownPage('Middle modeling note','A synthetic note about grain and joins.');
         note.tags=['lang:en','domain:data-engineering','tech:sql'];
-        ws.overlays.pages[note.id]={page:note};
+        ws.overlays.pages[note.id]={page:note};ws.overlays.categories={'project.qa.library':'informatics','project.qa.destination':'informatics'};
         ws.overlays.projects=[{id:'project.qa.library',title:'Private study library',icon:'book',description:'Synthetic UI fixtures only',nodes:[{id:'folder.qa.mixed',title:'Mixed references',children:[{id:'node.qa.note',pageId:note.id,title:note.title},{id:'folder.qa.nested',title:'Nested folder',children:[]}]}]},{id:'project.qa.destination',title:'Destination notebook',icon:'book',description:'Synthetic move target',nodes:[]}];
         for(const [index,title,lang,domain,tech] of [[1,'Alpha architecture PDF','fr','cloud-architecture','spark'],[2,'Zebra pipeline PDF','en','data-engineering','databricks']]){
           const bytes=new Uint8Array([...testPdfBytes,...new TextEncoder().encode('\\n% synthetic mixed library '+index+'\\n')]);
           const meta={...lib.emptyPdfMetadata(),title,summary:'Synthetic PDF reference '+index,language:lang,domains:domain,technologies:tech,source:'linkedin',documentType:'cheatsheet',pageCount:'5'};
           const r=await lib.prepareLocalPdf(core.compose(testBuilt,ws),ws,bytes,meta,'project.qa.library','folder.qa.mixed');
-          ws.overlays=r.overlays;ws.assets.push(r.asset);ws.personal.ratings[r.page.id]='green';
+          ws.overlays=r.overlays;ws.assets.push(r.asset);ws.personal.ratings[r.page.id]='green';const d=ws.overlays.documents.find(d=>d.pageId===r.page.id);addNotebookReference(ws.overlays,{kind:'pdf-page',pageId:r.page.id,documentId:d.id,pdfPage:1,revision:d.sha256},title,{subject:'it',folderId:'folder.qa.mixed',path:['Private study library','Mixed references']});
         }
-        const v=core.newView('folder.qa.mixed');v.history[0].collectionId='folder.qa.mixed';ws.personal.session.panes[0].views=[v];ws.personal.session.panes[0].active=v.id;ws.personal.session.screen='reader';ws.personal.session.expanded=['project.qa.library','folder.qa.mixed','folder.qa.nested','project.qa.destination'];ws.personal.session.showFlags=true;
+        const v=core.newView('folder.qa.mixed');v.history[0].collectionId='folder.qa.mixed';ws.personal.session.panes[0].views=[v];ws.personal.session.panes[0].active=v.id;ws.personal.session.screen='reader';delete ws.personal.session.surface;ws.personal.session.expanded=['project.qa.library','folder.qa.mixed','folder.qa.nested','project.qa.destination'];ws.personal.session.showFlags=true;
         store.setLoaded(ws);
       };
       // Explicit in-memory adapter. Production transaction code is not replaced.
@@ -120,7 +121,7 @@ with sync_playwright() as pw:
     check('Fresh internal tab picker has independent modes and Back/Forward history',[37,38,40,42],picker)
     def collection():
         reset(mixed=True);assert page.locator('.collection-card').count()==4
-        assert page.locator('[data-item-type=pdf]').count()==2 and page.locator('[data-item-type=note]').count()==1
+        assert page.locator('[data-item-type=reference]').count()==2 and page.locator('[data-item-type=note]').count()==1
         assert page.locator('.collection-card-meta').filter(has_text='FR / 5 pages').count()==1
         assert page.locator('.collection-flag').count()==3
         assert page.locator('.collection-open').all_text_contents()==['Middle modeling note','Nested folder','Alpha architecture PDF','Zebra pipeline PDF']
@@ -142,7 +143,7 @@ with sync_playwright() as pw:
         check('Collection opens independent internal tab with '+modifier,[85 if modifier!='middle' else 86],tabs)
     def collection_context():
         reset(mixed=True);target=page.locator('.collection-view').get_by_role('button',name='Alpha architecture PDF',exact=True);target.focus();page.keyboard.press('Shift+F10')
-        labels=page.get_by_role('menuitem').all_text_contents();assert set(['Open','Open in new tab','Bookmark','Rename','Move','Archive']).issubset(set(labels)),labels
+        labels=page.get_by_role('menuitem').all_text_contents();assert set(['Open here','Open in new tab','Bookmark','Add to Read later']).issubset(set(labels)),labels
         page.keyboard.press('Escape');assert page.evaluate('document.activeElement.textContent')=='Alpha architecture PDF'
         page.get_by_role('button',name='Collection actions for Alpha architecture PDF',exact=True).click();page.get_by_role('menuitem',name='Bookmark',exact=True).click();assert page.evaluate('testStore.state.personal.bookmarks.length')==1
         page.get_by_role('button',name='Compare in two panes').click();page.locator('.document-pane').first.locator('.collection-view').click(position={'x':10,'y':10});page.get_by_role('button',name='Collection actions for Alpha architecture PDF',exact=True).click();page.get_by_role('menuitem',name='Open in other pane').click();page.wait_for_timeout(250)
@@ -151,11 +152,13 @@ with sync_playwright() as pw:
     check('Collection keyboard/context menu, bookmark and open-in-other-pane',[84,87,88],collection_context)
     def move_archive():
         reset(mixed=True);before=page.evaluate('testStore.state.overlays.documents.map(d=>({id:d.id,pageId:d.pageId,sha:d.sha256}))')
-        page.get_by_role('button',name='Collection actions for Alpha architecture PDF',exact=True).click();page.get_by_role('menuitem',name='Move',exact=True).click();page.get_by_role('dialog').get_by_label('Destination notebook',exact=True).select_option('project.qa.destination');page.get_by_role('button',name='Move here').click();page.wait_for_timeout(200)
+        page.locator('.collection-view').get_by_role('button',name='Edit reference Alpha architecture PDF',exact=True).click();page.get_by_label('Classification folder',exact=True).select_option('project.qa.destination');page.get_by_role('button',name='Save reference',exact=True).click();page.wait_for_timeout(200)
         assert page.locator('.collection-card').count()==3;assert page.evaluate('testStore.state.overlays.documents.map(d=>({id:d.id,pageId:d.pageId,sha:d.sha256}))')==before
-        page.get_by_role('button',name='Collection actions for Zebra pipeline PDF',exact=True).click();page.get_by_role('menuitem',name='Archive',exact=True).click();page.get_by_role('button',name='Archive item').click();assert page.locator('.collection-card').count()==2
-        assert page.evaluate('testStore.state.assets.length')==2
-    check('Collection PDF move/archive changes only placement/visibility, not byte identity',[87,88,100],move_archive)
+        page.locator('.collection-view').get_by_role('button',name='Edit reference Zebra pipeline PDF',exact=True).click();page.get_by_role('button',name='Remove reference only',exact=True).click();assert page.locator('.collection-card').count()==2
+        page.get_by_role('button',name='PDF content',exact=True).click();choose_library_resource(page,before[1]['pageId']);page.get_by_role('button',name='Archive resource',exact=True).click();assert before[1]['pageId'] in page.evaluate('testStore.state.overlays.archived')
+        page.get_by_label('Include archived',exact=True).check();choose_library_resource(page,before[1]['pageId']);page.get_by_role('button',name='Restore resource',exact=True).click()
+        assert page.evaluate('testStore.state.overlays.documents.map(d=>({id:d.id,pageId:d.pageId,sha:d.sha256}))')==before;assert page.evaluate('testStore.state.assets.length')==2
+    check('Explicit PDF reference move/removal and library archive/restore retain exact source identity',[87,88,100],move_archive)
     def themes():
         reset(mixed=True);colors=[]
         for theme,label in [('fluent','Fluent Blue'),('neutral','Neutral/Sage'),('academic','Academic Paper'),('lavender','Soft Lavender'),('slate','Dark Slate')]:
@@ -177,14 +180,14 @@ with sync_playwright() as pw:
         return ratios
     check('Normal and muted theme text tokens meet 4.5:1 and keyboard focus is visible',[69],token_contrast)
     def pdf_focus_combinations():
-        reset(mixed=True);page.locator('.collection-view').get_by_role('button',name='Alpha architecture PDF',exact=True).click();assert page.get_by_role('button',name='Switch to notes',exact=True).count()==1;page.get_by_role('button',name='Compare in two panes').click();tree('Zebra pipeline PDF').click();page.wait_for_timeout(250)
+        reset(mixed=True);page.locator('.collection-view').get_by_role('button',name='Alpha architecture PDF',exact=True).click();assert page.get_by_role('button',name='Notebook content',exact=True).count()==1;page.get_by_role('button',name='Compare in two panes').click();tree('Zebra pipeline PDF').click();page.wait_for_timeout(250)
         assert page.locator('.pdf-reader').count()==2
         assert page.get_by_text('Browser PDF fallback',exact=True).count()==2
         page.get_by_role('button',name='Enter focus mode').click();page.wait_for_timeout(350)
         for frame in page.locator('.pdf-fallback').all():
             box=frame.bounding_box();assert box['y']==0 and abs(box['height']-900)<=1,box
         assert page.locator('.pdf-intro:visible').count()==0;page.screenshot(path=str(OUT/'focus-pdf-pdf-fallback.png'))
-        page.keyboard.press('Escape');page.get_by_role('button',name='Switch to notes',exact=True).click();tree('Middle modeling note').click();assert page.locator('.pdf-reader').count()==1 and page.locator('.reader-body').count()==1
+        page.keyboard.press('Escape');page.get_by_role('button',name='Notebook content',exact=True).click();tree('Middle modeling note').click();assert page.locator('.pdf-reader').count()==1 and page.locator('.reader-body').count()==1
         return {'PDFFrameBounds':'full viewport','engine':'Explicit native-browser fallback; physical-page engine NOT certified'}
     check('PDF/PDF then PDF/note Compare and maximum Focus preview frame',[28,41,44,45,46,150],pdf_focus_combinations)
     def intake():

@@ -61,7 +61,7 @@ def mount_dom(page, base, controls_visible=True):
       window.testReset=(id='page.atlas.welcome',mode='continuous',useSynthetic=false)=>{
         const ws=core.blankWorkspace();if(controlsVisible)ws.personal.session.panes[0].readerChromeCollapsed=false;if(useSynthetic)ws.imports=structuredClone(synthetic[0].packs);
         const c=core.compose(built,ws);ws.personal.session.expanded=c.projects.flatMap(p=>{const ids=[p.id];const walk=ns=>ns.forEach(n=>{if(n.children){ids.push(n.id);walk(n.children);}});walk(p.nodes);return ids;});
-        if(id){const v=core.newView(id);v.history[0].presentation=mode;ws.personal.session.panes[0].views=[v];ws.personal.session.panes[0].active=v.id;ws.personal.session.screen='reader';}store.setLoaded(ws);
+        if(id){delete ws.personal.session.surface;const v=core.newView(id);v.history[0].presentation=mode;ws.personal.session.panes[0].views=[v];ws.personal.session.panes[0].active=v.id;ws.personal.session.screen='reader';}store.setLoaded(ws);
       };
       ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App,{built}));
     }''', {'base': base, 'synthetic': synthetic_data(), 'controlsVisible': controls_visible})
@@ -131,7 +131,8 @@ def open_reading(page,pane=None):
         if page.locator('.popover-reading').count():page.keyboard.press('Escape')
         pane.locator('.document-tab.selected').click() if pane.locator('.document-tab.selected').count() else pane.locator('.empty-pane').click()
     if not page.locator('.popover-reading').count():
-        page.get_by_role('button',name='Reading mode',exact=True).click()
+        show_reader_controls(page,pane)
+        (pane or page.locator('.active-pane')).get_by_role('button',name='Reading mode',exact=True).click()
     return page.locator('.popover-reading')
 
 def reader_action(page,name,pane=None):
@@ -149,3 +150,19 @@ def show_reader_controls(page, pane=None):
     button=area.get_by_role('button',name='Show reader controls',exact=True)
     if button.count():button.click()
     return area
+
+
+def open_article_advanced(page):
+    """V2 content-first Article editor keeps secondary metadata in its disclosure."""
+    disclosure=page.locator('details.article-advanced')
+    if disclosure.count() and disclosure.get_attribute('open') is None:
+        disclosure.locator('summary').click()
+    return disclosure
+
+
+def choose_library_resource(page, resource_id):
+    """Exercise the compact keyboard fallback; never inject selected source state."""
+    disclosure=page.locator('details.resource-browser')
+    if disclosure.count() and disclosure.get_attribute('open') is None:
+        disclosure.locator('summary').click()
+    page.get_by_label('Selected library resource',exact=True).select_option(resource_id)

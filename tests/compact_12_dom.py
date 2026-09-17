@@ -79,14 +79,17 @@ with sync_playwright() as pw:
   return rows
  check('Exactly five visually distinct themes cover Compare, tree, tabs and Context',theme_coverage)
  def filtered():
-  reset('page.atlas.welcome');before=page.evaluate('JSON.stringify(testStore.state.overlays)');page.get_by_role('button',name='Switch to PDF library',exact=True).click()
+  reset('page.atlas.welcome');before=page.evaluate('JSON.stringify(testStore.state.overlays)');page.get_by_role('button',name='PDF content',exact=True).click()
   assert page.locator('[data-node-id="node.page.atlas.language"]').count()==0
   assert page.locator('[data-node-id="node.page.atlas.pdf"]').count()==1
-  assert page.locator('.pdf-subject-heading').filter(has_text='Apache Spark').count()==1
+  page.get_by_role('button',name='Expand IT / Unfiled',exact=True).click()
+  assert page.locator('[data-node-id="node.pdfatlas.spark-concepts"]').count()==1
+  assert page.locator('.pdf-subject-heading').count()==0  # Shared Notebook folder projection replaces the parallel subject tree.
   assert page.locator('[data-node-id="node.pdfatlas.spark-concepts"]').count()==1
   assert page.evaluate('JSON.stringify(testStore.state.overlays)')==before
-  subject=page.locator('.pdf-subject-heading').filter(has_text='Apache Spark');subject.click();assert page.locator('[data-node-id="node.pdfatlas.spark-concepts"]').count()==0;subject.click();assert page.locator('.pdf-nav-subject .tree-row[data-node-id]').count()==2;assert page.locator('.pdf-library-sidebar .tree-group').count()==0
-  shot('pdf-library-tree');page.get_by_role('button',name='Switch to notes',exact=True).click();assert page.locator('[data-node-id="node.page.atlas.language"]').count()==1
+  # Unmatched legacy metadata is retained under the collapsible shared IT / Unfiled bucket.
+  page.get_by_role('button',name='Collapse IT / Unfiled',exact=True).click();assert page.locator('[data-node-id="node.pdfatlas.spark-concepts"]').count()==0;page.get_by_role('button',name='Expand IT / Unfiled',exact=True).click();assert page.locator('[data-project-id="project.unfiled.it"] .tree-row[data-node-id]').count()==2
+  shot('pdf-library-tree');page.get_by_role('button',name='Notebook content',exact=True).click();assert page.locator('[data-node-id="node.page.atlas.language"]').count()==1
   assert page.evaluate('JSON.stringify(testStore.state.overlays)')==before
   return {'canonicalOverlayUnchanged':True,'externalPDFLeaves':2}
  check('PDF mode is a flat, collapsible projection retaining the canonical document leaves',filtered)
@@ -97,7 +100,7 @@ with sync_playwright() as pw:
   assert panel.get_by_role('button',name='Book',exact=True).count()==0;page.keyboard.press('Escape')
   assert page.locator('.pdf-fallback').is_visible();shot('pdf-opened-native-fallback')
   page.get_by_role('button',name='Enter focus mode',exact=True).click();assert page.locator('.reader-rail:visible').count()==0;assert page.locator('.pdf-fallback').is_visible();page.keyboard.press('Escape')
-  page.get_by_role('button',name='Switch to PDF library',exact=True).click();page.get_by_role('button',name='Compare in two panes',exact=True).click();page.locator('[data-node-id="node.page.atlas.rotated"] .tree-target').click();assert page.locator('.pdf-reader').count()==2
+  page.get_by_role('button',name='PDF content',exact=True).click();page.get_by_role('button',name='Compare in two panes',exact=True).click();page.locator('[data-node-id="node.page.atlas.rotated"] .tree-target').click();assert page.locator('.pdf-reader').count()==2
   shot('pdf-pdf-compare-fallback');return {'engine':'honest browser fallback, no PDF.js certification','pdfPanes':2}
  check('Contextual PDF modes are honest when engine unavailable; PDF Focus and PDF/PDF shell work',pdf_fallback)
  def flags_bookmark():
@@ -112,7 +115,7 @@ with sync_playwright() as pw:
    const bytes=new Uint8Array(fixture),hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');
    window.externalRequests=[];const original=window.fetch;window.restoreExternalFetch=()=>{window.fetch=original;};
    window.fetch=(input,options)=>{const url=String(input);if(url.includes('raw.githubusercontent.com/')||url.includes('example.invalid/')){externalRequests.push({url,credentials:options?.credentials,redirect:options?.redirect});return Promise.resolve(new Response(bytes,{status:200,headers:{'Content-Type':'application/pdf'}}));}return original(input,options);};
-   window.testExternal=(trusted=true,badHash=false)=>{const ws=testCore.blankWorkspace(),p=testCore.makeMarkdownPage('Synthetic external transport test','Author-created fixture, NOT the real remote PDF host.');ws.overlays.pages[p.id]={page:p};ws.overlays.documents=[{id:'doc.test.external',pageId:p.id,title:p.title,source:{kind:'https',url:trusted?'https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/library/test/fixture.pdf':'https://example.invalid/reference.pdf'},packId:trusted?'pdfatlas.public':'test.external',sha256:badHash?'0'.repeat(64):hash,bytes:bytes.length,pageCount:5,visibility:'public',rights:{status:'author-created',attribution:'Synthetic test fixture'}}];const v=testCore.newView(p.id);ws.personal.session.panes[0].views=[v];ws.personal.session.panes[0].active=v.id;ws.personal.session.screen='reader';testStore.setLoaded(ws);};
+   window.testExternal=(trusted=true,badHash=false)=>{const ws=testCore.blankWorkspace(),p=testCore.makeMarkdownPage('Synthetic external transport test','Author-created fixture, NOT the real remote PDF host.');ws.overlays.pages[p.id]={page:p};ws.overlays.documents=[{id:'doc.test.external',pageId:p.id,title:p.title,source:{kind:'https',url:trusted?'https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/library/test/fixture.pdf':'https://example.invalid/reference.pdf'},packId:trusted?'pdfatlas.public':'test.external',sha256:badHash?'0'.repeat(64):hash,bytes:bytes.length,pageCount:5,visibility:'public',rights:{status:'author-created',attribution:'Synthetic test fixture'}}];const v=testCore.newView(p.id);ws.personal.session.panes[0].views=[v];ws.personal.session.panes[0].active=v.id;ws.personal.session.screen='reader';delete ws.personal.session.surface;testStore.setLoaded(ws);};
   }''',list((ROOT/'content/packs/atlas.reader-guide/assets/atlas-reader-fixture.pdf').read_bytes()))
   try:
    page.evaluate('testExternal(false)');page.get_by_role('button',name='Allow external PDF reference',exact=True).wait_for();assert page.evaluate('externalRequests.length')==0
