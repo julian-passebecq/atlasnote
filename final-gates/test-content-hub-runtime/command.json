@@ -1,7 +1,0 @@
-{
-  "name": "test:content-hub:runtime",
-  "command": "npm run test:content-hub:runtime",
-  "exitCode": 2,
-  "seconds": 1.7,
-  "status": "BLOCKED"
-}

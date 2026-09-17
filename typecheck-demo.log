@@ -1,8 +1,0 @@
-
-> knowledge-atlas@2.0.0 typecheck
-> tsc --noEmit
-
-src/stabilization/demo.ts(20,8): error TS2322: Type '{ id: string; title: string; icon: string; nodes: { id: string; title: string; pageId: string; }[]; }[]' is not assignable to type 'Project[]'.
-  Property 'description' is missing in type '{ id: string; title: string; icon: string; nodes: { id: string; title: string; pageId: string; }[]; }' but required in type 'Project'.
-src/stabilization/demo.ts(87,39): error TS2339: Property 'pageId' does not exist on type 'StructuralOperation'.
-src/stabilization/demo.ts(87,66): error TS2339: Property 'pageId' does not exist on type 'StructuralOperation'.

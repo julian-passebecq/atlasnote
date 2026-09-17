@@ -1,0 +1,165 @@
+{
+  "id": "page.interview.coding-group",
+  "title": "Dictionary pattern A - Group rows by customer",
+  "summary": "Coding / Python / Dictionaries / Grouping and state",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "page.interview.coding-group.prompt",
+      "title": "Question",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-group.question",
+          "text": "Given a list of order dictionaries, return a dictionary from customer_id to that customer's rows. Preserve input order within each group."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-group.reasoning",
+      "title": "Reasoning",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.coding-group.reasoning-points",
+          "ordered": true,
+          "items": [
+            "Choose customer_id as the dictionary key.",
+            "Initialize a list for the first row of a group.",
+            "Append subsequent rows to that list.",
+            "Check empty input and interleaved customers."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-group.answer",
+      "title": "Answer / mental model",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-group.explanation",
+          "text": "The key selects the group; the dictionary value stores the growing list. Every row must be appended rather than replacing the previous list."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-group.example",
+      "title": "Example",
+      "children": [
+        {
+          "type": "code",
+          "id": "page.interview.coding-group.code",
+          "language": "python",
+          "code": "def group_rows(rows):\n    groups = {}\n    for row in rows:\n        key = row[\"customer_id\"]\n        groups.setdefault(key, []).append(row)\n    return groups"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-group.alternatives",
+      "title": "Alternative / tradeoff",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-group.alternative-0",
+          "text": "defaultdict(list) makes initialization implicit. Both versions assume customer_id exists and is hashable."
+        },
+        {
+          "type": "code",
+          "id": "page.interview.coding-group.alternative-code-0",
+          "language": "python",
+          "code": "from collections import defaultdict\n\ndef group_rows_alternative(rows):\n    groups = defaultdict(list)\n    for row in rows:\n        groups[row[\"customer_id\"]].append(row)\n    return dict(groups)"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-group.complexity",
+      "title": "Complexity / tradeoff",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-group.cost",
+          "text": "Expected O(n) dictionary work for n rows under ordinary hash-table assumptions. Stored row references require O(n) output space."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-group.trap",
+      "title": "Common mistake / trap",
+      "children": [
+        {
+          "type": "callout",
+          "id": "page.interview.coding-group.trap-note",
+          "tone": "warning",
+          "title": "Watch for this",
+          "text": "Assigning groups[key] = row on every iteration retains only the last row."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-group.followup",
+      "title": "Follow-up",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.coding-group.followups",
+          "items": [
+            "How would you produce total revenue instead of lists?"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-group.intent",
+      "title": "Interviewer intent",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.coding-group.intent-points",
+          "items": [
+            "Recognize keyed accumulation.",
+            "Transfer the pattern to new wording."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-group.reflection",
+      "title": "Reflection",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-group.reflection-prompt",
+          "text": "What pattern did I recognize, where did I get stuck, and what would I change in my first approach?\n\nUse Context > Remarks for your personal reflection. It is saved separately from this reference."
+        }
+      ]
+    }
+  ],
+  "related": [
+    "page.interview.coding-errors",
+    "page.interview.coding-latest"
+  ],
+  "terms": [],
+  "sources": [
+    {
+      "title": "Python - collections",
+      "url": "https://docs.python.org/3/library/collections.html"
+    }
+  ],
+  "tags": [
+    "interview",
+    "coding",
+    "pattern:dictionary-grouping",
+    "series:dictionary-transfer"
+  ],
+  "provenance": "Original educational prototype. Prompts Q1-Q5 preserve the user-provided canonical SQL sequence. Examples are reference code, not executable tasks."
+}

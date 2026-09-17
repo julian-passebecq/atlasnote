@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "atlas.pdf.library",
+  "version": "1.1.0",
+  "title": "Atlas PDF Library",
+  "visibility": "private",
+  "projects": [
+    {
+      "id": "project.fabric",
+      "title": "Microsoft Fabric",
+      "icon": "book",
+      "description": "Fabric reference PDFs"
+    },
+    {
+      "id": "project.data-engineering",
+      "title": "Data Engineering",
+      "icon": "book",
+      "description": "Data engineering reference PDFs"
+    }
+  ],
+  "documents": [
+    "documents/pdf.example.fabric.json",
+    "documents/pdf.example.spark.json"
+  ]
+}

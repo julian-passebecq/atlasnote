@@ -1,7 +1,0 @@
-{
-  "name": "check:integrated-deps",
-  "command": "npm run check:integrated-deps",
-  "exitCode": 0,
-  "seconds": 0.17,
-  "status": "PASS"
-}

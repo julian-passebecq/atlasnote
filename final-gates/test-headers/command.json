@@ -1,7 +1,0 @@
-{
-  "name": "test:headers",
-  "command": "npm run test:headers",
-  "exitCode": 0,
-  "seconds": 0.97,
-  "status": "PASS"
-}

@@ -1,7 +1,0 @@
-{
-  "name": "pdf:library:validate",
-  "command": "npm run pdf:library:validate",
-  "exitCode": 0,
-  "seconds": 0.79,
-  "status": "PASS"
-}

@@ -1,0 +1,165 @@
+{
+  "id": "page.interview.coding-errors",
+  "title": "Dictionary pattern B - Count errors by code",
+  "summary": "Coding / Python / Dictionaries / Grouping and state",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "page.interview.coding-errors.prompt",
+      "title": "Question",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-errors.question",
+          "text": "Given error-code strings, return the frequency of each code. How is this the same pattern as grouping rows?"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-errors.reasoning",
+      "title": "Reasoning",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.coding-errors.reasoning-points",
+          "ordered": true,
+          "items": [
+            "Use the code as key.",
+            "Start an unseen key at zero.",
+            "Increment for each observation.",
+            "Specify whether case and missing values should be normalized upstream."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-errors.answer",
+      "title": "Answer / mental model",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-errors.explanation",
+          "text": "The dictionary key is now the error code and the accumulator is an integer, not a list. The loop still finds a key and updates its state."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-errors.example",
+      "title": "Example",
+      "children": [
+        {
+          "type": "code",
+          "id": "page.interview.coding-errors.code",
+          "language": "python",
+          "code": "def count_errors(codes):\n    counts = {}\n    for code in codes:\n        counts[code] = counts.get(code, 0) + 1\n    return counts"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-errors.alternatives",
+      "title": "Alternative / tradeoff",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-errors.alternative-0",
+          "text": "Counter expresses frequency counting directly; the manual version reveals the interview pattern."
+        },
+        {
+          "type": "code",
+          "id": "page.interview.coding-errors.alternative-code-0",
+          "language": "python",
+          "code": "from collections import Counter\n\ndef count_errors_alternative(codes):\n    return dict(Counter(codes))"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-errors.complexity",
+      "title": "Complexity / tradeoff",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-errors.cost",
+          "text": "Expected O(n) time and O(k) output space for k distinct codes."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-errors.trap",
+      "title": "Common mistake / trap",
+      "children": [
+        {
+          "type": "callout",
+          "id": "page.interview.coding-errors.trap-note",
+          "tone": "warning",
+          "title": "Watch for this",
+          "text": "Reinitializing the count to zero inside every iteration loses earlier observations."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-errors.followup",
+      "title": "Follow-up",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.coding-errors.followups",
+          "items": [
+            "How would you count by (service, error_code) instead?"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-errors.intent",
+      "title": "Interviewer intent",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.coding-errors.intent-points",
+          "items": [
+            "Recognize the same keyed-accumulator pattern.",
+            "Explain defaults and updates."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.coding-errors.reflection",
+      "title": "Reflection",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.coding-errors.reflection-prompt",
+          "text": "What pattern did I recognize, where did I get stuck, and what would I change in my first approach?\n\nUse Context > Remarks for your personal reflection. It is saved separately from this reference."
+        }
+      ]
+    }
+  ],
+  "related": [
+    "page.interview.coding-group",
+    "page.interview.coding-latest"
+  ],
+  "terms": [],
+  "sources": [
+    {
+      "title": "Python - collections",
+      "url": "https://docs.python.org/3/library/collections.html"
+    }
+  ],
+  "tags": [
+    "interview",
+    "coding",
+    "pattern:dictionary-grouping",
+    "series:dictionary-transfer"
+  ],
+  "provenance": "Original educational prototype. Prompts Q1-Q5 preserve the user-provided canonical SQL sequence. Examples are reference code, not executable tasks."
+}

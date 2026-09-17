@@ -1,7 +1,0 @@
-{
-  "name": "test:finish:integrated",
-  "command": "npm run test:finish:integrated",
-  "exitCode": 2,
-  "seconds": 1.63,
-  "status": "BLOCKED"
-}

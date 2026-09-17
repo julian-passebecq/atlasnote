@@ -1,7 +1,0 @@
-{
-  "name": "test:cheatsheets",
-  "command": "npm run test:cheatsheets",
-  "exitCode": 0,
-  "seconds": 0.21,
-  "status": "PASS"
-}

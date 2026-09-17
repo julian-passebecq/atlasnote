@@ -1,5 +1,0 @@
-
-> knowledge-atlas@2.0.0 test:cheatsheets
-> node tools/generate-cheatsheets.mjs --check
-
-Verified 4 native cheatsheets / 8 physical pages; semantic hash 79cb4a1da1faf3c65f84df209b1b31ad71b136f2b7b9abfd3972ef461778b051

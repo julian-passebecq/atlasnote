@@ -1,26 +1,35 @@
-# AtlasNote V2 stabilization - actual test evidence
+# AtlasNote V2 - local-first knowledge reader
 
-Final local commit: `454202e3ba2642e9afd86e43db21b368c8a84e62`. Tree: `f2c1205a8101ecd2c7830d3ebf10104ad32a3431`. Neither was pushed.
+AtlasNote combines freely editable Notebooks, PDFs, native structured SVG Cheatsheets, Articles/transcripts and QCM question sets. It includes five subjects, five independent reader workspaces, Dashboard, Quick Capture, bookmarks, Read Later, saved workspace states and complete local backups.
 
-## Final results to read first
+A separate stable Concept Index connects exact pages, sections and questions without imposing a rigid hierarchy on the Notebook tree. Context, derived backlinks, the optional virtual Reference Lens and a closable Reference Explorer provide cross-library navigation. AI-reference review is explicit local export/import, not a background service.
 
-- `final-result-index.json`: command-by-command actual pass/fail/blocked index and source identity.
-- `unit-final2.log`: full 705/705 unit run, including the last metadata-title guard.
-- `sealed-final/summary.json`: final core/integrated typecheck, production build, release integrity, component-harness build and focused UI rerun.
-- `sealed-final/ui/results.json`: 31/31 focused visible-UI checks and screenshots, no browser exceptions. In-memory harness, not durable IndexedDB.
-- `compat-final/summary.json`: 206/206 checks across 12 existing DOM suites.
-- `final-pdf/summary.json`: 34/34 actual React-PDF/PDF.js component checks (11 component,12 grid,11 wheel). Real canvases/worker/text layer, in-memory mounted application.
-- `final-pdf/test-pdf-grid/compare-state.json`: stage-labelled independent Grid/Spread state before/after all-workspace restoration.
-- `final-gates/summary.json`: other required commands, including 12 PDF authoring checks, backup diagnostic, library/headers and blocked runtime attempts.
-- `stabilization-runtime/` and `theme-hosted-attempt/`: actual production-origin attempts, blocked before navigation by ERR_BLOCKED_BY_ADMINISTRATOR.
-- `dependencies/`: real clean-install timeout and audit DNS failure. No vulnerability or fresh-install clearance claimed.
-- `protected-source-integrity.json`: 114 protected files unchanged from the audited source.
-- `source-integrity.json` and `source-inventory.json`: independently extracted ZIP bytes, Git blobs/modes and reconstructed source tree.
+## Current delivery: V2 stabilization, version 2.0.0
 
-## Earlier evidence retained, not final passing outcomes
+Implemented on the audited V2 application, preserving its reference model and PDF/SVG engines. This pass adds five compact Dashboard tables, lossless Capture/Article back-navigation, tree-first resource management, validated Visual/JSON editing, clearer pane controls, and an optional deterministic demo.
 
-`baseline/` shows the inherited 11/12 PDF grid result; `pdf-fix/` shows the correction. `compat/`, older unit logs, `stabilization-ui1/`, `stabilization-ui2/`, and `sealed-screenshot-attempt/` retain development failures. The screenshot-only failure attempted to dismiss a toast behind a modal; its helper was corrected without weakening an application assertion. `stabilization-ui-final/` is an earlier passing31check run, superseded for the last source change by `sealed-final/ui/`.
+**Not production-cleared.** Actual integrated builds, type checks, 705 unit tests, 237 DOM UI checks and 34 real PDF component checks pass. Normal-origin browser policy blocks durable reload/fresh-profile verification in the delivery environment. Clean install/security/license review remains incomplete. See `FINAL_TEST_STATUS.md` rather than older historical delivery reports.
 
-All scores are test results, not a production-release certification. Clean install, real-origin/IndexedDB/reload/fresh-profile tests, current vulnerability review and complete inherited Mermaid license closure remain unresolved. The source includes reproducible commands and the runtime tests to run in a normal environment.
+## Run
 
-No recovered node_modules, runtime tarball, private library, font binaries or credentials are included here. Only test logs/results and synthetic/public test captures are packaged.
+```sh
+npm ci
+npm run build
+npm run preview
+```
+
+Use Node >=22.12 and the committed lockfile. `npm run test:release` is the full release matrix; Python test requirements and Playwright Chromium must already be installed. `npm run test:stabilization:ui` runs the new focused in-memory UI suite. `npm run test:stabilization:runtime` exercises the actual production entry and IndexedDB on a normal HTTP origin.
+
+The offline bootstrap/build remains a labelled compatibility fallback, not a replacement for the integrated application or durability tests.
+
+## Explore the app
+
+The top-left ribbon is Sidebar, Search, Back, Forward, Quick Capture, Dashboard, Compare. Focus is at the top of the right rail. Clicking Dashboard again returns to the underlying reader layout.
+
+Open Dashboard's **Demo / test data** disclosure and choose **Load demo data** to populate realistic optional examples. Nothing loads automatically. **Reset/remove demo data** removes unchanged demo-owned records while retaining user-modified or user-referenced items; it is not an erase-all command.
+
+Select PDF, Cheatsheet, Article or QCM and drag a source from the left tree into the management workspace, or use **Choose resource**. **Add to Notebook** creates a reference, never a source copy. **Visual | JSON** exposes validated source editing; PDF JSON contains metadata only, never its binary.
+
+See `START_HERE.md`, `docs/stabilization/USER_GUIDE.md`, `V2_REFERENCE_MODEL.md`, `REQUIREMENTS_COVERAGE.md` and `WORKSPACE_READY_FOR_GITHUB.md`.
+
+Private library sources, captures, attempts, and backups stay in local import/export workflows. Never commit them as application source.

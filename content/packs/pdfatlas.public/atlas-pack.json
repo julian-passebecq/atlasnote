@@ -1,0 +1,20 @@
+{
+  "format": "atlas-content-pack",
+  "schemaVersion": 1,
+  "payloadSchema": "atlas.bundle@2",
+  "id": "pdfatlas.public",
+  "version": "1.0.0",
+  "title": "PDF Atlas",
+  "visibility": "public",
+  "files": {
+    "projects": "projects.json",
+    "pages": "pages",
+    "glossary": "glossary.json"
+  },
+  "requires": [],
+  "assets": [],
+  "provenance": {
+    "kind": "external-references",
+    "note": "Reviewed descriptive metadata only. Original third-party PDF bytes excluded; no redistribution rights are asserted."
+  }
+}

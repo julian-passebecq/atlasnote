@@ -1,7 +1,0 @@
-{
-  "name": "test:interviews",
-  "command": "npm run test:interviews",
-  "exitCode": 0,
-  "seconds": 0.22,
-  "status": "PASS"
-}

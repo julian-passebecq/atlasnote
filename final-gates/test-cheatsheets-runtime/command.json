@@ -1,7 +1,0 @@
-{
-  "name": "test:cheatsheets:runtime",
-  "command": "npm run test:cheatsheets:runtime",
-  "exitCode": 2,
-  "seconds": 1.53,
-  "status": "BLOCKED"
-}

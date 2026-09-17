@@ -1,7 +1,0 @@
-{
-  "name": "test:references",
-  "command": "npm run test:references",
-  "exitCode": 0,
-  "seconds": 0.82,
-  "status": "PASS"
-}

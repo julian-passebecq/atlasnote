@@ -1,7 +1,0 @@
-{
-  "name": "test:pdf:grid",
-  "command": "npm run test:pdf:grid",
-  "exitCode": 0,
-  "seconds": 23.83,
-  "status": "PASS"
-}

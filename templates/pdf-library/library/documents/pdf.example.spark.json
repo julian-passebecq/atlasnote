@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "pdf.example.spark",
+  "title": "Spark reference sheet",
+  "summary": "Synthetic PDF library fixture for AtlasNote development.",
+  "language": "en",
+  "documentType": "reference",
+  "primaryPlacement": {
+    "projectId": "project.data-engineering",
+    "folderPath": [
+      "Spark",
+      "Reference"
+    ]
+  },
+  "domains": [
+    "data-engineering"
+  ],
+  "technologies": [
+    "spark"
+  ],
+  "topics": [
+    "spark",
+    "performance"
+  ],
+  "level": "reference",
+  "source": {
+    "platform": "personal",
+    "author": "AtlasNote test fixture"
+  },
+  "rights": {
+    "status": "author-created",
+    "attribution": "Synthetic AtlasNote test fixture."
+  },
+  "file": {
+    "path": "assets/pdf/pdf.example.spark/spark-reference.pdf",
+    "sha256": "be191591aac7c2f42da11447b016d4ee0ab8988fe0cbd1bd8026d79fcca4936d",
+    "bytes": 51031,
+    "pageCount": 5
+  },
+  "processing": {
+    "profile": "synthetic-fixture-revision",
+    "originalBytes": 50862,
+    "optimizedBytes": 51031,
+    "processor": "PyMuPDF 1.26.7",
+    "note": "Added a visible private-library fixture label. Separate test revision from public reader fixtures; no user document is modified."
+  },
+  "extraTags": [
+    "fixture:pdf-library"
+  ]
+}

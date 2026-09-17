@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Atlas PDF source-library document",
+  "type": "object",
+  "required": ["schemaVersion", "id", "title", "language", "documentType", "primaryPlacement", "domains", "technologies", "topics", "level", "source", "rights", "file"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"},
+    "title": {"type": "string", "minLength": 1, "maxLength": 240},
+    "summary": {"type": "string"},
+    "language": {"type": "string", "minLength": 1, "maxLength": 16},
+    "documentType": {"enum": ["cheatsheet", "guide", "reference", "slides", "article", "whitepaper", "certification", "diagram", "other"]},
+    "primaryPlacement": {
+      "type": "object",
+      "required": ["projectId", "folderPath"],
+      "properties": {
+        "projectId": {"type": "string"},
+        "folderPath": {"type": "array", "items": {"type": "string"}, "maxItems": 20}
+      },
+      "additionalProperties": false
+    },
+    "domains": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "technologies": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "topics": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "level": {"enum": ["overview", "fundamentals", "intermediate", "advanced", "reference"]},
+    "source": {
+      "type": "object",
+      "required": ["platform"],
+      "properties": {
+        "platform": {"enum": ["linkedin", "vendor", "web", "personal", "course", "book", "other"]},
+        "url": {"type": "string"},
+        "author": {"type": "string"},
+        "publisher": {"type": "string"},
+        "acquiredAt": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "rights": {
+      "type": "object",
+      "required": ["status", "attribution"],
+      "properties": {
+        "status": {"enum": ["author-created", "permission", "reference-only", "unreviewed"]},
+        "attribution": {"type": "string"},
+        "sourceUrl": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "file": {
+      "type": "object",
+      "required": ["path", "sha256", "bytes", "pageCount"],
+      "properties": {
+        "path": {"type": "string"},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "bytes": {"type": "integer", "minimum": 1},
+        "pageCount": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "processing": {"type": "object"},
+    "extraTags": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

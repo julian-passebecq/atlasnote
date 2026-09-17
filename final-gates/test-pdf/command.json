@@ -1,7 +1,0 @@
-{
-  "name": "test:pdf",
-  "command": "npm run test:pdf",
-  "exitCode": 2,
-  "seconds": 1.73,
-  "status": "BLOCKED"
-}

@@ -1,0 +1,20 @@
+{
+  "format": "atlas-content-pack",
+  "schemaVersion": 1,
+  "payloadSchema": "atlas.bundle@2",
+  "id": "atlas.interview-samples",
+  "version": "1.0.0",
+  "title": "Interview Preparation",
+  "visibility": "public",
+  "files": {
+    "projects": "projects.json",
+    "pages": "pages",
+    "glossary": "glossary.json"
+  },
+  "requires": [],
+  "assets": [],
+  "provenance": {
+    "kind": "author-created",
+    "note": "Original reasoning-first samples. Canonical SQL prompts supplied by the user; no private library content or third-party assets."
+  }
+}

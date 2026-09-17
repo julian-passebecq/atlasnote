@@ -1,7 +1,0 @@
-{
-  "name": "pdf:library:build",
-  "command": "npm run pdf:library:build",
-  "exitCode": 0,
-  "seconds": 0.77,
-  "status": "PASS"
-}

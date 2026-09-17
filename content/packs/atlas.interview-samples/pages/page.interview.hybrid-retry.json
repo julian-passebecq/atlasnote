@@ -1,0 +1,126 @@
+{
+  "id": "page.interview.hybrid-retry",
+  "title": "Retries and idempotency at a pipeline boundary",
+  "summary": "Hybrid / System Design / Pipeline reliability / Failure and replay",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-retry.prompt",
+      "title": "Question",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.hybrid-retry.question",
+          "text": "A job writes output successfully but crashes before acknowledging completion. The scheduler retries it. How do you avoid duplicate data?"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-retry.reasoning",
+      "title": "Reasoning",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.hybrid-retry.reasoning-points",
+          "ordered": true,
+          "items": [
+            "Identify the crash boundary between write and acknowledgement.",
+            "Reuse an immutable batch identity across retries.",
+            "Define how the sink detects or overwrites an already committed batch.",
+            "Retry transient faults with limits; surface invalid data separately."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-retry.answer",
+      "title": "Answer / mental model",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.hybrid-retry.explanation",
+          "text": "Retrying safely requires a stable identity for the logical work and an atomic or deduplicated write contract. A new random run ID for each retry does not identify the same logical batch. The configuration below is a design example, not an executable product-specific API."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-retry.example",
+      "title": "Example",
+      "children": [
+        {
+          "type": "code",
+          "id": "page.interview.hybrid-retry.code",
+          "language": "json",
+          "code": "{\n  \"logical_batch_id\": \"orders-2026-09-01\",\n  \"retry_policy\": {\"max_attempts\": 3, \"backoff_seconds\": 10},\n  \"sink_contract\": \"atomic replacement of this batch partition\",\n  \"acknowledge\": \"only after durable commit\"\n}",
+          "title": "Illustrative contract, not a vendor configuration"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-retry.trap",
+      "title": "Common mistake / trap",
+      "children": [
+        {
+          "type": "callout",
+          "id": "page.interview.hybrid-retry.trap-note",
+          "tone": "warning",
+          "title": "Watch for this",
+          "text": "A processed-batch check followed by an unrelated write is vulnerable to races. The commit/marker must share the required transaction boundary or use another proven atomic protocol."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-retry.followup",
+      "title": "Follow-up",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.hybrid-retry.followups",
+          "items": [
+            "What happens when two workers retry the same batch at the same time?"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-retry.intent",
+      "title": "Interviewer intent",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.hybrid-retry.intent-points",
+          "items": [
+            "Reason about failure boundaries and replay.",
+            "Distinguish a retry policy from idempotent effects."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-retry.reflection",
+      "title": "Reflection",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.hybrid-retry.reflection-prompt",
+          "text": "What pattern did I recognize, where did I get stuck, and what would I change in my first approach?\n\nUse Context > Remarks for your personal reflection. It is saved separately from this reference."
+        }
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "interview",
+    "hybrid"
+  ],
+  "provenance": "Original educational prototype. Prompts Q1-Q5 preserve the user-provided canonical SQL sequence. Examples are reference code, not executable tasks."
+}

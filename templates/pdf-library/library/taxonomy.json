@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "note": "Recommended facets. Extend deliberately; do not turn every facet into tree depth.",
+  "languages": ["en", "no", "fr", "de", "es", "other"],
+  "documentTypes": ["cheatsheet", "guide", "reference", "slides", "article", "whitepaper", "certification", "diagram", "other"],
+  "domains": [
+    "cloud-architecture",
+    "data-engineering",
+    "data-modeling",
+    "business-intelligence",
+    "sql",
+    "python",
+    "big-data",
+    "data-quality",
+    "devops",
+    "security-governance",
+    "language-learning",
+    "interview",
+    "career",
+    "other"
+  ],
+  "technologies": [
+    "microsoft-fabric",
+    "azure",
+    "databricks",
+    "spark",
+    "delta-lake",
+    "dbt",
+    "airflow",
+    "power-bi",
+    "dax",
+    "snowflake",
+    "bigquery",
+    "kafka",
+    "docker",
+    "kubernetes",
+    "terraform",
+    "other"
+  ],
+  "levels": ["overview", "fundamentals", "intermediate", "advanced", "reference"],
+  "sourcePlatforms": ["linkedin", "vendor", "web", "personal", "course", "book", "other"],
+  "rightsStatuses": ["author-created", "permission", "reference-only", "unreviewed"],
+  "principles": {
+    "canonicalPlacement": "Exactly one primary project/folder path per document.",
+    "crossCutting": "Use facets/tags/related links for secondary relevance.",
+    "linkedinDefaultRights": "reference-only or unreviewed unless redistribution permission is established."
+  }
+}

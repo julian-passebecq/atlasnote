@@ -1,7 +1,0 @@
-{
-  "name": "audit:local",
-  "command": "npm run audit:local",
-  "exitCode": 0,
-  "seconds": 0.22,
-  "status": "PASS"
-}

@@ -1,7 +1,0 @@
-{
-  "name": "test:reading:runtime",
-  "command": "npm run test:reading:runtime",
-  "exitCode": 2,
-  "seconds": 1.58,
-  "status": "BLOCKED"
-}

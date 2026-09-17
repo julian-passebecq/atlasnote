@@ -1,7 +1,0 @@
-{
-  "name": "test:workspaces:runtime",
-  "command": "npm run test:workspaces:runtime",
-  "exitCode": 2,
-  "seconds": 1.53,
-  "status": "BLOCKED"
-}

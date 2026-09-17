@@ -1,0 +1,11 @@
+import fs from 'node:fs/promises';import path from 'node:path';import {createRequire} from 'node:module';import {execFileSync} from 'node:child_process';import {compileContent} from './compile-content.mjs';
+import {createHash} from 'node:crypto';import {checkIntegratedDependencies} from './check-integrated-deps.mjs';import {readFiles} from './fs.mjs';
+const packages=await checkIntegratedDependencies(),vite=packages.vite,reactPDF=packages['react-pdf'],pdfjs=packages.pdfjs;
+for(const file of ['build/pdf.worker.min.mjs','cmaps','wasm','standard_fonts'])await fs.access(path.join(pdfjs.dir,file));
+await fs.rm('.vite-public',{recursive:true,force:true});await fs.cp('public','.vite-public',{recursive:true});await fs.mkdir('.vite-public/app/vendor',{recursive:true});for(const n of ['jszip.js','prism.js'])await fs.copyFile('src/vendor/'+n,'.vite-public/app/vendor/'+n);await fs.cp('src/content/schemas','.vite-public/app/content/schemas',{recursive:true});await compileContent('.vite-public');await fs.mkdir('.vite-public/pdf-assets',{recursive:true});await fs.copyFile(path.join(pdfjs.dir,'build/pdf.worker.min.mjs'),'.vite-public/pdf-assets/pdf.worker.min.mjs');for(const dir of ['cmaps','wasm','standard_fonts']){await fs.cp(path.join(pdfjs.dir,dir),'.vite-public/pdf-assets/'+dir,{recursive:true});}
+await fs.copyFile('LICENSE','.vite-public/LICENSE.txt');await fs.copyFile('THIRD_PARTY_NOTICES.md','.vite-public/THIRD_PARTY_NOTICES.md');await fs.cp('docs/licenses','.vite-public/licenses',{recursive:true});
+await fs.writeFile('.vite-public/pdf-assets/engine.json',JSON.stringify({reactPdf:reactPDF.p.version,pdfjs:pdfjs.p.version}));
+const payload=await readFiles('.vite-public/pdf-assets');
+await fs.writeFile('.vite-public/pdf-assets/integrity.json',JSON.stringify({format:'atlas-pdf-assets',reactPdf:reactPDF.p.version,pdfjs:pdfjs.p.version,files:Object.fromEntries([...payload].map(([n,b])=>[n,createHash('sha256').update(b).digest('hex')]))},null,2));
+execFileSync(process.execPath,[path.join(vite.dir,'bin/vite.js'),'build','--config','vite.config.mjs'],{stdio:'inherit'});
+console.log('Integrated hosted build completed in dist/. Compatibility tests cannot overwrite it. Run normal-origin PDF and IndexedDB browser tests before release.');

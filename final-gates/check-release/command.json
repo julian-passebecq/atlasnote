@@ -1,7 +1,0 @@
-{
-  "name": "check:release",
-  "command": "npm run check:release",
-  "exitCode": 0,
-  "seconds": 0.37,
-  "status": "PASS"
-}

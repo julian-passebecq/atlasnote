@@ -1,7 +1,0 @@
-{
-  "name": "test:references:runtime",
-  "command": "npm run test:references:runtime",
-  "exitCode": 2,
-  "seconds": 1.58,
-  "status": "BLOCKED"
-}
