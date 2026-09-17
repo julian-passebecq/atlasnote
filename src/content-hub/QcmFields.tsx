@@ -1,17 +1,16 @@
-import React,{useState} from '../vendor/react.mjs';
+import React from '../vendor/react.mjs';
 import {Field} from '../components/Modal.js';
 import {uid} from '../core/workspace.js';
 import type {QcmDocument,QcmQuestion} from './model.js';
 
 export function newQuestion():QcmQuestion{return {id:uid('question'),prompt:'',options:[{id:uid('option'),text:''},{id:uid('option'),text:''}],correctOptionIds:[]};}
-/** Answer mode is a draft affordance. The existing format derives it from correct answers. */
-export function QcmFields({source,onChange}:{source:QcmDocument;onChange:(value:QcmDocument)=>void}){
- const [multiple,setMultiple]=useState<Record<string,boolean>>({});
+/** Answer mode belongs to the author, including temporarily invalid drafts. */
+export function QcmFields({source,onChange,multiple,onModeChange}:{source:QcmDocument;onChange:(value:QcmDocument)=>void;multiple:Record<string,boolean>;onModeChange:(id:string,value:boolean)=>void}){
  function update(id:string,patch:Partial<QcmQuestion>){onChange({...source,questions:source.questions.map(q=>q.id===id?{...q,...patch}:q)});}
  return <div className="qcm-authoring"><Field label="Set title"><input aria-label="Set title" required maxLength={200} value={source.title} onChange={e=>onChange({...source,title:e.target.value})}/></Field>
- {source.questions.map((q,index)=>{const multi=multiple[q.id]??q.correctOptionIds.length>1;return <fieldset key={q.id} className="qcm-question-editor"><legend>Question {index+1}</legend>
+ {source.questions.map((q,index)=>{const multi=multiple[q.id]??false;return <fieldset key={q.id} className="qcm-question-editor"><legend>Question {index+1}</legend>
  <Field label="Question prompt"><textarea aria-label={'Question '+(index+1)+' prompt'} required rows={3} value={q.prompt} onChange={e=>update(q.id,{prompt:e.target.value})}/></Field>
- <Field label="Answer mode"><select ref={el=>el?.setCustomValidity(multi&&q.correctOptionIds.length<2?"Mark at least two correct options.":"")} aria-label={'Question '+(index+1)+' answer mode'} value={multi?'multiple':'single'} onChange={e=>{const value=e.target.value==='multiple';setMultiple(m=>({...m,[q.id]:value}));if(!value)update(q.id,{correctOptionIds:q.correctOptionIds.slice(0,1)});}}><option value="single">Single answer</option><option value="multiple">Multiple answers</option></select></Field>
+ <Field label="Answer mode"><select ref={el=>el?.setCustomValidity(multi&&q.correctOptionIds.length<2?"Mark at least two correct options.":"")} aria-label={'Question '+(index+1)+' answer mode'} value={multi?'multiple':'single'} onChange={e=>{const value=e.target.value==='multiple';onModeChange(q.id,value);if(!value)update(q.id,{correctOptionIds:q.correctOptionIds.slice(0,1)});}}><option value="single">Single answer</option><option value="multiple">Multiple answers</option></select></Field>
  <p className="secondary">{multi?'Mark at least two correct options.':'Mark one correct option.'} Each option can include an explanation.</p>
  {q.options.map((option,i)=><div className="qcm-option-editor" key={option.id}>
  <label className="inline-check"><input type={multi?'checkbox':'radio'} name={'correct-'+q.id} aria-label={'Question '+(index+1)+' option '+(i+1)+' correct'} checked={q.correctOptionIds.includes(option.id)} onChange={e=>update(q.id,{correctOptionIds:multi?(e.target.checked?[...q.correctOptionIds,option.id]:q.correctOptionIds.filter(id=>id!==option.id)):[option.id]})}/>Correct</label>

@@ -66,7 +66,8 @@
     "test:references:runtime": "python tests/references_v2_runtime.py",
     "test:stabilization:ui": "python tests/stabilization_v2_dom.py",
     "test:stabilization:runtime": "python tests/stabilization_v2_runtime.py",
-    "test:final-polish:runtime": "python tests/final_polish_runtime.py"
+    "test:final-polish:runtime": "python tests/final_polish_runtime.py",
+    "test:release-blockers:runtime": "python tests/release_blockers_runtime.py"
   },
   "dependencies": {
     "jszip": "3.10.1",

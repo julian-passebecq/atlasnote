@@ -66,6 +66,7 @@ jobs:
       - run: npm run test:references:runtime
       - run: npm run test:stabilization:runtime
       - run: npm run test:final-polish:runtime
+      - run: npm run test:release-blockers:runtime
       - run: npm run test:headers
       - uses: actions/upload-artifact@v4
         if: always()

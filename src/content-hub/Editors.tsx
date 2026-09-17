@@ -3,9 +3,10 @@ import {Modal,Field} from '../components/Modal.js';
 import {store} from '../storage/database.js';
 import {uid} from '../core/workspace.js';
 import type {ArticleSource,TaxonomyRef,QcmDocument} from './model.js';
-import {parseContentJSON,validateArticleSource,validateQcm} from './validation.mjs';
+import {parseContentJSON,validateArticleSource,validateQcm,validateTaxonomy} from './validation.mjs';
 import {articlePage,articleExport,qcmPage,putContent,captureRows,downloadJSON,updateReference,removeReference,updateCapture} from './content.js';
 import {QcmFields} from './QcmFields.js';
+import {qcmAnswerModes,validateQcmDraftModes} from './qcm-draft.js';
 import {contextLabel} from './context-label.js';
 import {TaxonomyPicker} from './TaxonomyPicker.js';
 import {taxonomyLabel} from './taxonomy.js';
@@ -19,11 +20,17 @@ export function ContentEditor({kind,page,catalogue,initialSource,initialTaxonomy
  const [initial]=useState<any>(()=>kind==='qcm'?(page?.qcm??{...qcmTemplate(),...(initialTaxonomy?{taxonomy:initialTaxonomy}:{})}):(page?.article?articleExport(page):{id:uid('article'),title:'',sourceType:'article',status:'inbox',...(initialTaxonomy?{taxonomy:initialTaxonomy}:{}),...(initialSource??{})}));
  const [source,setSource]=useState<any>(initial),[raw,setRaw]=useState(JSON.stringify(initial,null,2)),[error,setError]=useState(''),[busy,setBusy]=useState(false),[jsonMode,setJsonMode]=useState(false),[replaceBody,setReplaceBody]=useState(!initial.blocks?.length||initial.blocks.length===1&&initial.blocks[0].type==='markdown');
  const [text,setText]=useState(initial.text??(initial.blocks?.length===1&&initial.blocks[0].type==='markdown'?initial.blocks[0].text:''));
+ const [multiple,setMultiple]=useState<Record<string,boolean>>(()=>kind==='qcm'?qcmAnswerModes(initial):{});
  function change(k:string,v:any){setSource(s=>({...s,[k]:v}));}
+ // In JSON mode the picker projects and edits the same draft that Save consumes.
+ let taxonomySource=source,taxonomyError='';
+ if(jsonMode&&kind==='articles'){try{taxonomySource=parseContentJSON(raw);if(!taxonomySource||typeof taxonomySource!=='object'||Array.isArray(taxonomySource))throw Error('Article JSON must be an object.');if(taxonomySource.taxonomy!==undefined)validateTaxonomy(taxonomySource.taxonomy);}catch{taxonomyError='Fix the Article JSON object and classification before using the visual classification picker.';}}
+ function changeTaxonomy(value?:TaxonomyRef){const next={...taxonomySource};if(value)next.taxonomy=value;else delete next.taxonomy;if(jsonMode)setRaw(JSON.stringify(next,null,2));else setSource(next);}
  function visualSource(){if(kind==='qcm')return structuredClone(source);const v={...source};for(const k of ['url','publisher','note'])if(!v[k])delete v[k];if(replaceBody){delete v.blocks;delete v.text;if(text.length)v.text=text;}return v;}
- function changeMode(checked:boolean){try{if(checked)setRaw(JSON.stringify(visualSource(),null,2));else{const v=parseContentJSON(raw);if(kind==='qcm')validateQcm(v);else validateArticleSource(v);setSource(v);setText(v.text??(v.blocks?.length===1&&v.blocks[0].type==='markdown'?v.blocks[0].text:''));setReplaceBody(!v.blocks?.length||v.blocks.length===1&&v.blocks[0].type==='markdown');}setJsonMode(checked);setError('');}catch(e){setError((e as Error).message);}}
+ function changeMode(checked:boolean){try{if(checked){if(kind==='qcm')validateQcmDraftModes(source,multiple);setRaw(JSON.stringify(visualSource(),null,2));}else{const v=parseContentJSON(raw);if(kind==='qcm'){validateQcm(v);setMultiple(qcmAnswerModes(v));}else validateArticleSource(v);setSource(v);setText(v.text??(v.blocks?.length===1&&v.blocks[0].type==='markdown'?v.blocks[0].text:''));setReplaceBody(!v.blocks?.length||v.blocks.length===1&&v.blocks[0].type==='markdown');}setJsonMode(checked);setError('');}catch(e){setError((e as Error).message);}}
  async function load(file?:File){if(!file)return;try{if(file.size>4*1024*1024)throw Error('JSON file exceeds 4 MiB.');setRaw(await file.text());setJsonMode(true);setError('');}catch(e){setError((e as Error).message);}}
  async function save(e:any){e.preventDefault();setBusy(true);setError('');try{
+  if(kind==='qcm'&&!jsonMode)validateQcmDraftModes(source,multiple);
   const value:any=jsonMode?parseContentJSON(raw):visualSource();
   if(editing&&value.id!==page.id)throw Error('An edit cannot change the resource ID. Import a new copy instead.');
   if(kind==='articles'){validateArticleSource(value);if(editing)value.updatedAt=Date.now();}else validateQcm(value);
@@ -36,9 +43,9 @@ export function ContentEditor({kind,page,catalogue,initialSource,initialTaxonomy
  return <Modal wide title={(editing?'Edit ':'New/import ')+(kind==='qcm'?'QCM':'article')} onClose={onClose}><form onSubmit={save} className="hub-editor">
  {onBack&&<button type="button" className="capture-back" onClick={()=>{let draft=visualSource();if(jsonMode){try{draft=parseContentJSON(raw);}catch{draft={...draft};}}onBack(draft);}}>Back to Quick Capture</button>}
  <p className="secondary">Private local content. Source URLs are links, never automatically fetched or embedded.</p>
- {kind==='qcm'?<>{!jsonMode&&<><QcmFields source={source} onChange={setSource}/><TaxonomyPicker catalogue={catalogue} overlays={store.state.overlays} value={source.taxonomy} onChange={v=>{const next={...source};if(v)next.taxonomy=v;else delete next.taxonomy;setSource(next);}}/></>}<label className="inline-check"><input type="checkbox" checked={jsonMode} onChange={e=>changeMode(e.target.checked)}/>Edit canonical JSON</label><Field label="Import JSON file"><input type="file" aria-label="Content JSON file" accept=".json,application/json" onChange={e=>void load(e.target.files?.[0])}/></Field>{jsonMode&&jsonField}</>:<>
+ {kind==='qcm'?<>{!jsonMode&&<><QcmFields source={source} onChange={setSource} multiple={multiple} onModeChange={(id,value)=>setMultiple(m=>({...m,[id]:value}))}/><TaxonomyPicker catalogue={catalogue} overlays={store.state.overlays} value={source.taxonomy} onChange={v=>{const next={...source};if(v)next.taxonomy=v;else delete next.taxonomy;setSource(next);}}/></>}<label className="inline-check"><input type="checkbox" checked={jsonMode} onChange={e=>changeMode(e.target.checked)}/>Edit canonical JSON</label><Field label="Import JSON file"><input type="file" aria-label="Content JSON file" accept=".json,application/json" onChange={e=>void load(e.target.files?.[0])}/></Field>{jsonMode&&jsonField}</>:<>
  <div className="article-primary"><Field label="Title"><input aria-label="Title" required={!jsonMode} maxLength={200} value={source.title} disabled={jsonMode} onChange={e=>change('title',e.target.value)}/></Field><Field label="Source URL"><input aria-label="Source URL" type="url" value={source.url??''} disabled={jsonMode} onChange={e=>change('url',e.target.value)}/></Field>
- <TaxonomyPicker catalogue={catalogue} overlays={store.state.overlays} value={source.taxonomy} onChange={v=>{const next={...source};if(v)next.taxonomy=v;else delete next.taxonomy;setSource(next);}}/>
+ <TaxonomyPicker disabled={!!taxonomyError} catalogue={catalogue} overlays={store.state.overlays} value={taxonomyError?undefined:taxonomySource.taxonomy} onChange={changeTaxonomy}/>{taxonomyError&&<p className="secondary">{taxonomyError}</p>}
  {!jsonMode&&(initial.blocks?.length>0&&!replaceBody?<p>This article has structured blocks. They are preserved. Expand Advanced / JSON to edit them, or <button type="button" onClick={()=>setReplaceBody(true)}>Replace body with pasted text</button>.</p>:<Field label="Pasted article or transcript"><textarea aria-label="Pasted article or transcript" rows={12} value={text} onChange={e=>setText(e.target.value)} placeholder="Paste text or safe Markdown. No remote HTML is fetched."/></Field>)}
  </div>
  <details className="article-advanced" open={jsonMode||undefined}><summary>Advanced / JSON</summary>
