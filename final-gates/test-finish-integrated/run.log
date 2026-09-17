@@ -1,0 +1,132 @@
+
+> knowledge-atlas@2.0.0 test:finish:integrated
+> python tests/finish_121_integrated.py
+
+Traceback (most recent call last):
+  File "/mnt/data/atlasnote-v2-stabilized/tests/finish_121_integrated.py", line 21, in <module>
+    p.goto(base,wait_until='networkidle')
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/sync_api/_generated.py", line 9050, in goto
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.goto(
+        ^^^^^^^^^^^^^^^^^^^^
+            url=url, timeout=timeout, waitUntil=wait_until, referer=referer
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        )
+        ^
+    )
+    ^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_page.py", line 552, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_frame.py", line 153, in goto
+    await self._channel.send(
+        "goto", self._navigation_timeout, locals_to_params(locals())
+    )
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:41599/
+Call log:
+  - navigating to "http://127.0.0.1:41599/", waiting until "networkidle"
+
+{
+  "scope": "Actual hosted integrated PDF build on normal origin, no fake PDF renderer",
+  "status": "BLOCKED",
+  "checks": [
+    {
+      "id": "projection",
+      "name": "Strict two-way tree discovery",
+      "status": "BLOCKED",
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:41599/\nCall log:\n  - navigating to \"http://127.0.0.1:41599/\", waiting until \"networkidle\"\n"
+    },
+    {
+      "id": "pinned",
+      "name": "Exact pinned public references",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "assets",
+      "name": "Verified worker, CMaps, WASM and standard fonts",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "normal",
+      "name": "Actual integrated canvas, no native toolbar or intro",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "geometry",
+      "name": "Four viewport document-space measurements",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "info",
+      "name": "On-demand provenance and original actions",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "focus",
+      "name": "Focus requests the actual browser Fullscreen API when available",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "arrows",
+      "name": "Focus arrows navigate physical pages outside inputs",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "exit",
+      "name": "Fullscreen/CSS Focus exit restores the shell",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "spread",
+      "name": "Physical-page spread screenshot",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "compare",
+      "name": "PDF/note independent Compare screenshot",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "slate",
+      "name": "Dark Slate integrated PDF screenshot",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "fallback",
+      "name": "Intentional worker failure exposes usable compact native fallback",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    },
+    {
+      "id": "errors",
+      "name": "No uncaught errors",
+      "status": "BLOCKED",
+      "error": "Prerequisite projection did not complete."
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,15 @@
+{
+  "base": "http://127.0.0.1:48051/",
+  "scope": "Unmodified production entry and actual IndexedDB",
+  "status": "BLOCKED",
+  "passed": 0,
+  "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:48051/#/page/page.atlas.welcome\nCall log:\n  - navigating to \"http://127.0.0.1:48051/#/page/page.atlas.welcome\", waiting until \"networkidle\"\n",
+  "pending": [
+    "five theme changes and reload",
+    "demo persistence",
+    "capture draft return and cancel",
+    "JSON edit reload",
+    "Dashboard reader restoration",
+    "safe demo cleanup after reload"
+  ]
+}

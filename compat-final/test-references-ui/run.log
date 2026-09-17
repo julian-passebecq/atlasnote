@@ -1,0 +1,20 @@
+
+> knowledge-atlas@2.0.0 test:references:ui
+> python tests/references_v2_dom.py
+
+PASS Existing native Article/QCM import and Notebook reader remain usable
+PASS Header shortcuts survive hidden controls; dropdown reclick, outside, Escape and focus work
+PASS Create stable concept and assign exact Notebook section without structural writes
+PASS UI links exact PDF page, sheet block, QCM question, Article section and interview section
+PASS Concept rename preserves all six assignments and Notebook freedom
+PASS Closable Explorer filters and unlinked queue preserve originating tab state
+PASS Virtual Notebook lens double-click opens exact sheet block in a new tab
+PASS Reference menu opens exact QCM in other pane and Article section in Workspace 5
+PASS Opt-in exact-context capture appears as derived incoming backlink
+PASS Actual bounded local JSON and Markdown downloads include exact target and semantic revision
+PASS Malformed/stale suggestion rejection, pure preview, staging, selected accept/reject and history
+PASS Downloaded backup contains exact semantic state, shared lens and unchanged overlays (not durable restore)
+PASS 390px Context view and workspace return keep layout and Compare state
+PASS Inactive pane mode activation, per-pane ARIA/chrome and A/B collapse/restore
+PASS No uncaught browser exceptions
+{"status": "PASS", "passed": 15, "total": 15}

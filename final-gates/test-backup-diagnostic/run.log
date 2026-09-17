@@ -1,0 +1,15 @@
+
+> knowledge-atlas@2.0.0 test:backup:diagnostic
+> python tests/backup_diagnostic.py
+
+diagnostic: mounting
+diagnostic: mounted
+diagnostic: opening remarks
+diagnostic: opened
+diagnostic: snapshot and ZIP
+{
+  "scope": "Real DOM remark handler + production makeBackup and ZIP parser; storage writes suppressed, not real-origin/IndexedDB/download evidence",
+  "exactPersonalEquality": true,
+  "undefinedPaths": [],
+  "diff": []
+}

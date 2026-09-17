@@ -1,0 +1,68 @@
+{
+  "scope": null,
+  "build": "integrated",
+  "checks": [
+    {
+      "id": "normal_origin",
+      "status": "BLOCKED",
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:58027/\nCall log:\n  - navigating to \"http://127.0.0.1:58027/\", waiting until \"networkidle\"\n"
+    },
+    {
+      "id": "native_article",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "qcm_answer_and_draft",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "capture_context",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "taxonomy_and_reference",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "reload_all_shared_data",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "checkpoint_boundary",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "exact_backup_download",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "fresh_profile_restore",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "restored_typed_navigation",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "actual_pdf_qcm_compare",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "no_browser_errors",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    }
+  ],
+  "errors": [],
+  "status": "BLOCKED"
+}

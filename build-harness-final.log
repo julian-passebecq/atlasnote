@@ -1,0 +1,88 @@
+
+> knowledge-atlas@2.0.0 build:test-harness
+> node tools/build-test-harness.mjs
+
+[36mvite v8.2.2 [32mbuilding client environment for production...[36m[39m
+transforming...
+<script src="./app/vendor/jszip.js"> in "/index.html" can't be bundled without type="module" attribute
+<script src="./app/vendor/prism.js"> in "/index.html" can't be bundled without type="module" attribute
+[33m[plugin rolldown:vite-resolve] Module "node:crypto" has been externalized for browser compatibility, imported by "/mnt/data/atlasnote-v2-stabilized/src/vendor/mermaid/svelte/svelte_internal_server.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.[39m
+[33m[plugin rolldown:vite-resolve] Module "node:async_hooks" has been externalized for browser compatibility, imported by "/mnt/data/atlasnote-v2-stabilized/src/vendor/mermaid/svelte/svelte_internal_server.js". See https://vite.dev/guide/troubleshooting.html#module-externalized-for-browser-compatibility for more details.[39m
+✓ 258 modules transformed.
+rendering chunks...
+computing gzip size...
+.build/engine-dom/index.html                                                  0.64 kB │ gzip:   0.36 kB
+.build/engine-dom/assets/PdfEngine-Bf5_3j-I.css                              17.31 kB │ gzip:   3.91 kB
+.build/engine-dom/assets/preload-helper-D0Vx-SKh.css                        124.79 kB │ gzip:  24.49 kB
+.build/engine-dom/assets/clone-CMXc9HUx-CE4giRmo.js                           0.10 kB │ gzip:   0.11 kB
+.build/engine-dom/assets/channel-CWqaS4Jl-x6N1ggmw.js                         0.11 kB │ gzip:   0.12 kB
+.build/engine-dom/assets/snapshot-kG8eJGUR.js                                 0.12 kB │ gzip:   0.11 kB
+.build/engine-dom/assets/init-Dmth1JHB-C-OQMol4.js                            0.14 kB │ gzip:   0.12 kB
+.build/engine-dom/assets/chunk-QZHKN3VN-D9Om-fOY-cGa09BBf.js                  0.19 kB │ gzip:   0.15 kB
+.build/engine-dom/assets/chunk-4BX2VUAB-BaO1cqwC-CVg1rtor.js                  0.22 kB │ gzip:   0.16 kB
+.build/engine-dom/assets/chunk-55IACEB6-DRRLWp3g-DWk1Siso.js                  0.23 kB │ gzip:   0.20 kB
+.build/engine-dom/assets/pie-7BOR55EZ-M8Psj7d1-Dscpha8d.js                    0.24 kB │ gzip:   0.19 kB
+.build/engine-dom/assets/info-NVLQJR56-DsY8nGXZ-TBPBjDxN.js                   0.24 kB │ gzip:   0.19 kB
+.build/engine-dom/assets/radar-NHE76QYJ-5ODM55so-B4Xymsoi.js                  0.24 kB │ gzip:   0.19 kB
+.build/engine-dom/assets/packet-BFZMPI3H-CIbab7aJ-NHTHYY9L.js                 0.24 kB │ gzip:   0.19 kB
+.build/engine-dom/assets/treemap-KMMF4GRG-BrVflxTa-CVGljGbB.js                0.24 kB │ gzip:   0.19 kB
+.build/engine-dom/assets/gitGraph-F6HP7TQM-DtAHpTEk-BoUOl3T2.js               0.24 kB │ gzip:   0.19 kB
+.build/engine-dom/assets/architecture-U656AL7Q-B0aT4QJ2-DoT-3hdp.js           0.25 kB │ gzip:   0.19 kB
+.build/engine-dom/assets/chunk-FMBD7UC4-CmreEvgd-CxtjLHY7.js                  0.36 kB │ gzip:   0.26 kB
+.build/engine-dom/assets/stateDiagram-v2-4FDKWEC3-YCZ2rsQb-Bu6OrNbQ.js        0.41 kB │ gzip:   0.30 kB
+.build/engine-dom/assets/classDiagram-2ON5EDUG-CaMWxcv5-7hA3AkzE.js           0.45 kB │ gzip:   0.33 kB
+.build/engine-dom/assets/classDiagram-v2-WZHVMYZB-CaMWxcv5-7hA3AkzE.js        0.45 kB │ gzip:   0.33 kB
+.build/engine-dom/assets/chunk-QN33PNHL-CTWghO9X-DBSo2rCi.js                  0.50 kB │ gzip:   0.36 kB
+.build/engine-dom/assets/min-BsQtlEPy-B-hgRVxc.js                             0.58 kB │ gzip:   0.36 kB
+.build/engine-dom/assets/main-B2JigC9P.js                                     0.66 kB │ gzip:   0.43 kB
+.build/engine-dom/assets/infoDiagram-WHAUD3N6-kTDtfRnW-Ca0XAe7S.js            0.67 kB │ gzip:   0.44 kB
+.build/engine-dom/assets/jsx-runtime-CYGyfRVj.js                              0.72 kB │ gzip:   0.47 kB
+.build/engine-dom/assets/ordinal-BeghXfj9-BOYJFW-9.js                         1.18 kB │ gzip:   0.57 kB
+.build/engine-dom/assets/preload-helper-JAmACgYC.js                           1.21 kB │ gzip:   0.67 kB
+.build/engine-dom/assets/main-CgwTxQC9.js                                     1.27 kB │ gzip:   0.71 kB
+.build/engine-dom/assets/chunk-TZMSLE5B-B6U4LxXm-CLJq-2Ie.js                  1.41 kB │ gzip:   0.63 kB
+.build/engine-dom/assets/harness-De21j7sF.js                                  1.53 kB │ gzip:   0.80 kB
+.build/engine-dom/assets/arc-CSo4ybba-BIpwj12I.js                             3.47 kB │ gzip:   1.45 kB
+.build/engine-dom/assets/diagram-S2PKOQOG-DU59fZvD-DZ4Ll3ij.js                4.26 kB │ gzip:   1.86 kB
+.build/engine-dom/assets/defaultLocale-CzDG__Ur-CIABXL3n.js                   4.62 kB │ gzip:   2.12 kB
+.build/engine-dom/assets/pieDiagram-ADFJNKIX-BkULcsJ0-Bl0kB3jc.js             5.07 kB │ gzip:   2.24 kB
+.build/engine-dom/assets/linear-Bc_1ZEPy-C0VmhTwg.js                          5.55 kB │ gzip:   2.28 kB
+.build/engine-dom/assets/diagram-QEK2KX5R-DGdH6jS5-FV4zO1w5.js                5.79 kB │ gzip:   2.41 kB
+.build/engine-dom/assets/_baseUniq-Y4WFS72s-IEaEoNW_.js                       8.34 kB │ gzip:   3.46 kB
+.build/engine-dom/assets/graph-BrhA-33P-DdblwzIf.js                           9.29 kB │ gzip:   3.15 kB
+.build/engine-dom/assets/stateDiagram-FKZM4ZOC-D2v1Cixb-CIwzozDC.js          10.29 kB │ gzip:   3.59 kB
+.build/engine-dom/assets/dagre-6UL2VRFP-CovziYUG-COZha1Q-.js                 10.90 kB │ gzip:   4.06 kB
+.build/engine-dom/assets/svelte_events-_cdbuH0E.js                           15.50 kB │ gzip:   6.39 kB
+.build/engine-dom/assets/diagram-PSM6KHXK-BaOZ_W7c-Cb3BXoI5.js               15.51 kB │ gzip:   5.45 kB
+.build/engine-dom/assets/kanban-definition-3W4ZIXB7-aoKSFCZX-B2qqdHV1.js     19.84 kB │ gzip:   6.96 kB
+.build/engine-dom/assets/workspace-snapshot-yMeu0ym6.js                      20.09 kB │ gzip:   6.42 kB
+.build/engine-dom/assets/mindmap-definition-VGOIOE7T-CGx00QaD-D6vTNHxX.js    20.67 kB │ gzip:   7.16 kB
+.build/engine-dom/assets/sankeyDiagram-TZEHDZUN-Flg_xlJG-BHPz8QJp.js         21.70 kB │ gzip:   7.85 kB
+.build/engine-dom/assets/journeyDiagram-XKPGCS4Q-CRgOiro7-CAlTe3FL.js        23.14 kB │ gzip:   8.14 kB
+.build/engine-dom/assets/timeline-definition-IT6M3QCI-DGC3eVRT-DidgEXZ8.js   23.19 kB │ gzip:   8.00 kB
+.build/engine-dom/assets/gitGraphDiagram-NY62KEGX-BqXjLLaB-CSrEwomF.js       23.69 kB │ gzip:   7.22 kB
+.build/engine-dom/assets/erDiagram-Q2GNP2WA-BBFjvy80-DsHHKqMD.js             24.95 kB │ gzip:   8.71 kB
+.build/engine-dom/assets/layout-BOSGuAzj-htSi7t_P.js                         28.85 kB │ gzip:  10.27 kB
+.build/engine-dom/assets/requirementDiagram-UZGBJVZJ-BO-Er0Gv-B5Eb8Qqg.js    29.74 kB │ gzip:   9.30 kB
+.build/engine-dom/assets/quadrantDiagram-AYHSOK5B-Beqah9EL-DgznKG87.js       33.37 kB │ gzip:   9.73 kB
+.build/engine-dom/assets/chunk-DI55MBZ5-Bl2jrir--BO4criLz.js                 35.79 kB │ gzip:  11.55 kB
+.build/engine-dom/assets/xychartDiagram-PRI3JC2R-qrUHXmDM-D3SlFjIA.js        39.74 kB │ gzip:  11.11 kB
+.build/engine-dom/assets/chunk-B4BG7PRW-CbQ8D9M5-B72qPYbZ.js                 44.84 kB │ gzip:  14.67 kB
+.build/engine-dom/assets/personal-state-G-djr4Rq.js                          52.34 kB │ gzip:  18.74 kB
+.build/engine-dom/assets/flowDiagram-NV44I4VS-BcGzX01g-DlWmi1sm.js           59.82 kB │ gzip:  19.43 kB
+.build/engine-dom/assets/ganttDiagram-JELNMOA3-CVPqjhwm-tsXxrTaO.js          67.40 kB │ gzip:  22.36 kB
+.build/engine-dom/assets/c4Diagram-YG6GDRKO-DzK26qXY-CJN78v7d.js             69.28 kB │ gzip:  19.36 kB
+.build/engine-dom/assets/blockDiagram-VD42YOAC-C4UOSqDr-CjYig8RL.js          70.66 kB │ gzip:  19.86 kB
+.build/engine-dom/assets/cose-bilkent-S5V4N54A-Dgxubuxm-DohzHqGm.js          80.95 kB │ gzip:  21.49 kB
+.build/engine-dom/assets/jszip.min-D_BdDBgS.js                               95.81 kB │ gzip:  28.43 kB
+.build/engine-dom/assets/sequenceDiagram-WL72ISMW-BYJVMZSO-DedYBy10.js       96.43 kB │ gzip:  26.34 kB
+.build/engine-dom/assets/architectureDiagram-VXUJARFQ-CCOdiPU4-DaT3Zipy.js  145.30 kB │ gzip:  39.93 kB
+.build/engine-dom/assets/study-bridge-RZKgDvKC.js                           151.77 kB │ gzip:  50.47 kB
+.build/engine-dom/assets/katex-XbL3y5x--haj-WNSA.js                         263.46 kB │ gzip:  77.47 kB
+.build/engine-dom/assets/mermaid-parser.core-C2YL8PBe-CB0Ob_uW.js           348.21 kB │ gzip:  85.87 kB
+.build/engine-dom/assets/App-BQIh0FPE.js                                    401.01 kB │ gzip: 116.72 kB
+.build/engine-dom/assets/cytoscape.esm-5J0xJHOV-BE_oXxxz.js                 433.30 kB │ gzip: 137.33 kB
+.build/engine-dom/assets/PdfEngine-CANcZ8Cr.js                              439.15 kB │ gzip: 130.38 kB
+.build/engine-dom/assets/mermaid-loader-fjswIzMT.js                         489.12 kB │ gzip: 136.97 kB
+
+[32m✓ built in 829ms[39m

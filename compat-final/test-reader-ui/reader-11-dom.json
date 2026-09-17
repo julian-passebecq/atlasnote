@@ -1,0 +1,421 @@
+{
+  "scope": "ACTUAL Chromium DOM/layout, pointer/keyboard and file/download UI. about:blank harness; enqueue and import commit use in-memory adapters; unavailable secure-context SHA-256 uses a test-only Python digest bridge. NOT IndexedDB/reload/normal-origin or integrated PDF certification.",
+  "checks": [
+    {
+      "name": "True Focus full-viewport geometry and exact semantic anchor: continuous",
+      "accepts": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": {
+        "readingBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "anchorBeforeAfter": {
+          "blockId": "block.atlas.layouts.2.0",
+          "unit": "block.atlas.layouts.2.0.0",
+          "offset": 51,
+          "viewportOffset": 20.453125,
+          "atStart": false
+        },
+        "browserFullscreen": true
+      }
+    },
+    {
+      "name": "True Focus full-viewport geometry and exact semantic anchor: book",
+      "accepts": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": {
+        "readingBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "anchorBeforeAfter": {
+          "blockId": "block.atlas.layouts.2.1",
+          "unit": "block.atlas.layouts.2.1.0",
+          "offset": 0,
+          "viewportOffset": -8.78125,
+          "atStart": false
+        },
+        "browserFullscreen": true
+      }
+    },
+    {
+      "name": "True Focus full-viewport geometry and exact semantic anchor: parallel",
+      "accepts": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": {
+        "readingBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 1440,
+          "height": 900
+        },
+        "anchorBeforeAfter": {
+          "blockId": "block.atlas.layouts.2.0",
+          "unit": "block.atlas.layouts.2.0.0",
+          "offset": 51,
+          "viewportOffset": 20.453125,
+          "atStart": false
+        },
+        "browserFullscreen": true
+      }
+    },
+    {
+      "name": "Compare picker, active target, exact survivor and pointer/keyboard ratio persistence",
+      "accepts": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": {
+        "ratioAfterReopen": 55.89930555555556,
+        "leftUnchanged": true,
+        "newPaneEmpty": true
+      }
+    },
+    {
+      "name": "Focus Compare contains both panes and divider, including narrow viewport",
+      "accepts": [
+        27,
+        37,
+        39,
+        40,
+        42,
+        43,
+        48
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": null
+    },
+    {
+      "name": "Fresh internal tab picker has independent modes and Back/Forward history",
+      "accepts": [
+        37,
+        38,
+        40,
+        42
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": null
+    },
+    {
+      "name": "Mixed collection metadata, flags, all facets, direct children and sorting",
+      "accepts": [
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": {
+        "directItems": 4,
+        "notes": 1,
+        "pdfs": 2,
+        "folders": 1
+      }
+    },
+    {
+      "name": "Collection opens independent internal tab with Control",
+      "accepts": [
+        85
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": null
+    },
+    {
+      "name": "Collection opens independent internal tab with Meta",
+      "accepts": [
+        85
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": null
+    },
+    {
+      "name": "Collection opens independent internal tab with middle",
+      "accepts": [
+        86
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": null
+    },
+    {
+      "name": "Collection keyboard/context menu, bookmark and open-in-other-pane",
+      "accepts": [
+        84,
+        87,
+        88
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": [
+        "Open here",
+        "Open in new tab",
+        "Open in other pane",
+        "Open in new tab in other pane",
+        "Open in workspace...",
+        "Add to Read later",
+        "Bookmark"
+      ]
+    },
+    {
+      "name": "Explicit PDF reference move/removal and library archive/restore retain exact source identity",
+      "accepts": [
+        87,
+        88,
+        100
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": null
+    },
+    {
+      "name": "Five themes visibly differ across semantic surfaces without layout changes",
+      "accepts": [
+        62,
+        63,
+        64,
+        65,
+        66,
+        68
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": {
+        "computedThemeSurfaces": [
+          [
+            "rgb(244, 247, 252)",
+            "rgb(36, 53, 75)",
+            "#f2f6fc",
+            "#e9eef6",
+            "#f3f6fb",
+            "#eaf1fc"
+          ],
+          [
+            "rgb(246, 248, 245)",
+            "rgb(36, 36, 36)",
+            "#f0f4ef",
+            "#e9ede6",
+            "#f4f4f4",
+            "#eeeeee"
+          ],
+          [
+            "rgb(242, 236, 223)",
+            "rgb(59, 48, 38)",
+            "#eee6d8",
+            "#dfd6c6",
+            "#f0eadf",
+            "#e9dfcb"
+          ],
+          [
+            "rgb(247, 244, 252)",
+            "rgb(53, 46, 69)",
+            "#f1ecf8",
+            "#eae2f3",
+            "#f1edf6",
+            "#eae3f3"
+          ],
+          [
+            "rgb(37, 50, 67)",
+            "rgb(237, 241, 247)",
+            "#202d3d",
+            "#141f2d",
+            "#172332",
+            "#304158"
+          ]
+        ],
+        "reload": "Not covered by DOM harness"
+      }
+    },
+    {
+      "name": "Normal and muted theme text tokens meet 4.5:1 and keyboard focus is visible",
+      "accepts": [
+        69
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": [
+        {
+          "theme": "fluent",
+          "text": 12.456588960657367,
+          "muted": 5.460561800300508,
+          "canvas": 5.085233993431588,
+          "accent": 6.510028044819567
+        },
+        {
+          "theme": "neutral",
+          "text": 15.522910417680388,
+          "muted": 6.584652797685219,
+          "canvas": 6.165756365577135,
+          "accent": 7.427142857322516
+        },
+        {
+          "theme": "academic",
+          "text": 12.621243939774674,
+          "muted": 6.47693466165582,
+          "canvas": 5.593258735560135,
+          "accent": 6.905117724809241
+        },
+        {
+          "theme": "lavender",
+          "text": 12.719220468537937,
+          "muted": 6.29665232657267,
+          "canvas": 5.868676005439558,
+          "accent": 7.302429658320095
+        },
+        {
+          "theme": "slate",
+          "text": 12.959995054236268,
+          "muted": 8.758666112045006,
+          "canvas": 7.747978630189851,
+          "accent": 8.244207660985095
+        }
+      ]
+    },
+    {
+      "name": "PDF/PDF then PDF/note Compare and maximum Focus preview frame",
+      "accepts": [
+        28,
+        41,
+        44,
+        45,
+        46,
+        150
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": {
+        "PDFFrameBounds": "full viewport",
+        "engine": "Explicit native-browser fallback; physical-page engine NOT certified"
+      }
+    },
+    {
+      "name": "File picker, nested target/new folder, metadata, conservative rights, exact payload, edit and SHA dedupe",
+      "accepts": [
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        101
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": {
+        "sha256": "578575ebafac80d373c23b58a9c320663a8ff5dfff4b5996c6473411f5f2afe4",
+        "bytes": 50977,
+        "originalAndRenameIdsSame": true,
+        "storageScope": "Only actual intake output into in-memory adapter; real IDB gate separate"
+      }
+    },
+    {
+      "name": "Private PDF-library UI performs a real local ZIP download without user-state export",
+      "accepts": [
+        107,
+        114,
+        116
+      ],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": {
+        "downloadBytes": 77929,
+        "privateDocuments": 2,
+        "publicFixturesExcluded": true
+      }
+    },
+    {
+      "name": "No unhandled JavaScript exceptions in new Reader/PDF UI",
+      "accepts": [],
+      "status": "PASS",
+      "scope": "Real DOM + in-memory state only",
+      "detail": null
+    }
+  ],
+  "passed": 18,
+  "failed": 0
+}

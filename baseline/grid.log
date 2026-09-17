@@ -1,0 +1,19 @@
+PASS Four real canvas pages form a 2x2 grid with selectable text and un-stretched mixed orientations
+PASS Group navigation 1-4 then final real page5; no invented trailing pages
+PASS Clicking a grid page and physical page input preserve exact selected-page identity
+PASS Fit grid keeps two columns and two rows visible at desktop and phone sizes
+PASS Intrinsic rotation and additional90-degree viewer rotation use actual page dimensions
+PASS Quick grid and two-page Spread remain distinct; leaving grid restores prior layout and zoom
+PASS Cover alone and keyboard arrows navigate cover then pages2-5 without skipped groups
+PASS Deliberate wheel gestures navigate groups forward and backward in grid mode
+Traceback (most recent call last):
+  File "/mnt/data/atlasnote-v2-stabilized/tests/grid_124_dom.py", line 27, in check
+    try:d=fn();results.append({'name':name,'status':'PASS','detail':d});print('PASS',name,flush=True)
+          ~~^^
+  File "/mnt/data/atlasnote-v2-stabilized/tests/grid_124_dom.py", line 62, in compare
+    reset();p.set_viewport_size({'width':1920,'height':1080});ready();grid();rendered([1,2,3,4]);a=session()['panes'][0];btn('Compare in two panes').click();p.locator('[data-node-id="node.page.atlas.rotated"] .tree-target').click();ready();btn('Quick PDF Spread').last.click();ready();before=session();assert before['panes'][0]==a;assert p.locator('.pdf-grid').count()==1;assert p.locator('.pdf-spread').count()==1;state_action(p,'Save all workspace states');p.wait_for_timeout(200);expected=session();btn('Swap panes').click();state_action(p,'Restore last all-workspaces save');ready();assert session()==expected;p.screenshot(path=str(OUT/'grid-and-spread-compare.png'))
+                                                                                                                                                                                                                                                                                                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+PASS Bookmark made in grid restores the selected physical page, not only the group start
+PASS Entering fit grid from a scrolled single page keeps the first row visible
+PASS No uncaught PDF/reader errors

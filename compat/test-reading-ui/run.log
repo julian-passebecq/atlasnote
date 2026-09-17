@@ -1,0 +1,15 @@
+
+> knowledge-atlas@2.0.0 test:reading:ui
+> python tests/reading_124_dom.py
+
+PASS Shared top-left controls and paired rail order; new readers hidden by default
+PASS Bookmarks edit title, note and subject; lists are shared rather than workspace-scoped
+PASS Safe pasted URLs, no automatic fetch, read status, subject filtering and confirmed removal
+PASS PDF tree is only category and short page headings, with repeated page references
+PASS Physical PDF page actions preserve source and open a tab, second pane or numbered workspace
+PASS Queue can distinguish whole PDFs, physical pages and PDF categories; bookmarks separate
+PASS Full pane refuses a sixth tab without losing or replacing existing work
+PASS Separate Workspace States and document Context; checkpoint restore retains newer queue
+PASS Page context menu and subject tabs are keyboard-operable
+PASS Manager and paired actions fit desktop and phone without viewport overflow
+PASS No unhandled UI errors

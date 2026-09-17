@@ -1,0 +1,7 @@
+{
+  "name": "typecheck:online",
+  "command": "npm run typecheck:online",
+  "exitCode": 0,
+  "seconds": 6.94,
+  "status": "PASS"
+}

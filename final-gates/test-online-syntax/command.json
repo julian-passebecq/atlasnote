@@ -1,0 +1,7 @@
+{
+  "name": "test:online:syntax",
+  "command": "npm run test:online:syntax",
+  "exitCode": 0,
+  "seconds": 0.62,
+  "status": "PASS"
+}

@@ -1,0 +1,187 @@
+{
+  "scope": "Real offline PyMuPDF/Pillow processing and source-repository builder. Synthetic PDFs only. Automated QA does not itself confer human approval.",
+  "checks": [
+    {
+      "name": "Lossless structural cleanup: actual text/page hashes and all-page render comparison",
+      "accepts": [
+        118,
+        119,
+        122,
+        123,
+        125,
+        129
+      ],
+      "status": "PASS",
+      "detail": {
+        "beforeBytes": 51033,
+        "afterBytes": 49045,
+        "renderDiff": "all 5 pages zero pixel difference",
+        "textIdentical": true
+      }
+    },
+    {
+      "name": "Image-only rewrite study after structural cleanup; vector text retained",
+      "accepts": [
+        120,
+        121,
+        122,
+        123,
+        125,
+        126
+      ],
+      "status": "PASS",
+      "detail": {
+        "inputBytes": 10716600,
+        "outputBytes": 1453037,
+        "ratio": 0.135587,
+        "visualQA": [
+          {
+            "page": 1,
+            "meanAbsoluteChannelDifference": 0.910556,
+            "maxChannelDifference": 56
+          }
+        ]
+      }
+    },
+    {
+      "name": "Image-only rewrite compact after structural cleanup; vector text retained",
+      "accepts": [
+        120,
+        121,
+        122,
+        123,
+        125,
+        126
+      ],
+      "status": "PASS",
+      "detail": {
+        "inputBytes": 10716600,
+        "outputBytes": 223115,
+        "ratio": 0.02082,
+        "visualQA": [
+          {
+            "page": 1,
+            "meanAbsoluteChannelDifference": 1.013122,
+            "maxChannelDifference": 70
+          }
+        ]
+      }
+    },
+    {
+      "name": "Explicit lossy profile without QA destination is rejected",
+      "accepts": [
+        121,
+        126
+      ],
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Image-only PDF remains image-only: no invented OCR/text layer",
+      "accepts": [
+        120,
+        122,
+        123
+      ],
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A non-smaller candidate returns the original exact bytes",
+      "accepts": [
+        124
+      ],
+      "status": "PASS",
+      "detail": {
+        "iterations": [
+          {
+            "before": 49045,
+            "candidate": 49045
+          }
+        ],
+        "originalBytesPreserved": true
+      }
+    },
+    {
+      "name": "SHA duplicate check creates no competing binary",
+      "accepts": [
+        113
+      ],
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Reject non-PDF, encrypted and active-action inputs; no password persisted",
+      "accepts": [
+        106,
+        117
+      ],
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Processor cannot raise the application hard cap",
+      "accepts": [
+        128
+      ],
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Actual large-image PDFs exercise 12 MiB warning and 20 MiB rejection",
+      "accepts": [
+        127,
+        128
+      ],
+      "status": "PASS",
+      "detail": {
+        "warnedBytes": 13863525,
+        "rejectedBytes": 27724026
+      }
+    },
+    {
+      "name": "Repository validation rejects traversal, invalid rights/language, tampering, duplicate bytes and >20 MiB",
+      "accepts": [
+        110,
+        111,
+        112,
+        113,
+        128
+      ],
+      "status": "PASS",
+      "detail": [
+        {
+          "case": "traversal",
+          "rejected": "Unsafe relative path: ../escape.pdf"
+        },
+        {
+          "case": "false-rights",
+          "rejected": "Unknown rights status: pdf.example.fabric"
+        },
+        {
+          "case": "tampered-hash",
+          "rejected": "PDF hash/size mismatch: pdf.example.fabric"
+        },
+        {
+          "case": "unknown-language",
+          "rejected": "Invalid language: pdf.example.fabric"
+        }
+      ]
+    },
+    {
+      "name": "Private repository pack is reproducible and generated/raw material is gitignored",
+      "accepts": [
+        107,
+        115,
+        130
+      ],
+      "status": "PASS",
+      "detail": {
+        "sha256": "f1ef2e492011bd6d8433380543ce53607dfabde398358616a552740a5249d64a",
+        "rebuildIdentical": true
+      }
+    }
+  ],
+  "passed": 12,
+  "failed": 0
+}

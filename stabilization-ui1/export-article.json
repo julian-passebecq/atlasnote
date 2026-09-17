@@ -1,0 +1,22 @@
+{
+  "id": "demo.v2.article.sql",
+  "title": "Reviewed / Demo / Why a join can multiply rows",
+  "sourceType": "article",
+  "status": "inbox",
+  "publisher": "AtlasNote demonstration",
+  "addedAt": 1789646400000,
+  "taxonomy": {
+    "subject": "it",
+    "folderId": "demo.v2.notebook.it",
+    "path": [
+      "Demo / IT"
+    ]
+  },
+  "blocks": [
+    {
+      "id": "demo.v2.article.sql.body",
+      "type": "markdown",
+      "text": "Before joining an order table to a detail table, state each table's grain. Multiple matching detail rows can produce multiple output rows per order. Validate the keys before summing order-level values."
+    }
+  ]
+}

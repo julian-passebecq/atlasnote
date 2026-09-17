@@ -1,0 +1,6 @@
+{
+  "command": "npm ci --fetch-retries=0 --fetch-timeout=10000",
+  "cwd": "/mnt/data/atlasnote-clean-install",
+  "exitCode": null,
+  "seconds": 22.0
+}

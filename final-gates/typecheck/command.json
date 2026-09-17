@@ -1,0 +1,7 @@
+{
+  "name": "typecheck",
+  "command": "npm run typecheck",
+  "exitCode": 0,
+  "seconds": 6.46,
+  "status": "PASS"
+}

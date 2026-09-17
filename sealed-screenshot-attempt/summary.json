@@ -1,0 +1,38 @@
+[
+  {
+    "name": "typecheck",
+    "exitCode": 0,
+    "status": "PASS",
+    "seconds": 5.46
+  },
+  {
+    "name": "typecheck:online",
+    "exitCode": 0,
+    "status": "PASS",
+    "seconds": 5.74
+  },
+  {
+    "name": "build",
+    "exitCode": 0,
+    "status": "PASS",
+    "seconds": 1.58
+  },
+  {
+    "name": "check:release",
+    "exitCode": 0,
+    "status": "PASS",
+    "seconds": 0.26
+  },
+  {
+    "name": "build:test-harness",
+    "exitCode": 0,
+    "status": "PASS",
+    "seconds": 1.05
+  },
+  {
+    "name": "test:stabilization:ui",
+    "exitCode": 1,
+    "status": "FAIL",
+    "seconds": 36.28
+  }
+]

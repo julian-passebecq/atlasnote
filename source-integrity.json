@@ -1,0 +1,237 @@
+{
+  "auditedStartingSHA": "fc41a5a5ac843f228175194b6a679867843530d8",
+  "auditedTree": "4f08e832311c211cb4bf8140cd2a7d73bc8e7808",
+  "inspectedRemoteSHA": "f366f015bb6ace49d3c367b3d76ff278779a53ba",
+  "inspectedRemoteTree": "48087f68fc9841b606656c296b4e9dfbbe028cf6",
+  "branch": "v2manualupload",
+  "finalLocalSHA": "454202e3ba2642e9afd86e43db21b368c8a84e62",
+  "finalTree": "f2c1205a8101ecd2c7830d3ebf10104ad32a3431",
+  "reconstructedTree": "f2c1205a8101ecd2c7830d3ebf10104ad32a3431",
+  "sourceFiles": 523,
+  "changedFiles": 54,
+  "changes": [
+    {
+      "status": "M",
+      "path": ".github/workflows/ci.yml"
+    },
+    {
+      "status": "A",
+      "path": ".github/workflows/stabilization-diagnostic.yml"
+    },
+    {
+      "status": "A",
+      "path": ".github/workflows/theme-preview-diagnostic.yml"
+    },
+    {
+      "status": "M",
+      "path": "CHANGED_FILES.md"
+    },
+    {
+      "status": "M",
+      "path": "CHANGELOG.md"
+    },
+    {
+      "status": "M",
+      "path": "CODEX_HANDOFF.md"
+    },
+    {
+      "status": "M",
+      "path": "FINAL_TEST_STATUS.md"
+    },
+    {
+      "status": "M",
+      "path": "README.md"
+    },
+    {
+      "status": "M",
+      "path": "REQUIREMENTS_COVERAGE.md"
+    },
+    {
+      "status": "M",
+      "path": "START_HERE.md"
+    },
+    {
+      "status": "M",
+      "path": "V2_REFERENCE_MODEL.md"
+    },
+    {
+      "status": "M",
+      "path": "WORKSPACE_READY_FOR_GITHUB.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/stabilization/PDF_RESTORE_DIAGNOSIS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/stabilization/PRO_IMPROVEMENT_PASS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/stabilization/TEST_CHANGES.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/stabilization/USER_GUIDE.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/stabilization/historical-v2-delivery/CHANGED_FILES.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/stabilization/historical-v2-delivery/CODEX_HANDOFF.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/stabilization/historical-v2-delivery/FINAL_TEST_STATUS.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/stabilization/historical-v2-delivery/REQUIREMENTS_COVERAGE.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/stabilization/historical-v2-delivery/START_HERE.md"
+    },
+    {
+      "status": "A",
+      "path": "docs/stabilization/historical-v2-delivery/WORKSPACE_READY_FOR_GITHUB.md"
+    },
+    {
+      "status": "M",
+      "path": "package.json"
+    },
+    {
+      "status": "M",
+      "path": "src/app/App.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/components/ReaderRail.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/components/Tree.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/content-hub/Dashboard.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/content-hub/Editors.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/content-hub/LibraryManager.tsx"
+    },
+    {
+      "status": "M",
+      "path": "src/content-hub/surfaces.ts"
+    },
+    {
+      "status": "A",
+      "path": "src/stabilization/ReadingTargetDialog.tsx"
+    },
+    {
+      "status": "A",
+      "path": "src/stabilization/capture-draft.ts"
+    },
+    {
+      "status": "A",
+      "path": "src/stabilization/demo.ts"
+    },
+    {
+      "status": "A",
+      "path": "src/stabilization/resource-drag.ts"
+    },
+    {
+      "status": "A",
+      "path": "src/stabilization/resource-source.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/storage/database.ts"
+    },
+    {
+      "status": "M",
+      "path": "src/styles/app.css"
+    },
+    {
+      "status": "A",
+      "path": "src/styles/stabilization.css"
+    },
+    {
+      "status": "M",
+      "path": "tests/browser_support.py"
+    },
+    {
+      "status": "M",
+      "path": "tests/content_hub_127_dom.py"
+    },
+    {
+      "status": "M",
+      "path": "tests/content_hub_127_runtime.py"
+    },
+    {
+      "status": "A",
+      "path": "tests/diagnose_pdf_grid.py"
+    },
+    {
+      "status": "M",
+      "path": "tests/grid_124_dom.py"
+    },
+    {
+      "status": "M",
+      "path": "tests/hardening_dom.py"
+    },
+    {
+      "status": "M",
+      "path": "tests/reader_11_dom.py"
+    },
+    {
+      "status": "M",
+      "path": "tests/reading_124_dom.py"
+    },
+    {
+      "status": "M",
+      "path": "tests/references_v2_dom.py"
+    },
+    {
+      "status": "M",
+      "path": "tests/simplified_123_dom.py"
+    },
+    {
+      "status": "A",
+      "path": "tests/stabilization-v2.test.mjs"
+    },
+    {
+      "status": "A",
+      "path": "tests/stabilization_v2_dom.py"
+    },
+    {
+      "status": "A",
+      "path": "tests/stabilization_v2_runtime.py"
+    },
+    {
+      "status": "A",
+      "path": "tests/theme_stabilization_preview.py"
+    },
+    {
+      "status": "M",
+      "path": "tests/workspace_122_dom.py"
+    },
+    {
+      "status": "M",
+      "path": "tools/run-release.mjs"
+    }
+  ],
+  "sourceZipSHA256": "c931084b0ad1ee1992914ecb82265d0358ff89b33f213c5913755af1e4f76cef",
+  "sourceZipBytes": 2364257,
+  "allExtractedBytesMatch": true,
+  "status": "PASS",
+  "pushed": false,
+  "merged": false,
+  "deployed": false
+}

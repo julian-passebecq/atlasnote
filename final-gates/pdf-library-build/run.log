@@ -1,0 +1,13 @@
+
+> knowledge-atlas@2.0.0 pdf:library:build
+> python templates/pdf-library/tools/build_atlas_library.py --root templates/pdf-library
+
+{
+  "output": "/mnt/data/atlasnote-v2-stabilized/templates/pdf-library/out/atlas-pdf-library.zip",
+  "projects": 2,
+  "documents": 2,
+  "assets": 2,
+  "bytes": 75172,
+  "warnings": [],
+  "visibility": "private"
+}

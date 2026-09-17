@@ -1,0 +1,4263 @@
+
+> knowledge-atlas@2.0.0 pretest
+> npm run build:offline
+
+
+> knowledge-atlas@2.0.0 build:offline
+> node tools/build.mjs
+
+Validated public content: {"owners":{"page.cheatsheet.azure-data-factory":"atlas.cheatsheet-samples","page.cheatsheet.pandas-essentials":"atlas.cheatsheet-samples","page.cheatsheet.pyspark-execution":"atlas.cheatsheet-samples","page.cheatsheet.sql-analytics":"atlas.cheatsheet-samples","project.cheatsheets":"atlas.cheatsheet-samples","page.interview.coding-errors":"atlas.interview-samples","page.interview.coding-group":"atlas.interview-samples","page.interview.coding-latest":"atlas.interview-samples","page.interview.hybrid-fanout":"atlas.interview-samples","page.interview.hybrid-lazy":"atlas.interview-samples","page.interview.hybrid-retry":"atlas.interview-samples","page.interview.sql-q1":"atlas.interview-samples","page.interview.sql-q2":"atlas.interview-samples","page.interview.sql-q3":"atlas.interview-samples","page.interview.sql-q4":"atlas.interview-samples","page.interview.sql-q5":"atlas.interview-samples","page.interview.theory-batch":"atlas.interview-samples","page.interview.theory-behavioral":"atlas.interview-samples","page.interview.theory-layout":"atlas.interview-samples","page.interview.theory-medallion":"atlas.interview-samples","project.interview-preparation":"atlas.interview-samples","page.atlas.language":"atlas.reader-guide","page.atlas.layouts":"atlas.reader-guide","page.atlas.password":"atlas.reader-guide","page.atlas.pdf":"atlas.reader-guide","page.atlas.rotated":"atlas.reader-guide","page.atlas.welcome":"atlas.reader-guide","project.atlas.guide":"atlas.reader-guide","example.page.overview":"example.notes","example.page.second":"example.notes","example.term.pack":"example.notes","example.project":"example.notes","page.pdfatlas.pyspark-pandas":"pdfatlas.public","page.pdfatlas.spark-concepts":"pdfatlas.public","project.pdfatlas":"pdfatlas.public","page.samples.azure.pipeline":"study.samples","page.samples.databricks.workflow":"study.samples","page.samples.job.explain":"study.samples","page.samples.norsk.sentences":"study.samples","page.samples.pandas.filter":"study.samples","page.samples.personal.scratchpad":"study.samples","page.samples.pyspark.transform":"study.samples","page.samples.python.collections":"study.samples","page.samples.python.loops":"study.samples","page.samples.sql.select":"study.samples","project.samples.python":"study.samples","project.samples.sql":"study.samples","project.samples.pandas":"study.samples","project.samples.pyspark":"study.samples","project.samples.azure":"study.samples","project.samples.databricks":"study.samples","project.samples.norsk":"study.samples","project.samples.job":"study.samples","project.samples.personal":"study.samples"},"missing":[],"pages":39,"terms":1,"projects":14,"glossaryLinks":1}
+Compatibility build complete in dist-offline/. No private library is included.
+
+> knowledge-atlas@2.0.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: 1.2.6 canonical two-page fixture/schema/renderer: azure-data-factory
+ok 1 - 1.2.6 canonical two-page fixture/schema/renderer: azure-data-factory
+  ---
+  duration_ms: 34.867061
+  type: 'test'
+  ...
+# Subtest: 1.2.6 canonical two-page fixture/schema/renderer: pandas-essentials
+ok 2 - 1.2.6 canonical two-page fixture/schema/renderer: pandas-essentials
+  ---
+  duration_ms: 34.300869
+  type: 'test'
+  ...
+# Subtest: 1.2.6 canonical two-page fixture/schema/renderer: pyspark-execution
+ok 3 - 1.2.6 canonical two-page fixture/schema/renderer: pyspark-execution
+  ---
+  duration_ms: 8.991879
+  type: 'test'
+  ...
+# Subtest: 1.2.6 canonical two-page fixture/schema/renderer: sql-analytics
+ok 4 - 1.2.6 canonical two-page fixture/schema/renderer: sql-analytics
+  ---
+  duration_ms: 10.681074
+  type: 'test'
+  ...
+# Subtest: 1.2.6 reconstructed inventory is explicitly 150 blocks, 8 diagrams, zero drawing fallbacks
+ok 5 - 1.2.6 reconstructed inventory is explicitly 150 blocks, 8 diagrams, zero drawing fallbacks
+  ---
+  duration_ms: 0.39288
+  type: 'test'
+  ...
+# Subtest: 1.2.6 original-preview gaps are recorded, never passed off as exact source JSON
+ok 6 - 1.2.6 original-preview gaps are recorded, never passed off as exact source JSON
+  ---
+  duration_ms: 0.24384
+  type: 'test'
+  ...
+# Subtest: 1.2.6 wrapper requires native kind and empty notebook blocks, without PDF disguise
+ok 7 - 1.2.6 wrapper requires native kind and empty notebook blocks, without PDF disguise
+  ---
+  duration_ms: 3.870086
+  type: 'test'
+  ...
+# Subtest: 1.2.6 JSON grammar definitions are identical in standalone and embedded import schemas
+ok 8 - 1.2.6 JSON grammar definitions are identical in standalone and embedded import schemas
+  ---
+  duration_ms: 1.856892
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects unknown document field
+ok 9 - 1.2.6 rejects unknown document field
+  ---
+  duration_ms: 0.383407
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects unsupported version
+ok 10 - 1.2.6 rejects unsupported version
+  ---
+  duration_ms: 0.398028
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects wrong fixed page size
+ok 11 - 1.2.6 rejects wrong fixed page size
+  ---
+  duration_ms: 0.183841
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects invalid stable ID
+ok 12 - 1.2.6 rejects invalid stable ID
+  ---
+  duration_ms: 0.117724
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects duplicate block
+ok 13 - 1.2.6 rejects duplicate block
+  ---
+  duration_ms: 0.134539
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects orphan frame
+ok 14 - 1.2.6 rejects orphan frame
+  ---
+  duration_ms: 0.119556
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects frame outside page
+ok 15 - 1.2.6 rejects frame outside page
+  ---
+  duration_ms: 0.097094
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects missing frame
+ok 16 - 1.2.6 rejects missing frame
+  ---
+  duration_ms: 0.105706
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects unknown block kind
+ok 17 - 1.2.6 rejects unknown block kind
+  ---
+  duration_ms: 0.169921
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects event handler
+ok 18 - 1.2.6 rejects event handler
+  ---
+  duration_ms: 0.126717
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects outline missing target
+ok 19 - 1.2.6 rejects outline missing target
+  ---
+  duration_ms: 0.108881
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects outline collision
+ok 20 - 1.2.6 rejects outline collision
+  ---
+  duration_ms: 0.106367
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects invalid color
+ok 21 - 1.2.6 rejects invalid color
+  ---
+  duration_ms: 0.1488
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects non-finite coordinates
+ok 22 - 1.2.6 rejects non-finite coordinates
+  ---
+  duration_ms: 0.10771
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects subminimum font
+ok 23 - 1.2.6 rejects subminimum font
+  ---
+  duration_ms: 0.103233
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects raw HTML tag field
+ok 24 - 1.2.6 rejects raw HTML tag field
+  ---
+  duration_ms: 0.093408
+  type: 'test'
+  ...
+# Subtest: 1.2.6 rejects 1.0 has no audience extension
+ok 25 - 1.2.6 rejects 1.0 has no audience extension
+  ---
+  duration_ms: 0.127098
+  type: 'test'
+  ...
+# Subtest: 1.2.6 version 1.0 core and version 1.1 audience/goal both supported
+ok 26 - 1.2.6 version 1.0 core and version 1.1 audience/goal both supported
+  ---
+  duration_ms: 0.131324
+  type: 'test'
+  ...
+# Subtest: 1.2.6 reserved keys, cycles, oversized JSON and malformed JSON fail closed
+ok 27 - 1.2.6 reserved keys, cycles, oversized JSON and malformed JSON fail closed
+  ---
+  duration_ms: 9.883576
+  type: 'test'
+  ...
+# Subtest: 1.2.6 source import keeps exact whitespace and never converts SVG into source
+ok 28 - 1.2.6 source import keeps exact whitespace and never converts SVG into source
+  ---
+  duration_ms: 0.512197
+  type: 'test'
+  ...
+# Subtest: 1.2.6 SVG text is escaped in body, code, table, diagram labels and accessibility titles
+ok 29 - 1.2.6 SVG text is escaped in body, code, table, diagram labels and accessibility titles
+  ---
+  duration_ms: 0.635178
+  type: 'test'
+  ...
+# Subtest: 1.2.6 instance scope rejects attributes/URLs and namespaced IDs cannot collide with title or marker
+ok 30 - 1.2.6 instance scope rejects attributes/URLs and namespaced IDs cannot collide with title or marker
+  ---
+  duration_ms: 0.355074
+  type: 'test'
+  ...
+# Subtest: 1.2.6 inline whitespace, tabs and zero-width hints have deterministic layout
+ok 31 - 1.2.6 inline whitespace, tabs and zero-width hints have deterministic layout
+  ---
+  duration_ms: 0.152836
+  type: 'test'
+  ...
+# Subtest: 1.2.6 declared text overflow mode clip
+ok 32 - 1.2.6 declared text overflow mode clip
+  ---
+  duration_ms: 0.461181
+  type: 'test'
+  ...
+# Subtest: 1.2.6 declared text overflow mode shrink
+ok 33 - 1.2.6 declared text overflow mode shrink
+  ---
+  duration_ms: 5.775068
+  type: 'test'
+  ...
+# Subtest: 1.2.6 declared text overflow mode error
+ok 34 - 1.2.6 declared text overflow mode error
+  ---
+  duration_ms: 4.410884
+  type: 'test'
+  ...
+# Subtest: 1.2.6 modest overflow shrinks within its explicit floor
+ok 35 - 1.2.6 modest overflow shrinks within its explicit floor
+  ---
+  duration_ms: 0.281535
+  type: 'test'
+  ...
+# Subtest: 1.2.6 calm theme uses no fluorescent rectangles or slogan/footer content
+ok 36 - 1.2.6 calm theme uses no fluorescent rectangles or slogan/footer content
+  ---
+  duration_ms: 2.226909
+  type: 'test'
+  ...
+# Subtest: 1.2.6 arrows land on actual rect bounds
+ok 37 - 1.2.6 arrows land on actual rect bounds
+  ---
+  duration_ms: 0.111905
+  type: 'test'
+  ...
+# Subtest: 1.2.6 arrows land on actual circle bounds
+ok 38 - 1.2.6 arrows land on actual circle bounds
+  ---
+  duration_ms: 0.048592
+  type: 'test'
+  ...
+# Subtest: 1.2.6 arrows land on actual diamond bounds
+ok 39 - 1.2.6 arrows land on actual diamond bounds
+  ---
+  duration_ms: 0.04067
+  type: 'test'
+  ...
+# Subtest: 1.2.6 sequence steps horizontal
+ok 40 - 1.2.6 sequence steps horizontal
+  ---
+  duration_ms: 0.214487
+  type: 'test'
+  ...
+# Subtest: 1.2.6 sequence array horizontal
+ok 41 - 1.2.6 sequence array horizontal
+  ---
+  duration_ms: 0.130824
+  type: 'test'
+  ...
+# Subtest: 1.2.6 sequence stack horizontal
+ok 42 - 1.2.6 sequence stack horizontal
+  ---
+  duration_ms: 0.120708
+  type: 'test'
+  ...
+# Subtest: 1.2.6 sequence queue horizontal
+ok 43 - 1.2.6 sequence queue horizontal
+  ---
+  duration_ms: 0.14927
+  type: 'test'
+  ...
+# Subtest: 1.2.6 sequence linked_list horizontal
+ok 44 - 1.2.6 sequence linked_list horizontal
+  ---
+  duration_ms: 0.134439
+  type: 'test'
+  ...
+# Subtest: 1.2.6 sequence steps vertical
+ok 45 - 1.2.6 sequence steps vertical
+  ---
+  duration_ms: 0.120308
+  type: 'test'
+  ...
+# Subtest: 1.2.6 sequence array vertical
+ok 46 - 1.2.6 sequence array vertical
+  ---
+  duration_ms: 0.110893
+  type: 'test'
+  ...
+# Subtest: 1.2.6 sequence stack vertical
+ok 47 - 1.2.6 sequence stack vertical
+  ---
+  duration_ms: 0.108771
+  type: 'test'
+  ...
+# Subtest: 1.2.6 sequence queue vertical
+ok 48 - 1.2.6 sequence queue vertical
+  ---
+  duration_ms: 0.175579
+  type: 'test'
+  ...
+# Subtest: 1.2.6 sequence linked_list vertical
+ok 49 - 1.2.6 sequence linked_list vertical
+  ---
+  duration_ms: 0.131595
+  type: 'test'
+  ...
+# Subtest: 1.2.6 impossible sequence geometry rejected before negative node widths can render
+ok 50 - 1.2.6 impossible sequence geometry rejected before negative node widths can render
+  ---
+  duration_ms: 0.222819
+  type: 'test'
+  ...
+# Subtest: 1.2.6 graph validates node frames, endpoint identities and registered icons
+ok 51 - 1.2.6 graph validates node frames, endpoint identities and registered icons
+  ---
+  duration_ms: 0.363657
+  type: 'test'
+  ...
+# Subtest: 1.2.6 drawing, icons and registry-local image remain typed bounded primitives
+ok 52 - 1.2.6 drawing, icons and registry-local image remain typed bounded primitives
+  ---
+  duration_ms: 0.268847
+  type: 'test'
+  ...
+# Subtest: 1.2.6 unregistered asset rejected https://evil/image.svg
+ok 53 - 1.2.6 unregistered asset rejected https://evil/image.svg
+  ---
+  duration_ms: 0.167857
+  type: 'test'
+  ...
+# Subtest: 1.2.6 unregistered asset rejected javascript:evil
+ok 54 - 1.2.6 unregistered asset rejected javascript:evil
+  ---
+  duration_ms: 0.091535
+  type: 'test'
+  ...
+# Subtest: 1.2.6 unregistered asset rejected data:image/svg+xml,<svg/>
+ok 55 - 1.2.6 unregistered asset rejected data:image/svg+xml,<svg/>
+  ---
+  duration_ms: 0.078456
+  type: 'test'
+  ...
+# Subtest: 1.2.6 unregistered asset rejected ../../private
+ok 56 - 1.2.6 unregistered asset rejected ../../private
+  ---
+  duration_ms: 0.071976
+  type: 'test'
+  ...
+# Subtest: 1.2.6 unregistered asset rejected atlas.unknown
+ok 57 - 1.2.6 unregistered asset rejected atlas.unknown
+  ---
+  duration_ms: 0.070955
+  type: 'test'
+  ...
+# Subtest: 1.2.6 tables require equal row arity and proportional column widths
+ok 58 - 1.2.6 tables require equal row arity and proportional column widths
+  ---
+  duration_ms: 0.293313
+  type: 'test'
+  ...
+# Subtest: 1.2.6 nested box children keep global coordinates and cannot escape their parent frame
+ok 59 - 1.2.6 nested box children keep global coordinates and cannot escape their parent frame
+  ---
+  duration_ms: 0.198914
+  type: 'test'
+  ...
+# Subtest: 1.2.6 page groups preserve identities without fabricated duplicates: single
+ok 60 - 1.2.6 page groups preserve identities without fabricated duplicates: single
+  ---
+  duration_ms: 0.23648
+  type: 'test'
+  ...
+# Subtest: 1.2.6 page groups preserve identities without fabricated duplicates: spread
+ok 61 - 1.2.6 page groups preserve identities without fabricated duplicates: spread
+  ---
+  duration_ms: 0.060099
+  type: 'test'
+  ...
+# Subtest: 1.2.6 page groups preserve identities without fabricated duplicates: grid
+ok 62 - 1.2.6 page groups preserve identities without fabricated duplicates: grid
+  ---
+  duration_ms: 0.043084
+  type: 'test'
+  ...
+# Subtest: 1.2.6 a four-page source renders four different physical pages in a 2x2 group
+ok 63 - 1.2.6 a four-page source renders four different physical pages in a 2x2 group
+  ---
+  duration_ms: 0.30466
+  type: 'test'
+  ...
+# Subtest: 1.2.6 physical page and block anchors survive page reorder; missing pages are not silently retargeted
+ok 64 - 1.2.6 physical page and block anchors survive page reorder; missing pages are not silently retargeted
+  ---
+  duration_ms: 0.389395
+  type: 'test'
+  ...
+# Subtest: 1.2.6 location changes omit undefined optionals and clear stale scroll
+ok 65 - 1.2.6 location changes omit undefined optionals and clear stale scroll
+  ---
+  duration_ms: 0.211413
+  type: 'test'
+  ...
+# Subtest: 1.2.6 native text participates in global/document search and text export
+ok 66 - 1.2.6 native text participates in global/document search and text export
+  ---
+  duration_ms: 7.147054
+  type: 'test'
+  ...
+# Subtest: 1.2.6 explicit interview links exist without altering interview pages
+ok 67 - 1.2.6 explicit interview links exist without altering interview pages
+  ---
+  duration_ms: 2.596174
+  type: 'test'
+  ...
+# Subtest: 1.2.6 native physical-page actions preserve other views and route to here
+ok 68 - 1.2.6 native physical-page actions preserve other views and route to here
+  ---
+  duration_ms: 6.551985
+  type: 'test'
+  ...
+# Subtest: 1.2.6 native physical-page actions preserve other views and route to tab
+ok 69 - 1.2.6 native physical-page actions preserve other views and route to tab
+  ---
+  duration_ms: 0.395223
+  type: 'test'
+  ...
+# Subtest: 1.2.6 native physical-page actions preserve other views and route to pane
+ok 70 - 1.2.6 native physical-page actions preserve other views and route to pane
+  ---
+  duration_ms: 0.502172
+  type: 'test'
+  ...
+# Subtest: 1.2.6 native physical-page actions preserve other views and route to 1
+ok 71 - 1.2.6 native physical-page actions preserve other views and route to 1
+  ---
+  duration_ms: 0.251691
+  type: 'test'
+  ...
+# Subtest: 1.2.6 native physical-page actions preserve other views and route to 2
+ok 72 - 1.2.6 native physical-page actions preserve other views and route to 2
+  ---
+  duration_ms: 0.98227
+  type: 'test'
+  ...
+# Subtest: 1.2.6 native physical-page actions preserve other views and route to 3
+ok 73 - 1.2.6 native physical-page actions preserve other views and route to 3
+  ---
+  duration_ms: 0.32498
+  type: 'test'
+  ...
+# Subtest: 1.2.6 native physical-page actions preserve other views and route to 4
+ok 74 - 1.2.6 native physical-page actions preserve other views and route to 4
+  ---
+  duration_ms: 0.255307
+  type: 'test'
+  ...
+# Subtest: 1.2.6 native physical-page actions preserve other views and route to 5
+ok 75 - 1.2.6 native physical-page actions preserve other views and route to 5
+  ---
+  duration_ms: 0.307504
+  type: 'test'
+  ...
+# Subtest: 1.2.6 unavailable physical-page action is atomic and retains existing saves
+ok 76 - 1.2.6 unavailable physical-page action is atomic and retains existing saves
+  ---
+  duration_ms: 0.448492
+  type: 'test'
+  ...
+# Subtest: 1.2.6 malformed reading identity refused t=>t.sheetPage=0
+ok 77 - 1.2.6 malformed reading identity refused t=>t.sheetPage=0
+  ---
+  duration_ms: 0.374964
+  type: 'test'
+  ...
+# Subtest: 1.2.6 malformed reading identity refused t=>t.sheetPage=2.5
+ok 78 - 1.2.6 malformed reading identity refused t=>t.sheetPage=2.5
+  ---
+  duration_ms: 0.093559
+  type: 'test'
+  ...
+# Subtest: 1.2.6 malformed reading identity refused t=>t.sheetPage=65
+ok 79 - 1.2.6 malformed reading identity refused t=>t.sheetPage=65
+  ---
+  duration_ms: 0.083243
+  type: 'test'
+  ...
+# Subtest: 1.2.6 malformed reading identity refused t=>t.anchor.sheetPage=1
+ok 80 - 1.2.6 malformed reading identity refused t=>t.anchor.sheetPage=1
+  ---
+  duration_ms: 0.072097
+  type: 'test'
+  ...
+# Subtest: 1.2.6 malformed reading identity refused t=>t.anchor.pdfPage=1
+ok 81 - 1.2.6 malformed reading identity refused t=>t.anchor.pdfPage=1
+  ---
+  duration_ms: 0.179185
+  type: 'test'
+  ...
+# Subtest: 1.2.6 malformed reading identity refused t=>t.anchor.sheetId='bad id'
+ok 82 - 1.2.6 malformed reading identity refused t=>t.anchor.sheetId='bad id'
+  ---
+  duration_ms: 0.084404
+  type: 'test'
+  ...
+# Subtest: 1.2.6 malformed reading identity refused t=>t.documentId='../bad'
+ok 83 - 1.2.6 malformed reading identity refused t=>t.documentId='../bad'
+  ---
+  duration_ms: 0.094059
+  type: 'test'
+  ...
+# Subtest: 1.2.6 malformed reading identity refused t=>t.extra='bad'
+ok 84 - 1.2.6 malformed reading identity refused t=>t.extra='bad'
+  ---
+  duration_ms: 0.0743
+  type: 'test'
+  ...
+# Subtest: 1.2.6 personal state rejects invalid sheetPage=65
+ok 85 - 1.2.6 personal state rejects invalid sheetPage=65
+  ---
+  duration_ms: 0.255808
+  type: 'test'
+  ...
+# Subtest: 1.2.6 personal state rejects invalid sheetPage=0
+ok 86 - 1.2.6 personal state rejects invalid sheetPage=0
+  ---
+  duration_ms: 0.116262
+  type: 'test'
+  ...
+# Subtest: 1.2.6 personal state rejects invalid sheetMode=continuous
+ok 87 - 1.2.6 personal state rejects invalid sheetMode=continuous
+  ---
+  duration_ms: 0.141489
+  type: 'test'
+  ...
+# Subtest: 1.2.6 personal state rejects invalid sheetZoom=0.1
+ok 88 - 1.2.6 personal state rejects invalid sheetZoom=0.1
+  ---
+  duration_ms: 0.116843
+  type: 'test'
+  ...
+# Subtest: 1.2.6 personal state rejects invalid sheetFit=stretch
+ok 89 - 1.2.6 personal state rejects invalid sheetFit=stretch
+  ---
+  duration_ms: 0.098686
+  type: 'test'
+  ...
+# Subtest: 1.2.6 pane A/B mode, page, fit, zoom and chrome restore independently in all-workspace saves
+ok 90 - 1.2.6 pane A/B mode, page, fit, zoom and chrome restore independently in all-workspace saves
+  ---
+  duration_ms: 4.026336
+  type: 'test'
+  ...
+# Subtest: 1.2.6 exact backup preserves native source, stable anchors, notes, bookmarks, queue and saved states
+ok 91 - 1.2.6 exact backup preserves native source, stable anchors, notes, bookmarks, queue and saved states
+  ---
+  duration_ms: 296.208772
+  type: 'test'
+  ...
+# Subtest: 1.2.6 repository export retains structured JSON, physical page IDs and private classification
+ok 92 - 1.2.6 repository export retains structured JSON, physical page IDs and private classification
+  ---
+  duration_ms: 155.051966
+  type: 'test'
+  ...
+# Subtest: 1.2.6 malicious canonical source hidden inside an overlay fails backup validation
+ok 93 - 1.2.6 malicious canonical source hidden inside an overlay fails backup validation
+  ---
+  duration_ms: 0.881973
+  type: 'test'
+  ...
+# Subtest: 1.2.6 per-page bookmarks use native typed targets while legacy notebook bookmarks stay unchanged
+ok 94 - 1.2.6 per-page bookmarks use native typed targets while legacy notebook bookmarks stay unchanged
+  ---
+  duration_ms: 0.308706
+  type: 'test'
+  ...
+# Subtest: 1.2 startup preserves exact session: empty active Compare pane
+ok 95 - 1.2 startup preserves exact session: empty active Compare pane
+  ---
+  duration_ms: 1.936189
+  type: 'test'
+  ...
+# Subtest: 1.2 startup preserves exact session: inactive tab
+ok 96 - 1.2 startup preserves exact session: inactive tab
+  ---
+  duration_ms: 0.17575
+  type: 'test'
+  ...
+# Subtest: 1.2 startup preserves exact session: inactive history entry
+ok 97 - 1.2 startup preserves exact session: inactive history entry
+  ---
+  duration_ms: 0.272342
+  type: 'test'
+  ...
+# Subtest: 1.2 genuinely new startup link navigates; an empty workspace accepts a link
+ok 98 - 1.2 genuinely new startup link navigates; an empty workspace accepts a link
+  ---
+  duration_ms: 0.238372
+  type: 'test'
+  ...
+# Subtest: 1.2 collection startup route retains canonical identity and does not alias a page
+ok 99 - 1.2 collection startup route retains canonical identity and does not alias a page
+  ---
+  duration_ms: 0.136081
+  type: 'test'
+  ...
+# Subtest: 1.2 hash parser preserves block IDs and rejects malformed URI encodings
+ok 100 - 1.2 hash parser preserves block IDs and rejects malformed URI encodings
+  ---
+  duration_ms: 0.403997
+  type: 'test'
+  ...
+# Subtest: 1.2 PDF projection recursively filters notes and empty branches without mutations
+ok 101 - 1.2 PDF projection recursively filters notes and empty branches without mutations
+  ---
+  duration_ms: 0.232033
+  type: 'test'
+  ...
+# Subtest: 1.2.1 archived PDF leaves remain absent; Notes excludes PDF-only branches
+ok 102 - 1.2.1 archived PDF leaves remain absent; Notes excludes PDF-only branches
+  ---
+  duration_ms: 0.168338
+  type: 'test'
+  ...
+# Subtest: 1.2 precisely five theme IDs and labels, old backups still accepted
+ok 103 - 1.2 precisely five theme IDs and labels, old backups still accepted
+  ---
+  duration_ms: 2.009668
+  type: 'test'
+  ...
+# Subtest: 1.2 real backup serializer and parser roundtrip theme and PDF mode: fluent
+ok 104 - 1.2 real backup serializer and parser roundtrip theme and PDF mode: fluent
+  ---
+  duration_ms: 239.718729
+  type: 'test'
+  ...
+# Subtest: 1.2 real backup serializer and parser roundtrip theme and PDF mode: neutral
+ok 105 - 1.2 real backup serializer and parser roundtrip theme and PDF mode: neutral
+  ---
+  duration_ms: 132.510667
+  type: 'test'
+  ...
+# Subtest: 1.2 real backup serializer and parser roundtrip theme and PDF mode: academic
+ok 106 - 1.2 real backup serializer and parser roundtrip theme and PDF mode: academic
+  ---
+  duration_ms: 101.28224
+  type: 'test'
+  ...
+# Subtest: 1.2 real backup serializer and parser roundtrip theme and PDF mode: lavender
+ok 107 - 1.2 real backup serializer and parser roundtrip theme and PDF mode: lavender
+  ---
+  duration_ms: 89.127566
+  type: 'test'
+  ...
+# Subtest: 1.2 real backup serializer and parser roundtrip theme and PDF mode: slate
+ok 108 - 1.2 real backup serializer and parser roundtrip theme and PDF mode: slate
+  ---
+  duration_ms: 52.704472
+  type: 'test'
+  ...
+# Subtest: 1.2 invalid themes and mode values cannot enter restored state
+ok 109 - 1.2 invalid themes and mode values cannot enter restored state
+  ---
+  duration_ms: 0.475712
+  type: 'test'
+  ...
+# Subtest: 1.2 exact repo and pinned SHA are trusted URL forms
+ok 110 - 1.2 exact repo and pinned SHA are trusted URL forms
+  ---
+  duration_ms: 0.262287
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 0
+ok 111 - 1.2 arbitrary external URL retains consent: hostile case 0
+  ---
+  duration_ms: 0.065107
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 1
+ok 112 - 1.2 arbitrary external URL retains consent: hostile case 1
+  ---
+  duration_ms: 0.035081
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 2
+ok 113 - 1.2 arbitrary external URL retains consent: hostile case 2
+  ---
+  duration_ms: 0.037785
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 3
+ok 114 - 1.2 arbitrary external URL retains consent: hostile case 3
+  ---
+  duration_ms: 0.038296
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 4
+ok 115 - 1.2 arbitrary external URL retains consent: hostile case 4
+  ---
+  duration_ms: 0.029214
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 5
+ok 116 - 1.2 arbitrary external URL retains consent: hostile case 5
+  ---
+  duration_ms: 0.043214
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 6
+ok 117 - 1.2 arbitrary external URL retains consent: hostile case 6
+  ---
+  duration_ms: 0.037655
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 7
+ok 118 - 1.2 arbitrary external URL retains consent: hostile case 7
+  ---
+  duration_ms: 0.041441
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 8
+ok 119 - 1.2 arbitrary external URL retains consent: hostile case 8
+  ---
+  duration_ms: 0.101801
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 9
+ok 120 - 1.2 arbitrary external URL retains consent: hostile case 9
+  ---
+  duration_ms: 0.042322
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 10
+ok 121 - 1.2 arbitrary external URL retains consent: hostile case 10
+  ---
+  duration_ms: 0.030435
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 11
+ok 122 - 1.2 arbitrary external URL retains consent: hostile case 11
+  ---
+  duration_ms: 0.051006
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary external URL retains consent: hostile case 12
+ok 123 - 1.2 arbitrary external URL retains consent: hostile case 12
+  ---
+  duration_ms: 0.025097
+  type: 'test'
+  ...
+# Subtest: 1.2 trusted URL alone cannot bypass pack ownership, visibility or hash
+ok 124 - 1.2 trusted URL alone cannot bypass pack ownership, visibility or hash
+  ---
+  duration_ms: 0.131664
+  type: 'test'
+  ...
+# Subtest: 1.2 trusted fetch verifies exact bytes and suppresses credentials/referrers/redirects
+ok 125 - 1.2 trusted fetch verifies exact bytes and suppresses credentials/referrers/redirects
+  ---
+  duration_ms: 25.089707
+  type: 'test'
+  ...
+# Subtest: 1.2 trusted fetch fails closed: HTTP failure
+ok 126 - 1.2 trusted fetch fails closed: HTTP failure
+  ---
+  duration_ms: 1.043491
+  type: 'test'
+  ...
+# Subtest: 1.2 trusted fetch fails closed: byte count mismatch
+ok 127 - 1.2 trusted fetch fails closed: byte count mismatch
+  ---
+  duration_ms: 0.574959
+  type: 'test'
+  ...
+# Subtest: 1.2 trusted fetch fails closed: HTML masquerade
+ok 128 - 1.2 trusted fetch fails closed: HTML masquerade
+  ---
+  duration_ms: 0.367673
+  type: 'test'
+  ...
+# Subtest: 1.2 trusted fetch fails closed: hash mismatch
+ok 129 - 1.2 trusted fetch fails closed: hash mismatch
+  ---
+  duration_ms: 1.757886
+  type: 'test'
+  ...
+# Subtest: 1.2 trusted fetch fails closed: declared oversized response
+ok 130 - 1.2 trusted fetch fails closed: declared oversized response
+  ---
+  duration_ms: 0.692653
+  type: 'test'
+  ...
+# Subtest: 1.2 trusted fetch fails closed: redirected response
+ok 131 - 1.2 trusted fetch fails closed: redirected response
+  ---
+  duration_ms: 0.166696
+  type: 'test'
+  ...
+# Subtest: 1.2 arbitrary URL is rejected before making any fetch
+ok 132 - 1.2 arbitrary URL is rejected before making any fetch
+  ---
+  duration_ms: 0.335546
+  type: 'test'
+  ...
+# Subtest: 1.2 manifest is valid and commits can be pinned in the single config base
+ok 133 - 1.2 manifest is valid and commits can be pinned in the single config base
+  ---
+  duration_ms: 0.768224
+  type: 'test'
+  ...
+# Subtest: 1.2 manifest rejects traversal
+ok 134 - 1.2 manifest rejects traversal
+  ---
+  duration_ms: 0.238382
+  type: 'test'
+  ...
+# Subtest: 1.2 manifest rejects missing hash
+ok 135 - 1.2 manifest rejects missing hash
+  ---
+  duration_ms: 0.12198
+  type: 'test'
+  ...
+# Subtest: 1.2 manifest rejects unverified pages
+ok 136 - 1.2 manifest rejects unverified pages
+  ---
+  duration_ms: 0.107379
+  type: 'test'
+  ...
+# Subtest: 1.2 manifest rejects invalid language
+ok 137 - 1.2 manifest rejects invalid language
+  ---
+  duration_ms: 0.117924
+  type: 'test'
+  ...
+# Subtest: 1.2 manifest stable IDs survive path-only reorganizations and duplicate IDs are rejected
+ok 138 - 1.2 manifest stable IDs survive path-only reorganizations and duplicate IDs are rejected
+  ---
+  duration_ms: 0.349727
+  type: 'test'
+  ...
+# Subtest: 1.2 generated catalog is metadata only, canonical hierarchy, exact external hashes
+ok 139 - 1.2 generated catalog is metadata only, canonical hierarchy, exact external hashes
+  ---
+  duration_ms: 0.235768
+  type: 'test'
+  ...
+# Subtest: 1.2 metadata-only references need explicit publication opt-in, never relabel rights
+ok 140 - 1.2 metadata-only references need explicit publication opt-in, never relabel rights
+  ---
+  duration_ms: 62.756787
+  type: 'test'
+  ...
+# Subtest: 1.2 reference-only binary documents remain blocked from public publication
+ok 141 - 1.2 reference-only binary documents remain blocked from public publication
+  ---
+  duration_ms: 20.095737
+  type: 'test'
+  ...
+# Subtest: 1.2 external metadata does not prevent an explicit private offline PDF intake
+ok 142 - 1.2 external metadata does not prevent an explicit private offline PDF intake
+  ---
+  duration_ms: 7.900707
+  type: 'test'
+  ...
+# Subtest: 1.2 importing local bytes is not blocked by a metadata-only remote SHA reference
+ok 143 - 1.2 importing local bytes is not blocked by a metadata-only remote SHA reference
+  ---
+  duration_ms: 0.285692
+  type: 'test'
+  ...
+# Subtest: 127 subjects and five modes are additive; default empty workspace is Dashboard
+ok 144 - 127 subjects and five modes are additive; default empty workspace is Dashboard
+  ---
+  duration_ms: 5.761199
+  type: 'test'
+  ...
+# Subtest: 127 source fixtures preserved exactly in article/QCM wrappers
+ok 145 - 127 source fixtures preserved exactly in article/QCM wrappers
+  ---
+  duration_ms: 9.695619
+  type: 'test'
+  ...
+# Subtest: 127 capture ignores blank rows, supports five tasks and exact opt-in source only
+ok 146 - 127 capture ignores blank rows, supports five tasks and exact opt-in source only
+  ---
+  duration_ms: 2.401105
+  type: 'test'
+  ...
+# Subtest: 127 six captures is atomic
+ok 147 - 127 six captures is atomic
+  ---
+  duration_ms: 0.687005
+  type: 'test'
+  ...
+# Subtest: 127 invalid URL batch is atomic
+ok 148 - 127 invalid URL batch is atomic
+  ---
+  duration_ms: 1.534166
+  type: 'test'
+  ...
+# Subtest: 127 invalid date is atomic
+ok 149 - 127 invalid date is atomic
+  ---
+  duration_ms: 0.518045
+  type: 'test'
+  ...
+# Subtest: 127 empty captures is atomic
+ok 150 - 127 empty captures is atomic
+  ---
+  duration_ms: 0.474431
+  type: 'test'
+  ...
+# Subtest: 127 invalid subject is atomic
+ok 151 - 127 invalid subject is atomic
+  ---
+  duration_ms: 0.45357
+  type: 'test'
+  ...
+# Subtest: 127 unsafe context is atomic
+ok 152 - 127 unsafe context is atomic
+  ---
+  duration_ms: 0.675577
+  type: 'test'
+  ...
+# Subtest: 127 optional date timestamp and importance survive update and done/reopen/archive
+ok 153 - 127 optional date timestamp and importance survive update and done/reopen/archive
+  ---
+  duration_ms: 1.200563
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects zero questions
+ok 154 - 127 QCM rejects zero questions
+  ---
+  duration_ms: 0.311971
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects one option
+ok 155 - 127 QCM rejects one option
+  ---
+  duration_ms: 0.230881
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects seven options
+ok 156 - 127 QCM rejects seven options
+  ---
+  duration_ms: 0.33855
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects duplicate questions
+ok 157 - 127 QCM rejects duplicate questions
+  ---
+  duration_ms: 0.159385
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects duplicate options
+ok 158 - 127 QCM rejects duplicate options
+  ---
+  duration_ms: 0.12818
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects missing answer
+ok 159 - 127 QCM rejects missing answer
+  ---
+  duration_ms: 0.148259
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects duplicate answer
+ok 160 - 127 QCM rejects duplicate answer
+  ---
+  duration_ms: 0.132646
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects empty answer
+ok 161 - 127 QCM rejects empty answer
+  ---
+  duration_ms: 0.177582
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects arbitrary markup field
+ok 162 - 127 QCM rejects arbitrary markup field
+  ---
+  duration_ms: 0.150832
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects remote script link
+ok 163 - 127 QCM rejects remote script link
+  ---
+  duration_ms: 0.229959
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects bad version
+ok 164 - 127 QCM rejects bad version
+  ---
+  duration_ms: 0.12851
+  type: 'test'
+  ...
+# Subtest: 127 QCM rejects oversized title
+ok 165 - 127 QCM rejects oversized title
+  ---
+  duration_ms: 0.133177
+  type: 'test'
+  ...
+# Subtest: 127 Article rejects unsafe URL
+ok 166 - 127 Article rejects unsafe URL
+  ---
+  duration_ms: 0.224652
+  type: 'test'
+  ...
+# Subtest: 127 Article rejects iframe block
+ok 167 - 127 Article rejects iframe block
+  ---
+  duration_ms: 0.169711
+  type: 'test'
+  ...
+# Subtest: 127 Article rejects both body forms
+ok 168 - 127 Article rejects both body forms
+  ---
+  duration_ms: 0.127798
+  type: 'test'
+  ...
+# Subtest: 127 Article rejects event handler
+ok 169 - 127 Article rejects event handler
+  ---
+  duration_ms: 0.2638
+  type: 'test'
+  ...
+# Subtest: 127 Article rejects unsafe layout
+ok 170 - 127 Article rejects unsafe layout
+  ---
+  duration_ms: 0.218813
+  type: 'test'
+  ...
+# Subtest: 127 Article rejects wrong boolean
+ok 171 - 127 Article rejects wrong boolean
+  ---
+  duration_ms: 0.254495
+  type: 'test'
+  ...
+# Subtest: 127 Article rejects unknown metadata
+ok 172 - 127 Article rejects unknown metadata
+  ---
+  duration_ms: 0.160357
+  type: 'test'
+  ...
+# Subtest: 127 Article rejects prototype pollution
+ok 173 - 127 Article rejects prototype pollution
+  ---
+  duration_ms: 0.218162
+  type: 'test'
+  ...
+# Subtest: 127 malformed/oversized/reserved JSON rejected without coercion
+ok 174 - 127 malformed/oversized/reserved JSON rejected without coercion
+  ---
+  duration_ms: 4.39524
+  type: 'test'
+  ...
+# Subtest: 127 pasted markup remains literal canonical text, not remote HTML
+ok 175 - 127 pasted markup remains literal canonical text, not remote HTML
+  ---
+  duration_ms: 0.224041
+  type: 'test'
+  ...
+# Subtest: 127 article source collision needs explicit same-kind edit and retains related data
+ok 176 - 127 article source collision needs explicit same-kind edit and retains related data
+  ---
+  duration_ms: 1.116308
+  type: 'test'
+  ...
+# Subtest: 127 shared folder IDs stay stable across all five projected modes; no metadata mutation
+ok 177 - 127 shared folder IDs stay stable across all five projected modes; no metadata mutation
+  ---
+  duration_ms: 21.294057
+  type: 'test'
+  ...
+# Subtest: 127 descendants use stable parent identities, not equal textual folder names
+ok 178 - 127 descendants use stable parent identities, not equal textual folder names
+  ---
+  duration_ms: 0.23646
+  type: 'test'
+  ...
+# Subtest: 127 unknown folder hints fall back to Unfiled without destroying stored source taxonomy
+ok 179 - 127 unknown folder hints fall back to Unfiled without destroying stored source taxonomy
+  ---
+  duration_ms: 3.706273
+  type: 'test'
+  ...
+# Subtest: 127 explicit unclassification overrides source subject without destructive source rewrite
+ok 180 - 127 explicit unclassification overrides source subject without destructive source rewrite
+  ---
+  duration_ms: 1.264968
+  type: 'test'
+  ...
+# Subtest: 127 native Notebook projection contains no implicit PDF, cheatsheet, Article or QCM copies
+ok 181 - 127 native Notebook projection contains no implicit PDF, cheatsheet, Article or QCM copies
+  ---
+  duration_ms: 3.194678
+  type: 'test'
+  ...
+# Subtest: 127 Notebook references are deduplicated by target+destination and removal never alters source
+ok 182 - 127 Notebook references are deduplicated by target+destination and removal never alters source
+  ---
+  duration_ms: 3.281596
+  type: 'test'
+  ...
+# Subtest: 127 reference rename/move preserves target identity and supports a new subject destination
+ok 183 - 127 reference rename/move preserves target identity and supports a new subject destination
+  ---
+  duration_ms: 0.845589
+  type: 'test'
+  ...
+# Subtest: 127 local source removal retains attempts, captures, bookmarks and references
+ok 184 - 127 local source removal retains attempts, captures, bookmarks and references
+  ---
+  duration_ms: 1.582817
+  type: 'test'
+  ...
+# Subtest: 127 single/multiple answers use exact set equality, not subset or option order
+ok 185 - 127 single/multiple answers use exact set equality, not subset or option order
+  ---
+  duration_ms: 0.615099
+  type: 'test'
+  ...
+# Subtest: 127 reveal is an attempt, never incorrectly scored as correct; draft selection persists
+ok 186 - 127 reveal is an attempt, never incorrectly scored as correct; draft selection persists
+  ---
+  duration_ms: 3.369667
+  type: 'test'
+  ...
+# Subtest: 127 invalid answer selections leave all attempts and response records unchanged
+ok 187 - 127 invalid answer selections leave all attempts and response records unchanged
+  ---
+  duration_ms: 0.452838
+  type: 'test'
+  ...
+# Subtest: 127 bounded AI review export includes every option and all relevant attempts
+ok 188 - 127 bounded AI review export includes every option and all relevant attempts
+  ---
+  duration_ms: 0.619034
+  type: 'test'
+  ...
+# Subtest: 127 typed article routes to here via shared router
+ok 189 - 127 typed article routes to here via shared router
+  ---
+  duration_ms: 1.393678
+  type: 'test'
+  ...
+# Subtest: 127 typed article routes to tab via shared router
+ok 190 - 127 typed article routes to tab via shared router
+  ---
+  duration_ms: 0.602911
+  type: 'test'
+  ...
+# Subtest: 127 typed article routes to pane via shared router
+ok 191 - 127 typed article routes to pane via shared router
+  ---
+  duration_ms: 0.564534
+  type: 'test'
+  ...
+# Subtest: 127 typed article routes to 5 via shared router
+ok 192 - 127 typed article routes to 5 via shared router
+  ---
+  duration_ms: 0.575049
+  type: 'test'
+  ...
+# Subtest: 127 typed qcm routes to here via shared router
+ok 193 - 127 typed qcm routes to here via shared router
+  ---
+  duration_ms: 2.365844
+  type: 'test'
+  ...
+# Subtest: 127 typed qcm routes to tab via shared router
+ok 194 - 127 typed qcm routes to tab via shared router
+  ---
+  duration_ms: 0.5621
+  type: 'test'
+  ...
+# Subtest: 127 typed qcm routes to pane via shared router
+ok 195 - 127 typed qcm routes to pane via shared router
+  ---
+  duration_ms: 0.524425
+  type: 'test'
+  ...
+# Subtest: 127 typed qcm routes to 5 via shared router
+ok 196 - 127 typed qcm routes to 5 via shared router
+  ---
+  duration_ms: 0.509782
+  type: 'test'
+  ...
+# Subtest: 127 exact context targets retain PDF revision, cheatsheet page/block and QCM question
+ok 197 - 127 exact context targets retain PDF revision, cheatsheet page/block and QCM question
+  ---
+  duration_ms: 0.863605
+  type: 'test'
+  ...
+# Subtest: 127 missing question refuses routing with no workspace/tab mutation
+ok 198 - 127 missing question refuses routing with no workspace/tab mutation
+  ---
+  duration_ms: 0.620156
+  type: 'test'
+  ...
+# Subtest: 127 Dashboard target opens selected capture without replacing reader history
+ok 199 - 127 Dashboard target opens selected capture without replacing reader history
+  ---
+  duration_ms: 1.143018
+  type: 'test'
+  ...
+# Subtest: 127 content-type switches preserve subject and independent expansion, not tabs
+ok 200 - 127 content-type switches preserve subject and independent expansion, not tabs
+  ---
+  duration_ms: 0.337418
+  type: 'test'
+  ...
+# Subtest: 127 unused slot detection never resets a used reader or creates workspace six
+ok 201 - 127 unused slot detection never resets a used reader or creates workspace six
+  ---
+  duration_ms: 0.531325
+  type: 'test'
+  ...
+# Subtest: 127 dashboard derives bookmarks/read-later and scopes by shared folder; no duplicated stores
+ok 202 - 127 dashboard derives bookmarks/read-later and scopes by shared folder; no duplicated stores
+  ---
+  duration_ms: 1.411705
+  type: 'test'
+  ...
+# Subtest: 127 older reading checkpoint cannot revert newer shared Article/QCM/capture/reference data
+ok 203 - 127 older reading checkpoint cannot revert newer shared Article/QCM/capture/reference data
+  ---
+  duration_ms: 3.692903
+  type: 'test'
+  ...
+# Subtest: 127 typed inline/Related/QCM explanation links validate and survive source records
+ok 204 - 127 typed inline/Related/QCM explanation links validate and survive source records
+  ---
+  duration_ms: 1.789652
+  type: 'test'
+  ...
+# Subtest: 127 summary template uses unchanged native grammar and live SVG without overflow
+ok 205 - 127 summary template uses unchanged native grammar and live SVG without overflow
+  ---
+  duration_ms: 10.30584
+  type: 'test'
+  ...
+# Subtest: 127 architecture template uses unchanged native grammar and live SVG without overflow
+ok 206 - 127 architecture template uses unchanged native grammar and live SVG without overflow
+  ---
+  duration_ms: 2.575063
+  type: 'test'
+  ...
+# Subtest: 127 bilingual template uses unchanged native grammar and live SVG without overflow
+ok 207 - 127 bilingual template uses unchanged native grammar and live SVG without overflow
+  ---
+  duration_ms: 1.683616
+  type: 'test'
+  ...
+# Subtest: 127 vocabulary template uses unchanged native grammar and live SVG without overflow
+ok 208 - 127 vocabulary template uses unchanged native grammar and live SVG without overflow
+  ---
+  duration_ms: 1.140204
+  type: 'test'
+  ...
+# Subtest: 127 old 1.2.6-shaped state and backups load without invented shared records
+ok 209 - 127 old 1.2.6-shaped state and backups load without invented shared records
+  ---
+  duration_ms: 256.986539
+  type: 'test'
+  ...
+# Subtest: 127 full exact backup round trip includes all new sources, taxonomy, references, shared records and surface sessions
+ok 210 - 127 full exact backup round trip includes all new sources, taxonomy, references, shared records and surface sessions
+  ---
+  duration_ms: 97.165491
+  type: 'test'
+  ...
+# Subtest: 127 explicit unclassification wins over embedded source taxonomy
+ok 211 - 127 explicit unclassification wins over embedded source taxonomy
+  ---
+  duration_ms: 0.949422
+  type: 'test'
+  ...
+# Subtest: 127 shared folder bookmarks participate in scoped Dashboard without copying a folder
+ok 212 - 127 shared folder bookmarks participate in scoped Dashboard without copying a folder
+  ---
+  duration_ms: 1.102688
+  type: 'test'
+  ...
+# Subtest: 127 native sibling order is stable in the Notebook projection
+ok 213 - 127 native sibling order is stable in the Notebook projection
+  ---
+  duration_ms: 2.037278
+  type: 'test'
+  ...
+# Subtest: public catalogue retains the 1.2.1 core plus ten original study samples
+ok 214 - public catalogue retains the 1.2.1 core plus ten original study samples
+  ---
+  duration_ms: 1.398946
+  type: 'test'
+  ...
+# Subtest: strict schemas refuse unknown page fields
+ok 215 - strict schemas refuse unknown page fields
+  ---
+  duration_ms: 5.616264
+  type: 'test'
+  ...
+# Subtest: strict @2 schema requires stable IDs on all blocks
+ok 216 - strict @2 schema requires stable IDs on all blocks
+  ---
+  duration_ms: 1.467117
+  type: 'test'
+  ...
+# Subtest: unknown payload versions cannot be guessed
+ok 217 - unknown payload versions cannot be guessed
+  ---
+  duration_ms: 0.604163
+  type: 'test'
+  ...
+# Subtest: path rejected "../secret"
+ok 218 - path rejected "../secret"
+  ---
+  duration_ms: 0.173065
+  type: 'test'
+  ...
+# Subtest: path rejected "/absolute"
+ok 219 - path rejected "/absolute"
+  ---
+  duration_ms: 0.063594
+  type: 'test'
+  ...
+# Subtest: path rejected "a/../b"
+ok 220 - path rejected "a/../b"
+  ---
+  duration_ms: 0.108921
+  type: 'test'
+  ...
+# Subtest: path rejected "a//b"
+ok 221 - path rejected "a//b"
+  ---
+  duration_ms: 0.06092
+  type: 'test'
+  ...
+# Subtest: path rejected "a\\\\b"
+ok 222 - path rejected "a\\\\b"
+  ---
+  duration_ms: 0.258332
+  type: 'test'
+  ...
+# Subtest: path rejected "x:evil"
+ok 223 - path rejected "x:evil"
+  ---
+  duration_ms: 0.274936
+  type: 'test'
+  ...
+# Subtest: path rejected "a/./b"
+ok 224 - path rejected "a/./b"
+  ---
+  duration_ms: 0.153787
+  type: 'test'
+  ...
+# Subtest: path rejected "bad\\u0000name"
+ok 225 - path rejected "bad\\u0000name"
+  ---
+  duration_ms: 0.056333
+  type: 'test'
+  ...
+# Subtest: safe relative nested file accepted
+ok 226 - safe relative nested file accepted
+  ---
+  duration_ms: 0.063384
+  type: 'test'
+  ...
+# Subtest: unsafe URL schemes and credentials refused
+ok 227 - unsafe URL schemes and credentials refused
+  ---
+  duration_ms: 0.126276
+  type: 'test'
+  ...
+# Subtest: prototype pollution and overdeep objects refused
+ok 228 - prototype pollution and overdeep objects refused
+  ---
+  duration_ms: 0.407001
+  type: 'test'
+  ...
+# Subtest: canonical hashing stable across key order and omitted undefined fields
+ok 229 - canonical hashing stable across key order and omitted undefined fields
+  ---
+  duration_ms: 8.676894
+  type: 'test'
+  ...
+# Subtest: deterministic block migration retains existing IDs and all text
+ok 230 - deterministic block migration retains existing IDs and all text
+  ---
+  duration_ms: 1.925174
+  type: 'test'
+  ...
+# Subtest: duplicate block IDs rejected instead of silently rewritten
+ok 231 - duplicate block IDs rejected instead of silently rewritten
+  ---
+  duration_ms: 0.188428
+  type: 'test'
+  ...
+# Subtest: wiki references resolve while code indexing is not misread as a link
+ok 232 - wiki references resolve while code indexing is not misread as a link
+  ---
+  duration_ms: 0.428894
+  type: 'test'
+  ...
+# Subtest: duplicate global owner IDs rejected
+ok 233 - duplicate global owner IDs rejected
+  ---
+  duration_ms: 0.167968
+  type: 'test'
+  ...
+# Subtest: broken page links rejected
+ok 234 - broken page links rejected
+  ---
+  duration_ms: 3.915322
+  type: 'test'
+  ...
+# Subtest: glossary backlinks counted by edge, not page annotation
+ok 235 - glossary backlinks counted by edge, not page annotation
+  ---
+  duration_ms: 0.099617
+  type: 'test'
+  ...
+# Subtest: semantic version comparison numeric not lexicographic
+ok 236 - semantic version comparison numeric not lexicographic
+  ---
+  duration_ms: 0.062583
+  type: 'test'
+  ...
+# Subtest: identical import is idempotent
+ok 237 - identical import is idempotent
+  ---
+  duration_ms: 7.627895
+  type: 'test'
+  ...
+# Subtest: same-version changed bytes are a conflict
+ok 238 - same-version changed bytes are a conflict
+  ---
+  duration_ms: 7.349654
+  type: 'test'
+  ...
+# Subtest: older version does not overwrite newer built-in content
+ok 239 - older version does not overwrite newer built-in content
+  ---
+  duration_ms: 6.816296
+  type: 'test'
+  ...
+# Subtest: missing stable page IDs are not deletion commands
+ok 240 - missing stable page IDs are not deletion commands
+  ---
+  duration_ms: 5.345385
+  type: 'test'
+  ...
+# Subtest: update touching local edited source requires a rebase
+ok 241 - update touching local edited source requires a rebase
+  ---
+  duration_ms: 5.161622
+  type: 'test'
+  ...
+# Subtest: library update preserves additions, remarks, flags, bookmarks, archives and active views
+ok 242 - library update preserves additions, remarks, flags, bookmarks, archives and active views
+  ---
+  duration_ms: 7.031524
+  type: 'test'
+  ...
+# Subtest: new built-in revisions win over stale backup pack snapshots
+ok 243 - new built-in revisions win over stale backup pack snapshots
+  ---
+  duration_ms: 6.895252
+  type: 'test'
+  ...
+# Subtest: move operations preserve page IDs and block contents
+ok 244 - move operations preserve page IDs and block contents
+  ---
+  duration_ms: 2.721038
+  type: 'test'
+  ...
+# Subtest: folder cycles rejected
+ok 245 - folder cycles rejected
+  ---
+  duration_ms: 0.136912
+  type: 'test'
+  ...
+# Subtest: histories and English toggles independent across views
+ok 246 - histories and English toggles independent across views
+  ---
+  duration_ms: 0.211822
+  type: 'test'
+  ...
+# Subtest: history branch removes only forward branch of that view
+ok 247 - history branch removes only forward branch of that view
+  ---
+  duration_ms: 0.153307
+  type: 'test'
+  ...
+# Subtest: lossless text editing leaves structured blocks and IDs untouched
+ok 248 - lossless text editing leaves structured blocks and IDs untouched
+  ---
+  duration_ms: 0.418107
+  type: 'test'
+  ...
+# Subtest: search indexes code body, glossary definition and translations
+ok 249 - search indexes code body, glossary definition and translations
+  ---
+  duration_ms: 5.899742
+  type: 'test'
+  ...
+# Subtest: AI text export omits answers, English and personal remarks by default flags
+ok 250 - AI text export omits answers, English and personal remarks by default flags
+  ---
+  duration_ms: 0.157002
+  type: 'test'
+  ...
+# Subtest: AI text export includes remarks only with explicit content option
+ok 251 - AI text export includes remarks only with explicit content option
+  ---
+  duration_ms: 0.084284
+  type: 'test'
+  ...
+# Subtest: active SVG rejected <svg><script>alert(1)</script></svg
+ok 252 - active SVG rejected <svg><script>alert(1)</script></svg
+  ---
+  duration_ms: 0.344139
+  type: 'test'
+  ...
+# Subtest: active SVG rejected <svg onload="evil()"/>
+ok 253 - active SVG rejected <svg onload="evil()"/>
+  ---
+  duration_ms: 0.31123
+  type: 'test'
+  ...
+# Subtest: active SVG rejected <svg><image href="https://evil.test
+ok 254 - active SVG rejected <svg><image href="https://evil.test
+  ---
+  duration_ms: 0.178484
+  type: 'test'
+  ...
+# Subtest: active SVG rejected <svg><foreignObject>HTML</foreignOb
+ok 255 - active SVG rejected <svg><foreignObject>HTML</foreignOb
+  ---
+  duration_ms: 0.056904
+  type: 'test'
+  ...
+# Subtest: authored local SVG markers accepted
+ok 256 - authored local SVG markers accepted
+  ---
+  duration_ms: 0.181438
+  type: 'test'
+  ...
+# Subtest: HTML and LFS pointers refused as PDF bytes
+ok 257 - HTML and LFS pointers refused as PDF bytes
+  ---
+  duration_ms: 0.127719
+  type: 'test'
+  ...
+# Subtest: asset MIME mismatch rejected
+ok 258 - asset MIME mismatch rejected
+  ---
+  duration_ms: 0.073338
+  type: 'test'
+  ...
+# Subtest: repository-shaped private content export round-trips stable IDs and attachments
+ok 259 - repository-shaped private content export round-trips stable IDs and attachments
+  ---
+  duration_ms: 292.473736
+  type: 'test'
+  ...
+# Subtest: complete backup round-trip retains personal state and exact PDF bytes
+ok 260 - complete backup round-trip retains personal state and exact PDF bytes
+  ---
+  duration_ms: 80.730891
+  type: 'test'
+  ...
+# Subtest: backup refuses incomplete attachment dependencies
+ok 261 - backup refuses incomplete attachment dependencies
+  ---
+  duration_ms: 0.301665
+  type: 'test'
+  ...
+# Subtest: corrupt transfer checksums refused
+ok 262 - corrupt transfer checksums refused
+  ---
+  duration_ms: 1.82823
+  type: 'test'
+  ...
+# Subtest: ZIP traversal refused before extraction
+ok 263 - ZIP traversal refused before extraction
+  ---
+  duration_ms: 0.483654
+  type: 'test'
+  ...
+# Subtest: executable notebook imports quarantined
+ok 264 - executable notebook imports quarantined
+  ---
+  duration_ms: 0.774324
+  type: 'test'
+  ...
+# Subtest: ZIP high compression ratio refused
+ok 265 - ZIP high compression ratio refused
+  ---
+  duration_ms: 15.624298
+  type: 'test'
+  ...
+# Subtest: malformed ZIP header refused
+ok 266 - malformed ZIP header refused
+  ---
+  duration_ms: 0.166776
+  type: 'test'
+  ...
+# Subtest: valid personal state passes pre-restore validation
+ok 267 - valid personal state passes pre-restore validation
+  ---
+  duration_ms: 0.317309
+  type: 'test'
+  ...
+# Subtest: invalid active view and cursor rejected before restore
+ok 268 - invalid active view and cursor rejected before restore
+  ---
+  duration_ms: 0.358749
+  type: 'test'
+  ...
+# Subtest: third pane and six views rejected on restore
+ok 269 - third pane and six views rejected on restore
+  ---
+  duration_ms: 0.368594
+  type: 'test'
+  ...
+# Subtest: restore rejects malformed ratings and overlay ID substitutions
+ok 270 - restore rejects malformed ratings and overlay ID substitutions
+  ---
+  duration_ms: 0.529392
+  type: 'test'
+  ...
+# Subtest: publication rejects private and unreviewed packs
+ok 271 - publication rejects private and unreviewed packs
+  ---
+  duration_ms: 0.361073
+  type: 'test'
+  ...
+# Subtest: publication rejects stale content review hash
+ok 272 - publication rejects stale content review hash
+  ---
+  duration_ms: 24.05845
+  type: 'test'
+  ...
+# Subtest: physical PDF spread pairs consecutive pages without invented blank last page
+ok 273 - physical PDF spread pairs consecutive pages without invented blank last page
+  ---
+  duration_ms: 0.315496
+  type: 'test'
+  ...
+# Subtest: PDF cover-alone mode preserves page-one identity
+ok 274 - PDF cover-alone mode preserves page-one identity
+  ---
+  duration_ms: 0.078506
+  type: 'test'
+  ...
+# Subtest: PDF controls clamp pages and add intrinsic rotation
+ok 275 - PDF controls clamp pages and add intrinsic rotation
+  ---
+  duration_ms: 0.060159
+  type: 'test'
+  ...
+# Subtest: source import cannot shadow a retained locally added page ID
+ok 276 - source import cannot shadow a retained locally added page ID
+  ---
+  duration_ms: 4.892485
+  type: 'test'
+  ...
+# Subtest: removed project IDs are blocked during pack update
+ok 277 - removed project IDs are blocked during pack update
+  ---
+  duration_ms: 4.222666
+  type: 'test'
+  ...
+# Subtest: SVG safety inspection covers content after two megabytes
+ok 278 - SVG safety inspection covers content after two megabytes
+  ---
+  duration_ms: 3.367553
+  type: 'test'
+  ...
+# Subtest: duplicate PDF identities are not silently resolved first-wins
+ok 279 - duplicate PDF identities are not silently resolved first-wins
+  ---
+  duration_ms: 1.330425
+  type: 'test'
+  ...
+# Subtest: 1.2.1 actual Notes projection excludes both public PDFs and their emptied notebook
+ok 280 - 1.2.1 actual Notes projection excludes both public PDFs and their emptied notebook
+  ---
+  duration_ms: 2.370791
+  type: 'test'
+  ...
+# Subtest: 1.2.1 actual PDF projection contains only canonical PDF leaves
+ok 281 - 1.2.1 actual PDF projection contains only canonical PDF leaves
+  ---
+  duration_ms: 0.220015
+  type: 'test'
+  ...
+# Subtest: 1.2.1 Notes -> PDF -> Notes is deterministic and leaves canonical source untouched
+ok 282 - 1.2.1 Notes -> PDF -> Notes is deterministic and leaves canonical source untouched
+  ---
+  duration_ms: 9.402035
+  type: 'test'
+  ...
+# Subtest: 1.2.1 mixed folders retain only matching leaves: notes
+ok 283 - 1.2.1 mixed folders retain only matching leaves: notes
+  ---
+  duration_ms: 0.218643
+  type: 'test'
+  ...
+# Subtest: 1.2.1 mixed folders retain only matching leaves: pdfs
+ok 284 - 1.2.1 mixed folders retain only matching leaves: pdfs
+  ---
+  duration_ms: 0.099607
+  type: 'test'
+  ...
+# Subtest: 1.2.1 archived ancestor stays absent in notes
+ok 285 - 1.2.1 archived ancestor stays absent in notes
+  ---
+  duration_ms: 0.115711
+  type: 'test'
+  ...
+# Subtest: 1.2.1 archived node stays absent in notes
+ok 286 - 1.2.1 archived node stays absent in notes
+  ---
+  duration_ms: 0.06804
+  type: 'test'
+  ...
+# Subtest: 1.2.1 archived page stays absent in notes
+ok 287 - 1.2.1 archived page stays absent in notes
+  ---
+  duration_ms: 0.669338
+  type: 'test'
+  ...
+# Subtest: 1.2.1 archived ancestor stays absent in pdfs
+ok 288 - 1.2.1 archived ancestor stays absent in pdfs
+  ---
+  duration_ms: 0.212584
+  type: 'test'
+  ...
+# Subtest: 1.2.1 archived node stays absent in pdfs
+ok 289 - 1.2.1 archived node stays absent in pdfs
+  ---
+  duration_ms: 0.317579
+  type: 'test'
+  ...
+# Subtest: 1.2.1 archived page stays absent in pdfs
+ok 290 - 1.2.1 archived page stays absent in pdfs
+  ---
+  duration_ms: 0.111835
+  type: 'test'
+  ...
+# Subtest: 1.2.1 projections never mutate open PDF view/history/remarks/bookmark state
+ok 291 - 1.2.1 projections never mutate open PDF view/history/remarks/bookmark state
+  ---
+  duration_ms: 2.0251
+  type: 'test'
+  ...
+# Subtest: 1.2.1 PDF anchor omits an absent revision without dropping a real value
+ok 292 - 1.2.1 PDF anchor omits an absent revision without dropping a real value
+  ---
+  duration_ms: 0.097765
+  type: 'test'
+  ...
+# Subtest: 1.2.1 note remark is exactly JSON representable
+ok 293 - 1.2.1 note remark is exactly JSON representable
+  ---
+  duration_ms: 0.111655
+  type: 'test'
+  ...
+# Subtest: 1.2.1 PDF remark preserves revision and physical anchor exactly
+ok 294 - 1.2.1 PDF remark preserves revision and physical anchor exactly
+  ---
+  duration_ms: 0.096753
+  type: 'test'
+  ...
+# Subtest: 1.2.1 legacy absence repair is bounded, nonmutating and idempotent
+ok 295 - 1.2.1 legacy absence repair is bounded, nonmutating and idempotent
+  ---
+  duration_ms: 0.552576
+  type: 'test'
+  ...
+# Subtest: 1.2.1 exact personal equality through actual ZIP parser after legacy absence repair
+ok 296 - 1.2.1 exact personal equality through actual ZIP parser after legacy absence repair
+  ---
+  duration_ms: 329.772523
+  type: 'test'
+  ...
+# Subtest: 1.2.1 asynchronous backup freezes personal state before its first asset await
+ok 297 - 1.2.1 asynchronous backup freezes personal state before its first asset await
+  ---
+  duration_ms: 48.819465
+  type: 'test'
+  ...
+# Subtest: 1.2.1 Focus requests Fullscreen API synchronously from enter
+ok 298 - 1.2.1 Focus requests Fullscreen API synchronously from enter
+  ---
+  duration_ms: 1.064332
+  type: 'test'
+  ...
+# Subtest: 1.2.1 constructing/restoring controller never automatically requests fullscreen
+ok 299 - 1.2.1 constructing/restoring controller never automatically requests fullscreen
+  ---
+  duration_ms: 0.113798
+  type: 'test'
+  ...
+# Subtest: 1.2.1 fullscreen reject retains CSS Focus (no exit callback)
+ok 300 - 1.2.1 fullscreen reject retains CSS Focus (no exit callback)
+  ---
+  duration_ms: 0.490344
+  type: 'test'
+  ...
+# Subtest: 1.2.1 fullscreen throw retains CSS Focus (no exit callback)
+ok 301 - 1.2.1 fullscreen throw retains CSS Focus (no exit callback)
+  ---
+  duration_ms: 0.320132
+  type: 'test'
+  ...
+# Subtest: 1.2.1 browser Escape/fullscreenchange synchronizes focus exit once
+ok 302 - 1.2.1 browser Escape/fullscreenchange synchronizes focus exit once
+  ---
+  duration_ms: 0.347413
+  type: 'test'
+  ...
+# Subtest: 1.2.1 programmatic Focus exit calls exitFullscreen only for our app
+ok 303 - 1.2.1 programmatic Focus exit calls exitFullscreen only for our app
+  ---
+  duration_ms: 0.315667
+  type: 'test'
+  ...
+# Subtest: 1.2.1 unrelated element fullscreen is never acquired or exited
+ok 304 - 1.2.1 unrelated element fullscreen is never acquired or exited
+  ---
+  duration_ms: 0.140979
+  type: 'test'
+  ...
+# Subtest: 1.2.1 rapid Focus cancellation cannot leave a late granted fullscreen
+ok 305 - 1.2.1 rapid Focus cancellation cannot leave a late granted fullscreen
+  ---
+  duration_ms: 0.601308
+  type: 'test'
+  ...
+# Subtest: 1.2.1 disposed controller cleans listeners and a pending fullscreen grant
+ok 306 - 1.2.1 disposed controller cleans listeners and a pending fullscreen grant
+  ---
+  duration_ms: 0.455533
+  type: 'test'
+  ...
+# Subtest: 1.2.1 all public pdfatlas URLs are pinned and byte/page metadata is retained
+ok 307 - 1.2.1 all public pdfatlas URLs are pinned and byte/page metadata is retained
+  ---
+  duration_ms: 2.575443
+  type: 'test'
+  ...
+# Subtest: 1.2.1 hosted and compatibility builders cannot overwrite each other
+ok 308 - 1.2.1 hosted and compatibility builders cannot overwrite each other
+  ---
+  duration_ms: 0.753072
+  type: 'test'
+  ...
+# Subtest: 1.2.1 reader source has no PDF metadata intro and retains failure boundary
+ok 309 - 1.2.1 reader source has no PDF metadata intro and retains failure boundary
+  ---
+  duration_ms: 0.621688
+  type: 'test'
+  ...
+# Subtest: Discovery totals exclude PDF-only, hidden and archived projects without counting duplicate leaves
+ok 310 - Discovery totals exclude PDF-only, hidden and archived projects without counting duplicate leaves
+  ---
+  duration_ms: 0.323868
+  type: 'test'
+  ...
+# Subtest: Emergency backup snapshot retains canonical unsaved work after a storage error
+ok 311 - Emergency backup snapshot retains canonical unsaved work after a storage error
+  ---
+  duration_ms: 11.758965
+  type: 'test'
+  ...
+# Subtest: supplied v1 and v2 fixtures parse through the actual ZIP and schema validators
+ok 312 - supplied v1 and v2 fixtures parse through the actual ZIP and schema validators
+  ---
+  duration_ms: 1.587395
+  type: 'test'
+  ...
+# Subtest: supplied synthetic update preserves additions, remarks, flags, bookmarks, views and archive/group state exactly
+ok 313 - supplied synthetic update preserves additions, remarks, flags, bookmarks, views and archive/group state exactly
+  ---
+  duration_ms: 4.19835
+  type: 'test'
+  ...
+# Subtest: synthetic v1.1 reimport is idempotent without duplicate pages
+ok 314 - synthetic v1.1 reimport is idempotent without duplicate pages
+  ---
+  duration_ms: 1.421439
+  type: 'test'
+  ...
+# Subtest: same-version modified synthetic content is blocked without mutating the workspace
+ok 315 - same-version modified synthetic content is blocked without mutating the workspace
+  ---
+  duration_ms: 8.309562
+  type: 'test'
+  ...
+# Subtest: older synthetic pack is blocked
+ok 316 - older synthetic pack is blocked
+  ---
+  duration_ms: 0.587668
+  type: 'test'
+  ...
+# Subtest: omitted stable synthetic page IDs are never deletion instructions
+ok 317 - omitted stable synthetic page IDs are never deletion instructions
+  ---
+  duration_ms: 3.493048
+  type: 'test'
+  ...
+# Subtest: synthetic source edit collision requires explicit rebase
+ok 318 - synthetic source edit collision requires explicit rebase
+  ---
+  duration_ms: 1.319469
+  type: 'test'
+  ...
+# Subtest: complete synthetic backup restore round-trip is exact including a local PDF
+ok 319 - complete synthetic backup restore round-trip is exact including a local PDF
+  ---
+  duration_ms: 95.063256
+  type: 'test'
+  ...
+# Subtest: backup fails BEFORE download when imported-pack assets are absent
+ok 320 - backup fails BEFORE download when imported-pack assets are absent
+  ---
+  duration_ms: 4.104001
+  type: 'test'
+  ...
+# Subtest: backup fails BEFORE download when a local PDF is missing
+ok 321 - backup fails BEFORE download when a local PDF is missing
+  ---
+  duration_ms: 0.79216
+  type: 'test'
+  ...
+# Subtest: backup rejects changed bytes under an unchanged attachment hash
+ok 322 - backup rejects changed bytes under an unchanged attachment hash
+  ---
+  duration_ms: 1.317065
+  type: 'test'
+  ...
+# Subtest: Compare top-bar close preserves pane 0 losslessly
+ok 323 - Compare top-bar close preserves pane 0 losslessly
+  ---
+  duration_ms: 0.647236
+  type: 'test'
+  ...
+# Subtest: Compare top-bar close preserves pane 1 losslessly
+ok 324 - Compare top-bar close preserves pane 1 losslessly
+  ---
+  duration_ms: 0.391068
+  type: 'test'
+  ...
+# Subtest: Compare opens an empty active picker without cloning or changing the source pane
+ok 325 - Compare opens an empty active picker without cloning or changing the source pane
+  ---
+  duration_ms: 0.458758
+  type: 'test'
+  ...
+# Subtest: Compare closes an empty active picker by retaining the other nonempty pane
+ok 326 - Compare closes an empty active picker by retaining the other nonempty pane
+  ---
+  duration_ms: 0.278982
+  type: 'test'
+  ...
+# Subtest: five tabs have independent mode, translation, source anchor and history
+ok 327 - five tabs have independent mode, translation, source anchor and history
+  ---
+  duration_ms: 0.40606
+  type: 'test'
+  ...
+# Subtest: six nested folders plus a local root/deep page survive rename and cross-notebook move
+ok 328 - six nested folders plus a local root/deep page survive rename and cross-notebook move
+  ---
+  duration_ms: 1.018474
+  type: 'test'
+  ...
+# Subtest: synthetic search: title
+ok 329 - synthetic search: title
+  ---
+  duration_ms: 1.201844
+  type: 'test'
+  ...
+# Subtest: synthetic search: body
+ok 330 - synthetic search: body
+  ---
+  duration_ms: 1.457763
+  type: 'test'
+  ...
+# Subtest: synthetic search: code
+ok 331 - synthetic search: code
+  ---
+  duration_ms: 0.530254
+  type: 'test'
+  ...
+# Subtest: synthetic search: tags
+ok 332 - synthetic search: tags
+  ---
+  duration_ms: 0.416886
+  type: 'test'
+  ...
+# Subtest: synthetic search: folder
+ok 333 - synthetic search: folder
+  ---
+  duration_ms: 0.463394
+  type: 'test'
+  ...
+# Subtest: synthetic search: English
+ok 334 - synthetic search: English
+  ---
+  duration_ms: 0.389024
+  type: 'test'
+  ...
+# Subtest: synthetic search: Norwegian
+ok 335 - synthetic search: Norwegian
+  ---
+  duration_ms: 0.381694
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 1 cover=false
+ok 336 - physical spread navigation covers every page once: 1 cover=false
+  ---
+  duration_ms: 0.211533
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 1 cover=true
+ok 337 - physical spread navigation covers every page once: 1 cover=true
+  ---
+  duration_ms: 0.049914
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 2 cover=false
+ok 338 - physical spread navigation covers every page once: 2 cover=false
+  ---
+  duration_ms: 0.039107
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 2 cover=true
+ok 339 - physical spread navigation covers every page once: 2 cover=true
+  ---
+  duration_ms: 0.104124
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 3 cover=false
+ok 340 - physical spread navigation covers every page once: 3 cover=false
+  ---
+  duration_ms: 0.114249
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 3 cover=true
+ok 341 - physical spread navigation covers every page once: 3 cover=true
+  ---
+  duration_ms: 0.053499
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 4 cover=false
+ok 342 - physical spread navigation covers every page once: 4 cover=false
+  ---
+  duration_ms: 0.092847
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 4 cover=true
+ok 343 - physical spread navigation covers every page once: 4 cover=true
+  ---
+  duration_ms: 0.06102
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 5 cover=false
+ok 344 - physical spread navigation covers every page once: 5 cover=false
+  ---
+  duration_ms: 0.039739
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 5 cover=true
+ok 345 - physical spread navigation covers every page once: 5 cover=true
+  ---
+  duration_ms: 0.037145
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 10 cover=false
+ok 346 - physical spread navigation covers every page once: 10 cover=false
+  ---
+  duration_ms: 0.04043
+  type: 'test'
+  ...
+# Subtest: physical spread navigation covers every page once: 10 cover=true
+ok 347 - physical spread navigation covers every page once: 10 cover=true
+  ---
+  duration_ms: 0.041181
+  type: 'test'
+  ...
+# Subtest: synthetic glossary label/definition/translation: Glossary-only audit term
+ok 348 - synthetic glossary label/definition/translation: Glossary-only audit term
+  ---
+  duration_ms: 0.435723
+  type: 'test'
+  ...
+# Subtest: synthetic glossary label/definition/translation: GlossaryDefinitionOnlyToken_7319
+ok 349 - synthetic glossary label/definition/translation: GlossaryDefinitionOnlyToken_7319
+  ---
+  duration_ms: 0.374984
+  type: 'test'
+  ...
+# Subtest: synthetic glossary label/definition/translation: Parallellspråk
+ok 350 - synthetic glossary label/definition/translation: Parallellspråk
+  ---
+  duration_ms: 0.389866
+  type: 'test'
+  ...
+# Subtest: backup also rejects corrupt orphan attachments retained in the workspace
+ok 351 - backup also rejects corrupt orphan attachments retained in the workspace
+  ---
+  duration_ms: 6.552166
+  type: 'test'
+  ...
+# Subtest: 1.1 empty picker navigation produces cursor zero and a valid portable session
+ok 352 - 1.1 empty picker navigation produces cursor zero and a valid portable session
+  ---
+  duration_ms: 7.476381
+  type: 'test'
+  ...
+# Subtest: 1.1 folder routes retain real tree IDs without inventing content pages
+ok 353 - 1.1 folder routes retain real tree IDs without inventing content pages
+  ---
+  duration_ms: 1.763815
+  type: 'test'
+  ...
+# Subtest: 1.1 Compare preserves source pane byte-for-byte, opens empty active picker, retains 66% ratio
+ok 354 - 1.1 Compare preserves source pane byte-for-byte, opens empty active picker, retains 66% ratio
+  ---
+  duration_ms: 0.60896
+  type: 'test'
+  ...
+# Subtest: 1.1 two intentional copies retain different PDF modes, physical anchors, English and history
+ok 355 - 1.1 two intentional copies retain different PDF modes, physical anchors, English and history
+  ---
+  duration_ms: 0.442313
+  type: 'test'
+  ...
+# Subtest: 1.1 nested local PDF intake is atomic, exact, private, conservative and facet-rich
+ok 356 - 1.1 nested local PDF intake is atomic, exact, private, conservative and facet-rich
+  ---
+  duration_ms: 7.763886
+  type: 'test'
+  ...
+# Subtest: 1.1 local duplicate filename-independent SHA intake returns the existing record
+ok 357 - 1.1 local duplicate filename-independent SHA intake returns the existing record
+  ---
+  duration_ms: 3.284059
+  type: 'test'
+  ...
+# Subtest: 1.1 duplicate built-in SHA is also detected rather than copied into local storage
+ok 358 - 1.1 duplicate built-in SHA is also detected rather than copied into local storage
+  ---
+  duration_ms: 1.541957
+  type: 'test'
+  ...
+# Subtest: 1.1 PDF intake rejects bad signature, excessive bytes, unknown placement and silently promoted rights
+ok 359 - 1.1 PDF intake rejects bad signature, excessive bytes, unknown placement and silently promoted rights
+  ---
+  duration_ms: 6.150643
+  type: 'test'
+  ...
+# Subtest: 1.1 invalid page count, URL and language are rejected before addition
+ok 360 - 1.1 invalid page count, URL and language are rejected before addition
+  ---
+  duration_ms: 1.455159
+  type: 'test'
+  ...
+# Subtest: 1.1 mixed collection is direct-child projection with one canonical PDF placement
+ok 361 - 1.1 mixed collection is direct-child projection with one canonical PDF placement
+  ---
+  duration_ms: 4.735112
+  type: 'test'
+  ...
+# Subtest: 1.1 collection filters language/domain/technology/text/type and title sorting compose correctly
+ok 362 - 1.1 collection filters language/domain/technology/text/type and title sorting compose correctly
+  ---
+  duration_ms: 10.631801
+  type: 'test'
+  ...
+# Subtest: 1.1 archived collection leaves are hidden without deleting metadata or PDF bytes
+ok 363 - 1.1 archived collection leaves are hidden without deleting metadata or PDF bytes
+  ---
+  duration_ms: 1.835761
+  type: 'test'
+  ...
+# Subtest: 1.1 PDF move preserves page/document/revision and search follows title, tags and path
+ok 364 - 1.1 PDF move preserves page/document/revision and search follows title, tags and path
+  ---
+  duration_ms: 7.172192
+  type: 'test'
+  ...
+# Subtest: 1.1 same SHA in incoming private libraries is blocked but identical reimport is not
+ok 365 - 1.1 same SHA in incoming private libraries is blocked but identical reimport is not
+  ---
+  duration_ms: 2.199218
+  type: 'test'
+  ...
+# Subtest: 1.1 actual backup parser recovers exact private bytes, folder, theme, two panes, remarks and revision bookmark
+ok 366 - 1.1 actual backup parser recovers exact private bytes, folder, theme, two panes, remarks and revision bookmark
+  ---
+  duration_ms: 281.618545
+  type: 'test'
+  ...
+# Subtest: 1.1 private PDF export is accepted by actual readWorkspace and excludes all personal and teaching state
+ok 367 - 1.1 private PDF export is accepted by actual readWorkspace and excludes all personal and teaching state
+  ---
+  duration_ms: 29.000778
+  type: 'test'
+  ...
+# Subtest: 1.1 local PDFs filed under public notebooks export into safe context IDs and import into a default fresh app
+ok 368 - 1.1 local PDFs filed under public notebooks export into safe context IDs and import into a default fresh app
+  ---
+  duration_ms: 36.339411
+  type: 'test'
+  ...
+# Subtest: 1.1 private PDF export refuses missing and corrupt local bytes
+ok 369 - 1.1 private PDF export refuses missing and corrupt local bytes
+  ---
+  duration_ms: 6.33161
+  type: 'test'
+  ...
+# Subtest: 1.1 template builder runs offline; actual reader accepts it and retains required mappings
+ok 370 - 1.1 template builder runs offline; actual reader accepts it and retains required mappings
+  ---
+  duration_ms: 688.171284
+  type: 'test'
+  ...
+# Subtest: 1.1 template PDF tamper and missing bytes are rejected by actual ZIP reader
+ok 371 - 1.1 template PDF tamper and missing bytes are rejected by actual ZIP reader
+  ---
+  duration_ms: 7.292649
+  type: 'test'
+  ...
+# Subtest: 1.1 synthetic 137-page 685-term scale preserves IDs, glossary references and additive private PDF composition
+ok 372 - 1.1 synthetic 137-page 685-term scale preserves IDs, glossary references and additive private PDF composition
+  ---
+  duration_ms: 8.859083
+  type: 'test'
+  ...
+# Subtest: 1.2.5 per-pane visibility remains independent in every workspace, save, undo and backup
+ok 373 - 1.2.5 per-pane visibility remains independent in every workspace, save, undo and backup
+  ---
+  duration_ms: 244.599356
+  type: 'test'
+  ...
+# Subtest: 1.2.5 legacy personal state needs no history migration or new global controls setting
+ok 374 - 1.2.5 legacy personal state needs no history migration or new global controls setting
+  ---
+  duration_ms: 0.402925
+  type: 'test'
+  ...
+# Subtest: 1.2.5 visits have bounded unique recency, stable first-open time and monotonic clocks
+ok 375 - 1.2.5 visits have bounded unique recency, stable first-open time and monotonic clocks
+  ---
+  duration_ms: 0.552276
+  type: 'test'
+  ...
+# Subtest: 1.2.5 invalid document visits rejected before restore: duplicate
+ok 376 - 1.2.5 invalid document visits rejected before restore: duplicate
+  ---
+  duration_ms: 0.279693
+  type: 'test'
+  ...
+# Subtest: 1.2.5 invalid document visits rejected before restore: chronology
+ok 377 - 1.2.5 invalid document visits rejected before restore: chronology
+  ---
+  duration_ms: 4.313039
+  type: 'test'
+  ...
+# Subtest: 1.2.5 invalid document visits rejected before restore: timestamp
+ok 378 - 1.2.5 invalid document visits rejected before restore: timestamp
+  ---
+  duration_ms: 0.137072
+  type: 'test'
+  ...
+# Subtest: 1.2.5 invalid document visits rejected before restore: identifier
+ok 379 - 1.2.5 invalid document visits rejected before restore: identifier
+  ---
+  duration_ms: 0.175399
+  type: 'test'
+  ...
+# Subtest: 1.2.5 invalid document visits rejected before restore: overlong
+ok 380 - 1.2.5 invalid document visits rejected before restore: overlong
+  ---
+  duration_ms: 0.14949
+  type: 'test'
+  ...
+# Subtest: 1.2.5 workspace restore leaves current history and interview reflections alone
+ok 381 - 1.2.5 workspace restore leaves current history and interview reflections alone
+  ---
+  duration_ms: 0.739192
+  type: 'test'
+  ...
+# Subtest: 1.2.5 scoped search finds code and nested sections only in the supplied document
+ok 382 - 1.2.5 scoped search finds code and nested sections only in the supplied document
+  ---
+  duration_ms: 0.766132
+  type: 'test'
+  ...
+# Subtest: 1.2.5 explicit related links are non-destructive overlays and retain earlier edits/base hash
+ok 383 - 1.2.5 explicit related links are non-destructive overlays and retain earlier edits/base hash
+  ---
+  duration_ms: 2.748038
+  type: 'test'
+  ...
+# Subtest: 1.2.5 edited native interview content, related PDF link and remarks survive verified backup
+ok 384 - 1.2.5 edited native interview content, related PDF link and remarks survive verified backup
+  ---
+  duration_ms: 76.149045
+  type: 'test'
+  ...
+# Subtest: 1.2.5 PDF projection removes wrapper taxonomy without mutating metadata, IDs or actions
+ok 385 - 1.2.5 PDF projection removes wrapper taxonomy without mutating metadata, IDs or actions
+  ---
+  duration_ms: 0.621428
+  type: 'test'
+  ...
+# Subtest: 1.2.5 projected PDF respects archived node.de
+ok 386 - 1.2.5 projected PDF respects archived node.de
+  ---
+  duration_ms: 0.158504
+  type: 'test'
+  ...
+# Subtest: 1.2.5 projected PDF respects archived node.spark
+ok 387 - 1.2.5 projected PDF respects archived node.spark
+  ---
+  duration_ms: 0.305241
+  type: 'test'
+  ...
+# Subtest: 1.2.5 projected PDF respects archived node.pdf.spark
+ok 388 - 1.2.5 projected PDF respects archived node.pdf.spark
+  ---
+  duration_ms: 0.09464
+  type: 'test'
+  ...
+# Subtest: 1.2.5 projected PDF respects archived page.spark
+ok 389 - 1.2.5 projected PDF respects archived page.spark
+  ---
+  duration_ms: 0.052167
+  type: 'test'
+  ...
+# Subtest: 1.2.5 projected PDF respects archived project.pdfatlas
+ok 390 - 1.2.5 projected PDF respects archived project.pdfatlas
+  ---
+  duration_ms: 0.043635
+  type: 'test'
+  ...
+# Subtest: 1.2.5 PDF projection preserves explicit notebook filtering and PDF category topic granularity
+ok 391 - 1.2.5 PDF projection preserves explicit notebook filtering and PDF category topic granularity
+  ---
+  duration_ms: 0.519877
+  type: 'test'
+  ...
+# Subtest: 1.2.5 terminal wheel retains selected page 3 in group 4
+ok 392 - 1.2.5 terminal wheel retains selected page 3 in group 4
+  ---
+  duration_ms: 0.192144
+  type: 'test'
+  ...
+# Subtest: 1.2.5 terminal wheel retains selected page 8 in group 4
+ok 393 - 1.2.5 terminal wheel retains selected page 8 in group 4
+  ---
+  duration_ms: 0.051036
+  type: 'test'
+  ...
+# Subtest: 1.2.5 terminal wheel retains selected page 2 in group 2
+ok 394 - 1.2.5 terminal wheel retains selected page 2 in group 2
+  ---
+  duration_ms: 0.045087
+  type: 'test'
+  ...
+# Subtest: 1.2.5 terminal wheel retains selected page 8 in group 2
+ok 395 - 1.2.5 terminal wheel retains selected page 8 in group 2
+  ---
+  duration_ms: 0.035713
+  type: 'test'
+  ...
+# Subtest: 1.2.5 wheel latch consumes one completed momentum burst, slow next gesture still progresses
+ok 396 - 1.2.5 wheel latch consumes one completed momentum burst, slow next gesture still progresses
+  ---
+  duration_ms: 0.315686
+  type: 'test'
+  ...
+# Subtest: 1.2.5 slow-wheel accumulation remains available in single
+ok 397 - 1.2.5 slow-wheel accumulation remains available in single
+  ---
+  duration_ms: 0.124013
+  type: 'test'
+  ...
+# Subtest: 1.2.5 slow-wheel accumulation remains available in spread
+ok 398 - 1.2.5 slow-wheel accumulation remains available in spread
+  ---
+  duration_ms: 0.048712
+  type: 'test'
+  ...
+# Subtest: 1.2.5 slow-wheel accumulation remains available in grid
+ok 399 - 1.2.5 slow-wheel accumulation remains available in grid
+  ---
+  duration_ms: 0.102761
+  type: 'test'
+  ...
+# Subtest: 1.2.5 PDF text search uses physical pages, plain excerpts and aborts before further work
+ok 400 - 1.2.5 PDF text search uses physical pages, plain excerpts and aborts before further work
+  ---
+  duration_ms: 0.599616
+  type: 'test'
+  ...
+# Subtest: 1.2.5 Context searches only the permitted engine for the exact workspace/pane/document
+ok 401 - 1.2.5 Context searches only the permitted engine for the exact workspace/pane/document
+  ---
+  duration_ms: 0.328865
+  type: 'test'
+  ...
+# Subtest: 1.2.5 replaced PDF search registration is not removed by earlier unmount
+ok 402 - 1.2.5 replaced PDF search registration is not removed by earlier unmount
+  ---
+  duration_ms: 0.118565
+  type: 'test'
+  ...
+# Subtest: 1.2.5 interview set contains >=3 each style and generates exactly the reviewed native pack
+ok 403 - 1.2.5 interview set contains >=3 each style and generates exactly the reviewed native pack
+  ---
+  duration_ms: 1.654283
+  type: 'test'
+  ...
+# Subtest: 1.2.5 seven interview categories and deeper topic nesting stay native and filter as Job
+ok 404 - 1.2.5 seven interview categories and deeper topic nesting stay native and filter as Job
+  ---
+  duration_ms: 0.218964
+  type: 'test'
+  ...
+# Subtest: 1.2.5 canonical Q1-Q5 reasoning sequence and future harder families are retained
+ok 405 - 1.2.5 canonical Q1-Q5 reasoning sequence and future harder families are retained
+  ---
+  duration_ms: 0.127619
+  type: 'test'
+  ...
+# Subtest: 1.2.5 coding variants teach one dictionary pattern with alternatives, complexity and followups
+ok 406 - 1.2.5 coding variants teach one dictionary pattern with alternatives, complexity and followups
+  ---
+  duration_ms: 0.097394
+  type: 'test'
+  ...
+# Subtest: 1.2.5 invalid interview authoring model rejected x=>x.questions[0].style='Game'
+ok 407 - 1.2.5 invalid interview authoring model rejected x=>x.questions[0].style='Game'
+  ---
+  duration_ms: 0.242489
+  type: 'test'
+  ...
+# Subtest: 1.2.5 invalid interview authoring model rejected x=>x.questions.push(copy(x.questions[0]))
+ok 408 - 1.2.5 invalid interview authoring model rejected x=>x.questions.push(copy(x.questions[0]))
+  ---
+  duration_ms: 0.201778
+  type: 'test'
+  ...
+# Subtest: 1.2.5 invalid interview authoring model rejected x=>x.questions[0].reasoning=[]
+ok 409 - 1.2.5 invalid interview authoring model rejected x=>x.questions[0].reasoning=[]
+  ---
+  duration_ms: 0.140588
+  type: 'test'
+  ...
+# Subtest: 1.2.5 invalid interview authoring model rejected x=>x.questions.find(q=>q.style==='Coding').alternatives=[]
+ok 410 - 1.2.5 invalid interview authoring model rejected x=>x.questions.find(q=>q.style==='Coding').alternatives=[]
+  ---
+  duration_ms: 0.164814
+  type: 'test'
+  ...
+# Subtest: 1.2.5 actual public PDF Atlas pack projects directly to Data Engineering / Apache Spark
+ok 411 - 1.2.5 actual public PDF Atlas pack projects directly to Data Engineering / Apache Spark
+  ---
+  duration_ms: 0.448282
+  type: 'test'
+  ...
+# Subtest: 1.2.5 runtime persistence assertion rejects unrelated mutations
+ok 412 - 1.2.5 runtime persistence assertion rejects unrelated mutations
+  ---
+  duration_ms: 735.814307
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 1 pages exactly once, cover=false
+ok 413 - 1.2.4 grid covers 1 pages exactly once, cover=false
+  ---
+  duration_ms: 1.737917
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 1 pages exactly once, cover=true
+ok 414 - 1.2.4 grid covers 1 pages exactly once, cover=true
+  ---
+  duration_ms: 0.113748
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 2 pages exactly once, cover=false
+ok 415 - 1.2.4 grid covers 2 pages exactly once, cover=false
+  ---
+  duration_ms: 0.088611
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 2 pages exactly once, cover=true
+ok 416 - 1.2.4 grid covers 2 pages exactly once, cover=true
+  ---
+  duration_ms: 0.245172
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 3 pages exactly once, cover=false
+ok 417 - 1.2.4 grid covers 3 pages exactly once, cover=false
+  ---
+  duration_ms: 0.138414
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 3 pages exactly once, cover=true
+ok 418 - 1.2.4 grid covers 3 pages exactly once, cover=true
+  ---
+  duration_ms: 0.137143
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 4 pages exactly once, cover=false
+ok 419 - 1.2.4 grid covers 4 pages exactly once, cover=false
+  ---
+  duration_ms: 0.112756
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 4 pages exactly once, cover=true
+ok 420 - 1.2.4 grid covers 4 pages exactly once, cover=true
+  ---
+  duration_ms: 0.066478
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 5 pages exactly once, cover=false
+ok 421 - 1.2.4 grid covers 5 pages exactly once, cover=false
+  ---
+  duration_ms: 0.306443
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 5 pages exactly once, cover=true
+ok 422 - 1.2.4 grid covers 5 pages exactly once, cover=true
+  ---
+  duration_ms: 0.293694
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 6 pages exactly once, cover=false
+ok 423 - 1.2.4 grid covers 6 pages exactly once, cover=false
+  ---
+  duration_ms: 0.134699
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 6 pages exactly once, cover=true
+ok 424 - 1.2.4 grid covers 6 pages exactly once, cover=true
+  ---
+  duration_ms: 0.062392
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 7 pages exactly once, cover=false
+ok 425 - 1.2.4 grid covers 7 pages exactly once, cover=false
+  ---
+  duration_ms: 0.048292
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 7 pages exactly once, cover=true
+ok 426 - 1.2.4 grid covers 7 pages exactly once, cover=true
+  ---
+  duration_ms: 0.044806
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 8 pages exactly once, cover=false
+ok 427 - 1.2.4 grid covers 8 pages exactly once, cover=false
+  ---
+  duration_ms: 0.039449
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 8 pages exactly once, cover=true
+ok 428 - 1.2.4 grid covers 8 pages exactly once, cover=true
+  ---
+  duration_ms: 0.041591
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 9 pages exactly once, cover=false
+ok 429 - 1.2.4 grid covers 9 pages exactly once, cover=false
+  ---
+  duration_ms: 0.040921
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 9 pages exactly once, cover=true
+ok 430 - 1.2.4 grid covers 9 pages exactly once, cover=true
+  ---
+  duration_ms: 0.064074
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 13 pages exactly once, cover=false
+ok 431 - 1.2.4 grid covers 13 pages exactly once, cover=false
+  ---
+  duration_ms: 0.054501
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid covers 13 pages exactly once, cover=true
+ok 432 - 1.2.4 grid covers 13 pages exactly once, cover=true
+  ---
+  duration_ms: 0.043675
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid selects lower-row pages without changing group identity
+ok 433 - 1.2.4 grid selects lower-row pages without changing group identity
+  ---
+  duration_ms: 0.076634
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid fit uses two rows of actual portrait and landscape ratios
+ok 434 - 1.2.4 grid fit uses two rows of actual portrait and landscape ratios
+  ---
+  duration_ms: 0.1355
+  type: 'test'
+  ...
+# Subtest: 1.2.4 grid returns prior spread mode and zoom without touching source anchors
+ok 435 - 1.2.4 grid returns prior spread mode and zoom without touching source anchors
+  ---
+  duration_ms: 0.228387
+  type: 'test'
+  ...
+# Subtest: 1.2.4 flattened categories keep repeated physical pages under distinct short headings
+ok 436 - 1.2.4 flattened categories keep repeated physical pages under distinct short headings
+  ---
+  duration_ms: 0.79907
+  type: 'test'
+  ...
+# Subtest: 1.2.4 unsafe URL refused: javascript:alert(1)
+ok 437 - 1.2.4 unsafe URL refused: javascript:alert(1)
+  ---
+  duration_ms: 0.270299
+  type: 'test'
+  ...
+# Subtest: 1.2.4 unsafe URL refused: data:text/html,bad
+ok 438 - 1.2.4 unsafe URL refused: data:text/html,bad
+  ---
+  duration_ms: 0.099056
+  type: 'test'
+  ...
+# Subtest: 1.2.4 unsafe URL refused: file:///etc/passwd
+ok 439 - 1.2.4 unsafe URL refused: file:///etc/passwd
+  ---
+  duration_ms: 0.054
+  type: 'test'
+  ...
+# Subtest: 1.2.4 unsafe URL refused: ftp://example.com
+ok 440 - 1.2.4 unsafe URL refused: ftp://example.com
+  ---
+  duration_ms: 0.084054
+  type: 'test'
+  ...
+# Subtest: 1.2.4 unsafe URL refused: https://user:secret@example.com
+ok 441 - 1.2.4 unsafe URL refused: https://user:secret@example.com
+  ---
+  duration_ms: 0.061451
+  type: 'test'
+  ...
+# Subtest: 1.2.4 unsafe URL refused: https://example.com/a\\nb
+ok 442 - 1.2.4 unsafe URL refused: https://example.com/a\\nb
+  ---
+  duration_ms: 0.043384
+  type: 'test'
+  ...
+# Subtest: 1.2.4 unsafe URL refused: https://example.com/a b
+ok 443 - 1.2.4 unsafe URL refused: https://example.com/a b
+  ---
+  duration_ms: 0.044215
+  type: 'test'
+  ...
+# Subtest: 1.2.4 unsafe URL refused: not a URL
+ok 444 - 1.2.4 unsafe URL refused: not a URL
+  ---
+  duration_ms: 0.037906
+  type: 'test'
+  ...
+# Subtest: 1.2.4 safe web addresses canonicalized, with query and fragment preserved
+ok 445 - 1.2.4 safe web addresses canonicalized, with query and fragment preserved
+  ---
+  duration_ms: 0.080959
+  type: 'test'
+  ...
+# Subtest: 1.2.4 read-later targets are frozen and deduplicated without losing distinct page headings
+ok 446 - 1.2.4 read-later targets are frozen and deduplicated without losing distinct page headings
+  ---
+  duration_ms: 1.73303
+  type: 'test'
+  ...
+# Subtest: 1.2.4 invalid entry input is atomic
+ok 447 - 1.2.4 invalid entry input is atomic
+  ---
+  duration_ms: 0.376706
+  type: 'test'
+  ...
+# Subtest: 1.2.4 malformed PDF reading target rejected t=>t.pdfPage=0
+ok 448 - 1.2.4 malformed PDF reading target rejected t=>t.pdfPage=0
+  ---
+  duration_ms: 0.110473
+  type: 'test'
+  ...
+# Subtest: 1.2.4 malformed PDF reading target rejected t=>t.pdfPage=2.5
+ok 449 - 1.2.4 malformed PDF reading target rejected t=>t.pdfPage=2.5
+  ---
+  duration_ms: 0.076363
+  type: 'test'
+  ...
+# Subtest: 1.2.4 malformed PDF reading target rejected t=>t.revision='bad'
+ok 450 - 1.2.4 malformed PDF reading target rejected t=>t.revision='bad'
+  ---
+  duration_ms: 0.071996
+  type: 'test'
+  ...
+# Subtest: 1.2.4 malformed PDF reading target rejected t=>t.documentId='../secret'
+ok 451 - 1.2.4 malformed PDF reading target rejected t=>t.documentId='../secret'
+  ---
+  duration_ms: 0.058777
+  type: 'test'
+  ...
+# Subtest: 1.2.4 malformed PDF reading target rejected t=>t.secret='no'
+ok 452 - 1.2.4 malformed PDF reading target rejected t=>t.secret='no'
+  ---
+  duration_ms: 0.157202
+  type: 'test'
+  ...
+# Subtest: 1.2.4 malformed PDF reading target rejected t=>t.anchor={pdfPage:4}
+ok 453 - 1.2.4 malformed PDF reading target rejected t=>t.anchor={pdfPage:4}
+  ---
+  duration_ms: 0.173627
+  type: 'test'
+  ...
+# Subtest: 1.2.4 malformed PDF reading target rejected t=>t.anchor={pdfOffset:11}
+ok 454 - 1.2.4 malformed PDF reading target rejected t=>t.anchor={pdfOffset:11}
+  ---
+  duration_ms: 0.165555
+  type: 'test'
+  ...
+# Subtest: 1.2.4 legacy bookmarks load without list injection or destructive migration
+ok 455 - 1.2.4 legacy bookmarks load without list injection or destructive migration
+  ---
+  duration_ms: 0.1964
+  type: 'test'
+  ...
+# Subtest: 1.2.4 bookmark title, note and subject are editable across workspaces
+ok 456 - 1.2.4 bookmark title, note and subject are editable across workspaces
+  ---
+  duration_ms: 0.789415
+  type: 'test'
+  ...
+# Subtest: 1.2.4 bookmark subject is inferred from owning notebook, not active workspace
+ok 457 - 1.2.4 bookmark subject is inferred from owning notebook, not active workspace
+  ---
+  duration_ms: 0.402394
+  type: 'test'
+  ...
+# Subtest: 1.2.4 source-preserving navigation to tab
+ok 458 - 1.2.4 source-preserving navigation to tab
+  ---
+  duration_ms: 2.050198
+  type: 'test'
+  ...
+# Subtest: 1.2.4 source-preserving navigation to pane
+ok 459 - 1.2.4 source-preserving navigation to pane
+  ---
+  duration_ms: 0.353242
+  type: 'test'
+  ...
+# Subtest: 1.2.4 source-preserving navigation to 2
+ok 460 - 1.2.4 source-preserving navigation to 2
+  ---
+  duration_ms: 0.286674
+  type: 'test'
+  ...
+# Subtest: 1.2.4 source-preserving navigation to 5
+ok 461 - 1.2.4 source-preserving navigation to 5
+  ---
+  duration_ms: 0.308766
+  type: 'test'
+  ...
+# Subtest: 1.2.4 full destination never overwrites tabs or changes active workspace
+ok 462 - 1.2.4 full destination never overwrites tabs or changes active workspace
+  ---
+  duration_ms: 0.44653
+  type: 'test'
+  ...
+# Subtest: 1.2.4 missing and revision-mismatched targets do not mutate personal state
+ok 463 - 1.2.4 missing and revision-mismatched targets do not mutate personal state
+  ---
+  duration_ms: 0.232193
+  type: 'test'
+  ...
+# Subtest: 1.2.4 state restore preserves newer bookmarks, queue and notes
+ok 464 - 1.2.4 state restore preserves newer bookmarks, queue and notes
+  ---
+  duration_ms: 2.686427
+  type: 'test'
+  ...
+# Subtest: 1.2.4 complete backup includes targets, categories, notes, read status and grid sessions exactly
+ok 465 - 1.2.4 complete backup includes targets, categories, notes, read status and grid sessions exactly
+  ---
+  duration_ms: 191.535393
+  type: 'test'
+  ...
+# Subtest: 1.2.4 read-later limit refuses new entries rather than dropping existing ones
+ok 466 - 1.2.4 read-later limit refuses new entries rather than dropping existing ones
+  ---
+  duration_ms: 8.07861
+  type: 'test'
+  ...
+# Subtest: V2 / old personal snapshots remain byte-equivalent; five roots are lazily derived
+ok 467 - V2 / old personal snapshots remain byte-equivalent; five roots are lazily derived
+  ---
+  duration_ms: 3.06737
+  type: 'test'
+  ...
+# Subtest: V2 / stable ID survives rename and reparent
+ok 468 - V2 / stable ID survives rename and reparent
+  ---
+  duration_ms: 9.118316
+  type: 'test'
+  ...
+# Subtest: V2 / related concepts do not rewrite parents
+ok 469 - V2 / related concepts do not rewrite parents
+  ---
+  duration_ms: 5.015807
+  type: 'test'
+  ...
+# Subtest: V2 / cyclic concept edit is atomic
+ok 470 - V2 / cyclic concept edit is atomic
+  ---
+  duration_ms: 2.844281
+  type: 'test'
+  ...
+# Subtest: V2 / cross-subject parents are rejected
+ok 471 - V2 / cross-subject parents are rejected
+  ---
+  duration_ms: 12.742888
+  type: 'test'
+  ...
+# Subtest: V2 / linked concept cannot be deleted; deprecation preserves assignments and replacement
+ok 472 - V2 / linked concept cannot be deleted; deprecation preserves assignments and replacement
+  ---
+  duration_ms: 4.630208
+  type: 'test'
+  ...
+# Subtest: V2 / replacement cycles are rejected
+ok 473 - V2 / replacement cycles are rejected
+  ---
+  duration_ms: 2.909477
+  type: 'test'
+  ...
+# Subtest: V2 / unlinked concept may be removed but subject roots cannot
+ok 474 - V2 / unlinked concept may be removed but subject roots cannot
+  ---
+  duration_ms: 2.530697
+  type: 'test'
+  ...
+# Subtest: V2 / many concepts can bind one physical PDF page
+ok 475 - V2 / many concepts can bind one physical PDF page
+  ---
+  duration_ms: 8.144387
+  type: 'test'
+  ...
+# Subtest: V2 / one concept groups Notebook, PDF, sheet block, QCM, article section and interview
+ok 476 - V2 / one concept groups Notebook, PDF, sheet block, QCM, article section and interview
+  ---
+  duration_ms: 24.607309
+  type: 'test'
+  ...
+# Subtest: V2 / exact navigation: notebook
+ok 477 - V2 / exact navigation: notebook
+  ---
+  duration_ms: 3.071116
+  type: 'test'
+  ...
+# Subtest: V2 / exact navigation: pdf
+ok 478 - V2 / exact navigation: pdf
+  ---
+  duration_ms: 1.776113
+  type: 'test'
+  ...
+# Subtest: V2 / exact navigation: sheet
+ok 479 - V2 / exact navigation: sheet
+  ---
+  duration_ms: 3.527229
+  type: 'test'
+  ...
+# Subtest: V2 / exact navigation: question
+ok 480 - V2 / exact navigation: question
+  ---
+  duration_ms: 2.869717
+  type: 'test'
+  ...
+# Subtest: V2 / exact navigation: article
+ok 481 - V2 / exact navigation: article
+  ---
+  duration_ms: 1.915168
+  type: 'test'
+  ...
+# Subtest: V2 / exact navigation: interview
+ok 482 - V2 / exact navigation: interview
+  ---
+  duration_ms: 2.041856
+  type: 'test'
+  ...
+# Subtest: V2 / one stored outgoing edge yields derived incoming backlink
+ok 483 - V2 / one stored outgoing edge yields derived incoming backlink
+  ---
+  duration_ms: 3.307254
+  type: 'test'
+  ...
+# Subtest: V2 / context-attached task is an exact backlink; unattached capture is not guessed
+ok 484 - V2 / context-attached task is an exact backlink; unattached capture is not guessed
+  ---
+  duration_ms: 4.227744
+  type: 'test'
+  ...
+# Subtest: V2 / Dashboard item opens its own selected item
+ok 485 - V2 / Dashboard item opens its own selected item
+  ---
+  duration_ms: 2.413764
+  type: 'test'
+  ...
+# Subtest: V2 / duplicate related target is deduplicated with both reasons retained
+ok 486 - V2 / duplicate related target is deduplicated with both reasons retained
+  ---
+  duration_ms: 11.995375
+  type: 'test'
+  ...
+# Subtest: V2 / page-level links do not incorrectly imply every PDF page is linked
+ok 487 - V2 / page-level links do not incorrectly imply every PDF page is linked
+  ---
+  duration_ms: 3.454342
+  type: 'test'
+  ...
+# Subtest: V2 / Notebook nested block inherits section scope with explicit broader provenance
+ok 488 - V2 / Notebook nested block inherits section scope with explicit broader provenance
+  ---
+  duration_ms: 3.706323
+  type: 'test'
+  ...
+# Subtest: V2 / deleted Notebook block falls back explicitly without mutating the stored target
+ok 489 - V2 / deleted Notebook block falls back explicitly without mutating the stored target
+  ---
+  duration_ms: 1.574185
+  type: 'test'
+  ...
+# Subtest: V2 / deleted question falls back to its set with warning
+ok 490 - V2 / deleted question falls back to its set with warning
+  ---
+  duration_ms: 1.407649
+  type: 'test'
+  ...
+# Subtest: V2 / deleted sheet block falls back to its physical sheet
+ok 491 - V2 / deleted sheet block falls back to its physical sheet
+  ---
+  duration_ms: 2.766917
+  type: 'test'
+  ...
+# Subtest: V2 / reordered sheets keep stable page and block identities
+ok 492 - V2 / reordered sheets keep stable page and block identities
+  ---
+  duration_ms: 6.506049
+  type: 'test'
+  ...
+# Subtest: V2 / changed PDF revision never silently opens a potentially different physical page
+ok 493 - V2 / changed PDF revision never silently opens a potentially different physical page
+  ---
+  duration_ms: 1.586823
+  type: 'test'
+  ...
+# Subtest: V2 / removed source remains an explicit unavailable reference
+ok 494 - V2 / removed source remains an explicit unavailable reference
+  ---
+  duration_ms: 1.380789
+  type: 'test'
+  ...
+# Subtest: V2 / rename/move Notebook folders cannot mutate semantic IDs
+ok 495 - V2 / rename/move Notebook folders cannot mutate semantic IDs
+  ---
+  duration_ms: 1.991761
+  type: 'test'
+  ...
+# Subtest: V2 / reference lens preference leaves structural projection byte-equivalent
+ok 496 - V2 / reference lens preference leaves structural projection byte-equivalent
+  ---
+  duration_ms: 17.326783
+  type: 'test'
+  ...
+# Subtest: V2 / manual pins remain distinct from virtual concept relations
+ok 497 - V2 / manual pins remain distinct from virtual concept relations
+  ---
+  duration_ms: 9.286394
+  type: 'test'
+  ...
+# Subtest: V2 / Explorer opens a system tab, keeping original reader byte-for-byte
+ok 498 - V2 / Explorer opens a system tab, keeping original reader byte-for-byte
+  ---
+  duration_ms: 3.418178
+  type: 'test'
+  ...
+# Subtest: V2 / Explorer uses the existing five-tab bound before mutation
+ok 499 - V2 / Explorer uses the existing five-tab bound before mutation
+  ---
+  duration_ms: 2.177987
+  type: 'test'
+  ...
+# Subtest: V2 / navigating a system tab converts it to a normal reader without fake content
+ok 500 - V2 / navigating a system tab converts it to a normal reader without fake content
+  ---
+  duration_ms: 2.001926
+  type: 'test'
+  ...
+# Subtest: V2 / reference destinations keep other pane independent and open Workspace5 exactly
+ok 501 - V2 / reference destinations keep other pane independent and open Workspace5 exactly
+  ---
+  duration_ms: 2.476187
+  type: 'test'
+  ...
+# Subtest: V2 / unlinked queue and reviewed fingerprints respond to edits
+ok 502 - V2 / unlinked queue and reviewed fingerprints respond to edits
+  ---
+  duration_ms: 278.40851
+  type: 'test'
+  ...
+# Subtest: V2 / review export bounds and live source excerpts with semantic revision
+ok 503 - V2 / review export bounds and live source excerpts with semantic revision
+  ---
+  duration_ms: 5.055105
+  type: 'test'
+  ...
+# Subtest: V2 / valid proposal preview is pure and selected acceptance is explicit
+ok 504 - V2 / valid proposal preview is pure and selected acceptance is explicit
+  ---
+  duration_ms: 11.871772
+  type: 'test'
+  ...
+# Subtest: V2 / batch acceptance creates once and atomic rejection of stale semantics
+ok 505 - V2 / batch acceptance creates once and atomic rejection of stale semantics
+  ---
+  duration_ms: 6.291551
+  type: 'test'
+  ...
+# Subtest: V2 / stale imported resource revision rejects whole batch without mutation
+ok 506 - V2 / stale imported resource revision rejects whole batch without mutation
+  ---
+  duration_ms: 2.698756
+  type: 'test'
+  ...
+# Subtest: V2 / stale semantic import is rejected before staging
+ok 507 - V2 / stale semantic import is rejected before staging
+  ---
+  duration_ms: 3.544294
+  type: 'test'
+  ...
+# Subtest: V2 / unknown concepts, targets and unsafe URLs rejected atomically
+ok 508 - V2 / unknown concepts, targets and unsafe URLs rejected atomically
+  ---
+  duration_ms: 14.843976
+  type: 'test'
+  ...
+# Subtest: V2 / rejected proposal retains history and no accepted links
+ok 509 - V2 / rejected proposal retains history and no accepted links
+  ---
+  duration_ms: 4.986274
+  type: 'test'
+  ...
+# Subtest: V2 / duplicate suggestion imports do not partially stage
+ok 510 - V2 / duplicate suggestion imports do not partially stage
+  ---
+  duration_ms: 6.590322
+  type: 'test'
+  ...
+# Subtest: V2 / explicit reference suggestions validate both endpoints
+ok 511 - V2 / explicit reference suggestions validate both endpoints
+  ---
+  duration_ms: 3.221488
+  type: 'test'
+  ...
+# Subtest: V2 / full JSON backup personal payload preserves semantic state and lens exactly
+ok 512 - V2 / full JSON backup personal payload preserves semantic state and lens exactly
+  ---
+  duration_ms: 7.14408
+  type: 'test'
+  ...
+# Subtest: V2 / reading checkpoint restore does not rewind newer knowledge or shared lens preference
+ok 513 - V2 / reading checkpoint restore does not rewind newer knowledge or shared lens preference
+  ---
+  duration_ms: 4.522589
+  type: 'test'
+  ...
+# Subtest: V2 / invalid knowledge in backup is rejected including cycles and prototype fields
+ok 514 - V2 / invalid knowledge in backup is rejected including cycles and prototype fields
+  ---
+  duration_ms: 0.248246
+  type: 'test'
+  ...
+# Subtest: V2 / semantic audit is bounded without deleting accepted links
+ok 515 - V2 / semantic audit is bounded without deleting accepted links
+  ---
+  duration_ms: 76.974914
+  type: 'test'
+  ...
+# Subtest: V2 / first-time PDF defaults are opt-in for new locations; restored modes untouched
+ok 516 - V2 / first-time PDF defaults are opt-in for new locations; restored modes untouched
+  ---
+  duration_ms: 0.329767
+  type: 'test'
+  ...
+# Subtest: V2 / native wheel boundaries do not count unread content as edge
+ok 517 - V2 / native wheel boundaries do not count unread content as edge
+  ---
+  duration_ms: 0.227976
+  type: 'test'
+  ...
+# Subtest: V2 / pending restore gate never swallows a rendered tall-page scroll
+ok 518 - V2 / pending restore gate never swallows a rendered tall-page scroll
+  ---
+  duration_ms: 0.139826
+  type: 'test'
+  ...
+# Subtest: V2 / one momentum burst scrolls mid-page but can turn only one physical group
+ok 519 - V2 / one momentum burst scrolls mid-page but can turn only one physical group
+  ---
+  duration_ms: 0.435163
+  type: 'test'
+  ...
+# Subtest: V2 / horizontal/modified/continuous gestures never page-turn
+ok 520 - V2 / horizontal/modified/continuous gestures never page-turn
+  ---
+  duration_ms: 0.165754
+  type: 'test'
+  ...
+# Subtest: V2 / resource browser and reference result lists are bounded
+ok 521 - V2 / resource browser and reference result lists are bounded
+  ---
+  duration_ms: 2.758824
+  type: 'test'
+  ...
+# Subtest: V2 / PDF harness correctly clears Dashboard surface and expands projected libraries
+ok 522 - V2 / PDF harness correctly clears Dashboard surface and expands projected libraries
+  ---
+  duration_ms: 0.41271
+  type: 'test'
+  ...
+# Subtest: V2 / exact same-PDF links retain user-selected presentation and zoom
+ok 523 - V2 / exact same-PDF links retain user-selected presentation and zoom
+  ---
+  duration_ms: 2.407976
+  type: 'test'
+  ...
+# Subtest: V2 / page-title anchor canonicalizes to whole document scope
+ok 524 - V2 / page-title anchor canonicalizes to whole document scope
+  ---
+  duration_ms: 2.452642
+  type: 'test'
+  ...
+# Subtest: V2 / accepting a valid selected proposal does not require accepting stale unselected data
+ok 525 - V2 / accepting a valid selected proposal does not require accepting stale unselected data
+  ---
+  duration_ms: 3.424808
+  type: 'test'
+  ...
+# Subtest: V2 / reopening Explorer for a new target clears its old concept filter
+ok 526 - V2 / reopening Explorer for a new target clears its old concept filter
+  ---
+  duration_ms: 2.311654
+  type: 'test'
+  ...
+# Subtest: V2 / whole Notebook page lens aggregates its precise section links without altering scopes
+ok 527 - V2 / whole Notebook page lens aggregates its precise section links without altering scopes
+  ---
+  duration_ms: 9.276259
+  type: 'test'
+  ...
+# Subtest: V2 / Open in new tab from Explorer does not consume the system tab as an empty reader
+ok 528 - V2 / Open in new tab from Explorer does not consume the system tab as an empty reader
+  ---
+  duration_ms: 2.801688
+  type: 'test'
+  ...
+# Subtest: V2 / deleted saved sheet remains unavailable while explicit semantic resolution offers a warned parent
+ok 529 - V2 / deleted saved sheet remains unavailable while explicit semantic resolution offers a warned parent
+  ---
+  duration_ms: 3.494841
+  type: 'test'
+  ...
+# Subtest: 1.2.3 old personal state loads without an empty saves module being injected
+ok 530 - 1.2.3 old personal state loads without an empty saves module being injected
+  ---
+  duration_ms: 2.576315
+  type: 'test'
+  ...
+# Subtest: 1.2.3 workspace save freezes every session field without modifying the live session
+ok 531 - 1.2.3 workspace save freezes every session field without modifying the live session
+  ---
+  duration_ms: 5.056918
+  type: 'test'
+  ...
+# Subtest: 1.2.3 all save captures five distinct sessions and the active workspace
+ok 532 - 1.2.3 all save captures five distinct sessions and the active workspace
+  ---
+  duration_ms: 2.22145
+  type: 'test'
+  ...
+# Subtest: 1.2.3 single restore targets its original slot and leaves the other four byte-equivalent
+ok 533 - 1.2.3 single restore targets its original slot and leaves the other four byte-equivalent
+  ---
+  duration_ms: 0.963653
+  type: 'test'
+  ...
+# Subtest: 1.2.3 all restore restores the complete session layout, not shared content
+ok 534 - 1.2.3 all restore restores the complete session layout, not shared content
+  ---
+  duration_ms: 1.525754
+  type: 'test'
+  ...
+# Subtest: 1.2.3 restoring a save creates an independent undo point, not a new manual save
+ok 535 - 1.2.3 restoring a save creates an independent undo point, not a new manual save
+  ---
+  duration_ms: 2.025732
+  type: 'test'
+  ...
+# Subtest: 1.2.3 all-workspace undo returns the pre-restore layout and active slot
+ok 536 - 1.2.3 all-workspace undo returns the pre-restore layout and active slot
+  ---
+  duration_ms: 1.737516
+  type: 'test'
+  ...
+# Subtest: 1.2.3 all restore preserves exact uninitialized-slot absence
+ok 537 - 1.2.3 all restore preserves exact uninitialized-slot absence
+  ---
+  duration_ms: 0.316207
+  type: 'test'
+  ...
+# Subtest: 1.2.3 an inactive unused workspace can be saved without altering active workspace
+ok 538 - 1.2.3 an inactive unused workspace can be saved without altering active workspace
+  ---
+  duration_ms: 0.533538
+  type: 'test'
+  ...
+# Subtest: 1.2.3 repeated saves never nest the saved-state store in snapshots
+ok 539 - 1.2.3 repeated saves never nest the saved-state store in snapshots
+  ---
+  duration_ms: 7.954507
+  type: 'test'
+  ...
+# Subtest: 1.2.3 manual saves have a per-scope cap and are never silently pruned
+ok 540 - 1.2.3 manual saves have a per-scope cap and are never silently pruned
+  ---
+  duration_ms: 10.242055
+  type: 'test'
+  ...
+# Subtest: 1.2.3 mini history is bounded and chronological by action insertion
+ok 541 - 1.2.3 mini history is bounded and chronological by action insertion
+  ---
+  duration_ms: 6.283839
+  type: 'test'
+  ...
+# Subtest: 1.2.3 rename/progress note and delete preserve sessions and reading bookmarks
+ok 542 - 1.2.3 rename/progress note and delete preserve sessions and reading bookmarks
+  ---
+  duration_ms: 0.615229
+  type: 'test'
+  ...
+# Subtest: 1.2.3 the quick restore chooses the newest manual save, never an undo snapshot
+ok 543 - 1.2.3 the quick restore chooses the newest manual save, never an undo snapshot
+  ---
+  duration_ms: 0.732932
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saves with equal timestamps still use last inserted as latest
+ok 544 - 1.2.3 saves with equal timestamps still use last inserted as latest
+  ---
+  duration_ms: 0.3792
+  type: 'test'
+  ...
+# Subtest: 1.2.3 a missing restore ID cannot mutate state
+ok 545 - 1.2.3 a missing restore ID cannot mutate state
+  ---
+  duration_ms: 0.234607
+  type: 'test'
+  ...
+# Subtest: 1.2.3 invalid save scope 0 is rejected atomically
+ok 546 - 1.2.3 invalid save scope 0 is rejected atomically
+  ---
+  duration_ms: 0.390096
+  type: 'test'
+  ...
+# Subtest: 1.2.3 invalid save scope 6 is rejected atomically
+ok 547 - 1.2.3 invalid save scope 6 is rejected atomically
+  ---
+  duration_ms: 0.342847
+  type: 'test'
+  ...
+# Subtest: 1.2.3 invalid save scope NaN is rejected atomically
+ok 548 - 1.2.3 invalid save scope NaN is rejected atomically
+  ---
+  duration_ms: 0.765751
+  type: 'test'
+  ...
+# Subtest: 1.2.3 invalid save scope 1 is rejected atomically
+ok 549 - 1.2.3 invalid save scope 1 is rejected atomically
+  ---
+  duration_ms: 0.274736
+  type: 'test'
+  ...
+# Subtest: 1.2.3 invalid save scope wrong is rejected atomically
+ok 550 - 1.2.3 invalid save scope wrong is rejected atomically
+  ---
+  duration_ms: 0.400952
+  type: 'test'
+  ...
+# Subtest: 1.2.3 invalid save metadata is rejected without pruning
+ok 551 - 1.2.3 invalid save metadata is rejected without pruning
+  ---
+  duration_ms: 1.445104
+  type: 'test'
+  ...
+# Subtest: 1.2.3 invalid save metadata is rejected without pruning
+ok 552 - 1.2.3 invalid save metadata is rejected without pruning
+  ---
+  duration_ms: 0.411828
+  type: 'test'
+  ...
+# Subtest: 1.2.3 invalid save metadata is rejected without pruning
+ok 553 - 1.2.3 invalid save metadata is rejected without pruning
+  ---
+  duration_ms: 0.306703
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects nested invalid active view
+ok 554 - 1.2.3 saved-state validation rejects nested invalid active view
+  ---
+  duration_ms: 0.403295
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects nested invalid PDF page
+ok 555 - 1.2.3 saved-state validation rejects nested invalid PDF page
+  ---
+  duration_ms: 0.347153
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects fractional workspace
+ok 556 - 1.2.3 saved-state validation rejects fractional workspace
+  ---
+  duration_ms: 0.281936
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects unknown saved schema
+ok 557 - 1.2.3 saved-state validation rejects unknown saved schema
+  ---
+  duration_ms: 0.249819
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects embedded recursive store
+ok 558 - 1.2.3 saved-state validation rejects embedded recursive store
+  ---
+  duration_ms: 0.647056
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects duplicate save
+ok 559 - 1.2.3 saved-state validation rejects duplicate save
+  ---
+  duration_ms: 0.368465
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects mismatched undo scope
+ok 560 - 1.2.3 saved-state validation rejects mismatched undo scope
+  ---
+  duration_ms: 0.382095
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects invalid restoration revision
+ok 561 - 1.2.3 saved-state validation rejects invalid restoration revision
+  ---
+  duration_ms: 0.643651
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects excess history
+ok 562 - 1.2.3 saved-state validation rejects excess history
+  ---
+  duration_ms: 1.487256
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects unknown field
+ok 563 - 1.2.3 saved-state validation rejects unknown field
+  ---
+  duration_ms: 0.290919
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects nonfinite timestamp
+ok 564 - 1.2.3 saved-state validation rejects nonfinite timestamp
+  ---
+  duration_ms: 0.309948
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects unsafe structural key
+ok 565 - 1.2.3 saved-state validation rejects unsafe structural key
+  ---
+  duration_ms: 0.300945
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved-state validation rejects duplicate PDF tree disclosures
+ok 566 - 1.2.3 saved-state validation rejects duplicate PDF tree disclosures
+  ---
+  duration_ms: 0.373071
+  type: 'test'
+  ...
+# Subtest: 1.2.3 all snapshot with missing active numbered workspace is rejected
+ok 567 - 1.2.3 all snapshot with missing active numbered workspace is rejected
+  ---
+  duration_ms: 0.579716
+  type: 'test'
+  ...
+# Subtest: 1.2.3 complete backup ZIP preserves saves, undo points, progress notes and activity exactly
+ok 568 - 1.2.3 complete backup ZIP preserves saves, undo points, progress notes and activity exactly
+  ---
+  duration_ms: 264.983915
+  type: 'test'
+  ...
+# Subtest: 1.2.3 invalid snapshot is rejected when importing a full backup before any write
+ok 569 - 1.2.3 invalid snapshot is rejected when importing a full backup before any write
+  ---
+  duration_ms: 62.299247
+  type: 'test'
+  ...
+# Subtest: 1.2.3 saved PDF anchors with absent optional values remain exactly JSON representable
+ok 570 - 1.2.3 saved PDF anchors with absent optional values remain exactly JSON representable
+  ---
+  duration_ms: 1.40191
+  type: 'test'
+  ...
+# Subtest: 1.2.3 slow 30px ticks separated by 350ms turn at the edge
+ok 571 - 1.2.3 slow 30px ticks separated by 350ms turn at the edge
+  ---
+  duration_ms: 0.267745
+  type: 'test'
+  ...
+# Subtest: 1.2.3 opposite small ticks cannot inherit accumulated downward movement
+ok 572 - 1.2.3 opposite small ticks cannot inherit accumulated downward movement
+  ---
+  duration_ms: 0.10817
+  type: 'test'
+  ...
+# Subtest: 1.2.3 old abandoned edge ticks expire
+ok 573 - 1.2.3 old abandoned edge ticks expire
+  ---
+  duration_ms: 0.086978
+  type: 'test'
+  ...
+# Subtest: 1.2.3 returning to mid-page discards stale edge ticks
+ok 574 - 1.2.3 returning to mid-page discards stale edge ticks
+  ---
+  duration_ms: 0.16949
+  type: 'test'
+  ...
+# Subtest: 1.2.3 a sustained high-frequency burst advances once only
+ok 575 - 1.2.3 a sustained high-frequency burst advances once only
+  ---
+  duration_ms: 0.259283
+  type: 'test'
+  ...
+# Subtest: 1.2.3 invalid wheel inputs cannot poison the next gesture
+ok 576 - 1.2.3 invalid wheel inputs cannot poison the next gesture
+  ---
+  duration_ms: 0.104895
+  type: 'test'
+  ...
+# Subtest: 1.2.3 study projection is revision-bound and never mutates canonical metadata
+ok 577 - 1.2.3 study projection is revision-bound and never mutates canonical metadata
+  ---
+  duration_ms: 0.29089
+  type: 'test'
+  ...
+# Subtest: 1.2.3 projection keys cannot alias punctuation in document/category identifiers
+ok 578 - 1.2.3 projection keys cannot alias punctuation in document/category identifiers
+  ---
+  duration_ms: 0.154137
+  type: 'test'
+  ...
+# Subtest: 1.2.3 category page links deduplicate physical pages without confusing concept indexes
+ok 579 - 1.2.3 category page links deduplicate physical pages without confusing concept indexes
+  ---
+  duration_ms: 0.253955
+  type: 'test'
+  ...
+# Subtest: 1.2.3 timestamps outside the browser Date range are rejected atomically
+ok 580 - 1.2.3 timestamps outside the browser Date range are rejected atomically
+  ---
+  duration_ms: 1.984541
+  type: 'test'
+  ...
+# Subtest: stabilization: capture starts with three independent empty rows and defaults global
+ok 581 - stabilization: capture starts with three independent empty rows and defaults global
+  ---
+  duration_ms: 1.539163
+  type: 'test'
+  ...
+# Subtest: stabilization: draft row floor and cap do not mutate input
+ok 582 - stabilization: draft row floor and cap do not mutate input
+  ---
+  duration_ms: 0.236159
+  type: 'test'
+  ...
+# Subtest: stabilization: saved capture workflow snapshot preserves hidden URL, date, importance and classification
+ok 583 - stabilization: saved capture workflow snapshot preserves hidden URL, date, importance and classification
+  ---
+  duration_ms: 0.956423
+  type: 'test'
+  ...
+# Subtest: stabilization: Dashboard toggle changes only surface and selected capture, not readers
+ok 584 - stabilization: Dashboard toggle changes only surface and selected capture, not readers
+  ---
+  duration_ms: 0.916513
+  type: 'test'
+  ...
+# Subtest: stabilization: actual articles source has validated shared copy-only drag
+ok 585 - stabilization: actual articles source has validated shared copy-only drag
+  ---
+  duration_ms: 14.953062
+  type: 'test'
+  ...
+# Subtest: stabilization: articles canonical JSON round-trip remains valid without touching input
+ok 586 - stabilization: articles canonical JSON round-trip remains valid without touching input
+  ---
+  duration_ms: 28.467049
+  type: 'test'
+  ...
+# Subtest: stabilization: articles malformed JSON is atomic
+ok 587 - stabilization: articles malformed JSON is atomic
+  ---
+  duration_ms: 4.023561
+  type: 'test'
+  ...
+# Subtest: stabilization: actual qcm source has validated shared copy-only drag
+ok 588 - stabilization: actual qcm source has validated shared copy-only drag
+  ---
+  duration_ms: 4.917302
+  type: 'test'
+  ...
+# Subtest: stabilization: qcm canonical JSON round-trip remains valid without touching input
+ok 589 - stabilization: qcm canonical JSON round-trip remains valid without touching input
+  ---
+  duration_ms: 25.766926
+  type: 'test'
+  ...
+# Subtest: stabilization: qcm malformed JSON is atomic
+ok 590 - stabilization: qcm malformed JSON is atomic
+  ---
+  duration_ms: 5.700789
+  type: 'test'
+  ...
+# Subtest: stabilization: actual cheatsheets source has validated shared copy-only drag
+ok 591 - stabilization: actual cheatsheets source has validated shared copy-only drag
+  ---
+  duration_ms: 9.441813
+  type: 'test'
+  ...
+# Subtest: stabilization: cheatsheets canonical JSON round-trip remains valid without touching input
+ok 592 - stabilization: cheatsheets canonical JSON round-trip remains valid without touching input
+  ---
+  duration_ms: 22.774863
+  type: 'test'
+  ...
+# Subtest: stabilization: cheatsheets malformed JSON is atomic
+ok 593 - stabilization: cheatsheets malformed JSON is atomic
+  ---
+  duration_ms: 2.601152
+  type: 'test'
+  ...
+# Subtest: stabilization: actual pdfs source has validated shared copy-only drag
+ok 594 - stabilization: actual pdfs source has validated shared copy-only drag
+  ---
+  duration_ms: 3.339952
+  type: 'test'
+  ...
+# Subtest: stabilization: pdfs canonical JSON round-trip remains valid without touching input
+ok 595 - stabilization: pdfs canonical JSON round-trip remains valid without touching input
+  ---
+  duration_ms: 23.942698
+  type: 'test'
+  ...
+# Subtest: stabilization: pdfs malformed JSON is atomic
+ok 596 - stabilization: pdfs malformed JSON is atomic
+  ---
+  duration_ms: 3.617492
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects unknown version before mutation
+ok 597 - stabilization: drag rejects unknown version before mutation
+  ---
+  duration_ms: 2.836008
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects HTML field before mutation
+ok 598 - stabilization: drag rejects HTML field before mutation
+  ---
+  duration_ms: 3.145997
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects missing target before mutation
+ok 599 - stabilization: drag rejects missing target before mutation
+  ---
+  duration_ms: 2.549855
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects missing block before mutation
+ok 600 - stabilization: drag rejects missing block before mutation
+  ---
+  duration_ms: 2.961093
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects unsafe URL before mutation
+ok 601 - stabilization: drag rejects unsafe URL before mutation
+  ---
+  duration_ms: 2.476317
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects not a resource before mutation
+ok 602 - stabilization: drag rejects not a resource before mutation
+  ---
+  duration_ms: 3.070724
+  type: 'test'
+  ...
+# Subtest: stabilization: malformed, byte-oversized, prototype drag and missing folder fail closed
+ok 603 - stabilization: malformed, byte-oversized, prototype drag and missing folder fail closed
+  ---
+  duration_ms: 2.431131
+  type: 'test'
+  ...
+# Subtest: stabilization: Article simple text edit retains original stable Markdown block
+ok 604 - stabilization: Article simple text edit retains original stable Markdown block
+  ---
+  duration_ms: 18.605697
+  type: 'test'
+  ...
+# Subtest: stabilization: exact Article bookmark blocks destructive body edit but permits label changes
+ok 605 - stabilization: exact Article bookmark blocks destructive body edit but permits label changes
+  ---
+  duration_ms: 24.953951
+  type: 'test'
+  ...
+# Subtest: stabilization: exact QCM question and retained attempt option identities are protected
+ok 606 - stabilization: exact QCM question and retained attempt option identities are protected
+  ---
+  duration_ms: 3.896394
+  type: 'test'
+  ...
+# Subtest: stabilization: missing exact link inside imported QCM fails before overlay mutation
+ok 607 - stabilization: missing exact link inside imported QCM fails before overlay mutation
+  ---
+  duration_ms: 4.445555
+  type: 'test'
+  ...
+# Subtest: stabilization: selected stable resource ID cannot be changed in JSON
+ok 608 - stabilization: selected stable resource ID cannot be changed in JSON
+  ---
+  duration_ms: 5.932771
+  type: 'test'
+  ...
+# Subtest: stabilization: PDF JSON contains metadata only and refuses binary identity and unsafe companion changes
+ok 609 - stabilization: PDF JSON contains metadata only and refuses binary identity and unsafe companion changes
+  ---
+  duration_ms: 22.742515
+  type: 'test'
+  ...
+# Subtest: stabilization: source change while JSON is open must be explicitly reloaded
+ok 610 - stabilization: source change while JSON is open must be explicitly reloaded
+  ---
+  duration_ms: 5.428837
+  type: 'test'
+  ...
+# Subtest: stabilization: cheatsheet stable page bookmark survives reorder but not page deletion
+ok 611 - stabilization: cheatsheet stable page bookmark survives reorder but not page deletion
+  ---
+  duration_ms: 36.229563
+  type: 'test'
+  ...
+# Subtest: stabilization: deterministic optional demo has complete content and realistic explained options
+ok 612 - stabilization: deterministic optional demo has complete content and realistic explained options
+  ---
+  duration_ms: 1.839246
+  type: 'test'
+  ...
+# Subtest: stabilization: demo loading twice is idempotent and never touches reader sessions
+ok 613 - stabilization: demo loading twice is idempotent and never touches reader sessions
+  ---
+  duration_ms: 8.489788
+  type: 'test'
+  ...
+# Subtest: stabilization: cleanup removes unedited demo sources and keeps unrelated user content
+ok 614 - stabilization: cleanup removes unedited demo sources and keeps unrelated user content
+  ---
+  duration_ms: 7.977461
+  type: 'test'
+  ...
+# Subtest: stabilization: user bookmark prevents demo source cleanup; editing prevents removal
+ok 615 - stabilization: user bookmark prevents demo source cleanup; editing prevents removal
+  ---
+  duration_ms: 6.686895
+  type: 'test'
+  ...
+# Subtest: stabilization: saved reader location and QCM attempts protect demo content during cleanup
+ok 616 - stabilization: saved reader location and QCM attempts protect demo content during cleanup
+  ---
+  duration_ms: 6.692834
+  type: 'test'
+  ...
+# Subtest: stabilization: invalid atomic shared-data update preserves both canonical stores
+ok 617 - stabilization: invalid atomic shared-data update preserves both canonical stores
+  ---
+  duration_ms: 0.439759
+  type: 'test'
+  ...
+# Subtest: stabilization: complete demo survives existing exact backup protocol
+ok 618 - stabilization: complete demo survives existing exact backup protocol
+  ---
+  duration_ms: 201.884321
+  type: 'test'
+  ...
+# Subtest: stabilization: user reading target protects a demo capture and its context during cleanup
+ok 619 - stabilization: user reading target protects a demo capture and its context during cleanup
+  ---
+  duration_ms: 6.514671
+  type: 'test'
+  ...
+# Subtest: stabilization: retained customized Article keeps its classified Notebook destination
+ok 620 - stabilization: retained customized Article keeps its classified Notebook destination
+  ---
+  duration_ms: 5.280739
+  type: 'test'
+  ...
+# Subtest: stabilization: demo wrapper metadata is not silently erased during cleanup
+ok 621 - stabilization: demo wrapper metadata is not silently erased during cleanup
+  ---
+  duration_ms: 4.812937
+  type: 'test'
+  ...
+# Subtest: stabilization: reload demo keeps a customized deleted exact anchor without throwing
+ok 622 - stabilization: reload demo keeps a customized deleted exact anchor without throwing
+  ---
+  duration_ms: 4.897272
+  type: 'test'
+  ...
+# Subtest: stabilization: JSON prevents deleting a bookmarked PDF companion category
+not ok 623 - stabilization: JSON prevents deleting a bookmarked PDF companion category
+  ---
+  duration_ms: 2.366575
+  type: 'test'
+  location: '/mnt/data/atlasnote-v2-stabilized/tests/stabilization-v2.test.mjs:56:1'
+  failureType: 'testCodeFailure'
+  error: 'Invalid reading list: unknown field categoryId'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    fail (file:///mnt/data/atlasnote-v2-stabilized/dist-offline/app/storage/reading-validation.mjs:4:27)
+    keys (file:///mnt/data/atlasnote-v2-stabilized/dist-offline/app/storage/reading-validation.mjs:13:9)
+    validateReadingTarget (file:///mnt/data/atlasnote-v2-stabilized/dist-offline/app/storage/reading-validation.mjs:59:5)
+    resolveTarget (file:///mnt/data/atlasnote-v2-stabilized/dist-offline/app/references/targets.js:79:5)
+    TestContext.<anonymous> (file:///mnt/data/atlasnote-v2-stabilized/tests/stabilization-v2.test.mjs:56:353)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+  ...
+# Subtest: stabilization: PDF metadata export cannot mutate the original companion
+ok 624 - stabilization: PDF metadata export cannot mutate the original companion
+  ---
+  duration_ms: 2.203704
+  type: 'test'
+  ...
+# Subtest: 1.2.2 migration preserves exact v2 personal data and slot 1 session
+ok 625 - 1.2.2 migration preserves exact v2 personal data and slot 1 session
+  ---
+  duration_ms: 3.891867
+  type: 'test'
+  ...
+# Subtest: 1.2.2 slots are canonical independent sessions, not snapshots swapped into session
+ok 626 - 1.2.2 slots are canonical independent sessions, not snapshots swapped into session
+  ---
+  duration_ms: 0.793732
+  type: 'test'
+  ...
+# Subtest: 1.2.2 activating all five slots does not create a sixth or clone document tabs
+ok 627 - 1.2.2 activating all five slots does not create a sixth or clone document tabs
+  ---
+  duration_ms: 0.913009
+  type: 'test'
+  ...
+# Subtest: 1.2.2 invalid workspace selector is rejected: 0
+ok 628 - 1.2.2 invalid workspace selector is rejected: 0
+  ---
+  duration_ms: 0.509863
+  type: 'test'
+  ...
+# Subtest: 1.2.2 invalid workspace selector is rejected: 6
+ok 629 - 1.2.2 invalid workspace selector is rejected: 6
+  ---
+  duration_ms: 0.096973
+  type: 'test'
+  ...
+# Subtest: 1.2.2 invalid workspace selector is rejected: -1
+ok 630 - 1.2.2 invalid workspace selector is rejected: -1
+  ---
+  duration_ms: 0.156491
+  type: 'test'
+  ...
+# Subtest: 1.2.2 invalid workspace selector is rejected: 1.5
+ok 631 - 1.2.2 invalid workspace selector is rejected: 1.5
+  ---
+  duration_ms: 0.150112
+  type: 'test'
+  ...
+# Subtest: 1.2.2 invalid workspace selector is rejected: 2
+ok 632 - 1.2.2 invalid workspace selector is rejected: 2
+  ---
+  duration_ms: 0.078196
+  type: 'test'
+  ...
+# Subtest: 1.2.2 invalid workspace selector is rejected: null
+ok 633 - 1.2.2 invalid workspace selector is rejected: null
+  ---
+  duration_ms: 0.522391
+  type: 'test'
+  ...
+# Subtest: 1.2.2 multiple slots can independently choose the same category
+ok 634 - 1.2.2 multiple slots can independently choose the same category
+  ---
+  duration_ms: 0.661196
+  type: 'test'
+  ...
+# Subtest: 1.2.2 categories filter explicit metadata, not display-name keywords
+ok 635 - 1.2.2 categories filter explicit metadata, not display-name keywords
+  ---
+  duration_ms: 0.208108
+  type: 'test'
+  ...
+# Subtest: 1.2.2 shared notes and content are not duplicated by switching workspaces
+ok 636 - 1.2.2 shared notes and content are not duplicated by switching workspaces
+  ---
+  duration_ms: 0.241657
+  type: 'test'
+  ...
+# Subtest: 1.2.2 quick Book restores continuous without closing or replacing anything
+ok 637 - 1.2.2 quick Book restores continuous without closing or replacing anything
+  ---
+  duration_ms: 0.181858
+  type: 'test'
+  ...
+# Subtest: 1.2.2 quick Book restores parallel without closing or replacing anything
+ok 638 - 1.2.2 quick Book restores parallel without closing or replacing anything
+  ---
+  duration_ms: 0.073929
+  type: 'test'
+  ...
+# Subtest: 1.2.2 quick PDF Spread restores single without replacing history
+ok 639 - 1.2.2 quick PDF Spread restores single without replacing history
+  ---
+  duration_ms: 0.146837
+  type: 'test'
+  ...
+# Subtest: 1.2.2 quick PDF Spread restores continuous without replacing history
+ok 640 - 1.2.2 quick PDF Spread restores continuous without replacing history
+  ---
+  duration_ms: 0.080368
+  type: 'test'
+  ...
+# Subtest: 1.2.2 pane collapse/restore preserves tabs, ratio and physical positions: 0
+ok 641 - 1.2.2 pane collapse/restore preserves tabs, ratio and physical positions: 0
+  ---
+  duration_ms: 0.384037
+  type: 'test'
+  ...
+# Subtest: 1.2.2 pane collapse/restore preserves tabs, ratio and physical positions: 1
+ok 642 - 1.2.2 pane collapse/restore preserves tabs, ratio and physical positions: 1
+  ---
+  duration_ms: 0.160747
+  type: 'test'
+  ...
+# Subtest: 1.2.2 cannot collapse the only pane or a missing pane
+ok 643 - 1.2.2 cannot collapse the only pane or a missing pane
+  ---
+  duration_ms: 0.12166
+  type: 'test'
+  ...
+# Subtest: 1.2.2 closing Compare after a solo pane retains the populated survivor
+ok 644 - 1.2.2 closing Compare after a solo pane retains the populated survivor
+  ---
+  duration_ms: 0.259353
+  type: 'test'
+  ...
+# Subtest: 1.2.2 physical bookmarks navigate to their actual PDF page
+ok 645 - 1.2.2 physical bookmarks navigate to their actual PDF page
+  ---
+  duration_ms: 0.219514
+  type: 'test'
+  ...
+# Subtest: 1.2.2 all slots validate before restore: missing active slot
+ok 646 - 1.2.2 all slots validate before restore: missing active slot
+  ---
+  duration_ms: 0.136492
+  type: 'test'
+  ...
+# Subtest: 1.2.2 all slots validate before restore: sixth slot
+ok 647 - 1.2.2 all slots validate before restore: sixth slot
+  ---
+  duration_ms: 0.21016
+  type: 'test'
+  ...
+# Subtest: 1.2.2 all slots validate before restore: invalid category
+ok 648 - 1.2.2 all slots validate before restore: invalid category
+  ---
+  duration_ms: 0.247716
+  type: 'test'
+  ...
+# Subtest: 1.2.2 all slots validate before restore: hidden active pane
+ok 649 - 1.2.2 all slots validate before restore: hidden active pane
+  ---
+  duration_ms: 0.209129
+  type: 'test'
+  ...
+# Subtest: 1.2.2 all slots validate before restore: six document tabs
+ok 650 - 1.2.2 all slots validate before restore: six document tabs
+  ---
+  duration_ms: 0.177712
+  type: 'test'
+  ...
+# Subtest: 1.2.2 all slots validate before restore: duplicate view IDs
+ok 651 - 1.2.2 all slots validate before restore: duplicate view IDs
+  ---
+  duration_ms: 0.140388
+  type: 'test'
+  ...
+# Subtest: 1.2.2 all slots validate before restore: bad companion view
+ok 652 - 1.2.2 all slots validate before restore: bad companion view
+  ---
+  duration_ms: 0.134829
+  type: 'test'
+  ...
+# Subtest: 1.2.2 all slots validate before restore: invalid physical offset
+ok 653 - 1.2.2 all slots validate before restore: invalid physical offset
+  ---
+  duration_ms: 0.140548
+  type: 'test'
+  ...
+# Subtest: 1.2.2 all slots validate before restore: unknown slot hidden corruption
+ok 654 - 1.2.2 all slots validate before restore: unknown slot hidden corruption
+  ---
+  duration_ms: 0.131805
+  type: 'test'
+  ...
+# Subtest: 1.2.2 verified fixture companion validates and does not mutate its source
+ok 655 - 1.2.2 verified fixture companion validates and does not mutate its source
+  ---
+  duration_ms: 1.666681
+  type: 'test'
+  ...
+# Subtest: 1.2.2 physical page map, category ancestry and contextual terms agree
+ok 656 - 1.2.2 physical page map, category ancestry and contextual terms agree
+  ---
+  duration_ms: 0.263199
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects schema
+ok 657 - 1.2.2 companion validation rejects schema
+  ---
+  duration_ms: 0.174107
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects unknown top-level action
+ok 658 - 1.2.2 companion validation rejects unknown top-level action
+  ---
+  duration_ms: 0.178433
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects wrong document
+ok 659 - 1.2.2 companion validation rejects wrong document
+  ---
+  duration_ms: 0.133627
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects wrong revision
+ok 660 - 1.2.2 companion validation rejects wrong revision
+  ---
+  duration_ms: 0.132726
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects missing known revision
+ok 661 - 1.2.2 companion validation rejects missing known revision
+  ---
+  duration_ms: 0.129071
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects wrong page count
+ok 662 - 1.2.2 companion validation rejects wrong page count
+  ---
+  duration_ms: 0.164763
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects fractional physical page
+ok 663 - 1.2.2 companion validation rejects fractional physical page
+  ---
+  duration_ms: 0.249679
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects out-of-range page
+ok 664 - 1.2.2 companion validation rejects out-of-range page
+  ---
+  duration_ms: 0.164233
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects zero page
+ok 665 - 1.2.2 companion validation rejects zero page
+  ---
+  duration_ms: 0.146176
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects duplicate occurrence
+ok 666 - 1.2.2 companion validation rejects duplicate occurrence
+  ---
+  duration_ms: 1.059124
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects reversed range
+ok 667 - 1.2.2 companion validation rejects reversed range
+  ---
+  duration_ms: 0.234296
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects duplicate category
+ok 668 - 1.2.2 companion validation rejects duplicate category
+  ---
+  duration_ms: 0.221077
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects duplicate term
+ok 669 - 1.2.2 companion validation rejects duplicate term
+  ---
+  duration_ms: 0.221186
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects dangling category
+ok 670 - 1.2.2 companion validation rejects dangling category
+  ---
+  duration_ms: 0.152986
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects dangling term
+ok 671 - 1.2.2 companion validation rejects dangling term
+  ---
+  duration_ms: 0.293073
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects wrong page key
+ok 672 - 1.2.2 companion validation rejects wrong page key
+  ---
+  duration_ms: 0.185153
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects unsafe nested key
+ok 673 - 1.2.2 companion validation rejects unsafe nested key
+  ---
+  duration_ms: 0.181038
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects unknown category field
+ok 674 - 1.2.2 companion validation rejects unknown category field
+  ---
+  duration_ms: 0.166716
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects nested category limit
+ok 675 - 1.2.2 companion validation rejects nested category limit
+  ---
+  duration_ms: 0.225553
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects invalid author
+ok 676 - 1.2.2 companion validation rejects invalid author
+  ---
+  duration_ms: 0.150512
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects invalid review
+ok 677 - 1.2.2 companion validation rejects invalid review
+  ---
+  duration_ms: 0.144884
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects excessively long label
+ok 678 - 1.2.2 companion validation rejects excessively long label
+  ---
+  duration_ms: 0.191362
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects invalid importance
+ok 679 - 1.2.2 companion validation rejects invalid importance
+  ---
+  duration_ms: 0.167598
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion validation rejects invalid timestamp
+ok 680 - 1.2.2 companion validation rejects invalid timestamp
+  ---
+  duration_ms: 1.167975
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion rejects oversize JSON before parsing
+ok 681 - 1.2.2 companion rejects oversize JSON before parsing
+  ---
+  duration_ms: 1.717896
+  type: 'test'
+  ...
+# Subtest: 1.2.2 prototype pollution cannot enter companion storage
+ok 682 - 1.2.2 prototype pollution cannot enter companion storage
+  ---
+  duration_ms: 0.110323
+  type: 'test'
+  ...
+# Subtest: 1.2.2 textual markup is inert content, not a remote-asset instruction
+ok 683 - 1.2.2 textual markup is inert content, not a remote-asset instruction
+  ---
+  duration_ms: 0.244381
+  type: 'test'
+  ...
+# Subtest: 1.2.2 wheel page-turns only at the page edge
+ok 684 - 1.2.2 wheel page-turns only at the page edge
+  ---
+  duration_ms: 0.192454
+  type: 'test'
+  ...
+# Subtest: 1.2.2 a continuous trackpad burst can turn only once
+ok 685 - 1.2.2 a continuous trackpad burst can turn only once
+  ---
+  duration_ms: 0.241817
+  type: 'test'
+  ...
+# Subtest: 1.2.2 wheel supports a later deliberate reverse gesture
+ok 686 - 1.2.2 wheel supports a later deliberate reverse gesture
+  ---
+  duration_ms: 0.117814
+  type: 'test'
+  ...
+# Subtest: 1.2.2 continuous scroll is never hijacked
+ok 687 - 1.2.2 continuous scroll is never hijacked
+  ---
+  duration_ms: 0.100399
+  type: 'test'
+  ...
+# Subtest: 1.2.2 wheel input safety {"blocked":true}
+ok 688 - 1.2.2 wheel input safety {"blocked":true}
+  ---
+  duration_ms: 0.062893
+  type: 'test'
+  ...
+# Subtest: 1.2.2 wheel input safety {"deltaX":200}
+ok 689 - 1.2.2 wheel input safety {"deltaX":200}
+  ---
+  duration_ms: 0.036063
+  type: 'test'
+  ...
+# Subtest: 1.2.2 wheel input safety {"deltaY":0}
+ok 690 - 1.2.2 wheel input safety {"deltaY":0}
+  ---
+  duration_ms: 0.08141
+  type: 'test'
+  ...
+# Subtest: 1.2.2 small wheel deltas accumulate and line/page modes are normalized
+ok 691 - 1.2.2 small wheel deltas accumulate and line/page modes are normalized
+  ---
+  duration_ms: 0.093669
+  type: 'test'
+  ...
+# Subtest: 1.2.2 cooldown prevents two separate short bursts from skipping pages
+ok 692 - 1.2.2 cooldown prevents two separate short bursts from skipping pages
+  ---
+  duration_ms: 0.067099
+  type: 'test'
+  ...
+# Subtest: 1.2.2 authoring is bounded, page-addressed, explicit, and local-only
+ok 693 - 1.2.2 authoring is bounded, page-addressed, explicit, and local-only
+  ---
+  duration_ms: 36.827175
+  type: 'test'
+  ...
+# Subtest: 1.2.2 authoring discloses text truncation and image-only pages
+ok 694 - 1.2.2 authoring discloses text truncation and image-only pages
+  ---
+  duration_ms: 0.225663
+  type: 'test'
+  ...
+# Subtest: 1.2.2 cancelled extraction does not continue reading pages
+ok 695 - 1.2.2 cancelled extraction does not continue reading pages
+  ---
+  duration_ms: 0.281285
+  type: 'test'
+  ...
+# Subtest: 1.2.2 authoring rejects invalid physical range without an extraction
+ok 696 - 1.2.2 authoring rejects invalid physical range without an extraction
+  ---
+  duration_ms: 0.152065
+  type: 'test'
+  ...
+# Subtest: 1.2.2 exact complete backup includes all five slots, companion and PDF bytes
+ok 697 - 1.2.2 exact complete backup includes all five slots, companion and PDF bytes
+  ---
+  duration_ms: 171.073005
+  type: 'test'
+  ...
+# Subtest: 1.2.2 legacy v2 backup is retained exactly by parser and migrated at load boundary
+ok 698 - 1.2.2 legacy v2 backup is retained exactly by parser and migrated at load boundary
+  ---
+  duration_ms: 68.798539
+  type: 'test'
+  ...
+# Subtest: 1.2.2 promoted glossary tags are validated without dropping metadata
+ok 699 - 1.2.2 promoted glossary tags are validated without dropping metadata
+  ---
+  duration_ms: 0.577663
+  type: 'test'
+  ...
+# Subtest: 1.2.2 invalid inactive slot is rejected before restore, not silently discarded
+ok 700 - 1.2.2 invalid inactive slot is rejected before restore, not silently discarded
+  ---
+  duration_ms: 0.283579
+  type: 'test'
+  ...
+# Subtest: 1.2.2 companion revision keys and promoted page references validate
+ok 701 - 1.2.2 companion revision keys and promoted page references validate
+  ---
+  duration_ms: 0.456905
+  type: 'test'
+  ...
+# Subtest: 1.2.2 all representative sample notebooks place canonical PDFs before reading
+ok 702 - 1.2.2 all representative sample notebooks place canonical PDFs before reading
+  ---
+  duration_ms: 0.113358
+  type: 'test'
+  ...
+# Subtest: 1.2.2 real Spark companion uses six physical pages, not the 30 concept numbers
+ok 703 - 1.2.2 real Spark companion uses six physical pages, not the 30 concept numbers
+  ---
+  duration_ms: 0.526287
+  type: 'test'
+  ...
+# Subtest: 1.2.2 local AI export includes its exact machine-readable companion schema
+ok 704 - 1.2.2 local AI export includes its exact machine-readable companion schema
+  ---
+  duration_ms: 0.200466
+  type: 'test'
+  ...
+1..704
+# tests 704
+# suites 0
+# pass 703
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3305.080398

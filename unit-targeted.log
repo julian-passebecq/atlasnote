@@ -1,0 +1,289 @@
+TAP version 13
+# Subtest: stabilization: capture starts with three independent empty rows and defaults global
+ok 1 - stabilization: capture starts with three independent empty rows and defaults global
+  ---
+  duration_ms: 1.010202
+  type: 'test'
+  ...
+# Subtest: stabilization: draft row floor and cap do not mutate input
+ok 2 - stabilization: draft row floor and cap do not mutate input
+  ---
+  duration_ms: 0.154909
+  type: 'test'
+  ...
+# Subtest: stabilization: saved capture workflow snapshot preserves hidden URL, date, importance and classification
+ok 3 - stabilization: saved capture workflow snapshot preserves hidden URL, date, importance and classification
+  ---
+  duration_ms: 0.658172
+  type: 'test'
+  ...
+# Subtest: stabilization: Dashboard toggle changes only surface and selected capture, not readers
+ok 4 - stabilization: Dashboard toggle changes only surface and selected capture, not readers
+  ---
+  duration_ms: 0.662658
+  type: 'test'
+  ...
+# Subtest: stabilization: actual articles source has validated shared copy-only drag
+ok 5 - stabilization: actual articles source has validated shared copy-only drag
+  ---
+  duration_ms: 13.984903
+  type: 'test'
+  ...
+# Subtest: stabilization: articles canonical JSON round-trip remains valid without touching input
+ok 6 - stabilization: articles canonical JSON round-trip remains valid without touching input
+  ---
+  duration_ms: 29.88162
+  type: 'test'
+  ...
+# Subtest: stabilization: articles malformed JSON is atomic
+ok 7 - stabilization: articles malformed JSON is atomic
+  ---
+  duration_ms: 3.881642
+  type: 'test'
+  ...
+# Subtest: stabilization: actual qcm source has validated shared copy-only drag
+ok 8 - stabilization: actual qcm source has validated shared copy-only drag
+  ---
+  duration_ms: 3.693164
+  type: 'test'
+  ...
+# Subtest: stabilization: qcm canonical JSON round-trip remains valid without touching input
+ok 9 - stabilization: qcm canonical JSON round-trip remains valid without touching input
+  ---
+  duration_ms: 19.110793
+  type: 'test'
+  ...
+# Subtest: stabilization: qcm malformed JSON is atomic
+ok 10 - stabilization: qcm malformed JSON is atomic
+  ---
+  duration_ms: 3.443315
+  type: 'test'
+  ...
+# Subtest: stabilization: actual cheatsheets source has validated shared copy-only drag
+ok 11 - stabilization: actual cheatsheets source has validated shared copy-only drag
+  ---
+  duration_ms: 5.763191
+  type: 'test'
+  ...
+# Subtest: stabilization: cheatsheets canonical JSON round-trip remains valid without touching input
+ok 12 - stabilization: cheatsheets canonical JSON round-trip remains valid without touching input
+  ---
+  duration_ms: 20.769253
+  type: 'test'
+  ...
+# Subtest: stabilization: cheatsheets malformed JSON is atomic
+ok 13 - stabilization: cheatsheets malformed JSON is atomic
+  ---
+  duration_ms: 2.779084
+  type: 'test'
+  ...
+# Subtest: stabilization: actual pdfs source has validated shared copy-only drag
+ok 14 - stabilization: actual pdfs source has validated shared copy-only drag
+  ---
+  duration_ms: 3.015893
+  type: 'test'
+  ...
+# Subtest: stabilization: pdfs canonical JSON round-trip remains valid without touching input
+ok 15 - stabilization: pdfs canonical JSON round-trip remains valid without touching input
+  ---
+  duration_ms: 23.716704
+  type: 'test'
+  ...
+# Subtest: stabilization: pdfs malformed JSON is atomic
+ok 16 - stabilization: pdfs malformed JSON is atomic
+  ---
+  duration_ms: 3.202188
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects unknown version before mutation
+ok 17 - stabilization: drag rejects unknown version before mutation
+  ---
+  duration_ms: 3.271851
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects HTML field before mutation
+ok 18 - stabilization: drag rejects HTML field before mutation
+  ---
+  duration_ms: 2.898801
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects missing target before mutation
+ok 19 - stabilization: drag rejects missing target before mutation
+  ---
+  duration_ms: 3.261457
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects missing block before mutation
+ok 20 - stabilization: drag rejects missing block before mutation
+  ---
+  duration_ms: 2.624606
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects unsafe URL before mutation
+ok 21 - stabilization: drag rejects unsafe URL before mutation
+  ---
+  duration_ms: 3.065417
+  type: 'test'
+  ...
+# Subtest: stabilization: drag rejects not a resource before mutation
+ok 22 - stabilization: drag rejects not a resource before mutation
+  ---
+  duration_ms: 3.167968
+  type: 'test'
+  ...
+# Subtest: stabilization: malformed, byte-oversized, prototype drag and missing folder fail closed
+ok 23 - stabilization: malformed, byte-oversized, prototype drag and missing folder fail closed
+  ---
+  duration_ms: 2.910268
+  type: 'test'
+  ...
+# Subtest: stabilization: Article simple text edit retains original stable Markdown block
+ok 24 - stabilization: Article simple text edit retains original stable Markdown block
+  ---
+  duration_ms: 107.597277
+  type: 'test'
+  ...
+# Subtest: stabilization: exact Article bookmark blocks destructive body edit but permits label changes
+ok 25 - stabilization: exact Article bookmark blocks destructive body edit but permits label changes
+  ---
+  duration_ms: 26.636696
+  type: 'test'
+  ...
+# Subtest: stabilization: exact QCM question and retained attempt option identities are protected
+ok 26 - stabilization: exact QCM question and retained attempt option identities are protected
+  ---
+  duration_ms: 3.669789
+  type: 'test'
+  ...
+# Subtest: stabilization: missing exact link inside imported QCM fails before overlay mutation
+ok 27 - stabilization: missing exact link inside imported QCM fails before overlay mutation
+  ---
+  duration_ms: 3.825469
+  type: 'test'
+  ...
+# Subtest: stabilization: selected stable resource ID cannot be changed in JSON
+ok 28 - stabilization: selected stable resource ID cannot be changed in JSON
+  ---
+  duration_ms: 4.397384
+  type: 'test'
+  ...
+# Subtest: stabilization: PDF JSON contains metadata only and refuses binary identity and unsafe companion changes
+ok 29 - stabilization: PDF JSON contains metadata only and refuses binary identity and unsafe companion changes
+  ---
+  duration_ms: 19.041534
+  type: 'test'
+  ...
+# Subtest: stabilization: source change while JSON is open must be explicitly reloaded
+ok 30 - stabilization: source change while JSON is open must be explicitly reloaded
+  ---
+  duration_ms: 5.411251
+  type: 'test'
+  ...
+# Subtest: stabilization: cheatsheet stable page bookmark survives reorder but not page deletion
+ok 31 - stabilization: cheatsheet stable page bookmark survives reorder but not page deletion
+  ---
+  duration_ms: 29.608625
+  type: 'test'
+  ...
+# Subtest: stabilization: deterministic optional demo has complete content and realistic explained options
+ok 32 - stabilization: deterministic optional demo has complete content and realistic explained options
+  ---
+  duration_ms: 1.255244
+  type: 'test'
+  ...
+# Subtest: stabilization: demo loading twice is idempotent and never touches reader sessions
+ok 33 - stabilization: demo loading twice is idempotent and never touches reader sessions
+  ---
+  duration_ms: 5.920634
+  type: 'test'
+  ...
+# Subtest: stabilization: cleanup removes unedited demo sources and keeps unrelated user content
+ok 34 - stabilization: cleanup removes unedited demo sources and keeps unrelated user content
+  ---
+  duration_ms: 5.790491
+  type: 'test'
+  ...
+# Subtest: stabilization: user bookmark prevents demo source cleanup; editing prevents removal
+ok 35 - stabilization: user bookmark prevents demo source cleanup; editing prevents removal
+  ---
+  duration_ms: 5.57326
+  type: 'test'
+  ...
+# Subtest: stabilization: saved reader location and QCM attempts protect demo content during cleanup
+ok 36 - stabilization: saved reader location and QCM attempts protect demo content during cleanup
+  ---
+  duration_ms: 5.57268
+  type: 'test'
+  ...
+# Subtest: stabilization: invalid atomic shared-data update preserves both canonical stores
+ok 37 - stabilization: invalid atomic shared-data update preserves both canonical stores
+  ---
+  duration_ms: 0.314234
+  type: 'test'
+  ...
+# Subtest: stabilization: complete demo survives existing exact backup protocol
+ok 38 - stabilization: complete demo survives existing exact backup protocol
+  ---
+  duration_ms: 182.696931
+  type: 'test'
+  ...
+# Subtest: stabilization: user reading target protects a demo capture and its context during cleanup
+ok 39 - stabilization: user reading target protects a demo capture and its context during cleanup
+  ---
+  duration_ms: 6.411158
+  type: 'test'
+  ...
+# Subtest: stabilization: retained customized Article keeps its classified Notebook destination
+ok 40 - stabilization: retained customized Article keeps its classified Notebook destination
+  ---
+  duration_ms: 6.380863
+  type: 'test'
+  ...
+# Subtest: stabilization: demo wrapper metadata is not silently erased during cleanup
+ok 41 - stabilization: demo wrapper metadata is not silently erased during cleanup
+  ---
+  duration_ms: 7.513306
+  type: 'test'
+  ...
+# Subtest: stabilization: reload demo keeps a customized deleted exact anchor without throwing
+ok 42 - stabilization: reload demo keeps a customized deleted exact anchor without throwing
+  ---
+  duration_ms: 5.201602
+  type: 'test'
+  ...
+# Subtest: stabilization: JSON prevents deleting a bookmarked PDF companion category
+not ok 43 - stabilization: JSON prevents deleting a bookmarked PDF companion category
+  ---
+  duration_ms: 21.112398
+  type: 'test'
+  location: '/mnt/data/atlasnote-v2-stabilized/tests/stabilization-v2.test.mjs:56:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected exception.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  operator: 'throws'
+  stack: |-
+    TestContext.<anonymous> (file:///mnt/data/atlasnote-v2-stabilized/tests/stabilization-v2.test.mjs:56:640)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: stabilization: PDF metadata export cannot mutate the original companion
+ok 44 - stabilization: PDF metadata export cannot mutate the original companion
+  ---
+  duration_ms: 2.558889
+  type: 'test'
+  ...
+1..44
+# tests 44
+# suites 0
+# pass 43
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 772.501859

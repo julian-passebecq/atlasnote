@@ -1,0 +1,47 @@
+{
+  "scope": null,
+  "status": "BLOCKED",
+  "checks": [
+    {
+      "id": "normal_origin",
+      "status": "BLOCKED",
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:50311/\nCall log:\n  - navigating to \"http://127.0.0.1:50311/\", waiting until \"networkidle\"\n"
+    },
+    {
+      "id": "workspace_durable_save",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "workspace_restore_undo_isolation",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "all_workspaces_restore",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "manager_progress_history",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "backup_fresh_context",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "restored_checkpoint_usable",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "no_errors",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    }
+  ],
+  "errors": []
+}

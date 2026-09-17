@@ -1,0 +1,279 @@
+{
+  "scope": "Compiled application + in-memory DOM harness, not durable IndexedDB or hosted reload",
+  "checks": [
+    {
+      "name": "Exact ribbon/rail ownership, workspace plus ordering, single-pane identity",
+      "status": "FAIL",
+      "error": "['Collapse notebook sidebar', 'Global search', 'Back in active tab', 'Forward in active tab', 'Quick Capture', 'Open Dashboard', 'Compare in two panes']"
+    },
+    {
+      "name": "Five independent compact tables have three empty UI rows without fake records",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Dashboard second-click returns both readers with exact panes, tabs and histories",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "All five Dashboard plus workflows use correct capture modes or canonical reading lists",
+      "status": "FAIL",
+      "error": "Locator.click: Error: strict mode violation: get_by_role(\"region\", name=\"Inbox table\").get_by_role(\"button\", name=\"Add to Inbox\", exact=True) resolved to 4 elements:\n    1) <button title=\"Add to Inbox\" aria-label=\"Add to Inbox\">+</button> aka locator(\"header\").filter(has_text=\"Inbox 0+\").get_by_label(\"Add to Inbox\")\n    2) <button title=\"Add to Inbox\" class=\"dashboard-add\" aria-label=\"Add to Inbox\">+</button> aka get_by_role(\"button\", name=\"Add to Inbox\").nth(1)\n    3) <button title=\"Add to Inbox\" class=\"dashboard-add\" aria-label=\"Add to Inbox\">+</button> aka get_by_role(\"button\", name=\"Add to Inbox\").nth(2)\n    4) <button title=\"Add to Inbox\" class=\"dashboard-add\" aria-label=\"Add to Inbox\">+</button> aka get_by_role(\"button\", name=\"Add to Inbox\").nth(3)\n\nCall log:\n  - waiting for get_by_role(\"region\", name=\"Inbox table\").get_by_role(\"button\", name=\"Add to Inbox\", exact=True)\n"
+    },
+    {
+      "name": "Capture three-row floor, five-row cap and blank-row omission",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Article/Transcript Back preserves all unsaved rows, hidden fields, mode, classification and context",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Optional demo loads explained Articles/QCM, references, completed/archive data idempotently",
+      "status": "FAIL",
+      "error": ""
+    },
+    {
+      "name": "PDF actual left-tree typed drag selects the resource without a source mutation",
+      "status": "PASS",
+      "detail": {
+        "schemaVersion": 1,
+        "kind": "atlas-resource",
+        "target": {
+          "kind": "page",
+          "pageId": "page.atlas.pdf"
+        },
+        "title": "PDF reading fixture"
+      }
+    },
+    {
+      "name": "PDF Visual/JSON preserves selection, rejects malformed edits, stages import and exports exact JSON",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Cheatsheet actual left-tree typed drag selects the resource without a source mutation",
+      "status": "PASS",
+      "detail": {
+        "schemaVersion": 1,
+        "kind": "atlas-resource",
+        "target": {
+          "kind": "page",
+          "pageId": "page.cheatsheet.pyspark-execution"
+        },
+        "title": "PySpark Execution Model"
+      }
+    },
+    {
+      "name": "Cheatsheet Visual/JSON preserves selection, rejects malformed edits, stages import and exports exact JSON",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Article actual left-tree typed drag selects the resource without a source mutation",
+      "status": "PASS",
+      "detail": {
+        "schemaVersion": 1,
+        "kind": "atlas-resource",
+        "target": {
+          "kind": "article",
+          "articleId": "demo.v2.article.sql",
+          "pageId": "demo.v2.article.sql"
+        },
+        "title": "Demo / Why a join can multiply rows"
+      }
+    },
+    {
+      "name": "Article Visual/JSON preserves selection, rejects malformed edits, stages import and exports exact JSON",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "QCM actual left-tree typed drag selects the resource without a source mutation",
+      "status": "PASS",
+      "detail": {
+        "schemaVersion": 1,
+        "kind": "atlas-resource",
+        "target": {
+          "kind": "qcm",
+          "setId": "demo.v2.qcm.spark",
+          "pageId": "demo.v2.qcm.spark"
+        },
+        "title": "Demo / Spark shuffle and partitions"
+      }
+    },
+    {
+      "name": "QCM Visual/JSON preserves selection, rejects malformed edits, stages import and exports exact JSON",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Tree-to-Notebook folder drop creates one explicit reference and leaves source/tree operations intact",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Malformed tree drag is rejected before any workspace or source mutation",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Keyboard Choose resource and Add to Notebook are complete drag/drop alternatives",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Directional A/B collapse and full-height widened strips preserve tabs and history exactly",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Theme fluent changes only theme, preserving exact reading/workspace session",
+      "status": "PASS",
+      "detail": {
+        "bg": "rgb(255, 255, 255)",
+        "fg": "rgb(36, 53, 75)"
+      }
+    },
+    {
+      "name": "Theme neutral changes only theme, preserving exact reading/workspace session",
+      "status": "PASS",
+      "detail": {
+        "bg": "rgb(255, 255, 255)",
+        "fg": "rgb(36, 36, 36)"
+      }
+    },
+    {
+      "name": "Theme academic changes only theme, preserving exact reading/workspace session",
+      "status": "PASS",
+      "detail": {
+        "bg": "rgb(255, 253, 248)",
+        "fg": "rgb(59, 48, 38)"
+      }
+    },
+    {
+      "name": "Theme lavender changes only theme, preserving exact reading/workspace session",
+      "status": "PASS",
+      "detail": {
+        "bg": "rgb(254, 253, 255)",
+        "fg": "rgb(53, 46, 69)"
+      }
+    },
+    {
+      "name": "Theme slate changes only theme, preserving exact reading/workspace session",
+      "status": "PASS",
+      "detail": {
+        "bg": "rgb(30, 41, 56)",
+        "fg": "rgb(237, 241, 247)"
+      }
+    },
+    {
+      "name": "Five distinct themes and Dark Slate across managers, JSON, capture, Article, Context and states",
+      "status": "PASS",
+      "detail": {
+        "Dashboard": {
+          "background": "rgb(21, 29, 40)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "PDF": {
+          "background": "rgb(21, 29, 40)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "PDF JSON": {
+          "background": "rgb(21, 29, 40)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "Cheatsheet": {
+          "background": "rgb(21, 29, 40)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "Cheatsheet JSON": {
+          "background": "rgb(21, 29, 40)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "Article": {
+          "background": "rgb(30, 41, 56)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "Article JSON": {
+          "background": "rgb(21, 29, 40)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "QCM": {
+          "background": "rgb(21, 29, 40)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "QCM JSON": {
+          "background": "rgb(21, 29, 40)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "Capture": {
+          "background": "rgb(30, 41, 56)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "Saved states": {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(237, 241, 247)"
+        },
+        "Context": {
+          "background": "rgb(30, 41, 56)",
+          "color": "rgb(237, 241, 247)"
+        }
+      }
+    },
+    {
+      "name": "Responsive Dashboard/manager/Capture at 390x844",
+      "status": "FAIL",
+      "error": "Locator.click: Timeout 6500ms exceeded.\nCall log:\n  - waiting for get_by_role(\"button\", name=\"Article content\", exact=True)\n"
+    },
+    {
+      "name": "Responsive Dashboard/manager/Capture at 1366x768",
+      "status": "PASS",
+      "detail": {
+        "viewport": [
+          1366,
+          768
+        ],
+        "overflow": 0
+      }
+    },
+    {
+      "name": "Responsive Dashboard/manager/Capture at 1440x900",
+      "status": "PASS",
+      "detail": {
+        "viewport": [
+          1440,
+          900
+        ],
+        "overflow": 0
+      }
+    },
+    {
+      "name": "Responsive Dashboard/manager/Capture at 1920x1080",
+      "status": "PASS",
+      "detail": {
+        "viewport": [
+          1920,
+          1080
+        ],
+        "overflow": 0
+      }
+    },
+    {
+      "name": "Demo cleanup preserves customized sources, user bookmarks and unrelated captures",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "No uncaught JavaScript exceptions in stabilization workflows",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "passed": 27,
+  "failed": 4,
+  "errors": []
+}

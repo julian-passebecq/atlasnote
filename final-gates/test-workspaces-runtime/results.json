@@ -1,0 +1,137 @@
+{
+  "scope": "Actual normal-origin integrated PDF, local IndexedDB, UI-driven workspaces and backup/fresh-context restoration",
+  "status": "BLOCKED",
+  "checks": [
+    {
+      "id": "normal_origin",
+      "status": "BLOCKED",
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:39669/\nCall log:\n  - navigating to \"http://127.0.0.1:39669/\", waiting until \"networkidle\"\n"
+    },
+    {
+      "id": "independent_slots",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "duplicate_categories",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "workspace_position",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "quick_layouts",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "pdf_engine",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "wheel_single",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "wheel_middle",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "wheel_gesture",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "wheel_spread",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "continuous_position",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "companion_navigation",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "companion_edit",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "companion_import_validation",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "local_ai_input",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "companion_promotion",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "pane_collapse_markers",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "compact_controls",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "geometry_themes",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "all_slot_reload",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "backup_download",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "fresh_restore",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "restored_reload",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "legacy_v2_restore",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "public_spark_companion",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "no_errors",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    }
+  ],
+  "errors": []
+}

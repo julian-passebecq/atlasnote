@@ -1,0 +1,5 @@
+
+> knowledge-atlas@2.0.0 typecheck
+> tsc --noEmit
+
+src/stabilization/ReadingTargetDialog.tsx(7,27): error TS2554: Expected 1 arguments, but got 0.

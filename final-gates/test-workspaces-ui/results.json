@@ -1,0 +1,98 @@
+{
+  "scope": "Actual compiled compatibility DOM, storage queue suppressed; not integrated/persistence certification",
+  "checks": [
+    {
+      "name": "Five workspace numbers are independent from optional category filters; duplicates allowed",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Category/group filtering never changes canonical content or open tabs",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Quick Book is reversible without closing a tab or creating a pane",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A/B collapse is non-destructive and tree markers restore existing panes; swap works",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Per-pane controls and sidebar hide independently; global topbar no longer exists",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Study term/category edits are shared; tree disclosures stay in their original workspace",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Invalid companion input is rejected without a partial write",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Compact headers and relocated controls remain reachable in four viewports",
+      "status": "PASS",
+      "detail": [
+        {
+          "width": 1366,
+          "height": 768,
+          "globalTopbarRows": 0,
+          "reader": {
+            "x": 244,
+            "y": 0,
+            "width": 1078,
+            "height": 743
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "globalTopbarRows": 0,
+          "reader": {
+            "x": 244,
+            "y": 0,
+            "width": 1152,
+            "height": 875
+          }
+        },
+        {
+          "width": 1920,
+          "height": 1080,
+          "globalTopbarRows": 0,
+          "reader": {
+            "x": 260,
+            "y": 0,
+            "width": 1616,
+            "height": 1055
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "globalTopbarRows": 0,
+          "reader": {
+            "x": 32,
+            "y": 0,
+            "width": 322,
+            "height": 821
+          }
+        }
+      ]
+    },
+    {
+      "name": "No uncaught JavaScript errors in 1.2.2 interactions",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "passed": 9,
+  "failed": 0
+}

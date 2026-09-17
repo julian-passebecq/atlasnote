@@ -1,0 +1,7 @@
+{
+  "name": "test:pdf:wheel",
+  "command": "npm run test:pdf:wheel",
+  "exitCode": 0,
+  "seconds": 78.38,
+  "status": "PASS"
+}

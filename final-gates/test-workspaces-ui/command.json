@@ -1,0 +1,7 @@
+{
+  "name": "test:workspaces:ui",
+  "command": "npm run test:workspaces:ui",
+  "exitCode": 0,
+  "seconds": 11.76,
+  "status": "PASS"
+}

@@ -1,0 +1,293 @@
+{
+  "scope": "Actual offline-compatibility DOM; in-memory storage; simulated Fullscreen API; no integrated renderer or normal-origin certification",
+  "checks": [
+    {
+      "name": "Strict two-way discovery and exact returned Notes projection/count",
+      "status": "PASS",
+      "detail": {
+        "noteNodeIds": [
+          "node.samples.python.pdfs",
+          "node.samples.python.reading",
+          "node.samples.python.loops",
+          "node.samples.python.collections",
+          "node.samples.pandas.pdfs",
+          "node.samples.pandas.reading",
+          "node.samples.pandas.filter",
+          "node.samples.pyspark.pdfs",
+          "node.samples.pyspark.reading",
+          "node.samples.pyspark.transform",
+          "node.samples.sql.pdfs",
+          "node.samples.sql.reading",
+          "node.samples.sql.select",
+          "node.samples.azure.pdfs",
+          "node.samples.azure.reading",
+          "node.samples.azure.pipeline",
+          "node.samples.databricks.pdfs",
+          "node.samples.databricks.reading",
+          "node.samples.databricks.workflow",
+          "node.samples.norsk.pdfs",
+          "node.samples.norsk.reading",
+          "node.samples.norsk.sentences",
+          "node.samples.job.pdfs",
+          "node.samples.job.reading",
+          "node.samples.job.explain",
+          "node.interview.sql",
+          "node.interview.sql.aggregation",
+          "node.interview.sql.aggregation.row-filters-and-group-filters",
+          "node.interview.sql-q1",
+          "node.interview.sql.joins",
+          "node.interview.sql.joins.cardinality-and-preservation",
+          "node.interview.sql-q2",
+          "node.interview.sql.window-functions",
+          "node.interview.sql.window-functions.ties-and-partitions",
+          "node.interview.sql-q3",
+          "node.interview.sql.ctes",
+          "node.interview.sql.ctes.composition",
+          "node.interview.sql-q4",
+          "node.interview.sql.temporal-logic",
+          "node.interview.sql.temporal-logic.deterministic-ordering",
+          "node.interview.sql-q5",
+          "node.interview.data-modeling",
+          "node.interview.data-modeling.physical-layout",
+          "node.interview.data-modeling.physical-layout.workload-led-choices",
+          "node.interview.theory-layout",
+          "node.interview.data-modeling.join-grain",
+          "node.interview.data-modeling.join-grain.slowly-changing-dimensions",
+          "node.interview.hybrid-fanout",
+          "node.interview.etl-elt-pipelines",
+          "node.interview.etl-elt-pipelines.processing-modes",
+          "node.interview.etl-elt-pipelines.processing-modes.latency-and-correctness",
+          "node.interview.theory-batch",
+          "node.interview.modern-data-stack-governance",
+          "node.interview.modern-data-stack-governance.layered-architecture",
+          "node.interview.modern-data-stack-governance.layered-architecture.quality-and-ownership",
+          "node.interview.theory-medallion",
+          "node.interview.python",
+          "node.interview.python.pyspark",
+          "node.interview.python.pyspark.lazy-evaluation",
+          "node.interview.hybrid-lazy",
+          "node.interview.python.dictionaries",
+          "node.interview.python.dictionaries.grouping-and-state",
+          "node.interview.coding-group",
+          "node.interview.coding-errors",
+          "node.interview.coding-latest",
+          "node.interview.system-design",
+          "node.interview.system-design.pipeline-reliability",
+          "node.interview.system-design.pipeline-reliability.failure-and-replay",
+          "node.interview.hybrid-retry",
+          "node.interview.behavioral",
+          "node.interview.behavioral.communication",
+          "node.interview.behavioral.communication.incident-reasoning",
+          "node.interview.theory-behavioral",
+          "node.samples.personal.pdfs",
+          "node.samples.personal.reading",
+          "node.samples.personal.scratchpad",
+          "node.atlas.documents",
+          "node.atlas.read",
+          "node.page.atlas.welcome",
+          "node.page.atlas.layouts",
+          "node.page.atlas.language",
+          "example.folder",
+          "example.subfolder",
+          "example.leaf.overview",
+          "example.leaf.second"
+        ],
+        "pdfNodeIds": [
+          "node.atlas.documents",
+          "node.page.atlas.password",
+          "node.page.atlas.pdf",
+          "node.page.atlas.rotated",
+          "node.pdfatlas.pyspark-pandas",
+          "node.pdfatlas.spark-concepts"
+        ],
+        "exactReturn": true
+      }
+    },
+    {
+      "name": "Keyboard content switching and re-click preserve pane data and exact Notebook projection",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Open PDF state, history, remarks, bytes and placements survive discovery switches",
+      "status": "PASS",
+      "detail": {
+        "panesExact": true,
+        "remarksExact": true,
+        "openPDFRemains": true
+      }
+    },
+    {
+      "name": "Tree filter cannot resurrect hidden types; global search remains cross-content",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Archived branches and leaves remain absent in both discovery modes",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Actual fallback geometry with sidebar study navigation at all four viewports: no intro, compact strip, canvas >=75%",
+      "status": "PASS",
+      "detail": [
+        {
+          "width": 1366,
+          "height": 768,
+          "pane": {
+            "x": 244,
+            "y": 0,
+            "width": 1078,
+            "height": 743
+          },
+          "fallbackFrame": {
+            "x": 244,
+            "y": 90,
+            "width": 1078,
+            "height": 653
+          },
+          "compactStrip": {
+            "x": 244,
+            "y": 56,
+            "width": 1078,
+            "height": 34
+          },
+          "documentFraction": 0.8788694481830417,
+          "renderer": "native fallback, NOT integrated PDF evidence"
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "pane": {
+            "x": 244,
+            "y": 0,
+            "width": 1152,
+            "height": 875
+          },
+          "fallbackFrame": {
+            "x": 244,
+            "y": 90,
+            "width": 1152,
+            "height": 785
+          },
+          "compactStrip": {
+            "x": 244,
+            "y": 56,
+            "width": 1152,
+            "height": 34
+          },
+          "documentFraction": 0.8971428571428571,
+          "renderer": "native fallback, NOT integrated PDF evidence"
+        },
+        {
+          "width": 1920,
+          "height": 1080,
+          "pane": {
+            "x": 260,
+            "y": 0,
+            "width": 1616,
+            "height": 1055
+          },
+          "fallbackFrame": {
+            "x": 260,
+            "y": 90,
+            "width": 1616,
+            "height": 965
+          },
+          "compactStrip": {
+            "x": 260,
+            "y": 56,
+            "width": 1616,
+            "height": 34
+          },
+          "documentFraction": 0.9146919431279621,
+          "renderer": "native fallback, NOT integrated PDF evidence"
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "pane": {
+            "x": 32,
+            "y": 0,
+            "width": 322,
+            "height": 821
+          },
+          "fallbackFrame": {
+            "x": 32,
+            "y": 90,
+            "width": 322,
+            "height": 731
+          },
+          "compactStrip": {
+            "x": 32,
+            "y": 56,
+            "width": 322,
+            "height": 34
+          },
+          "documentFraction": 0.8903775883069428,
+          "renderer": "native fallback, NOT integrated PDF evidence"
+        }
+      ]
+    },
+    {
+      "name": "Rights, exact hash, size, provenance and original actions remain in on-demand info",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Focus click calls Fullscreen API in activation; fullscreenchange exits and restores panels",
+      "status": "PASS",
+      "detail": {
+        "scope": "Simulated Fullscreen API grant/event; actual click activation and app DOM/state",
+        "request": {
+          "stack": "Error\n    at HTMLDivElement.value (eval at evaluate (:290:30), <anonymous>:5:108)\n    at Object.enter (http://127.0.0.1:59545/app/core/fullscreen.js:37:43)\n    at toggleFocus (http://127.0.0.1:59545/app/app/App.js:335:33)\n    at Object.Ue (http://127.0.0.1:59545/app/vendor/react.mjs:5:16901)\n    at Qe (http://127.0.0.1:59545/app/vendor/react.mjs:5:17055)\n    at je (http://127.0.0.1:59545/app/vendor/react.mjs:5:17109)\n    at al (http://127.0.0.1:59545/app/vendor/react.mjs:5:38536)\n    at ul (http://127.0.0.1:59545/app/vendor/react.mjs:5:38953)\n    at http://127.0.0.1:59545/app/vendor/react.mjs:5:43874\n    at Os (http://127.0.0.1:59545/app/vendor/react.mjs:5:110400)",
+          "active": true
+        }
+      }
+    },
+    {
+      "name": "Fullscreen rejection degrades to usable PDF CSS Focus without error loop",
+      "status": "PASS",
+      "detail": {
+        "scope": "Simulated rejected Fullscreen API; CSS Focus and Escape remain functional"
+      }
+    },
+    {
+      "name": "Programmatic exit releases only owned fullscreen; restored Focus never auto-requests it",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Engine chunk failures are contained; compact fallback and retry remain available",
+      "status": "PASS",
+      "detail": {
+        "scope": "Intentional adapter load failures, not a mock successful PDF engine",
+        "paths": [
+          "Promise rejection",
+          "synchronous throw",
+          "missing export"
+        ],
+        "nativeFallback": true,
+        "retryControl": true
+      }
+    },
+    {
+      "name": "Native fallback retains independent PDF/PDF and PDF/note Compare plus Dark Slate",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Home discovery counts match mode, with an explicit separate all-notebook management option",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "No uncaught JavaScript errors in finish-pass scenarios",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "passed": 14,
+  "failed": 0,
+  "errors": []
+}

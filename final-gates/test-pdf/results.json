@@ -1,0 +1,113 @@
+{
+  "scope": "Actual normal-origin integrated React-PDF + PDF.js worker; no fake renderer",
+  "metadata": {
+    "reactPdf": "10.5.0",
+    "pdfjs": "5.4.296"
+  },
+  "errors": [],
+  "status": "BLOCKED",
+  "checks": [
+    {
+      "id": "engine",
+      "name": "Actual integrated engine and matching local worker",
+      "status": "BLOCKED",
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:33321/\nCall log:\n  - navigating to \"http://127.0.0.1:33321/\", waiting until \"networkidle\"\n"
+    },
+    {
+      "id": "single",
+      "name": "Single physical page",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "continuous",
+      "name": "Continuous physical pages",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "spread",
+      "name": "Consecutive physical two-page spreads",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "cover",
+      "name": "Cover-alone 1 / 2-3 / 4-5",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "page",
+      "name": "Physical page input",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "zoom",
+      "name": "Zoom changes actual canvas size",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "rotation",
+      "name": "Viewer rotation including intrinsic-rotation fixture",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "outline",
+      "name": "Actual document outline",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "text",
+      "name": "Selectable searchable PDF text",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "image_only",
+      "name": "Image-only PDF reports no selectable text, no OCR",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "password",
+      "name": "Wrong password then correct unlock",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "password_storage",
+      "name": "Entered passwords absent from saved records",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "note_compare",
+      "name": "Note + integrated PDF Compare",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "pdf_compare",
+      "name": "Integrated PDF + PDF Compare",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "original",
+      "name": "Original byte-identical PDF browser download",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    },
+    {
+      "id": "worker_mismatch",
+      "name": "Wrong worker metadata refuses render and supports retry",
+      "status": "BLOCKED",
+      "error": "Prerequisite engine did not complete."
+    }
+  ]
+}

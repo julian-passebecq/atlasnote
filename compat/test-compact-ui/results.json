@@ -1,0 +1,247 @@
+{
+  "scope": "Actual DOM and in-memory state on about:blank. Not real-origin IndexedDB/reload or integrated PDF certification. External test uses synthetic mocked transport.",
+  "checks": [
+    {
+      "name": "Compact geometry and icon-only controls at all four required viewports",
+      "status": "PASS",
+      "detail": [
+        {
+          "width": 1366,
+          "height": 768,
+          "navigation": {
+            "x": 4,
+            "y": 4,
+            "width": 235,
+            "height": 28
+          },
+          "search": {
+            "x": 36.859375,
+            "y": 4,
+            "width": 25,
+            "height": 28
+          },
+          "rail": {
+            "x": 1322,
+            "y": 0,
+            "width": 44,
+            "height": 743
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "navigation": {
+            "x": 4,
+            "y": 4,
+            "width": 235,
+            "height": 28
+          },
+          "search": {
+            "x": 36.859375,
+            "y": 4,
+            "width": 25,
+            "height": 28
+          },
+          "rail": {
+            "x": 1396,
+            "y": 0,
+            "width": 44,
+            "height": 875
+          }
+        },
+        {
+          "width": 1920,
+          "height": 1080,
+          "navigation": {
+            "x": 4,
+            "y": 4,
+            "width": 251,
+            "height": 28
+          },
+          "search": {
+            "x": 39.140625,
+            "y": 4,
+            "width": 25,
+            "height": 28
+          },
+          "rail": {
+            "x": 1876,
+            "y": 0,
+            "width": 44,
+            "height": 1055
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "navigation": {
+            "x": 2,
+            "y": 4,
+            "width": 27,
+            "height": 813
+          },
+          "search": {
+            "x": 3.5,
+            "y": 37,
+            "width": 24,
+            "height": 28
+          },
+          "rail": {
+            "x": 354,
+            "y": 0,
+            "width": 36,
+            "height": 821
+          }
+        }
+      ]
+    },
+    {
+      "name": "Context overlays, preserves exact session/geometry and restores trigger focus",
+      "status": "PASS",
+      "detail": {
+        "reader": {
+          "x": 244,
+          "y": 0,
+          "width": 1152,
+          "height": 875
+        },
+        "drawer": {
+          "x": 908,
+          "y": 38,
+          "width": 480,
+          "height": 829
+        },
+        "exactSessionUnchanged": true,
+        "escapeFocusReturn": true
+      }
+    },
+    {
+      "name": "Drawer and rail popovers are mutually exclusive and outside-dismissable",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Compare has distinct tab identities, same-page dual tree markers and active-only reading actions",
+      "status": "PASS",
+      "detail": {
+        "tabBorderColors": [
+          "rgb(32, 92, 166)",
+          "rgb(103, 69, 148)"
+        ],
+        "dualMarker": "A / B",
+        "independentEnglishLayout": true
+      }
+    },
+    {
+      "name": "Exactly five visually distinct themes cover Compare, tree, tabs and Context",
+      "status": "PASS",
+      "detail": [
+        {
+          "theme": "fluent",
+          "tokens": [
+            "#ffffff",
+            "#24354b",
+            "#205ca6",
+            "#674594",
+            "#f2f6fc",
+            "#e9eef6"
+          ]
+        },
+        {
+          "theme": "neutral",
+          "tokens": [
+            "#ffffff",
+            "#242424",
+            "#205ca6",
+            "#674594",
+            "#f0f4ef",
+            "#e9ede6"
+          ]
+        },
+        {
+          "theme": "academic",
+          "tokens": [
+            "#fffdf8",
+            "#3b3026",
+            "#205ca6",
+            "#674594",
+            "#eee6d8",
+            "#dfd6c6"
+          ]
+        },
+        {
+          "theme": "lavender",
+          "tokens": [
+            "#fefdff",
+            "#352e45",
+            "#205ca6",
+            "#5f3989",
+            "#f1ecf8",
+            "#eae2f3"
+          ]
+        },
+        {
+          "theme": "slate",
+          "tokens": [
+            "#1e2938",
+            "#edf1f7",
+            "#9bc8ff",
+            "#d7baff",
+            "#202d3d",
+            "#141f2d"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PDF mode is a flat, collapsible projection retaining the canonical document leaves",
+      "status": "PASS",
+      "detail": {
+        "canonicalOverlayUnchanged": true,
+        "externalPDFLeaves": 2
+      }
+    },
+    {
+      "name": "Contextual PDF modes are honest when engine unavailable; PDF Focus and PDF/PDF shell work",
+      "status": "PASS",
+      "detail": {
+        "engine": "honest browser fallback, no PDF.js certification",
+        "pdfPanes": 2
+      }
+    },
+    {
+      "name": "Hidden learning flags retain values; shared Bookmark targets active Compare page",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "One-click trusted external opening verifies bytes; arbitrary URL consent and hash mismatch fail closed",
+      "status": "PASS",
+      "detail": {
+        "scope": "synthetic mocked transport, actual SHA-256 and UI; zero remote network",
+        "requests": [
+          {
+            "url": "https://raw.githubusercontent.com/julian-passebecq/pdfatlas/main/library/test/fixture.pdf",
+            "credentials": "omit",
+            "redirect": "error"
+          }
+        ],
+        "hashMismatchRejected": true,
+        "backupAssets": 0
+      }
+    },
+    {
+      "name": "Dark narrow drawer, More and settings stay on-screen without overflow",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "No uncaught JavaScript errors in compact pass",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "passed": 11,
+  "failed": 0,
+  "errors": []
+}

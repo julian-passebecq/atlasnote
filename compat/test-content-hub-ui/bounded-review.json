@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-qcm-review",
+  "setId": "sample-spark-qcm",
+  "title": "Spark execution quick assessment",
+  "taxonomy": {
+    "subject": "it",
+    "path": [
+      "Data Engineering",
+      "Apache Spark"
+    ]
+  },
+  "range": {
+    "from": 2,
+    "to": 2
+  },
+  "questions": [
+    {
+      "id": "q2",
+      "prompt": "Which can cause a wide dependency / shuffle? Select all that apply.",
+      "options": [
+        {
+          "id": "a",
+          "text": "groupBy()",
+          "explanation": "Usually redistributes rows by grouping key."
+        },
+        {
+          "id": "b",
+          "text": "join()",
+          "explanation": "Can require redistribution unless the plan avoids it, e.g. broadcast."
+        },
+        {
+          "id": "c",
+          "text": "select()",
+          "explanation": "Normally a narrow projection."
+        },
+        {
+          "id": "d",
+          "text": "orderBy()",
+          "explanation": "Global ordering generally requires a shuffle."
+        }
+      ],
+      "correctOptionIds": [
+        "a",
+        "b",
+        "d"
+      ],
+      "explanation": "Wide operations can require data movement across partitions.",
+      "selectedOptionIds": [],
+      "result": "revealed",
+      "reflection": "",
+      "attempts": [
+        {
+          "id": "attempt.019c86fad9c09787e77b2937b74b2633",
+          "setId": "sample-spark-qcm",
+          "questionId": "q2",
+          "selectedOptionIds": [
+            "a",
+            "b",
+            "d"
+          ],
+          "correct": true,
+          "answeredAt": 1789604184665,
+          "attemptNumber": 1,
+          "reflection": ""
+        },
+        {
+          "id": "attempt.78ff51e33c45b445eca6c3ca2457c3e5",
+          "setId": "sample-spark-qcm",
+          "questionId": "q2",
+          "selectedOptionIds": [
+            "a"
+          ],
+          "correct": false,
+          "answeredAt": 1789604185017,
+          "attemptNumber": 2,
+          "reflection": ""
+        },
+        {
+          "id": "attempt.ae3ad6b6063d3b14f1c825541b6c079e",
+          "setId": "sample-spark-qcm",
+          "questionId": "q2",
+          "selectedOptionIds": [],
+          "correct": false,
+          "answeredAt": 1789604185298,
+          "attemptNumber": 3,
+          "reflection": "",
+          "revealed": true
+        }
+      ]
+    }
+  ]
+}

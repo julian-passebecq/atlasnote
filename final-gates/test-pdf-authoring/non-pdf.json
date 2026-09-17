@@ -1,0 +1,18 @@
+{
+  "format": "atlasnote-pdf-processing",
+  "schemaVersion": 1,
+  "timestamp": "2026-09-17T00:24:08.130754+00:00",
+  "profile": "lossless",
+  "options": null,
+  "inputName": "not.pdf",
+  "outputName": "bad-out.pdf",
+  "processor": {
+    "tool": "AtlasNote prepare-pdf",
+    "version": "1.1.0",
+    "pymupdf": "1.26.7"
+  },
+  "warnings": [],
+  "rights": "unchanged; no permission inferred",
+  "status": "FAIL",
+  "error": "Missing %PDF- signature"
+}

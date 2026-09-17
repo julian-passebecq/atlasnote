@@ -1,0 +1,68 @@
+{
+  "scope": "1.2.6 normal-origin native cheatsheet release gate.\nActual application entry, durable IndexedDB, reload and fresh-context backup\nrestore. No in-memory mounting, intercepted network, fake storage or policy bypass.\nATLAS_DIST=dist-offline may diagnose native persistence only; it cannot clear the\nintegrated PDF Compare gate or certify the production bundle.\n",
+  "build": "integrated",
+  "checks": [
+    {
+      "id": "normal_origin",
+      "status": "BLOCKED",
+      "error": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:33993/\nCall log:\n  - navigating to \"http://127.0.0.1:33993/\", waiting until \"networkidle\"\n"
+    },
+    {
+      "id": "builtin_reload",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "private_source_persist",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "bookmarks_and_remarks",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "bookmark_anchor_restore",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "layouts_and_independent_panes",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "unsafe_source_rejection",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "all_workspace_saved_states",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "exact_backup_download",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "fresh_context_restore",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "actual_pdf_compare",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    },
+    {
+      "id": "no_errors",
+      "status": "BLOCKED",
+      "error": "Prerequisite normal_origin did not complete."
+    }
+  ],
+  "errors": [],
+  "status": "BLOCKED"
+}

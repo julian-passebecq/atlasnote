@@ -1,0 +1,15 @@
+
+> knowledge-atlas@2.0.0 test:pdf:component
+> python tests/engine_123_dom.py
+
+PASS Actual PDF.js canvas loads with hidden controls and no bottom companion module
+PASS Natural single-page scroll reaches edge; slow wheel ticks advance and reverse correctly
+PASS One continuous momentum burst does not skip multiple physical pages
+PASS Quick PDF Spread controls one document, separately from Compare
+PASS Sidebar page headings and on-demand definitions navigate actual physical PDF pages
+PASS Workspace state save/restore retains actual PDF intra-page scroll and all session fields
+PASS All-state restore preserves two independent PDFs, pane order and collapse state
+PASS Local text preparation remains available on demand, without a reader module
+PASS On-demand metadata editing and promotion preserve PDF content and physical position
+PASS Continuous mode keeps native scrolling rather than discrete page turns
+PASS No uncaught PDF or UI errors

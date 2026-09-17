@@ -1,0 +1,26 @@
+{
+  "id": "sample-norsk-transcript",
+  "title": "Edited native transcript",
+  "url": "https://example.invalid/original",
+  "publisher": "Example",
+  "sourceType": "transcript",
+  "taxonomy": {
+    "subject": "norsk",
+    "path": [
+      "Lytting",
+      "Arbeidsliv"
+    ]
+  },
+  "status": "finished",
+  "important": false,
+  "note": "User-pasted transcript; no remote page embedding required.",
+  "addedAt": 1789604199833,
+  "updatedAt": 1789604200986,
+  "blocks": [
+    {
+      "id": "block.article.9f05c91e50ace28f900d1ad0fda36478",
+      "type": "markdown",
+      "text": "Edited safe local body."
+    }
+  ]
+}

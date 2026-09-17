@@ -1,0 +1,17 @@
+
+> knowledge-atlas@2.0.0 check:integrated-deps
+> node tools/check-integrated-deps.mjs
+
+{
+  "status": "PASS",
+  "versions": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-pdf": "10.5.0",
+    "vite": "8.2.2",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "typescript": "5.8.3",
+    "pdfjs": "5.4.296"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "test:pdf:component",
+  "command": "npm run test:pdf:component",
+  "exitCode": 0,
+  "seconds": 24.98,
+  "status": "PASS"
+}

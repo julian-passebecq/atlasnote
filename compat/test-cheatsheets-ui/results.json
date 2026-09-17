@@ -1,0 +1,262 @@
+{
+  "scope": "1.2.6 compiled compatibility UI in Chromium on about:blank.\nReal DOM events and SVG geometry; in-memory store. NOT an integrated React/PDF,\nIndexedDB, native OS clipboard or fresh-profile persistence certification.\n",
+  "checks": [
+    {
+      "name": "All eight actual native pages: live SVG, no frame collisions or text overflow, scoped IDs",
+      "status": "PASS",
+      "detail": [
+        {
+          "document": "sql-analytics",
+          "page": 1,
+          "failures": [],
+          "uniqueIds": true,
+          "textElements": 80,
+          "liveFragments": 111
+        },
+        {
+          "document": "sql-analytics",
+          "page": 2,
+          "failures": [],
+          "uniqueIds": true,
+          "textElements": 69,
+          "liveFragments": 102
+        },
+        {
+          "document": "pyspark-execution",
+          "page": 1,
+          "failures": [],
+          "uniqueIds": true,
+          "textElements": 72,
+          "liveFragments": 88
+        },
+        {
+          "document": "pyspark-execution",
+          "page": 2,
+          "failures": [],
+          "uniqueIds": true,
+          "textElements": 79,
+          "liveFragments": 98
+        },
+        {
+          "document": "azure-data-factory",
+          "page": 1,
+          "failures": [],
+          "uniqueIds": true,
+          "textElements": 81,
+          "liveFragments": 100
+        },
+        {
+          "document": "azure-data-factory",
+          "page": 2,
+          "failures": [],
+          "uniqueIds": true,
+          "textElements": 75,
+          "liveFragments": 104
+        },
+        {
+          "document": "pandas-essentials",
+          "page": 1,
+          "failures": [],
+          "uniqueIds": true,
+          "textElements": 67,
+          "liveFragments": 103
+        },
+        {
+          "document": "pandas-essentials",
+          "page": 2,
+          "failures": [],
+          "uniqueIds": true,
+          "textElements": 66,
+          "liveFragments": 99
+        }
+      ]
+    },
+    {
+      "name": "Every nonempty canonical text field is present as exact live SVG text, not a raster/path substitute",
+      "status": "PASS",
+      "detail": {
+        "matchedCanonicalTextFields": 479,
+        "pages": 8
+      }
+    },
+    {
+      "name": "Physical page controls, two-page spread, terminal partial grid and keyboard navigation",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Four distinct physical pages, genuine 2x2 geometry and quick-grid return to selected page",
+      "status": "PASS",
+      "detail": [
+        {
+          "page": "1",
+          "x": 512.25,
+          "y": 111,
+          "w": 293.25,
+          "h": 417
+        },
+        {
+          "page": "2",
+          "x": 819.5,
+          "y": 111,
+          "w": 293.25,
+          "h": 417
+        },
+        {
+          "page": "3",
+          "x": 512.25,
+          "y": 542,
+          "w": 293.25,
+          "h": 417
+        },
+        {
+          "page": "4",
+          "x": 819.5,
+          "y": 542,
+          "w": 293.25,
+          "h": 417
+        }
+      ]
+    },
+    {
+      "name": "Two native panes have independent modes, controls and collision-free SVG IDs",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Compare keeps a native page beside the unchanged actual interview notebook reader",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Native/PDF document routing is independent (compatibility fallback, not engine verification)",
+      "status": "PASS",
+      "detail": "Compatibility PDF fallback only; actual PDF-engine Compare remains a runtime gate."
+    },
+    {
+      "name": "Actual reading action: Open here",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Actual reading action: Open in new tab",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Actual reading action: Open in Workspace 4",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Bookmarks and Read Later restore the rendered physical page, not just the page-number field",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Context outline and scoped text search resolve stable section/block anchors on physical page 2",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Native content participates in global search without becoming a fake PDF",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Remarks stay attached to stable physical page identities and do not overwrite the other page",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Existing Related links work from cheatsheet to interview and back through backlinks",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Copy preserves code newlines, inline whitespace and partial-selection boundaries",
+      "status": "PASS",
+      "detail": {
+        "fullBlockNewlinesRetained": true,
+        "partialSelectionOnly": "dept",
+        "scope": "DOM selection + browser copy event payload; OS clipboard not read"
+      }
+    },
+    {
+      "name": "Desktop/tablet/phone changes only uniform page scale: byte-identical internal SVG, no app overflow",
+      "status": "PASS",
+      "detail": [
+        {
+          "width": 616.5,
+          "height": 822
+        },
+        {
+          "width": 466.5,
+          "height": 622
+        },
+        {
+          "width": 279,
+          "height": 372
+        }
+      ]
+    },
+    {
+      "name": "Real wheel scroll, fit/zoom and workspace restoration; page change cancels stale scroll writes",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "All five workspace page/mode states survive existing save-all/restore-all manager",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Import, validate, export and edit actual canonical JSON through the existing local overlay store",
+      "status": "PASS",
+      "detail": {
+        "localWrapperId": "page.cheatsheet.local.757408dba91de8ac8f1ee9c940b74d4c",
+        "sourceExportExact": true,
+        "localEditRendered": true
+      }
+    },
+    {
+      "name": "Malicious/unsupported source import is rejected atomically with an actionable validation error",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "A bookmarked physical page survives canonical page reordering by stable page ID",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Deleted bookmarked physical page is retained as unavailable, never silently replaced",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Markup-like code remains selectable inert text in the actual reader DOM",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "name": "Exact backup download/decoder and verified restore preview; denied opaque-origin storage never loses state",
+      "status": "PASS",
+      "detail": {
+        "exactArchivePayload": true,
+        "productionDecoderExact": true,
+        "restorePreviewValidated": true,
+        "deniedStorageLeavesStateIntact": true,
+        "successfulPersistentRestore": "separate normal-origin runtime gate"
+      }
+    },
+    {
+      "name": "No uncaught UI exceptions across the native workflows",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "errors": [],
+  "passed": 26,
+  "failed": 0
+}

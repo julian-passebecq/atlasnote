@@ -1,0 +1,132 @@
+
+> knowledge-atlas@2.0.0 test:stabilization:ui
+> python tests/stabilization_v2_dom.py
+
+Traceback (most recent call last):
+  File "/mnt/data/atlasnote-v2-stabilized/tests/stabilization_v2_dom.py", line 22, in check
+    try:d=fn();results.append({'name':name,'status':'PASS','detail':d});print('PASS',name,flush=True)
+          ~~^^
+  File "/mnt/data/atlasnote-v2-stabilized/tests/stabilization_v2_dom.py", line 39, in layout
+    reset();labels=p.locator('.sidebar-navigation>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert len(labels)==7,labels;assert labels[1:]==['Search','Back','Forward','Quick Capture','Open Dashboard','Compare in two panes'],labels
+                                                                                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ['Collapse notebook sidebar', 'Global search', 'Back in active tab', 'Forward in active tab', 'Quick Capture', 'Open Dashboard', 'Compare in two panes']
+PASS Five independent compact tables have three empty UI rows without fake records
+PASS Dashboard second-click returns both readers with exact panes, tabs and histories
+Traceback (most recent call last):
+  File "/mnt/data/atlasnote-v2-stabilized/tests/stabilization_v2_dom.py", line 22, in check
+    try:d=fn();results.append({'name':name,'status':'PASS','detail':d});print('PASS',name,flush=True)
+          ~~^^
+  File "/mnt/data/atlasnote-v2-stabilized/tests/stabilization_v2_dom.py", line 53, in plus_workflows
+    click('Add to '+row,p.get_by_role('region',name=row+' table')) if p.get_by_role('region',name=row+' table').count() else p.locator('.dashboard-mini-table').filter(has=p.get_by_role('heading',name=row,exact=False)).get_by_role('button',name='Add to '+row,exact=True).first.click()
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/atlasnote-v2-stabilized/tests/stabilization_v2_dom.py", line 19, in click
+    def click(name,area=None):button(name,area).click();p.wait_for_timeout(70)
+                              ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/sync_api/_generated.py", line 15637, in click
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.click(
+        ^^^^^^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        )
+        ^
+    )
+    ^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_locator.py", line 162, in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_frame.py", line 566, in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Locator.click: Error: strict mode violation: get_by_role("region", name="Inbox table").get_by_role("button", name="Add to Inbox", exact=True) resolved to 4 elements:
+    1) <button title="Add to Inbox" aria-label="Add to Inbox">+</button> aka locator("header").filter(has_text="Inbox 0+").get_by_label("Add to Inbox")
+    2) <button title="Add to Inbox" class="dashboard-add" aria-label="Add to Inbox">+</button> aka get_by_role("button", name="Add to Inbox").nth(1)
+    3) <button title="Add to Inbox" class="dashboard-add" aria-label="Add to Inbox">+</button> aka get_by_role("button", name="Add to Inbox").nth(2)
+    4) <button title="Add to Inbox" class="dashboard-add" aria-label="Add to Inbox">+</button> aka get_by_role("button", name="Add to Inbox").nth(3)
+
+Call log:
+  - waiting for get_by_role("region", name="Inbox table").get_by_role("button", name="Add to Inbox", exact=True)
+
+PASS Capture three-row floor, five-row cap and blank-row omission
+PASS Article/Transcript Back preserves all unsaved rows, hidden fields, mode, classification and context
+Traceback (most recent call last):
+  File "/mnt/data/atlasnote-v2-stabilized/tests/stabilization_v2_dom.py", line 22, in check
+    try:d=fn();results.append({'name':name,'status':'PASS','detail':d});print('PASS',name,flush=True)
+          ~~^^
+  File "/mnt/data/atlasnote-v2-stabilized/tests/stabilization_v2_dom.py", line 65, in demo_load
+    reset();demo();before=state();click('Load demo data');after=state();assert before==after;pages=list(after['overlays']['pages'].values());assert sum('article'in x['page'] for x in pages)==3;assert sum('qcm'in x['page'] for x in pages)==3;items=after['personal']['dashboardItems'];assert any(x['status']=='archived' for x in items);assert any(x['status']=='done' for x in items);assert len(after['overlays']['references'])>=10;assert len(after['personal']['knowledge']['assignments'])>=5;shot('dashboard-demo');p.get_by_label('Include completed',exact=True).check();assert p.locator('.dashboard-data-row.done').count()>=1
+                                                                               ^^^^^^^^^^^^^
+AssertionError
+PASS PDF actual left-tree typed drag selects the resource without a source mutation
+PASS PDF Visual/JSON preserves selection, rejects malformed edits, stages import and exports exact JSON
+PASS Cheatsheet actual left-tree typed drag selects the resource without a source mutation
+PASS Cheatsheet Visual/JSON preserves selection, rejects malformed edits, stages import and exports exact JSON
+PASS Article actual left-tree typed drag selects the resource without a source mutation
+PASS Article Visual/JSON preserves selection, rejects malformed edits, stages import and exports exact JSON
+PASS QCM actual left-tree typed drag selects the resource without a source mutation
+PASS QCM Visual/JSON preserves selection, rejects malformed edits, stages import and exports exact JSON
+PASS Tree-to-Notebook folder drop creates one explicit reference and leaves source/tree operations intact
+PASS Malformed tree drag is rejected before any workspace or source mutation
+PASS Keyboard Choose resource and Add to Notebook are complete drag/drop alternatives
+PASS Directional A/B collapse and full-height widened strips preserve tabs and history exactly
+PASS Theme fluent changes only theme, preserving exact reading/workspace session
+PASS Theme neutral changes only theme, preserving exact reading/workspace session
+PASS Theme academic changes only theme, preserving exact reading/workspace session
+PASS Theme lavender changes only theme, preserving exact reading/workspace session
+PASS Theme slate changes only theme, preserving exact reading/workspace session
+PASS Five distinct themes and Dark Slate across managers, JSON, capture, Article, Context and states
+Traceback (most recent call last):
+  File "/mnt/data/atlasnote-v2-stabilized/tests/stabilization_v2_dom.py", line 22, in check
+    try:d=fn();results.append({'name':name,'status':'PASS','detail':d});print('PASS',name,flush=True)
+          ~~^^
+  File "/mnt/data/atlasnote-v2-stabilized/tests/stabilization_v2_dom.py", line 119, in responsive
+    dashboard();p.set_viewport_size({'width':w,'height':h});p.wait_for_timeout(160);assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1;assert p.locator('.dashboard-mini-table table').count()==5;shot('slate-dashboard-'+str(w));click('Article content');choose_library_resource(p,SOURCES['Article']);assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1;shot('slate-manager-'+str(w));capture();expect(p.get_by_label('Capture text 3')).to_be_visible();assert p.locator('dialog').bounding_box()['width']<=w;shot('slate-capture-'+str(w));close_panels(p);return {'viewport':[w,h],'overflow':p.evaluate('document.documentElement.scrollWidth-innerWidth')}
+                                                                                                                                                                                                                                                       ~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/atlasnote-v2-stabilized/tests/stabilization_v2_dom.py", line 19, in click
+    def click(name,area=None):button(name,area).click();p.wait_for_timeout(70)
+                              ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/sync_api/_generated.py", line 15637, in click
+    self._sync(
+    ~~~~~~~~~~^
+        self._impl_obj.click(
+        ^^^^^^^^^^^^^^^^^^^^^
+    ...<10 lines>...
+        )
+        ^
+    )
+    ^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ~~~~~~~~~~~^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_locator.py", line 162, in click
+    return await self._frame._click(self._selector, strict=True, **params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_frame.py", line 566, in _click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/opt/pyvenv/lib/python3.13/site-packages/playwright/_impl/_connection.py", line 559, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Locator.click: Timeout 6500ms exceeded.
+Call log:
+  - waiting for get_by_role("button", name="Article content", exact=True)
+
+PASS Responsive Dashboard/manager/Capture at 1366x768
+PASS Responsive Dashboard/manager/Capture at 1440x900
+PASS Responsive Dashboard/manager/Capture at 1920x1080
+PASS Demo cleanup preserves customized sources, user bookmarks and unrelated captures
+PASS No uncaught JavaScript exceptions in stabilization workflows

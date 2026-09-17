@@ -1,4 +1,0 @@
-import React,{useEffect,useRef} from '../vendor/react.mjs';
-import {IconButton} from './Icon.js';
-export function Modal({title,onClose,children,wide=false}:any){const ref=useRef<HTMLDialogElement|null>(null);useEffect(()=>{const dialog=ref.current!,before=document.activeElement as HTMLElement;dialog.showModal();const close=(e:Event)=>{e.preventDefault();onClose();};dialog.addEventListener('cancel',close);return()=>{dialog.removeEventListener('cancel',close);dialog.close();before?.focus?.();};},[]);return <dialog ref={ref} className={wide?'wide':''} aria-label={title}><div className="dialog-title"><h2>{title}</h2><IconButton name="close" label="Close dialog" onClick={onClose}/></div><div className="dialog-body">{children}</div></dialog>;}
-export function Field({label,children}:any){return <label className="field"><span>{label}</span>{children}</label>;}

@@ -1,0 +1,107 @@
+{
+  "format": "atlasnote-pdf-processing",
+  "schemaVersion": 1,
+  "timestamp": "2026-09-17T00:24:01.417856+00:00",
+  "profile": "study",
+  "options": {
+    "dpi_threshold": 220,
+    "dpi_target": 160,
+    "quality": 82
+  },
+  "inputName": "dense.pdf",
+  "outputName": "study.pdf",
+  "processor": {
+    "tool": "AtlasNote prepare-pdf",
+    "version": "1.1.0",
+    "pymupdf": "1.26.7"
+  },
+  "warnings": [],
+  "rights": "unchanged; no permission inferred",
+  "status": "PREPARED_REVIEW_REQUIRED",
+  "before": {
+    "bytes": 10716600,
+    "sha256": "3d61876bf74c9900436066ac6efce8321ce00e662dac888c226f1e06858c9b0b",
+    "pageCount": 1,
+    "hasSelectableText": true,
+    "textSha256": "ec55828f91112c6d05404171d747f20d21ef7eb410f3393a5fb7f7b83a1d4dfa",
+    "pageTextSha256": [
+      "ec55828f91112c6d05404171d747f20d21ef7eb410f3393a5fb7f7b83a1d4dfa"
+    ],
+    "dimensions": [
+      [
+        595.0,
+        842.0
+      ]
+    ]
+  },
+  "losslessCandidate": {
+    "bytes": 3091779,
+    "sha256": "175d2194c95c3ddde1b9ae07e60636ebdeedf21eec4707013657a7af0b3b8e4e",
+    "pageCount": 1,
+    "hasSelectableText": true,
+    "textSha256": "ec55828f91112c6d05404171d747f20d21ef7eb410f3393a5fb7f7b83a1d4dfa",
+    "pageTextSha256": [
+      "ec55828f91112c6d05404171d747f20d21ef7eb410f3393a5fb7f7b83a1d4dfa"
+    ],
+    "dimensions": [
+      [
+        595.0,
+        842.0
+      ]
+    ]
+  },
+  "lossyCandidate": {
+    "bytes": 1453037,
+    "sha256": "02978b68bf7c65c7c5649bf25148b5db358892fdd7dfb34dab2f143e3a3068ad",
+    "pageCount": 1,
+    "hasSelectableText": true,
+    "textSha256": "ec55828f91112c6d05404171d747f20d21ef7eb410f3393a5fb7f7b83a1d4dfa",
+    "pageTextSha256": [
+      "ec55828f91112c6d05404171d747f20d21ef7eb410f3393a5fb7f7b83a1d4dfa"
+    ],
+    "dimensions": [
+      [
+        595.0,
+        842.0
+      ]
+    ]
+  },
+  "after": {
+    "bytes": 1453037,
+    "sha256": "02978b68bf7c65c7c5649bf25148b5db358892fdd7dfb34dab2f143e3a3068ad",
+    "pageCount": 1,
+    "hasSelectableText": true,
+    "textSha256": "ec55828f91112c6d05404171d747f20d21ef7eb410f3393a5fb7f7b83a1d4dfa",
+    "pageTextSha256": [
+      "ec55828f91112c6d05404171d747f20d21ef7eb410f3393a5fb7f7b83a1d4dfa"
+    ],
+    "dimensions": [
+      [
+        595.0,
+        842.0
+      ]
+    ]
+  },
+  "keptOriginalBecauseCandidateWasNotSmaller": false,
+  "savedBytes": 9263563,
+  "ratio": 0.135587,
+  "targetBytes": 12582912,
+  "hardLimitBytes": 20971520,
+  "targetMet": true,
+  "hardLimitMet": true,
+  "visualQA": {
+    "dpi": 120,
+    "pages": [
+      {
+        "page": 1,
+        "meanAbsoluteChannelDifference": 0.910556,
+        "maxChannelDifference": 56
+      }
+    ],
+    "coverage": "all",
+    "humanReviewRequired": true,
+    "humanApproved": false,
+    "note": "Render metrics are evidence, not a guarantee of legibility. Inspect small labels, diagrams and tables before accepting lossy output."
+  },
+  "outputWritten": true
+}

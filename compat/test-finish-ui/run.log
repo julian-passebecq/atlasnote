@@ -1,0 +1,18 @@
+
+> knowledge-atlas@2.0.0 test:finish:ui
+> python tests/finish_121_dom.py
+
+PASS Strict two-way discovery and exact returned Notes projection/count
+PASS Keyboard content switching and re-click preserve pane data and exact Notebook projection
+PASS Open PDF state, history, remarks, bytes and placements survive discovery switches
+PASS Tree filter cannot resurrect hidden types; global search remains cross-content
+PASS Archived branches and leaves remain absent in both discovery modes
+PASS Actual fallback geometry with sidebar study navigation at all four viewports: no intro, compact strip, canvas >=75%
+PASS Rights, exact hash, size, provenance and original actions remain in on-demand info
+PASS Focus click calls Fullscreen API in activation; fullscreenchange exits and restores panels
+PASS Fullscreen rejection degrades to usable PDF CSS Focus without error loop
+PASS Programmatic exit releases only owned fullscreen; restored Focus never auto-requests it
+PASS Engine chunk failures are contained; compact fallback and retry remain available
+PASS Native fallback retains independent PDF/PDF and PDF/note Compare plus Dark Slate
+PASS Home discovery counts match mode, with an explicit separate all-notebook management option
+PASS No uncaught JavaScript errors in finish-pass scenarios

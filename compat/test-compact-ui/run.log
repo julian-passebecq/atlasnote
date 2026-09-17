@@ -1,0 +1,15 @@
+
+> knowledge-atlas@2.0.0 test:compact:ui
+> python tests/compact_12_dom.py
+
+PASS Compact geometry and icon-only controls at all four required viewports
+PASS Context overlays, preserves exact session/geometry and restores trigger focus
+PASS Drawer and rail popovers are mutually exclusive and outside-dismissable
+PASS Compare has distinct tab identities, same-page dual tree markers and active-only reading actions
+PASS Exactly five visually distinct themes cover Compare, tree, tabs and Context
+PASS PDF mode is a flat, collapsible projection retaining the canonical document leaves
+PASS Contextual PDF modes are honest when engine unavailable; PDF Focus and PDF/PDF shell work
+PASS Hidden learning flags retain values; shared Bookmark targets active Compare page
+PASS One-click trusted external opening verifies bytes; arbitrary URL consent and hash mismatch fail closed
+PASS Dark narrow drawer, More and settings stay on-screen without overflow
+PASS No uncaught JavaScript errors in compact pass

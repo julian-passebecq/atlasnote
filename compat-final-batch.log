@@ -1,0 +1,12 @@
+{'name': 'test:dom', 'exitCode': 0, 'seconds': 22.69}
+{'name': 'test:hardening:ui', 'exitCode': 0, 'seconds': 39.49}
+{'name': 'test:compact:ui', 'exitCode': 0, 'seconds': 17.94}
+{'name': 'test:reader:ui', 'exitCode': 0, 'seconds': 44.7}
+{'name': 'test:workspaces:ui', 'exitCode': 0, 'seconds': 14.36}
+{'name': 'test:finish:ui', 'exitCode': 0, 'seconds': 20.88}
+{'name': 'test:simplified:ui', 'exitCode': 0, 'seconds': 18.01}
+{'name': 'test:reading:ui', 'exitCode': 0, 'seconds': 16.9}
+{'name': 'test:polish:ui', 'exitCode': 0, 'seconds': 16.47}
+{'name': 'test:references:ui', 'exitCode': 0, 'seconds': 20.32}
+{'name': 'test:cheatsheets:ui', 'exitCode': 0, 'seconds': 39.51}
+{'name': 'test:content-hub:ui', 'exitCode': 0, 'seconds': 37.42}

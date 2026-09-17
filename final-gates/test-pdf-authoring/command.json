@@ -1,0 +1,7 @@
+{
+  "name": "test:pdf:authoring",
+  "command": "npm run test:pdf:authoring",
+  "exitCode": 0,
+  "seconds": 17.33,
+  "status": "PASS"
+}

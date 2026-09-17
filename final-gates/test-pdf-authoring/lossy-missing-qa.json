@@ -1,0 +1,22 @@
+{
+  "format": "atlasnote-pdf-processing",
+  "schemaVersion": 1,
+  "timestamp": "2026-09-17T00:24:04.248978+00:00",
+  "profile": "compact",
+  "options": {
+    "dpi_threshold": 180,
+    "dpi_target": 130,
+    "quality": 75
+  },
+  "inputName": "fabric-cheatsheet.pdf",
+  "outputName": "no-qa.pdf",
+  "processor": {
+    "tool": "AtlasNote prepare-pdf",
+    "version": "1.1.0",
+    "pymupdf": "1.26.7"
+  },
+  "warnings": [],
+  "rights": "unchanged; no permission inferred",
+  "status": "FAIL",
+  "error": "Lossy profiles require --qa-dir and human review of the generated before/after/diff images"
+}

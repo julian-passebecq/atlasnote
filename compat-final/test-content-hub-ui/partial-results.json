@@ -1,0 +1,179 @@
+[
+  {
+    "name": "Five compact Dashboard tables and separate content/subject/workspace axes",
+    "status": "PASS",
+    "detail": {
+      "tables": 5,
+      "emptySlots": 15,
+      "subjects": 5,
+      "types": 5,
+      "workspaceCap": 5
+    }
+  },
+  {
+    "name": "Import supplied Article fixture as native text without remote iframe",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Link-only Article creation retains external reference without fetching",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Malformed and executable Article import rejected before mutation",
+    "status": "PASS",
+    "detail": {
+      "malformedAndUnsafeAtomic": true
+    }
+  },
+  {
+    "name": "Import supplied QCM fixture and show single-answer question",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Single answer scoring, all option explanations, timestamp and reflection",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Multi-select exact-set scoring and monotonic attempt history",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Reveal is stored separately and never counted as correct",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "QCM Context outline/search navigate stable question IDs",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Batch task capture with date/exact QCM context, default global note capture",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Five-row capture limit and importance retained",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Derived Dashboard, bounded Show more, task toggle and exact source return",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Actual downloads: QCM source, attempts, bounded AI JSON and Markdown",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Checkpoint restore and workspace switching never rewind shared captures/attempts",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Shared folder classification plus keyboard-accessible Notebook reference insertion",
+    "status": "PASS",
+    "detail": {
+      "folderId": "project.samples.python"
+    }
+  },
+  {
+    "name": "Rename/remove reference changes no underlying QCM source",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Actual drag events add a typed Notebook reference via shared destination tree",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Content-mode switches preserve subject/folder and independent reader state",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Create and follow typed Related link to an exact QCM question",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Cheatsheet/QCM Compare and independent chrome survive Dashboard round-trip",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Reading popover reclick, Escape focus-return, another popover and outside dismissal",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Capture Transcript opens the proper long-form native Article editor",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "390px short-screen Dashboard and compact workspace chooser remain usable",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Final data integrity and no browser exceptions",
+    "status": "PASS",
+    "detail": {
+      "attempts": 5,
+      "captures": 9,
+      "consoleErrors": [],
+      "persistence": "not certified by this harness"
+    }
+  },
+  {
+    "name": "Article edit, reading status, source export and archive/restore preserve identity",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Duplicate, executable and malformed QCM imports fail atomically",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "All four authoring presets validate, import and render live SVG with unchanged grammar",
+    "status": "PASS",
+    "detail": {
+      "presets": 4,
+      "liveSVG": true
+    }
+  },
+  {
+    "name": "Notebook editor creates and follows exact PDF, cheatsheet, Article and QCM inline links",
+    "status": "PASS",
+    "detail": {
+      "typedInlineLinks": 4,
+      "pdfEngine": "routing only in compatibility harness"
+    }
+  },
+  {
+    "name": "Actual QCM wheel scroll survives Dashboard and workspace switches without stale question overwrite",
+    "status": "PASS",
+    "detail": {
+      "actualWheelScroll": 680,
+      "workspaceAndDashboardPreserved": true
+    }
+  },
+  {
+    "name": "Link capture retains safe URLs, ignores blanks and never inherits context silently",
+    "status": "PASS",
+    "detail": {
+      "blankRowsIgnored": true,
+      "implicitContext": false
+    }
+  }
+]

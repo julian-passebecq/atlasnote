@@ -1,0 +1,15 @@
+
+> knowledge-atlas@2.0.0 test:polish:ui
+> python tests/reader_polish_125_dom.py
+
+PASS Per-pane A-B / + / tabs / persistent shortcuts / toolbar toggle; no star; independent selection, workspace switch and restore
+PASS Compact home/search/history/sidebar/context/focus controls still navigate
+PASS Deep interview hierarchy opens all fifteen SQL/Theory/Hybrid/Coding native references
+PASS Context targets the active document: outline, scoped search, personal reflection and bounded history
+PASS Explicit related notebook/PDF links use existing overlays and expose backlinks
+PASS PDF Context reuses category/physical-page navigation; fallback text search is honest
+PASS Actual public PDF taxonomy is flat, searchable by domain, and keeps original metadata
+PASS Workspace States is separate from Context and retains all five scopes plus all-workspace saves
+PASS Interview code renders as inert text, not HTML or executable markup
+PASS Document Context and interview references remain readable at desktop and phone widths
+PASS No uncaught UI errors

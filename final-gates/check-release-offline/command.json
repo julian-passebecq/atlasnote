@@ -1,0 +1,7 @@
+{
+  "name": "check:release:offline",
+  "command": "npm run check:release:offline",
+  "exitCode": 0,
+  "seconds": 0.32,
+  "status": "PASS"
+}

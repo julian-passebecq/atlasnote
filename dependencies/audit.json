@@ -1,0 +1,6 @@
+{
+  "command": "npm audit --json --fetch-retries=0 --fetch-timeout=10000",
+  "cwd": "/mnt/data/atlasnote-v2-stabilized",
+  "exitCode": 1,
+  "seconds": 5.39
+}

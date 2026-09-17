@@ -1,0 +1,167 @@
+{
+  "format": "atlasnote-pdf-processing",
+  "schemaVersion": 1,
+  "timestamp": "2026-09-17T00:23:59.814587+00:00",
+  "profile": "lossless",
+  "options": null,
+  "inputName": "fabric-cheatsheet.pdf",
+  "outputName": "lossless.pdf",
+  "processor": {
+    "tool": "AtlasNote prepare-pdf",
+    "version": "1.1.0",
+    "pymupdf": "1.26.7"
+  },
+  "warnings": [],
+  "rights": "unchanged; no permission inferred",
+  "status": "PASS",
+  "before": {
+    "bytes": 51033,
+    "sha256": "24e77167c001589fef7322e968c06f3c739a15395ce8fa308d2f7fb744af2dc8",
+    "pageCount": 5,
+    "hasSelectableText": true,
+    "textSha256": "38a454731b1ec53309ee4ebbc8316327404b41cf9662c5cab1792e64dcd5a302",
+    "pageTextSha256": [
+      "a3e3b1723dd03ff0ac822382e054d96b8f2ae1e1a21e13c0b9d5a808db042257",
+      "c26bcf6415bb609d4780f233f306a2fe673a014faf2461a4a4a626f9c7ce50bb",
+      "6add6cbcd23a507ddcac26045973e7aedcb1df7833c7d2d8b14ed62e118c92c6",
+      "61c246b0974e16541a4d11b56475eb8610c548615e812c32f2641cd515d33cc4",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "dimensions": [
+      [
+        595.2756,
+        841.8898
+      ],
+      [
+        595.2756,
+        841.8898
+      ],
+      [
+        841.8898,
+        595.2756
+      ],
+      [
+        595.2756,
+        841.8898
+      ],
+      [
+        595.2756,
+        841.8898
+      ]
+    ]
+  },
+  "losslessCandidate": {
+    "bytes": 49045,
+    "sha256": "5eb0b8bec3001647dd65db61461f2529773113ef7c87885163857acf78f7d473",
+    "pageCount": 5,
+    "hasSelectableText": true,
+    "textSha256": "38a454731b1ec53309ee4ebbc8316327404b41cf9662c5cab1792e64dcd5a302",
+    "pageTextSha256": [
+      "a3e3b1723dd03ff0ac822382e054d96b8f2ae1e1a21e13c0b9d5a808db042257",
+      "c26bcf6415bb609d4780f233f306a2fe673a014faf2461a4a4a626f9c7ce50bb",
+      "6add6cbcd23a507ddcac26045973e7aedcb1df7833c7d2d8b14ed62e118c92c6",
+      "61c246b0974e16541a4d11b56475eb8610c548615e812c32f2641cd515d33cc4",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "dimensions": [
+      [
+        595.2756,
+        841.8898
+      ],
+      [
+        595.2756,
+        841.8898
+      ],
+      [
+        841.8898,
+        595.2756
+      ],
+      [
+        595.2756,
+        841.8898
+      ],
+      [
+        595.2756,
+        841.8898
+      ]
+    ]
+  },
+  "after": {
+    "bytes": 49045,
+    "sha256": "5eb0b8bec3001647dd65db61461f2529773113ef7c87885163857acf78f7d473",
+    "pageCount": 5,
+    "hasSelectableText": true,
+    "textSha256": "38a454731b1ec53309ee4ebbc8316327404b41cf9662c5cab1792e64dcd5a302",
+    "pageTextSha256": [
+      "a3e3b1723dd03ff0ac822382e054d96b8f2ae1e1a21e13c0b9d5a808db042257",
+      "c26bcf6415bb609d4780f233f306a2fe673a014faf2461a4a4a626f9c7ce50bb",
+      "6add6cbcd23a507ddcac26045973e7aedcb1df7833c7d2d8b14ed62e118c92c6",
+      "61c246b0974e16541a4d11b56475eb8610c548615e812c32f2641cd515d33cc4",
+      "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    ],
+    "dimensions": [
+      [
+        595.2756,
+        841.8898
+      ],
+      [
+        595.2756,
+        841.8898
+      ],
+      [
+        841.8898,
+        595.2756
+      ],
+      [
+        595.2756,
+        841.8898
+      ],
+      [
+        595.2756,
+        841.8898
+      ]
+    ]
+  },
+  "keptOriginalBecauseCandidateWasNotSmaller": false,
+  "savedBytes": 1988,
+  "ratio": 0.961045,
+  "targetBytes": 12582912,
+  "hardLimitBytes": 20971520,
+  "targetMet": true,
+  "hardLimitMet": true,
+  "visualQA": {
+    "dpi": 120,
+    "pages": [
+      {
+        "page": 1,
+        "meanAbsoluteChannelDifference": 0.0,
+        "maxChannelDifference": 0
+      },
+      {
+        "page": 2,
+        "meanAbsoluteChannelDifference": 0.0,
+        "maxChannelDifference": 0
+      },
+      {
+        "page": 3,
+        "meanAbsoluteChannelDifference": 0.0,
+        "maxChannelDifference": 0
+      },
+      {
+        "page": 4,
+        "meanAbsoluteChannelDifference": 0.0,
+        "maxChannelDifference": 0
+      },
+      {
+        "page": 5,
+        "meanAbsoluteChannelDifference": 0.0,
+        "maxChannelDifference": 0
+      }
+    ],
+    "coverage": "all",
+    "humanReviewRequired": true,
+    "humanApproved": false,
+    "note": "Render metrics are evidence, not a guarantee of legibility. Inspect small labels, diagrams and tables before accepting lossy output."
+  },
+  "outputWritten": true
+}

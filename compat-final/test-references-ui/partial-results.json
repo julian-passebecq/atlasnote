@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Existing native Article/QCM import and Notebook reader remain usable",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Header shortcuts survive hidden controls; dropdown reclick, outside, Escape and focus work",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Create stable concept and assign exact Notebook section without structural writes",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "UI links exact PDF page, sheet block, QCM question, Article section and interview section",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Concept rename preserves all six assignments and Notebook freedom",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Closable Explorer filters and unlinked queue preserve originating tab state",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Virtual Notebook lens double-click opens exact sheet block in a new tab",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Reference menu opens exact QCM in other pane and Article section in Workspace 5",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Opt-in exact-context capture appears as derived incoming backlink",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Actual bounded local JSON and Markdown downloads include exact target and semantic revision",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Malformed/stale suggestion rejection, pure preview, staging, selected accept/reject and history",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Downloaded backup contains exact semantic state, shared lens and unchanged overlays (not durable restore)",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "390px Context view and workspace return keep layout and Compare state",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "Inactive pane mode activation, per-pane ARIA/chrome and A/B collapse/restore",
+    "status": "PASS",
+    "detail": null
+  },
+  {
+    "name": "No uncaught browser exceptions",
+    "status": "PASS",
+    "detail": null
+  }
+]

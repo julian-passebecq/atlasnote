@@ -1,0 +1,7 @@
+{
+  "name": "test:backup:diagnostic",
+  "command": "npm run test:backup:diagnostic",
+  "exitCode": 0,
+  "seconds": 6.97,
+  "status": "PASS"
+}

@@ -1,0 +1,5 @@
+
+> knowledge-atlas@2.0.0 test:interviews
+> node tools/generate-interviews.mjs --check
+
+Verified 15 native interview pages and Q1-Q8 progression.

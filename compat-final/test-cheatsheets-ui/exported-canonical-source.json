@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "1.1",
+  "id": "test-four-pages",
+  "title": "Four-page UI fixture",
+  "pageSize": {
+    "width": 1200,
+    "height": 1600
+  },
+  "pages": [
+    {
+      "id": "four.p1",
+      "title": "Physical test page 1",
+      "blocks": [
+        {
+          "id": "four.b1",
+          "type": "text",
+          "text": "Distinct physical page 1",
+          "role": "title"
+        }
+      ],
+      "frames": {
+        "four.b1": {
+          "x": 100,
+          "y": 150,
+          "width": 1000,
+          "height": 200
+        }
+      },
+      "outline": [
+        {
+          "id": "four.a1",
+          "label": "Page 1",
+          "blockId": "four.b1"
+        }
+      ]
+    },
+    {
+      "id": "four.p2",
+      "title": "Physical test page 2",
+      "blocks": [
+        {
+          "id": "four.b2",
+          "type": "text",
+          "text": "Distinct physical page 2",
+          "role": "title"
+        }
+      ],
+      "frames": {
+        "four.b2": {
+          "x": 100,
+          "y": 150,
+          "width": 1000,
+          "height": 200
+        }
+      },
+      "outline": [
+        {
+          "id": "four.a2",
+          "label": "Page 2",
+          "blockId": "four.b2"
+        }
+      ]
+    },
+    {
+      "id": "four.p3",
+      "title": "Physical test page 3",
+      "blocks": [
+        {
+          "id": "four.b3",
+          "type": "text",
+          "text": "Distinct physical page 3",
+          "role": "title"
+        }
+      ],
+      "frames": {
+        "four.b3": {
+          "x": 100,
+          "y": 150,
+          "width": 1000,
+          "height": 200
+        }
+      },
+      "outline": [
+        {
+          "id": "four.a3",
+          "label": "Page 3",
+          "blockId": "four.b3"
+        }
+      ]
+    },
+    {
+      "id": "four.p4",
+      "title": "Physical test page 4",
+      "blocks": [
+        {
+          "id": "four.b4",
+          "type": "text",
+          "text": "Distinct physical page 4",
+          "role": "title"
+        }
+      ],
+      "frames": {
+        "four.b4": {
+          "x": 100,
+          "y": 150,
+          "width": 1000,
+          "height": 200
+        }
+      },
+      "outline": [
+        {
+          "id": "four.a4",
+          "label": "Page 4",
+          "blockId": "four.b4"
+        }
+      ]
+    }
+  ]
+}
