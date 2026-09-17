@@ -33,6 +33,14 @@ export function compose(built:{packs:Pack[];groups:Group[]},ws:Workspace):Catalo
  const owners:Record<string,string>={};const pages:Map<string,Page>=new Map();
  for(const pack of chosen.packs){for(const p of pack.pages){pages.set(p.id,p);owners[p.id]=pack.manifest.id;}for(const p of pack.projects)owners[p.id]=pack.manifest.id;for(const t of pack.glossary)owners[t.id]=pack.manifest.id;}
  for(const {page,baseHash}of Object.values(ws.overlays.pages)){if(baseHash){const pack=chosen.packs.find(p=>p.manifest.id===owners[page.id]);if(pack&&pack.hash!==baseHash)warnings.push('Local overlay '+page.id+' is retained over an updated source. Review the rebase in Settings.');}pages.set(page.id,page);owners[page.id]??='local';}
+ // Legacy classification overrides win on read, including an explicit unclassification.
+ // Project them into source metadata without mutating imported packs or stored data.
+ for(const [id,taxonomy] of Object.entries(ws.overlays.taxonomy??{})){
+  const source=pages.get(id);if(!source?.article&&!source?.qcm)continue;
+  const page=structuredClone(source),metadata=page.article??page.qcm!;
+  if(taxonomy)metadata.taxonomy=structuredClone(taxonomy);else delete metadata.taxonomy;
+  pages.set(id,page);
+ }
  for(const p of ws.overlays.projects)owners[p.id]='local';
  const docs=[...chosen.packs.flatMap(p=>p.documents??[]),...ws.overlays.documents];
  return {projects,pages:[...pages.values()],glossary:[...chosen.packs.flatMap(p=>p.glossary),...(ws.overlays.glossary??[]).filter(t=>!chosen.packs.some(p=>p.glossary.some(x=>x.id===t.id)))],groups:ws.overlays.groups??built.groups,packs:chosen.packs,owners,documents:docs.map(d=>({...d,title:pages.get(d.pageId)?.title??d.title})),warnings};

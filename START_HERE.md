@@ -1,3 +1,5 @@
+> Current V2.1 stabilization + polish pass: [delivery report](docs/final-polish/DELIVERY.md), [file inventory](docs/final-polish/FILES.md), and [test results](docs/final-polish/TESTS.md). The material below is retained historical evidence from the earlier V2 pass.
+
 # AtlasNote V2 stabilization - start here
 
 This is the completed bounded improvement implementation, not another handoff-only package. Package version remains **2.0.0**. Production release is **not cleared**: normal-origin browser/storage tests, clean installation and the full security/license review remain open.

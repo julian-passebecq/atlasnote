@@ -41,3 +41,11 @@
 .suggestion-row{padding:10px;border-bottom:1px solid var(--line)}.suggestion-row>.inline-check{align-items:flex-start}.suggestion-row .button-row{margin-left:24px}
 @media(max-width:760px){.reference-explorer-layout{grid-template-columns:145px minmax(0,1fr)}.reference-explorer-main{padding:10px}.concept-editor-layout{grid-template-columns:1fr}.pane-tabbar .pane-header-actions{gap:0;padding:0}.pane-tabbar .pane-header-actions .icon-button{width:26px;min-width:26px;padding:4px}}
 @media(max-width:480px){.reference-explorer-layout{display:flex;flex-direction:column}.concept-index{max-height:190px;border-right:0;border-bottom:1px solid var(--line)}.reference-explorer-main{flex:1;min-height:0}}
+
+/* Group headings identify type once; exact destinations and taxonomy stay visible. */
+.reference-open{padding:6px 7px;gap:1px}.reference-open strong{font-size:12px;line-height:1.4}
+.reference-open .reference-taxonomy{color:var(--muted);font-size:11px}
+.reference-open:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.reference-result>.icon-button{min-width:32px;min-height:32px}
+.reference-explorer>header{padding:10px 14px}.reference-explorer-main{padding:10px 14px}
+.reference-filters{gap:7px;margin:7px 0 10px}.reference-direction{margin:10px 0}

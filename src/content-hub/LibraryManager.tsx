@@ -2,7 +2,7 @@ import React,{useState,useEffect} from '../vendor/react.mjs';
 import {store} from '../storage/database.js';
 import {LIBRARY_TYPES,subjectFromCategory} from './model.js';
 import type {TaxonomyRef} from './model.js';
-import {removeLocalContent,libraryModeForPage,downloadJSON,addNotebookReference,currentResourceTarget} from './content.js';
+import {classifyResource,removeLocalContent,libraryModeForPage,downloadJSON,addNotebookReference,currentResourceTarget} from './content.js';
 import {resourceTaxonomy,sharedFolders,taxonomyLabel,scopeMatches,targetId} from './taxonomy.js';
 import {targetForPage} from '../core/reading-lists.js';
 import {isArchived,newLocation} from '../core/workspace.js';
@@ -20,7 +20,9 @@ export function LibraryManager({catalogue,workspace,session,selectedResource,onS
  }).sort((a,b)=>(b.article?.addedAt??0)-(a.article?.addedAt??0));
  const page=catalogue.pages.find(p=>p.id===selected&&libraryModeForPage(catalogue,p.id)===mode),type=LIBRARY_TYPES.find(t=>t.id===mode)!;
  function loadJSON(){if(!page)return;setRaw(JSON.stringify(resourceSource(catalogue,workspace,page),null,2));setLoadedIdentity(sourceIdentity(catalogue,workspace,page));setError('');}
- useEffect(()=>{setTaxonomy(page?resourceTaxonomy(catalogue,workspace.overlays,page.id):undefined);loadJSON();},[page?.id]);
+ const effectiveTaxonomy=page?resourceTaxonomy(catalogue,workspace.overlays,page.id):undefined;
+ useEffect(()=>{setTaxonomy(effectiveTaxonomy);},[page?.id,JSON.stringify(effectiveTaxonomy)]);
+ useEffect(()=>{loadJSON();},[page?.id]);
  async function run(fn:any,message?:string){try{setError('');await fn();if(message)notify(message);}catch(e){setError((e as Error).message);}}
  function target(){return page?currentResourceTarget(catalogue,newLocation(page.id))!:undefined;}
  function choose(id:string){setSelected(id);setError('');if(onSelectResource)onSelectResource(id);}
@@ -42,7 +44,7 @@ export function LibraryManager({catalogue,workspace,session,selectedResource,onS
  {page.qcm&&<div className="resource-questions">{page.qcm.questions.slice(0,3).map(q=><details key={q.id}><summary>{q.prompt}</summary><p>{q.explanation}</p><ul>{q.options.map(o=><li key={o.id}>{o.text} <small>{o.explanation}</small></li>)}</ul></details>)}</div>}
  {page.cheatsheet&&<div className="resource-sheet-list">{page.cheatsheet.pages.map((p,i)=><div key={p.id}><strong>Page {i+1}</strong><span>{p.title??p.id}</span><small>{p.blocks.length} structured blocks</small></div>)}</div>}
  {mode==='pdfs'&&<p>{catalogue.documents.find(d=>d.pageId===page.id)?.pageCount??'Unknown count of'} physical pages. Rendering and page navigation remain in the PDF reader.</p>}
- <TaxonomyPicker catalogue={catalogue} overlays={workspace.overlays} value={taxonomy} onChange={setTaxonomy}/><button onClick={()=>void run(()=>store.overlays(o=>{o.taxonomy??={};o.taxonomy[page.id]=taxonomy?structuredClone(taxonomy):null;}),'Classification saved without changing source metadata.')}>Save classification</button></section>}
+ <TaxonomyPicker catalogue={catalogue} overlays={workspace.overlays} value={taxonomy} onChange={setTaxonomy}/><button onClick={()=>void run(()=>store.overlays(o=>{classifyResource(o,catalogue,page.id,taxonomy);}),'Classification saved. Notebook shortcut placement is unchanged.')}>Save classification</button></section>}
  <div className="button-row resource-source-actions"><button onClick={()=>onOpen(target())}>Read resource</button><button onClick={e=>onActions(target(),page.title,e)}>Reading actions</button><button onClick={()=>mode==='pdfs'?onPdfManage(catalogue.documents.find(d=>d.pageId===page.id)):onEdit(page)}>Edit / details</button><button onClick={()=>downloadJSON(resourceSource(catalogue,workspace,page),page.id+'.json')}>{mode==='pdfs'?'Export PDF metadata':'Export source'}</button><button onClick={()=>void run(()=>store.overlays(o=>{o.archived=isArchived(page.id,catalogue,o)?o.archived.filter(id=>id!==page.id):[...new Set([...o.archived,page.id])];}),'Archive status updated. Content and references retained.')}>{isArchived(page.id,catalogue,workspace.overlays)?'Restore resource':'Archive resource'}</button>{['articles','qcm'].includes(mode)&&workspace.overlays.pages[page.id]&&!catalogue.packs.some(pack=>pack.pages.some(p=>p.id===page.id))&&<button className="danger" onClick={()=>{if(confirm('Remove this local source? Bookmarks, Notebook references and attempt history will remain as unavailable targets. Export a backup first.'))void run(()=>store.overlays(o=>removeLocalContent(o,catalogue,page.id)),'Source removed; shared history retained.');}}>Remove local source</button>}</div></article>:<div className="resource-drop-empty"><h2>Drop a resource from the tree</h2><p>Drag a {type.label.toLowerCase()} here, use a tree row's Manage button, or expand Choose resource. Source files stay in their library.</p></div>}
  {error&&<p className="error-message" role="alert">{error}</p>}</section></div></main>;
 }

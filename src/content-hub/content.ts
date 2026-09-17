@@ -22,7 +22,18 @@ export function putContent(o:Overlays,page:Page,c:Catalogue,editing=false){
  if(c.pages.some(p=>p.id===page.id)&&!editing)throw Error('This source ID already exists. Edit the existing resource or give the imported source a new ID.');
  const old=c.pages.find(p=>p.id===page.id);if(editing&&(!old||old.kind!==page.kind))throw Error('Cannot replace a different resource kind.');
  if(editing&&old)page={...old,...page,related:old.related,resourceLinks:old.resourceLinks,terms:old.terms,sources:old.sources,tags:old.tags};
+ // IndexedDB preserves undefined properties while JSON cannot. Do not manufacture
+ // an optional field during edits: the canonical source must round-trip exactly.
+ if(page.resourceLinks===undefined){const {resourceLinks,...defined}=page;page=defined;}
  validateHubPage(page);o.pages[page.id]={...o.pages[page.id],page:structuredClone(page)};
+ // Source edits supersede legacy classification overrides in the same transaction.
+ if(page.article||page.qcm){o.taxonomy??={};o.taxonomy[page.id]=structuredClone((page.article??page.qcm)!.taxonomy??null);}
+}
+export function classifyResource(o:Overlays,c:Catalogue,id:string,taxonomy?:TaxonomyRef){
+ if(taxonomy)validateTaxonomy(taxonomy);
+ const original=c.pages.find(p=>p.id===id);if(!original)throw Error('Resource is unavailable.');
+ if(original.article||original.qcm){const page=structuredClone(original),metadata=page.article??page.qcm!;if(taxonomy)metadata.taxonomy=structuredClone(taxonomy);else delete metadata.taxonomy;putContent(o,page,c,true);}
+ else {o.taxonomy??={};o.taxonomy[id]=structuredClone(taxonomy??null);}
 }
 export function currentResourceTarget(c:Catalogue,loc?:Location):ReadingTarget|undefined {
  if(!loc)return;const p=c.pages.find(x=>x.id===loc.pageId);if(!p)return loc.collectionId?{kind:'collection',collectionId:loc.collectionId}:undefined;

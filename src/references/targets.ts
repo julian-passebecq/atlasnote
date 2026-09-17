@@ -99,7 +99,7 @@ export function resolveTarget(c:Catalogue,ws:Workspace,input:ResourceTarget):Res
  if((t.kind==='page'||t.kind==='article')&&t.anchor?.blockId){
   let block:Block|undefined;walkBlocks(page.blocks,(b:Block)=>{if(b.id===t.anchor!.blockId)block=b;});
   if(!block)return lost('The section/block was removed. Opening the parent resource instead.','Missing block '+t.anchor.blockId);
-  return {...out,detail:'Section / '+('title'in block?block.title??block.id:block.id),revision:fingerprint(block),excerpt:blocksText([block]).slice(0,1200)};
+  return {...out,detail:'Section / '+(('title'in block&&block.title)||blocksText([block]).replace(/\s+/g,' ').trim().slice(0,90)||'Untitled section'),revision:fingerprint(block),excerpt:blocksText([block]).slice(0,1200)};
  }
  return out;
 }

@@ -1,3 +1,4 @@
+import {targetTaxonomy,taxonomyLabel} from '../content-hub/taxonomy.js';
 import type {Catalogue,Personal,Workspace,Block} from '../core/model.js';
 import type {ResourceTarget} from '../core/reading-types.js';
 import type {Concept,KnowledgeState,ReferenceEdge} from './model.js';
@@ -70,7 +71,7 @@ export function createReferenceIndex(c:Catalogue,ws:Workspace):ReferenceIndex {
  return {knowledge:k,documentScopes,bySource,byTarget,assignments,byConcept};
 }
 export type ReferenceDirection='outgoing'|'incoming'|'related';
-export type ReferenceRow=ResolvedTarget&{directions:ReferenceDirection[];reasons:string[];stale:boolean};
+export type ReferenceRow=ResolvedTarget&{directions:ReferenceDirection[];reasons:string[];stale:boolean;taxonomyLabel?:string};
 export function queryReferences(c:Catalogue,ws:Workspace,index:ReferenceIndex,target?:ResourceTarget,conceptId?:string,limit=200){
  const rows=new Map<string,ReferenceRow>(),own=target?targetKey(c,target):'',scopes=target?targetScopeKeys(c,target):[];
  const canonical=target?canonicalTarget(c,target):undefined;const whole=!!canonical&&((canonical.kind==='page'||canonical.kind==='article')&&!canonical.anchor?.blockId||canonical.kind==='qcm'&&!canonical.questionId);
@@ -79,7 +80,8 @@ export function queryReferences(c:Catalogue,ws:Workspace,index:ReferenceIndex,ta
  const add=(to:ResourceTarget,direction:ReferenceDirection,reason:string,revision?:string)=>{
   const resolved=resolveTarget(c,ws,to);if(resolved.key===own)return;const old=rows.get(resolved.key),stale=!!revision&&resolved.revision!==revision;
   if(old){if(!old.directions.includes(direction))old.directions.push(direction);if(!old.reasons.includes(reason))old.reasons.push(reason);old.stale||=stale;return;}
-  rows.set(resolved.key,{...resolved,directions:[direction],reasons:[reason],stale});
+  const taxonomy=targetTaxonomy(c,ws,to);
+  rows.set(resolved.key,{...resolved,...(taxonomy?{taxonomyLabel:taxonomyLabel(taxonomy,c,ws.overlays)}:{}),directions:[direction],reasons:[reason],stale});
  };
  for(const key of scopes){const broad=key!==own?(whole?' (section/page within this document)':' (broader document/page scope)'):'';
   for(const e of index.bySource.get(key)??[])add(e.target,'outgoing',e.provenance+broad+(e.label?' / '+e.label:''),e.targetRevision);

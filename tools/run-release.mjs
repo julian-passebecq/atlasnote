@@ -25,7 +25,7 @@ const commands=[
  ['runtime',['run','test:runtime']], ['workspaces-runtime',['run','test:workspaces:runtime']],
  ['saved-states-runtime',['run','test:savedstates:runtime']], ['reading-runtime',['run','test:reading:runtime']], ['headers',['run','test:headers']],
  ['cheatsheets-content',['run','test:cheatsheets']], ['cheatsheets-ui',['run','test:cheatsheets:ui']], ['cheatsheets-runtime',['run','test:cheatsheets:runtime']],
- ['stabilization-ui',['run','test:stabilization:ui']], ['stabilization-runtime',['run','test:stabilization:runtime']], ['content-hub-ui',['run','test:content-hub:ui']], ['content-hub-runtime',['run','test:content-hub:runtime']], ['references-unit',['run','test:references']], ['references-ui',['run','test:references:ui']], ['references-runtime',['run','test:references:runtime']]
+ ['stabilization-ui',['run','test:stabilization:ui']], ['stabilization-runtime',['run','test:stabilization:runtime']], ['content-hub-ui',['run','test:content-hub:ui']], ['content-hub-runtime',['run','test:content-hub:runtime']], ['references-unit',['run','test:references']], ['references-ui',['run','test:references:ui']], ['references-runtime',['run','test:references:runtime']], ['final-polish-runtime',['run','test:final-polish:runtime']]
 ];
 // Invoke npm's JavaScript entry point through Node; npm.cmd is not directly
 // executable by spawnSync on Windows. See nodejs.org/api/child_process.html.

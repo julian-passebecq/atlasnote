@@ -56,3 +56,53 @@ test('stabilization: reload demo keeps a customized deleted exact anchor without
 test('stabilization: JSON prevents deleting a bookmarked PDF companion category',()=>{const {c,ws}=start(),pg=c.pages.find(p=>p.id===ids.pdfs),v=resourceSource(c,ws,pg),cat=v.companion.categories[0];const target={kind:'pdf-category',documentId:v.document.id,pageId:pg.id,pdfCategoryId:cat.id,pdfPage:1,...(v.document.sha256?{revision:v.document.sha256}:{})};assert(resolveTarget(c,ws,target).exact);addReadingBookmark(ws.personal,target,'Saved category','informatics');v.companion.categories=[];for(const term of v.companion.terms??[])term.categoryIds=[];for(const value of Object.values(v.companion.pages??{}))value.categoryIds=[];assert.throws(()=>replace(c,ws,pg.id,v),/exact reference/);});
 test('stabilization: PDF metadata export cannot mutate the original companion',()=>{const {c,ws}=start(),pg=c.pages.find(p=>p.id===ids.pdfs),before=resourceSource(c,ws,pg),exported=resourceSource(c,ws,pg);exported.companion.documentId='changed';assert.deepEqual(resourceSource(c,ws,pg),before);});
 test('stabilization: public PDF label edit exports its persisted overlay title after recomposition',()=>{const {c,ws}=start(),pg=c.pages.find(p=>p.id===ids.pdfs),v=resourceSource(c,ws,pg);v.document.title='Persisted PDF label';ws.overlays=replace(c,ws,pg.id,v);const next=compose(built,ws),fresh=next.pages.find(p=>p.id===pg.id);assert.equal(resourceSource(next,ws,fresh).document.title,'Persisted PDF label');assert.doesNotThrow(()=>replace(next,ws,pg.id,resourceSource(next,ws,fresh),sourceIdentity(next,ws,fresh)));assert.notEqual(c.documents.find(d=>d.pageId===pg.id).title,'Persisted PDF label');});
+
+// V2.1 source/projection coherence, using the existing backup envelope.
+import {classifyResource,articleExport,captureRows} from '../dist-offline/app/content-hub/content.js';
+import {resourceTaxonomy,projectLibrary} from '../dist-offline/app/content-hub/taxonomy.js';
+import {contextLabel} from '../dist-offline/app/content-hub/context-label.js';
+import {createReferenceIndex,queryReferences} from '../dist-offline/app/references/knowledge.js';
+for(const kind of ['articles','qcm'])test('V2.1 '+kind+' classification, source edit and backup agree; pins stay user-owned',async()=>{
+ const {ws}=start(),id=ids[kind],before=clone(ws.overlays.references);let c=compose(built,ws);
+ classifyResource(ws.overlays,c,id,{subject:'cloud'});c=compose(built,ws);
+ assert.deepEqual(resourceTaxonomy(c,ws.overlays,id),{subject:'cloud'});assert(!Object.hasOwn(ws.overlays.pages[id].page,'resourceLinks'));assert.deepEqual(ws.overlays,JSON.parse(JSON.stringify(ws.overlays)));
+ assert.deepEqual(resourceSource(c,ws,c.pages.find(p=>p.id===id)).taxonomy,{subject:'cloud'});
+ assert(projectLibrary(c,ws.overlays,kind,'cloud').some(p=>JSON.stringify(p.nodes).includes(id)));
+ const value=resourceSource(c,ws,c.pages.find(p=>p.id===id));value.taxonomy={subject:'norsk'};
+ ws.overlays=replace(c,ws,id,value);c=compose(built,ws);
+ assert.deepEqual(resourceTaxonomy(c,ws.overlays,id),{subject:'norsk'});assert.deepEqual(ws.overlays.references,before);
+ const files=await makeBackup(ws,built,async key=>source.assets.find(a=>a.key===key));const restored=(await readBackup((await unzipBounded(files.bytes)).files,schemas)).workspace;
+ const next=compose(built,restored);assert.deepEqual(resourceSource(next,restored,next.pages.find(p=>p.id===id)).taxonomy,{subject:'norsk'});
+ assert(resolveTarget(next,restored,targetForPage(next,id)).available);
+ classifyResource(restored.overlays,next,id);const cleared=compose(built,restored);
+ assert.equal(resourceTaxonomy(cleared,restored.overlays,id),undefined);assert.equal(resourceSource(cleared,restored,cleared.pages.find(p=>p.id===id)).taxonomy,undefined);
+});
+test('V2.1 legacy contradictory taxonomy is projected without mutating storage; stale editor rejected',()=>{
+ const {ws,c}=start(),id=ids.articles,pg=c.pages.find(p=>p.id===id),identity=sourceIdentity(c,ws,pg);
+ ws.overlays.taxonomy??={};ws.overlays.taxonomy[id]={subject:'job'};const before=clone(ws),next=compose(built,ws);
+ assert.deepEqual(articleExport(next.pages.find(p=>p.id===id)).taxonomy,{subject:'job'});assert.deepEqual(ws,before);
+ assert.throws(()=>replace(next,ws,id,articleExport(pg),identity),/changed while/);
+});
+test('V2.1 readable context preserves exact PDF page and context off omits target',()=>{
+ const {ws,c}=start(),doc=c.documents.find(d=>d.pageId===ids.pdfs),target={kind:'pdf-page',documentId:doc.id,pageId:doc.pageId,pdfPage:3};
+ const label=contextLabel(c,ws,target);assert(label.includes(doc.title));assert(label.includes('3'));assert(!label.includes(doc.id));
+ const on=captureRows(ws.personal,'note',[{text:'Attached'}],undefined,target)[0],off=captureRows(ws.personal,'note',[{text:'Global'}])[0];
+ assert.deepEqual(on.contextTarget,target);assert(!('contextTarget' in off));
+});
+test('V2.1 reference rows expose effective taxonomy and preserve exact destination',()=>{
+ const {ws,c}=start(),target=targetForPage(c,'demo.v2.article.spark'),query=queryReferences(c,ws,createReferenceIndex(c,ws),target);
+ assert(query.rows.length);for(const row of query.rows){assert.equal(row.detail,resolveTarget(c,ws,row.target).detail);assert.equal(row.title,resolveTarget(c,ws,row.target).title);}
+ assert(query.rows.some(r=>r.taxonomyLabel));
+});
+
+test('V2.1 untitled section context uses readable text without exposing stable block IDs',()=>{
+ const {ws,c}=start(),page=c.pages.find(p=>p.id==='demo.v2.note.it'),block=page.blocks[0],target=targetForPage(c,page.id,{blockId:block.id});
+ const resolved=resolveTarget(c,ws,target);assert(resolved.exact);assert(!resolved.detail.includes(block.id));assert(resolved.detail.startsWith('Section / '));assert(contextLabel(c,ws,target).includes(resolved.detail));
+});
+
+import {resumeArticleDraft} from '../dist-offline/app/stabilization/capture-draft.js';
+test('V2.1 capture back then context OFF clears hidden Article context and classification',()=>{
+ const previous={title:'Draft body',text:'Retained',taxonomy:{subject:'it'},contextTarget:{kind:'page',pageId:'page.atlas.welcome'}};
+ const next=resumeArticleDraft(previous,{sourceType:'transcript'});assert.deepEqual(next,{title:'Draft body',text:'Retained',sourceType:'transcript'});assert(previous.contextTarget);
+ const on=resumeArticleDraft(previous,{sourceType:'article',contextTarget:{kind:'page',pageId:'page.atlas.pdf'},taxonomy:{subject:'cloud'}});assert.equal(on.contextTarget.pageId,'page.atlas.pdf');assert.equal(on.taxonomy.subject,'cloud');
+});

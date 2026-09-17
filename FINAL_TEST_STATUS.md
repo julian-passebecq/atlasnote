@@ -1,3 +1,5 @@
+> Current V2.1 stabilization + polish pass: [delivery report](docs/final-polish/DELIVERY.md), [file inventory](docs/final-polish/FILES.md), and [test results](docs/final-polish/TESTS.md). The material below is retained historical evidence from the earlier V2 pass.
+
 # AtlasNote V2 stabilization - final test status
 
 **Implementation delivered; production release NOT CLEARED.** The final delivery manifest binds these results to the packaged application source. Reports under `docs/stabilization/historical-v2-delivery/` describe the earlier V2 pass and are not the current status.
