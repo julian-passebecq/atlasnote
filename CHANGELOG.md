@@ -1,3 +1,11 @@
+# AtlasNote V2.1.0 - 2026-09-18
+
+- Finalize the stabilized V2 architecture and UX with compact Dashboard tables, pane-owned reader controls, typed Notebook references, local-first Content Hub authoring, Quick Capture, Reference Lens/Explorer and five independent workspaces.
+- Add visual Article/QCM authoring polish, readable exact context labels, denser reference surfaces, clearer drag/resize affordances and consistent AtlasNote V2.1 user-facing naming.
+- Repair three browser-confirmed release blockers: canonical Article classification synchronization, author-owned Multiple-answer QCM mode, and embedded PDF internal-destination navigation.
+- Preserve IndexedDB version 2 and the existing full-backup envelope; no persistence schema migration or new runtime storage authority.
+- Final local release gate: 46/46 commands; 715/715 unit tests. Push and PR production-release CI completed successfully on the repaired release candidate.
+
 # V2 stabilization (2.0.0) - unreleased
 
 - Diagnose and correct the inherited Grid/Spread Compare test setup without changing the PDF engine or weakening all-workspace restore equality.
