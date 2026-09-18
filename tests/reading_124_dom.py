@@ -31,7 +31,7 @@ with sync_playwright() as pw:
   assert names==['Collapse notebook sidebar','Global search','Back in active tab','Forward in active tab','Quick Capture','Open Dashboard','Compare in two panes'],names
   assert p.locator('.reader-chrome-hidden').count()==1 and p.locator('.pane-chrome-toggle').count()==1
   labels=p.locator('.reader-rail > button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))')
-  assert labels==['Enter focus mode','Open context panel','Open bookmarks','Open read later','Export to AI','Theme','More / Settings'],labels
+  assert labels==['Enter focus mode','Open context panel','Open bookmarks','Open read later','Version History','Export to AI','Theme','More / Settings'],labels
   btn('Show reader controls').click();assert session()['panes'][0]['readerChromeCollapsed']==False
   btn('Hide reader controls').click();assert session()['panes'][0]['readerChromeCollapsed']==True
   btn('Collapse notebook sidebar').click();assert btn('Global search').is_visible() and btn('Show reader controls').is_visible();btn('Open notebook sidebar').click();shot('paired-navigation');return {'navigation':names,'rail':labels}
