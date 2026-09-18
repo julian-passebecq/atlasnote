@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-agent-changeset",
+  "id": "example.6",
+  "createdAt": 1789754775036,
+  "source": "Synthetic test agent",
+  "summary": "Restore old source as a new version",
+  "operations": [
+    {
+      "id": "example.operation.6.resource.restoreAsNewRevision",
+      "kind": "resource.restoreAsNewRevision",
+      "resourceKey": "notebook-page:page.atlas.welcome",
+      "baseRevisionId": "revision.923d1eed831f4fae8d6d1a7b2351a8ee",
+      "payload": {
+        "revisionId": "revision.1a9bd9eb047441f2a889dfa6d83c266e"
+      }
+    }
+  ]
+}

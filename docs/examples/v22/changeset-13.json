@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-agent-changeset",
+  "id": "example.13",
+  "createdAt": 1789754777417,
+  "source": "Synthetic test agent",
+  "summary": "Add typed authored link",
+  "operations": [
+    {
+      "id": "example.operation.13.resource.link.add",
+      "kind": "resource.link.add",
+      "resourceKey": "notebook-page:page.atlas.welcome",
+      "baseRevisionId": "revision.b9b4e58619bc4bda8dc70b3697f6aec2",
+      "payload": {
+        "target": {
+          "kind": "article",
+          "articleId": "page.v22.article",
+          "pageId": "page.v22.article"
+        },
+        "label": "Exact authored link"
+      }
+    }
+  ]
+}

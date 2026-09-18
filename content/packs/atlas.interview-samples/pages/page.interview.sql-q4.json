@@ -1,0 +1,150 @@
+{
+  "id": "page.interview.sql-q4",
+  "title": "Q4 - Aggregate, then rank with a CTE",
+  "summary": "SQL / SQL / CTEs / Composition",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "page.interview.sql-q4.prompt",
+      "title": "Question",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.sql-q4.question",
+          "text": "Classic SQL screener: when a problem needs aggregation followed by ranking/filtering, why might you use a CTE, and is a CTE automatically faster than a subquery?"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q4.reasoning",
+      "title": "Reasoning",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.sql-q4.reasoning-points",
+          "ordered": true,
+          "items": [
+            "Separate the aggregation stage from the ranking stage.",
+            "Give the intermediate result a clear name and grain.",
+            "Decide how equal revenue should rank.",
+            "Evaluate performance using the actual plan and representative data."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q4.answer",
+      "title": "Answer / mental model",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.sql-q4.explanation",
+          "text": "A CTE names an intermediate result and exposes its grain. First produce customer-level revenue, then rank that result. WITH does not itself promise a speedup: optimization and materialization depend on the engine, query and references."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q4.example",
+      "title": "Example",
+      "children": [
+        {
+          "type": "code",
+          "id": "page.interview.sql-q4.code",
+          "language": "sql",
+          "code": "WITH revenue AS (\n  SELECT customer_id, SUM(net_amount) AS total_revenue\n  FROM orders WHERE status = 'PAID'\n  GROUP BY customer_id\n)\nSELECT customer_id, total_revenue,\n       DENSE_RANK() OVER (ORDER BY total_revenue DESC) AS revenue_rank\nFROM revenue\nORDER BY revenue_rank, customer_id;"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q4.alternatives",
+      "title": "Alternative / tradeoff",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.sql-q4.alternative-0",
+          "text": "An inline derived table can express the same intermediate result. Compare plans rather than choosing syntax by performance folklore."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q4.trap",
+      "title": "Common mistake / trap",
+      "children": [
+        {
+          "type": "callout",
+          "id": "page.interview.sql-q4.trap-note",
+          "tone": "warning",
+          "title": "Watch for this",
+          "text": "Ranking order rows before aggregation answers a different question. Readability is not evidence of improved execution time."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q4.followup",
+      "title": "Follow-up",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.sql-q4.followups",
+          "items": [
+            "Write a CTE that aggregates customer revenue, then ranks customers by revenue."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q4.intent",
+      "title": "Interviewer intent",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.sql-q4.intent-points",
+          "items": [
+            "decompose logic.",
+            "Do not teach that WITH is automatically faster."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q4.reflection",
+      "title": "Reflection",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.sql-q4.reflection-prompt",
+          "text": "What pattern did I recognize, where did I get stuck, and what would I change in my first approach?\n\nUse Context > Remarks for your personal reflection. It is saved separately from this reference."
+        }
+      ]
+    }
+  ],
+  "related": [
+    "page.interview.sql-q1",
+    "page.interview.sql-q3"
+  ],
+  "terms": [],
+  "sources": [
+    {
+      "title": "PostgreSQL - WITH queries",
+      "url": "https://www.postgresql.org/docs/current/queries-with.html"
+    },
+    {
+      "title": "PostgreSQL - window functions",
+      "url": "https://www.postgresql.org/docs/current/functions-window.html"
+    }
+  ],
+  "tags": [
+    "interview",
+    "sql",
+    "series:sql-q1-q5"
+  ],
+  "provenance": "Original educational prototype. Prompts Q1-Q5 preserve the user-provided canonical SQL sequence. Examples are reference code, not executable tasks."
+}

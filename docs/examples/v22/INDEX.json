@@ -1,0 +1,171 @@
+{
+  "scope": "Synthetic examples, generated and accepted sequentially in a unit backend; not browser evidence. Refresh resource/base/fingerprint IDs for a real workspace.",
+  "plans": [
+    {
+      "file": "changeset-01.json",
+      "label": "Create a canonical Notebook page",
+      "operations": [
+        "resource.create"
+      ]
+    },
+    {
+      "file": "changeset-02.json",
+      "label": "Update canonical notebook-page:page.atlas.welcome",
+      "operations": [
+        "resource.update"
+      ]
+    },
+    {
+      "file": "changeset-03.json",
+      "label": "Update canonical article:page.v22.article",
+      "operations": [
+        "resource.update"
+      ]
+    },
+    {
+      "file": "changeset-04.json",
+      "label": "Update canonical cheatsheet:page.cheatsheet.azure-data-factory",
+      "operations": [
+        "resource.update"
+      ]
+    },
+    {
+      "file": "changeset-05.json",
+      "label": "Update canonical qcm:page.v22.qcm",
+      "operations": [
+        "resource.update"
+      ]
+    },
+    {
+      "file": "changeset-06.json",
+      "label": "Restore old source as a new version",
+      "operations": [
+        "resource.restoreAsNewRevision"
+      ]
+    },
+    {
+      "file": "changeset-07.json",
+      "label": "Retain draft metadata without changing current source",
+      "operations": [
+        "resource.draft"
+      ]
+    },
+    {
+      "file": "changeset-08.json",
+      "label": "Assign canonical Article taxonomy",
+      "operations": [
+        "taxonomy.assign"
+      ]
+    },
+    {
+      "file": "changeset-09.json",
+      "label": "Create a Notebook structural folder",
+      "operations": [
+        "notebook.tree.createNode"
+      ]
+    },
+    {
+      "file": "changeset-10.json",
+      "label": "Rename a stable Notebook node",
+      "operations": [
+        "notebook.tree.renameNode"
+      ]
+    },
+    {
+      "file": "changeset-11.json",
+      "label": "Reorder Notebook siblings",
+      "operations": [
+        "notebook.tree.reorderNode"
+      ]
+    },
+    {
+      "file": "changeset-12.json",
+      "label": "Reparent a stable Notebook node",
+      "operations": [
+        "notebook.tree.moveNode"
+      ]
+    },
+    {
+      "file": "changeset-13.json",
+      "label": "Add typed authored link",
+      "operations": [
+        "resource.link.add"
+      ]
+    },
+    {
+      "file": "changeset-14.json",
+      "label": "Update typed authored link",
+      "operations": [
+        "resource.link.update"
+      ]
+    },
+    {
+      "file": "changeset-15.json",
+      "label": "Remove typed authored link",
+      "operations": [
+        "resource.link.remove"
+      ]
+    },
+    {
+      "file": "changeset-16.json",
+      "label": "Add semantic edge through exact-target service",
+      "operations": [
+        "reference.add"
+      ]
+    },
+    {
+      "file": "changeset-17.json",
+      "label": "Remove semantic edge",
+      "operations": [
+        "reference.remove"
+      ]
+    },
+    {
+      "file": "changeset-18.json",
+      "label": "Stage concept assignment for the existing semantic review",
+      "operations": [
+        "concept.assignment.propose"
+      ]
+    },
+    {
+      "file": "changeset-19.json",
+      "label": "Reviewed personal writes, not content history",
+      "operations": [
+        "bookmark.add",
+        "readLater.add",
+        "capture.create"
+      ]
+    },
+    {
+      "file": "changeset-20.json",
+      "label": "Reviewed personal update/removal",
+      "operations": [
+        "bookmark.remove",
+        "readLater.remove",
+        "capture.update"
+      ]
+    },
+    {
+      "file": "changeset-21.json",
+      "label": "Reviewed layout/navigation, not content history",
+      "operations": [
+        "workspace.navigate",
+        "workspace.compare"
+      ]
+    },
+    {
+      "file": "changeset-22.json",
+      "label": "PDF metadata edit with unchanged reviewed bytes",
+      "operations": [
+        "pdf.metadata.update"
+      ]
+    },
+    {
+      "file": "changeset-23.json",
+      "label": "PDF logical revision using already reviewed source",
+      "operations": [
+        "pdf.revision.propose"
+      ]
+    }
+  ]
+}

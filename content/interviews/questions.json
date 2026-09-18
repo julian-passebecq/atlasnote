@@ -1,0 +1,597 @@
+{
+  "schemaVersion": 1,
+  "questions": [
+    {
+      "id": "sql-q1",
+      "title": "Q1 - WHERE / GROUP BY / HAVING",
+      "style": "SQL",
+      "category": "SQL",
+      "subcategory": "Aggregation",
+      "prompt": "Classic SQL screener: filter to PAID orders in 2026 and return total net_amount per customer. What clauses do you need, and what is the output grain?",
+      "explanation": "Filter order rows first, then aggregate. The output has one row per customer with qualifying orders. A revenue threshold belongs in HAVING after grouping. This example uses PostgreSQL-style DATE literals, a half-open date interval and non-null net_amount.",
+      "reasoning": [
+        "State the input grain: one row per order.",
+        "Use WHERE for status and the year interval.",
+        "GROUP BY customer_id and SUM net_amount.",
+        "For the follow-up, apply HAVING SUM(net_amount) > 1000."
+      ],
+      "intent": [
+        "WHERE filters rows.",
+        "GROUP BY changes the output grain.",
+        "HAVING filters aggregated groups."
+      ],
+      "trap": "Filtering a row amount above 1000 is not the same as retaining a customer whose aggregate exceeds 1000.",
+      "followUps": [
+        "How would you keep only customers whose total paid revenue exceeds 1000?"
+      ],
+      "topic": "Row filters and group filters",
+      "series": "sql-q1-q5",
+      "sources": [
+        {
+          "title": "PostgreSQL - aggregate functions",
+          "url": "https://www.postgresql.org/docs/current/tutorial-agg.html"
+        }
+      ],
+      "example": {
+        "language": "sql",
+        "code": "SELECT customer_id, SUM(net_amount) AS total_paid_revenue\nFROM orders\nWHERE status = 'PAID'\n  AND order_date >= DATE '2026-01-01'\n  AND order_date < DATE '2027-01-01'\nGROUP BY customer_id;"
+      },
+      "alternatives": [
+        {
+          "text": "For the follow-up, add HAVING after GROUP BY. A grouped CTE followed by an outer WHERE is another readable composition.",
+          "language": "sql",
+          "code": "SELECT customer_id, SUM(net_amount) AS total_paid_revenue\nFROM orders\nWHERE status = 'PAID'\n  AND order_date >= DATE '2026-01-01'\n  AND order_date < DATE '2027-01-01'\nGROUP BY customer_id\nHAVING SUM(net_amount) > 1000;"
+        }
+      ],
+      "related": [
+        "sql-q2",
+        "sql-q4"
+      ]
+    },
+    {
+      "id": "sql-q2",
+      "title": "Q2 - LEFT JOIN and revenue grain",
+      "style": "SQL",
+      "category": "SQL",
+      "subcategory": "Joins",
+      "prompt": "Classic SQL screener: return total paid revenue for every customer, including customers with no paid orders. Which join do you use and where should the paid-order filter go?",
+      "explanation": "Start from the unique customer table and LEFT JOIN matching paid orders. Put the paid-order predicate in ON to preserve customers without a match. COALESCE turns their null total into zero. Check the relationship grain before summing.",
+      "reasoning": [
+        "Confirm customers.customer_id is unique.",
+        "Preserve customers with LEFT JOIN.",
+        "Restrict matching orders in ON, not an outer WHERE.",
+        "Check dimension cardinality and revenue totals before and after any additional join."
+      ],
+      "intent": [
+        "LEFT JOIN preservation.",
+        "Predicate placement.",
+        "Join cardinality.",
+        "Fan-out / duplicated revenue."
+      ],
+      "trap": "A WHERE o.status = PAID condition removes the null-extended rows. SUM(DISTINCT amount) is not a general repair for fan-out: different orders can have equal amounts.",
+      "followUps": [
+        "What happens if one customer has multiple matching dimension rows before you SUM revenue?"
+      ],
+      "topic": "Cardinality and preservation",
+      "series": "sql-q1-q5",
+      "sources": [
+        {
+          "title": "PostgreSQL - joins",
+          "url": "https://www.postgresql.org/docs/current/tutorial-join.html"
+        },
+        {
+          "title": "PostgreSQL - aggregate functions",
+          "url": "https://www.postgresql.org/docs/current/tutorial-agg.html"
+        }
+      ],
+      "example": {
+        "language": "sql",
+        "code": "SELECT c.customer_id, COALESCE(SUM(o.net_amount), 0) AS revenue\nFROM customers AS c\nLEFT JOIN orders AS o\n  ON o.customer_id = c.customer_id\n AND o.status = 'PAID'\nGROUP BY c.customer_id;"
+      },
+      "alternatives": [
+        {
+          "text": "Pre-aggregate paid orders to one row per customer before the LEFT JOIN. A later non-unique dimension join can still multiply those totals; fix its key or effective-date condition."
+        }
+      ],
+      "related": [
+        "hybrid-fanout",
+        "sql-q1"
+      ]
+    },
+    {
+      "id": "sql-q3",
+      "title": "Q3 - Second-highest distinct salary",
+      "style": "SQL",
+      "category": "SQL",
+      "subcategory": "Window functions",
+      "prompt": "Classic SQL screener: how would you return the second-highest distinct salary, and how do ROW_NUMBER, RANK and DENSE_RANK differ?",
+      "explanation": "DENSE_RANK over salary descending assigns consecutive ranks to distinct salary values. ROW_NUMBER numbers individual rows; tied rows need a tie-breaker for deterministic row selection. RANK shares a rank across ties and leaves gaps. Filter null salaries explicitly.",
+      "reasoning": [
+        "Clarify distinct salary value versus second employee row.",
+        "Exclude null salaries.",
+        "Use DENSE_RANK for distinct values without gaps.",
+        "Add PARTITION BY department_id for the follow-up."
+      ],
+      "intent": [
+        "ranking",
+        "ties",
+        "distinct rank",
+        "PARTITION BY"
+      ],
+      "trap": "ROW_NUMBER = 2 can return the highest salary again when two employees tie. RANK = 2 may not exist after a first-place tie.",
+      "followUps": [
+        "How would you return the second-highest distinct salary within each department?"
+      ],
+      "topic": "Ties and partitions",
+      "series": "sql-q1-q5",
+      "sources": [
+        {
+          "title": "PostgreSQL - window functions",
+          "url": "https://www.postgresql.org/docs/current/functions-window.html"
+        }
+      ],
+      "example": {
+        "language": "sql",
+        "code": "WITH ranked AS (\n  SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS r\n  FROM employees WHERE salary IS NOT NULL\n)\nSELECT DISTINCT salary FROM ranked WHERE r = 2;\n\n-- Follow-up: one value per department; departments with <2 values are absent.\nWITH ranked AS (\n  SELECT department_id, salary,\n         DENSE_RANK() OVER (PARTITION BY department_id ORDER BY salary DESC) AS r\n  FROM employees WHERE salary IS NOT NULL\n)\nSELECT DISTINCT department_id, salary FROM ranked WHERE r = 2;"
+      },
+      "alternatives": [
+        {
+          "text": "For a single global value, MAX below the overall MAX also works and returns NULL if there is no second value.",
+          "language": "sql",
+          "code": "SELECT MAX(salary) AS second_salary\nFROM employees\nWHERE salary < (SELECT MAX(salary) FROM employees);"
+        }
+      ],
+      "related": [
+        "sql-q4",
+        "sql-q5"
+      ]
+    },
+    {
+      "id": "sql-q4",
+      "title": "Q4 - Aggregate, then rank with a CTE",
+      "style": "SQL",
+      "category": "SQL",
+      "subcategory": "CTEs",
+      "prompt": "Classic SQL screener: when a problem needs aggregation followed by ranking/filtering, why might you use a CTE, and is a CTE automatically faster than a subquery?",
+      "explanation": "A CTE names an intermediate result and exposes its grain. First produce customer-level revenue, then rank that result. WITH does not itself promise a speedup: optimization and materialization depend on the engine, query and references.",
+      "reasoning": [
+        "Separate the aggregation stage from the ranking stage.",
+        "Give the intermediate result a clear name and grain.",
+        "Decide how equal revenue should rank.",
+        "Evaluate performance using the actual plan and representative data."
+      ],
+      "intent": [
+        "decompose logic.",
+        "Do not teach that WITH is automatically faster."
+      ],
+      "trap": "Ranking order rows before aggregation answers a different question. Readability is not evidence of improved execution time.",
+      "followUps": [
+        "Write a CTE that aggregates customer revenue, then ranks customers by revenue."
+      ],
+      "topic": "Composition",
+      "series": "sql-q1-q5",
+      "sources": [
+        {
+          "title": "PostgreSQL - WITH queries",
+          "url": "https://www.postgresql.org/docs/current/queries-with.html"
+        },
+        {
+          "title": "PostgreSQL - window functions",
+          "url": "https://www.postgresql.org/docs/current/functions-window.html"
+        }
+      ],
+      "example": {
+        "language": "sql",
+        "code": "WITH revenue AS (\n  SELECT customer_id, SUM(net_amount) AS total_revenue\n  FROM orders WHERE status = 'PAID'\n  GROUP BY customer_id\n)\nSELECT customer_id, total_revenue,\n       DENSE_RANK() OVER (ORDER BY total_revenue DESC) AS revenue_rank\nFROM revenue\nORDER BY revenue_rank, customer_id;"
+      },
+      "alternatives": [
+        {
+          "text": "An inline derived table can express the same intermediate result. Compare plans rather than choosing syntax by performance folklore."
+        }
+      ],
+      "related": [
+        "sql-q1",
+        "sql-q3"
+      ]
+    },
+    {
+      "id": "sql-q5",
+      "title": "Q5 - Previous observed row: LAG or self-join",
+      "style": "SQL",
+      "category": "SQL",
+      "subcategory": "Temporal logic",
+      "prompt": "Classic SQL screener: how can a self-join reproduce previous/next-row logic, when would you prefer LAG/LEAD, and how would you respond if the interviewer restricts available SQL features?",
+      "explanation": "Clarify previous observed balance rather than previous calendar day. Assume one row per (account_id, observed_date). LAG expresses adjacency directly. Without windows, choose the greatest earlier observed date, then join that row. Duplicate dates require a stable tie-breaker in both approaches.",
+      "reasoning": [
+        "Define partition, order and uniqueness.",
+        "Use LAG within each account for the previous observed value.",
+        "Without windows, match the maximum earlier date.",
+        "Retain the first row with a null predecessor and explain query-plan tradeoffs."
+      ],
+      "intent": [
+        "alternative techniques",
+        "deterministic ordering",
+        "row multiplication",
+        "feature restrictions",
+        "reasoning rather than memorized syntax"
+      ],
+      "trap": "A self-join on previous.date < current.date alone returns all earlier rows and multiplies the output. Subtracting one day misses gaps in observations.",
+      "followUps": [
+        "Given daily account balances, return each balance and the previous observed balance using both LAG and a self-join."
+      ],
+      "topic": "Deterministic ordering",
+      "series": "sql-q1-q5",
+      "sources": [
+        {
+          "title": "PostgreSQL - window functions",
+          "url": "https://www.postgresql.org/docs/current/functions-window.html"
+        },
+        {
+          "title": "PostgreSQL - joins",
+          "url": "https://www.postgresql.org/docs/current/tutorial-join.html"
+        }
+      ],
+      "example": {
+        "language": "sql",
+        "code": "SELECT account_id, observed_date, balance,\n       LAG(balance) OVER (\n         PARTITION BY account_id ORDER BY observed_date\n       ) AS previous_balance\nFROM balances;"
+      },
+      "alternatives": [
+        {
+          "text": "No window functions: the uniqueness assumption makes the predecessor join return at most one row. An index beginning with (account_id, observed_date) may help; inspect the real plan.",
+          "language": "sql",
+          "code": "SELECT b.account_id, b.observed_date, b.balance,\n       p.balance AS previous_balance\nFROM balances AS b\nLEFT JOIN balances AS p\n  ON p.account_id = b.account_id\n AND p.observed_date = (\n   SELECT MAX(x.observed_date)\n   FROM balances AS x\n   WHERE x.account_id = b.account_id\n     AND x.observed_date < b.observed_date\n );"
+        }
+      ],
+      "related": [
+        "sql-q3"
+      ]
+    },
+    {
+      "id": "theory-layout",
+      "title": "Partitioning vs clustering / indexing",
+      "style": "Theory",
+      "category": "Data Modeling",
+      "subcategory": "Physical layout",
+      "prompt": "How would you explain partitioning versus clustering or indexing to a teammate choosing storage for a large orders table?",
+      "explanation": "Partitioning divides data by a partition rule. Clustering often organizes nearby values within storage, while an index supplies an access structure. Exact meanings differ by engine. Start with filtering patterns and data distribution rather than assuming a universal layout.",
+      "reasoning": [
+        "Ask which database or table format is in use.",
+        "Identify selective predicates, common date ranges and write patterns.",
+        "Consider partition count, skew and small-file overhead.",
+        "Measure pruning, read volume and maintenance cost."
+      ],
+      "intent": [
+        "Distinguish logical keys from physical layout.",
+        "Reason from workload rather than labels."
+      ],
+      "trap": "A high-cardinality customer key is not automatically a good partition column. The word clustering does not promise identical behavior in every engine.",
+      "followUps": [
+        "What would change if queries filter on dates but updates arrive for old customers?"
+      ],
+      "topic": "Workload-led choices"
+    },
+    {
+      "id": "theory-batch",
+      "title": "Batch vs streaming: choose the freshness budget",
+      "style": "Theory",
+      "category": "ETL / ELT & Pipelines",
+      "subcategory": "Processing modes",
+      "prompt": "A dashboard is refreshed daily, but operations wants a five-minute fraud alert. When would you use batch versus streaming?",
+      "explanation": "Batch processes a bounded collection. Streaming incrementally processes arriving data and needs explicit decisions about late events, state and recovery. Choose a freshness objective and operational model for each consumer; one architecture need not serve every latency requirement.",
+      "reasoning": [
+        "Ask how stale each output is allowed to be.",
+        "Separate event time from arrival time.",
+        "Define late-data and duplicate handling.",
+        "Compare operating cost, recovery and support capacity."
+      ],
+      "intent": [
+        "Translate business freshness into architecture.",
+        "Mention correctness and failure handling, not just speed."
+      ],
+      "trap": "Streaming is not automatically real time or exactly once end-to-end. Source, state and sink behavior all matter.",
+      "followUps": [
+        "How would a late event update yesterday's aggregate?"
+      ],
+      "topic": "Latency and correctness"
+    },
+    {
+      "id": "theory-medallion",
+      "title": "Bronze / Silver / Gold: define the contracts",
+      "style": "Theory",
+      "category": "Modern Data Stack & Governance",
+      "subcategory": "Layered architecture",
+      "prompt": "Explain a medallion data architecture and what belongs in Bronze, Silver and Gold.",
+      "explanation": "Bronze retains source-like data for replay. Silver validates and standardizes data at a documented grain. Gold exposes consumer-oriented products such as customer revenue aggregates. These are logical quality contracts, not a requirement to copy every dataset three times.",
+      "reasoning": [
+        "Keep replayable inputs and ingestion metadata in Bronze.",
+        "Define keys, types, quality rules and deduplication in Silver.",
+        "Publish business measures and usable contracts in Gold.",
+        "Explain lineage, access and ownership across layers."
+      ],
+      "intent": [
+        "Place transformations according to data quality and consumer needs.",
+        "Connect governance to concrete boundaries."
+      ],
+      "trap": "Calling a table Gold does not validate its metric definition. Preserve raw inputs and specify who owns quality failures.",
+      "followUps": [
+        "Where would you quarantine invalid records and how would you reprocess them?"
+      ],
+      "topic": "Quality and ownership",
+      "sources": [
+        {
+          "title": "Microsoft - medallion architecture",
+          "url": "https://learn.microsoft.com/en-us/azure/databricks/lakehouse/medallion"
+        }
+      ],
+      "diagram": "flowchart LR\n  A[Source systems] --> B[Bronze: source-like data]\n  B --> C[Silver: validated records]\n  C --> D[Gold: business products]\n  C --> E[Quarantine and review]"
+    },
+    {
+      "id": "hybrid-lazy",
+      "title": "PySpark: when does this chain run?",
+      "style": "Hybrid",
+      "category": "Python",
+      "subcategory": "PySpark",
+      "prompt": "Given a filter and groupBy chain, explain lazy evaluation and identify what triggers execution.",
+      "explanation": "The transformations describe a computation. An action such as show asks Spark to produce a result. Multiple actions can repeat work unless appropriate results are persisted; caching is a resource decision, not a universal speed fix.",
+      "reasoning": [
+        "Identify transformations versus the action.",
+        "Explain the output grain after groupBy.",
+        "Expect aggregation to require data redistribution in typical cases.",
+        "Use an execution plan to discuss the actual physical stages."
+      ],
+      "intent": [
+        "Explain Spark execution without memorizing syntax alone.",
+        "Connect grain, actions and cost."
+      ],
+      "trap": "The assignment to totals is not an action. Calling show twice should not be assumed to reuse the first computed result.",
+      "followUps": [
+        "Where might you persist data when two downstream consumers use the same expensive transformation?"
+      ],
+      "topic": "Lazy evaluation",
+      "sources": [
+        {
+          "title": "Apache Spark - programming guide",
+          "url": "https://spark.apache.org/docs/latest/rdd-programming-guide.html"
+        }
+      ],
+      "example": {
+        "language": "python",
+        "code": "from pyspark.sql import functions as F\n\n# Assumes orders is a Spark DataFrame with customer_id, status, net_amount.\npaid = orders.filter(F.col('status') == 'PAID')\ntotals = paid.groupBy('customer_id').agg(\n    F.sum('net_amount').alias('revenue')\n)\ntotals.show()  # An action requests results."
+      }
+    },
+    {
+      "id": "hybrid-retry",
+      "title": "Retries and idempotency at a pipeline boundary",
+      "style": "Hybrid",
+      "category": "System Design",
+      "subcategory": "Pipeline reliability",
+      "prompt": "A job writes output successfully but crashes before acknowledging completion. The scheduler retries it. How do you avoid duplicate data?",
+      "explanation": "Retrying safely requires a stable identity for the logical work and an atomic or deduplicated write contract. A new random run ID for each retry does not identify the same logical batch. The configuration below is a design example, not an executable product-specific API.",
+      "reasoning": [
+        "Identify the crash boundary between write and acknowledgement.",
+        "Reuse an immutable batch identity across retries.",
+        "Define how the sink detects or overwrites an already committed batch.",
+        "Retry transient faults with limits; surface invalid data separately."
+      ],
+      "intent": [
+        "Reason about failure boundaries and replay.",
+        "Distinguish a retry policy from idempotent effects."
+      ],
+      "trap": "A processed-batch check followed by an unrelated write is vulnerable to races. The commit/marker must share the required transaction boundary or use another proven atomic protocol.",
+      "followUps": [
+        "What happens when two workers retry the same batch at the same time?"
+      ],
+      "topic": "Failure and replay",
+      "example": {
+        "language": "json",
+        "code": "{\n  \"logical_batch_id\": \"orders-2026-09-01\",\n  \"retry_policy\": {\"max_attempts\": 3, \"backoff_seconds\": 10},\n  \"sink_contract\": \"atomic replacement of this batch partition\",\n  \"acknowledge\": \"only after durable commit\"\n}",
+        "title": "Illustrative contract, not a vendor configuration"
+      }
+    },
+    {
+      "id": "hybrid-fanout",
+      "title": "SQL fan-out: debug the model, not the SUM",
+      "style": "Hybrid",
+      "category": "Data Modeling",
+      "subcategory": "Join grain",
+      "prompt": "An orders-to-customer-history join doubles revenue. What would you inspect and how would you demonstrate the problem?",
+      "explanation": "An order may match multiple historical dimension rows. Check the dimension key and the intended as-of relationship before changing the aggregate. If the history contains overlapping effective periods, even an as-of predicate can remain non-unique.",
+      "reasoning": [
+        "Declare the order and dimension grains.",
+        "Count dimension matches per order before summing.",
+        "Check uniqueness, current-row rules or effective-date intervals.",
+        "Compare row counts and revenue totals against the fact-only baseline."
+      ],
+      "intent": [
+        "Diagnose relational cardinality.",
+        "Separate data-model repair from cosmetic SQL changes."
+      ],
+      "trap": "SUM(DISTINCT net_amount) discards legitimate equal-valued orders and can hide a modeling defect.",
+      "followUps": [
+        "How would you validate that effective-date intervals do not overlap for a customer?"
+      ],
+      "topic": "Slowly changing dimensions",
+      "sources": [
+        {
+          "title": "PostgreSQL - joins",
+          "url": "https://www.postgresql.org/docs/current/tutorial-join.html"
+        }
+      ],
+      "example": {
+        "language": "sql",
+        "code": "SELECT o.order_id, COUNT(d.customer_id) AS dimension_matches\nFROM orders AS o\nLEFT JOIN customer_history AS d\n  ON d.customer_id = o.customer_id\n AND o.order_date >= d.valid_from\n AND (o.order_date < d.valid_to OR d.valid_to IS NULL)\nGROUP BY o.order_id\nHAVING COUNT(d.customer_id) > 1;"
+      },
+      "related": [
+        "sql-q2"
+      ]
+    },
+    {
+      "id": "coding-group",
+      "title": "Dictionary pattern A - Group rows by customer",
+      "style": "Coding",
+      "category": "Python",
+      "subcategory": "Dictionaries",
+      "prompt": "Given a list of order dictionaries, return a dictionary from customer_id to that customer's rows. Preserve input order within each group.",
+      "explanation": "The key selects the group; the dictionary value stores the growing list. Every row must be appended rather than replacing the previous list.",
+      "reasoning": [
+        "Choose customer_id as the dictionary key.",
+        "Initialize a list for the first row of a group.",
+        "Append subsequent rows to that list.",
+        "Check empty input and interleaved customers."
+      ],
+      "intent": [
+        "Recognize keyed accumulation.",
+        "Transfer the pattern to new wording."
+      ],
+      "trap": "Assigning groups[key] = row on every iteration retains only the last row.",
+      "followUps": [
+        "How would you produce total revenue instead of lists?"
+      ],
+      "topic": "Grouping and state",
+      "pattern": "dictionary-grouping",
+      "series": "dictionary-transfer",
+      "sources": [
+        {
+          "title": "Python - collections",
+          "url": "https://docs.python.org/3/library/collections.html"
+        }
+      ],
+      "example": {
+        "language": "python",
+        "code": "def group_rows(rows):\n    groups = {}\n    for row in rows:\n        key = row[\"customer_id\"]\n        groups.setdefault(key, []).append(row)\n    return groups"
+      },
+      "alternatives": [
+        {
+          "text": "defaultdict(list) makes initialization implicit. Both versions assume customer_id exists and is hashable.",
+          "language": "python",
+          "code": "from collections import defaultdict\n\ndef group_rows_alternative(rows):\n    groups = defaultdict(list)\n    for row in rows:\n        groups[row[\"customer_id\"]].append(row)\n    return dict(groups)"
+        }
+      ],
+      "complexity": "Expected O(n) dictionary work for n rows under ordinary hash-table assumptions. Stored row references require O(n) output space.",
+      "related": [
+        "coding-errors",
+        "coding-latest"
+      ]
+    },
+    {
+      "id": "coding-errors",
+      "title": "Dictionary pattern B - Count errors by code",
+      "style": "Coding",
+      "category": "Python",
+      "subcategory": "Dictionaries",
+      "prompt": "Given error-code strings, return the frequency of each code. How is this the same pattern as grouping rows?",
+      "explanation": "The dictionary key is now the error code and the accumulator is an integer, not a list. The loop still finds a key and updates its state.",
+      "reasoning": [
+        "Use the code as key.",
+        "Start an unseen key at zero.",
+        "Increment for each observation.",
+        "Specify whether case and missing values should be normalized upstream."
+      ],
+      "intent": [
+        "Recognize the same keyed-accumulator pattern.",
+        "Explain defaults and updates."
+      ],
+      "trap": "Reinitializing the count to zero inside every iteration loses earlier observations.",
+      "followUps": [
+        "How would you count by (service, error_code) instead?"
+      ],
+      "topic": "Grouping and state",
+      "pattern": "dictionary-grouping",
+      "series": "dictionary-transfer",
+      "sources": [
+        {
+          "title": "Python - collections",
+          "url": "https://docs.python.org/3/library/collections.html"
+        }
+      ],
+      "example": {
+        "language": "python",
+        "code": "def count_errors(codes):\n    counts = {}\n    for code in codes:\n        counts[code] = counts.get(code, 0) + 1\n    return counts"
+      },
+      "alternatives": [
+        {
+          "text": "Counter expresses frequency counting directly; the manual version reveals the interview pattern.",
+          "language": "python",
+          "code": "from collections import Counter\n\ndef count_errors_alternative(codes):\n    return dict(Counter(codes))"
+        }
+      ],
+      "complexity": "Expected O(n) time and O(k) output space for k distinct codes.",
+      "related": [
+        "coding-group",
+        "coding-latest"
+      ]
+    },
+    {
+      "id": "coding-latest",
+      "title": "Dictionary pattern C - Latest record per entity",
+      "style": "Coding",
+      "category": "Python",
+      "subcategory": "Dictionaries",
+      "prompt": "Keep the latest record for each entity_id. Input is not sorted. updated_at values are comparable timestamps in one time basis. On equal timestamps, keep the last input record.",
+      "explanation": "The dictionary stores the best record seen so far for each key. Update only when the candidate wins under the defined timestamp and tie policy. The sample uses numeric timestamps; arbitrary date strings must be parsed and normalized before comparison.",
+      "reasoning": [
+        "Choose entity_id as key.",
+        "Store the first record for an unseen key.",
+        "Compare candidate and stored timestamps.",
+        "Use >= to implement the stated last-input-wins tie rule."
+      ],
+      "intent": [
+        "Transfer keyed accumulation to conditional state.",
+        "Make ordering and tie assumptions explicit."
+      ],
+      "trap": "Unconditionally overwriting the value works only when input ordering guarantees the newest record comes last.",
+      "followUps": [
+        "How would you change the policy to break ties using a stable sequence_id instead of input order?"
+      ],
+      "topic": "Grouping and state",
+      "pattern": "dictionary-grouping",
+      "series": "dictionary-transfer",
+      "sources": [
+        {
+          "title": "Python - collections",
+          "url": "https://docs.python.org/3/library/collections.html"
+        }
+      ],
+      "example": {
+        "language": "python",
+        "code": "def latest_records(rows):\n    latest = {}\n    for row in rows:\n        key = row[\"entity_id\"]\n        previous = latest.get(key)\n        if previous is None or row[\"updated_at\"] >= previous[\"updated_at\"]:\n            latest[key] = row\n    return latest"
+      },
+      "alternatives": [
+        {
+          "text": "Stable sorting then overwriting gives the same tie behavior, but costs O(n log n) time and O(n) temporary storage.",
+          "language": "python",
+          "code": "def latest_records_alternative(rows):\n    ordered = sorted(rows, key=lambda row: row[\"updated_at\"])\n    return {row[\"entity_id\"]: row for row in ordered}"
+        }
+      ],
+      "complexity": "Single pass: expected O(n) time and O(k) retained references for k entities. Missing or incomparable timestamps require an explicit validation policy.",
+      "related": [
+        "coding-group",
+        "coding-errors"
+      ]
+    },
+    {
+      "id": "theory-behavioral",
+      "title": "Explain a pipeline incident without hiding uncertainty",
+      "style": "Theory",
+      "category": "Behavioral",
+      "subcategory": "Communication",
+      "prompt": "Tell an interviewer how you would explain a pipeline incident when the root cause is not yet confirmed.",
+      "explanation": "Separate observed impact, verified facts and hypotheses. Explain your own action, the evidence used to test it and the next safe step. Use a real experience when practicing; do not invent employment history or outcomes.",
+      "reasoning": [
+        "State user or business impact.",
+        "Distinguish what is known from what is suspected.",
+        "Describe containment, investigation and communication.",
+        "Close with evidence, outcome and a prevention lesson when known."
+      ],
+      "intent": [
+        "Assess communication and ownership.",
+        "Check how you handle uncertainty and tradeoffs."
+      ],
+      "trap": "Presenting an untested guess as the root cause, or claiming a team result as your own work, weakens the answer.",
+      "followUps": [
+        "What would you tell stakeholders before you have a reliable recovery time?"
+      ],
+      "topic": "Incident reasoning"
+    }
+  ]
+}

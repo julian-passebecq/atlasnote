@@ -1,0 +1,11 @@
+{
+  "expectedUpstreamCommit": "b50c27a987fa65eee1c51d36225908621e322da7",
+  "gitMetadataAvailable": false,
+  "packageVersion": "2.1.0",
+  "sourceArchiveSha256": "02e6d1d34ee2d372f102ab4f810f8b19255b9194cd94962054ffa7e41916da49",
+  "verifiedFiles": [
+    "tests/release_blockers_runtime.py",
+    "tests/final_polish_runtime.py"
+  ],
+  "verification": "Supplied source archive; package and required QA files verified. Upstream SHA is handoff provenance, not independently verified Git ancestry."
+}

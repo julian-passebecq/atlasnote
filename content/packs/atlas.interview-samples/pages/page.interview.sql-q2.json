@@ -1,0 +1,152 @@
+{
+  "id": "page.interview.sql-q2",
+  "title": "Q2 - LEFT JOIN and revenue grain",
+  "summary": "SQL / SQL / Joins / Cardinality and preservation",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "page.interview.sql-q2.prompt",
+      "title": "Question",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.sql-q2.question",
+          "text": "Classic SQL screener: return total paid revenue for every customer, including customers with no paid orders. Which join do you use and where should the paid-order filter go?"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q2.reasoning",
+      "title": "Reasoning",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.sql-q2.reasoning-points",
+          "ordered": true,
+          "items": [
+            "Confirm customers.customer_id is unique.",
+            "Preserve customers with LEFT JOIN.",
+            "Restrict matching orders in ON, not an outer WHERE.",
+            "Check dimension cardinality and revenue totals before and after any additional join."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q2.answer",
+      "title": "Answer / mental model",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.sql-q2.explanation",
+          "text": "Start from the unique customer table and LEFT JOIN matching paid orders. Put the paid-order predicate in ON to preserve customers without a match. COALESCE turns their null total into zero. Check the relationship grain before summing."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q2.example",
+      "title": "Example",
+      "children": [
+        {
+          "type": "code",
+          "id": "page.interview.sql-q2.code",
+          "language": "sql",
+          "code": "SELECT c.customer_id, COALESCE(SUM(o.net_amount), 0) AS revenue\nFROM customers AS c\nLEFT JOIN orders AS o\n  ON o.customer_id = c.customer_id\n AND o.status = 'PAID'\nGROUP BY c.customer_id;"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q2.alternatives",
+      "title": "Alternative / tradeoff",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.sql-q2.alternative-0",
+          "text": "Pre-aggregate paid orders to one row per customer before the LEFT JOIN. A later non-unique dimension join can still multiply those totals; fix its key or effective-date condition."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q2.trap",
+      "title": "Common mistake / trap",
+      "children": [
+        {
+          "type": "callout",
+          "id": "page.interview.sql-q2.trap-note",
+          "tone": "warning",
+          "title": "Watch for this",
+          "text": "A WHERE o.status = PAID condition removes the null-extended rows. SUM(DISTINCT amount) is not a general repair for fan-out: different orders can have equal amounts."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q2.followup",
+      "title": "Follow-up",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.sql-q2.followups",
+          "items": [
+            "What happens if one customer has multiple matching dimension rows before you SUM revenue?"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q2.intent",
+      "title": "Interviewer intent",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.sql-q2.intent-points",
+          "items": [
+            "LEFT JOIN preservation.",
+            "Predicate placement.",
+            "Join cardinality.",
+            "Fan-out / duplicated revenue."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.sql-q2.reflection",
+      "title": "Reflection",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.sql-q2.reflection-prompt",
+          "text": "What pattern did I recognize, where did I get stuck, and what would I change in my first approach?\n\nUse Context > Remarks for your personal reflection. It is saved separately from this reference."
+        }
+      ]
+    }
+  ],
+  "related": [
+    "page.interview.hybrid-fanout",
+    "page.interview.sql-q1"
+  ],
+  "terms": [],
+  "sources": [
+    {
+      "title": "PostgreSQL - joins",
+      "url": "https://www.postgresql.org/docs/current/tutorial-join.html"
+    },
+    {
+      "title": "PostgreSQL - aggregate functions",
+      "url": "https://www.postgresql.org/docs/current/tutorial-agg.html"
+    }
+  ],
+  "tags": [
+    "interview",
+    "sql",
+    "series:sql-q1-q5"
+  ],
+  "provenance": "Original educational prototype. Prompts Q1-Q5 preserve the user-provided canonical SQL sequence. Examples are reference code, not executable tasks."
+}

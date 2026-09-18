@@ -1,0 +1,43 @@
+ATLASNOTE 1.2.1 - INTEGRATED PDF / STRICT DISCOVERY / FULLSCREEN
+
+PRIMARY HOSTED TARGET: the integrated React-PDF distribution in dist/.
+COMPATIBILITY TARGET: the separately generated native fallback in dist-offline/.
+Only publish a successfully built and tested integrated dist. A missing integrated
+build is a release blocker, not permission to publish the compatibility output.
+Consult the source FINAL_TEST_STATUS.md for executed gates and remaining limits.
+
+Run node serve.mjs in a built distribution (Start_Atlas.cmd on Windows).
+Open http://127.0.0.1:4173. Do not double-click index.html. Back up before changing
+origin/browser: localhost and hosted origins do not share browser storage.
+
+Notes shows note-only branches; PDF Library shows PDF-only branches in the same
+canonical tree. Neither switch closes tabs or modifies saved PDFs/remarks.
+Global search, Compare and existing tabs can still combine notes and PDFs.
+Empty folders can be edited from their collection view or Home's explicit
+Manage all notebooks option, without putting empty branches in discovery.
+
+The compact reader rail controls Focus, reading mode, Context, Compare, Swap,
+bookmarks and the five themes. Context, PDF outline/search and Document info
+are overlays. Rights, source, exact hash, byte count and original-download
+links are preserved in Document info/Context instead of above the document.
+
+Focus requests browser fullscreen directly from your click and falls back to
+CSS Focus when unsupported or refused. Exit focus or Escape restores the shell.
+Restored Focus never requests browser fullscreen automatically.
+
+Hosted PDF controls act on physical pages: Single / Continuous / Spread, page
+number, zoom, rotation, cover, outline and selectable-text search. Image-only
+PDFs are not OCR'd. A failed engine can use the labelled compact Browser PDF
+fallback; browser-native page controls are not controlled by AtlasNote.
+
+Public PDF Atlas metadata references the exact reviewed commit:
+fa5e83f7825cdc837078f87c5e130cb012332195
+No PDF Atlas binaries or private corpus are bundled. Opening a trusted reference
+verifies its size, magic and SHA-256; arbitrary external hosts require consent.
+The original PDF artwork and original bytes are never recolored or replaced.
+
+A full workspace backup includes local content, local PDFs and personal state.
+External references alone contain metadata, not remote bytes. A storage failure
+does not prevent a backup of available unsaved in-memory work; read the warning
+and keep the tab open until you verify recovery. Keep backups/private ZIPs private.
+No accounts, cloud sync, automatic publication or telemetry are added.

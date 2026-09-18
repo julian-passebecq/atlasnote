@@ -1,0 +1,132 @@
+{
+  "id": "page.interview.hybrid-fanout",
+  "title": "SQL fan-out: debug the model, not the SUM",
+  "summary": "Hybrid / Data Modeling / Join grain / Slowly changing dimensions",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-fanout.prompt",
+      "title": "Question",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.hybrid-fanout.question",
+          "text": "An orders-to-customer-history join doubles revenue. What would you inspect and how would you demonstrate the problem?"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-fanout.reasoning",
+      "title": "Reasoning",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.hybrid-fanout.reasoning-points",
+          "ordered": true,
+          "items": [
+            "Declare the order and dimension grains.",
+            "Count dimension matches per order before summing.",
+            "Check uniqueness, current-row rules or effective-date intervals.",
+            "Compare row counts and revenue totals against the fact-only baseline."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-fanout.answer",
+      "title": "Answer / mental model",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.hybrid-fanout.explanation",
+          "text": "An order may match multiple historical dimension rows. Check the dimension key and the intended as-of relationship before changing the aggregate. If the history contains overlapping effective periods, even an as-of predicate can remain non-unique."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-fanout.example",
+      "title": "Example",
+      "children": [
+        {
+          "type": "code",
+          "id": "page.interview.hybrid-fanout.code",
+          "language": "sql",
+          "code": "SELECT o.order_id, COUNT(d.customer_id) AS dimension_matches\nFROM orders AS o\nLEFT JOIN customer_history AS d\n  ON d.customer_id = o.customer_id\n AND o.order_date >= d.valid_from\n AND (o.order_date < d.valid_to OR d.valid_to IS NULL)\nGROUP BY o.order_id\nHAVING COUNT(d.customer_id) > 1;"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-fanout.trap",
+      "title": "Common mistake / trap",
+      "children": [
+        {
+          "type": "callout",
+          "id": "page.interview.hybrid-fanout.trap-note",
+          "tone": "warning",
+          "title": "Watch for this",
+          "text": "SUM(DISTINCT net_amount) discards legitimate equal-valued orders and can hide a modeling defect."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-fanout.followup",
+      "title": "Follow-up",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.hybrid-fanout.followups",
+          "items": [
+            "How would you validate that effective-date intervals do not overlap for a customer?"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-fanout.intent",
+      "title": "Interviewer intent",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.hybrid-fanout.intent-points",
+          "items": [
+            "Diagnose relational cardinality.",
+            "Separate data-model repair from cosmetic SQL changes."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.hybrid-fanout.reflection",
+      "title": "Reflection",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.hybrid-fanout.reflection-prompt",
+          "text": "What pattern did I recognize, where did I get stuck, and what would I change in my first approach?\n\nUse Context > Remarks for your personal reflection. It is saved separately from this reference."
+        }
+      ]
+    }
+  ],
+  "related": [
+    "page.interview.sql-q2"
+  ],
+  "terms": [],
+  "sources": [
+    {
+      "title": "PostgreSQL - joins",
+      "url": "https://www.postgresql.org/docs/current/tutorial-join.html"
+    }
+  ],
+  "tags": [
+    "interview",
+    "hybrid"
+  ],
+  "provenance": "Original educational prototype. Prompts Q1-Q5 preserve the user-provided canonical SQL sequence. Examples are reference code, not executable tasks."
+}

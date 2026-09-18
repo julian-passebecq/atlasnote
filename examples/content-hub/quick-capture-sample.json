@@ -1,0 +1,27 @@
+{
+  "mode": "task",
+  "rows": [
+    {
+      "text": "Review Spark shuffle notes",
+      "due": "2026-09-18",
+      "taxonomy": {
+        "subject": "it",
+        "path": [
+          "Data Engineering",
+          "Apache Spark"
+        ]
+      },
+      "attachCurrentContext": true
+    },
+    {
+      "text": "Read saved article on Fabric shortcuts",
+      "taxonomy": {
+        "subject": "cloud",
+        "path": [
+          "Microsoft / Azure"
+        ]
+      },
+      "attachCurrentContext": false
+    }
+  ]
+}

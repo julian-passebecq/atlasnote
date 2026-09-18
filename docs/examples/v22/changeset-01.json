@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-agent-changeset",
+  "id": "example.1",
+  "createdAt": 1789754773294,
+  "source": "Synthetic test agent",
+  "summary": "Create a canonical Notebook page",
+  "operations": [
+    {
+      "id": "create.page",
+      "kind": "resource.create",
+      "resourceKey": "notebook-page:page.example.new",
+      "baseRevisionId": null,
+      "payload": {
+        "resourceType": "notebook-page",
+        "snapshot": {
+          "page": {
+            "id": "page.example.new",
+            "title": "Created from a reviewed proposal",
+            "summary": "V2.2 synthetic test content.",
+            "blocks": [
+              {
+                "id": "page.example.new.body",
+                "type": "markdown",
+                "text": "Original explanation."
+              }
+            ],
+            "related": [],
+            "terms": [],
+            "sources": [],
+            "tags": []
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-agent-changeset",
+  "id": "example.19",
+  "createdAt": 1789754779404,
+  "source": "Synthetic test agent",
+  "summary": "Reviewed personal writes, not content history",
+  "operations": [
+    {
+      "id": "operation.9",
+      "kind": "bookmark.add",
+      "baseFingerprint": "d39cf74823307f68",
+      "payload": {
+        "target": {
+          "kind": "article",
+          "articleId": "page.v22.article",
+          "pageId": "page.v22.article"
+        },
+        "title": "Example bookmark"
+      }
+    },
+    {
+      "id": "operation.10",
+      "kind": "readLater.add",
+      "baseFingerprint": "d39cf74823307f68",
+      "payload": {
+        "target": {
+          "kind": "article",
+          "articleId": "page.v22.article",
+          "pageId": "page.v22.article"
+        },
+        "title": "Example Read Later"
+      }
+    },
+    {
+      "id": "operation.11",
+      "kind": "capture.create",
+      "baseFingerprint": "d39cf74823307f68",
+      "payload": {
+        "kind": "note",
+        "text": "Example reviewed capture"
+      }
+    }
+  ]
+}

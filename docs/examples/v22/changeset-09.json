@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-agent-changeset",
+  "id": "example.9",
+  "createdAt": 1789754776042,
+  "source": "Synthetic test agent",
+  "summary": "Create a Notebook structural folder",
+  "operations": [
+    {
+      "id": "example.operation.9.notebook.tree.createNode",
+      "kind": "notebook.tree.createNode",
+      "resourceKey": "notebook-tree:project.atlas.guide",
+      "baseRevisionId": "revision.d4a1310858a444e3823aee1fc46ab057",
+      "payload": {
+        "operation": {
+          "kind": "add",
+          "projectId": "project.atlas.guide",
+          "nodeId": "node.example.folder",
+          "node": {
+            "id": "node.example.folder",
+            "title": "Review examples",
+            "children": []
+          }
+        }
+      }
+    }
+  ]
+}

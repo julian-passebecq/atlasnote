@@ -1,0 +1,39 @@
+name: V2 PDF stabilization diagnostic
+on:
+  push:
+    branches: [v2manualupload]
+    paths:
+      - '.github/workflows/stabilization-diagnostic.yml'
+      - 'tests/diagnose_pdf_grid.py'
+permissions:
+  contents: read
+jobs:
+  pdf-diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npm run build:offline && npm run build && npm run build:test-harness
+      - run: python -m pip install -r requirements-test.txt
+      - run: python -m playwright install --with-deps chromium
+      - name: Reproduce unchanged PDF grid assertions with state diagnostics
+        run: python tests/diagnose_pdf_grid.py
+      - name: Package reproducible test environment
+        if: always()
+        run: tar -czf diagnostic-runtime.tgz node_modules dist .build/engine-dom
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlasnote-v2-pdf-diagnostic
+          path: |
+            docs/evidence
+            diagnostic-runtime.tgz
+          retention-days: 7

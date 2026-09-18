@@ -1,0 +1,5 @@
+AtlasNote V2.2 FINAL MEMORY MINI
+Purpose: compact, self-contained continuation memory; no application source/build.
+Contains: final contract, implementation status/gaps, final QA, next-AI prompt, verified repository/artifact identities, authoritative reference contracts.
+Known critical gap: missing tree context-menu version actions in delivered V2.2 candidate.
+Production remains V2.1.0 at b50c27a987fa65eee1c51d36225908621e322da7.
