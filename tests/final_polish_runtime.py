@@ -19,7 +19,7 @@ try:
   def manager(kind,id):
    close_panels(p);click(kind+' content');choose_library_resource(p,id)
   def field(name,value):p.get_by_label(name,exact=True).fill(value)
-  p.goto(base,wait_until='networkidle');assert p.title()=='AtlasNote V2.1';expect(p.locator('.atlas-app')).to_be_visible();record()
+  p.goto(base,wait_until='networkidle');assert p.title()=='AtlasNote V2.2';expect(p.locator('.atlas-app')).to_be_visible();record()
   phase='visual single and multiple authoring with invalid-state validation'
   click('QCM content');click('New/import QCM');expect(p.get_by_label('Set title',exact=True)).to_be_visible();assert not p.get_by_label('QCM JSON',exact=True).count()
   field('Set title','Visual regression QCM');field('Question 1 prompt','Which value is even?');field('Question 1 option 1','Two');field('Question 1 option 2','Three');field('Question 1 option 1 explanation','Two divides by two.');field('Question 1 option 2 explanation','Three is odd.');field('Question 1 global explanation','Even numbers divide by two.');field('Question 1 follow-up','What about four?')
