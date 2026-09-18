@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.23",
-  "createdAt": 1789754780732,
+  "createdAt": 1789766233167,
   "source": "Synthetic test agent",
   "summary": "PDF logical revision using already reviewed source",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "operation.18",
       "kind": "pdf.revision.propose",
       "resourceKey": "pdf:doc.atlas.pdf",
-      "baseRevisionId": "revision.044bd3eb158f49e4996f33496a70626c",
+      "baseRevisionId": "revision.aa912472b1c648f6842431555a3ab6df",
       "payload": {
         "resourceType": "pdf",
         "snapshot": {

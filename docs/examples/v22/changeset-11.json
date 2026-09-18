@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.11",
-  "createdAt": 1789754776733,
+  "createdAt": 1789766225735,
   "source": "Synthetic test agent",
   "summary": "Reorder Notebook siblings",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "example.operation.11.notebook.tree.reorderNode",
       "kind": "notebook.tree.reorderNode",
       "resourceKey": "notebook-tree:project.atlas.guide",
-      "baseRevisionId": "revision.ffdbe2ff0006482187d6e1d135b6d2b6",
+      "baseRevisionId": "revision.436f9c5c6a0a44c48062546b22cef187",
       "payload": {
         "operation": {
           "kind": "order",

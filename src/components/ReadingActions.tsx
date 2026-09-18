@@ -27,6 +27,14 @@ export function ReadingActions({menu, historyContext, onClose, onOpen, onLater, 
  // Restore the trigger before opening a dialog so its own focus restoration
  // targets the real tree/card button rather than an unmounted menu entry.
  function action(fn: () => void) { close(); fn(); }
+ function navigate(destination: ReadingDestination) {
+  close(false); onOpen(destination);
+  // Navigation transfers focus to the destination. Leaving the source trigger
+  // focused lets a later dialog restore focus into the wrong pane.
+  requestAnimationFrame(() => document.querySelector<HTMLElement>(
+   '.document-pane.active-pane .document-tab[aria-selected="true"]'
+  )?.focus());
+ }
  useLayoutEffect(() => {
   const el = ref.current;
   if (!el) return;
@@ -55,15 +63,15 @@ export function ReadingActions({menu, historyContext, onClose, onOpen, onLater, 
   {choosing ? <>
    <small>Add a tab without replacing existing work.</small>
    {([1, 2, 3, 4, 5] as const).map(n => <button role="menuitem" key={n} data-agent-action="resource-open"
-    data-destination="workspace" data-workspace-id={n} onClick={() => action(() => onOpen(n))}>Open in Workspace {n}</button>)}
+    data-destination="workspace" data-workspace-id={n} onClick={() => navigate(n)}>Open in Workspace {n}</button>)}
    <button role="menuitem" data-agent-action="destination-back" onClick={() => setChoosing(false)}>Back</button>
   </> : <>
    {menu.target.kind === 'url' ? <a role="menuitem" href={menu.target.url} target="_blank" rel="noopener noreferrer" onClick={() => close()}>Open external link</a> : <>
-    <button role="menuitem" data-agent-action="resource-open" data-destination="here" onClick={() => action(() => onOpen('here'))}><Icon name="page" />Open here</button>
+    <button role="menuitem" data-agent-action="resource-open" data-destination="here" onClick={() => navigate('here')}><Icon name="page" />Open here</button>
     {menu.target.kind !== 'dashboard-item' && <>
-     <button role="menuitem" data-agent-action="resource-open" data-destination="tab" onClick={() => action(() => onOpen('tab'))}><Icon name="plus" />Open in new tab</button>
-     <button role="menuitem" data-agent-action="resource-open" data-destination="pane" onClick={() => action(() => onOpen('pane'))}><Icon name="compare" />Open in other pane</button>
-     <button role="menuitem" data-agent-action="resource-open" data-destination="pane" onClick={() => action(() => onOpen('pane'))}><Icon name="plus" />Open in new tab in other pane</button>
+     <button role="menuitem" data-agent-action="resource-open" data-destination="tab" onClick={() => navigate('tab')}><Icon name="plus" />Open in new tab</button>
+     <button role="menuitem" data-agent-action="resource-open" data-destination="pane" onClick={() => navigate('pane')}><Icon name="compare" />Open in other pane</button>
+     <button role="menuitem" data-agent-action="resource-open" data-destination="pane" onClick={() => navigate('pane')}><Icon name="plus" />Open in new tab in other pane</button>
     </>}
     <button role="menuitem" data-agent-action="choose-destination" onClick={() => setChoosing(true)}><Icon name="panel" />Open in workspace...</button>
    </>}

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.5",
-  "createdAt": 1789754774708,
+  "createdAt": 1789766222448,
   "source": "Synthetic test agent",
   "summary": "Update canonical qcm:page.v22.qcm",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "operation.4",
       "kind": "resource.update",
       "resourceKey": "qcm:page.v22.qcm",
-      "baseRevisionId": "revision.08d80688173e4779b55fd4e8eb7f6453",
+      "baseRevisionId": "revision.c0225ca9d39144e7aa50c1a49630e1c7",
       "payload": {
         "resourceType": "qcm",
         "snapshot": {

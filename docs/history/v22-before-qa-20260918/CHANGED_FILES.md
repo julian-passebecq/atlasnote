@@ -1,12 +1,3 @@
-# Current V2.2 QA changes
-
-See [V22_QA_REPORT.md](V22_QA_REPORT.md) for the executed repair inventory and
-`SOURCE_MANIFEST.json` for exact delivered hashes. The coding-only inventory
-below describes the received candidate; it is preserved as historical context.
-The QA pass also adds the completion browser and PDF lifecycle regression suites.
-
----
-
 **Current change inventory:** `V22_COMPLETION_CHANGED_FILES.json` and `V22_CHANGED_FILES.md`. Older entries below are historical.
 
 # Changed files - V2 stabilization

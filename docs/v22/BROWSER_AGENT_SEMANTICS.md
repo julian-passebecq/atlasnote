@@ -53,6 +53,16 @@ workspace 1-5. Optional Article/QCM wrapper page IDs are resolved from canonical
 IDs; a wrong explicit wrapper is rejected. The `historyRevisionId` is NOT a PDF
 SHA-256, Git SHA or physical page number.
 
+V2.2 has one canonical Article/QCM identity, confirmed by the user during QA:
+`resourceId === page.id === page.article.id` (or `page.qcm.id`). The existing
+typed fields `articleId` and `setId` carry that same ID, not separate aliases.
+Use it consistently for history, deep links, ChangeSets, query/navigation, backups
+and restore. Rename, move and restore-as-new-version preserve it. Historical
+links add a logical revision ID to this resource identity. Conflicting wrapper
+and document IDs are invalid authored content and must be rejected. The earlier
+handoff wording about independent IDs is outside the agreed V2.2 scope; it does
+not authorize an identity migration.
+
 `compareRevisions(resourceKey, aRevisionId, bRevisionId?)` orders visible A/B
 independently of focus. B omitted means current; two explicit pins means old/old.
 It reuses active compare tabs. `setAgentCompareState` retains Changes/Side by side/

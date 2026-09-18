@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.12",
-  "createdAt": 1789754777079,
+  "createdAt": 1789766226361,
   "source": "Synthetic test agent",
   "summary": "Reparent a stable Notebook node",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "example.operation.12.notebook.tree.moveNode",
       "kind": "notebook.tree.moveNode",
       "resourceKey": "notebook-tree:project.atlas.guide",
-      "baseRevisionId": "revision.e104b09118064a66b56f223c81b2082e",
+      "baseRevisionId": "revision.edd4a323fcbd4a6a8e69cedc40c427ac",
       "payload": {
         "operation": {
           "kind": "move",

@@ -1,10 +1,12 @@
-ATLASNOTE 1.2.1 - INTEGRATED PDF / STRICT DISCOVERY / FULLSCREEN
+ATLASNOTE V2.2 - INTEGRATED PDF / VERSION HISTORY / REVIEWED CHANGES
 
 PRIMARY HOSTED TARGET: the integrated React-PDF distribution in dist/.
 COMPATIBILITY TARGET: the separately generated native fallback in dist-offline/.
 Only publish a successfully built and tested integrated dist. A missing integrated
 build is a release blocker, not permission to publish the compatibility output.
-Consult the source FINAL_TEST_STATUS.md for executed gates and remaining limits.
+Consult the source V22_QA_REPORT.md for executed gates and remaining limits.
+The original historical reports do not certify this candidate. In particular,
+Article/QCM document IDs must still equal their canonical wrapper page IDs.
 
 Run node serve.mjs in a built distribution (Start_Atlas.cmd on Windows).
 Open http://127.0.0.1:4173. Do not double-click index.html. Back up before changing

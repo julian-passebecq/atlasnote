@@ -44,7 +44,8 @@ export function ProjectTree({onHistory,onComparePrevious,onOpenPrevious,onManage
   if(node?.pageId){const original=locations(source).get(node.pageId);if(original){project=original.project;node={...node,id:original.nodeId};}}
   e.preventDefault();e.stopPropagation();
   const el=e.currentTarget as HTMLElement,r=el.getBoundingClientRect();
-  const hit=e.target instanceof Element?e.target.closest<HTMLElement>('button,a,[tabindex]'):null;
+  const target=e.target as EventTarget|null;
+  const hit=target instanceof Element?target.closest<HTMLElement>('button,a,[tabindex]'):null;
   const origin=hit&&el.contains(hit)?hit:el.matches('button,a,[tabindex]')?el:el.querySelector<HTMLElement>('.tree-target,button')??el;
   setMenu({project,node,x:e.clientX||r.left,y:e.clientY||r.bottom,returnFocus:origin});
  }

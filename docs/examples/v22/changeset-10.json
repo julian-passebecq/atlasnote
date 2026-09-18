@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.10",
-  "createdAt": 1789754776372,
+  "createdAt": 1789766225161,
   "source": "Synthetic test agent",
   "summary": "Rename a stable Notebook node",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "example.operation.10.notebook.tree.renameNode",
       "kind": "notebook.tree.renameNode",
       "resourceKey": "notebook-tree:project.atlas.guide",
-      "baseRevisionId": "revision.338e8d8da3074858a26d7dede67ad8af",
+      "baseRevisionId": "revision.b0f893c1a548436383b2afc6452e4db0",
       "payload": {
         "operation": {
           "kind": "rename",

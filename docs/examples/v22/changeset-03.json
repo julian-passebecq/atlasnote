@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.3",
-  "createdAt": 1789754774023,
+  "createdAt": 1789766221700,
   "source": "Synthetic test agent",
   "summary": "Update canonical article:page.v22.article",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "operation.2",
       "kind": "resource.update",
       "resourceKey": "article:page.v22.article",
-      "baseRevisionId": "revision.82fdada3e073490d9d515b2b4cd47318",
+      "baseRevisionId": "revision.783b21706bbf40119ccae288dd1ea471",
       "payload": {
         "resourceType": "article",
         "snapshot": {

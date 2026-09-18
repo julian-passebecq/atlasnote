@@ -27,7 +27,9 @@ function activeLocations(backend) {
 test('Completion: wrapper normalization resolves canonical Article/QCM IDs without changing caller data', async () => {
  const {backend} = await setup(), catalogue = structuredClone(compose(built, backend.state));
  const article = catalogue.pages.find(p => p.article), qcm = catalogue.pages.find(p => p.qcm);
- article.article.id = 'article.independent.identity'; qcm.qcm.id = 'qcm.independent.identity';
+ // V2.2 keeps one identity. An earlier handoff fixture mutated this catalogue
+ // into an invalid state; the user explicitly retained the established schema.
+ assert.equal(article.article.id, article.id); assert.equal(qcm.qcm.id, qcm.id);
  for (const [target, page, key] of [[{kind:'article',articleId:article.article.id},article,'article:'], [{kind:'qcm',setId:qcm.qcm.id},qcm,'qcm:']]) {
   assert.equal(normalizeReadingTargetIdentity(catalogue, target).pageId, page.id);
   assert.equal(Object.hasOwn(target, 'pageId'), false);
@@ -36,6 +38,27 @@ test('Completion: wrapper normalization resolves canonical Article/QCM IDs witho
  const wrong = {kind:'article',articleId:article.article.id,pageId:'page.wrong.wrapper'};
  assert.equal(normalizeReadingTargetIdentity(catalogue, wrong).pageId, wrong.pageId);
  assert.equal(resourceKeyForTarget(catalogue, wrong), undefined);
+});
+
+test('Completion: Article/QCM identity stays canonical through edit and restore; conflicting IDs are rejected', async () => {
+ const {api, backend} = await setup();
+ for (const type of ['article','qcm']) {
+  const key=type+':page.v22.'+type, original=api.getResource(key), id=original.resourceId;
+  const conflicting=plan([edit(api,key,s=>{s.page[type].id='document.conflicting';})]);
+  const before=JSON.stringify(backend.state);
+  assert.throws(()=>api.preview(conflicting),/wrapper identity/);
+  assert.equal(JSON.stringify(backend.state),before);
+  const change=plan([edit(api,key,s=>{s.page.title+=' renamed';s.page[type].title=s.page.title;})]);
+  await api.stage(change);await api.accept(change.id);
+  const restore=plan([{id:'operation.identity.restore',kind:'resource.restoreAsNewRevision',resourceKey:key,baseRevisionId:api.getResource(key).head.revisionId,payload:{revisionId:original.head.revisionId}}]);
+  await api.stage(restore);await api.accept(restore.id);
+  const current=api.getResource(key), historic=api.getResource(key,original.head.revisionId);
+  for(const value of [current,historic]) {
+   assert.equal(value.resourceId,id);assert.equal(value.snapshot.page.id,id);assert.equal(value.snapshot.page[type].id,id);
+   assert.equal(value.target.pageId,id);assert.equal(value.target[type==='article'?'articleId':'setId'],id);
+  }
+  assert.equal(current.head.number,3);assert.equal(historic.target.historyRevisionId,original.head.revisionId);
+ }
 });
 
 test('Completion: first history version disables previous; subsequent versions follow immutable parent', async () => {

@@ -1,12 +1,3 @@
-# V2.2 completion and QA update
-
-The coding candidate has now been tested and repaired. See
-[V22_QA_REPORT.md](V22_QA_REPORT.md) for current results and the user-approved
-single-ID Article/QCM scope decision. The original implementation report below
-is historical: its deferred-execution statements no longer describe this QA run.
-
----
-
 # V2.2 completion coding pass report
 
 Date: 2026-09-18. Source baseline recorded by the complete handoff:

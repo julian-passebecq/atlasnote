@@ -1,14 +1,3 @@
-# Executed V2.2 checklist: current status
-
-This received checklist has now been executed and the candidate repaired. Read
-[V22_QA_REPORT.md](V22_QA_REPORT.md) for final results and the precise coverage.
-The user explicitly retained one canonical Article/QCM wrapper/document ID;
-independent IDs below are an accepted bounded exception, not a pending migration.
-Original checklist and coding-only reports are preserved in
-`docs/history/v22-before-qa-20260918/`. The checklist below is historical input.
-
----
-
 # Codex Light - final V2.2 verification and bounded fixes
 
 ## Objective and rules

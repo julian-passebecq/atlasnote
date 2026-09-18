@@ -1,12 +1,3 @@
-# Current V2.2 QA changes
-
-See [V22_QA_REPORT.md](V22_QA_REPORT.md) for the executed repair inventory and
-`SOURCE_MANIFEST.json` for exact delivered hashes. The coding-only inventory
-below describes the received candidate; it is preserved as historical context.
-The QA pass also adds the completion browser and PDF lifecycle regression suites.
-
----
-
 # V2.2 completion pass - changed files
 
 Baseline recorded by the supplied complete handoff: `60db2cb7504503ac416ddad940441e24f82266b1`.

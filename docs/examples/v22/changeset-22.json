@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.22",
-  "createdAt": 1789754780369,
+  "createdAt": 1789766232550,
   "source": "Synthetic test agent",
   "summary": "PDF metadata edit with unchanged reviewed bytes",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "operation.17",
       "kind": "pdf.metadata.update",
       "resourceKey": "pdf:doc.atlas.pdf",
-      "baseRevisionId": "revision.456727f4fa0f4985bd18f9c47acafa50",
+      "baseRevisionId": "revision.bf9fa2f4cc794b549633ae09b908c56d",
       "payload": {
         "resourceType": "pdf",
         "snapshot": {

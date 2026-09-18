@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.2",
-  "createdAt": 1789754773709,
+  "createdAt": 1789766221252,
   "source": "Synthetic test agent",
   "summary": "Update canonical notebook-page:page.atlas.welcome",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "operation.1",
       "kind": "resource.update",
       "resourceKey": "notebook-page:page.atlas.welcome",
-      "baseRevisionId": "revision.1a9bd9eb047441f2a889dfa6d83c266e",
+      "baseRevisionId": "revision.870be8a87232485a81d8fd19dbd6d78d",
       "payload": {
         "resourceType": "notebook-page",
         "snapshot": {

@@ -13,7 +13,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "cheatsheet:page.cheatsheet.azure-data-factory",
-      "revisionId": "revision.ec60ba7d79ca4fd38ddeb798dd0f4fb4",
+      "revisionId": "revision.b10367cbf474492594bcd37d2d243748",
       "number": 2,
       "contentHash": "9d4f5404eb5989602214191c98932286112ef302e566fa4a322845b7288d6a95"
     },
@@ -21,7 +21,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "cheatsheet:page.cheatsheet.pandas-essentials",
-      "revisionId": "revision.ffe8bc394a4c4da29792151137c86bae",
+      "revisionId": "revision.a35cde9ce2964f2e833fc6ec62f9f926",
       "number": 1,
       "contentHash": "a275a4a6ee385f4243f04cf48e5b2a2a9261cba2326aa2baa440a5cd536b5c02"
     },
@@ -29,7 +29,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "cheatsheet:page.cheatsheet.pyspark-execution",
-      "revisionId": "revision.f6bb1d411f474c418ac5c8a1551a0d5c",
+      "revisionId": "revision.26115306999240bab7dbf99f0050d46c",
       "number": 1,
       "contentHash": "286195d16edc51d19d540c558cd7c8f0d4457cf7eb7dff825c1db86588d27a9c"
     },
@@ -37,7 +37,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "cheatsheet:page.cheatsheet.sql-analytics",
-      "revisionId": "revision.4436722dc1c34ed18b21cfa746c61a07",
+      "revisionId": "revision.047b6e51cab64bda83853749726a94a5",
       "number": 1,
       "contentHash": "f87ab1429cffba4c97d35dccae88ac2e68a24e64c31726c03a38024ba4ddb49d"
     },
@@ -45,7 +45,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.coding-errors",
-      "revisionId": "revision.5102b1fe6d3243eb83f8705728ad94d8",
+      "revisionId": "revision.e8c634eef7914d39b965721988c73891",
       "number": 1,
       "contentHash": "57d95ae066f604b92af791363a77c8006848f216de9d8a2dc1384a9c230cc569"
     },
@@ -53,7 +53,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.coding-group",
-      "revisionId": "revision.6adb04db7cd241b9beabafd028880659",
+      "revisionId": "revision.afbd87dc14e049feba86095f82a39d92",
       "number": 1,
       "contentHash": "38e30c46c45628f785e064aacb94faf9dcc5bc950b3ba9d048707910157c13ad"
     },
@@ -61,7 +61,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.coding-latest",
-      "revisionId": "revision.79f24bce791f4c9db7f0ca5c44063fba",
+      "revisionId": "revision.8a7fb27d76fc4e079d9bc8a3e484537b",
       "number": 1,
       "contentHash": "847c13472ad341757a914ef400f976c82957aeeb1a349f8fada6d1f424c59b42"
     },
@@ -69,7 +69,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.hybrid-fanout",
-      "revisionId": "revision.b546849143c64d95bc1625bcf1b64b1b",
+      "revisionId": "revision.80100535783c45999d079a7f7a9c66e8",
       "number": 1,
       "contentHash": "fa47be074ea06986ea87e95785d377972b5c359a7ed29c33ce49c788851f663b"
     },
@@ -77,7 +77,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.hybrid-lazy",
-      "revisionId": "revision.2c5bd9e1298946a0a57dfe4101d7f521",
+      "revisionId": "revision.f984593b84ce4019886d7b1c0f2d8bbe",
       "number": 1,
       "contentHash": "1780463b28a0595fc3c784e38e03924a9424fdbe4d253c76a67ea83724b1ebb1"
     },
@@ -85,7 +85,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.hybrid-retry",
-      "revisionId": "revision.6c405c49da64401bbecd469b384ab138",
+      "revisionId": "revision.07fcb9095df342309ee1b584f7e24280",
       "number": 1,
       "contentHash": "3821a9ae554375bd5ea746ae164403787864f84382843485f87a522afa61be4d"
     },
@@ -93,7 +93,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.sql-q1",
-      "revisionId": "revision.e09457d6bb764a298c45cf338cc43332",
+      "revisionId": "revision.1a454b5d891d48edab4a22fa8656b48e",
       "number": 1,
       "contentHash": "3fa7b444246b9c1271862a344dfd7dd02f6a85dd81402b92d125a090758ed83e"
     },
@@ -101,7 +101,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.sql-q2",
-      "revisionId": "revision.348b9742fdb64724b814e914f7afc861",
+      "revisionId": "revision.fa1eb40d90734c74ac1139e2b02dd6be",
       "number": 1,
       "contentHash": "09057b9e3d2799a7b16bbeedac028dfe595320657a9a372f4143d970bc9604fd"
     },
@@ -109,7 +109,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.sql-q3",
-      "revisionId": "revision.5e9c3b77f13048a18c8deb1cc15b2d09",
+      "revisionId": "revision.6dac660a32b44106a2e9bd8ff050a0ef",
       "number": 1,
       "contentHash": "12c11d9839fb75bd8d56b579429a8420f569d1147f918d35afa823ae22e4e0d3"
     },
@@ -117,7 +117,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.sql-q4",
-      "revisionId": "revision.514be04e13e84d119bfee82359616970",
+      "revisionId": "revision.91ad22abd0344fa8836cbf838576e3b5",
       "number": 1,
       "contentHash": "2f00ea6b656a08ab05015c561ffb00232572cebdc1afe9596e48f1fc0d9847de"
     },
@@ -125,7 +125,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.sql-q5",
-      "revisionId": "revision.df74b1906e734bea8409b6a0c5b19ff2",
+      "revisionId": "revision.aca18710b9af44e09e475da1807bb39b",
       "number": 1,
       "contentHash": "d066c132dbf57e52bf96332f3a5130e6780a34f5b9eeae0088cab7c4238a6e69"
     },
@@ -133,7 +133,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.theory-batch",
-      "revisionId": "revision.edec9a145d3f4db78bb24b274b50f5df",
+      "revisionId": "revision.a6379904d2ca4d268de7171e50c2a131",
       "number": 1,
       "contentHash": "2fda1413aa0a5b40522f4803097aef07244d540716c9df161088c7351cc250c7"
     },
@@ -141,7 +141,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.theory-behavioral",
-      "revisionId": "revision.2492bb80462f4f98bfc2edfce2c68c66",
+      "revisionId": "revision.f06e733b19554ea09f0dbbba55af9878",
       "number": 1,
       "contentHash": "ee5eee74114be4e0dc86fedc5d6b0316cd5e526b75453d577666363cba2c91dd"
     },
@@ -149,7 +149,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.theory-layout",
-      "revisionId": "revision.ce4000354a124fd4873941941a4c8f5f",
+      "revisionId": "revision.f3c5a3392f334988b3cd5083871ce93e",
       "number": 1,
       "contentHash": "25ee6d07c24d1d4b505378e6ee42f7ac945e662dd602f86668b5eb38684cb8f2"
     },
@@ -157,7 +157,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.interview.theory-medallion",
-      "revisionId": "revision.3da0b46925234929b0a5f34f6e855904",
+      "revisionId": "revision.e8dea62f04e94053bee0bd3cb7663123",
       "number": 1,
       "contentHash": "8427de7261f168218276cdf2731258ad777c70b60663d843e5373e72a773fe92"
     },
@@ -165,7 +165,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.atlas.language",
-      "revisionId": "revision.a125108555014efcb666f04bd0c5b646",
+      "revisionId": "revision.00780b361052455bbb7f418945d219e1",
       "number": 1,
       "contentHash": "06501976361fa5dfacedb6029d32e350501b0eb3b895366bba78e0087574766b"
     },
@@ -173,7 +173,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.atlas.layouts",
-      "revisionId": "revision.ea8c437c8b634d48baeb6a57941bdaa7",
+      "revisionId": "revision.1affedc2d169414e96b8e090392b98fe",
       "number": 1,
       "contentHash": "d2a7fb3386c499dea6b7a68de3a5b43b2da1f3b1537a369b8395d8be561ca52f"
     },
@@ -181,7 +181,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "pdf:doc.atlas.password",
-      "revisionId": "revision.ee4f06bc68804f6caad6214ea2e7637d",
+      "revisionId": "revision.e035ba69d36a4ed19cdd2383a2b626c0",
       "number": 1,
       "contentHash": "fba5429e9b93926cab3d860c5424d4116f84c6eb1c864b72d97102651c83ece0"
     },
@@ -189,7 +189,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "pdf:doc.atlas.pdf",
-      "revisionId": "revision.5baa1b2e0d2e4ee3ae86ee86b4345517",
+      "revisionId": "revision.62639883932b48c79f20f75394d28f70",
       "number": 3,
       "contentHash": "81d7caeb0f4ef1d3347cc3a0e48dead9d3f7ad5baf912bb0f0dbc8a4a397cbdc"
     },
@@ -197,7 +197,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "pdf:doc.atlas.rotated",
-      "revisionId": "revision.4f94e5210cc0490d9473f54d1aa666e9",
+      "revisionId": "revision.97ac959221a64907b199c6a78750346f",
       "number": 1,
       "contentHash": "139c3146fe8f5c907fbdff569e94fcfae9f88c9ada04c39294340cbac8a79446"
     },
@@ -205,7 +205,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.atlas.welcome",
-      "revisionId": "revision.97e2264a399e49f7a71d5c7332ea504e",
+      "revisionId": "revision.d41aefc861a848a4a19bccde2458209a",
       "number": 6,
       "contentHash": "32ddf21e8fff5e892cc47441fa79313c6f562c3ca4eb7c8d8b04136d0b84669f"
     },
@@ -213,7 +213,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:example.page.overview",
-      "revisionId": "revision.bfbc9f2fd3fb40e5ae88bf6e55ff6228",
+      "revisionId": "revision.63d13b999c494998a9c2b08e12b08de3",
       "number": 1,
       "contentHash": "15ce4e62a3a7b37c1858f7011d1ae477193af56c39c1b8fffa00469d4e3e9412"
     },
@@ -221,7 +221,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:example.page.second",
-      "revisionId": "revision.a38f69f593b64cd3a7a0d5005fff30e4",
+      "revisionId": "revision.65769130b1474b09aee3e205de5b31e3",
       "number": 1,
       "contentHash": "1c2f88863ef4f25b8c5fc6a913322f0ec1a90a23dcaf55876a18f1fec8c6bfe3"
     },
@@ -229,7 +229,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "pdf:doc.pdfatlas.pyspark-pandas",
-      "revisionId": "revision.c035b69e03e84d37b3cda4c8e4f4989e",
+      "revisionId": "revision.6310dbf9999347c6bfb3fc0e2ad26025",
       "number": 1,
       "contentHash": "e80cffbde9aba643fa5b94c54f0111d4b05ee099b9bbbb3bfc50a808abad3b12"
     },
@@ -237,7 +237,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "pdf:doc.pdfatlas.spark-concepts",
-      "revisionId": "revision.460bbbb79fb64613a9582f24f837ad2c",
+      "revisionId": "revision.1f9ed55d25ec4120a4727390397a0ffc",
       "number": 1,
       "contentHash": "5164a4817c94a497a0891fe5fb58b1b48ff2445d1e6efdd492ab326e63c683db"
     },
@@ -245,7 +245,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.samples.azure.pipeline",
-      "revisionId": "revision.74c321ee42b646e38e954d34ec78be53",
+      "revisionId": "revision.bb779805f1414f9781afd7a33239afd3",
       "number": 1,
       "contentHash": "cff20f9012f9c5e17fe82a04f76835a36efa3cbe18ea466e82d28a430bdc0b66"
     },
@@ -253,7 +253,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.samples.databricks.workflow",
-      "revisionId": "revision.0ece273c826d4954973e23b57c6fd4c0",
+      "revisionId": "revision.5aa32c93dbbb4a5687513b07a9e14e98",
       "number": 1,
       "contentHash": "e5ec946704d8d74c334b41c2c643f2122dc33713e769d8169c895aeb3f6a89c9"
     },
@@ -261,7 +261,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.samples.job.explain",
-      "revisionId": "revision.0576526657dc4e4dbe423171d8311d3a",
+      "revisionId": "revision.99ca2e7280b04605927e85e03c085393",
       "number": 1,
       "contentHash": "b384f272c46a927ddf70cd741bef14e2f843c8e8390aa5ba4b19ccb817b6b691"
     },
@@ -269,7 +269,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.samples.norsk.sentences",
-      "revisionId": "revision.f0d863beaaa94bf0b18a370181af0eef",
+      "revisionId": "revision.1f1efec023c24acdb7a48ceb8f80944d",
       "number": 1,
       "contentHash": "cd394c18117c806ffa64036227eedefe6a5fab23e4ef7be6e67bbea698760e19"
     },
@@ -277,7 +277,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.samples.pandas.filter",
-      "revisionId": "revision.d1d186c0dd9e421e815ab37bebe6b31b",
+      "revisionId": "revision.54ae3bba01b24a4cac7650e5273c1366",
       "number": 1,
       "contentHash": "35c37b5d145229de6bc185844361d7f7fee64b106d61a58774b3240a7b2d109e"
     },
@@ -285,7 +285,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.samples.personal.scratchpad",
-      "revisionId": "revision.766db62b7d0b4369a4197e16f1fb6cec",
+      "revisionId": "revision.d895d1a3a6744e79b1a4c8d8da9ef7ef",
       "number": 1,
       "contentHash": "3b1dbd7686b5c92b2ee29bd00105691e7d40d1b44f0863fb8b1ccd064533b5ad"
     },
@@ -293,7 +293,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.samples.pyspark.transform",
-      "revisionId": "revision.fad4b298c61c4850a7a05e7e5e2e19c8",
+      "revisionId": "revision.d5c8ac4629484d36b94cb11136b80829",
       "number": 1,
       "contentHash": "d62c22dfadd101b37c663174356e553a9a75b5ff67bc7fc30801a05dcb8e0749"
     },
@@ -301,7 +301,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.samples.python.collections",
-      "revisionId": "revision.5d06863e0d534a6b88ff5b4c491ae465",
+      "revisionId": "revision.65eca59b79244076806a135164a392c3",
       "number": 1,
       "contentHash": "1ffdeea301af0367712959722047701396f233f57da788181ce92d2fa7271748"
     },
@@ -309,7 +309,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.samples.python.loops",
-      "revisionId": "revision.cf693d47177942f4bc37b6c557559011",
+      "revisionId": "revision.86e7c2a8f1b54cb994697df196fa5296",
       "number": 1,
       "contentHash": "4cf6ac47e2813e48fe99ad6fd4de9edc28f92dfbbef040e561628ae94b9cd8a2"
     },
@@ -317,7 +317,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.samples.sql.select",
-      "revisionId": "revision.c516df1ebc09428c88679775b77477d7",
+      "revisionId": "revision.6a6511fc28364eb99355dccd8037343c",
       "number": 1,
       "contentHash": "422f33c311a12947085b32871096e57b201cbcd83eaefed8a869d80cf9ac1705"
     },
@@ -325,7 +325,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "article:page.v22.article",
-      "revisionId": "revision.004341f5bb704612b7421925b8253f85",
+      "revisionId": "revision.c313ad3d9e1a4d37894d3364dba9df4d",
       "number": 3,
       "contentHash": "0db4ff04e48c42a88757de8a9c1f2754c608ef5d683fc32ace8909090df790ac"
     },
@@ -333,7 +333,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "qcm:page.v22.qcm",
-      "revisionId": "revision.0f8a6fbbebf5417b874ebb033c993a4c",
+      "revisionId": "revision.a3b3453f49f94fe280238f538ba15ad4",
       "number": 2,
       "contentHash": "480f194a643e0b22b17df84101f1555116a68190074547cc89d252e3b0571493"
     },
@@ -341,7 +341,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.cheatsheets",
-      "revisionId": "revision.9b4be1f366d24c559bc8d8c7e765c712",
+      "revisionId": "revision.cbdf74da619a4bacb0e60e813dfca573",
       "number": 1,
       "contentHash": "42cbe7ccaf1404b574dded00054c115fe06d8e8bcc7fcc8a80bb5de2bfcf4691"
     },
@@ -349,7 +349,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.interview-preparation",
-      "revisionId": "revision.4202f7e4e0ce4b49921bdfb2cf124d68",
+      "revisionId": "revision.64cbc461906147f9b855aacdd6be4ba7",
       "number": 1,
       "contentHash": "d5a949d7427bc87cf5fb73ab9c81e707a7a3b4df23a2c6bb33feca0caf088b90"
     },
@@ -357,7 +357,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.atlas.guide",
-      "revisionId": "revision.158321434c73426e98672c049d773263",
+      "revisionId": "revision.816811649f24401ba7cb67b1b105dfcf",
       "number": 5,
       "contentHash": "cdfa45e751c90917ce5178059db342d0c205fd6404e47c946dab39bfe6513c1a"
     },
@@ -365,7 +365,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:example.project",
-      "revisionId": "revision.03d6fc64c44a4bd7bf28d7d03b31768e",
+      "revisionId": "revision.3bba744009d34949a6119a975abdf6ea",
       "number": 1,
       "contentHash": "278ace693a4ae1795d3e7952d7d429b6583d144cbcc1c14d0cfcad413c0b133c"
     },
@@ -373,7 +373,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.pdfatlas",
-      "revisionId": "revision.22124b12effc45c981a50ca3d2012540",
+      "revisionId": "revision.76caa33467a9455296c8f4151224b922",
       "number": 1,
       "contentHash": "a25965d1203861e543ae73711f971616de642368e06524a7152ea201b5544dd8"
     },
@@ -381,7 +381,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.samples.python",
-      "revisionId": "revision.684a00730bc74004a05639f6a9723bc7",
+      "revisionId": "revision.0369cf2d819e4abd8c1b3e3b511615d2",
       "number": 1,
       "contentHash": "2e9b23d0f54ac2bb353c3672408a6fe4376e40ae71ae48690eb802deb52c8c19"
     },
@@ -389,7 +389,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.samples.sql",
-      "revisionId": "revision.4c6e30b74fde4c7b8138de1e32eaf16e",
+      "revisionId": "revision.b37bcc1800844bc4813ddfafb49c5a17",
       "number": 1,
       "contentHash": "1808b0ac8645d26e512eda758e257abddd5891afa82006af1603e67ddf20f535"
     },
@@ -397,7 +397,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.samples.pandas",
-      "revisionId": "revision.943748b1b9c64a398a2ceb4dda1bbcc0",
+      "revisionId": "revision.0f237cc70d2f487fa86cdc10cb632200",
       "number": 1,
       "contentHash": "3da301dd205b6ad23696da5279ef9ba5a9b2ab88a6f5bed6c42e88eabb12db71"
     },
@@ -405,7 +405,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.samples.pyspark",
-      "revisionId": "revision.62026684c2e94307b8096e76e2fc3bd4",
+      "revisionId": "revision.cfc235531a8c478e9a702f2b06f2b596",
       "number": 1,
       "contentHash": "0937146bcb30b5eca765aced3c5cad2c78ec0633e079f8038df5092c6aae69fd"
     },
@@ -413,7 +413,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.samples.azure",
-      "revisionId": "revision.a188a7bf728a476ca2b5589721d724d8",
+      "revisionId": "revision.b88f35d900fa4a84994c6a62d741a3ca",
       "number": 1,
       "contentHash": "ccf1b3d16bf606003e1420efc45e3df749e18b38f49d33bc96afdd915de03cdd"
     },
@@ -421,7 +421,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.samples.databricks",
-      "revisionId": "revision.193169b67c684145b040af5c4ffabfba",
+      "revisionId": "revision.86b76761ce69470892ece5345d5a3f36",
       "number": 1,
       "contentHash": "f7bc05f09730cd965ea988ce6732cc609491ac5bb5f2db6b9d215bae7a983c2c"
     },
@@ -429,7 +429,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.samples.norsk",
-      "revisionId": "revision.9f45ec11f0ac4ecb927794bd2437b609",
+      "revisionId": "revision.c18d88105a4143bdb36301e5e7ef6fbe",
       "number": 1,
       "contentHash": "89b379ef02e5f11e517052708f314cc6f5e2b6e4fd74801cd9796340b31f3d05"
     },
@@ -437,7 +437,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.samples.job",
-      "revisionId": "revision.8c718a2fa4944a5b94336a10a9596b9a",
+      "revisionId": "revision.20d581ff7a8d42a39172257a2013404c",
       "number": 1,
       "contentHash": "8f7b365e78be1609b6572a64a4f0513bd08fb5fcc824d6a2061821438bf11e32"
     },
@@ -445,7 +445,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:project.samples.personal",
-      "revisionId": "revision.498a8ed1737b49f580c768b114966c94",
+      "revisionId": "revision.883eb1c82ae141e8be40d2c8943fd42c",
       "number": 1,
       "contentHash": "625681d7115083836ab53b938e8e8591f906b2c194b240fa0216495881a46792"
     },
@@ -453,7 +453,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-tree:atlas.manual-references",
-      "revisionId": "revision.65678f326db747b08bd53bec5fbb689a",
+      "revisionId": "revision.2dd318ce128a436ea3d08178a5b28262",
       "number": 1,
       "contentHash": "ecedfadc9c176e476f1c2ab4e6a8e54b80c1b978a0489cd01c1bb4bb05705156"
     },
@@ -461,7 +461,7 @@
       "kind": "head",
       "schemaVersion": 1,
       "resourceKey": "notebook-page:page.example.new",
-      "revisionId": "revision.74bc6a149d3e40e4a3dfddc4b6c5b908",
+      "revisionId": "revision.816253a41b9445539f7eb0e561dd1933",
       "number": 1,
       "contentHash": "f919c9c3410a660d9fdd3c74ec2d55c5c44c62e66f409c08e9c9752517d0ab86"
     }
@@ -470,13 +470,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.2113f081f64b4d30b274640e27d23d25",
+      "revisionId": "revision.8838c92aa631418187403cfe260522c3",
       "resourceKey": "cheatsheet:page.cheatsheet.azure-data-factory",
       "resourceId": "page.cheatsheet.azure-data-factory",
       "resourceType": "cheatsheet",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773208,
+      "createdAt": 1789766220623,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -1555,13 +1555,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.ffe8bc394a4c4da29792151137c86bae",
+      "revisionId": "revision.a35cde9ce2964f2e833fc6ec62f9f926",
       "resourceKey": "cheatsheet:page.cheatsheet.pandas-essentials",
       "resourceId": "page.cheatsheet.pandas-essentials",
       "resourceType": "cheatsheet",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773215,
+      "createdAt": 1789766220631,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -2586,13 +2586,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.f6bb1d411f474c418ac5c8a1551a0d5c",
+      "revisionId": "revision.26115306999240bab7dbf99f0050d46c",
       "resourceKey": "cheatsheet:page.cheatsheet.pyspark-execution",
       "resourceId": "page.cheatsheet.pyspark-execution",
       "resourceType": "cheatsheet",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773227,
+      "createdAt": 1789766220637,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -3918,13 +3918,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.4436722dc1c34ed18b21cfa746c61a07",
+      "revisionId": "revision.047b6e51cab64bda83853749726a94a5",
       "resourceKey": "cheatsheet:page.cheatsheet.sql-analytics",
       "resourceId": "page.cheatsheet.sql-analytics",
       "resourceType": "cheatsheet",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773236,
+      "createdAt": 1789766220643,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -5106,13 +5106,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.5102b1fe6d3243eb83f8705728ad94d8",
+      "revisionId": "revision.e8c634eef7914d39b965721988c73891",
       "resourceKey": "notebook-page:page.interview.coding-errors",
       "resourceId": "page.interview.coding-errors",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773238,
+      "createdAt": 1789766220645,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -5288,13 +5288,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.6adb04db7cd241b9beabafd028880659",
+      "revisionId": "revision.afbd87dc14e049feba86095f82a39d92",
       "resourceKey": "notebook-page:page.interview.coding-group",
       "resourceId": "page.interview.coding-group",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773240,
+      "createdAt": 1789766220646,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -5470,13 +5470,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.79f24bce791f4c9db7f0ca5c44063fba",
+      "revisionId": "revision.8a7fb27d76fc4e079d9bc8a3e484537b",
       "resourceKey": "notebook-page:page.interview.coding-latest",
       "resourceId": "page.interview.coding-latest",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773242,
+      "createdAt": 1789766220648,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -5652,13 +5652,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.b546849143c64d95bc1625bcf1b64b1b",
+      "revisionId": "revision.80100535783c45999d079a7f7a9c66e8",
       "resourceKey": "notebook-page:page.interview.hybrid-fanout",
       "resourceId": "page.interview.hybrid-fanout",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773243,
+      "createdAt": 1789766220649,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -5801,13 +5801,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.2c5bd9e1298946a0a57dfe4101d7f521",
+      "revisionId": "revision.f984593b84ce4019886d7b1c0f2d8bbe",
       "resourceKey": "notebook-page:page.interview.hybrid-lazy",
       "resourceId": "page.interview.hybrid-lazy",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773244,
+      "createdAt": 1789766220650,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -5948,13 +5948,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.6c405c49da64401bbecd469b384ab138",
+      "revisionId": "revision.07fcb9095df342309ee1b584f7e24280",
       "resourceKey": "notebook-page:page.interview.hybrid-retry",
       "resourceId": "page.interview.hybrid-retry",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773245,
+      "createdAt": 1789766220651,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -6091,13 +6091,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.e09457d6bb764a298c45cf338cc43332",
+      "revisionId": "revision.1a454b5d891d48edab4a22fa8656b48e",
       "resourceKey": "notebook-page:page.interview.sql-q1",
       "resourceId": "page.interview.sql-q1",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773246,
+      "createdAt": 1789766220652,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -6261,13 +6261,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.348b9742fdb64724b814e914f7afc861",
+      "revisionId": "revision.fa1eb40d90734c74ac1139e2b02dd6be",
       "resourceKey": "notebook-page:page.interview.sql-q2",
       "resourceId": "page.interview.sql-q2",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773248,
+      "createdAt": 1789766220653,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -6430,13 +6430,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.5e9c3b77f13048a18c8deb1cc15b2d09",
+      "revisionId": "revision.6dac660a32b44106a2e9bd8ff050a0ef",
       "resourceKey": "notebook-page:page.interview.sql-q3",
       "resourceId": "page.interview.sql-q3",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773249,
+      "createdAt": 1789766220654,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -6601,13 +6601,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.514be04e13e84d119bfee82359616970",
+      "revisionId": "revision.91ad22abd0344fa8836cbf838576e3b5",
       "resourceKey": "notebook-page:page.interview.sql-q4",
       "resourceId": "page.interview.sql-q4",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773250,
+      "createdAt": 1789766220655,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -6768,13 +6768,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.df74b1906e734bea8409b6a0c5b19ff2",
+      "revisionId": "revision.aca18710b9af44e09e475da1807bb39b",
       "resourceKey": "notebook-page:page.interview.sql-q5",
       "resourceId": "page.interview.sql-q5",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773255,
+      "createdAt": 1789766220657,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -6943,13 +6943,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.edec9a145d3f4db78bb24b274b50f5df",
+      "revisionId": "revision.a6379904d2ca4d268de7171e50c2a131",
       "resourceKey": "notebook-page:page.interview.theory-batch",
       "resourceId": "page.interview.theory-batch",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773257,
+      "createdAt": 1789766220657,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -7072,13 +7072,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.2492bb80462f4f98bfc2edfce2c68c66",
+      "revisionId": "revision.f06e733b19554ea09f0dbbba55af9878",
       "resourceKey": "notebook-page:page.interview.theory-behavioral",
       "resourceId": "page.interview.theory-behavioral",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773257,
+      "createdAt": 1789766220658,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -7201,13 +7201,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.ce4000354a124fd4873941941a4c8f5f",
+      "revisionId": "revision.f3c5a3392f334988b3cd5083871ce93e",
       "resourceKey": "notebook-page:page.interview.theory-layout",
       "resourceId": "page.interview.theory-layout",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773258,
+      "createdAt": 1789766220659,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -7330,13 +7330,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.3da0b46925234929b0a5f34f6e855904",
+      "revisionId": "revision.e8dea62f04e94053bee0bd3cb7663123",
       "resourceKey": "notebook-page:page.interview.theory-medallion",
       "resourceId": "page.interview.theory-medallion",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773260,
+      "createdAt": 1789766220661,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -7482,13 +7482,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.a125108555014efcb666f04bd0c5b646",
+      "revisionId": "revision.00780b361052455bbb7f418945d219e1",
       "resourceKey": "notebook-page:page.atlas.language",
       "resourceId": "page.atlas.language",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773260,
+      "createdAt": 1789766220662,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -7558,13 +7558,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.ea8c437c8b634d48baeb6a57941bdaa7",
+      "revisionId": "revision.1affedc2d169414e96b8e090392b98fe",
       "resourceKey": "notebook-page:page.atlas.layouts",
       "resourceId": "page.atlas.layouts",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773262,
+      "createdAt": 1789766220663,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -7899,13 +7899,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.ee4f06bc68804f6caad6214ea2e7637d",
+      "revisionId": "revision.e035ba69d36a4ed19cdd2383a2b626c0",
       "resourceKey": "pdf:doc.atlas.password",
       "resourceId": "doc.atlas.password",
       "resourceType": "pdf",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773263,
+      "createdAt": 1789766220663,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -7966,13 +7966,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.456727f4fa0f4985bd18f9c47acafa50",
+      "revisionId": "revision.bf9fa2f4cc794b549633ae09b908c56d",
       "resourceKey": "pdf:doc.atlas.pdf",
       "resourceId": "doc.atlas.pdf",
       "resourceType": "pdf",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773264,
+      "createdAt": 1789766220665,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -8238,13 +8238,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.4f94e5210cc0490d9473f54d1aa666e9",
+      "revisionId": "revision.97ac959221a64907b199c6a78750346f",
       "resourceKey": "pdf:doc.atlas.rotated",
       "resourceId": "doc.atlas.rotated",
       "resourceType": "pdf",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773264,
+      "createdAt": 1789766220666,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -8305,13 +8305,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.1a9bd9eb047441f2a889dfa6d83c266e",
+      "revisionId": "revision.870be8a87232485a81d8fd19dbd6d78d",
       "resourceKey": "notebook-page:page.atlas.welcome",
       "resourceId": "page.atlas.welcome",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773264,
+      "createdAt": 1789766220667,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -8404,13 +8404,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.bfbc9f2fd3fb40e5ae88bf6e55ff6228",
+      "revisionId": "revision.63d13b999c494998a9c2b08e12b08de3",
       "resourceKey": "notebook-page:example.page.overview",
       "resourceId": "example.page.overview",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773265,
+      "createdAt": 1789766220667,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -8464,13 +8464,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.a38f69f593b64cd3a7a0d5005fff30e4",
+      "revisionId": "revision.65769130b1474b09aee3e205de5b31e3",
       "resourceKey": "notebook-page:example.page.second",
       "resourceId": "example.page.second",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773265,
+      "createdAt": 1789766220667,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -8502,13 +8502,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.c035b69e03e84d37b3cda4c8e4f4989e",
+      "revisionId": "revision.6310dbf9999347c6bfb3fc0e2ad26025",
       "resourceKey": "pdf:doc.pdfatlas.pyspark-pandas",
       "resourceId": "doc.pdfatlas.pyspark-pandas",
       "resourceType": "pdf",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773265,
+      "createdAt": 1789766220668,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -8586,13 +8586,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.460bbbb79fb64613a9582f24f837ad2c",
+      "revisionId": "revision.1f9ed55d25ec4120a4727390397a0ffc",
       "resourceKey": "pdf:doc.pdfatlas.spark-concepts",
       "resourceId": "doc.pdfatlas.spark-concepts",
       "resourceType": "pdf",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773266,
+      "createdAt": 1789766220669,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9275,13 +9275,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.74c321ee42b646e38e954d34ec78be53",
+      "revisionId": "revision.bb779805f1414f9781afd7a33239afd3",
       "resourceKey": "notebook-page:page.samples.azure.pipeline",
       "resourceId": "page.samples.azure.pipeline",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773266,
+      "createdAt": 1789766220670,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9324,13 +9324,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.0ece273c826d4954973e23b57c6fd4c0",
+      "revisionId": "revision.5aa32c93dbbb4a5687513b07a9e14e98",
       "resourceKey": "notebook-page:page.samples.databricks.workflow",
       "resourceId": "page.samples.databricks.workflow",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773267,
+      "createdAt": 1789766220670,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9369,13 +9369,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.0576526657dc4e4dbe423171d8311d3a",
+      "revisionId": "revision.99ca2e7280b04605927e85e03c085393",
       "resourceKey": "notebook-page:page.samples.job.explain",
       "resourceId": "page.samples.job.explain",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773267,
+      "createdAt": 1789766220670,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9414,13 +9414,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.f0d863beaaa94bf0b18a370181af0eef",
+      "revisionId": "revision.1f1efec023c24acdb7a48ceb8f80944d",
       "resourceKey": "notebook-page:page.samples.norsk.sentences",
       "resourceId": "page.samples.norsk.sentences",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773267,
+      "createdAt": 1789766220671,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9460,13 +9460,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.d1d186c0dd9e421e815ab37bebe6b31b",
+      "revisionId": "revision.54ae3bba01b24a4cac7650e5273c1366",
       "resourceKey": "notebook-page:page.samples.pandas.filter",
       "resourceId": "page.samples.pandas.filter",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773268,
+      "createdAt": 1789766220671,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9505,13 +9505,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.766db62b7d0b4369a4197e16f1fb6cec",
+      "revisionId": "revision.d895d1a3a6744e79b1a4c8d8da9ef7ef",
       "resourceKey": "notebook-page:page.samples.personal.scratchpad",
       "resourceId": "page.samples.personal.scratchpad",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773268,
+      "createdAt": 1789766220671,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9549,13 +9549,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.fad4b298c61c4850a7a05e7e5e2e19c8",
+      "revisionId": "revision.d5c8ac4629484d36b94cb11136b80829",
       "resourceKey": "notebook-page:page.samples.pyspark.transform",
       "resourceId": "page.samples.pyspark.transform",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773268,
+      "createdAt": 1789766220671,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9595,13 +9595,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.5d06863e0d534a6b88ff5b4c491ae465",
+      "revisionId": "revision.65eca59b79244076806a135164a392c3",
       "resourceKey": "notebook-page:page.samples.python.collections",
       "resourceId": "page.samples.python.collections",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773268,
+      "createdAt": 1789766220671,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9640,13 +9640,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.cf693d47177942f4bc37b6c557559011",
+      "revisionId": "revision.86e7c2a8f1b54cb994697df196fa5296",
       "resourceKey": "notebook-page:page.samples.python.loops",
       "resourceId": "page.samples.python.loops",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773268,
+      "createdAt": 1789766220672,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9686,13 +9686,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.c516df1ebc09428c88679775b77477d7",
+      "revisionId": "revision.6a6511fc28364eb99355dccd8037343c",
       "resourceKey": "notebook-page:page.samples.sql.select",
       "resourceId": "page.samples.sql.select",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773269,
+      "createdAt": 1789766220673,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9732,13 +9732,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.82fdada3e073490d9d515b2b4cd47318",
+      "revisionId": "revision.783b21706bbf40119ccae288dd1ea471",
       "resourceKey": "article:page.v22.article",
       "resourceId": "page.v22.article",
       "resourceType": "article",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773269,
+      "createdAt": 1789766220674,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9777,13 +9777,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.08d80688173e4779b55fd4e8eb7f6453",
+      "revisionId": "revision.c0225ca9d39144e7aa50c1a49630e1c7",
       "resourceKey": "qcm:page.v22.qcm",
       "resourceId": "page.v22.qcm",
       "resourceType": "qcm",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773270,
+      "createdAt": 1789766220675,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9841,13 +9841,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.9b4be1f366d24c559bc8d8c7e765c712",
+      "revisionId": "revision.cbdf74da619a4bacb0e60e813dfca573",
       "resourceKey": "notebook-tree:project.cheatsheets",
       "resourceId": "project.cheatsheets",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773270,
+      "createdAt": 1789766220675,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -9888,13 +9888,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.4202f7e4e0ce4b49921bdfb2cf124d68",
+      "revisionId": "revision.64cbc461906147f9b855aacdd6be4ba7",
       "resourceKey": "notebook-tree:project.interview-preparation",
       "resourceId": "project.interview-preparation",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773271,
+      "createdAt": 1789766220676,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10188,13 +10188,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.d4a1310858a444e3823aee1fc46ab057",
+      "revisionId": "revision.4a5a11183cc74a15b16f5087cab0682c",
       "resourceKey": "notebook-tree:project.atlas.guide",
       "resourceId": "project.atlas.guide",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773271,
+      "createdAt": 1789766220677,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10257,13 +10257,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.03d6fc64c44a4bd7bf28d7d03b31768e",
+      "revisionId": "revision.3bba744009d34949a6119a975abdf6ea",
       "resourceKey": "notebook-tree:example.project",
       "resourceId": "example.project",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773271,
+      "createdAt": 1789766220677,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10306,13 +10306,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.22124b12effc45c981a50ca3d2012540",
+      "revisionId": "revision.76caa33467a9455296c8f4151224b922",
       "resourceKey": "notebook-tree:project.pdfatlas",
       "resourceId": "project.pdfatlas",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773271,
+      "createdAt": 1789766220677,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10355,13 +10355,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.684a00730bc74004a05639f6a9723bc7",
+      "revisionId": "revision.0369cf2d819e4abd8c1b3e3b511615d2",
       "resourceKey": "notebook-tree:project.samples.python",
       "resourceId": "project.samples.python",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773271,
+      "createdAt": 1789766220678,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10403,13 +10403,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.4c6e30b74fde4c7b8138de1e32eaf16e",
+      "revisionId": "revision.b37bcc1800844bc4813ddfafb49c5a17",
       "resourceKey": "notebook-tree:project.samples.sql",
       "resourceId": "project.samples.sql",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773272,
+      "createdAt": 1789766220678,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10446,13 +10446,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.943748b1b9c64a398a2ceb4dda1bbcc0",
+      "revisionId": "revision.0f237cc70d2f487fa86cdc10cb632200",
       "resourceKey": "notebook-tree:project.samples.pandas",
       "resourceId": "project.samples.pandas",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773272,
+      "createdAt": 1789766220678,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10489,13 +10489,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.62026684c2e94307b8096e76e2fc3bd4",
+      "revisionId": "revision.cfc235531a8c478e9a702f2b06f2b596",
       "resourceKey": "notebook-tree:project.samples.pyspark",
       "resourceId": "project.samples.pyspark",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773272,
+      "createdAt": 1789766220678,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10532,13 +10532,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.a188a7bf728a476ca2b5589721d724d8",
+      "revisionId": "revision.b88f35d900fa4a84994c6a62d741a3ca",
       "resourceKey": "notebook-tree:project.samples.azure",
       "resourceId": "project.samples.azure",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773272,
+      "createdAt": 1789766220678,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10575,13 +10575,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.193169b67c684145b040af5c4ffabfba",
+      "revisionId": "revision.86b76761ce69470892ece5345d5a3f36",
       "resourceKey": "notebook-tree:project.samples.databricks",
       "resourceId": "project.samples.databricks",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773272,
+      "createdAt": 1789766220679,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10618,13 +10618,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.9f45ec11f0ac4ecb927794bd2437b609",
+      "revisionId": "revision.c18d88105a4143bdb36301e5e7ef6fbe",
       "resourceKey": "notebook-tree:project.samples.norsk",
       "resourceId": "project.samples.norsk",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773272,
+      "createdAt": 1789766220679,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10661,13 +10661,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.8c718a2fa4944a5b94336a10a9596b9a",
+      "revisionId": "revision.20d581ff7a8d42a39172257a2013404c",
       "resourceKey": "notebook-tree:project.samples.job",
       "resourceId": "project.samples.job",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773273,
+      "createdAt": 1789766220679,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10704,13 +10704,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.498a8ed1737b49f580c768b114966c94",
+      "revisionId": "revision.883eb1c82ae141e8be40d2c8943fd42c",
       "resourceKey": "notebook-tree:project.samples.personal",
       "resourceId": "project.samples.personal",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773273,
+      "createdAt": 1789766220679,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10747,13 +10747,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.65678f326db747b08bd53bec5fbb689a",
+      "revisionId": "revision.2dd318ce128a436ea3d08178a5b28262",
       "resourceKey": "notebook-tree:atlas.manual-references",
       "resourceId": "atlas.manual-references",
       "resourceType": "notebook-tree",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773273,
+      "createdAt": 1789766220680,
       "source": "migration",
       "summary": "Synthetic baseline",
       "status": "committed",
@@ -10772,13 +10772,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.74bc6a149d3e40e4a3dfddc4b6c5b908",
+      "revisionId": "revision.816253a41b9445539f7eb0e561dd1933",
       "resourceKey": "notebook-page:page.example.new",
       "resourceId": "page.example.new",
       "resourceType": "notebook-page",
       "number": 1,
       "parentRevisionId": null,
-      "createdAt": 1789754773666,
+      "createdAt": 1789766221175,
       "source": "ai",
       "summary": "Create a canonical Notebook page",
       "status": "committed",
@@ -10806,13 +10806,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.923d1eed831f4fae8d6d1a7b2351a8ee",
+      "revisionId": "revision.bd4b29f0c3614a70940317aa63245a99",
       "resourceKey": "notebook-page:page.atlas.welcome",
       "resourceId": "page.atlas.welcome",
       "resourceType": "notebook-page",
       "number": 2,
-      "parentRevisionId": "revision.1a9bd9eb047441f2a889dfa6d83c266e",
-      "createdAt": 1789754773975,
+      "parentRevisionId": "revision.870be8a87232485a81d8fd19dbd6d78d",
+      "createdAt": 1789766221628,
       "source": "ai",
       "summary": "Update canonical notebook-page:page.atlas.welcome",
       "status": "committed",
@@ -10906,13 +10906,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.0298b66931544f80a28dbed0fc8bd03d",
+      "revisionId": "revision.8766f0b2ca264ff28d55b923ca829719",
       "resourceKey": "article:page.v22.article",
       "resourceId": "page.v22.article",
       "resourceType": "article",
       "number": 2,
-      "parentRevisionId": "revision.82fdada3e073490d9d515b2b4cd47318",
-      "createdAt": 1789754774311,
+      "parentRevisionId": "revision.783b21706bbf40119ccae288dd1ea471",
+      "createdAt": 1789766222001,
       "source": "ai",
       "summary": "Update canonical article:page.v22.article",
       "status": "committed",
@@ -10952,13 +10952,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.ec60ba7d79ca4fd38ddeb798dd0f4fb4",
+      "revisionId": "revision.b10367cbf474492594bcd37d2d243748",
       "resourceKey": "cheatsheet:page.cheatsheet.azure-data-factory",
       "resourceId": "page.cheatsheet.azure-data-factory",
       "resourceType": "cheatsheet",
       "number": 2,
-      "parentRevisionId": "revision.2113f081f64b4d30b274640e27d23d25",
-      "createdAt": 1789754774631,
+      "parentRevisionId": "revision.8838c92aa631418187403cfe260522c3",
+      "createdAt": 1789766222363,
       "source": "ai",
       "summary": "Update canonical cheatsheet:page.cheatsheet.azure-data-factory",
       "status": "committed",
@@ -12038,13 +12038,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.0f8a6fbbebf5417b874ebb033c993a4c",
+      "revisionId": "revision.a3b3453f49f94fe280238f538ba15ad4",
       "resourceKey": "qcm:page.v22.qcm",
       "resourceId": "page.v22.qcm",
       "resourceType": "qcm",
       "number": 2,
-      "parentRevisionId": "revision.08d80688173e4779b55fd4e8eb7f6453",
-      "createdAt": 1789754774986,
+      "parentRevisionId": "revision.c0225ca9d39144e7aa50c1a49630e1c7",
+      "createdAt": 1789766222808,
       "source": "ai",
       "summary": "Update canonical qcm:page.v22.qcm",
       "status": "committed",
@@ -12103,13 +12103,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.b9b4e58619bc4bda8dc70b3697f6aec2",
+      "revisionId": "revision.d03b0ba2a0c34ac899ab180408a4b0eb",
       "resourceKey": "notebook-page:page.atlas.welcome",
       "resourceId": "page.atlas.welcome",
       "resourceType": "notebook-page",
       "number": 3,
-      "parentRevisionId": "revision.923d1eed831f4fae8d6d1a7b2351a8ee",
-      "createdAt": 1789754775298,
+      "parentRevisionId": "revision.bd4b29f0c3614a70940317aa63245a99",
+      "createdAt": 1789766223220,
       "source": "ai",
       "summary": "Restore old source as a new version",
       "status": "committed",
@@ -12199,18 +12199,18 @@
         }
       },
       "changeSetId": "example.6",
-      "restoredFromRevisionId": "revision.1a9bd9eb047441f2a889dfa6d83c266e"
+      "restoredFromRevisionId": "revision.870be8a87232485a81d8fd19dbd6d78d"
     },
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.004341f5bb704612b7421925b8253f85",
+      "revisionId": "revision.c313ad3d9e1a4d37894d3364dba9df4d",
       "resourceKey": "article:page.v22.article",
       "resourceId": "page.v22.article",
       "resourceType": "article",
       "number": 3,
-      "parentRevisionId": "revision.0298b66931544f80a28dbed0fc8bd03d",
-      "createdAt": 1789754775990,
+      "parentRevisionId": "revision.8766f0b2ca264ff28d55b923ca829719",
+      "createdAt": 1789766224378,
       "source": "ai",
       "summary": "Assign canonical Article taxonomy",
       "status": "committed",
@@ -12250,13 +12250,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.338e8d8da3074858a26d7dede67ad8af",
+      "revisionId": "revision.b0f893c1a548436383b2afc6452e4db0",
       "resourceKey": "notebook-tree:project.atlas.guide",
       "resourceId": "project.atlas.guide",
       "resourceType": "notebook-tree",
       "number": 2,
-      "parentRevisionId": "revision.d4a1310858a444e3823aee1fc46ab057",
-      "createdAt": 1789754776322,
+      "parentRevisionId": "revision.4a5a11183cc74a15b16f5087cab0682c",
+      "createdAt": 1789766225069,
       "source": "ai",
       "summary": "Create a Notebook structural folder",
       "status": "committed",
@@ -12325,13 +12325,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.ffdbe2ff0006482187d6e1d135b6d2b6",
+      "revisionId": "revision.436f9c5c6a0a44c48062546b22cef187",
       "resourceKey": "notebook-tree:project.atlas.guide",
       "resourceId": "project.atlas.guide",
       "resourceType": "notebook-tree",
       "number": 3,
-      "parentRevisionId": "revision.338e8d8da3074858a26d7dede67ad8af",
-      "createdAt": 1789754776680,
+      "parentRevisionId": "revision.b0f893c1a548436383b2afc6452e4db0",
+      "createdAt": 1789766225641,
       "source": "ai",
       "summary": "Rename a stable Notebook node",
       "status": "committed",
@@ -12400,13 +12400,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.e104b09118064a66b56f223c81b2082e",
+      "revisionId": "revision.edd4a323fcbd4a6a8e69cedc40c427ac",
       "resourceKey": "notebook-tree:project.atlas.guide",
       "resourceId": "project.atlas.guide",
       "resourceType": "notebook-tree",
       "number": 4,
-      "parentRevisionId": "revision.ffdbe2ff0006482187d6e1d135b6d2b6",
-      "createdAt": 1789754777024,
+      "parentRevisionId": "revision.436f9c5c6a0a44c48062546b22cef187",
+      "createdAt": 1789766226252,
       "source": "ai",
       "summary": "Reorder Notebook siblings",
       "status": "committed",
@@ -12475,13 +12475,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.158321434c73426e98672c049d773263",
+      "revisionId": "revision.816811649f24401ba7cb67b1b105dfcf",
       "resourceKey": "notebook-tree:project.atlas.guide",
       "resourceId": "project.atlas.guide",
       "resourceType": "notebook-tree",
       "number": 5,
-      "parentRevisionId": "revision.e104b09118064a66b56f223c81b2082e",
-      "createdAt": 1789754777365,
+      "parentRevisionId": "revision.edd4a323fcbd4a6a8e69cedc40c427ac",
+      "createdAt": 1789766226888,
       "source": "ai",
       "summary": "Reparent a stable Notebook node",
       "status": "committed",
@@ -12551,13 +12551,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.1b50732a73ea482884ba856eb17adcf9",
+      "revisionId": "revision.f0a985b8f6fa47efb56c15cd5a4c2b58",
       "resourceKey": "notebook-page:page.atlas.welcome",
       "resourceId": "page.atlas.welcome",
       "resourceType": "notebook-page",
       "number": 4,
-      "parentRevisionId": "revision.b9b4e58619bc4bda8dc70b3697f6aec2",
-      "createdAt": 1789754777693,
+      "parentRevisionId": "revision.d03b0ba2a0c34ac899ab180408a4b0eb",
+      "createdAt": 1789766227498,
       "source": "ai",
       "summary": "Add typed authored link",
       "status": "committed",
@@ -12661,13 +12661,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.4013d12c7f1e42e6b1a3c1278d03e5e0",
+      "revisionId": "revision.6186bb9e82854b5eba2ab5b8698d2eba",
       "resourceKey": "notebook-page:page.atlas.welcome",
       "resourceId": "page.atlas.welcome",
       "resourceType": "notebook-page",
       "number": 5,
-      "parentRevisionId": "revision.1b50732a73ea482884ba856eb17adcf9",
-      "createdAt": 1789754778020,
+      "parentRevisionId": "revision.f0a985b8f6fa47efb56c15cd5a4c2b58",
+      "createdAt": 1789766228191,
       "source": "ai",
       "summary": "Update typed authored link",
       "status": "committed",
@@ -12771,13 +12771,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.97e2264a399e49f7a71d5c7332ea504e",
+      "revisionId": "revision.d41aefc861a848a4a19bccde2458209a",
       "resourceKey": "notebook-page:page.atlas.welcome",
       "resourceId": "page.atlas.welcome",
       "resourceType": "notebook-page",
       "number": 6,
-      "parentRevisionId": "revision.4013d12c7f1e42e6b1a3c1278d03e5e0",
-      "createdAt": 1789754778373,
+      "parentRevisionId": "revision.6186bb9e82854b5eba2ab5b8698d2eba",
+      "createdAt": 1789766228773,
       "source": "ai",
       "summary": "Remove typed authored link",
       "status": "committed",
@@ -12872,13 +12872,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.044bd3eb158f49e4996f33496a70626c",
+      "revisionId": "revision.aa912472b1c648f6842431555a3ab6df",
       "resourceKey": "pdf:doc.atlas.pdf",
       "resourceId": "doc.atlas.pdf",
       "resourceType": "pdf",
       "number": 2,
-      "parentRevisionId": "revision.456727f4fa0f4985bd18f9c47acafa50",
-      "createdAt": 1789754780655,
+      "parentRevisionId": "revision.bf9fa2f4cc794b549633ae09b908c56d",
+      "createdAt": 1789766233067,
       "source": "ai",
       "summary": "PDF metadata edit with unchanged reviewed bytes",
       "status": "committed",
@@ -13145,13 +13145,13 @@
     {
       "kind": "revision",
       "schemaVersion": 1,
-      "revisionId": "revision.5baa1b2e0d2e4ee3ae86ee86b4345517",
+      "revisionId": "revision.62639883932b48c79f20f75394d28f70",
       "resourceKey": "pdf:doc.atlas.pdf",
       "resourceId": "doc.atlas.pdf",
       "resourceType": "pdf",
       "number": 3,
-      "parentRevisionId": "revision.044bd3eb158f49e4996f33496a70626c",
-      "createdAt": 1789754781015,
+      "parentRevisionId": "revision.aa912472b1c648f6842431555a3ab6df",
+      "createdAt": 1789766233684,
       "source": "ai",
       "summary": "PDF logical revision using already reviewed source",
       "status": "committed",
@@ -13422,12 +13422,12 @@
       "schemaVersion": 1,
       "id": "example.1",
       "status": "accepted",
-      "createdAt": 1789754773481,
+      "createdAt": 1789766220932,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.1",
-        "createdAt": 1789754773294,
+        "createdAt": 1789766220724,
         "source": "Synthetic test agent",
         "summary": "Create a canonical Notebook page",
         "operations": [
@@ -13460,12 +13460,12 @@
           }
         ]
       },
-      "decidedAt": 1789754773632,
+      "decidedAt": 1789766221117,
       "selectedOperationIds": [
         "create.page"
       ],
       "revisionIds": [
-        "revision.74bc6a149d3e40e4a3dfddc4b6c5b908"
+        "revision.816253a41b9445539f7eb0e561dd1933"
       ]
     },
     {
@@ -13473,12 +13473,12 @@
       "schemaVersion": 1,
       "id": "example.2",
       "status": "accepted",
-      "createdAt": 1789754773828,
+      "createdAt": 1789766221411,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.2",
-        "createdAt": 1789754773709,
+        "createdAt": 1789766221252,
         "source": "Synthetic test agent",
         "summary": "Update canonical notebook-page:page.atlas.welcome",
         "operations": [
@@ -13486,7 +13486,7 @@
             "id": "operation.1",
             "kind": "resource.update",
             "resourceKey": "notebook-page:page.atlas.welcome",
-            "baseRevisionId": "revision.1a9bd9eb047441f2a889dfa6d83c266e",
+            "baseRevisionId": "revision.870be8a87232485a81d8fd19dbd6d78d",
             "payload": {
               "resourceType": "notebook-page",
               "snapshot": {
@@ -13577,12 +13577,12 @@
           }
         ]
       },
-      "decidedAt": 1789754773945,
+      "decidedAt": 1789766221587,
       "selectedOperationIds": [
         "operation.1"
       ],
       "revisionIds": [
-        "revision.923d1eed831f4fae8d6d1a7b2351a8ee"
+        "revision.bd4b29f0c3614a70940317aa63245a99"
       ]
     },
     {
@@ -13590,12 +13590,12 @@
       "schemaVersion": 1,
       "id": "example.3",
       "status": "accepted",
-      "createdAt": 1789754774161,
+      "createdAt": 1789766221828,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.3",
-        "createdAt": 1789754774023,
+        "createdAt": 1789766221700,
         "source": "Synthetic test agent",
         "summary": "Update canonical article:page.v22.article",
         "operations": [
@@ -13603,7 +13603,7 @@
             "id": "operation.2",
             "kind": "resource.update",
             "resourceKey": "article:page.v22.article",
-            "baseRevisionId": "revision.82fdada3e073490d9d515b2b4cd47318",
+            "baseRevisionId": "revision.783b21706bbf40119ccae288dd1ea471",
             "payload": {
               "resourceType": "article",
               "snapshot": {
@@ -13640,12 +13640,12 @@
           }
         ]
       },
-      "decidedAt": 1789754774277,
+      "decidedAt": 1789766221957,
       "selectedOperationIds": [
         "operation.2"
       ],
       "revisionIds": [
-        "revision.0298b66931544f80a28dbed0fc8bd03d"
+        "revision.8766f0b2ca264ff28d55b923ca829719"
       ]
     },
     {
@@ -13653,12 +13653,12 @@
       "schemaVersion": 1,
       "id": "example.4",
       "status": "accepted",
-      "createdAt": 1789754774495,
+      "createdAt": 1789766222223,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.4",
-        "createdAt": 1789754774356,
+        "createdAt": 1789766222060,
         "source": "Synthetic test agent",
         "summary": "Update canonical cheatsheet:page.cheatsheet.azure-data-factory",
         "operations": [
@@ -13666,7 +13666,7 @@
             "id": "operation.3",
             "kind": "resource.update",
             "resourceKey": "cheatsheet:page.cheatsheet.azure-data-factory",
-            "baseRevisionId": "revision.2113f081f64b4d30b274640e27d23d25",
+            "baseRevisionId": "revision.8838c92aa631418187403cfe260522c3",
             "payload": {
               "resourceType": "cheatsheet",
               "snapshot": {
@@ -14743,12 +14743,12 @@
           }
         ]
       },
-      "decidedAt": 1789754774623,
+      "decidedAt": 1789766222355,
       "selectedOperationIds": [
         "operation.3"
       ],
       "revisionIds": [
-        "revision.ec60ba7d79ca4fd38ddeb798dd0f4fb4"
+        "revision.b10367cbf474492594bcd37d2d243748"
       ]
     },
     {
@@ -14756,12 +14756,12 @@
       "schemaVersion": 1,
       "id": "example.5",
       "status": "accepted",
-      "createdAt": 1789754774824,
+      "createdAt": 1789766222603,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.5",
-        "createdAt": 1789754774708,
+        "createdAt": 1789766222448,
         "source": "Synthetic test agent",
         "summary": "Update canonical qcm:page.v22.qcm",
         "operations": [
@@ -14769,7 +14769,7 @@
             "id": "operation.4",
             "kind": "resource.update",
             "resourceKey": "qcm:page.v22.qcm",
-            "baseRevisionId": "revision.08d80688173e4779b55fd4e8eb7f6453",
+            "baseRevisionId": "revision.c0225ca9d39144e7aa50c1a49630e1c7",
             "payload": {
               "resourceType": "qcm",
               "snapshot": {
@@ -14825,12 +14825,12 @@
           }
         ]
       },
-      "decidedAt": 1789754774952,
+      "decidedAt": 1789766222762,
       "selectedOperationIds": [
         "operation.4"
       ],
       "revisionIds": [
-        "revision.0f8a6fbbebf5417b874ebb033c993a4c"
+        "revision.a3b3453f49f94fe280238f538ba15ad4"
       ]
     },
     {
@@ -14838,12 +14838,12 @@
       "schemaVersion": 1,
       "id": "example.6",
       "status": "accepted",
-      "createdAt": 1789754775147,
+      "createdAt": 1789766223037,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.6",
-        "createdAt": 1789754775036,
+        "createdAt": 1789766222890,
         "source": "Synthetic test agent",
         "summary": "Restore old source as a new version",
         "operations": [
@@ -14851,19 +14851,19 @@
             "id": "example.operation.6.resource.restoreAsNewRevision",
             "kind": "resource.restoreAsNewRevision",
             "resourceKey": "notebook-page:page.atlas.welcome",
-            "baseRevisionId": "revision.923d1eed831f4fae8d6d1a7b2351a8ee",
+            "baseRevisionId": "revision.bd4b29f0c3614a70940317aa63245a99",
             "payload": {
-              "revisionId": "revision.1a9bd9eb047441f2a889dfa6d83c266e"
+              "revisionId": "revision.870be8a87232485a81d8fd19dbd6d78d"
             }
           }
         ]
       },
-      "decidedAt": 1789754775269,
+      "decidedAt": 1789766223183,
       "selectedOperationIds": [
         "example.operation.6.resource.restoreAsNewRevision"
       ],
       "revisionIds": [
-        "revision.b9b4e58619bc4bda8dc70b3697f6aec2"
+        "revision.d03b0ba2a0c34ac899ab180408a4b0eb"
       ]
     },
     {
@@ -14871,12 +14871,12 @@
       "schemaVersion": 1,
       "id": "example.7",
       "status": "accepted",
-      "createdAt": 1789754775480,
+      "createdAt": 1789766223447,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.7",
-        "createdAt": 1789754775358,
+        "createdAt": 1789766223294,
         "source": "Synthetic test agent",
         "summary": "Retain draft metadata without changing current source",
         "operations": [
@@ -14884,7 +14884,7 @@
             "id": "operation.5",
             "kind": "resource.draft",
             "resourceKey": "notebook-page:page.atlas.welcome",
-            "baseRevisionId": "revision.b9b4e58619bc4bda8dc70b3697f6aec2",
+            "baseRevisionId": "revision.d03b0ba2a0c34ac899ab180408a4b0eb",
             "payload": {
               "resourceType": "notebook-page",
               "snapshot": {
@@ -14975,7 +14975,7 @@
           }
         ]
       },
-      "decidedAt": 1789754775612,
+      "decidedAt": 1789766223683,
       "selectedOperationIds": [
         "operation.5"
       ],
@@ -14986,12 +14986,12 @@
       "schemaVersion": 1,
       "id": "example.8",
       "status": "accepted",
-      "createdAt": 1789754775829,
+      "createdAt": 1789766224076,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.8",
-        "createdAt": 1789754775702,
+        "createdAt": 1789766223850,
         "source": "Synthetic test agent",
         "summary": "Assign canonical Article taxonomy",
         "operations": [
@@ -14999,7 +14999,7 @@
             "id": "example.operation.8.taxonomy.assign",
             "kind": "taxonomy.assign",
             "resourceKey": "article:page.v22.article",
-            "baseRevisionId": "revision.0298b66931544f80a28dbed0fc8bd03d",
+            "baseRevisionId": "revision.8766f0b2ca264ff28d55b923ca829719",
             "payload": {
               "taxonomy": {
                 "subject": "cloud"
@@ -15008,12 +15008,12 @@
           }
         ]
       },
-      "decidedAt": 1789754775955,
+      "decidedAt": 1789766224309,
       "selectedOperationIds": [
         "example.operation.8.taxonomy.assign"
       ],
       "revisionIds": [
-        "revision.004341f5bb704612b7421925b8253f85"
+        "revision.c313ad3d9e1a4d37894d3364dba9df4d"
       ]
     },
     {
@@ -15021,12 +15021,12 @@
       "schemaVersion": 1,
       "id": "example.9",
       "status": "accepted",
-      "createdAt": 1789754776161,
+      "createdAt": 1789766224766,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.9",
-        "createdAt": 1789754776042,
+        "createdAt": 1789766224505,
         "source": "Synthetic test agent",
         "summary": "Create a Notebook structural folder",
         "operations": [
@@ -15034,7 +15034,7 @@
             "id": "example.operation.9.notebook.tree.createNode",
             "kind": "notebook.tree.createNode",
             "resourceKey": "notebook-tree:project.atlas.guide",
-            "baseRevisionId": "revision.d4a1310858a444e3823aee1fc46ab057",
+            "baseRevisionId": "revision.4a5a11183cc74a15b16f5087cab0682c",
             "payload": {
               "operation": {
                 "kind": "add",
@@ -15050,12 +15050,12 @@
           }
         ]
       },
-      "decidedAt": 1789754776287,
+      "decidedAt": 1789766225007,
       "selectedOperationIds": [
         "example.operation.9.notebook.tree.createNode"
       ],
       "revisionIds": [
-        "revision.338e8d8da3074858a26d7dede67ad8af"
+        "revision.b0f893c1a548436383b2afc6452e4db0"
       ]
     },
     {
@@ -15063,12 +15063,12 @@
       "schemaVersion": 1,
       "id": "example.10",
       "status": "accepted",
-      "createdAt": 1789754776519,
+      "createdAt": 1789766225366,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.10",
-        "createdAt": 1789754776372,
+        "createdAt": 1789766225161,
         "source": "Synthetic test agent",
         "summary": "Rename a stable Notebook node",
         "operations": [
@@ -15076,7 +15076,7 @@
             "id": "example.operation.10.notebook.tree.renameNode",
             "kind": "notebook.tree.renameNode",
             "resourceKey": "notebook-tree:project.atlas.guide",
-            "baseRevisionId": "revision.338e8d8da3074858a26d7dede67ad8af",
+            "baseRevisionId": "revision.b0f893c1a548436383b2afc6452e4db0",
             "payload": {
               "operation": {
                 "kind": "rename",
@@ -15087,12 +15087,12 @@
           }
         ]
       },
-      "decidedAt": 1789754776645,
+      "decidedAt": 1789766225578,
       "selectedOperationIds": [
         "example.operation.10.notebook.tree.renameNode"
       ],
       "revisionIds": [
-        "revision.ffdbe2ff0006482187d6e1d135b6d2b6"
+        "revision.436f9c5c6a0a44c48062546b22cef187"
       ]
     },
     {
@@ -15100,12 +15100,12 @@
       "schemaVersion": 1,
       "id": "example.11",
       "status": "accepted",
-      "createdAt": 1789754776864,
+      "createdAt": 1789766225934,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.11",
-        "createdAt": 1789754776733,
+        "createdAt": 1789766225735,
         "source": "Synthetic test agent",
         "summary": "Reorder Notebook siblings",
         "operations": [
@@ -15113,7 +15113,7 @@
             "id": "example.operation.11.notebook.tree.reorderNode",
             "kind": "notebook.tree.reorderNode",
             "resourceKey": "notebook-tree:project.atlas.guide",
-            "baseRevisionId": "revision.ffdbe2ff0006482187d6e1d135b6d2b6",
+            "baseRevisionId": "revision.436f9c5c6a0a44c48062546b22cef187",
             "payload": {
               "operation": {
                 "kind": "order",
@@ -15124,12 +15124,12 @@
           }
         ]
       },
-      "decidedAt": 1789754776986,
+      "decidedAt": 1789766226171,
       "selectedOperationIds": [
         "example.operation.11.notebook.tree.reorderNode"
       ],
       "revisionIds": [
-        "revision.e104b09118064a66b56f223c81b2082e"
+        "revision.edd4a323fcbd4a6a8e69cedc40c427ac"
       ]
     },
     {
@@ -15137,12 +15137,12 @@
       "schemaVersion": 1,
       "id": "example.12",
       "status": "accepted",
-      "createdAt": 1789754777205,
+      "createdAt": 1789766226609,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.12",
-        "createdAt": 1789754777079,
+        "createdAt": 1789766226361,
         "source": "Synthetic test agent",
         "summary": "Reparent a stable Notebook node",
         "operations": [
@@ -15150,7 +15150,7 @@
             "id": "example.operation.12.notebook.tree.moveNode",
             "kind": "notebook.tree.moveNode",
             "resourceKey": "notebook-tree:project.atlas.guide",
-            "baseRevisionId": "revision.e104b09118064a66b56f223c81b2082e",
+            "baseRevisionId": "revision.edd4a323fcbd4a6a8e69cedc40c427ac",
             "payload": {
               "operation": {
                 "kind": "move",
@@ -15162,12 +15162,12 @@
           }
         ]
       },
-      "decidedAt": 1789754777331,
+      "decidedAt": 1789766226826,
       "selectedOperationIds": [
         "example.operation.12.notebook.tree.moveNode"
       ],
       "revisionIds": [
-        "revision.158321434c73426e98672c049d773263"
+        "revision.816811649f24401ba7cb67b1b105dfcf"
       ]
     },
     {
@@ -15175,12 +15175,12 @@
       "schemaVersion": 1,
       "id": "example.13",
       "status": "accepted",
-      "createdAt": 1789754777538,
+      "createdAt": 1789766227200,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.13",
-        "createdAt": 1789754777417,
+        "createdAt": 1789766226991,
         "source": "Synthetic test agent",
         "summary": "Add typed authored link",
         "operations": [
@@ -15188,7 +15188,7 @@
             "id": "example.operation.13.resource.link.add",
             "kind": "resource.link.add",
             "resourceKey": "notebook-page:page.atlas.welcome",
-            "baseRevisionId": "revision.b9b4e58619bc4bda8dc70b3697f6aec2",
+            "baseRevisionId": "revision.d03b0ba2a0c34ac899ab180408a4b0eb",
             "payload": {
               "target": {
                 "kind": "article",
@@ -15200,12 +15200,12 @@
           }
         ]
       },
-      "decidedAt": 1789754777659,
+      "decidedAt": 1789766227440,
       "selectedOperationIds": [
         "example.operation.13.resource.link.add"
       ],
       "revisionIds": [
-        "revision.1b50732a73ea482884ba856eb17adcf9"
+        "revision.f0a985b8f6fa47efb56c15cd5a4c2b58"
       ]
     },
     {
@@ -15213,12 +15213,12 @@
       "schemaVersion": 1,
       "id": "example.14",
       "status": "accepted",
-      "createdAt": 1789754777864,
+      "createdAt": 1789766227849,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.14",
-        "createdAt": 1789754777748,
+        "createdAt": 1789766227597,
         "source": "Synthetic test agent",
         "summary": "Update typed authored link",
         "operations": [
@@ -15226,7 +15226,7 @@
             "id": "example.operation.14.resource.link.update",
             "kind": "resource.link.update",
             "resourceKey": "notebook-page:page.atlas.welcome",
-            "baseRevisionId": "revision.1b50732a73ea482884ba856eb17adcf9",
+            "baseRevisionId": "revision.f0a985b8f6fa47efb56c15cd5a4c2b58",
             "payload": {
               "index": 0,
               "target": {
@@ -15239,12 +15239,12 @@
           }
         ]
       },
-      "decidedAt": 1789754777987,
+      "decidedAt": 1789766228134,
       "selectedOperationIds": [
         "example.operation.14.resource.link.update"
       ],
       "revisionIds": [
-        "revision.4013d12c7f1e42e6b1a3c1278d03e5e0"
+        "revision.6186bb9e82854b5eba2ab5b8698d2eba"
       ]
     },
     {
@@ -15252,12 +15252,12 @@
       "schemaVersion": 1,
       "id": "example.15",
       "status": "accepted",
-      "createdAt": 1789754778214,
+      "createdAt": 1789766228514,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.15",
-        "createdAt": 1789754778079,
+        "createdAt": 1789766228308,
         "source": "Synthetic test agent",
         "summary": "Remove typed authored link",
         "operations": [
@@ -15265,19 +15265,19 @@
             "id": "example.operation.15.resource.link.remove",
             "kind": "resource.link.remove",
             "resourceKey": "notebook-page:page.atlas.welcome",
-            "baseRevisionId": "revision.4013d12c7f1e42e6b1a3c1278d03e5e0",
+            "baseRevisionId": "revision.6186bb9e82854b5eba2ab5b8698d2eba",
             "payload": {
               "index": 0
             }
           }
         ]
       },
-      "decidedAt": 1789754778344,
+      "decidedAt": 1789766228723,
       "selectedOperationIds": [
         "example.operation.15.resource.link.remove"
       ],
       "revisionIds": [
-        "revision.97e2264a399e49f7a71d5c7332ea504e"
+        "revision.d41aefc861a848a4a19bccde2458209a"
       ]
     },
     {
@@ -15285,12 +15285,12 @@
       "schemaVersion": 1,
       "id": "example.16",
       "status": "accepted",
-      "createdAt": 1789754778542,
+      "createdAt": 1789766229158,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.16",
-        "createdAt": 1789754778431,
+        "createdAt": 1789766228960,
         "source": "Synthetic test agent",
         "summary": "Add semantic edge through exact-target service",
         "operations": [
@@ -15315,7 +15315,7 @@
           }
         ]
       },
-      "decidedAt": 1789754778670,
+      "decidedAt": 1789766229407,
       "selectedOperationIds": [
         "operation.6"
       ],
@@ -15326,26 +15326,26 @@
       "schemaVersion": 1,
       "id": "example.17",
       "status": "accepted",
-      "createdAt": 1789754778860,
+      "createdAt": 1789766229822,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.17",
-        "createdAt": 1789754778752,
+        "createdAt": 1789766229591,
         "source": "Synthetic test agent",
         "summary": "Remove semantic edge",
         "operations": [
           {
             "id": "operation.7",
             "kind": "reference.remove",
-            "baseFingerprint": "64e0e67c38fb12b6",
+            "baseFingerprint": "a33f98b5bf4eef83",
             "payload": {
-              "id": "edge.d39c395c447f4a408a3423688281992b"
+              "id": "edge.4645b7bab9674514bd1b6ba65c348a09"
             }
           }
         ]
       },
-      "decidedAt": 1789754778980,
+      "decidedAt": 1789766230069,
       "selectedOperationIds": [
         "operation.7"
       ],
@@ -15356,19 +15356,19 @@
       "schemaVersion": 1,
       "id": "example.18",
       "status": "accepted",
-      "createdAt": 1789754779193,
+      "createdAt": 1789766230417,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.18",
-        "createdAt": 1789754779074,
+        "createdAt": 1789766230221,
         "source": "Synthetic test agent",
         "summary": "Stage concept assignment for the existing semantic review",
         "operations": [
           {
             "id": "operation.8",
             "kind": "concept.assignment.propose",
-            "baseFingerprint": "00a90e242da1ffc6",
+            "baseFingerprint": "3e327bd330181af4",
             "payload": {
               "batch": {
                 "schemaVersion": 1,
@@ -15393,7 +15393,7 @@
           }
         ]
       },
-      "decidedAt": 1789754779322,
+      "decidedAt": 1789766230617,
       "selectedOperationIds": [
         "operation.8"
       ],
@@ -15404,12 +15404,12 @@
       "schemaVersion": 1,
       "id": "example.19",
       "status": "accepted",
-      "createdAt": 1789754779515,
+      "createdAt": 1789766231006,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.19",
-        "createdAt": 1789754779404,
+        "createdAt": 1789766230775,
         "source": "Synthetic test agent",
         "summary": "Reviewed personal writes, not content history",
         "operations": [
@@ -15450,7 +15450,7 @@
           }
         ]
       },
-      "decidedAt": 1789754779642,
+      "decidedAt": 1789766231256,
       "selectedOperationIds": [
         "operation.9",
         "operation.10",
@@ -15463,44 +15463,44 @@
       "schemaVersion": 1,
       "id": "example.20",
       "status": "accepted",
-      "createdAt": 1789754779832,
+      "createdAt": 1789766231617,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.20",
-        "createdAt": 1789754779722,
+        "createdAt": 1789766231424,
         "source": "Synthetic test agent",
         "summary": "Reviewed personal update/removal",
         "operations": [
           {
             "id": "operation.12",
             "kind": "bookmark.remove",
-            "baseFingerprint": "d895f6d2f77eb0f4",
+            "baseFingerprint": "c5f4445ce0d2dd4a",
             "payload": {
-              "id": "bookmark.84b1f3853a424e6ebd3b6a9e5f17121a"
+              "id": "bookmark.8b6f85a5287646a3b24c481c69ce1425"
             }
           },
           {
             "id": "operation.13",
             "kind": "readLater.remove",
-            "baseFingerprint": "d895f6d2f77eb0f4",
+            "baseFingerprint": "c5f4445ce0d2dd4a",
             "payload": {
-              "id": "later.76a8f46232734fa5a70dd0b250a026f0"
+              "id": "later.4be091543d3a4d5999abe21b82d4a7dc"
             }
           },
           {
             "id": "operation.14",
             "kind": "capture.update",
-            "baseFingerprint": "d895f6d2f77eb0f4",
+            "baseFingerprint": "c5f4445ce0d2dd4a",
             "payload": {
-              "id": "capture.e582a3abd7d74a07ad0aa4b38862b1b2",
+              "id": "capture.b09895918797402d8335e5bd142b7483",
               "text": "Updated example capture",
               "status": "done"
             }
           }
         ]
       },
-      "decidedAt": 1789754779952,
+      "decidedAt": 1789766231833,
       "selectedOperationIds": [
         "operation.12",
         "operation.13",
@@ -15513,12 +15513,12 @@
       "schemaVersion": 1,
       "id": "example.21",
       "status": "accepted",
-      "createdAt": 1789754780154,
+      "createdAt": 1789766232182,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.21",
-        "createdAt": 1789754780040,
+        "createdAt": 1789766231991,
         "source": "Synthetic test agent",
         "summary": "Reviewed layout/navigation, not content history",
         "operations": [
@@ -15547,7 +15547,7 @@
           }
         ]
       },
-      "decidedAt": 1789754780280,
+      "decidedAt": 1789766232398,
       "selectedOperationIds": [
         "operation.15",
         "operation.16"
@@ -15559,12 +15559,12 @@
       "schemaVersion": 1,
       "id": "example.22",
       "status": "accepted",
-      "createdAt": 1789754780490,
+      "createdAt": 1789766232774,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.22",
-        "createdAt": 1789754780369,
+        "createdAt": 1789766232550,
         "source": "Synthetic test agent",
         "summary": "PDF metadata edit with unchanged reviewed bytes",
         "operations": [
@@ -15572,7 +15572,7 @@
             "id": "operation.17",
             "kind": "pdf.metadata.update",
             "resourceKey": "pdf:doc.atlas.pdf",
-            "baseRevisionId": "revision.456727f4fa0f4985bd18f9c47acafa50",
+            "baseRevisionId": "revision.bf9fa2f4cc794b549633ae09b908c56d",
             "payload": {
               "resourceType": "pdf",
               "snapshot": {
@@ -15836,12 +15836,12 @@
           }
         ]
       },
-      "decidedAt": 1789754780621,
+      "decidedAt": 1789766233017,
       "selectedOperationIds": [
         "operation.17"
       ],
       "revisionIds": [
-        "revision.044bd3eb158f49e4996f33496a70626c"
+        "revision.aa912472b1c648f6842431555a3ab6df"
       ]
     },
     {
@@ -15849,12 +15849,12 @@
       "schemaVersion": 1,
       "id": "example.23",
       "status": "accepted",
-      "createdAt": 1789754780853,
+      "createdAt": 1789766233388,
       "plan": {
         "schemaVersion": 1,
         "kind": "atlas-agent-changeset",
         "id": "example.23",
-        "createdAt": 1789754780732,
+        "createdAt": 1789766233167,
         "source": "Synthetic test agent",
         "summary": "PDF logical revision using already reviewed source",
         "operations": [
@@ -15862,7 +15862,7 @@
             "id": "operation.18",
             "kind": "pdf.revision.propose",
             "resourceKey": "pdf:doc.atlas.pdf",
-            "baseRevisionId": "revision.044bd3eb158f49e4996f33496a70626c",
+            "baseRevisionId": "revision.aa912472b1c648f6842431555a3ab6df",
             "payload": {
               "resourceType": "pdf",
               "snapshot": {
@@ -16126,12 +16126,12 @@
           }
         ]
       },
-      "decidedAt": 1789754780986,
+      "decidedAt": 1789766233619,
       "selectedOperationIds": [
         "operation.18"
       ],
       "revisionIds": [
-        "revision.5baa1b2e0d2e4ee3ae86ee86b4345517"
+        "revision.62639883932b48c79f20f75394d28f70"
       ]
     }
   ]
