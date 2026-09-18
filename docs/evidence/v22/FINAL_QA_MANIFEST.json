@@ -89,7 +89,7 @@
     "deployed": false,
     "date": "2026-09-19",
     "workingTreeBasedOn": "215b60ff792a59e736b2b059a4e3fc60f1092d54",
-    "commitCreated": false,
+    "commitCreated": true,
     "expandedBrowser": {
       "passed": 15,
       "total": 15,
@@ -100,6 +100,10 @@
       "status": "PASS",
       "navigationCount": 80,
       "errors": []
-    }
+    },
+    "finalizationImplementationCommit": "64ba14c4383ced43f7af5d16b3a0b7ed9d8531df",
+    "statusNormalizationCommit": "cd056d646ef283d0269b0f46eb2b045cf330ee66",
+    "branch": "newversion2.2vfmanual",
+    "note": "The implementation finalization commit contains the tested code/config changes. Subsequent commits only normalize release-status/provenance documents; main remains unmerged and production undeployed."
   }
 }
