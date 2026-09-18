@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-agent-changeset",
+  "id": "example.20",
+  "createdAt": 1789754779722,
+  "source": "Synthetic test agent",
+  "summary": "Reviewed personal update/removal",
+  "operations": [
+    {
+      "id": "operation.12",
+      "kind": "bookmark.remove",
+      "baseFingerprint": "d895f6d2f77eb0f4",
+      "payload": {
+        "id": "bookmark.84b1f3853a424e6ebd3b6a9e5f17121a"
+      }
+    },
+    {
+      "id": "operation.13",
+      "kind": "readLater.remove",
+      "baseFingerprint": "d895f6d2f77eb0f4",
+      "payload": {
+        "id": "later.76a8f46232734fa5a70dd0b250a026f0"
+      }
+    },
+    {
+      "id": "operation.14",
+      "kind": "capture.update",
+      "baseFingerprint": "d895f6d2f77eb0f4",
+      "payload": {
+        "id": "capture.e582a3abd7d74a07ad0aa4b38862b1b2",
+        "text": "Updated example capture",
+        "status": "done"
+      }
+    }
+  ]
+}

@@ -9,7 +9,7 @@ export async function captureWorkspaceSnapshot():Promise<Workspace>{
  // A failed durable write must not prevent an emergency copy of unsaved
  // in-memory work. Diagnostics compare this snapshot to persisted data
  // separately; the Settings UI explicitly discloses a storage failure.
- return structuredClone(store.state);
+ return store.backupSnapshot();
 }
 /** Read persisted data without exposing the mutation store in the hosted bundle. */
 export async function readPersistedWorkspace():Promise<Workspace>{return loadWorkspace();}

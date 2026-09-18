@@ -19,7 +19,7 @@ import {normalize} from '../core/workspace.js';
 
 type MenuState={project:Project;node?:TreeNode;x:number;y:number;returnFocus:HTMLElement};
 /** All tree actions also have an ordinary, keyboard-focusable Actions button. */
-export function ProjectTree({onManageResource,notify,references,onReferenceLens,catalogue:source,workspace:ws,onTypeAdd,onResourceOpen,onReferenceEdit,onManageLibrary,activePage,panePages=[],activePaneIndex=0,navigation,onLibraryMode,onReadingActions,onReadLater,onPdfToggle,onPdfNavigate,onPdfTerm,onPdfManage,onWorkspace,onCategory,onSidebar,onPaneMarker,onGroupToggle,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
+export function ProjectTree({onHistory,onComparePrevious,onOpenPrevious,onManageResource,notify,references,onReferenceLens,catalogue:source,workspace:ws,onTypeAdd,onResourceOpen,onReferenceEdit,onManageLibrary,activePage,panePages=[],activePaneIndex=0,navigation,onLibraryMode,onReadingActions,onReadLater,onPdfToggle,onPdfNavigate,onPdfTerm,onPdfManage,onWorkspace,onCategory,onSidebar,onPaneMarker,onGroupToggle,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
  const [filterOpen,setFilterOpen]=useState(false),[filter,setFilter]=useState(''),[menu,setMenu]=useState<MenuState|null>(null);
  const [dropError,setDropError]=useState('');
  function allowDrop(e:any,id:string){if(mode==='notes'&&e.dataTransfer.types.includes(RESOURCE_DRAG_TYPE)&&sharedFolders(source,ws.overlays).some(f=>f.id===id)){e.preventDefault();e.dataTransfer.dropEffect='copy';}}

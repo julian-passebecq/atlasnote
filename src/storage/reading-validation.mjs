@@ -22,7 +22,7 @@ function anchor(a){
 export function validateReadingTarget(t){
  obj(t);
  const allowed={article:['kind','articleId','pageId','anchor'],qcm:['kind','setId','pageId','questionId'],'dashboard-item':['kind','itemId'],'cheatsheet-page':['kind','pageId','documentId','sheetPage','anchor'],url:['kind','url'],page:['kind','pageId','anchor'],collection:['kind','collectionId'],'pdf-page':['kind','pageId','documentId','revision','pdfPage','anchor'],'pdf-category':['kind','pageId','documentId','revision','pdfPage','pdfCategoryId']};
- if(!Object.hasOwn(allowed,t.kind))fail('target kind');keys(t,allowed[t.kind]);
+ if(!Object.hasOwn(allowed,t.kind))fail('target kind');keys(t,[...allowed[t.kind],'historyRevisionId']);if(t.historyRevisionId!==undefined){id(t.historyRevisionId);if(['url','dashboard-item'].includes(t.kind))fail('This target has no content history');}
  if(t.kind==='url'){normaliseReadingUrl(t.url);return;}
  if(t.kind==='collection'){id(t.collectionId);return;}
  if(t.kind==='dashboard-item'){id(t.itemId);return;}

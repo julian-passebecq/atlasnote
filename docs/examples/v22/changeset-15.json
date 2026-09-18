@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-agent-changeset",
+  "id": "example.15",
+  "createdAt": 1789754778079,
+  "source": "Synthetic test agent",
+  "summary": "Remove typed authored link",
+  "operations": [
+    {
+      "id": "example.operation.15.resource.link.remove",
+      "kind": "resource.link.remove",
+      "resourceKey": "notebook-page:page.atlas.welcome",
+      "baseRevisionId": "revision.4013d12c7f1e42e6b1a3c1278d03e5e0",
+      "payload": {
+        "index": 0
+      }
+    }
+  ]
+}

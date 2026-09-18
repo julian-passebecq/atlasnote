@@ -1,3 +1,4 @@
+import {assertHistoryTarget,historicalWorkspace} from '../history/adapters.js';
 import {readingTargetId} from './reading-types.js';
 import {libraryModeForPage} from '../content-hub/content.js';
 import {sheetPosition} from '../cheatsheets/content.mjs';
@@ -8,8 +9,8 @@ import {blankPersonal,current,newView,navigate,locations,isArchived,findNode} fr
 import {validateReadingTarget} from '../storage/reading-validation.mjs';
 import {studyTreeKey} from '../companion/tree.js';
 /** Validate the target and the capacity BEFORE any session or active-slot change. */
-export function openReadingTarget(p:Personal,c:Catalogue,o:Overlays,target:ReadingTarget,destination:ReadingDestination):void{
- validateReadingTarget(target);if(target.kind==='url')throw Error('External addresses open only through an explicit link.');
+export function openReadingTarget(p:Personal,c:Catalogue,o:Overlays,target:ReadingTarget,destination:ReadingDestination,workspace?:import('./model.js').Workspace):void{
+ validateReadingTarget(target);if(target.historyRevisionId){if(!workspace)throw Error('Historical navigation requires the workspace history.');c=assertHistoryTarget(c,workspace,target);o={...o,archived:[]};}if(target.kind==='url')throw Error('External addresses open only through an explicit link.');
  if(target.kind==='dashboard-item'){
   const item=p.dashboardItems?.find(x=>x.id===target.itemId);if(!item)throw Error('This capture is unavailable. The saved link is retained.');
   if(destination==='pane'||destination==='tab')throw Error('Capture items open in Dashboard. Choose Open here or a workspace.');
@@ -43,8 +44,8 @@ export function openReadingTarget(p:Personal,c:Catalogue,o:Overlays,target:Readi
  if(createPane){dest={id:live.panes[0].id==='left'?'right':'left',views:[],active:''};live.panes.push(dest);}
  const anchor=target.kind==='cheatsheet-page'?{...target.anchor,sheetPage:sheetPosition(sheet,{sheetPage:target.sheetPage,anchor:target.anchor}).page}:target.kind==='pdf-page'?{...target.anchor,pdfPage:target.pdfPage,...(target.revision?{pdfRevision:target.revision}:{})}:target.kind==='pdf-category'?{pdfPage:target.pdfPage,...(target.revision?{pdfRevision:target.revision}:{})}:target.kind==='page'||target.kind==='article'?target.anchor:target.kind==='qcm'&&target.questionId?{questionId:target.questionId}:undefined;
  const v=dest.views.find(v=>v.id===dest.active),reuse=!newTab||!!v&&!current(v)&&!v.referenceExplorer;
- if(v&&reuse){dest.views[dest.views.indexOf(v)]=navigate(v,id,anchor,!!doc);}else {const fresh=newView(id,anchor,!!doc);dest.views.push(fresh);dest.active=fresh.id;}
- const loc=current(dest.views.find(v=>v.id===dest.active))!;if(target.kind==='collection')loc.collectionId=id;
+ if(v&&reuse){dest.views[dest.views.indexOf(v)]=navigate(v,id,target.historyRevisionId!==current(v)?.historyRevisionId?(anchor??{}):anchor,!!doc);}else {const fresh=newView(id,anchor,!!doc);dest.views.push(fresh);dest.active=fresh.id;}
+ const loc=current(dest.views.find(v=>v.id===dest.active))!;if(target.historyRevisionId)loc.historyRevisionId=target.historyRevisionId;else delete loc.historyRevisionId;if(target.kind==='collection')loc.collectionId=id;
  live.screen='reader';delete live.surface;revealPane(live,dest.id);if(target.kind!=='collection')live.libraryMode=libraryModeForPage(c,id);
  for(const branch of locations(c).get(id)?.ancestors??[])if(!live.expanded.includes(branch))live.expanded.push(branch);
  if(target.kind==='pdf-category'&&doc){const set=new Set(live.pdfTreeExpanded??[]);set.add(studyTreeKey(doc,'document'));set.add(studyTreeKey(doc,'category',target.pdfCategoryId));live.pdfTreeExpanded=[...set];}

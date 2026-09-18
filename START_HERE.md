@@ -1,31 +1,40 @@
-> Current V2.1 stabilization + polish pass: [delivery report](docs/final-polish/DELIVERY.md), [file inventory](docs/final-polish/FILES.md), and [test results](docs/final-polish/TESTS.md). The material below is retained historical evidence from the earlier V2 pass.
+# AtlasNote V2.2.0 candidate - start here
 
-# AtlasNote V2 stabilization - start here
+**Verdict: NOT READY FOR COORDINATOR INTEGRATION.** Implementation and compatibility verification are delivered; integrated dependency installation/build and normal-origin browser verification are blocked in this environment. Read the actual evidence, not older release claims.
 
-This is the completed bounded improvement implementation, not another handoff-only package. Package version remains **2.0.0**. Production release is **not cleared**: normal-origin browser/storage tests, clean installation and the full security/license review remain open.
+This continues the uploaded V2.1.0 production source. The supplied archive had no Git metadata: package 2.1.0 and the required final-polish/release-blocker tests were verified. `b50c27a987fa65eee1c51d36225908621e322da7` is the authoritative handoff's expected upstream commit, not independently verified ancestry. No final Git commit, remote write, merge or deployment was made.
 
-Required audited starting SHA: `fc41a5a5ac843f228175194b6a679867843530d8`.
-Inspected remote head on resumption: `f366f015bb6ace49d3c367b3d76ff278779a53ba` on `v2manualupload` (PR #13). Its two commits only add four diagnostic files. Those files are preserved exactly; the implementation continues the required audited application source.
+Read in order:
 
-## Read in order
+1. `V22_DELIVERY_REPORT.md` - implemented scope, verdict and limitations.
+2. `docs/ARCHITECTURE_INDEX.md` and `V22_ARCHITECTURE.md` - current boundaries.
+3. `V22_MIGRATION_AND_BACKUP.md` - IndexedDB 2 -> 3, backup 2/3/4, recovery.
+4. `V22_AI_CHANGESET_SPEC.md` - provider-neutral service, exact bases, human review.
+5. `V22_TEST_EVIDENCE.md` - retained old/new gate results and browser blocker.
+6. `V22_CHANGED_FILES.json` - hashes and changed-file inventory.
 
-1. `FINAL_TEST_STATUS.md` - actual results and verification limits.
-2. `REQUIREMENTS_COVERAGE.md` - every section of the improvement handoff.
-3. `docs/stabilization/PDF_RESTORE_DIAGNOSIS.md` - the original PDF restore blocker and the meaningful test correction.
-4. `docs/stabilization/USER_GUIDE.md` - changed controls and optional demo.
-5. `V2_REFERENCE_MODEL.md` - unchanged architecture plus source-edit safety boundaries.
-6. `WORKSPACE_READY_FOR_GITHUB.md` - source provenance and safe manual integration.
-
-The external delivery manifest identifies the exact final local commit, tree, ZIP hash and source inventory. Local Git history was reconstructed from source snapshots; it is not an upstream clone and its local commits are not on GitHub.
-
-## Run locally
+## Normal development environment
 
 ```sh
 npm ci
-npm run build
-npm run preview
+python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
+python -m playwright install chromium
+npm run test:release
 ```
 
-Node >=22.12 is required by the existing project. Install the committed Python test requirements and Playwright Chromium for browser tests. On a normal development environment run `npm run test:release`; it retains every gate and adds the two focused stabilization suites. It is not a passing skip mechanism.
+The full runner attempts all old and new gates. It must pass in a normal environment before integration. Node >=22.12 is required; dependency versions/lock integrities remain the V2.1 pins. `npm run build` creates the integrated production distribution in `dist/`; `npm run preview` serves it. No production distribution is supplied in this delivery because it could not be built honestly here.
 
-Do not merge, deploy, restart the app, remove failing gates, or put private content/backups into GitHub. No remote write was made during this retry.
+## Supplied compatibility build
+
+```sh
+npm run bootstrap:offline
+npm run build:offline
+npm test
+npm run check:release:offline
+```
+
+This uses the existing compatibility renderer and is not React-PDF/Vite production proof. The separately named `compatibility_build_NOT_PRODUCTION.zip` is for inspection only. Do not put it on production as a substitute for the integrated build.
+
+Source control is not a backup of a reader's IndexedDB profile. Before trying this candidate on a real profile, download and retain a V2.1 full workspace backup, then test the candidate in a separate browser profile/origin.
+
+The earlier entry points are preserved in `docs/history/v21-entrypoints/`. Older 1.x/V2 reports remain historical evidence and do not override these V2.2 instructions.

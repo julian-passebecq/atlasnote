@@ -1,3 +1,4 @@
+import {historicalWorkspace,historicalCatalogue,resourceKeyForTarget} from '../history/adapters.js';
 import {resolveStudy} from '../companion/tree.js';
 /** Pure resolver for the existing ResourceTarget family. No DOM IDs or ad-hoc URL scheme. */
 import type {Catalogue,Workspace,Block} from '../core/model.js';
@@ -16,7 +17,7 @@ export function fingerprint(value:unknown):string {
  for(const byte of input)hash=BigInt.asUintN(64,(hash^BigInt(byte))*0x100000001b3n);
  return hash.toString(16).padStart(16,'0');
 }
-export function canonicalTarget(c:Catalogue,t:ResourceTarget):ResourceTarget {
+function plainCanonicalTarget(c:Catalogue,t:ResourceTarget):ResourceTarget {
  const v=structuredClone(t);
  if((v.kind==='page'||v.kind==='article')&&v.anchor?.blockId===(v.kind==='page'?v.pageId:v.pageId??v.articleId))delete v.anchor; // Reader's page-title anchor denotes the whole resource.
  if(v.kind==='pdf-category')return {kind:'pdf-page',pageId:v.pageId,documentId:v.documentId,pdfPage:v.pdfPage,...(v.revision?{revision:v.revision}:{})};
@@ -29,7 +30,7 @@ export function canonicalTarget(c:Catalogue,t:ResourceTarget):ResourceTarget {
  }
  return v;
 }
-export function targetKey(c:Catalogue,target:ResourceTarget):string {
+function plainTargetKey(c:Catalogue,target:ResourceTarget):string {
  const t=canonicalTarget(c,target);
  switch(t.kind){
  case 'page':return stable(['page',t.pageId,t.anchor?.blockId??'']);
@@ -42,7 +43,7 @@ export function targetKey(c:Catalogue,target:ResourceTarget):string {
  case 'url':return stable(['url',new URL(t.url).href]);
  }
 }
-export function documentTarget(c:Catalogue,input:ResourceTarget):ResourceTarget {
+function plainDocumentTarget(c:Catalogue,input:ResourceTarget):ResourceTarget {
  const t=canonicalTarget(c,input);
  if(t.kind==='pdf-page'||t.kind==='pdf-category'||t.kind==='cheatsheet-page'||t.kind==='page')return {kind:'page',pageId:t.pageId};
  if(t.kind==='article')return {kind:'article',articleId:t.articleId,...(t.pageId?{pageId:t.pageId}:{})};
@@ -55,7 +56,7 @@ export function targetScopeKeys(c:Catalogue,input:ResourceTarget):string[]{
  if(t.kind==='cheatsheet-page'&&t.anchor?.blockId){const {blockId,...a}=t.anchor;keys.push(targetKey(c,{...t,anchor:a}));}
  keys.push(targetKey(c,documentTarget(c,t)));return [...new Set(keys)];
 }
-export function resolveTarget(c:Catalogue,ws:Workspace,input:ResourceTarget):ResolvedTarget {
+function resolveUnpinnedTarget(c:Catalogue,ws:Workspace,input:ResourceTarget):ResolvedTarget {
  validateReadingTarget(input);const t=canonicalTarget(c,input),key=targetKey(c,t);
  const base:ResolvedTarget={target:input,key,title:'Unavailable resource',detail:'',group:'Notebook',available:false,exact:false,revision:fingerprint(t),excerpt:''};
  if(t.kind==='url')return {...base,title:new URL(t.url).hostname,detail:t.url,group:'Link',available:true,exact:true,openTarget:t,excerpt:t.url};
@@ -116,4 +117,13 @@ export function resourceTargets(c:Catalogue,ws:Workspace,limit=5000):ResourceTar
  }
  for(const item of ws.personal.dashboardItems??[])if(item.status!=='archived')add({kind:'dashboard-item',itemId:item.id});
  const seen=new Set<string>();return targets.filter(t=>{const k=targetKey(c,t);if(seen.has(k))return false;seen.add(k);return true;});
+}
+
+export function canonicalTarget(c:Catalogue,t:ResourceTarget):ResourceTarget {const x=plainCanonicalTarget(c,t);return t.historyRevisionId?{...x,historyRevisionId:t.historyRevisionId}:x;}
+export function targetKey(c:Catalogue,t:ResourceTarget):string {const key=plainTargetKey(c,t);return t.historyRevisionId?stable([key,'history',t.historyRevisionId]):key;}
+export function documentTarget(c:Catalogue,t:ResourceTarget):ResourceTarget {const x=plainDocumentTarget(c,t);return t.historyRevisionId?{...x,historyRevisionId:t.historyRevisionId}:x;}
+export function resolveTarget(c:Catalogue,ws:Workspace,input:ResourceTarget):ResolvedTarget {
+ if(!input.historyRevisionId)return resolveUnpinnedTarget(c,ws,input);
+ const h=historicalCatalogue(c,ws,input.historyRevisionId);if(h.warning||!h.revision||resourceKeyForTarget(h.catalogue,input)!==h.revision.resourceKey)return {target:input,key:targetKey(c,input),title:'Unavailable historical revision',detail:input.historyRevisionId,group:'Notebook',available:false,exact:false,warning:h.warning??'Historical revision belongs to another resource.',revision:input.historyRevisionId,excerpt:''};
+ const resolved=resolveUnpinnedTarget(h.catalogue,{...historicalWorkspace(ws,input.historyRevisionId),overlays:{...ws.overlays,archived:[]}},input);return {...resolved,revision:fingerprint({historyRevisionId:input.historyRevisionId,targetRevision:resolved.revision})};
 }

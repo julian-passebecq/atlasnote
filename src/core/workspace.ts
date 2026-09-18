@@ -10,7 +10,7 @@ export function blankWorkspace():Workspace{return {imports:[],overlays:blankOver
 export function current(view:View|undefined){return view?.history[view.cursor];}
 export function newLocation(pageId:string,pdf=false):Location{return {pageId,presentation:'continuous',pdfMode:pdf?'spread':'single',pdfPage:1,zoom:1,rotation:0,cover:false};}
 export function newView(pageId?:string,anchor?:any,pdf=false):View{return {id:uid('view'),history:pageId?[{...newLocation(pageId,pdf),...(anchor?{anchor,...(anchor.pdfPage?{pdfPage:anchor.pdfPage}:{}),...(anchor.sheetPage?{sheetPage:anchor.sheetPage}:{})}:{})}]:[],cursor:0,collapsed:{},revealed:{},english:true};}
-export function navigate(view:View,pageId:string,anchor?:any,pdf=false):View{const here=current(view);if(here?.pageId===pageId&&!anchor)return view;const prefix=view.history.slice(0,view.cursor+1);const {referenceExplorer,...reader}=view;const defaults=newLocation(pageId,pdf);const same=here?.pageId===pageId?{presentation:here.presentation,pdfMode:here.pdfMode,zoom:here.zoom,rotation:here.rotation,cover:here.cover,...(here.sheetMode?{sheetMode:here.sheetMode}:{}),...(here.sheetZoom?{sheetZoom:here.sheetZoom}:{}),...(here.sheetFit?{sheetFit:here.sheetFit}:{})}:{};return {...reader,history:[...prefix,{...defaults,...same,...(anchor?{anchor,...(anchor.pdfPage?{pdfPage:anchor.pdfPage}:{}),...(anchor.sheetPage?{sheetPage:anchor.sheetPage}:{})}:{})}],cursor:prefix.length};}
+export function navigate(view:View,pageId:string,anchor?:any,pdf=false):View{const here=current(view);if(here?.pageId===pageId&&!anchor&&!here?.historyRevisionId)return view;const prefix=view.history.slice(0,view.cursor+1);const {referenceExplorer,...reader}=view;const defaults=newLocation(pageId,pdf);const same=here?.pageId===pageId?{presentation:here.presentation,pdfMode:here.pdfMode,zoom:here.zoom,rotation:here.rotation,cover:here.cover,...(here.sheetMode?{sheetMode:here.sheetMode}:{}),...(here.sheetZoom?{sheetZoom:here.sheetZoom}:{}),...(here.sheetFit?{sheetFit:here.sheetFit}:{})}:{};return {...reader,history:[...prefix,{...defaults,...same,...(anchor?{anchor,...(anchor.pdfPage?{pdfPage:anchor.pdfPage}:{}),...(anchor.sheetPage?{sheetPage:anchor.sheetPage}:{})}:{})}],cursor:prefix.length};}
 export function travel(view:View,delta:number):View{return {...view,cursor:Math.max(0,Math.min(view.history.length-1,view.cursor+delta))};}
 export function findNode(projects:Project[],id:string):{node:TreeNode;list:TreeNode[];index:number;project:Project;ancestors:string[]}|undefined{
  function walk(ns:TreeNode[],p:Project,ancestors:string[]):any{for(let i=0;i<ns.length;i++){if(ns[i].id===id)return {node:ns[i],list:ns,index:i,project:p,ancestors};const r=walk(ns[i].children??[],p,[...ancestors,ns[i].id]);if(r)return r;}}
@@ -27,6 +27,7 @@ export function applyOperation(projects:Project[],op:StructuralOperation){const 
 }
 export function compose(built:{packs:Pack[];groups:Group[]},ws:Workspace):Catalogue{
  const chosen=selectPacks(built.packs,ws.imports);const projects:Project[]=structuredClone(chosen.packs.flatMap(p=>p.projects));projects.push(...structuredClone(ws.overlays.projects));const warnings=[...chosen.warnings];
+ for(let i=0;i<projects.length;i++)if(ws.overlays.treeSnapshots?.[projects[i].id])projects[i]=structuredClone(ws.overlays.treeSnapshots[projects[i].id]);
  for(const op of ws.overlays.operations){try{applyOperation(projects,op);}catch(e){warnings.push((e as Error).message+' ('+op.nodeId+')');}}
  for(const p of projects)Object.assign(p,ws.overlays.projectPrefs[p.id]??{});
  projects.sort((a,b)=>(ws.overlays.projectPrefs[a.id]?.order??1000)-(ws.overlays.projectPrefs[b.id]?.order??1000));
@@ -42,7 +43,7 @@ export function compose(built:{packs:Pack[];groups:Group[]},ws:Workspace):Catalo
   pages.set(id,page);
  }
  for(const p of ws.overlays.projects)owners[p.id]='local';
- const docs=[...chosen.packs.flatMap(p=>p.documents??[]),...ws.overlays.documents];
+ const docs=[...new Map([...chosen.packs.flatMap(p=>p.documents??[]),...ws.overlays.documents].map(d=>[d.id,d])).values()];
  return {projects,pages:[...pages.values()],glossary:[...chosen.packs.flatMap(p=>p.glossary),...(ws.overlays.glossary??[]).filter(t=>!chosen.packs.some(p=>p.glossary.some(x=>x.id===t.id)))],groups:ws.overlays.groups??built.groups,packs:chosen.packs,owners,documents:docs.map(d=>({...d,title:pages.get(d.pageId)?.title??d.title})),warnings};
 }
 export function locations(c:Catalogue){const result=new Map<string,{project:Project;ancestors:string[];path:string[];nodeId:string}>();function walk(p:Project,ns:TreeNode[],path:string[],ancestors:string[]){for(const n of ns){if(n.pageId)result.set(n.pageId,{project:p,ancestors,path:[...path,n.title],nodeId:n.id});if(n.children)walk(p,n.children,[...path,n.title],[...ancestors,n.id]);}}for(const p of c.projects)walk(p,p.nodes,[p.title],[p.id]);return result;}

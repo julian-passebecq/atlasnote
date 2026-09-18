@@ -1,3 +1,5 @@
+import {checkPdfatlasProvenance} from './check-pdfatlas-provenance.mjs';
+await checkPdfatlasProvenance();
 import fs from 'node:fs/promises';import path from 'node:path';import {createRequire} from 'node:module';import {execFileSync} from 'node:child_process';import {compileContent} from './compile-content.mjs';
 import {createHash} from 'node:crypto';import {checkIntegratedDependencies} from './check-integrated-deps.mjs';import {readFiles} from './fs.mjs';
 const packages=await checkIntegratedDependencies(),vite=packages.vite,reactPDF=packages['react-pdf'],pdfjs=packages.pdfjs;
