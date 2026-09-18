@@ -1,13 +1,7 @@
-# Codex audit and integration handoff - stabilized V2
+# Current V2.2 handoff
 
-Continue this source; do not restart implementation. Read START_HERE.md and FINAL_TEST_STATUS.md first. The only allowed integration branch in this pass is `v2manualupload`. Do not merge PR #13 or deploy production.
+The QA head `215b60ff792a59e736b2b059a4e3fc60f1092d54` on `newversion2.2vfmanual` records **50/50 release gates, 813 unit tests and 15/15 expanded normal-origin browser scenarios passing**. See [V22_QA_REPORT.md](V22_QA_REPORT.md) for repairs, retained failures and coverage limits. The user-approved canonical single-ID Article/QCM invariant remains; independent wrapper/document IDs are outside V2.2. Nothing was merged or deployed.
 
-The remaining job is verification on a normal developer/browser environment, not another broad feature pass. Use the existing lockfile, install Python test requirements, install Playwright Chromium, and run `npm run test:release`. Preserve logs/screenshots for every failed or blocked gate.
+The release runner now retains the original 50 gates and adds completion runtime and PDF lifecycle runtime (52 total). This finalization runs only the seven targeted checks; it does not rerun the historical matrix.
 
-Pay particular attention to actual-origin theme reload, durable demo/source edits, capture cancellation, normal-entry PDF rendering, all five workspaces, save/restore, and a full backup restored into a fresh profile. Do not replace these tests with in-memory mounts.
-
-The inherited PDF grid failure was a test that toggled a newly opened Spread into Single. The corrected test selects Spread explicitly, checks its precondition, and retains exact all-workspace equality after swap/restore. Keep these assertions; do not reintroduce the blind toggle or delete the gate.
-
-A lightweight test/audit agent should report concrete failing stages, expected versus actual state, browser errors, and minimal reproduction steps. Avoid speculative architecture changes. Never upload personal library content, use GitHub as private app storage, or publish a diagnostic build as production.
-
-The external delivery manifest provides exact source ZIP/commit identity. The packaged local history was reconstructed; integrate the source in the existing upstream clone rather than force-pushing it.
+The superseded report is preserved in [docs/history](docs/history/v22-before-finalization-20260919/CODEX_HANDOFF.md). The finalization manifest is [FINAL_QA_MANIFEST.json](docs/evidence/v22/FINAL_QA_MANIFEST.json).

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-agent-changeset",
+  "id": "example.18",
+  "createdAt": 1789766230221,
+  "source": "Synthetic test agent",
+  "summary": "Stage concept assignment for the existing semantic review",
+  "operations": [
+    {
+      "id": "operation.8",
+      "kind": "concept.assignment.propose",
+      "baseFingerprint": "3e327bd330181af4",
+      "payload": {
+        "batch": {
+          "schemaVersion": 1,
+          "kind": "atlas-reference-suggestions",
+          "semanticRevision": 2,
+          "suggestions": [
+            {
+              "id": "proposal.example.concept",
+              "type": "assignment",
+              "conceptId": "concept.it",
+              "target": {
+                "kind": "article",
+                "articleId": "page.v22.article",
+                "pageId": "page.v22.article"
+              },
+              "targetRevision": "8d07ff903566c24a",
+              "reason": "Example reviewed assignment"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

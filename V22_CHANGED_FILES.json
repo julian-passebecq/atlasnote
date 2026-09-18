@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "currentInventory": "V22_COMPLETION_CHANGED_FILES.json",
+  "fullPayloadManifest": "SOURCE_MANIFEST.json",
+  "historicalInventory": "docs/history/v22-before-completion/V22_CHANGED_FILES.json",
+  "status": "CODE_UPDATED_QA_DEFERRED_NOT_RELEASE_CERTIFIED"
+}

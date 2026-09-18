@@ -67,6 +67,14 @@ jobs:
       - run: npm run test:stabilization:runtime
       - run: npm run test:final-polish:runtime
       - run: npm run test:release-blockers:runtime
+      # V2.2 release gates: immutable history, universal agent interface,
+      # pinned PDF Atlas provenance and real normal-origin migration/runtime QA.
+      - run: npm run test:history
+      - run: npm run test:agent
+      - run: npm run check:pdfatlas
+      - run: npm run test:v22:runtime
+      - run: npm run test:completion:runtime
+      - run: npm run test:pdf:lifecycle
       - run: npm run test:headers
       - uses: actions/upload-artifact@v4
         if: always()

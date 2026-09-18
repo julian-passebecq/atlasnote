@@ -1,2 +1,13 @@
-*.pdf binary
+# Deterministic source/generated text on Windows, macOS and Linux.
+* text=auto eol=lf
+
+# Reviewed byte-hashed upstream assets must never undergo text normalization.
+config/vendor/** -text
 src/vendor/** -text
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.zip binary
+*.wasm binary

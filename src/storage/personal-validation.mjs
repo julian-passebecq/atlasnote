@@ -29,7 +29,7 @@ export function validatePersonal(p){
  }else if(p.workspaceSlots!==undefined||p.activeWorkspaceSlot!==undefined)fail('numbered workspaces require personal schema 3');
  if(p.savedStates!==undefined){if(p.schemaVersion!==3)fail('saved states require personal schema 3');validateSavedStates(p.savedStates,sessions);}
  for(const s of sessions){
-  obj(s,'session');arr(s.panes,'panes',2);if(!s.panes.length)fail('no pane');const paneIds=new Set(),viewIds=new Set();
+  obj(s,'session');if(s.revisionCompareMode!==undefined&&!['changes','side-by-side','a','b'].includes(s.revisionCompareMode))fail('version comparison mode');arr(s.panes,'panes',2);if(!s.panes.length)fail('no pane');const paneIds=new Set(),viewIds=new Set();
   for(const pane of s.panes){
    id(pane.id,'pane ID');if(paneIds.has(pane.id))fail('duplicate pane');paneIds.add(pane.id);arr(pane.views,'views',5);
    if(pane.readerChromeCollapsed!==undefined)bool(pane.readerChromeCollapsed,'reader chrome');
@@ -40,7 +40,7 @@ export function validatePersonal(p){
    }}
    for(const v of pane.views){validateExplorer(v.referenceExplorer);if(v.referenceExplorer&&v.history.length)fail('system tab with content history');id(v.id,'view ID');if(viewIds.has(v.id))fail('duplicate view');viewIds.add(v.id);arr(v.history,'history',10000);int(v.cursor,'history cursor',0,Math.max(0,v.history.length-1));bool(v.english,'English visibility');
     for(const key of ['collapsed','revealed']){obj(v[key],key);for(const [bid,state] of Object.entries(v[key])){id(bid,'disclosure block');bool(state,'disclosure');}}
-    for(const l of v.history){id(l.pageId,'history page');if(l.collectionId!==undefined){id(l.collectionId,'collection ID');if(l.pageId!==l.collectionId)fail('collection navigation identity');}
+    for(const l of v.history){if(l.historyRevisionId!==undefined)id(l.historyRevisionId,'content revision');id(l.pageId,'history page');if(l.collectionId!==undefined){id(l.collectionId,'collection ID');if(l.pageId!==l.collectionId)fail('collection navigation identity');}
      if(!['continuous','book','parallel'].includes(l.presentation))fail('presentation');if(!['single','continuous','spread','grid'].includes(l.pdfMode))fail('PDF mode');
      if(l.previousPresentation!==undefined&&!['continuous','parallel'].includes(l.previousPresentation))fail('previous note layout');if(l.previousPdfMode!==undefined&&!['single','continuous','spread','grid'].includes(l.previousPdfMode))fail('previous PDF layout');
      if(l.previousGridMode!==undefined&&!['single','continuous','spread'].includes(l.previousGridMode))fail('previous grid layout');if(l.previousGridZoom!==undefined)num(l.previousGridZoom,'previous grid zoom',0.1,10);

@@ -35,7 +35,7 @@ export function classifyResource(o:Overlays,c:Catalogue,id:string,taxonomy?:Taxo
  if(original.article||original.qcm){const page=structuredClone(original),metadata=page.article??page.qcm!;if(taxonomy)metadata.taxonomy=structuredClone(taxonomy);else delete metadata.taxonomy;putContent(o,page,c,true);}
  else {o.taxonomy??={};o.taxonomy[id]=structuredClone(taxonomy??null);}
 }
-export function currentResourceTarget(c:Catalogue,loc?:Location):ReadingTarget|undefined {
+function unpinnedCurrentResourceTarget(c:Catalogue,loc?:Location):ReadingTarget|undefined {
  if(!loc)return;const p=c.pages.find(x=>x.id===loc.pageId);if(!p)return loc.collectionId?{kind:'collection',collectionId:loc.collectionId}:undefined;
  if(p.qcm)return {kind:'qcm',setId:p.qcm.id,pageId:p.id,...(loc.anchor?.questionId?{questionId:loc.anchor.questionId}:{questionId:p.qcm.questions[0].id})};
  if(p.article)return {kind:'article',articleId:p.article.id,pageId:p.id,...(loc.anchor?{anchor:structuredClone(loc.anchor)}:{})};
@@ -96,3 +96,5 @@ export function addRelatedTarget(o:Overlays,c:Catalogue,pageId:string,label:stri
  if(removeIndex!==undefined)page.resourceLinks.splice(removeIndex,1);else {validateReadingTarget(target);page.resourceLinks.push({label,target:structuredClone(target)});}
  validateHubPage(page);o.pages[pageId]={...o.pages[pageId],page};
 }
+
+export function currentResourceTarget(c:Catalogue,loc?:Location):ReadingTarget|undefined {const t=unpinnedCurrentResourceTarget(c,loc);return t&&loc?.historyRevisionId?{...t,historyRevisionId:loc.historyRevisionId}:t;}

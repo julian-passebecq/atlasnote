@@ -1,3 +1,4 @@
+import {checkPdfatlasProvenance} from './check-pdfatlas-provenance.mjs';
 /** Build-only ingestion of a reviewed metadata manifest. No network, no PDF copying.
  * config/pdfatlas.json is the single commit-pinning point. */
 import fs from 'node:fs/promises';
@@ -34,6 +35,10 @@ export function validateManifest(m,base){
 export async function syncPdfatlas(){
  const config=JSON.parse(await fs.readFile('config/pdfatlas.json','utf8')),m=JSON.parse(await fs.readFile('config/pdfatlas.library.json','utf8'));
  validateManifest(m,config.baseUrl);
+ // Mutable main is permitted only for explicitly requested, non-release staging.
+ const staging=process.argv.includes('--allow-mutable-staging');
+ if(!staging)await checkPdfatlasProvenance({generated:false});
+ else if(!config.baseUrl.endsWith('/main/'))throw Error('The mutable staging flag is only for an explicit /main/ development config.');
  const root='content/packs/pdfatlas.public';await fs.rm(root,{recursive:true,force:true});await fs.mkdir(root+'/pages',{recursive:true});
  const write=(file,data)=>fs.writeFile(root+'/'+file,JSON.stringify(data,null,2)+'\n');
  const categories=new Map();const nodes=[];

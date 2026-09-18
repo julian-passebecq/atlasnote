@@ -1,0 +1,37 @@
+{
+  "format": "atlas-pdf-library",
+  "schemaVersion": 1,
+  "id": "pdfatlas.public",
+  "version": "1.0.0",
+  "title": "PDF Atlas",
+  "categories": [
+    {"id":"node.pdfatlas.data-engineering","path":["Data Engineering"]},
+    {"id":"node.pdfatlas.apache-spark","path":["Data Engineering","Apache Spark"]}
+  ],
+  "entries": [
+    {
+      "id": "doc.pdfatlas.spark-concepts",
+      "title": "Apache Spark: 30 concepts",
+      "relativePath": "library/data-engineering/apache-spark/apache-spark-30-concepts.pdf",
+      "sha256": "b6761e0907cb28ff660936c79ad2a2dcafd500cc01c5fa5a613470396a0af095",
+      "bytes": 2548426,
+      "pageCount": 6,
+      "language": "en",
+      "categoryPath": ["Data Engineering","Apache Spark"],
+      "tags": ["doctype:guide","domain:data-engineering","tech:apache-spark","tech:pyspark","tech:yarn"],
+      "rights": {"status":"reference-only","attribution":"Document displays theseniordev.io and afaqueahmad7117. No redistribution licence established from the supplied PDF."}
+    },
+    {
+      "id": "doc.pdfatlas.pyspark-pandas",
+      "title": "PySpark and Pandas: DataFrame guide",
+      "relativePath": "library/data-engineering/apache-spark/pyspark-pandas-dataframe-guide.pdf",
+      "sha256": "15f7be6e6970a77ddfc70be4cf8a9418c03445bf82937482b2a78ee5348b65c2",
+      "bytes": 5912749,
+      "pageCount": 28,
+      "language": "en",
+      "categoryPath": ["Data Engineering","Apache Spark"],
+      "tags": ["doctype:guide","domain:data-engineering","tech:pyspark","tech:pandas","tech:databricks"],
+      "rights": {"status":"reference-only","attribution":"Nitya CloudTech is displayed on the cover. No individual author or redistribution licence established from the supplied PDF."}
+    }
+  ]
+}

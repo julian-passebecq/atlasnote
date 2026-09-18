@@ -16,5 +16,8 @@ __pycache__/
 dist-offline/
 
 # Generated release evidence and delivery-only patch/inventories.
-docs/evidence/
+docs/evidence/*
+!docs/evidence/v22/
+docs/evidence/v22/*
+!docs/evidence/v22/FINAL_QA_MANIFEST.json
 handoff/

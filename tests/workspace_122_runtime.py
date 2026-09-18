@@ -149,7 +149,7 @@ try:
   await fs.writeFile(process.argv[1],backup.bytes);
   console.log(JSON.stringify(ws.personal));
   """
-  original=json.loads(subprocess.check_output(['node','--input-type=module','-e',legacy_js,str(legacy_path)],cwd=ROOT,text=True))
+  original=json.loads(subprocess.check_output(['node','--input-type=module','-e',legacy_js,str(legacy_path)],cwd=ROOT,text=True,encoding='utf-8'))
   context=browser.new_context(viewport={'width':1440,'height':900},accept_downloads=True);page=context.new_page();page.set_default_timeout(15000);page.on('pageerror',lambda e:errors.append(str(e)));page.goto(base,wait_until='networkidle');open_settings(page)
   page.get_by_label('Restore workspace backup',exact=True).set_input_files(str(legacy_path));page.get_by_role('checkbox',name='I understand that this replaces the current local workspace.',exact=True).check();page.get_by_role('button',name='Restore verified backup',exact=True).click();page.locator('dialog').wait_for(state='detached')
   migrated=snapshot(page)['personal'];assert migrated=={**original,'schemaVersion':3,'activeWorkspaceSlot':1,'workspaceSlots':{}}

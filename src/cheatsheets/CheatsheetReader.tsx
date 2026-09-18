@@ -56,7 +56,7 @@ function ValidatedCheatsheetReader({page,view,location,paneId,slotId,onLocation,
  function saveScroll(){if(timer.current)clearTimeout(timer.current);const identity=live.current.anchor?.sheetId;timer.current=setTimeout(()=>{if(viewport.current&&identity===live.current.anchor?.sheetId)callback.current({scroll:viewport.current.scrollTop});},180);}
  function go(n:number){if(timer.current)clearTimeout(timer.current);if(!Number.isInteger(n)||n<1||n>doc.pages.length){setMessage('Choose a physical page from 1 to '+doc.pages.length+'.');setDraft(String(group.page));return;}onLocation(sheetPagePatch(n,undefined,doc.pages[n-1].id));}
  function actions(n:number,e:any,anchor?:Anchor){
-  const target:ReadingTarget={kind:'cheatsheet-page',pageId:page.id,documentId:doc.id,sheetPage:n,anchor:{...anchor,sheetPage:n,sheetId:doc.pages[n-1].id}};
+  const target:ReadingTarget={...(location.historyRevisionId?{historyRevisionId:location.historyRevisionId}:{}),kind:'cheatsheet-page',pageId:page.id,documentId:doc.id,sheetPage:n,anchor:{...anchor,sheetPage:n,sheetId:doc.pages[n-1].id}};
   onActions(target,(doc.title+' - p.'+n).slice(0,120),e);
  }
  return <div className="cheatsheet-reader" data-native-cheatsheet={doc.id} data-sheet-mode={mode}>

@@ -40,7 +40,7 @@ def input_page(target,number):
 def visible_pages(target):
     return target.locator('.physical-page').evaluate_all('(es)=>es.map(e=>Number(e.dataset.physicalPage))')
 def saved_records(target):
-    return target.evaluate('''async()=>{const req=indexedDB.open('knowledge-atlas',2);const db=await new Promise((ok,no)=>{req.onsuccess=()=>ok(req.result);req.onerror=()=>no(req.error);});const tx=db.transaction(['personal','overlays'],'readonly');const out=await Promise.all(['personal','overlays'].map(n=>new Promise((ok,no)=>{const r=tx.objectStore(n).getAll();r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);})));db.close();return out;}''')
+    return target.evaluate('''async()=>{const req=indexedDB.open('knowledge-atlas');const db=await new Promise((ok,no)=>{req.onsuccess=()=>ok(req.result);req.onerror=()=>no(req.error);});const tx=db.transaction(['personal','overlays'],'readonly');const out=await Promise.all(['personal','overlays'].map(n=>new Promise((ok,no)=>{const r=tx.objectStore(n).getAll();r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);})));db.close();return out;}''')
 try:
     with sync_playwright() as pw:
         browser=launch(pw);context=browser.new_context(viewport={'width':1920,'height':1080},accept_downloads=True)

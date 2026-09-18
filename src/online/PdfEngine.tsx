@@ -34,7 +34,21 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  const passwordCallback=useRef<((value:string)=>void)|null>(null),host=useRef<HTMLDivElement>(null),job=useRef(0),locationRef=useRef(loc),onLocationRef=useRef(onLocation);locationRef.current=loc;onLocationRef.current=onLocation;
  useEffect(()=>{if(!pdf||!paneId)return;return registerStudyPreparer(slotId??1,paneId,doc.id,(first,last,onProgress,signal)=>prepareCompanionParts(pdf,doc,{startPage:first,endPage:last,onProgress,signal}));},[pdf,doc.id,doc.sha256,paneId,slotId]);
  useEffect(()=>{if(!pdf||!paneId)return;return registerPdfTextSearch(slotId??1,paneId,doc.id,(query,signal)=>searchPdfText(pdf,query,signal));},[pdf,doc.id,doc.sha256,paneId,slotId]);
- const source=useMemo(()=>url?{url}:null,[url]);
+ const [sourceBytes,setSourceBytes]=useState<{url:string;bytes:Uint8Array}|null>(null);
+ // Own the cancellable network phase before starting PDF.js. Destroying its
+ // worker while a network-backed document is starting can leave an unhandled
+ // worker rejection. Only consented/verified URLs reach this adapter.
+ useEffect(()=>{
+  const controller=new AbortController();let alive=true;setSourceBytes(null);
+  if(url)fetch(url,{signal:controller.signal}).then(async response=>{
+   if(!response.ok)throw Error('Unable to load PDF bytes: HTTP '+response.status);
+   const bytes=new Uint8Array(await response.arrayBuffer());
+   if(alive)setSourceBytes({url,bytes});
+  }).catch(e=>{if(alive&&e.name!=='AbortError')setError(e.message||'Unable to load PDF bytes.');});
+  return()=>{alive=false;controller.abort();};
+ },[url,retry]);
+ // PDF.js transfers its input buffer to the worker; keep our retry copy intact.
+ const source=useMemo(()=>sourceBytes&&sourceBytes.url===url?{data:sourceBytes.bytes.slice()}:null,[sourceBytes,url,retry]);
  const capturing=useRef(false),scrolling=useRef(false),restoreFrame=useRef(0),scrollFrame=useRef(0),settleTimer=useRef<ReturnType<typeof setTimeout>>();
  useEffect(()=>{let alive=true;setWorkerOK(false);setWorkerError('');fetch(new URL('pdf-assets/engine.json',document.baseURI),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('PDF worker metadata missing');return r.json();}).then(meta=>{if(meta.pdfjs!==pdfjs.version)throw Error('PDF worker version does not match React-PDF: '+meta.pdfjs+' vs '+pdfjs.version);if(alive)setWorkerOK(true);}).catch(e=>{if(alive)setWorkerError(e.message);});return()=>{alive=false;};},[retry]);
  useEffect(()=>{setPDF(null);setError('');setHits([]);setFindStatus('');setPassword('');setPasswordReason('');passwordCallback.current=null;job.current++;return()=>{job.current++;passwordCallback.current=null;};},[doc.id,doc.sha256,url,retry]);
@@ -158,10 +172,10 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
    onTouchStart={()=>{scrolling.current=true;pendingRestore.current=false;}} onPointerDown={()=>{scrolling.current=true;pendingRestore.current=false;}}
    onKeyDown={e=>{if(['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].includes(e.key))scrolling.current=true;}}
    onScroll={()=>{cancelAnimationFrame(scrollFrame.current);scrollFrame.current=requestAnimationFrame(captureScroll);clearTimeout(settleTimer.current);settleTimer.current=setTimeout(()=>{captureScroll();scrolling.current=false;},180);}}>
-   {workerOK&&!error&&!workerError?<Document key={doc.id+':'+doc.sha256+':'+retry} file={source} options={options} externalLinkTarget="_blank" externalLinkRel="noopener noreferrer" onLoadSuccess={async p=>{setPDF(p);setLoading('');const n=clampPage(locationRef.current.pdfPage,p.numPages);const l=locationRef.current;if(l.pdfPage!==n||l.anchor?.pdfPage!==n||l.anchor?.pdfRevision!==doc.sha256)onLocationRef.current({...l,pdfPage:n,anchor:pdfAnchor(n,doc.sha256)});queueRestore();}} onLoadError={e=>setError(e.message)} onSourceError={e=>setError(e.message)} onLoadProgress={({loaded,total})=>setLoading(total?'Loading '+Math.round(loaded/total*100)+'%':'Loading PDF bytes...')} onPassword={(callback,reason)=>{passwordCallback.current=callback;setPasswordReason(reason===2?'Incorrect password. Try again.':'This PDF is password protected.');}} onItemClick={onPdfItemClick} loading={<p role="status">{loading}</p>}>
+   {workerOK&&source&&!error&&!workerError?<Document key={doc.id+':'+doc.sha256+':'+retry} file={source} options={options} externalLinkTarget="_blank" externalLinkRel="noopener noreferrer" onLoadSuccess={async p=>{setPDF(p);setLoading('');const n=clampPage(locationRef.current.pdfPage,p.numPages);const l=locationRef.current;if(l.pdfPage!==n||l.anchor?.pdfPage!==n||l.anchor?.pdfRevision!==doc.sha256)onLocationRef.current({...l,pdfPage:n,anchor:pdfAnchor(n,doc.sha256)});queueRestore();}} onLoadError={e=>setError(e.message)} onSourceError={e=>setError(e.message)} onLoadProgress={({loaded,total})=>setLoading(total?'Loading '+Math.round(loaded/total*100)+'%':'Loading PDF bytes...')} onPassword={(callback,reason)=>{passwordCallback.current=callback;setPasswordReason(reason===2?'Incorrect password. Try again.':'This PDF is password protected.');}} onItemClick={onPdfItemClick} loading={<p role="status">{loading}</p>}>
     {pdf&&<aside className="pdf-outline" hidden={!outline}><IconButton name="close" label="Close PDF outline" onClick={()=>setOutline(false)}/><h3>Document outline</h3><Outline onItemClick={onPdfItemClick}/></aside>}
     <div className={'pdf-physical-pages '+(grid?'pdf-grid '+(pages.length===1?'grid-single':''):paired?'pdf-spread':'')} data-grid={grid?'four-pages':undefined} onPointerDown={e=>{if(!grid||(e.target as HTMLElement).closest('a'))return;const n=Number((e.target as HTMLElement).closest<HTMLElement>('[data-physical-page]')?.dataset.physicalPage);if(n&&n!==loc.pdfPage)setPage(n);}}>{pdf&&pages.map(n=><PhysicalPage key={n} pdf={pdf} n={n} width={pageWidth} rotation={loc.rotation} root={host.current} virtual={loc.pdfMode==='continuous'} onVisible={seen} onRendered={()=>restorePosition(true)}/>)}</div>
-   </Document>:!error&&!workerError&&<p>Checking compatible local PDF worker...</p>}
+   </Document>:!error&&!workerError&&<p>{workerOK?'Loading PDF bytes...':'Checking compatible local PDF worker...'}</p>}
   </div>
  </div>;
 }

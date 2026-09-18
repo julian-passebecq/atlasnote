@@ -1,4 +1,7 @@
 import {store} from '../storage/database.js';
+import {HistoryMenuItems} from '../history/HistoryMenuItems.js';
+import {createHistoryIndex,historyContextForTarget,historyIdentityAttributes} from '../history/ui-context.js';
+import {focusFirstMenuItem,moveMenuFocus} from './menu-navigation.js';
 import {RESOURCE_DRAG_TYPE,encodeResourceDrag,applyReferenceDrop} from '../stabilization/resource-drag.js';
 import {sharedFolders} from '../content-hub/taxonomy.js';
 import {ReferenceLens} from '../references/ReferenceUI.js';
@@ -11,7 +14,7 @@ import {pdfNavigationSections} from '../core/pdf-navigation.js';
 import {PdfStudyTree} from '../companion/PdfStudyTree.js';
 import {studyTreeKey} from '../companion/tree.js';
 import {activeSession,WORKSPACE_NUMBERS,CATEGORIES,categoryMatches} from '../core/workspace-slots.js';
-import React,{useState,useEffect,useLayoutEffect,useRef} from '../vendor/react.mjs';
+import React,{useState,useEffect,useLayoutEffect,useRef,useMemo} from '../vendor/react.mjs';
 import type {Catalogue,TreeNode,Project,Workspace} from '../core/model.js';
 import {Icon,IconButton} from './Icon.js';
 import {visibleLibraryNode} from '../core/library-projection.js';
@@ -19,9 +22,11 @@ import {normalize} from '../core/workspace.js';
 
 type MenuState={project:Project;node?:TreeNode;x:number;y:number;returnFocus:HTMLElement};
 /** All tree actions also have an ordinary, keyboard-focusable Actions button. */
-export function ProjectTree({onManageResource,notify,references,onReferenceLens,catalogue:source,workspace:ws,onTypeAdd,onResourceOpen,onReferenceEdit,onManageLibrary,activePage,panePages=[],activePaneIndex=0,navigation,onLibraryMode,onReadingActions,onReadLater,onPdfToggle,onPdfNavigate,onPdfTerm,onPdfManage,onWorkspace,onCategory,onSidebar,onPaneMarker,onGroupToggle,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
+export function ProjectTree({onHistory,onComparePrevious,onOpenPrevious,onManageResource,notify,references,onReferenceLens,catalogue:source,workspace:ws,onTypeAdd,onResourceOpen,onReferenceEdit,onManageLibrary,activePage,panePages=[],activePaneIndex=0,navigation,onLibraryMode,onReadingActions,onReadLater,onPdfToggle,onPdfNavigate,onPdfTerm,onPdfManage,onWorkspace,onCategory,onSidebar,onPaneMarker,onGroupToggle,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
  const [filterOpen,setFilterOpen]=useState(false),[filter,setFilter]=useState(''),[menu,setMenu]=useState<MenuState|null>(null);
  const [dropError,setDropError]=useState('');
+ const historyIndex=useMemo(()=>createHistoryIndex(ws.history),[ws.history]);
+ const historyFor=(project:Project,node?:TreeNode)=>historyContextForTarget(source,ws,node?.target??(node?.pageId?targetForPage(source,node.pageId):{kind:'collection',collectionId:node?.id??project.id}),historyIndex);
  function allowDrop(e:any,id:string){if(mode==='notes'&&e.dataTransfer.types.includes(RESOURCE_DRAG_TYPE)&&sharedFolders(source,ws.overlays).some(f=>f.id===id)){e.preventDefault();e.dataTransfer.dropEffect='copy';}}
  function drop(e:any,id:string){e.preventDefault();e.stopPropagation();try{const next=applyReferenceDrop(e.dataTransfer.getData(RESOURCE_DRAG_TYPE),source,store.state,id);void store.overlays(o=>{o.references=next.references;}).then(()=>{setDropError('');notify?.('Notebook reference added. Source retained.');}).catch(e=>setDropError(e.message));}catch(e){setDropError((e as Error).message);}}
  const menuRef=useRef<HTMLDivElement|null>(null);
@@ -39,7 +44,10 @@ export function ProjectTree({onManageResource,notify,references,onReferenceLens,
   if(node?.pageId){const original=locations(source).get(node.pageId);if(original){project=original.project;node={...node,id:original.nodeId};}}
   e.preventDefault();e.stopPropagation();
   const el=e.currentTarget as HTMLElement,r=el.getBoundingClientRect();
-  setMenu({project,node,x:e.clientX||r.left,y:e.clientY||r.bottom,returnFocus:el.matches('button')?el:el.querySelector('button')??el});
+  const target=e.target as EventTarget|null;
+  const hit=target instanceof Element?target.closest<HTMLElement>('button,a,[tabindex]'):null;
+  const origin=hit&&el.contains(hit)?hit:el.matches('button,a,[tabindex]')?el:el.querySelector<HTMLElement>('.tree-target,button')??el;
+  setMenu({project,node,x:e.clientX||r.left,y:e.clientY||r.bottom,returnFocus:origin});
  }
  function keyboardMenu(e:any,p:Project,n?:TreeNode){if(e.key==='ContextMenu'||e.shiftKey&&e.key==='F10')showMenu(e,p,n);}
  useLayoutEffect(()=>{
@@ -47,7 +55,7 @@ export function ProjectTree({onManageResource,notify,references,onReferenceLens,
   const r=el.getBoundingClientRect();
   el.style.left=Math.max(8,Math.min(menu.x,window.innerWidth-r.width-8))+'px';
   el.style.top=Math.max(8,Math.min(menu.y,window.innerHeight-r.height-8))+'px';
-  el.querySelector<HTMLButtonElement>('[role="menuitem"]')?.focus();
+  focusFirstMenuItem(el);
  },[menu]);
  useEffect(()=>{
   if(!menu)return;
@@ -56,23 +64,19 @@ export function ProjectTree({onManageResource,notify,references,onReferenceLens,
   document.addEventListener('pointerdown',outside);window.addEventListener('resize',resize);
   return()=>{document.removeEventListener('pointerdown',outside);window.removeEventListener('resize',resize);};
  },[menu]);
- function action(fn:()=>void){dismiss(false);fn();}
+ function action(fn:()=>void){dismiss();fn();}
  function menuKey(e:any){
-  const buttons=[...(menuRef.current?.querySelectorAll<HTMLButtonElement>('[role="menuitem"]')??[])];
-  const i=buttons.indexOf(document.activeElement as HTMLButtonElement);
   if(e.key==='Escape'){e.preventDefault();e.stopPropagation();dismiss();}
-  else if(e.key==='Tab'){dismiss();}
-  else if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){
-   e.preventDefault();const next=e.key==='Home'?0:e.key==='End'?buttons.length-1:(i+(e.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length;buttons[next]?.focus();
-  }
+  else if(e.key==='Tab'){dismiss(false);}
+  else if(moveMenuFocus(menuRef.current,e.key)){e.preventDefault();e.stopPropagation();}
  }
  function nodes(ns:TreeNode[],p:Project,depth:number,matchedPath=false):any{
   return ns.filter(n=>visible(n)&&(matchedPath||matches(n))).map(n=>{
    const doc=c.documents.find((d:any)=>d.pageId===n.pageId),pdfKey=doc?studyTreeKey(doc,'document'):'',pdfOpen=doc&&(activeSession(ws.personal).pdfTreeExpanded??[]).includes(pdfKey);
    const owners=[0,1].filter(i=>(n.pageId??(n.target?readingTargetId(n.target):undefined))&&panePages[i]===(n.pageId??(n.target?readingTargetId(n.target):undefined)));const open=expanded.has(n.id)||!!query,page=c.pages.find((p:any)=>p.id===n.pageId);
    return <div className="tree-node" key={n.id}>
-    <div className={'tree-row '+(n.pageId&&n.pageId===activePage?'active ':'')+owners.map(i=>'pane-owner-'+(i===0?'a':'b')).join(' ')} data-node-id={n.id} draggable={!!n.pageId&&mode!=='notes'} data-resource-drag={n.pageId&&mode!=='notes'?'true':undefined} onDragStart={e=>{if(!n.pageId||mode==='notes')return;e.dataTransfer.setData(RESOURCE_DRAG_TYPE,encodeResourceDrag(targetForPage(source,n.pageId),page?.title??n.title));e.dataTransfer.effectAllowed='copy';}} onDragOver={e=>allowDrop(e,n.id)} onDrop={e=>drop(e,n.id)} data-pane-owners={owners.map(i=>i===0?'a':'b').join(' ')} style={{paddingLeft:(mode==='pdfs'?4+depth*8:10+depth*14)+'px'}} onContextMenu={e=>showMenu(e,p,n)} onKeyDown={e=>keyboardMenu(e,p,n)}>
-     <>{n.pageId&&mode!=='notes'&&<span className="resource-drag-grip" aria-hidden="true" title="Drag to a Notebook folder, or use Manage resource">⠿</span>}{doc?<button className="tree-expander" aria-label={(pdfOpen?'Collapse PDF ':'Expand PDF ')+n.title} aria-expanded={pdfOpen} onClick={()=>onPdfToggle(pdfKey)}><Icon name={pdfOpen?'down':'chevron'} size={12}/></button>:n.children&&<button className="tree-expander" aria-label={(open?'Collapse ':'Expand ')+n.title} aria-expanded={open} onClick={()=>onToggle(n.id)}><Icon name={open?'down':'chevron'} size={12}/></button>}<button className="tree-target" title={n.title} aria-expanded={n.children?open:undefined} aria-current={n.pageId&&n.pageId===activePage?'page':undefined}
+    <div className={'tree-row '+(n.pageId&&n.pageId===activePage?'active ':'')+owners.map(i=>'pane-owner-'+(i===0?'a':'b')).join(' ')} data-node-id={n.id} {...historyIdentityAttributes(historyFor(p,n))} draggable={!!n.pageId&&mode!=='notes'} data-resource-drag={n.pageId&&mode!=='notes'?'true':undefined} onDragStart={e=>{if(!n.pageId||mode==='notes')return;e.dataTransfer.setData(RESOURCE_DRAG_TYPE,encodeResourceDrag(targetForPage(source,n.pageId),page?.title??n.title));e.dataTransfer.effectAllowed='copy';}} onDragOver={e=>allowDrop(e,n.id)} onDrop={e=>drop(e,n.id)} data-pane-owners={owners.map(i=>i===0?'a':'b').join(' ')} style={{paddingLeft:(mode==='pdfs'?4+depth*8:10+depth*14)+'px'}} onContextMenu={e=>showMenu(e,p,n)} onKeyDown={e=>keyboardMenu(e,p,n)}>
+     <>{n.pageId&&mode!=='notes'&&<span className="resource-drag-grip" aria-hidden="true" title="Drag to a Notebook folder, or use Manage resource">⠿</span>}{doc?<button className="tree-expander" aria-label={(pdfOpen?'Collapse PDF ':'Expand PDF ')+n.title} aria-expanded={pdfOpen} onClick={()=>onPdfToggle(pdfKey)}><Icon name={pdfOpen?'down':'chevron'} size={12}/></button>:n.children&&<button className="tree-expander" aria-label={(open?'Collapse ':'Expand ')+n.title} aria-expanded={open} onClick={()=>onToggle(n.id)}><Icon name={open?'down':'chevron'} size={12}/></button>}<button className="tree-target" data-agent-action="resource-open" title={n.title} aria-expanded={n.children?open:undefined} aria-current={n.pageId&&n.pageId===activePage?'page':undefined}
       onClick={e=>n.target?onResourceOpen(n.target,e.ctrlKey||e.metaKey?'tab':'here'):n.pageId?onOpen(n.pageId,undefined,e.ctrlKey||e.metaKey):(onCollection(n.id,undefined,e.ctrlKey||e.metaKey),!open&&onToggle(n.id))}
       onMouseDown={e=>{if(e.button===1)e.preventDefault();}}
       onAuxClick={e=>{if(e.button===1){e.preventDefault();if(n.target)onResourceOpen(n.target,'tab');else onOpen(n.pageId??n.id,undefined,true);}}}>
@@ -95,8 +99,8 @@ export function ProjectTree({onManageResource,notify,references,onReferenceLens,
   if(hidden(p)||p.nodes.length>0&&!p.nodes.some(visible))return null;const open=expanded.has(p.id)||!!query;
   if(query&&!normalize(p.title).includes(query)&&!p.nodes.some(matches))return null;
   return <div className="tree-project" key={p.id} data-project-id={p.id}>
-   <div className="tree-row project-row" onDragOver={e=>allowDrop(e,p.id)} onDrop={e=>drop(e,p.id)} onContextMenu={e=>showMenu(e,p)} onKeyDown={e=>keyboardMenu(e,p)}>
-    <button className="tree-expander" aria-label={(open?'Collapse ':'Expand ')+p.title} aria-expanded={open} onClick={()=>onToggle(p.id)}><Icon name={open?'down':'chevron'} size={12}/></button><button className="tree-target" onClick={e=>{onCollection(p.id,undefined,e.ctrlKey||e.metaKey);if(!open)onToggle(p.id);}} title={p.title}><span className="project-icon"><Icon name={p.icon} size={17}/></span><strong>{p.title}</strong></button>
+   <div className="tree-row project-row" {...historyIdentityAttributes(historyFor(p))} onDragOver={e=>allowDrop(e,p.id)} onDrop={e=>drop(e,p.id)} onContextMenu={e=>showMenu(e,p)} onKeyDown={e=>keyboardMenu(e,p)}>
+    <button className="tree-expander" aria-label={(open?'Collapse ':'Expand ')+p.title} aria-expanded={open} onClick={()=>onToggle(p.id)}><Icon name={open?'down':'chevron'} size={12}/></button><button className="tree-target" data-agent-action="collection-open" onClick={e=>{onCollection(p.id,undefined,e.ctrlKey||e.metaKey);if(!open)onToggle(p.id);}} title={p.title}><span className="project-icon"><Icon name={p.icon} size={17}/></span><strong>{p.title}</strong></button>
     {!p.id.startsWith('project.unfiled.')&&<IconButton name="more" label={'Actions for notebook '+p.title} className="tree-more" aria-haspopup="menu" onClick={e=>showMenu(e,p)}/>}
     {mode==='notes'&&!p.id.startsWith('project.unfiled.')&&<IconButton name="plus" label={'Add to '+p.title} className="tree-more" onClick={()=>onCreate('page',p)}/>}
    </div>{mode==='notes'&&ws.personal.referenceLens&&references&&!p.id.startsWith('project.unfiled.')&&<ReferenceLens {...references} target={{kind:'collection',collectionId:p.id}}/>}{open&&nodes(p.nodes,p,0)}
@@ -104,6 +108,7 @@ export function ProjectTree({onManageResource,notify,references,onReferenceLens,
  }
  const grouped=new Set(c.groups.flatMap((g:any)=>g.projectIds));
  const menuPage=menu?.node?.pageId;
+ const menuHistory=menu?historyFor(menu.project,menu.node):undefined;
  const firstPage=(ns:TreeNode[]):string|undefined=>{for(const n of ns){if(!visible(n))continue;if(n.pageId&&!archived.has(n.pageId))return n.pageId;const id=n.children&&firstPage(n.children);if(id)return id;}};
  const overview=menu&&!menuPage?firstPage(menu.node?.children??menu.project.nodes):undefined;
  const manage=(intent:string)=>{if(menu)action(()=>onItem({project:menu.project,node:menu.node,intent}));};
@@ -134,6 +139,7 @@ export function ProjectTree({onManageResource,notify,references,onReferenceLens,
     <button role="menuitem" onClick={()=>action(()=>onCreate('folder',menu.project,menu.node))}><Icon name="folder"/>Add folder</button>
    </>}
    {onReadLater&&<button role="menuitem" onClick={()=>action(()=>onReadLater(menuPage??menu.node?.id??menu.project.id,menu.node?.title??menu.project.title))}><Icon name="clock"/>Add to Read later</button>}
+   <HistoryMenuItems context={menuHistory} onHistory={onHistory?(key)=>action(()=>onHistory(key)):undefined} onComparePrevious={onComparePrevious?(key,revision)=>action(()=>onComparePrevious(key,revision)):undefined} onOpenPrevious={onOpenPrevious?(key,revision)=>action(()=>onOpenPrevious(key,revision)):undefined}/>
    <div role="separator"/>
    <button role="menuitem" onClick={()=>manage('rename')}><Icon name="edit"/>Rename</button>
    <button role="menuitem" onClick={()=>manage('move')}><Icon name="folder"/>{menu.node?'Move':'Move / group notebook'}</button>

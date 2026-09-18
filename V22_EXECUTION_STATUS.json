@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "release": "2.2.0",
+  "candidate": "v22-finalized-qa-candidate",
+  "date": "2026-09-19",
+  "baselineCommitRecordedByInput": "60db2cb7504503ac416ddad940441e24f82266b1",
+  "v21ProductionBaseline": "b50c27a987fa65eee1c51d36225908621e322da7",
+  "qaHead": "215b60ff792a59e736b2b059a4e3fc60f1092d54",
+  "finalizationImplementationCommit": "64ba14c4383ced43f7af5d16b3a0b7ed9d8531df",
+  "status": "QA_COMPLETE_FINALIZATION_TARGETED_CHECKS_PASS",
+  "execution": {
+    "fullReleaseGates": "PASS_50_OF_50_ON_QA_HEAD",
+    "unitTests": "PASS_813_ON_QA_HEAD",
+    "expandedBrowser": "PASS_15_OF_15_ON_QA_HEAD",
+    "typecheck": "PASS_FINALIZATION",
+    "typecheckOnline": "PASS_FINALIZATION",
+    "build": "PASS_FINALIZATION",
+    "completionUnit": "PASS_16_FINALIZATION",
+    "completionRuntime": "PASS_15_OF_15_FINALIZATION",
+    "pdfLifecycle": "PASS_80_SWITCHES_ZERO_ERRORS_FINALIZATION",
+    "pdfAtlasProvenance": "PASS_FINALIZATION"
+  },
+  "releaseRunner": {
+    "historicalGateCount": 50,
+    "currentGateCount": 52,
+    "addedPermanentGates": [
+      "test:completion:runtime",
+      "test:pdf:lifecycle"
+    ]
+  },
+  "remoteWrites": true,
+  "branch": "newversion2.2vfmanual",
+  "mainMerged": false,
+  "productionDeployed": false,
+  "articleQcmIdentity": "canonical-single-id",
+  "evidenceBoundary": "Full 50-gate QA evidence belongs to qaHead; finalization changes were verified by the seven targeted checks. Raw large QA/build evidence archives are kept external to GitHub.",
+  "nextAction": "Run/inspect GitHub CI on the finalized branch, then perform an explicit release/promotion decision."
+}

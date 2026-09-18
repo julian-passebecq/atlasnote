@@ -19,7 +19,7 @@ The two local module shims in the Mermaid directory supply Vite preload and Comm
 
 ## Optional online build
 
-`npm run enable:online` installs React 18.3.1, ReactDOM 18.3.1, the current compatible React-PDF 10.x wrapper and Vite, writing exact resolved versions to the lockfile. The online Vite alias uses a single installed React instance. `tools/build-vite.mjs` copies the worker, CMaps and WASM from the PDF.js version resolved by React-PDF, not a separately forced latest PDF.js. These dependencies were unavailable in this environment and are not falsely listed as installed or runtime-tested.
+`npm run enable:online` installs React 18.3.1, ReactDOM 18.3.1, the current compatible React-PDF 10.x wrapper and Vite, writing exact resolved versions to the lockfile. The online Vite alias uses a single installed React instance. `tools/build-vite.mjs` copies the worker, CMaps and WASM from the PDF.js version resolved by React-PDF, not a separately forced latest PDF.js. The installed dependency and integrated-runtime QA results are recorded in [V22_QA_REPORT.md](V22_QA_REPORT.md).
 
 Reference documentation consulted:
 

@@ -2,7 +2,7 @@ import {validateHubPage,validateHubOverlays} from '../content-hub/validation.mjs
 import {validateCheatsheetPage} from '../cheatsheets/validation.mjs';
 import {validatePersonal} from './personal-validation.mjs';
 import {validateCompanion,companionKey} from '../companion/validation.mjs';
-import {inspectObject,ID,safeUrl,validateSchema} from '../core/validation.mjs';
+import {inspectObject,ID,safePath,safeUrl,validateSchema} from '../core/validation.mjs';
 /** Validate restored personal state before any IndexedDB write. Never repair by dropping fields. */
 export function validateState(ws,schemas){
  inspectObject(ws);const fail=m=>{throw Error('Invalid saved workspace: '+m);};
@@ -16,6 +16,8 @@ export function validateState(ws,schemas){
  const p=ws?.personal,o=ws?.overlays;obj(o,'overlays');validateHubOverlays(o);if(o.schemaVersion!==2)fail('schema version');validatePersonal(p);
  obj(o.pages,'page overlays');arr(o.projects,'local projects');obj(o.projectPrefs,'project preferences');arr(o.operations,'structural operations');arr(o.archived,'archives');o.archived.forEach(x=>id(x,'archived ID'));arr(o.documents,'local documents');if(o.groups!==null)arr(o.groups,'groups');
  for(const [key,edit] of Object.entries(o.pages)){obj(edit,'page overlay');if(edit.page?.id!==key)fail('overlay ID mismatch');validateCheatsheetPage(edit.page);validateHubPage(edit.page);validateSchema({schemaVersion:2,title:'Local overlay',projects:[],pages:[edit.page],glossary:[],groups:[]},schemas.v2,'local overlay');if(edit.baseHash!==undefined&&!/^[a-f0-9]{64}$/.test(edit.baseHash))fail('overlay base hash');}
+ if(o.assetBindings!==undefined){obj(o.assetBindings,'asset bindings');for(const [pageId,refs]of Object.entries(o.assetBindings)){id(pageId,'asset owner');obj(refs,'asset references');for(const [path,ref]of Object.entries(refs)){safePath(path);obj(ref,'asset reference');if(Object.keys(ref).some(k=>!['key','sha256','mediaType'].includes(k))||typeof ref.mediaType!=='string'||!/^[a-f0-9]{64}$/.test(ref.sha256))fail('asset reference fields');safePath(ref.key);}}}
+ if(o.treeSnapshots!==undefined){obj(o.treeSnapshots,'tree snapshots');for(const [key,project] of Object.entries(o.treeSnapshots)){if(project.id!==key)fail('tree snapshot identity');validateSchema({schemaVersion:2,title:'Tree snapshot',projects:[project],pages:[],glossary:[],groups:[]},schemas.v2,'tree snapshot');}}
  validateSchema({schemaVersion:2,title:'Local tree',projects:o.projects,pages:[],glossary:[],groups:o.groups??[]},schemas.v2,'local tree');
  for(const [key,pref] of Object.entries(o.projectPrefs)){id(key,'project preference');obj(pref,'project preference');for(const k of ['title','description','icon'])if(pref[k]!==undefined)str(pref[k],k,10000);if(pref.hidden!==undefined)bool(pref.hidden,'hidden');if(pref.order!==undefined)num(pref.order,'order',-100000,100000);}
  for(const op of o.operations){obj(op,'operation');if(!['add','move','rename','order'].includes(op.kind))fail('operation kind');id(op.nodeId,'operation ID');for(const k of ['projectId','parentId'])if(op[k])id(op[k],k);if(op.kind==='rename')str(op.title,'node title',10000);if(op.kind==='order')num(op.delta,'order delta',-10000,10000);if(['add','move'].includes(op.kind))id(op.projectId,'destination project');if(op.kind==='add'){if(op.node?.id!==op.nodeId)fail('added node ID');validateSchema({schemaVersion:2,title:'Node',projects:[{id:'project.validation',title:'Validation',icon:'book',description:'',nodes:[op.node]}],pages:[],glossary:[],groups:[]},schemas.v2,'local node');}}

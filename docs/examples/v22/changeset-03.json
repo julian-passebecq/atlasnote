@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlas-agent-changeset",
+  "id": "example.3",
+  "createdAt": 1789766221700,
+  "source": "Synthetic test agent",
+  "summary": "Update canonical article:page.v22.article",
+  "operations": [
+    {
+      "id": "operation.2",
+      "kind": "resource.update",
+      "resourceKey": "article:page.v22.article",
+      "baseRevisionId": "revision.783b21706bbf40119ccae288dd1ea471",
+      "payload": {
+        "resourceType": "article",
+        "snapshot": {
+          "page": {
+            "id": "page.v22.article",
+            "title": "Review article",
+            "summary": "V2.2 synthetic test content.",
+            "blocks": [
+              {
+                "id": "page.v22.article.body",
+                "type": "markdown",
+                "text": "Original explanation. Example reviewed text."
+              }
+            ],
+            "related": [],
+            "terms": [],
+            "sources": [],
+            "tags": [],
+            "kind": "article",
+            "article": {
+              "id": "page.v22.article",
+              "title": "Review article",
+              "addedAt": 1,
+              "taxonomy": {
+                "subject": "it"
+              }
+            }
+          },
+          "taxonomy": {
+            "subject": "it"
+          }
+        }
+      }
+    }
+  ]
+}

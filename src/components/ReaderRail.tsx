@@ -4,7 +4,7 @@ import {FloatingPanel} from './FloatingPanel.js';
 import {FLAG_LABELS,THEME_LABELS} from '../core/model.js';
 import type {Session,Page,View,Location,DocumentEntry} from '../core/model.js';
 export type RailPopover='reading'|'theme'|'more'|'workspaces'|null;
-export function ReaderRail({onDashboard,onCapture,onWorkspace,onNewWorkspace,hasEmptyWorkspace,onImportCheatsheet,slotId=1,stateBusy=false,hasWorkspaceSave,hasAppSave,onSaveWorkspace,onRestoreWorkspace,onSaveApp,onRestoreApp,onSavedStates,onReadLater,managerMode,onPdfManage,onExport,pdfRenderer,session,page,view,location:loc,doc,leftVisible,contextOpen,popover,setPopover,onTree,onFocus,onContext,onCompare,onSwap,onBookmark,onTheme,onView,onSettings,onHome,onBookmarks,onEdit,onPrint,onFlags,onRating,rating}:any){
+export function ReaderRail({onHistory,onAgentReview,hasHistory,onDashboard,onCapture,onWorkspace,onNewWorkspace,hasEmptyWorkspace,onImportCheatsheet,slotId=1,stateBusy=false,hasWorkspaceSave,hasAppSave,onSaveWorkspace,onRestoreWorkspace,onSaveApp,onRestoreApp,onSavedStates,onReadLater,managerMode,onPdfManage,onExport,pdfRenderer,session,page,view,location:loc,doc,leftVisible,contextOpen,popover,setPopover,onTree,onFocus,onContext,onCompare,onSwap,onBookmark,onTheme,onView,onSettings,onHome,onBookmarks,onEdit,onPrint,onFlags,onRating,rating}:any){
  const toggle=(name:RailPopover)=>setPopover(popover===name?null:name);
  const choose=(fn:()=>void)=>{fn();setPopover(null);};
  const integrated=pdfRenderer==='integrated';
@@ -16,6 +16,7 @@ export function ReaderRail({onDashboard,onCapture,onWorkspace,onNewWorkspace,has
  <IconButton name="bookmark" label="Open bookmarks" active={managerMode==='bookmark'} onClick={onBookmarks}/>
  <IconButton name="clock" label="Open read later" active={managerMode==='later'} onClick={onReadLater}/>
  <span className="rail-separator"/>
+ <IconButton name="clock" data-agent-action="version-history" label="Version History" disabled={!hasHistory} onClick={onHistory}/>
  <IconButton name="export" label="Export to AI" disabled={!page} onClick={onExport}/>
  <IconButton name="theme" label="Theme" active={popover==='theme'} aria-haspopup="dialog" aria-expanded={popover==='theme'} onClick={()=>toggle('theme')}/>
  <IconButton name="settings" label="More / Settings" title="Settings and document actions" active={popover==='more'} aria-haspopup="dialog" aria-expanded={popover==='more'} onClick={()=>toggle('more')}/>
@@ -23,14 +24,14 @@ export function ReaderRail({onDashboard,onCapture,onWorkspace,onNewWorkspace,has
  <div className="workspace-dock" role="group" aria-label="Workspace dock">
  <IconButton name="plus" label={hasEmptyWorkspace?'Open an empty workspace':'Save a checkpoint of current workspace'} title={hasEmptyWorkspace?'Use an unused slot (maximum five)':'All slots used. Save a new checkpoint; no workspace will be overwritten.'} onClick={onNewWorkspace}/>
  <IconButton name="grid" className="compact-workspace-toggle" label="Choose workspace" title={'Workspace '+slotId} aria-haspopup="dialog" aria-expanded={popover==='workspaces'} onClick={()=>toggle('workspaces')}/>
- <div className="workspace-slots" role="group" aria-label="Study workspaces">{[1,2,3,4,5].map(n=><button key={n} aria-label={'Workspace '+n} aria-pressed={slotId===n} onClick={()=>onWorkspace(n)}>{n}</button>)}</div>
+ <div className="workspace-slots" role="group" aria-label="Study workspaces">{[1,2,3,4,5].map(n=><button key={n} data-agent-action="workspace-navigate" data-workspace-id={n} aria-label={'Workspace '+n} aria-pressed={slotId===n} onClick={()=>onWorkspace(n)}>{n}</button>)}</div>
 
  <IconButton name="save" label="Save current workspace" disabled={stateBusy} onClick={onSaveWorkspace}/>
  <IconButton name="save-all" label="Workspace States" active={managerMode==='states'} aria-haspopup="dialog" aria-expanded={contextOpen&&managerMode==='states'} onClick={onSavedStates}/>
  </div>
  </nav>
  {popover&&<FloatingPanel key={popover} title={popover==='reading'?'Reading mode':popover==='theme'?'Theme':popover==='workspaces'?'Choose workspace':'More / Settings'} className={'reader-popover popover-'+popover} onClose={()=>setPopover(null)}>
- {popover==='workspaces'&&<div className="workspace-chooser" role="group" aria-label="Choose study workspace">{[1,2,3,4,5].map(n=><button key={n} aria-label={'Workspace '+n} aria-pressed={slotId===n} onClick={()=>choose(()=>onWorkspace(n))}>Workspace {n}</button>)}</div>}
+ {popover==='workspaces'&&<div className="workspace-chooser" role="group" aria-label="Choose study workspace">{[1,2,3,4,5].map(n=><button key={n} data-agent-action="workspace-navigate" data-workspace-id={n} aria-label={'Workspace '+n} aria-pressed={slotId===n} onClick={()=>choose(()=>onWorkspace(n))}>Workspace {n}</button>)}</div>}
  {popover==='theme'&&<div className="theme-options">{Object.entries(THEME_LABELS).map(([id,label])=><button key={id} className={'theme-option '+(session.theme===id?'selected':'')} aria-pressed={session.theme===id} onClick={()=>choose(()=>onTheme(id))}><span className={'theme-swatch swatch-'+id} aria-hidden="true"/><span>{label}</span>{session.theme===id&&<Icon name="check" size={15}/>}</button>)}</div>}
  {popover==='reading'&&page&&view&&loc&&<div className="reading-options">
   <p className="popover-target">Pane {session.panes[0].id===session.activePane?'A':'B'} <span aria-hidden="true">/</span> {page.title}</p>
@@ -38,10 +39,10 @@ export function ReaderRail({onDashboard,onCapture,onWorkspace,onNewWorkspace,has
  </div>}
  {popover==='more'&&<div className="more-options">
   <button onClick={()=>choose(onHome)}><Icon name="home"/>Home</button><button onClick={()=>choose(onBookmarks)}><Icon name="bookmark"/>Bookmarks</button>
-  <hr/>{doc&&<button onClick={()=>choose(onPdfManage)}><Icon name="list"/>Manage PDF details</button>}<button disabled={!page} onClick={()=>choose(onEdit)}><Icon name="edit"/>Edit current page</button><button disabled={!page} onClick={()=>choose(onPrint)}><Icon name="print"/>Print or Save as PDF</button>
+  <hr/>{doc&&<button disabled={!!loc?.historyRevisionId} onClick={()=>choose(onPdfManage)}><Icon name="list"/>Manage PDF details</button>}<button disabled={!page||!!loc?.historyRevisionId} onClick={()=>choose(onEdit)}><Icon name="edit"/>Edit current page</button><button disabled={!page} onClick={()=>choose(onPrint)}><Icon name="print"/>Print or Save as PDF</button>
   <hr/><label className="inline-check"><input type="checkbox" checked={session.showFlags} onChange={onFlags}/>Show learning flags</label>
   {page&&<label className="popover-field">Learning flag<select aria-label="Learning flag" value={rating??'gray'} onChange={e=>onRating(e.target.value)}>{Object.entries(FLAG_LABELS).map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>}
-  <hr/><button onClick={()=>choose(onImportCheatsheet)}><Icon name="grid"/>Import cheatsheet JSON</button><button onClick={()=>choose(onSettings)}><Icon name="settings"/>Workspace settings</button><small className="secondary">AtlasNote V2.1 <span aria-hidden="true">/</span> Local-first workspace</small>
+  <hr/><button data-agent-action="agent-review" onClick={()=>choose(onAgentReview)}><Icon name="check"/>Agent Review</button><button onClick={()=>choose(onImportCheatsheet)}><Icon name="grid"/>Import cheatsheet JSON</button><button onClick={()=>choose(onSettings)}><Icon name="settings"/>Workspace settings</button><small className="secondary">AtlasNote V2.2 <span aria-hidden="true">/</span> Local-first workspace</small>
  </div>}
  </FloatingPanel>}
  </>;
