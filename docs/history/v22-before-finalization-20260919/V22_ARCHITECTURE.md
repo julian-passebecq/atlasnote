@@ -7,7 +7,7 @@ registry now publishes concrete payload envelopes via `agent/payload-schema.ts`
 and returns detached metadata. The existing service has internal mounted-UI
 navigation hooks, ordered/reusable A/B Compare and exact historical-target checks.
 These hooks are not external APIs. Read `docs/v22/BROWSER_AGENT_SEMANTICS.md`.
-Verification is recorded in [V22_QA_REPORT.md](V22_QA_REPORT.md), including the accepted single-ID Article/QCM scope and explicit coverage limits.
+All new behavior is unverified pending the Codex Light execution pass.
 
 # V2.2 history and universal agent architecture
 
@@ -15,7 +15,7 @@ Verification is recorded in [V22_QA_REPORT.md](V22_QA_REPORT.md), including the 
 
 This is an additive extension of the supplied V2.1.0 application, not a replacement UI or storage rewrite. The five-subject taxonomy remains orthogonal to five content types. Five workspaces, existing A/B panes, Workspace States, Article/QCM editing, exact semantic references, native SVG cheatsheets and existing PDF readers remain in place. No new dependency, AI provider SDK, server, cloud database, background fetch or deployment is introduced.
 
-The candidate uses package 2.2.0. QA head is `215b60ff792a59e736b2b059a4e3fc60f1092d54`; the received archive provenance remains in `docs/v22/BASELINE_IDENTITY.json`. See `V22_QA_REPORT.md` for the distinct QA snapshot and source identities.
+The candidate uses package 2.2.0. Its expected upstream baseline SHA is provenance supplied in the handoff; no final Git commit was created. `docs/v22/BASELINE_IDENTITY.json` records the uploaded archive hash and package/file checks. Use the delivered source digest, not an invented commit hash, to identify this candidate.
 
 ## Logical-resource revision engine
 
@@ -63,4 +63,4 @@ Every PDF snapshot keeps logical document ID, source repository/commit/path, byt
 
 ## Verification status
 
-The QA head `215b60ff792a59e736b2b059a4e3fc60f1092d54` on `newversion2.2vfmanual` records **50/50 release gates, 813 unit tests and 15/15 expanded normal-origin browser scenarios passing**. See [V22_QA_REPORT.md](V22_QA_REPORT.md) for repairs, retained failures and coverage limits. The user-approved canonical single-ID Article/QCM invariant remains; independent wrapper/document IDs are outside V2.2. Nothing was merged or deployed.
+See `V22_TEST_EVIDENCE.md`. Node/core compatibility tests exercise the model, orchestration, serializers and validators. Real IndexedDB atomicity/reload, native embedded PDF behavior, integrated bundle output and responsive visual/keyboard usability are not certified in this environment. The release verdict remains blocked.

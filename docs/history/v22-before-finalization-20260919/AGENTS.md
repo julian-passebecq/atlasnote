@@ -14,6 +14,4 @@ Read `START_HERE.md`, `V22_ARCHITECTURE.md`, `V22_MIGRATION_AND_BACKUP.md`, `V22
 - Preserve every meaningful old release assertion. A compatibility test is not a normal-origin IndexedDB or embedded PDF test. Keep failed/blocked logs and do not relax browser policies.
 - No GitHub writes, main merge, deployment or publication of private libraries/backups without a new explicit user request.
 
-The QA head `215b60ff792a59e736b2b059a4e3fc60f1092d54` on `newversion2.2vfmanual` records **50/50 release gates, 813 unit tests and 15/15 expanded normal-origin browser scenarios passing**. See [V22_QA_REPORT.md](V22_QA_REPORT.md) for repairs, retained failures and coverage limits. The user-approved canonical single-ID Article/QCM invariant remains; independent wrapper/document IDs are outside V2.2. Nothing was merged or deployed.
-
-For finalization, follow the user-authorized targeted checks only; preserve all existing gates and failed/blocked evidence.
+The completion authoring pass explicitly deferred all execution at the user's request. For the next authorized Codex Light QA pass, follow `CODEX_LIGHT_QA_HANDOFF.md`, run all original gates and the added acceptance cases, and preserve failures. Do not claim this source is release-cleared; see `V22_TEST_EVIDENCE.md`.

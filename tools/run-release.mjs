@@ -28,7 +28,8 @@ const commands=[
  ['stabilization-ui',['run','test:stabilization:ui']], ['stabilization-runtime',['run','test:stabilization:runtime']], ['content-hub-ui',['run','test:content-hub:ui']], ['content-hub-runtime',['run','test:content-hub:runtime']], ['references-unit',['run','test:references']], ['references-ui',['run','test:references:ui']], ['references-runtime',['run','test:references:runtime']], ['final-polish-runtime',['run','test:final-polish:runtime']],
  ['release-blockers-runtime',['run','test:release-blockers:runtime']],
  ['history-unit',['run','test:history']], ['agent-unit',['run','test:agent']],
- ['pdfatlas-provenance',['run','check:pdfatlas']], ['v22-runtime',['run','test:v22:runtime']]
+ ['pdfatlas-provenance',['run','check:pdfatlas']], ['v22-runtime',['run','test:v22:runtime']],
+ ['completion-runtime',['run','test:completion:runtime']], ['pdf-lifecycle',['run','test:pdf:lifecycle']]
 ];
 // Invoke npm's JavaScript entry point through Node; npm.cmd is not directly
 // executable by spawnSync on Windows. See nodejs.org/api/child_process.html.

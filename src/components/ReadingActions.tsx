@@ -71,7 +71,6 @@ export function ReadingActions({menu, historyContext, onClose, onOpen, onLater, 
     {menu.target.kind !== 'dashboard-item' && <>
      <button role="menuitem" data-agent-action="resource-open" data-destination="tab" onClick={() => navigate('tab')}><Icon name="plus" />Open in new tab</button>
      <button role="menuitem" data-agent-action="resource-open" data-destination="pane" onClick={() => navigate('pane')}><Icon name="compare" />Open in other pane</button>
-     <button role="menuitem" data-agent-action="resource-open" data-destination="pane" onClick={() => navigate('pane')}><Icon name="plus" />Open in new tab in other pane</button>
     </>}
     <button role="menuitem" data-agent-action="choose-destination" onClick={() => setChoosing(true)}><Icon name="panel" />Open in workspace...</button>
    </>}

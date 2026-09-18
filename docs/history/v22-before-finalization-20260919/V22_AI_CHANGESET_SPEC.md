@@ -108,9 +108,9 @@ Full backup restore, database reset/clear, history erasure, rewriting QCM attemp
 
 History rows expose `data-revision-id`; reader panes expose stable pane/history/current IDs; operations expose `data-operation-id`; audit controls expose review ID/status. Existing tree IDs and workspace 1-5 labels are preserved. Important controls retain names such as Version history, Agent Review, Preview ChangeSet, Stage for review, Accept selected operations, Reject ChangeSet and Compare mode. No hidden private-data DOM is added.
 
-## Limits and verification
+## Limits and unresolved verification
 
-Limits are exported from the same `HISTORY_LIMITS` object used by validation. There is no silent review/history pruning. Synthetic examples/unit tests cover the public orchestration, not browser durability. The normal-origin runtime suite uses the public module for agent actions, with direct database writes restricted to explicitly labeled pre-application migration fixture setup. Integrated module sharing, real transactions and the documented responsive matrix passed QA; see [V22_QA_REPORT.md](V22_QA_REPORT.md) for exact scope and limits. A future bridge still requires its own authorization boundary.
+Limits are exported from the same `HISTORY_LIMITS` object used by validation. There is no silent review/history pruning. Synthetic examples/unit tests cover the public orchestration, not browser durability. The normal-origin runtime suite uses the public module for agent actions, with direct database writes restricted to explicitly labeled pre-application migration fixture setup. Integrated module sharing, real transactions and responsive visual behavior remain blocked/unverified here; consult the release evidence before enabling a bridge or integrating this candidate.
 
 ## Manifest field anchors
 

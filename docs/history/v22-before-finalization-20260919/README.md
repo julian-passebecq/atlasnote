@@ -1,10 +1,10 @@
-**Current delivery:** V2.2 verified QA candidate. Read [START_HERE.md](START_HERE.md).
+**Current delivery:** V2.2 completion coding pass; QA/build execution deferred. Read [START_HERE.md](START_HERE.md). Older release claims below are historical.
 
 # AtlasNote V2.2.0 - local-first knowledge reader
 
 AtlasNote keeps the existing Notebook, PDF, structured-SVG Cheatsheet, Article and QCM readers inside five independent workspaces. V2.2 adds immutable logical-resource versions, historical A/B Compare, restore-as-new, reviewed provider-neutral ChangeSets and full-history backups.
 
-The QA head `215b60ff792a59e736b2b059a4e3fc60f1092d54` on `newversion2.2vfmanual` records **50/50 release gates, 813 unit tests and 15/15 expanded normal-origin browser scenarios passing**. See [V22_QA_REPORT.md](V22_QA_REPORT.md) for repairs, retained failures and coverage limits. The user-approved canonical single-ID Article/QCM invariant remains; independent wrapper/document IDs are outside V2.2. Nothing was merged or deployed.
+**This delivery is a candidate, not a production-cleared release.** Compatibility tests pass; integrated dependency/build and real-browser checks remain blocked. See `START_HERE.md` and `V22_TEST_EVIDENCE.md` for exact evidence and limitations.
 
 ```sh
 npm ci
@@ -12,7 +12,7 @@ npm run build
 npm run preview
 ```
 
-Use Node >=22.12 and the existing lockfile. For release verification install `requirements-test.txt`, `requirements-pdf-authoring.txt` and Playwright Chromium, then run `npm run test:release`. The offline bootstrap/build is a separately labeled compatibility fallback, never production PDF proof.
+Use Node >=22.12 and the existing lockfile. For release verification install `requirements-test.txt` and Playwright Chromium, then run `npm run test:release`. The offline bootstrap/build is a separately labeled compatibility fallback, never production PDF proof.
 
 ## Version History and Agent Review
 
@@ -22,4 +22,4 @@ Open a resource, then use **Version history** on the right rail. Open any immuta
 
 Settings' complete workspace backup includes current content, history, review audit and historical local attachments. Source ZIPs and GitHub clones do not contain a reader's private workspace database.
 
-Current documentation: `docs/ARCHITECTURE_INDEX.md`. Earlier release reports are preserved under `docs/history/`.
+Current documentation: `docs/ARCHITECTURE_INDEX.md`. Earlier release reports are preserved under `docs/history/` and their original paths.
