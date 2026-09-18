@@ -42,7 +42,7 @@ with sync_playwright() as pw:
   close_panels(p);p.keyboard.press('Control+k');p.get_by_label('Search all pages and glossary',exact=True).fill(title);p.locator('.search-result').filter(has_text=title).first.click();expect(p.locator('.active-pane')).to_be_visible()
  def layout():
   reset();labels=p.locator('.sidebar-navigation>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert len(labels)==7,labels;assert labels[1:]==['Global search','Back in active tab','Forward in active tab','Quick Capture','Open Dashboard','Compare in two panes'],labels
-  rail=p.locator('.reader-rail');rs=rail.locator(':scope>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert rs==['Enter focus mode','Open context panel','Open bookmarks','Open read later','Export to AI','Theme','More / Settings'],rs
+  rail=p.locator('.reader-rail');rs=rail.locator(':scope>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert rs==['Enter focus mode','Open context panel','Open bookmarks','Open read later','Version History','Export to AI','Theme','More / Settings'],rs
   assert rail.get_by_role('button',name='Quick Capture',exact=True).count()==0;assert rail.get_by_role('button',name='Open Dashboard',exact=True).count()==0
   dock=rail.locator('.workspace-dock');assert dock.locator(':scope>button').first.get_attribute('aria-label')=='Open an empty workspace';assert p.locator('.pane-identity').count()==0;return {'ribbon':labels,'rail':rs}
  check('Exact ribbon/rail ownership, workspace plus ordering, single-pane identity',layout)
