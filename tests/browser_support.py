@@ -45,7 +45,7 @@ def synthetic_data():
     const schemas=await loadSchemas(n=>fs.readFile('src/content/schemas/'+n,'utf8'));
     console.log(JSON.stringify(await Promise.all(['1.0.0','1.1.0'].map(async v=>readWorkspace((await unzipBounded(new Uint8Array(await fs.readFile('tests/fixtures/atlas-audit-stress-library-'+v+'.zip')))).files,schemas)))));
     """
-    return json.loads(subprocess.check_output(['node', '--input-type=module', '-e', script], cwd=ROOT, text=True))
+    return json.loads(subprocess.check_output(['node', '--input-type=module', '-e', script], cwd=ROOT, text=True, encoding='utf-8'))
 
 def mount_dom(page, base, controls_visible=True):
     page.set_content(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><base href="{base}"><link rel="stylesheet" href="styles/app.css"></head><body><div id="root"></div></body></html>')

@@ -1,3 +1,5 @@
+**Current delivery:** V2.2 completion coding pass; QA/build execution deferred. Read [START_HERE.md](START_HERE.md). Older release claims below are historical.
+
 # AtlasNote V2.2.0 - local-first knowledge reader
 
 AtlasNote keeps the existing Notebook, PDF, structured-SVG Cheatsheet, Article and QCM readers inside five independent workspaces. V2.2 adds immutable logical-resource versions, historical A/B Compare, restore-as-new, reviewed provider-neutral ChangeSets and full-history backups.

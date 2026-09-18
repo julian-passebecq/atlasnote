@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "release": "2.2.0",
+  "candidate": "v22-completion-coding-pass-1",
+  "date": "2026-09-18",
+  "baselineCommitRecordedByInput": "60db2cb7504503ac416ddad940441e24f82266b1",
+  "currentCommit": null,
+  "status": "CODE_UPDATED_QA_DEFERRED_NOT_RELEASE_CERTIFIED",
+  "execution": {
+    "dependencyInstall": "NOT_RUN_USER_DEFERRED",
+    "typecheck": "NOT_RUN_USER_DEFERRED",
+    "unitTests": "NOT_RUN_USER_DEFERRED",
+    "browserQA": "NOT_RUN_USER_DEFERRED",
+    "build": "NOT_RUN_USER_DEFERRED",
+    "releaseGates": "NOT_RUN_USER_DEFERRED"
+  },
+  "remoteWrites": false,
+  "mainMerged": false,
+  "productionDeployed": false,
+  "newRegressionSpecifications": 15,
+  "originalReleaseRunnerCommandCount": 50,
+  "nextAgent": "Codex Light",
+  "nextInstructions": "CODEX_LIGHT_QA_HANDOFF.md",
+  "historicalEvidenceAppliesToCurrentSource": false
+}

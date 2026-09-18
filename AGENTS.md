@@ -14,4 +14,4 @@ Read `START_HERE.md`, `V22_ARCHITECTURE.md`, `V22_MIGRATION_AND_BACKUP.md`, `V22
 - Preserve every meaningful old release assertion. A compatibility test is not a normal-origin IndexedDB or embedded PDF test. Keep failed/blocked logs and do not relax browser policies.
 - No GitHub writes, main merge, deployment or publication of private libraries/backups without a new explicit user request.
 
-Run `npm ci` and `npm run test:release` with the committed Python/browser prerequisites. The current candidate is not release-cleared; see `V22_TEST_EVIDENCE.md`.
+The completion authoring pass explicitly deferred all execution at the user's request. For the next authorized Codex Light QA pass, follow `CODEX_LIGHT_QA_HANDOFF.md`, run all original gates and the added acceptance cases, and preserve failures. Do not claim this source is release-cleared; see `V22_TEST_EVIDENCE.md`.

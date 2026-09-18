@@ -1,252 +1,105 @@
-# V2.2 changed-file inventory
+# V2.2 completion pass - changed files
 
-Baseline: uploaded V2.1.0 ZIP. No Git commit was made.
+Baseline recorded by the supplied complete handoff: `60db2cb7504503ac416ddad940441e24f82266b1`.
 
-Implementation-tree SHA-256: `3ef84015d5d1d24108cf9569ce13def2014362002a82bd603449ecc4404148e3`. The precise hash definition and per-file before/after checksums are in `V22_CHANGED_FILES.json`. Generated evidence is included in the change list but excluded from the implementation identity. This inventory excludes its own two files, build/dependency/cache directories and Python bytecode.
+**Coding only. No application tests, typechecks, browser QA or builds were run.**
 
-Changes: 37 modified, 205 added.
+Exact before/after SHA-256 values are in `V22_COMPLETION_CHANGED_FILES.json`.
+`SOURCE_MANIFEST.json` identifies every delivered payload file except itself.
 
-| File | Change | Bytes |
-| --- | --- | ---: |
-| `AGENTS.md` | modified | 2313 |
-| `README.md` | modified | 1904 |
-| `START_HERE.md` | modified | 2539 |
-| `V22_AI_CHANGESET_SPEC.md` | added | 19506 |
-| `V22_ARCHITECTURE.md` | added | 7860 |
-| `V22_DELIVERY_REPORT.md` | added | 6813 |
-| `V22_MIGRATION_AND_BACKUP.md` | added | 7600 |
-| `V22_TEST_EVIDENCE.md` | added | 11140 |
-| `config/vendor/pdfatlas.library.source.json` | added | 1729 |
-| `config/vendor/pdfatlas.source-provenance.json` | added | 483 |
-| `docs/ARCHITECTURE.md` | modified | 489 |
-| `docs/ARCHITECTURE_INDEX.md` | added | 1029 |
-| `docs/evidence/hardening/dependency-inventory.json` | added | 57434 |
-| `docs/evidence/hardening/pdf-static/syntax.json` | added | 533 |
-| `docs/evidence/hardening/synthetic-roundtrip.json` | added | 313 |
-| `docs/evidence/v22/BROWSER_QA_STATUS.md` | added | 1446 |
-| `docs/evidence/v22/FINAL_STATUS.json` | added | 1661 |
-| `docs/evidence/v22/baseline-preservation.json` | added | 344 |
-| `docs/evidence/v22/compatibility-rechecks/cheatsheets.log` | added | 218 |
-| `docs/evidence/v22/compatibility-rechecks/content.log` | added | 2771 |
-| `docs/evidence/v22/compatibility-rechecks/examples.exit` | added | 2 |
-| `docs/evidence/v22/compatibility-rechecks/examples.log` | added | 174 |
-| `docs/evidence/v22/compatibility-rechecks/headers-offline.log` | added | 1325 |
-| `docs/evidence/v22/compatibility-rechecks/headers-offline/headers.json` | added | 1324 |
-| `docs/evidence/v22/compatibility-rechecks/integrated-build.log` | added | 769 |
-| `docs/evidence/v22/compatibility-rechecks/integrated-typecheck.log` | added | 833 |
-| `docs/evidence/v22/compatibility-rechecks/interviews.log` | added | 145 |
-| `docs/evidence/v22/compatibility-rechecks/local-inventory.log` | added | 9251 |
-| `docs/evidence/v22/compatibility-rechecks/offline-release.log` | added | 2997 |
-| `docs/evidence/v22/compatibility-rechecks/online-syntax.log` | added | 616 |
-| `docs/evidence/v22/compatibility-rechecks/pdfatlas.log` | added | 483 |
-| `docs/evidence/v22/compatibility-rechecks/results.json` | added | 3188 |
-| `docs/evidence/v22/compatibility-rechecks/runtime-compatibility.log` | added | 265 |
-| `docs/evidence/v22/compatibility-rechecks/runtime-compatibility/results.json` | added | 2974 |
-| `docs/evidence/v22/compatibility-rechecks/runtime-syntax.log` | added | 0 |
-| `docs/evidence/v22/compatibility-rechecks/typecheck.log` | added | 51 |
-| `docs/evidence/v22/compatibility-rechecks/unit.exit` | added | 2 |
-| `docs/evidence/v22/compatibility-rechecks/unit.log` | added | 159729 |
-| `docs/evidence/v22/environment/atlasnote_npm_install.log` | added | 270 |
-| `docs/evidence/v22/environment/atlasnote_offline_bootstrap.log` | added | 318 |
-| `docs/evidence/v22/environment/atlasnote_v22_release_runner.log` | added | 52809 |
-| `docs/evidence/v22/pdfatlas-provenance.json` | added | 399 |
-| `docs/evidence/v22/release-gates/agent-unit.log` | added | 1544 |
-| `docs/evidence/v22/release-gates/backup-diagnostic.log` | added | 458 |
-| `docs/evidence/v22/release-gates/cheatsheets-content.log` | added | 218 |
-| `docs/evidence/v22/release-gates/cheatsheets-runtime.log` | added | 733 |
-| `docs/evidence/v22/release-gates/cheatsheets-runtime/results.json` | added | 2166 |
-| `docs/evidence/v22/release-gates/cheatsheets-ui.log` | added | 481 |
-| `docs/evidence/v22/release-gates/clean-install.log` | added | 270 |
-| `docs/evidence/v22/release-gates/compact.log` | added | 505 |
-| `docs/evidence/v22/release-gates/component-harness.log` | added | 1104 |
-| `docs/evidence/v22/release-gates/content-hub-runtime.log` | added | 733 |
-| `docs/evidence/v22/release-gates/content-hub-runtime/results.json` | added | 1797 |
-| `docs/evidence/v22/release-gates/content-hub-ui.log` | added | 539 |
-| `docs/evidence/v22/release-gates/core-typecheck.log` | added | 513 |
-| `docs/evidence/v22/release-gates/dom.log` | added | 427 |
-| `docs/evidence/v22/release-gates/final-polish-runtime.log` | added | 553 |
-| `docs/evidence/v22/release-gates/finish-integrated.log` | added | 4089 |
-| `docs/evidence/v22/release-gates/finish-integrated/results.json` | added | 3999 |
-| `docs/evidence/v22/release-gates/finish-ui.log` | added | 456 |
-| `docs/evidence/v22/release-gates/hardening.log` | added | 448 |
-| `docs/evidence/v22/release-gates/headers.log` | added | 425 |
-| `docs/evidence/v22/release-gates/history-unit.log` | added | 1563 |
-| `docs/evidence/v22/release-gates/integrated-build.log` | added | 769 |
-| `docs/evidence/v22/release-gates/integrated-deps.log` | added | 809 |
-| `docs/evidence/v22/release-gates/integrated-typecheck.log` | added | 551 |
-| `docs/evidence/v22/release-gates/interview-content.log` | added | 145 |
-| `docs/evidence/v22/release-gates/local-inventory.log` | added | 9251 |
-| `docs/evidence/v22/release-gates/npm-audit.log` | added | 306 |
-| `docs/evidence/v22/release-gates/offline-release.log` | added | 3286 |
-| `docs/evidence/v22/release-gates/online-syntax.log` | added | 1081 |
-| `docs/evidence/v22/release-gates/pdf-authoring.log` | added | 974 |
-| `docs/evidence/v22/release-gates/pdf-authoring/active-content.json` | added | 496 |
-| `docs/evidence/v22/release-gates/pdf-authoring/compact-qa/page-0001-after.png` | added | 565742 |
-| `docs/evidence/v22/release-gates/pdf-authoring/compact-qa/page-0001-before.png` | added | 529033 |
-| `docs/evidence/v22/release-gates/pdf-authoring/compact-qa/page-0001-diff.png` | added | 367533 |
-| `docs/evidence/v22/release-gates/pdf-authoring/compact.json` | added | 2895 |
-| `docs/evidence/v22/release-gates/pdf-authoring/duplicate.json` | added | 1487 |
-| `docs/evidence/v22/release-gates/pdf-authoring/encrypted.json` | added | 493 |
-| `docs/evidence/v22/release-gates/pdf-authoring/image-only-qa/page-0001-after.png` | added | 661901 |
-| `docs/evidence/v22/release-gates/pdf-authoring/image-only-qa/page-0001-before.png` | added | 642664 |
-| `docs/evidence/v22/release-gates/pdf-authoring/image-only-qa/page-0001-diff.png` | added | 492962 |
-| `docs/evidence/v22/release-gates/pdf-authoring/image-only.json` | added | 2899 |
-| `docs/evidence/v22/release-gates/pdf-authoring/invalid-cap.json` | added | 483 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-fixed-point-0.json` | added | 3476 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0001-after.png` | added | 108850 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0001-before.png` | added | 108850 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0001-diff.png` | added | 4134 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0002-after.png` | added | 86408 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0002-before.png` | added | 86408 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0002-diff.png` | added | 4134 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0003-after.png` | added | 66843 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0003-before.png` | added | 66843 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0003-diff.png` | added | 4134 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0004-after.png` | added | 65572 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0004-before.png` | added | 65572 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0004-diff.png` | added | 4134 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0005-after.png` | added | 79113 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0005-before.png` | added | 79113 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless-qa/page-0005-diff.png` | added | 4134 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossless.json` | added | 4358 |
-| `docs/evidence/v22/release-gates/pdf-authoring/lossy-missing-qa.json` | added | 595 |
-| `docs/evidence/v22/release-gates/pdf-authoring/non-pdf.json` | added | 449 |
-| `docs/evidence/v22/release-gates/pdf-authoring/over-hard-limit.json` | added | 2428 |
-| `docs/evidence/v22/release-gates/pdf-authoring/over-target.json` | added | 2016 |
-| `docs/evidence/v22/release-gates/pdf-authoring/pdf-authoring-tests.json` | added | 4286 |
-| `docs/evidence/v22/release-gates/pdf-authoring/study-qa/page-0001-after.png` | added | 541216 |
-| `docs/evidence/v22/release-gates/pdf-authoring/study-qa/page-0001-before.png` | added | 529033 |
-| `docs/evidence/v22/release-gates/pdf-authoring/study-qa/page-0001-diff.png` | added | 341815 |
-| `docs/evidence/v22/release-gates/pdf-authoring/study.json` | added | 2893 |
-| `docs/evidence/v22/release-gates/pdf-component.log` | added | 485 |
-| `docs/evidence/v22/release-gates/pdf-grid.log` | added | 475 |
-| `docs/evidence/v22/release-gates/pdf-runtime.log` | added | 4998 |
-| `docs/evidence/v22/release-gates/pdf-runtime/results.json` | added | 4932 |
-| `docs/evidence/v22/release-gates/pdf-wheel.log` | added | 115 |
-| `docs/evidence/v22/release-gates/pdf-wheel/results.json` | added | 2647 |
-| `docs/evidence/v22/release-gates/pdfatlas-provenance.log` | added | 483 |
-| `docs/evidence/v22/release-gates/polish-ui.log` | added | 469 |
-| `docs/evidence/v22/release-gates/public-release.log` | added | 3249 |
-| `docs/evidence/v22/release-gates/reader.log` | added | 502 |
-| `docs/evidence/v22/release-gates/reading-runtime.log` | added | 1915 |
-| `docs/evidence/v22/release-gates/reading-runtime/results.json` | added | 1466 |
-| `docs/evidence/v22/release-gates/reading-ui.log` | added | 506 |
-| `docs/evidence/v22/release-gates/references-runtime.log` | added | 728 |
-| `docs/evidence/v22/release-gates/references-runtime/results.json` | added | 2110 |
-| `docs/evidence/v22/release-gates/references-ui.log` | added | 534 |
-| `docs/evidence/v22/release-gates/references-unit.log` | added | 1571 |
-| `docs/evidence/v22/release-gates/release-blockers-runtime.log` | added | 565 |
-| `docs/evidence/v22/release-gates/release-blockers-runtime/results.json` | added | 262 |
-| `docs/evidence/v22/release-gates/results.json` | added | 10899 |
-| `docs/evidence/v22/release-gates/runtime.log` | added | 202 |
-| `docs/evidence/v22/release-gates/runtime/results.json` | added | 4050 |
-| `docs/evidence/v22/release-gates/saved-states-runtime.log` | added | 498 |
-| `docs/evidence/v22/release-gates/saved-states-runtime/results.json` | added | 1169 |
-| `docs/evidence/v22/release-gates/simplified-ui.log` | added | 515 |
-| `docs/evidence/v22/release-gates/stabilization-runtime.log` | added | 560 |
-| `docs/evidence/v22/release-gates/stabilization-ui.log` | added | 543 |
-| `docs/evidence/v22/release-gates/unit.log` | added | 1499 |
-| `docs/evidence/v22/release-gates/v22-runtime.log` | added | 198 |
-| `docs/evidence/v22/release-gates/v22-runtime/results.json` | added | 1072 |
-| `docs/evidence/v22/release-gates/workspaces-runtime.log` | added | 551 |
-| `docs/evidence/v22/release-gates/workspaces-runtime/results.json` | added | 3645 |
-| `docs/evidence/v22/release-gates/workspaces-ui.log` | added | 534 |
-| `docs/evidence/v22/runtime-compatibility/results.json` | added | 2974 |
-| `docs/examples/v22/INDEX.json` | added | 4109 |
-| `docs/examples/v22/accepted-history.json` | added | 617751 |
-| `docs/examples/v22/capabilities.json` | added | 28405 |
-| `docs/examples/v22/changeset-01.json` | added | 961 |
-| `docs/examples/v22/changeset-02.json` | added | 4958 |
-| `docs/examples/v22/changeset-03.json` | added | 1323 |
-| `docs/examples/v22/changeset-04.json` | added | 41691 |
-| `docs/examples/v22/changeset-05.json` | added | 1966 |
-| `docs/examples/v22/changeset-06.json` | added | 564 |
-| `docs/examples/v22/changeset-07.json` | added | 4957 |
-| `docs/examples/v22/changeset-08.json` | added | 521 |
-| `docs/examples/v22/changeset-09.json` | added | 776 |
-| `docs/examples/v22/changeset-10.json` | added | 628 |
-| `docs/examples/v22/changeset-11.json` | added | 608 |
-| `docs/examples/v22/changeset-12.json` | added | 676 |
-| `docs/examples/v22/changeset-13.json` | added | 645 |
-| `docs/examples/v22/changeset-14.json` | added | 677 |
-| `docs/examples/v22/changeset-15.json` | added | 492 |
-| `docs/examples/v22/changeset-16.json` | added | 733 |
-| `docs/examples/v22/changeset-17.json` | added | 406 |
-| `docs/examples/v22/changeset-18.json` | added | 1010 |
-| `docs/examples/v22/changeset-19.json` | added | 1087 |
-| `docs/examples/v22/changeset-20.json` | added | 895 |
-| `docs/examples/v22/changeset-21.json` | added | 774 |
-| `docs/examples/v22/changeset-22.json` | added | 9686 |
-| `docs/examples/v22/changeset-23.json` | added | 9699 |
-| `docs/examples/v22/initial-context.json` | added | 52402 |
-| `docs/examples/v22/synthetic-v21-schema-2.atlas-backup.zip` | added | 154985 |
-| `docs/examples/v22/synthetic-v21-schema-3.atlas-backup.zip` | added | 155000 |
-| `docs/examples/v22/synthetic-v22-from-2.atlas-backup.zip` | added | 235422 |
-| `docs/examples/v22/synthetic-v22-from-3.atlas-backup.zip` | added | 235458 |
-| `docs/history/v21-entrypoints/AGENTS.md` | added | 1516 |
-| `docs/history/v21-entrypoints/ARCHITECTURE.md` | added | 3260 |
-| `docs/history/v21-entrypoints/README.md` | added | 3089 |
-| `docs/history/v21-entrypoints/START_HERE.md` | added | 2211 |
-| `docs/v22/AUTHORITATIVE_MASTER_PROMPT.md` | added | 23301 |
-| `docs/v22/BASELINE_IDENTITY.json` | added | 495 |
-| `docs/v22/MUTATION_BOUNDARY_AUDIT.md` | added | 2899 |
-| `docs/v22/PDFATLAS_CONTRACT.md` | added | 7032 |
-| `docs/v22/PDFATLAS_MAINTENANCE.md` | added | 1534 |
-| `docs/v22/REQUIRED_RELEASE_GATES.md` | added | 6819 |
-| `docs/v22/UNIVERSAL_AGENT_INTERFACE.md` | added | 10129 |
-| `index.html` | modified | 514 |
-| `package-lock.json` | modified | 45870 |
-| `package.json` | modified | 4416 |
-| `src/agent/AgentReviewUI.tsx` | added | 6515 |
-| `src/agent/model.ts` | added | 2619 |
-| `src/agent/public.ts` | added | 620 |
-| `src/agent/registry.ts` | added | 5445 |
-| `src/agent/service.ts` | added | 27961 |
-| `src/agent/validation.ts` | added | 5831 |
-| `src/app/App.tsx` | modified | 66687 |
-| `src/app/assets.ts` | modified | 1801 |
-| `src/cheatsheets/CheatsheetReader.tsx` | modified | 9538 |
-| `src/companion/tree.ts` | modified | 2736 |
-| `src/components/ReaderRail.tsx` | modified | 7703 |
-| `src/components/SettingsDialog.tsx` | modified | 14425 |
-| `src/components/Tree.tsx` | modified | 18770 |
-| `src/content-hub/QcmReader.tsx` | modified | 9039 |
-| `src/content-hub/content.ts` | modified | 12230 |
-| `src/core/model.ts` | modified | 7455 |
-| `src/core/reading-navigation.ts` | modified | 6490 |
-| `src/core/reading-types.ts` | modified | 1359 |
-| `src/core/startup-route.ts` | modified | 1348 |
-| `src/core/workspace.ts` | modified | 11676 |
-| `src/history/HistoryUI.tsx` | added | 8878 |
-| `src/history/actions.ts` | added | 924 |
-| `src/history/adapters.ts` | added | 9609 |
-| `src/history/backup.mjs` | added | 2379 |
-| `src/history/diff.ts` | added | 3292 |
-| `src/history/engine.ts` | added | 3945 |
-| `src/history/model.ts` | added | 2673 |
-| `src/history/validation.mjs` | added | 12763 |
-| `src/main.tsx` | modified | 829 |
-| `src/references/targets.ts` | modified | 13387 |
-| `src/storage/archives.mjs` | modified | 11549 |
-| `src/storage/database.ts` | modified | 14946 |
-| `src/storage/personal-validation.mjs` | modified | 9373 |
-| `src/storage/reading-validation.mjs` | modified | 5017 |
-| `src/storage/saved-states-validation.mjs` | modified | 3424 |
-| `src/storage/state-validation.mjs` | modified | 6631 |
-| `src/storage/workspace-snapshot.ts` | modified | 957 |
-| `src/styles/app.css` | modified | 304 |
-| `src/styles/history.css` | added | 4115 |
-| `templates/pdf-library/out/atlas-pdf-library.zip` | added | 75172 |
-| `tests/agent-v22.test.mjs` | added | 21733 |
-| `tests/history-v22.test.mjs` | added | 14669 |
-| `tests/v22/fixtures.mjs` | added | 4206 |
-| `tests/v22_runtime.py` | added | 17061 |
-| `tools/build-vite.mjs` | modified | 2362 |
-| `tools/build.mjs` | modified | 1876 |
-| `tools/check-pdfatlas-provenance.mjs` | added | 3504 |
-| `tools/check-release.mjs` | modified | 3077 |
-| `tools/generate-v22-examples.mjs` | added | 7462 |
-| `tools/run-release.mjs` | modified | 4815 |
-| `tools/run-v22-compatibility-checks.mjs` | added | 2132 |
-| `tools/sync-pdfatlas.mjs` | modified | 7164 |
-| `vite.config.mjs` | modified | 880 |
+## Runtime / configuration / authored tests
+
+- `.gitattributes` - modified
+- `package.json` - modified
+- `src/agent/AgentReviewUI.tsx` - modified
+- `src/agent/payload-schema.ts` - added
+- `src/agent/registry.ts` - modified
+- `src/agent/service.ts` - modified
+- `src/agent/validation.ts` - modified
+- `src/app/App.tsx` - modified
+- `src/components/ReaderRail.tsx` - modified
+- `src/components/ReadingActions.tsx` - modified
+- `src/components/Tree.tsx` - modified
+- `src/components/menu-navigation.ts` - added
+- `src/core/reading-navigation.ts` - modified
+- `src/core/reading-types.ts` - modified
+- `src/history/HistoryMenuItems.tsx` - added
+- `src/history/HistoryUI.tsx` - modified
+- `src/history/StructureHistoryView.tsx` - added
+- `src/history/adapters.ts` - modified
+- `src/history/ui-context.ts` - added
+- `src/references/targets.ts` - modified
+- `src/styles/history.css` - modified
+- `tests/browser_support.py` - modified
+- `tests/completion-v22.test.mjs` - added
+- `tests/v22_runtime.py` - modified
+- `tests/workspace_122_runtime.py` - modified
+
+## Reports, preserved requirements and current instructions
+
+- `AGENTS.md` - modified
+- `CHANGED_FILES.md` - modified
+- `CHANGELOG.md` - modified
+- `CODEX_HANDOFF.md` - modified
+- `CODEX_LIGHT_PROMPT.txt` - added
+- `CODEX_LIGHT_QA_HANDOFF.md` - added
+- `FINAL_TEST_STATUS.md` - modified
+- `README.md` - modified
+- `REQUIREMENTS_COVERAGE.md` - modified
+- `START_HERE.md` - modified
+- `V22_AI_CHANGESET_SPEC.md` - modified
+- `V22_ARCHITECTURE.md` - modified
+- `V22_COMPLETION_REPORT.md` - added
+- `V22_DELIVERY_REPORT.md` - modified
+- `V22_EXECUTION_STATUS.json` - added
+- `V22_TEST_EVIDENCE.md` - modified
+- `WORKSPACE_READY_FOR_GITHUB.md` - modified
+- `docs/ARCHITECTURE_INDEX.md` - modified
+- `docs/history/v22-before-completion/FINAL_TEST_STATUS.md` - added
+- `docs/history/v22-before-completion/README.md` - added
+- `docs/history/v22-before-completion/START_HERE.md` - added
+- `docs/history/v22-before-completion/V22_CHANGED_FILES.json` - added
+- `docs/history/v22-before-completion/V22_CHANGED_FILES.md` - added
+- `docs/history/v22-before-completion/V22_DELIVERY_REPORT.md` - added
+- `docs/history/v22-before-completion/V22_TEST_EVIDENCE.md` - added
+- `docs/history/v22-input-complete-handoff/00_START_HERE.md` - added
+- `docs/history/v22-input-complete-handoff/01_CURRENT_STATUS.md` - added
+- `docs/history/v22-input-complete-handoff/02_WORK_TO_FINISH.md` - added
+- `docs/history/v22-input-complete-handoff/03_REPRODUCE_AND_DELIVER.md` - added
+- `docs/history/v22-input-complete-handoff/04_NEXT_TASK_PROMPT.txt` - added
+- `docs/history/v22-input-complete-handoff/AUDIT_REPORT.md` - added
+- `docs/history/v22-input-complete-handoff/README.md` - added
+- `docs/history/v22-input-complete-handoff/V22_COMPLETION_CHECKLIST.md` - added
+- `docs/history/v22-input-complete-handoff/supplemental_checks_portable.py` - added
+- `docs/history/v22-original-final-memory/00_READ_ME_FIRST.md` - added
+- `docs/history/v22-original-final-memory/01_FINAL_V22_CONTRACT.md` - added
+- `docs/history/v22-original-final-memory/02_IMPLEMENTED_STATUS_AND_GAPS.md` - added
+- `docs/history/v22-original-final-memory/03_REQUIRED_FINAL_QA.md` - added
+- `docs/history/v22-original-final-memory/04_NEXT_AI_PROMPT.txt` - added
+- `docs/history/v22-original-final-memory/05_REPOSITORY_AND_ARTIFACT_IDENTITY.md` - added
+- `docs/history/v22-original-final-memory/MANIFEST.txt` - added
+- `docs/history/v22-original-final-memory/README_ARCHIVE.md` - added
+- `docs/history/v22-original-final-memory/SHA256SUMS.txt` - added
+- `docs/history/v22-original-final-memory/reference/END_STATE_ARCHIVE_AND_RECOVERY.md` - added
+- `docs/history/v22-original-final-memory/reference/IMPLEMENTED_ARCHITECTURE.md` - added
+- `docs/history/v22-original-final-memory/reference/IMPLEMENTED_CHANGESET_SPEC.md` - added
+- `docs/history/v22-original-final-memory/reference/IMPLEMENTED_MIGRATION_AND_BACKUP.md` - added
+- `docs/history/v22-original-final-memory/reference/IMPLEMENTED_MUTATION_BOUNDARY_AUDIT.md` - added
+- `docs/history/v22-original-final-memory/reference/PDFATLAS_CONTRACT.md` - added
+- `docs/history/v22-original-final-memory/reference/PRODUCTION_BASELINE.md` - added
+- `docs/history/v22-original-final-memory/reference/PRO_MASTER_PROMPT.md` - added
+- `docs/history/v22-original-final-memory/reference/RELEASE_GATES.md` - added
+- `docs/history/v22-original-final-memory/reference/SUBSYSTEM_MATRIX.md` - added
+- `docs/history/v22-original-final-memory/reference/UNIVERSAL_AGENT_INTERFACE.md` - added
+- `docs/history/v22-original-final-memory/reference/VERSIONING_AGENT_ARCHITECTURE.md` - added
+- `docs/v22/BROWSER_AGENT_SEMANTICS.md` - added
+
+## Generated delivery inventories
+
+- `SOURCE_MANIFEST.json`
+- `V22_CHANGED_FILES.json`
+- `V22_CHANGED_FILES.md`
+- `V22_COMPLETION_CHANGED_FILES.json`
+
+These four generated files are excluded from their own delta enumeration to avoid recursive hashes.
+No removed gate or new dependency is intended; existing historical reports are retained with clear status labels.

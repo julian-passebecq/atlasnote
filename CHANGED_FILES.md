@@ -1,3 +1,5 @@
+**Current change inventory:** `V22_COMPLETION_CHANGED_FILES.json` and `V22_CHANGED_FILES.md`. Older entries below are historical.
+
 # Changed files - V2 stabilization
 
 Comparison is against the exact audited application source tree of upstream `fc41a5a5ac843f228175194b6a679867843530d8`. Four diagnostic-only files already on remote `f366f015` are explicitly retained. No source files are deleted. The source ZIP and external manifest identify the final local commit/tree.

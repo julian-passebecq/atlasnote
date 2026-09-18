@@ -1,3 +1,11 @@
+## V2.2 completion coding candidate - 2026-09-18 (unreleased, untested)
+
+History menus and stable identities; arbitrary revision pairs; ordered/reused A/B
+Compare; safer restore and reviewed-plan selection; readable structure history;
+exact pinned navigation; detached capability envelopes; Windows LF/UTF-8 fixes.
+Fifteen regression specifications added for later execution. No tests/build/QA
+run; no merge/deployment. See `V22_COMPLETION_REPORT.md`.
+
 # AtlasNote V2.1.0 - 2026-09-18
 
 - Finalize the stabilized V2 architecture and UX with compact Dashboard tables, pane-owned reader controls, typed Notebook references, local-first Content Hub authoring, Quick Capture, Reference Lens/Explorer and five independent workspaces.

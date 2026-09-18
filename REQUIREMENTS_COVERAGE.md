@@ -1,3 +1,5 @@
+> Historical baseline document. This coding-pass source is NOT release-certified. Read `START_HERE.md` and `CODEX_LIGHT_QA_HANDOFF.md` for the current status.
+
 # AtlasNote V2 stabilization - requirements coverage
 
 Scope authority: `00_START_HERE/PRO_IMPROVEMENT_PASS.md` from the improvement handoff. This matrix covers that bounded pass, not a redesign of the previous V2 handoff. The previous V2 coverage report is retained under `docs/stabilization/historical-v2-delivery/`.

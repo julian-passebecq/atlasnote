@@ -1,3 +1,5 @@
+> Historical baseline document. This coding-pass source is NOT release-certified. Read `START_HERE.md` and `CODEX_LIGHT_QA_HANDOFF.md` for the current status.
+
 # Workspace ready for manual GitHub integration
 
 ## Identity and baseline

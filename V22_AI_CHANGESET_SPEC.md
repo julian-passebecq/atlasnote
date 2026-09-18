@@ -1,3 +1,15 @@
+## Completion addendum (2026-09-18)
+
+The 25 kinds and atomic ownership model below are unchanged. Capability exports
+now describe payload/target envelopes and real validation modules, including
+`compareRevisions` and all actual system-surface values. Review UI clears stale
+previews, requires re-preview of changed selections, and displays decided audits
+without replay. The exported registry is a detached copy. New or retargeted
+manual-reference/authored-link targets must resolve exactly, while unchanged
+unresolved links are retained. Native tree node creation remains page/folder;
+typed placements use `resource.update` on `notebook-tree:atlas.manual-references`.
+See `V22_COMPLETION_REPORT.md` and `docs/v22/BROWSER_AGENT_SEMANTICS.md`.
+
 # Universal Agent Interface and ChangeSet v1
 
 ## Entry and trust boundary

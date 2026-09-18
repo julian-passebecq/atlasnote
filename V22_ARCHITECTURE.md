@@ -1,3 +1,14 @@
+## Completion coding-pass addendum (2026-09-18)
+
+The shared storage/history architecture below is retained. New UI composition is
+in `history/ui-context.ts`, `history/HistoryMenuItems.tsx`,
+`history/StructureHistoryView.tsx` and `components/menu-navigation.ts`. The agent
+registry now publishes concrete payload envelopes via `agent/payload-schema.ts`
+and returns detached metadata. The existing service has internal mounted-UI
+navigation hooks, ordered/reusable A/B Compare and exact historical-target checks.
+These hooks are not external APIs. Read `docs/v22/BROWSER_AGENT_SEMANTICS.md`.
+All new behavior is unverified pending the Codex Light execution pass.
+
 # V2.2 history and universal agent architecture
 
 ## Baseline and scope

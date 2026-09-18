@@ -1,40 +1,52 @@
-# AtlasNote V2.2.0 candidate - start here
+# AtlasNote V2.2 completion coding pass - START HERE
 
-**Verdict: NOT READY FOR COORDINATOR INTEGRATION.** Implementation and compatibility verification are delivered; integrated dependency installation/build and normal-origin browser verification are blocked in this environment. Read the actual evidence, not older release claims.
+**Status: CODE UPDATED / QA DEFERRED TO CODEX LIGHT / NOT RELEASE-CERTIFIED.**
 
-This continues the uploaded V2.1.0 production source. The supplied archive had no Git metadata: package 2.1.0 and the required final-polish/release-blocker tests were verified. `b50c27a987fa65eee1c51d36225908621e322da7` is the authoritative handoff's expected upstream commit, not independently verified ancestry. No final Git commit, remote write, merge or deployment was made.
+This complete project continues the source from
+`AtlasNote_V2.2_COMPLETE_HANDOFF_2026-09-18.zip`, whose recorded V2.2 base is
+`60db2cb7504503ac416ddad940441e24f82266b1`. It is not a restart from V2.1 or from the
+older incomplete V2.2 source ZIP. The package version remains `2.2.0`; this is a
+new uncommitted candidate, not a claimed V2.2.1 release.
 
-Read in order:
+The user explicitly requested coding rather than test/build/browser execution.
+No dependency install, typecheck, unit test, browser QA, build, release gate,
+GitHub write, merge or deployment was performed for these changes. Prior green
+results belong to the input source, never to this candidate.
 
-1. `V22_DELIVERY_REPORT.md` - implemented scope, verdict and limitations.
-2. `docs/ARCHITECTURE_INDEX.md` and `V22_ARCHITECTURE.md` - current boundaries.
-3. `V22_MIGRATION_AND_BACKUP.md` - IndexedDB 2 -> 3, backup 2/3/4, recovery.
-4. `V22_AI_CHANGESET_SPEC.md` - provider-neutral service, exact bases, human review.
-5. `V22_TEST_EVIDENCE.md` - retained old/new gate results and browser blocker.
-6. `V22_CHANGED_FILES.json` - hashes and changed-file inventory.
+## Read in this order
 
-## Normal development environment
+1. `V22_COMPLETION_REPORT.md`: code changes, scope and boundaries.
+2. `CODEX_LIGHT_QA_HANDOFF.md`: exact commands and outstanding acceptance cases.
+3. `V22_TEST_EVIDENCE.md`: current non-execution status versus historical results.
+4. `docs/v22/BROWSER_AGENT_SEMANTICS.md`: stable controls and public service rules.
+5. `V22_ARCHITECTURE.md`, `V22_MIGRATION_AND_BACKUP.md`,
+   `V22_AI_CHANGESET_SPEC.md`, and the original contracts in `docs/v22/`.
+6. `V22_COMPLETION_CHANGED_FILES.json`: before/after file hashes;
+   `SOURCE_MANIFEST.json`: delivered-source identity.
 
-```sh
-npm ci
-python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
-python -m playwright install chromium
-npm run test:release
-```
+For a low-token next agent, paste `CODEX_LIGHT_PROMPT.txt` and give it this source
+ZIP. Do not ask it to recreate V2.2. The full original 50-command release runner is
+retained, with additional regression specifications included by `npm test`.
 
-The full runner attempts all old and new gates. It must pass in a normal environment before integration. Node >=22.12 is required; dependency versions/lock integrities remain the V2.1 pins. `npm run build` creates the integrated production distribution in `dist/`; `npm run preview` serves it. No production distribution is supplied in this delivery because it could not be built honestly here.
+## Safety and delivery boundary
 
-## Supplied compatibility build
+Do not merge main, deploy, reset a real browser database, publish private PDFs or
+apply a backup automatically. First prove migration/restore with disposable
+profiles and keep the user's existing full backup. V2.1 production identity in the
+input handoff is `b50c27a987fa65eee1c51d36225908621e322da7`; no live repository or
+production state was queried in this coding pass.
 
-```sh
-npm run bootstrap:offline
-npm run build:offline
-npm test
-npm run check:release:offline
-```
+No compiled distribution is included in this new source delivery: rebuilding
+would violate the requested coding-only scope. Do not reuse an older `dist/`
+archive as the build of these source changes. Codex Light must build the integrated
+React/React-PDF application, not substitute `dist-offline`.
 
-This uses the existing compatibility renderer and is not React-PDF/Vite production proof. The separately named `compatibility_build_NOT_PRODUCTION.zip` is for inspection only. Do not put it on production as a substitute for the integrated build.
+Earlier entrypoints and the new input handoff context are retained under
+`docs/history/v22-before-completion/` and
+`docs/history/v22-input-complete-handoff/`. They do not override this status.
 
-Source control is not a backup of a reader's IndexedDB profile. Before trying this candidate on a real profile, download and retain a V2.1 full workspace backup, then test the candidate in a separate browser profile/origin.
+## Retained original instructions
 
-The earlier entry points are preserved in `docs/history/v21-entrypoints/`. Older 1.x/V2 reports remain historical evidence and do not override these V2.2 instructions.
+`docs/history/v22-original-final-memory/` preserves the earlier scope and agent/PDF
+contracts. `docs/history/v22-input-complete-handoff/` preserves the later input
+status. These are historical context, not current execution evidence.

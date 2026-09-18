@@ -1,3 +1,5 @@
+**Superseded entrypoint:** Use `CODEX_LIGHT_PROMPT.txt` and `CODEX_LIGHT_QA_HANDOFF.md` for the current completion source. The content below is historical.
+
 # Codex audit and integration handoff - stabilized V2
 
 Continue this source; do not restart implementation. Read START_HERE.md and FINAL_TEST_STATUS.md first. The only allowed integration branch in this pass is `v2manualupload`. Do not merge PR #13 or deploy production.

@@ -1,0 +1,508 @@
+{
+  "schemaVersion": 1,
+  "candidate": "v22-completion-coding-pass-1",
+  "baselineCommitRecordedByInput": "60db2cb7504503ac416ddad940441e24f82266b1",
+  "inputArchive": "AtlasNote_V2.2_COMPLETE_HANDOFF_2026-09-18.zip",
+  "inputArchiveSha256": "6194c385c48b1e765a4bb5dfa0a0eb4a5b47ab7b7e4f6763d3040ae90dcb9905",
+  "comparison": "Exact unmodified source files extracted from the supplied complete handoff vs this coding-pass source.",
+  "executionStatus": "NOT_RUN_USER_DEFERRED",
+  "exclusions": [
+    "SOURCE_MANIFEST.json",
+    "V22_CHANGED_FILES.json",
+    "V22_CHANGED_FILES.md",
+    "V22_COMPLETION_CHANGED_FILES.json"
+  ],
+  "exclusionReason": "Generated self-referential inventories. SOURCE_MANIFEST.json covers all delivered files except itself.",
+  "countsExcludingGeneratedInventories": {
+    "modified": 33,
+    "added": 48
+  },
+  "changes": [
+    {
+      "path": ".gitattributes",
+      "status": "modified",
+      "beforeSha256": "55929a4258d2b4123ee890533ac508a39bbc29d7a88fa99168ddf67111582ac5",
+      "afterSha256": "48e5827935953b9239992d76638e30261bc3fe8ef3ae3d795aa715ec2eaaaaf6"
+    },
+    {
+      "path": "AGENTS.md",
+      "status": "modified",
+      "beforeSha256": "cf7465b4baa7ef69262b0869f6dd17cb03b03142ae060f87a57b0968f0811525",
+      "afterSha256": "c966aa38852895ac8bc433ed7ba3535b5aebc56d347db6ad6428c52bd6955909"
+    },
+    {
+      "path": "CHANGED_FILES.md",
+      "status": "modified",
+      "beforeSha256": "34121754a977ccc7aba0d641296977fabac55d77af6c1b7e41633f97a1fa455b",
+      "afterSha256": "837baf26312532c7afc072c8b181bce7bf137e2c3322d30b909fbf6cbd95ca56"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "status": "modified",
+      "beforeSha256": "5a0a291e8fb211ebeb558e93af7561fe864c2d977de72a0f1f31b4de29e7269c",
+      "afterSha256": "0c965c6506631ef79d43c00f243297f36eb0cd1b4bd8cdb2b6e65a2414e0d49b"
+    },
+    {
+      "path": "CODEX_HANDOFF.md",
+      "status": "modified",
+      "beforeSha256": "f26dc7ed99b4b0332a2477da72fc2b458e405c0423477198b8ba6e0b3bb49025",
+      "afterSha256": "32055e97ca108f1bab82ff798ed2e521bd7a4df691cc4e7a42503faa092febc3"
+    },
+    {
+      "path": "CODEX_LIGHT_PROMPT.txt",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "2be43f5603f4b6e0aea7e4e413783f63b497ae3de8f9db34267de1fed51756f0"
+    },
+    {
+      "path": "CODEX_LIGHT_QA_HANDOFF.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "67996a4e3a535e80d3332959b8e9b880ff1df27196918264a2769de748e971ee"
+    },
+    {
+      "path": "FINAL_TEST_STATUS.md",
+      "status": "modified",
+      "beforeSha256": "77f48c14e5c5c8a69336d98dc8fa5b3172c83e6f20c7187a29731df7e1d9d5d7",
+      "afterSha256": "b5386838707846aeff3b739461ff4af36280853786813317957f087d24d080f6"
+    },
+    {
+      "path": "README.md",
+      "status": "modified",
+      "beforeSha256": "bde7c1c1da8158965b2c9896040d9e2e5704c2d7356eeb34505a297b8087744c",
+      "afterSha256": "1ba1a0f81e9a0a6de1ccefbe990dd39b4dd8fe405020c843bfa10f8428272364"
+    },
+    {
+      "path": "REQUIREMENTS_COVERAGE.md",
+      "status": "modified",
+      "beforeSha256": "c3834beb6e9c1c3148a0406152bff0de6a963977d5ad7fe70b16f279ebe902c7",
+      "afterSha256": "5b8fce3e78663cbc2cf51f13be92e41ad6b641cec12e6632ff0a2dc46746ce25"
+    },
+    {
+      "path": "START_HERE.md",
+      "status": "modified",
+      "beforeSha256": "7666d88b3c112f9d439c7845149eed83a990d38ea0016113cee930482407ce38",
+      "afterSha256": "9f2471f1d92ea417210fe91743a4387f0c5b6a948ec418bff31fa17241f3a51a"
+    },
+    {
+      "path": "V22_AI_CHANGESET_SPEC.md",
+      "status": "modified",
+      "beforeSha256": "cbffca953bf8408cd8abe48c6d94159e14eedd19037253a7c326e73bcda6a3f9",
+      "afterSha256": "0c75e40bb11093e859cfa926887b56e4903610b0fe0f61c0316ca8dc7a0063f1"
+    },
+    {
+      "path": "V22_ARCHITECTURE.md",
+      "status": "modified",
+      "beforeSha256": "1041059be04a52a81c5ac8a48681a3462d6a94a7530bf5ade61f192ba17cd9d0",
+      "afterSha256": "cccfd9f3b6488254af384f77c7e94a33583620afd631ee456a6ba2ea3a095408"
+    },
+    {
+      "path": "V22_COMPLETION_REPORT.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "958f20cd9a0e77a4f9efe36fe20d14abbd4879e83f3142f5188262393ea5e26a"
+    },
+    {
+      "path": "V22_DELIVERY_REPORT.md",
+      "status": "modified",
+      "beforeSha256": "cedfe8db1fc183de766f15d77f9361bc9766af95f41b04ae1cd1839ecc6475ab",
+      "afterSha256": "d9b0203add608e1dcda28273d1aec6269997ba6fd4b1a32d5098bf183f58436d"
+    },
+    {
+      "path": "V22_EXECUTION_STATUS.json",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "e65bc3211fa718155d26657693911bd9fcbbc60f8df2dde7d47fff81ea53577b"
+    },
+    {
+      "path": "V22_TEST_EVIDENCE.md",
+      "status": "modified",
+      "beforeSha256": "fe101349e03ea126f2f87055ddd55f879ad39d6c2fa059d8bbeed27795e3c874",
+      "afterSha256": "f9ed3ea41fa2e58b1e6d984878324e1603ba54160b8e795d53fa5c8c55d99ebf"
+    },
+    {
+      "path": "WORKSPACE_READY_FOR_GITHUB.md",
+      "status": "modified",
+      "beforeSha256": "8cd6d217854c36d8d29d02fbb56febf7ebd8550d0e320ebc2411e991433d771e",
+      "afterSha256": "1fc1757fa378d3cd5465f490553967c5a38f1e04254d96d051cef8919d5ba21b"
+    },
+    {
+      "path": "docs/ARCHITECTURE_INDEX.md",
+      "status": "modified",
+      "beforeSha256": "d87e2ee6f6ce7daa0c39b225f1a53dd1f60a4b072519d161a74566c64101a08f",
+      "afterSha256": "ad8e3905fe490c021934fc8d9c74c29f02b3f142867cf21d743a865d64b9f086"
+    },
+    {
+      "path": "docs/history/v22-before-completion/FINAL_TEST_STATUS.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "77f48c14e5c5c8a69336d98dc8fa5b3172c83e6f20c7187a29731df7e1d9d5d7"
+    },
+    {
+      "path": "docs/history/v22-before-completion/README.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "96400af1a82bf1d5633b137368caf6dee90642769897dffaf4a7b51c5c73fa88"
+    },
+    {
+      "path": "docs/history/v22-before-completion/START_HERE.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "7666d88b3c112f9d439c7845149eed83a990d38ea0016113cee930482407ce38"
+    },
+    {
+      "path": "docs/history/v22-before-completion/V22_CHANGED_FILES.json",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "3fac45e3e3cc1f4184d4d0cb56134258ecff997a03f3baf77ef6cd3059156cfd"
+    },
+    {
+      "path": "docs/history/v22-before-completion/V22_CHANGED_FILES.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "2615581bae48c379dc2329432e1a20d748a6573bdcc519c6273c1de533692f8e"
+    },
+    {
+      "path": "docs/history/v22-before-completion/V22_DELIVERY_REPORT.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "cedfe8db1fc183de766f15d77f9361bc9766af95f41b04ae1cd1839ecc6475ab"
+    },
+    {
+      "path": "docs/history/v22-before-completion/V22_TEST_EVIDENCE.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "fe101349e03ea126f2f87055ddd55f879ad39d6c2fa059d8bbeed27795e3c874"
+    },
+    {
+      "path": "docs/history/v22-input-complete-handoff/00_START_HERE.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "8d928b6437d420921878eedd8d901733db94de97c896a87462cd27f60a6476f9"
+    },
+    {
+      "path": "docs/history/v22-input-complete-handoff/01_CURRENT_STATUS.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "c4e128b7e7d93e276aaebdcb03a46e5f0f03bda416aeef51fcaf85c566660704"
+    },
+    {
+      "path": "docs/history/v22-input-complete-handoff/02_WORK_TO_FINISH.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "f612a3edb7a7adc174072b9088babab1836ead4a342a399d54abf0d57b3c7c93"
+    },
+    {
+      "path": "docs/history/v22-input-complete-handoff/03_REPRODUCE_AND_DELIVER.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "d64ede245ab6bc04e724f99ff078da1758adf0b694040608c1be93ee510a9f71"
+    },
+    {
+      "path": "docs/history/v22-input-complete-handoff/04_NEXT_TASK_PROMPT.txt",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "0c04a8b2c2275b8c098972a20bb5a7d2c594ae3dc096322453bd3dbbcafbc276"
+    },
+    {
+      "path": "docs/history/v22-input-complete-handoff/AUDIT_REPORT.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "ae2e2daa7e9be3efdac9a2065424b6869244a98dfa4a34f516fcacfa231d52fd"
+    },
+    {
+      "path": "docs/history/v22-input-complete-handoff/README.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "55beedcde02058e83de35b1b300e0128dc54ca237289c602fe8875fd92fb4061"
+    },
+    {
+      "path": "docs/history/v22-input-complete-handoff/V22_COMPLETION_CHECKLIST.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "ab5cf3c7a9afcf9181b5c3ace348fcd4bceff60cbcd9c0362a89e4cfe8c8c9f0"
+    },
+    {
+      "path": "docs/history/v22-input-complete-handoff/supplemental_checks_portable.py",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "24b3bdd89409e12d2d47c32064963cda8b40804562fbcd4e253a01684c994590"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/00_READ_ME_FIRST.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "c50c67504aa06da7bc0e65a142e9f9e7e53ea9f0de7cdb385c228d8f4cf4d753"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/01_FINAL_V22_CONTRACT.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "7f0be69367dc46865bebb114a29d5801a6992422c04e93a99588192511cecf3b"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/02_IMPLEMENTED_STATUS_AND_GAPS.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "44967d910ecc9940f02afaea44f16a8ef0c7f4eb403636a59ff05565840789c9"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/03_REQUIRED_FINAL_QA.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "30057d622f222c1f167731c765d52bfb055b0a1b90a01a280ed1cfdf0571c9f3"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/04_NEXT_AI_PROMPT.txt",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "0073759c488c22c96f4eb27400c4a3953bae09a2ad0268e45a909c935baf6de8"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/05_REPOSITORY_AND_ARTIFACT_IDENTITY.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "af3c3beb75c83956bf40ed34988aca6e755c4b23e661b25cd2e77ae2a58d703c"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/MANIFEST.txt",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "755ad46999a1deb94739f2ff91e640f485329e4e6a3040f6babf169c311b21d5"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/README_ARCHIVE.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "f103be760e540d8698fda19289175fe8f2335f483d28e0684fdb2a0b2afdf89b"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/SHA256SUMS.txt",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "9729386f5e6d9a8f8898eb8f873940c49a2bf9790372a4802bae2c335af16c10"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/END_STATE_ARCHIVE_AND_RECOVERY.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "5368f49a03e7967bdc22dcebae5e4c40247c4ef3210192cb3c1ecdbf766fe7ad"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/IMPLEMENTED_ARCHITECTURE.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "1004247f2210edb5d9f698a2f68e2d32519dc86fd8bc0b6f97c3c5e69f7132cd"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/IMPLEMENTED_CHANGESET_SPEC.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "78689d68dd1bcd1e1b210cfe411480224b91b1e549d6ad007e99c816122a7749"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/IMPLEMENTED_MIGRATION_AND_BACKUP.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "801b1a64bb16660231e58f5579864586cf27632334a232ae79245bfa31a8c848"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/IMPLEMENTED_MUTATION_BOUNDARY_AUDIT.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "c9c76896ea05098a81e93fd582dedae5560f02472e367d143ad8609b42e18708"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/PDFATLAS_CONTRACT.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "2e02f9fc8e9ab9cdff9b362833915fdee87e12fb37fca165c85888c5fcb8926d"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/PRODUCTION_BASELINE.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "83766e80456dfbccf7f04ad21479e21d6be83ebabf63cfed0a20585521ac8dad"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/PRO_MASTER_PROMPT.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "58fdfb0b5c031adc4cb42589db9bf64eae65159885241af2ba4ebf7518b489ed"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/RELEASE_GATES.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "89a8d3326ecbd0216555ac15db61b81270cc131b860766be646dff68e45cde3f"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/SUBSYSTEM_MATRIX.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "06943fc4836ebeb7ce0f8d6869da288a3c5c0ed411d56d46372c0551517ef5b2"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/UNIVERSAL_AGENT_INTERFACE.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "d879c30e5af81cea901ab30299cefc5c1dded97779dc68210f013425c7379c78"
+    },
+    {
+      "path": "docs/history/v22-original-final-memory/reference/VERSIONING_AGENT_ARCHITECTURE.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "cfdb4a64670489bf07528fa8dbf9e0c5e3497fe8afad9ad24ccd91ade8fad162"
+    },
+    {
+      "path": "docs/v22/BROWSER_AGENT_SEMANTICS.md",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "1911a2f299cac199e90101fb0262b5911f1b2b29fb8a6d200b288c484b46be71"
+    },
+    {
+      "path": "package.json",
+      "status": "modified",
+      "beforeSha256": "822dbc3752fa9f8e28ff57b9a99d8447248aac396a6ef31c3342656cd44cad4c",
+      "afterSha256": "b75dadfcfe9a16f10154de745ed35742398d7039b433eb520481331750a4efc4"
+    },
+    {
+      "path": "src/agent/AgentReviewUI.tsx",
+      "status": "modified",
+      "beforeSha256": "2f51c1b95e715bc084a1e6ed2beb9396500fb71456165e4ff1ca820ef9a95cd0",
+      "afterSha256": "5b2632ad0a2395b424a85fada2b303d0bf4690238bb2a11126d9b46a201c86cd"
+    },
+    {
+      "path": "src/agent/payload-schema.ts",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "3edc72ab46b04004e93615ea8190a206718cb5f080759b4ea78faee9fa8fd74f"
+    },
+    {
+      "path": "src/agent/registry.ts",
+      "status": "modified",
+      "beforeSha256": "b84c17b34ddd1680791d6a898c4b84077f5c6432a5cc763f5181a008d55e308d",
+      "afterSha256": "fd1e1f255efdfc8e6b290b78e7eefd093cc9c845c8bcd074e0b87af48312ea97"
+    },
+    {
+      "path": "src/agent/service.ts",
+      "status": "modified",
+      "beforeSha256": "b15aec65972ee2a4061f5805e15fc9ef12e6029cae08094f36b32ac2b6a90d8a",
+      "afterSha256": "fe7f9d038f33052152c24e472f2496cab4127af21e4144fcbbf89f9f57d0f08a"
+    },
+    {
+      "path": "src/agent/validation.ts",
+      "status": "modified",
+      "beforeSha256": "819edac16963720289b63b8a9dbeee737e6ceceeed4be5dd7b5d5b4e6aa3d81a",
+      "afterSha256": "ffcfac477d688243d92d31c81a7b1b90947404b127480611a9ee15d499aad6bb"
+    },
+    {
+      "path": "src/app/App.tsx",
+      "status": "modified",
+      "beforeSha256": "40c069f761327891517c1e49758cbc45f4c2275d74386aec8eef0ba377e57fce",
+      "afterSha256": "6e389983553288739e2474e8de1a8c6488b97090c3dffe69b699b84375ed704e"
+    },
+    {
+      "path": "src/components/ReaderRail.tsx",
+      "status": "modified",
+      "beforeSha256": "9ff4dc3be2832473285b576e79f4648c4140dc9a4fa36848b16940a7a6c95f88",
+      "afterSha256": "be3f0592c0f250a81a5055ba3b30f0bb157cf4176426486c58a069622b2ee1f0"
+    },
+    {
+      "path": "src/components/ReadingActions.tsx",
+      "status": "modified",
+      "beforeSha256": "61d1c87073b2b10f2b8e56fcb5677fdb667d442621fc8bb67c35971c089241eb",
+      "afterSha256": "9a3a438b48551efb70cfc10d765ccfd9c9bbbda522f48dea7baf1cc89138a6c7"
+    },
+    {
+      "path": "src/components/Tree.tsx",
+      "status": "modified",
+      "beforeSha256": "5923be98065cb4e432fc6a589f86a40b903f12eecf87f625ca2c520cb4fd1112",
+      "afterSha256": "472aa6fcaa991c29ec3fb87fa18e2fd378f68048c3b51812df29b7cd443f5242"
+    },
+    {
+      "path": "src/components/menu-navigation.ts",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "dff7aa96c7eeede208e5ff05e3498d66446e0446d19df0baaf886bb4530991eb"
+    },
+    {
+      "path": "src/core/reading-navigation.ts",
+      "status": "modified",
+      "beforeSha256": "e400eb47d10cea73e332a4650abed6ed37014f4d0f3ddd28c749b8fa7c15f400",
+      "afterSha256": "23dc97b2e963f0580212b087d18edea15dc033983be03016f7dcdf5ca8c2c5eb"
+    },
+    {
+      "path": "src/core/reading-types.ts",
+      "status": "modified",
+      "beforeSha256": "4b91928a5e06ec763b127150745dc8fa140911308e182b5a2bdfae2233ea829f",
+      "afterSha256": "9b6a416694b3eb7f516ac5c8c40efd77b0cb4e2a2c03dbb69b650620879d8b71"
+    },
+    {
+      "path": "src/history/HistoryMenuItems.tsx",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "d96f0177676825a70c628adc91e9ff132aa07325cbbfa47080997456792c72e5"
+    },
+    {
+      "path": "src/history/HistoryUI.tsx",
+      "status": "modified",
+      "beforeSha256": "376bcc781cc1d7e46773200f7c684e8f148391151ef716a1fb0c10caf012e635",
+      "afterSha256": "dc0d9d0e56cff7186018ba0891ddb8e786ff1321bb446d7b7ab49047972ac688"
+    },
+    {
+      "path": "src/history/StructureHistoryView.tsx",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "bd369fa5a0c00abb415dc30c3177cda74a1c92e7349465cfd22d017a00db9c16"
+    },
+    {
+      "path": "src/history/adapters.ts",
+      "status": "modified",
+      "beforeSha256": "bcf89db5310ad9785e5446e09a1fac9176fa2967a3e62539fbf9129d89f8238c",
+      "afterSha256": "55a4f297d253f835253b0c1b958656200f4fa88116a7af1669a042771ed8db90"
+    },
+    {
+      "path": "src/history/ui-context.ts",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "0187a364ab80996c4f66cc263d15efb0327857bcd3bdbd32bd37eaf3d93ec898"
+    },
+    {
+      "path": "src/references/targets.ts",
+      "status": "modified",
+      "beforeSha256": "ca78ba605444b194b78bc943b398860ae7542a2e9d8b8962b2cc877db98d913a",
+      "afterSha256": "b857b62cf00942279dc6531b34790c802708003e958f43b14e291db2a8f107fd"
+    },
+    {
+      "path": "src/styles/history.css",
+      "status": "modified",
+      "beforeSha256": "03419a48ca3be24c6adebdd528c33574dafc78f7487c0aa02e758c208320c6f8",
+      "afterSha256": "a8bdb35372858a3eeacd1f8f09d34441fbecfc3d92568f6ac19e411985757d4d"
+    },
+    {
+      "path": "tests/browser_support.py",
+      "status": "modified",
+      "beforeSha256": "35c46f970ecd84985081c8acaef53e6f1612c8fcdde9ed7f817469e257e55440",
+      "afterSha256": "ad953ca0aa2df0aa24d3c481e8990c768d53a66d8ee2e3d10617e56181227430"
+    },
+    {
+      "path": "tests/completion-v22.test.mjs",
+      "status": "added",
+      "beforeSha256": null,
+      "afterSha256": "10dcb79c15c1f9623c56244fbd466624613847f52a26432a8647824864ca75ea"
+    },
+    {
+      "path": "tests/v22_runtime.py",
+      "status": "modified",
+      "beforeSha256": "e24d125f738be8bc7aad2b58e5fc5620418c2987692a1b22d7b80f35db578d0d",
+      "afterSha256": "6b606a479fe6b592f8a01da7a45493d4e3dc01707cd8a524d4fcf153d51fc641"
+    },
+    {
+      "path": "tests/workspace_122_runtime.py",
+      "status": "modified",
+      "beforeSha256": "60c964096b84ace7bbbf0f6bcb8c1aa535288e2527c03634f0ca3dd814ebd4ff",
+      "afterSha256": "2c3358bff72bf63e6f4a22b8938ca7fd9ffb0b6b6ceffcb7505eb84c075f1466"
+    }
+  ]
+}
