@@ -92,9 +92,9 @@ with sync_playwright() as pw:
     def top_order():
         reset()
         labels=page.locator('.reader-rail > button').evaluate_all('(xs)=>xs.map(x=>x.getAttribute("aria-label")||x.textContent.trim())')
-        assert labels==['Enter focus mode','Open context panel','Open bookmarks','Open read later','Export to AI','Theme','More / Settings'],labels
+        assert labels==['Enter focus mode','Open context panel','Open bookmarks','Open read later','Version History','Export to AI','Theme','More / Settings'],labels
         return labels
-    check('Compact rail follows the 1.2.5 separate paired actions',['E01'],top_order)
+    check('Compact rail preserves legacy action order with V2.2 Version History inserted',['E01'],top_order)
     for left in [False,True]:
         for right in [False,True]:
             def focus(left=left,right=right):
