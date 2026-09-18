@@ -25,7 +25,7 @@ with sync_playwright() as pw:
  def chrome():
   reset();assert p.locator('.topbar').count()==0;assert button('Hide global topbar').count()==0;assert p.locator('.sidebar-heading').inner_text().strip()==''
   nav=p.locator('.sidebar-navigation button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert nav==['Collapse notebook sidebar','Global search','Back in active tab','Forward in active tab','Quick Capture','Open Dashboard','Compare in two panes'],nav
-  names=p.locator('.reader-rail>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert names[:5]==['Enter focus mode','Open context panel','Open bookmarks','Open read later','Export to AI'],names
+  names=p.locator('.reader-rail>button').evaluate_all('(es)=>es.map(e=>e.getAttribute("aria-label"))');assert names[:6]==['Enter focus mode','Open context panel','Open bookmarks','Open read later','Version History','Export to AI'],names
   classes=p.locator('.pane-tabbar').evaluate('(e)=>[...e.children].slice(0,4).map(x=>x.className)');assert len(classes)==4 and 'pane-new-tab' in classes[0] and classes[1]=='tab-list' and classes[2]=='pane-header-actions' and 'pane-chrome-toggle' in classes[3],classes
   assert p.locator('.pane-tabbar .pane-header-actions').get_by_role('button',name='Quick Book mode',exact=True).is_visible();assert p.locator('.pane-tabbar .pane-header-actions').get_by_role('button',name='Reading mode',exact=True).is_visible()
   assert p.locator('.workspace-dock').get_by_role('button',name='Workspace States',exact=True).is_visible()
