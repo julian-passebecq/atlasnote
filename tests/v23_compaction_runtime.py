@@ -110,7 +110,7 @@ def scenario(browser,context,page,base,out,passed):
     c,p=fresh(browser,base)
     try:
         sec,_,_=prepare(p,out,'concurrent-imports-write',1)
-        p.evaluate("""async()=>{const db=await new Promise((ok,no)=>{const r=indexedDB.open('knowledge-atlas');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);});const tx=db.transaction('imports','readwrite'),st=tx.objectStore('imports'),req=st.openCursor();await new Promise((ok,no)=>{req.onsuccess=ok;req.onerror=()=>no(req.error);});const cur=req.result;if(!cur)throw Error('No import fixture');const x=structuredClone(cur.value);x.hash=String(x.hash)+'-qa';st.put(x,cur.primaryKey);await new Promise((ok,no)=>{tx.oncomplete=ok;tx.onabort=()=>no(tx.error);});db.close();}""")
+        p.evaluate("""async()=>{const db=await new Promise((ok,no)=>{const r=indexedDB.open('knowledge-atlas');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);});const tx=db.transaction('imports','readwrite'),st=tx.objectStore('imports');st.put({manifest:{id:'qa.concurrent.import',version:'1.0.0',title:'QA concurrent import',visibility:'private',assets:[]},projects:[],pages:[],glossary:[],documents:[],assetKeys:[],hash:'qa-concurrent-write'},'qa.concurrent.import');await new Promise((ok,no)=>{tx.oncomplete=ok;tx.onabort=()=>no(tx.error);});db.close();}""")
         expected=p.evaluate(RAW)
         assert_rejected_exact(p,sec,expected,'concurrent-imports-write',passed)
     finally:c.close()
