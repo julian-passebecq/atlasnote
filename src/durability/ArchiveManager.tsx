@@ -3,7 +3,7 @@ import React,{useEffect,useRef,useState,useSyncExternalStore} from '../vendor/re
 import {store} from '../storage/database.js';
 import {captureWorkspaceSnapshot} from '../storage/workspace-snapshot.js';
 import {makeHistoryArchive} from './archive.mjs';
-import {selectSavedArchive,discardSavedSelection} from './ceremony.js';
+import {selectSavedArchive,discardSavedSelection,consumeSavedSelection} from './ceremony.js';
 import {attachArchive,detachArchive,isArchiveAttached,subscribeArchives,archiveAttachmentEpoch} from './registry.js';
 import {getBuildIdentity} from './provenance.js';
 import {download,unzipBounded} from '../storage/archives.mjs';
@@ -41,7 +41,7 @@ export function ArchiveManager({built,assets,resourceKey,disabled=false}:any){
      <details><summary>Exact removal set and byte preview</summary><pre>{JSON.stringify(preview,null,2)}</pre></details>
      <label className="inline-check"><input type="checkbox" aria-label="Confirm saved archive retention" checked={confirmed} disabled={unavailable} onChange={e=>setConfirmed(e.target.checked)}/>I have re-selected the saved archive and will keep it outside this browser. Clearing site data cannot recover an unsaved archive.</label>
     </div>}
-    <button className="primary" data-archive-commit data-durability-action="compact-archive" disabled={COMPACTION_BLOCKED||unavailable||!preview||!confirmed||!ticket.current||!!store.error} onClick={e=>{const ev=e.nativeEvent as Event,receipt=ticket.current;void run(async()=>{if(!receipt)throw Error('Re-select the saved file first.');try{await store.compactArchive(receipt,ev,assets.asset);await attachArchive(candidate.bytes,store.state.history!);setCandidate(undefined);setDownloaded(false);setMessage('Compaction committed atomically. Current content and all heads are unchanged. The saved archive is attached for this session.');}finally{clear();}});}}>3. Compaction blocked pending atomicity QA</button>
+    <button className="primary" data-archive-commit data-durability-action="compact-archive" disabled={COMPACTION_BLOCKED||unavailable||!preview||!confirmed||!ticket.current||!!store.error} onClick={e=>{const ev=e.nativeEvent as Event,receipt=ticket.current;void run(async()=>{if(!receipt)throw Error('Re-select the saved file first.');try{const selection=consumeSavedSelection(receipt,ev);await store.compactArchive(selection,assets.asset);await attachArchive(candidate.bytes,store.state.history!);setCandidate(undefined);setDownloaded(false);setMessage('Compaction committed atomically. Current content and all heads are unchanged. The saved archive is attached for this session.');}finally{clear();}});}}>3. Compaction blocked pending atomicity QA</button>
    </div>}
   </details>
   <label className="file-picker">Attach saved archives or a complete recovery bundle<input aria-label="Attach history archives" type="file" accept=".zip" multiple disabled={unavailable} onChange={e=>{const files=Array.from(e.target.files??[]) as File[];e.target.value='';if(files.length)void run(()=>attachFiles(files));}}/></label>
