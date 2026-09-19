@@ -4,6 +4,7 @@ from pathlib import Path
 from v23_browser_common import *
 
 def prepare(page,out,name):
+    close_panels(page)
     open_settings(page)
     section=page.locator('section[aria-label="History archival and attachments"]')
     section.get_by_text('Prepare a verified history archive',exact=True).click()
