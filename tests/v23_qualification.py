@@ -44,6 +44,9 @@ def recovery(browser,context,page,base,out,passed):
     target=out/'saved-demo.atlas-recovery.zip';pending.value.save_as(str(target))
     choose(page,'Verify backup file',target)
     page.get_by_text('Saved file verified without restoring or changing IndexedDB. This proves these file bytes, not permanent external retention.',exact=True).wait_for()
+    # Bundle creation flushes any pending production reader position before freezing
+    # the backup. Compare restoration to the durable state at that exact boundary.
+    flush(page);saved=persisted(page)
     fresh=browser.new_context(viewport={'width':1440,'height':900},accept_downloads=True)
     try:
         p=fresh.new_page();p.set_default_timeout(12000);p.goto(base,wait_until='networkidle');p.wait_for_selector('.atlas-app');flush(p)
@@ -53,7 +56,26 @@ def recovery(browser,context,page,base,out,passed):
         p.get_by_label('I understand that this replaces the current local workspace.',exact=True).check()
         p.get_by_role('button',name='Restore verified backup',exact=True).click();p.wait_for_timeout(300);flush(p)
         restored=persisted(p)
-        def first_diff(a,b,path='        assert persisted(p)['history']==saved['history']
+        def first_diff(a,b,path='$'):
+            if type(a)!=type(b): return {'path':path,'savedType':type(a).__name__,'restoredType':type(b).__name__,'saved':a,'restored':b}
+            if isinstance(a,dict):
+                if set(a)!=set(b): return {'path':path,'savedKeys':sorted(a),'restoredKeys':sorted(b)}
+                for key in sorted(a):
+                    d=first_diff(a[key],b[key],path+'.'+key)
+                    if d:return d
+                return None
+            if isinstance(a,list):
+                if len(a)!=len(b):return {'path':path,'savedLength':len(a),'restoredLength':len(b)}
+                for i,(x,y) in enumerate(zip(a,b)):
+                    d=first_diff(x,y,path+'['+str(i)+']')
+                    if d:return d
+                return None
+            return None if a==b else {'path':path,'saved':a,'restored':b}
+        for key in ['imports','overlays','assets','history']:
+            if restored[key]!=saved[key]:
+                raise AssertionError(key+': '+json.dumps(first_diff(saved[key],restored[key]),default=str,sort_keys=True))
+        p.reload(wait_until='networkidle');p.wait_for_selector('.atlas-app');flush(p)
+        assert persisted(p)['history']==saved['history']
         open_settings(p);p.locator('[data-durability-action="integrity"]').click()
         p.get_by_text('Read-only integrity check passed. Nothing was repaired or changed.',exact=True).wait_for()
         passed('Downloaded opt-in demo recovery verified, restored in fresh profile and persisted after reload',scope='Live history only; no archived descriptor/asset reachability proof')
