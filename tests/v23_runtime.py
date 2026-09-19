@@ -1,4 +1,4 @@
-"""Integrated read-only archive ceremony; production compaction remains disabled."""
+"""Integrated archive authorization on the non-production compaction candidate."""
 from v23_browser_common import *
 
 def scenario(browser,context,page,base,out,passed):
@@ -36,11 +36,15 @@ def scenario(browser,context,page,base,out,passed):
     passed('One-byte alteration rejected with all five stores and asset bytes unchanged')
     choose(page,'Re-select saved archive',correct)
     section.locator('[data-durability-preview]').wait_for()
-    page.get_by_label('Confirm saved archive retention',exact=True).check()
-    assert section.locator('[data-durability-action="compact-archive"]').is_disabled()
+    button=section.locator('[data-durability-action="compact-archive"]')
+    assert button.is_disabled()
+    confirmation=page.get_by_label('Confirm saved archive retention',exact=True)
+    confirmation.check();assert button.is_enabled()
+    confirmation.uncheck();assert button.is_disabled()
+    confirmation.check();assert button.is_enabled()
     assert page.evaluate(RAW)==before
     trusted=page.evaluate('window.__qaTrustedSelections');assert len(trusted)==3 and all(trusted)
-    passed('Native saved-file re-selection verifies; confirmation cannot enable unqualified deletion',trustedEvents=trusted)
+    passed('Native saved-file re-selection and explicit confirmation jointly authorize the qualified writer; neither writes by itself',trustedEvents=trusted)
     page.screenshot(path=str(out/'archive-ceremony.png'),full_page=True)
 
 if __name__=='__main__':
