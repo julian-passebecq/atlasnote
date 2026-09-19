@@ -1,4 +1,6 @@
-import {COMPACTION_BLOCK_REASON} from '../durability/release-state.js';
+import {COMPACTION_BLOCKED,COMPACTION_BLOCK_REASON} from '../durability/release-state.js';
+import {planCompaction} from '../durability/archive.mjs';
+import {consumeSavedSelection} from '../durability/ceremony.js';
 import {clearArchiveAttachments} from '../durability/registry.js';
 import {preflightStorage,workspaceImportBytes} from '../durability/storage-health.mjs';
 import {validateHubOverlays,validateHubPersonal} from '../content-hub/validation.mjs';
@@ -69,6 +71,39 @@ export async function restoreWorkspace(ws:Workspace){
  await commitProjection(next,previous.history!,STORES,true);return next;
 }
 export async function rawRecovery(){const db=await openDatabase(),tx=db.transaction(STORES,'readonly');return Object.fromEntries(await Promise.all(STORES.map(async n=>[n,await request(tx.objectStore(n).getAll())])));}
+
+function exactStoredValue(a:any,b:any):boolean{
+ if(Object.is(a,b))return true;
+ if(a instanceof Date||b instanceof Date)return a instanceof Date&&b instanceof Date&&a.getTime()===b.getTime();
+ if(a instanceof ArrayBuffer||b instanceof ArrayBuffer){if(!(a instanceof ArrayBuffer&&b instanceof ArrayBuffer)||a.byteLength!==b.byteLength)return false;const x=new Uint8Array(a),y=new Uint8Array(b);for(let i=0;i<x.length;i++)if(x[i]!==y[i])return false;return true;}
+ if(ArrayBuffer.isView(a)||ArrayBuffer.isView(b)){if(!(ArrayBuffer.isView(a)&&ArrayBuffer.isView(b))||a.constructor!==b.constructor||a.byteLength!==b.byteLength)return false;const x=new Uint8Array(a.buffer,a.byteOffset,a.byteLength),y=new Uint8Array(b.buffer,b.byteOffset,b.byteLength);for(let i=0;i<x.length;i++)if(x[i]!==y[i])return false;return true;}
+ if(Array.isArray(a)||Array.isArray(b))return Array.isArray(a)&&Array.isArray(b)&&a.length===b.length&&a.every((v,i)=>exactStoredValue(v,b[i]));
+ if(a&&b&&typeof a==='object'&&typeof b==='object'){if(a instanceof Blob||b instanceof Blob)return false;const ak=Object.keys(a).sort(),bk=Object.keys(b).sort();return ak.length===bk.length&&ak.every((k,i)=>k===bk[i]&&exactStoredValue(a[k],b[k]));}
+ return false;
+}
+function exactRawState(a:RawState,b:RawState){return STORES.every(name=>exactStoredValue(a[name]?.keys,b[name]?.keys)&&exactStoredValue(a[name]?.values,b[name]?.values));}
+async function commitCompactionTransaction(expected:RawState,descriptor:any,preview:any,nextMeta:any){
+ const db=await openDatabase(),tx=db.transaction(STORES,'readwrite');
+ await new Promise<void>((resolve,reject)=>{
+  let finished=false,readCount=0,abortReason:Error|undefined;const raw:any={};
+  tx.oncomplete=()=>{finished=true;resolve();};
+  tx.onabort=()=>{if(!finished)reject(abortReason??tx.error??Error('Storage transaction aborted'));};
+  const ready=()=>{if(++readCount!==STORES.length*2)return;try{
+    if(!exactRawState(expected,raw)){abortReason=Error('Stored workspace changed after saved-file verification. Prepare, save and re-select a new archive.');tx.abort();return;}
+    const history=tx.objectStore('history'),assets=tx.objectStore('assets');
+    history.add(descriptor,'archive:'+descriptor.archiveId);
+    for(const id of preview.revisionIds)history.delete('revision:'+id);
+    for(const id of preview.reviewIds)history.delete('review:'+id);
+    for(const key of preview.assetKeys)assets.delete(key);
+    history.put(nextMeta,'meta');
+   }catch(e){abortReason=e instanceof Error?e:Error(String(e));try{tx.abort();}catch{}}
+  };
+  for(const name of STORES){const store=tx.objectStore(name),keysReq=store.getAllKeys(),valuesReq=store.getAll();raw[name]={};
+   keysReq.onsuccess=()=>{raw[name].keys=keysReq.result;ready();};
+   valuesReq.onsuccess=()=>{raw[name].values=valuesReq.result;ready();};
+  }
+ });
+}
 export class WorkspaceStore{
  state:Workspace={...blankWorkspace(),personal:preparePersonal(blankWorkspace().personal)};error='';saving=0;private listeners=new Set<()=>void>();private queue=Promise.resolve();private reviewPreparing=false;
  subscribe=(fn:()=>void)=>{this.listeners.add(fn);return ()=>{this.listeners.delete(fn);};};getSnapshot=()=>this.state;
@@ -108,8 +143,18 @@ export class WorkspaceStore{
  get unsafeClose(){return this.saving>0||!!this.error;}
  /** No destructive history API ships until the real browser fault matrix passes.
   * An agent, synthetic event, console call, env flag or receipt cannot enable it. */
- async compactArchive(_ticket:object,_event:Event,_resolveAsset:(key:string)=>Promise<Asset|undefined>){
-  throw Error(COMPACTION_BLOCK_REASON);
+ async compactArchive(ticket:object,event:Event,resolveAsset:(key:string)=>Promise<Asset|undefined>){
+  if(COMPACTION_BLOCKED)throw Error(COMPACTION_BLOCK_REASON);
+  await this.flush();if(this.error)throw Error('Resolve the storage warning before compacting history.');
+  return this.enqueue(async()=>{this.reviewPreparing=true;try{
+   const receipt=consumeSavedSelection(ticket,event),before=this.state,history=before.history;
+   if(!history)throw Error('History is not initialized.');
+   const plan=await planCompaction(before,receipt.archive,builtSource.packs,captureResources(compose(builtSource,before),before),resolveAsset);
+   if(plan.previewHash!==receipt.previewHash)throw Error('Compaction preview changed. Prepare, save and re-select a new archive.');
+   await commitCompactionTransaction(receipt.rawState,receipt.archive.descriptor,plan.preview,plan.workspace.history!.meta);
+   const persisted=await readIntegrityWorkspace();await validateHistory(persisted.history!,persisted.assets,true);await assertProjection(compose(builtSource,persisted),persisted);
+   this.state={...persisted,generation:this.state.generation+1};this.error='';this.emit();
+  }finally{this.reviewPreparing=false;}},false);
  }
 }
 
@@ -117,7 +162,7 @@ function preparePersonal(p:Personal):Personal{const repaired=repairAbsentPersona
 export const store=new WorkspaceStore();
 
 // Read all five stores from one consistent readonly transaction.
-type RawState=Record<string,{keys:IDBValidKey[];values:any[]}>;
+export type RawState=Record<string,{keys:IDBValidKey[];values:any[]}>;
 async function readRawState(tx:IDBTransaction):Promise<RawState>{return Object.fromEntries(await Promise.all(STORES.map(async name=>{const store=tx.objectStore(name),[keys,values]=await Promise.all([request(store.getAllKeys()),request(store.getAll())]);return [name,{keys,values}];})));}
 /** Strict read-only normalization also checks record keys, not merely values.
  * It never repairs, rewrites or discards an unknown durable record. */
@@ -136,6 +181,11 @@ export function workspaceFromStoredRecords(raw:RawState):Workspace {
 export async function readIntegrityWorkspace():Promise<Workspace>{
  const db=await openDatabase();if(Array.from(db.objectStoreNames).sort().join(',')!==[...STORES].sort().join(','))throw Error('Unexpected database stores; nothing was changed.');
  return workspaceFromStoredRecords(await readRawState(db.transaction(STORES,'readonly')));
+}
+export async function captureCompactionState():Promise<{raw:RawState;workspace:Workspace}>{
+ const db=await openDatabase();if(Array.from(db.objectStoreNames).sort().join(',')!==[...STORES].sort().join(','))throw Error('Unexpected database stores; compaction was not prepared.');
+ const tx=db.transaction(STORES,'readonly'),done=complete(tx),raw=await readRawState(tx);await done;
+ return {raw:structuredClone(raw),workspace:workspaceFromStoredRecords(raw)};
 }
 // Browsers may suppress the prompt unless a user has interacted. This is a last
 // chance warning, never a claim that unload can finish asynchronous persistence.
