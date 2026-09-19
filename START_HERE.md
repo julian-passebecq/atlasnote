@@ -1,20 +1,31 @@
-# AtlasNote V2.3 durability/access candidate - BLOCKED
+# AtlasNote V2.3 final-finish candidate - BLOCKED
 
-Baseline: `5202f8a2afa388192789349307c9436c3c4403e2`.
-Local branch: `final/atlasnote-2.3-durability-access`.
-Read `V23_DURABILITY_ACCESS_RELEASE_REPORT.md` and `docs/v23/QA_MATRIX.md` first.
+Use `final/atlasnote-2.3-pro-finish` in `julian-passebecq/atlasnote`.
+It starts exactly from consolidated commit
+`84b8ba2addbfe3cb2527dc4a57039416ceabbb52`, not main or an older upload branch.
+The exact delivered head SHA/tree are recorded in the external `CANDIDATE.json`.
 
-This is the safety-bounded archive/read-only attachment fallback, not a completed release.
-Destructive compaction is not in the production database implementation. No bypass
-can enable it. Exact candidate commit and checksums are in the external delivery
-manifest; a Git bundle/patch preserves the baseline-parent relationship.
+Read `V23_DURABILITY_ACCESS_RELEASE_REPORT.md`,
+`docs/v23/FINAL_FINISH_REPORT.md`, `docs/v23/QA_MATRIX.md` and
+`docs/v23/FINALIZATION.md` before continuing.
 
-Use the source in an actual Git checkout (or restore the included bundle) before
-building, so provenance is exact. Integrated path: Node >=22.12, `npm ci`,
-`npm run typecheck:online`, `npm run build`. Preserve failures from all gates.
-Offline bootstrap/build is compatibility-only; do not publish dist-offline or a static
-ZIP without the Netlify Edge Functions. No production deployment/secret was configured.
+The native atomic compactor and consolidated recovery implementation are PRESENT and
+unchanged. Positive commit/reload, all 13 required fault cases, all four committed
+capacity recoveries, archived comparison/restore and historical private-PDF recovery
+have real normal-origin browser evidence. Do not redesign or replace the writer.
 
-The five Subjects, five content types, five workspaces, A/B readers, canonical
-Article/QCM identity and immutable PDFAtlas/history/Agent contracts are retained.
-V22_QA_REPORT.md is historical evidence for the released baseline, NOT V2.3 certification.
+Release remains BLOCKED until configured HTTPS/provider/session/cleanup qualification
+and every required gate pass on the same exact SHA. No exit 2 is success. Three Edge
+Functions or a built preview are not release approval. No production key/deploy is
+part of this pass. Do not merge main or tag.
+
+The source ZIP is the full candidate tree for inspection. Prefer fetching the exact
+GitHub branch/commit for implementation so ancestry and build provenance are retained.
+A manual re-upload changes the commit SHA and requires a new build/qualification.
+Node >=22.12: `npm ci`, `npm run typecheck:online`, `npm run build`.
+The offline build is compatibility-only. Never publish a static ZIP without the Netlify
+Edge Functions. The final package distinguishes full CI artifacts from any downloadable
+reference-build exclusions; use the source build to reproduce complete runtime assets.
+
+The five Subjects/content types/workspaces, A/B readers, canonical Article/QCM identity,
+immutable history, reviewed Agent and PDFAtlas contracts remain intact.

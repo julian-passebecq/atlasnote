@@ -1,4 +1,4 @@
-**Current delivery: V2.3 BLOCKED durability/access candidate.** Read [START_HERE.md](START_HERE.md) and [the V2.3 report](V23_DURABILITY_ACCESS_RELEASE_REPORT.md). Destructive compaction is absent pending real-browser safety proof. The notes below describe the released V2.2 baseline, not V2.3 certification.
+**Current delivery: V2.3 BLOCKED final-finish candidate.** Read [START_HERE.md](START_HERE.md) and [the current V2.3 report](V23_DURABILITY_ACCESS_RELEASE_REPORT.md). The consolidated native atomic compactor is present and unchanged; normal-origin compaction, capacity and recovery evidence is recorded by exact SHA. Configured HTTPS/provider qualification remains required before release. The notes below describe the released V2.2 baseline, not V2.3 certification.
 
 # AtlasNote V2.2.0 - local-first knowledge reader
 
