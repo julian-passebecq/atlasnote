@@ -1,3 +1,4 @@
+import {subscribeArchives,archiveAttachmentEpoch,requireHistoricalRevision} from '../durability/registry.js';
 import {HistoryPanel,ChangeList,RevisionCompareBar,revisionComparison} from '../history/HistoryUI.js';
 import {AgentReviewDialog} from '../agent/AgentReviewUI.js';
 import {StructureHistoryView} from '../history/StructureHistoryView.js';
@@ -72,6 +73,7 @@ export function App({built}:any){
  return <StudyWorkspace key={(ws.personal.activeWorkspaceSlot??1)+':'+(ws.personal.savedStates?.restoreRevision??0)} built={built} toast={toast} setToast={setToast}/>;
 }
 function StudyWorkspace({ built,toast,setToast }: any) {
+    const archiveEpoch=useSyncExternalStore(subscribeArchives,archiveAttachmentEpoch);
     const ws = useSyncExternalStore(store.subscribe, store.getSnapshot), slotId=ws.personal.activeWorkspaceSlot??1, session = activeSession(ws.personal);
     const catalogue = useMemo(() => compose(built, ws), [built, ws.imports, ws.overlays]), catalogueRef = useRef(catalogue);
     catalogueRef.current = catalogue;
@@ -93,7 +95,7 @@ function StudyWorkspace({ built,toast,setToast }: any) {
     const appRef = useRef<HTMLDivElement | null>(null), paneArea = useRef<HTMLDivElement | null>(null), drag = useRef(false), ratioDraft = useRef(session.ratio);
     function notify(text: string, error = false) { setToast({ text, error }); }
     const activeTarget=currentResourceTarget(activeProjection.catalogue,activeLocation),activeResourceKey=activeTarget?resourceKeyForTarget(activeProjection.catalogue,activeTarget):undefined,comparison=revisionComparison(catalogue,ws,session);
-    const historyIndex=useMemo(()=>createHistoryIndex(ws.history),[ws.history]);
+    const historyIndex=useMemo(()=>createHistoryIndex(ws.history),[ws.history,archiveEpoch]);
     function showHistory(id?:string){
       const c=catalogueRef.current,key=id?.includes(':')?id:id?resourceKeyForTarget(c,c.pages.some(p=>p.id===id)?targetForPage(c,id):{kind:'collection',collectionId:id}):activeResourceKey;
       if(key&&store.state.history?.heads.some(h=>h.resourceKey===key)){setPopover(null);setReadingMenu(null);setModal({kind:'history',resourceKey:key});}
@@ -104,7 +106,7 @@ function StudyWorkspace({ built,toast,setToast }: any) {
         captureReaders();await store.flush();
         const api=getAgentInterface(),selected=api.getResource(key,selectedRevisionId);
         const selectedId=selectedRevisionId??selected.head?.revisionId;
-        const revision=store.state.history?.revisions.find(r=>r.resourceKey===key&&r.revisionId===selectedId);
+        const revision=selectedId?requireHistoricalRevision(store.state.history,selectedId):undefined;
         if(!revision?.parentRevisionId)throw Error('This version has no previous version yet.');
         // Resolves the actual parent in live state, including pinned reference menus.
         const previous=api.getResource(key,revision.parentRevisionId);
@@ -430,7 +432,7 @@ function toggleChrome(paneId:string){document.dispatchEvent(new CustomEvent('atl
  </div><footer className="statusbar"><span><span className="status-dot"/> {discoveryCounts.projects} notebooks / {discoveryCounts.pages} {LIBRARY_TYPES.find(t=>t.id===(session.libraryMode??'notes'))?.label} resources / {catalogue.glossary.length} {catalogue.glossary.length === 1 ? 'term' : 'terms'}</span><span>Local workspace <span className="status-separator">/</span> No cloud sync</span></footer>{toast.text && <div className={'toast ' + (toast.error ? 'error' : '')} role={toast.error ? 'alert' : 'status'}>{toast.error ? <Icon name="help"/> : <Icon name="check"/>}<span>{toast.text}</span><IconButton name="close" label="Dismiss message" onClick={() => setToast({ text: '', error: false })}/></div>}
  {session.focus&&<button className="exit-focus" aria-label="Exit focus" onClick={toggleFocus}><Icon name="focus" size={15}/>Exit focus <kbd>Esc</kbd></button>}
  </div>
- {modal?.kind==='history'&&<HistoryPanel key={modal.resourceKey} built={built} workspace={ws} resourceKey={modal.resourceKey} onClose={()=>setModal(null)} notify={notify}/>}
+ {modal?.kind==='history'&&<HistoryPanel key={modal.resourceKey} built={built} assets={assets} workspace={ws} resourceKey={modal.resourceKey} onClose={()=>setModal(null)} notify={notify}/>}
  {modal?.kind==='agent-review'&&<AgentReviewDialog workspace={ws} resourceKey={activeResourceKey} onClose={()=>setModal(null)}/>}
  {modal?.kind==='capture'&&<QuickCapture initialDraft={modal.draft} catalogue={catalogue} contextTarget={modal.target} suggestion={modal.suggestion} onClose={()=>setModal(null)} notify={notify} onArticle={(source,draft)=>setModal({...modal,kind:'content-editor',contentKind:'articles',captureFlow:true,draft,source:resumeArticleDraft(modal.articleDraft,source)})}/>}
  {modal?.kind==='capture-edit'&&<CaptureEditor item={modal.item} catalogue={catalogue} onClose={()=>setModal(null)}/>}

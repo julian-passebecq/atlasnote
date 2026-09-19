@@ -1,3 +1,5 @@
+**V2.3 candidate:** see `v23/ARCHIVE_FORMAT.md`, `v23/ASSET_REACHABILITY.md`, `v23/RECOVERY.md`, `v23/ACCESS_CONTROL.md`, `v23/QA_DEMO.md` and `v23/QA_MATRIX.md`. Status BLOCKED; existing architecture below remains authoritative.
+
 **V2.2 completion addendum:** Read `../START_HERE.md` and `v22/BROWSER_AGENT_SEMANTICS.md`; the current code has not been release-tested.
 
 # Current architecture index - V2.2

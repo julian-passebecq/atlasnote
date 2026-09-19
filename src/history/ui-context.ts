@@ -1,3 +1,5 @@
+import {revisionIdentities} from '../durability/registry.js';
+import type {RevisionIdentity} from '../durability/model.js';
 import type {Catalogue, Workspace} from '../core/model.js';
 import type {ResourceTarget} from '../core/reading-types.js';
 import type {HistoryData, ResourceHead, ResourceRevision, ResourceType} from './model.js';
@@ -5,16 +7,16 @@ import {historicalCatalogue, resourceKeyForTarget} from './adapters.js';
 
 export type HistoryIndex = {
  heads: Map<string, ResourceHead>;
- revisions: Map<string, ResourceRevision>;
- versions: Map<string, ResourceRevision[]>;
+ revisions: Map<string, RevisionIdentity>;
+ versions: Map<string, RevisionIdentity[]>;
 };
 
 /** Build once per committed history snapshot, not once for every visible tree row. */
 export function createHistoryIndex(history?: HistoryData): HistoryIndex {
  const heads = new Map((history?.heads ?? []).map(h => [h.resourceKey, h]));
- const revisions = new Map<string, ResourceRevision>();
- const versions = new Map<string, ResourceRevision[]>();
- for (const revision of history?.revisions ?? []) {
+ const revisions = new Map<string, RevisionIdentity>();
+ const versions = new Map<string, RevisionIdentity[]>();
+ for (const revision of revisionIdentities(history)) {
   revisions.set(revision.revisionId, revision);
   const rows = versions.get(revision.resourceKey) ?? [];
   rows.push(revision);
