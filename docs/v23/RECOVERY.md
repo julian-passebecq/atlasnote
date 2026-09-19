@@ -1,5 +1,14 @@
 # Storage, backup verification and complete recovery
 
+## Finalization evidence status
+The inherited integrated build and V2.2 recovery regression matrix are green at
+66f9387. This candidate leaves all recovery/runtime code unchanged. New normal-origin
+live-demo recovery smoke and explicit complete-archive/private-PDF/reload requirements
+are wired into mandatory CI, but this environment blocks normal-origin Chromium.
+Neither the new test source nor existing pure recovery validation proves complete
+fresh-profile archived recovery. The included integrated build retains its prior SHA;
+a new exact-candidate build and real recovery run remain BLOCKED. See FINALIZATION.md.
+
 ## Database and compatibility
 No database version bump: `knowledge-atlas`, version 3, with exactly imports, overlays,
 personal, assets, history. Thin archive records use `archive:<archiveId>` keys in the

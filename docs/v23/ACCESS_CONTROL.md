@@ -1,8 +1,12 @@
 # Single-owner Netlify Edge access gate
 
-Status: code and Web Crypto tests implemented; provider routing, actual HTTPS cookies,
-rate-limit recognition and integrated production build are NOT certified. Do not deploy
-this BLOCKED candidate to production. No production key or environment was configured.
+Status: **BLOCKED for current finalization**. The inherited exact source passed its
+integrated GitHub build and PR #18 preview reports three deployed Edge Functions.
+Discovery is proven; actual configured HTTPS cookies, logout/rotation/cache isolation,
+all-path denial and rate enforcement are still not certified for this candidate.
+No disposable or production key/environment/deployment was created in this pass.
+The source handlers are unchanged; static declaration validation is now stricter.
+See `FINALIZATION.md` and the current release report for evidence-stage separation.
 
 ## Scope and threat model
 The gate protects the remotely served application shell/assets/deep links, not encryption
@@ -40,7 +44,7 @@ Missing/malformed runtime config, unavailable crypto, invalid/expired/ambiguous 
 or handler errors never continue to static content. Wrappers use `onError:'fail'`, never
 bypass or a static custom error rewrite. Both build commands check function declarations
 and client-secret exclusion before compiling. Removing a function invalidates the build.
-Provider discovery still must be verified; a manually uploaded static dist without Edge
+Provider discovery was verified on the inherited PR #18 preview; a manually uploaded static dist without Edge
 functions would be ungated and is NOT a supported deployment.
 
 No Edge cache opt-in. Authenticated and rejected responses enforce browser/CDN no-store

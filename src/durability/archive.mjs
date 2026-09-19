@@ -2,6 +2,7 @@ import {sha256, stable, assertSafeAsset} from '../core/validation.mjs';
 import {validateHistory, validateRevision, validateReviewRecords, jsonSafe, HISTORY_LIMITS} from '../history/validation.mjs';
 import {unzipBounded, zipFiles} from '../storage/archives.mjs';
 import {keys, validateBuildIdentity, validateDescriptor, descriptorIndex, revisionIdentity, sameDescriptor, isHash} from './descriptor.mjs';
+import {randomUuid} from './uuid.mjs';
 const encode = value => new TextEncoder().encode(stable(value));
 const decode = bytes => JSON.parse(new TextDecoder('utf-8', {fatal:true}).decode(bytes));
 const extension = type => ({'application/pdf':'pdf','image/svg+xml':'svg','image/png':'png','image/jpeg':'jpg','image/webp':'webp','text/plain':'txt'})[type];
@@ -57,7 +58,7 @@ export async function makeHistoryArchive(workspace, provenance, resolveAsset, op
  }
  const revisionShards=shards(selected,'revisions',files),reviewShards=shards(reviews,'reviews',files),fileHashes={};
  for(const [path,bytes] of files)fileHashes[path]=await sha256(bytes);
- const descriptor={kind:'archive',schemaVersion:1,archiveSchema:1,archiveId:'archive.'+crypto.randomUUID(),rootHash:'0'.repeat(64),createdAt:Date.now(),provenance:structuredClone(provenance),sourceEpoch:h.meta.epoch,sourceHistoryHash:await sha256(stable(h)),ranges,assets,reviews:reviews.map(auditIdentity),counts:{revisions:selected.length,reviews:reviews.length,assets:assets.length,assetBytes:assets.reduce((n,a)=>n+a.bytes,0),structuredBytes:encode(selected).length+encode(reviews).length}};
+ const descriptor={kind:'archive',schemaVersion:1,archiveSchema:1,archiveId:'archive.'+randomUuid(),rootHash:'0'.repeat(64),createdAt:Date.now(),provenance:structuredClone(provenance),sourceEpoch:h.meta.epoch,sourceHistoryHash:await sha256(stable(h)),ranges,assets,reviews:reviews.map(auditIdentity),counts:{revisions:selected.length,reviews:reviews.length,assets:assets.length,assetBytes:assets.reduce((n,a)=>n+a.bytes,0),structuredBytes:encode(selected).length+encode(reviews).length}};
  const manifest={format:'atlas-history-archive',archiveSchema:1,descriptor,ancestors,revisionShards,reviewShards,fileHashes};
  descriptor.rootHash=await manifestRoot(manifest);validateDescriptor(descriptor);
  files.set('archive.json',encode(manifest));const bytes=await zipFiles(files,'history-archive');

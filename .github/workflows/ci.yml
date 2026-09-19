@@ -47,6 +47,10 @@ jobs:
       - run: npm run typecheck:online
       - run: npm run build
       - run: npm run check:release
+      # Verify the clean candidate before later example generators alter fixtures.
+      # V2.3 is mandatory. Exit 2 (BLOCKED) is deliberately non-green.
+      # No production credentials or deployment writes run in this workflow.
+      - run: npm run test:v23:release
       - run: npm run build:test-harness
       - run: npm run test:pdf:component
       - run: npm run test:pdf:grid

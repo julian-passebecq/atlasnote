@@ -1,20 +1,13 @@
 # V2.3 qualification matrix A-X
 
-Overall **BLOCKED**. Current finalization starts from exact 66f9387, not main.
-The inherited GitHub integrated matrix is green and PR #18 reports three Edge Functions.
-That corrects the initial environmental claims; it does not certify the new candidate.
-All original run commands are retained. A mandatory V2.3 aggregate is added to CI;
-its present blocked outcomes intentionally prevent a green final release.
-See FINALIZATION.md and the external exact-candidate evidence for current results.
-
-Historical context (initial report retained under history/): Raw initial failures, intermediate repairs and exact-candidate
+Overall **BLOCKED**. Raw initial failures, intermediate repairs and exact-candidate
 reruns are preserved in the delivery evidence. PASS below means only the stated scope;
 it never promotes simulated storage to a real browser proof. Original V2.2 assertions
 and release command list are unchanged. No paid agent or production deployment used.
 
 | Matrix | Implemented evidence | Remaining qualification |
 |---|---|---|
-| A existing gates | inherited 66f9387 GitHub integrated matrix green; current all-tests rerun in delivery | freshly built exact finalization candidate and its complete matrix |
+| A existing gates | original 813 Node tests; full 52-command runner attempted | integrated deps/build, browser gates must pass externally |
 | B migration | empty and populated strict five-store readers; backup 2/3/4 tests | real V2.2 profile, reload, old-tab upgrade and interruption |
 | C storage | unsupported/throwing/unavailable/healthy estimates; persistence variants | real browser API outcomes |
 | D preflight | enough/insufficient/unknown estimates; no preflight mutation | IDB failure after optimistic estimate, exact rollback |
@@ -34,9 +27,9 @@ and release command list are unchanged. No paid agent or production deployment u
 | R demo | opt-in/idempotent, revision counts, synthetic bytes, safe removal | load/reload/compare/archive UI |
 | S icon | separate semantic icons and accessible labels in source | visible/keyboard verification |
 | T access | real Web Crypto + Request/Response tests: key, cookie, expiry, rotation, path, errors | actual browser HttpOnly/Secure enforcement and logout keeps IDB |
-| U Netlify | three wrappers recognized by Netlify on PR #18; stricter static declaration checks added | three functions recognized on inherited preview; current provider cache/cookie/rate enforcement still unqualified |
+| U Netlify | wrappers imported; declaration/error/rate rules checked before build | Netlify CLI discovery, provider manifest/cache/rate enforcement |
 | V layout | four unlock HTML viewport/keyboard cases attempted; app harness separately | all four integrated new-control viewports |
-| W privacy | static graph/distribution secret checks; original ZIP/security tests | scoped final source/present-dist/evidence scan added; fresh candidate dist and provider audit remain required |
+| W privacy | static graph/distribution secret checks; original ZIP/security tests | final production dist/source-map scan, provider config audit |
 | X performance | synthetic 2000-generation/verification/pure-plan timing | actual compaction timing absent by design |
 
 ## Exact commands
@@ -49,10 +42,8 @@ Then restore the separately labeled compatibility dependency fallback:
 `npm run test:v23:capacity`, `npm run test:v23:runtime`, `npm run test:v23:layout`.
 `npm run test:v23:release` runs the added sequence and retains each exit code.
 Normal runtime uses dist by default; a compatibility attempt with ATLAS_DIST=dist-offline
-must be labeled compatibility, never production PDF proof. Required layout now uses the unmodified integrated normal-origin entrypoint at all four sizes.
-The old opaque-origin layout script is retained only as test:v23:layout:diagnostic.
-Compare/recovery/safe-close/compaction/provider/identity/scan now have dedicated mandatory
-commands in tools/v23-release-contract.mjs. Unimplemented proof remains explicitly BLOCKED.
+must be labeled compatibility, never production PDF proof. Layout uses the original
+opaque-origin harness only for DOM/layout, never IndexedDB/secure-cookie claims.
 
 ## Required fault experiment before any compactor can ship
 Use disposable real browser profiles and the exact integrated candidate. Capture every
@@ -78,14 +69,3 @@ confirm HttpOnly cookie not exposed to JavaScript, and verify session expiry/rot
 Test cross-origin and GET unlock/lock, repeated failed unlocks and provider throttle.
 Logout clears cookie, no Clear-Site-Data, IndexedDB bytes identical. Delete/misconfigure
 a middleware in a test checkout and require the build to fail; never deploy the result.
-
-## Exact destructive fault list (no omissions)
-Stale source epoch; stale history hash; stale preview/removal hash; second-tab history;
-concurrent personal, imports and assets; abort during descriptor write; descriptor put
-failure; revision delete failure; closed-review delete failure; asset delete failure;
-quota during transaction. For each, reopen all five stores and compare every key/value
-and raw byte, current projections/heads and pending/staged reviews. Positive success
-must be indivisible and support exact archive attachment and restore-as-new.
-
-These are release-blocking missing proofs, not failing application features claimed
-to have been fixed. The shipping compactor remains absent.

@@ -6,6 +6,7 @@ import {compose} from '../core/workspace.js';
 import {validateHistory} from '../history/validation.mjs';
 import {keys,isHash,validateBuildIdentity} from './descriptor.mjs';
 import {verifyHistoryArchive,assertArchiveAttachment} from './archive.mjs';
+import {randomUuid} from './uuid.mjs';
 import type {Workspace,Asset} from '../core/model.js';
 import type {BuildIdentity,VerifiedArchive} from './model.js';
 const decode=(bytes:Uint8Array)=>JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(bytes));
@@ -26,7 +27,7 @@ export async function createRecoveryBundle(workspace:Workspace,built:any,resolve
  await copy(verified.bytes,'workspace/');
  for(const descriptor of ws.history?.archives??[]){const input=archivePayload(descriptor.archiveId);if(!input)throw Error('Attach the required archive before creating complete recovery: '+descriptor.archiveId);const archive=await verifyHistoryArchive(input);assertArchiveAttachment(ws.history,archive);const prefix='archives/'+String(archives.length).padStart(5,'0')+'/';await copy(archive.bytes,prefix);archives.push({archiveId:descriptor.archiveId,rootHash:descriptor.rootHash,prefix});}
  const hashes:Record<string,string>={};for(const [name,bytes]of files)hashes[name]=await sha256(bytes);
- const unsigned={format:'atlas-complete-recovery',recoverySchema:1,artifactId:'recovery.'+crypto.randomUUID(),createdAt:Date.now(),provenance:structuredClone(provenance),workspace:{prefix:'workspace/',rootHash:verified.backup.rootHash,schema:verified.backup.schemaVersion},archives,files:hashes};
+ const unsigned={format:'atlas-complete-recovery',recoverySchema:1,artifactId:'recovery.'+randomUuid(),createdAt:Date.now(),provenance:structuredClone(provenance),workspace:{prefix:'workspace/',rootHash:verified.backup.rootHash,schema:verified.backup.schemaVersion},archives,files:hashes};
  files.set('recovery.json',new TextEncoder().encode(stable({...unsigned,rootHash:await sha256(stable(unsigned))})));
  const bytes=await zipFiles(files,'complete-recovery');return {...await verifyRecoveryBundle(bytes,built,schemas),bytes};
 }

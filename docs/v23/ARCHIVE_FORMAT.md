@@ -1,12 +1,14 @@
 # AtlasNote V2.3 immutable history archives, schema 1
 
 ## Release boundary
-This candidate is **BLOCKED**, not a completed durability release. Archive generation,
-byte verification, removal previews and exact read-only attachments are implemented.
-Destructive compaction is absent from the production database module. Its public method
-throws; no URL, environment flag, Agent method or console token enables it. A proposed
-transaction is supplied only as unverified, non-shipping review material. A pure
-`planCompaction` result is not a committed transaction or evidence of atomicity.
+This finalization candidate is **BLOCKED**, with the same safe read-only implementation
+as the exact 66f9387 baseline. Archive creation/verification, removal preview and exact
+attachments remain available. No destructive IDB transaction is shipped; the public
+method throws and the commit UI remains disabled even after trusted saved-file selection.
+The new guard test is not rollback proof. All 13 fault cases and four actual capacity
+recovery boundaries remain mandatory, explicitly blocked until real-browser evidence.
+No unverified transaction proposal is promoted into production or included as a working
+compactor. See `FINALIZATION.md` for the full all-five-store proof and exact build rule.
 
 ## Container and manifest
 The format is `atlas-history-archive`, archiveSchema 1, in the existing bounded ZIP

@@ -1,31 +1,53 @@
-"""Normal-origin V23 safety smoke; never substitutes opaque-origin IDB emulation.
-Full destructive I/O qualification remains blocked while production has no compactor.
-"""
-import json, os, traceback, subprocess
-from pathlib import Path
-from playwright.sync_api import sync_playwright
-from browser_support import start_server, launch, open_settings
-OUT=Path(os.environ.get('ATLAS_EVIDENCE','docs/evidence/v23/runtime'));OUT.mkdir(parents=True,exist_ok=True)
-results=[]
-base=start_server(dist=os.environ.get('ATLAS_DIST','dist'))
-try:
- with sync_playwright() as pw:
-  browser=launch(pw);page=browser.new_page(viewport={'width':1440,'height':900},accept_downloads=True);page.set_default_timeout(10000)
-  page.goto(base,wait_until='networkidle');page.wait_for_selector('.atlas-app')
-  state=page.evaluate("async()=>{const {store}=await import('/app/storage/database.js');await store.flush();return {error:store.error,heads:store.state.history.heads,stores:Array.from((await new Promise((ok,fail)=>{const r=indexedDB.open('knowledge-atlas');r.onsuccess=()=>ok(r.result);r.onerror=()=>fail(r.error);})).objectStoreNames)};}")
-  assert not state['error'];assert set(state['stores'])=={'imports','overlays','personal','assets','history'}
-  assert not any('demo.v23' in h['resourceKey'] for h in state['heads'])
-  results.append({'name':'Fresh normal-origin exact five stores and no automatic corpus','status':'PASS'})
-  open_settings(page);page.get_by_text('Optional V2.3 durability demo data',exact=True).click();page.locator('[data-durability-action="load-demo"]').click()
-  page.wait_for_function("async()=>{const {store}=await import('/app/storage/database.js');return !store.saving&&store.state.history.heads.some(h=>h.resourceKey==='notebook-page:demo.v23.notebook'&&h.number===8);}")
-  page.reload(wait_until='networkidle');page.wait_for_selector('.atlas-app')
-  counts=page.evaluate("async()=>{const {store}=await import('/app/storage/database.js');await store.flush();return store.state.history.heads.filter(h=>h.resourceKey.includes(':demo.v23')).map(h=>[h.resourceKey,h.number]);}")
-  assert dict(counts)['notebook-page:demo.v23.notebook']==8
-  results.append({'name':'Optional corpus persisted across actual reload','status':'PASS','counts':counts})
-  page.screenshot(path=str(OUT/'normal-origin.png'),full_page=True);browser.close()
-except Exception as exc:
- results.append({'name':'Normal-origin prerequisite','status':'BLOCKED' if 'ERR_BLOCKED_BY_ADMINISTRATOR' in str(exc) else 'FAIL','error':str(exc),'traceback':traceback.format_exc()})
-for name in ['Real V22 upgrade/reload/old-tab/interrupted migration','IDB import abort after optimistic quota estimate','Trusted chooser saved-file receipt and concurrent writer','Atomic compaction I matrix and capacity recovery O','Fresh-profile complete recovery with historical PDF','Pending-write close/retry/emergency export','Provider Edge route/cache/rate-limit/HTTPS cookie enforcement']:
- results.append({'name':name,'status':'BLOCKED','reason':'Not certified by this safety smoke. Destructive compaction is absent; full normal-origin/provider QA is required. See docs/v23/QA_MATRIX.md.'})
-report={'scope':'Unmodified normal-origin production entry and real IndexedDB only','base':base,'buildDirectory':os.environ.get('ATLAS_DIST','dist'),'results':results}
-(OUT/'results.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2));raise SystemExit(2 if any(r['status']=='BLOCKED' for r in results) else 1 if any(r['status']=='FAIL' for r in results) else 0)
+"""Integrated read-only archive ceremony; production compaction remains disabled."""
+from v23_browser_common import *
+
+def scenario(browser,context,page,base,out,passed):
+    raw=page.evaluate(RAW);assert sorted(raw)==STORES
+    state=persisted(page)
+    assert not any('demo.v23' in h['resourceKey'] for h in state['history']['heads'])
+    passed('Fresh normal-origin exactly five stores; no automatic demo corpus')
+    seed_demo(page);page.reload(wait_until='networkidle');page.wait_for_selector('.atlas-app');flush(page)
+    heads={h['resourceKey']:h['number'] for h in persisted(page)['history']['heads'] if ':demo.v23' in h['resourceKey']}
+    assert heads['notebook-page:demo.v23.notebook']==8
+    passed('Opt-in demo persists across actual reload',heads=heads)
+    open_settings(page)
+    section=page.locator('section[aria-label="History archival and attachments"]')
+    section.get_by_text('Prepare a verified history archive',exact=True).click()
+    page.evaluate("window.__qaTrustedSelections=[];document.addEventListener('change',e=>{if(e.target.getAttribute('aria-label')==='Re-select saved archive')window.__qaTrustedSelections.push(e.isTrusted);},true)")
+    def prepare(retain,name):
+        page.get_by_label('Live versions to retain',exact=True).fill(str(retain))
+        section.locator('[data-durability-action="prepare-archive"]').click()
+        section.locator('[data-archive-id]').wait_for()
+        assert section.get_by_label('Re-select saved archive',exact=True).is_disabled()
+        with page.expect_download() as pending:section.locator('[data-durability-action="download-archive"]').click()
+        target=out/name;pending.value.save_as(str(target))
+        return target
+    older=prepare(2,'saved-retain-2.atlas-history.zip')
+    correct=prepare(3,'saved-retain-3.atlas-history.zip')
+    flush(page);before=page.evaluate(RAW)
+    choose(page,'Re-select saved archive',older)
+    section.get_by_role('alert').wait_for();assert section.locator('[data-durability-preview]').count()==0
+    assert page.evaluate(RAW)==before
+    passed('Different actually saved archive rejected with all five stores unchanged')
+    altered=out/'altered-saved-file.zip';b=bytearray(correct.read_bytes());b[-1]^=1;altered.write_bytes(b)
+    choose(page,'Re-select saved archive',altered)
+    section.get_by_role('alert').wait_for();assert section.locator('[data-durability-preview]').count()==0
+    assert page.evaluate(RAW)==before
+    passed('One-byte alteration rejected with all five stores and asset bytes unchanged')
+    choose(page,'Re-select saved archive',correct)
+    section.locator('[data-durability-preview]').wait_for()
+    page.get_by_label('Confirm saved archive retention',exact=True).check()
+    assert section.locator('[data-durability-action="compact-archive"]').is_disabled()
+    assert page.evaluate(RAW)==before
+    trusted=page.evaluate('window.__qaTrustedSelections');assert len(trusted)==3 and all(trusted)
+    passed('Native saved-file re-selection verifies; confirmation cannot enable unqualified deletion',trustedEvents=trusted)
+    page.screenshot(path=str(out/'archive-ceremony.png'),full_page=True)
+
+if __name__=='__main__':
+    raise SystemExit(run_suite('runtime',scenario,(
+        'V2.2 populated migration and blocked/old-tab/interrupted-upgrade matrix',
+        'Storage estimate and persistence granted/denied/unsupported/error browser matrix',
+        'Actual quota failure after optimistic preflight in a real transaction',
+        'Corrupt persisted fixtures: integrity checker rejects with zero five-store mutation',
+        'Repeated archived lineage after reload and exact attachment',
+    )))
