@@ -101,13 +101,22 @@ export function assertArchiveAttachment(history, archive) {
 }
 /** Conservative ownership: inspect every current/imported/personal domain and
  * retain shared SHA-addressed bytes. Unknown/unrelated orphan assets are not GC. */
-export function liveAssetReachability(ws, retainedRevisions, builtPacks=[], currentResources=[]) {
+export function liveAssetReachability(ws, retainedRevisions, builtPacks=[], currentResources=[], retainedReviews=ws.history?.reviews??[]) {
  const assetIndex=new Map(ws.assets.map(a=>[a.key,a])),allHashes=new Set(ws.assets.map(a=>a.sha256)),keys=new Set(),hashes=new Set();
  const mark=key=>{if(typeof key!=='string')return;keys.add(key);const a=assetIndex.get(key);if(a)hashes.add(a.sha256);};
  const scan=value=>{if(typeof value==='string'){if(assetIndex.has(value))mark(value);if(allHashes.has(value))hashes.add(value);}else if(value&&typeof value==='object')for(const v of Object.values(value))scan(v);};
+ const scanRevision=r=>{if(!r?.snapshot)return;scan(r.snapshot);for(const ref of Object.values(r.snapshot.assetRefs??{})){mark(ref.key);hashes.add(ref.sha256);}const d=r.snapshot.document;if(d?.assetKey){mark(d.assetKey);hashes.add(d.sha256);}if(d?.sha256)hashes.add(d.sha256);if(r.snapshot.pdfProvenance?.sha256)hashes.add(r.snapshot.pdfProvenance.sha256);};
+ const revisionsById=new Map((ws.history?.revisions??[]).map(r=>[r.revisionId,r]));
+ const referencedRevisionIds=new Set();
+ const findRevisionRefs=(value,key='')=>{if(typeof value==='string'){if(['revisionId','historyRevisionId','baseRevisionId','restoredFromRevisionId','derivedFromRevisionId'].includes(key))referencedRevisionIds.add(value);return;}if(Array.isArray(value)){if(key==='revisionIds')for(const id of value)if(typeof id==='string')referencedRevisionIds.add(id);for(const v of value)findRevisionRefs(v,key);return;}if(value&&typeof value==='object')for(const [k,v] of Object.entries(value))findRevisionRefs(v,k);};
  for(const pack of [...builtPacks,...ws.imports]){for(const key of pack.assetKeys??[])mark(key);for(const d of pack.documents??[])if(d.assetKey)mark(d.assetKey);}
  scan(ws.overlays);scan(ws.personal);
- for(const r of [...retainedRevisions,...currentResources]){for(const ref of Object.values(r.snapshot.assetRefs??{})){mark(ref.key);hashes.add(ref.sha256);}const d=r.snapshot.document;if(d?.assetKey){mark(d.assetKey);hashes.add(d.sha256);}}
+ for(const r of [...retainedRevisions,...currentResources])scanRevision(r);
+ // Retained review/change-set plans are live ownership roots. Scan both their
+ // embedded snapshots and any revision identities they reference. False-positive
+ // retention is intentional; compaction must never delete a still-referenced asset.
+ for(const review of retainedReviews){scan(review);findRevisionRefs(review);}
+ for(const id of referencedRevisionIds)scanRevision(revisionsById.get(id));
  return {keys,hashes};
 }
 export async function planCompaction(workspace, archive, builtPacks=[], currentResources=[], resolveAsset) {
@@ -119,7 +128,7 @@ export async function planCompaction(workspace, archive, builtPacks=[], currentR
  for(const range of d.ranges){const chain=h.revisions.filter(r=>r.resourceKey===range.resourceKey).sort((a,b)=>a.number-b.number),prefix=chain.slice(0,range.revisions.length);if(prefix.length>=chain.length||stable(prefix)!==stable(archive.revisions.filter(r=>r.resourceKey===range.resourceKey))||prefix.some(r=>r.revisionId===h.heads.find(head=>head.resourceKey===range.resourceKey)?.revisionId))throw Error('Only an exact oldest prefix before the current head can be compacted.');}
  for(const revision of archive.revisions)if(stable(liveById.get(revision.revisionId))!==stable(revision))throw Error('Archive revision no longer matches live history.');
  const reviewIds=new Set(archive.reviews.map(r=>r.id));for(const review of archive.reviews){if(review.status==='staged'||stable(reviewsById.get(review.id))!==stable(review)||(review.revisionIds??[]).some(id=>!removeIds.has(id)))throw Error('Pending or changed audit cannot be compacted.');}
- const retained=h.revisions.filter(r=>!removeIds.has(r.revisionId)),reach=liveAssetReachability(ws,retained,builtPacks,currentResources);
+ const retained=h.revisions.filter(r=>!removeIds.has(r.revisionId)),retainedReviews=h.reviews.filter(r=>!reviewIds.has(r.id)),reach=liveAssetReachability(ws,retained,builtPacks,currentResources,retainedReviews);
  const previousOwners=new Set((h.archives??[]).flatMap(a=>a.assets.map(asset=>asset.key)));
  const removedAssets=[];
  for(const source of archive.assets){const a=ws.assets.find(a=>a.key===source.key);if(!a||reach.keys.has(a.key)||reach.hashes.has(a.sha256)||previousOwners.has(a.key))continue;if(a.mediaType!==source.mediaType||a.sha256!==source.sha256||a.bytes.length!==source.bytes.length||await sha256(a.bytes)!==source.sha256)throw Error('Live/archive asset identity changed.');removedAssets.push(a.key);}
