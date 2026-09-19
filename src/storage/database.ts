@@ -114,6 +114,7 @@ export class WorkspaceStore{
  async compactArchive(ticket:object,event:Event,_resolveAsset:(key:string)=>Promise<Asset|undefined>){
   const receipt=consumeSavedSelection(ticket,event);
   if(!receipt?.plan?.workspace?.history)throw Error(COMPACTION_BLOCK_REASON);
+  if(await sha256(stable(receipt.plan.preview))!==receipt.previewHash)throw Error('Compaction preview integrity check failed. Prepare and re-select a new archive.');
   await this.flush();
   if(this.error)throw Error('Resolve the storage warning before compacting history.');
   return this.enqueue(async()=>{
