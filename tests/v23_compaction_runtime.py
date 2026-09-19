@@ -20,6 +20,7 @@ FAULTS=[
 ]
 
 def prepare(page,out,name):
+    close_panels(page)
     open_settings(page)
     section=page.locator('section[aria-label="History archival and attachments"]')
     section.get_by_text('Prepare a verified history archive',exact=True).click()
