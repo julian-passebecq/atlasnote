@@ -89,7 +89,7 @@
     "test:v23:compare": "python tests/v23_qualification.py compare",
     "test:v23:recovery": "python tests/v23_qualification.py recovery",
     "test:v23:safe-close": "python tests/v23_qualification.py safe-close",
-    "test:v23:compaction": "node tests/v23_compaction_gate.mjs",
+    "test:v23:compaction": "python tests/v23_compaction_runtime.py",
     "test:v23:access:preview": "node tests/v23_access_preview.mjs",
     "check:v23:secrets": "node tools/check-v23-secrets.mjs"
   },
