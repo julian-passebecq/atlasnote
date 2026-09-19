@@ -22,7 +22,7 @@ def prepare(page,out,name):
         raise AssertionError('Saved-file selection rejected: '+alert.inner_text())
     section.locator('[data-durability-preview]').wait_for()
     pre=section.locator('[data-durability-preview] pre')
-    pre.wait_for()
+    pre.wait_for(state='attached')
     page.wait_for_function("""()=>{const p=document.querySelector('[data-durability-preview] pre');return !!p&&p.textContent.trim().startsWith('{')}""")
     preview=json.loads(pre.inner_text())
     page.get_by_label('Confirm saved archive retention',exact=True).check()
