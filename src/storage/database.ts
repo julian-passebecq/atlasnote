@@ -1,4 +1,5 @@
 import {COMPACTION_BLOCK_REASON} from '../durability/release-state.js';
+import {consumeSavedSelection} from '../durability/ceremony.js';
 import {clearArchiveAttachments} from '../durability/registry.js';
 import {preflightStorage,workspaceImportBytes} from '../durability/storage-health.mjs';
 import {validateHubOverlays,validateHubPersonal} from '../content-hub/validation.mjs';
@@ -27,6 +28,7 @@ export function openDatabase():Promise<IDBDatabase>{
 }
 function request<T>(req:IDBRequest<T>):Promise<T>{return new Promise((resolve,reject)=>{req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
 function complete(tx:IDBTransaction){return new Promise<void>((resolve,reject)=>{tx.oncomplete=()=>resolve();tx.onabort=()=>reject(tx.error??Error('Storage transaction aborted'));tx.onerror=()=>reject(tx.error??Error('Storage error'));});}
+function terminal(tx:IDBTransaction){return new Promise<void>((resolve,reject)=>{tx.oncomplete=()=>resolve();tx.onabort=()=>reject(tx.error??Error('Storage transaction aborted'));});}
 function historyFromRecords(records:any[]):HistoryData {return {schemaVersion:1,meta:records.find(r=>r.kind==='meta')??emptyHistory().meta,heads:records.filter(r=>r.kind==='head'),revisions:records.filter(r=>r.kind==='revision'),reviews:records.filter(r=>r.kind==='review'),...(records.some(r=>r.kind==='archive')?{archives:records.filter(r=>r.kind==='archive')}:{})};}
 export async function loadWorkspace():Promise<Workspace>{
  const db=await openDatabase(),tx=db.transaction(STORES,'readonly');const [imports,overlays,personal,assets,records]=await Promise.all([request(tx.objectStore('imports').getAll()),request(tx.objectStore('overlays').get('active')),request(tx.objectStore('personal').get('active')),request(tx.objectStore('assets').getAll()),request(tx.objectStore('history').getAll())]);
@@ -106,10 +108,37 @@ export class WorkspaceStore{
  async backupSnapshot(){await this.flush();return this.error&&this.state.history?prepareEmergencySnapshot(builtSource,this.state):structuredClone(this.state);}
  async retry(){await this.flush();return this.enqueue(async()=>{const previous=await loadWorkspace();if((previous.history?.meta.epoch??0)!==(this.state.history?.meta.epoch??0))throw Error('Another tab advanced history. Export your unsaved recovery copy, then reload.');const next=await prepareWorkspaceHistory(builtSource,this.state,{source:'manual',summary:'Retry unsaved changes'});await commitProjection(next,previous.history!,['imports','assets','overlays','personal']);this.state={...next};this.error='';this.emit();});}
  get unsafeClose(){return this.saving>0||!!this.error;}
- /** No destructive history API ships until the real browser fault matrix passes.
-  * An agent, synthetic event, console call, env flag or receipt cannot enable it. */
- async compactArchive(_ticket:object,_event:Event,_resolveAsset:(key:string)=>Promise<Asset|undefined>){
-  throw Error(COMPACTION_BLOCK_REASON);
+ /** Destructive compaction remains UI-disabled until the browser fault matrix
+  * passes. The writer itself is bound to a trusted, single-use saved-file receipt
+  * and an exact five-store snapshot captured at selection time. */
+ async compactArchive(ticket:object,event:Event,_resolveAsset:(key:string)=>Promise<Asset|undefined>){
+  const receipt=consumeSavedSelection(ticket,event);
+  if(!receipt?.plan?.workspace?.history)throw Error(COMPACTION_BLOCK_REASON);
+  if(await sha256(stable(receipt.plan.preview))!==receipt.previewHash)throw Error('Compaction preview integrity check failed. Prepare and re-select a new archive.');
+  await this.flush();
+  if(this.error)throw Error('Resolve the storage warning before compacting history.');
+  return this.enqueue(async()=>{
+   const db=await openDatabase(),tx=db.transaction(STORES,'readwrite'),done=terminal(tx);
+   try{
+    const current=await readRawState(tx);
+    if(stable(current)!==stable(receipt.rawState)){tx.abort();await done.catch(()=>{});throw Error('Workspace changed after saved-file verification. Prepare, save and re-select a new archive. Nothing was removed.');}
+    if(receipt.previewHash!==receipt.plan.previewHash){tx.abort();await done.catch(()=>{});throw Error('Compaction preview changed after saved-file verification. Prepare a new archive.');}
+    const history=tx.objectStore('history'),assets=tx.objectStore('assets'),preview=receipt.plan.preview,next=receipt.plan.workspace as Workspace;
+    if(next.history!.meta.epoch!==(this.state.history?.meta.epoch??-1)+1){tx.abort();await done.catch(()=>{});throw Error('Compaction epoch mismatch. Reload before retrying.');}
+    history.add(receipt.archive.descriptor,'archive:'+receipt.archive.descriptor.archiveId);
+    for(const id of preview.revisionIds)history.delete('revision:'+id);
+    for(const id of preview.reviewIds)history.delete('review:'+id);
+    for(const key of preview.assetKeys)assets.delete(key);
+    history.put(next.history!.meta,'meta');
+    await done;
+    const reopened=await readIntegrityWorkspace();
+    await validateHistory(reopened.history!,reopened.assets,true);
+    this.state={...reopened,generation:this.state.generation+1};
+    this.error='';
+    this.emit();
+    return structuredClone(preview);
+   }catch(e){try{tx.abort();}catch{}await done.catch(()=>{});throw e;}
+  },false);
  }
 }
 
@@ -117,8 +146,9 @@ function preparePersonal(p:Personal):Personal{const repaired=repairAbsentPersona
 export const store=new WorkspaceStore();
 
 // Read all five stores from one consistent readonly transaction.
-type RawState=Record<string,{keys:IDBValidKey[];values:any[]}>;
+export type RawState=Record<string,{keys:IDBValidKey[];values:any[]}>;
 async function readRawState(tx:IDBTransaction):Promise<RawState>{return Object.fromEntries(await Promise.all(STORES.map(async name=>{const store=tx.objectStore(name),[keys,values]=await Promise.all([request(store.getAllKeys()),request(store.getAll())]);return [name,{keys,values}];})));}
+export async function captureRawState():Promise<RawState>{const db=await openDatabase(),tx=db.transaction(STORES,'readonly'),done=terminal(tx);const raw=await readRawState(tx);await done;return raw;}
 /** Strict read-only normalization also checks record keys, not merely values.
  * It never repairs, rewrites or discards an unknown durable record. */
 export function workspaceFromStoredRecords(raw:RawState):Workspace {
