@@ -21,7 +21,10 @@ def prepare(page,out,name):
     if alert.count() and alert.is_visible():
         raise AssertionError('Saved-file selection rejected: '+alert.inner_text())
     section.locator('[data-durability-preview]').wait_for()
-    preview=json.loads(section.locator('[data-durability-preview] pre').inner_text())
+    pre=section.locator('[data-durability-preview] pre')
+    pre.wait_for()
+    page.wait_for_function("""()=>{const p=document.querySelector('[data-durability-preview] pre');return !!p&&p.textContent.trim().startsWith('{')}""")
+    preview=json.loads(pre.inner_text())
     page.get_by_label('Confirm saved archive retention',exact=True).check()
     button=section.locator('[data-durability-action="compact-archive"]')
     assert button.is_enabled()
