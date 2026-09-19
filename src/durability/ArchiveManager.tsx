@@ -1,6 +1,6 @@
 import {COMPACTION_BLOCKED,COMPACTION_BLOCK_REASON} from './release-state.js';
 import React,{useEffect,useRef,useState,useSyncExternalStore} from '../vendor/react.mjs';
-import {store,captureRawState} from '../storage/database.js';
+import {store,captureRawState,workspaceFromStoredRecords} from '../storage/database.js';
 import {captureWorkspaceSnapshot} from '../storage/workspace-snapshot.js';
 import {makeHistoryArchive} from './archive.mjs';
 import {selectSavedArchive,discardSavedSelection} from './ceremony.js';
@@ -35,7 +35,7 @@ export function ArchiveManager({built,assets,resourceKey,disabled=false}:any){
     <p><strong>{candidate.descriptor.counts.revisions}</strong> revisions, {candidate.descriptor.counts.reviews} closed reviews, {candidate.descriptor.counts.assets} assets / {readableBytes(candidate.bytes.length)} ZIP.</p>
     <p><code>{candidate.descriptor.archiveId}</code><br/>Root SHA-256: <code>{candidate.descriptor.rootHash}</code><br/>Saved-file SHA-256: <code>{candidate.fileHash}</code></p>
     <button data-durability-action="download-archive" disabled={unavailable} onClick={()=>{download(candidate.bytes,candidate.descriptor.archiveId+'.atlas-history.zip');setDownloaded(true);}}>1. Download verified archive</button>
-    <label className="file-picker">2. Re-select the actual saved archive<input aria-label="Re-select saved archive" type="file" accept=".zip" disabled={unavailable||!downloaded} onChange={e=>{const input=e.target as HTMLInputElement,ev=e.nativeEvent as Event;clear();void run(async()=>{try{const selected=await selectSavedArchive(ev,candidate,store.state,built,assets.asset,await captureRawState());ticket.current=selected.ticket;setPreview(selected.preview);setMessage('Saved file independently verified. Review the exact deletion set before confirming.');}finally{input.value='';}});}}/></label>
+    <label className="file-picker">2. Re-select the actual saved archive<input aria-label="Re-select saved archive" type="file" accept=".zip" disabled={unavailable||!downloaded} onChange={e=>{const input=e.target as HTMLInputElement,ev=e.nativeEvent as Event;clear();void run(async()=>{try{const raw=await captureRawState(),snapshot=workspaceFromStoredRecords(raw);const selected=await selectSavedArchive(ev,candidate,snapshot,built,assets.asset,raw);ticket.current=selected.ticket;setPreview(selected.preview);setMessage('Saved file independently verified. Review the exact deletion set before confirming.');}finally{input.value='';}});}}/></label>
     {preview&&<div data-durability-preview>
      <p>Remove {preview.revisionIds.length} live snapshots, {preview.reviewIds.length} closed reviews and {preview.assetKeys.length} exclusively archived assets ({readableBytes(preview.assetBytes)}). Live structured history: {readableBytes(preview.structuredBytesBefore)} to {readableBytes(preview.structuredBytesAfter)}.</p>
      <details><summary>Exact removal set and byte preview</summary><pre>{JSON.stringify(preview,null,2)}</pre></details>
