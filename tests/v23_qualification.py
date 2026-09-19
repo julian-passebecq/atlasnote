@@ -161,9 +161,8 @@ def recovery(browser,context,page,base,out,passed):
         # Reload deliberately drops session-only archive payloads. Identities remain,
         # but current content must never substitute for the missing historical bytes.
         p.reload(wait_until='networkidle');p.wait_for_selector('.atlas-app');flush(p)
-        missing=p.evaluate("""async(x)=>{try{('+AGENT+').getResource(x.key,x.rev);return null;}catch(e){return String(e.message||e);}}""",{'key':pdf_key,'rev':oldest})
+        missing=p.evaluate('async(x)=>{try{const a='+AGENT+';a.getResource(x.key,x.rev);return null;}catch(e){return String(e.message||e);}}',{'key':pdf_key,'rev':oldest})
         assert missing and 'Attach the exact archive' in missing and 'Current content was not substituted' in missing,missing
-        before_tamper=p.evaluate(RAW)
 
         open_settings(p);choose(p,'Attach history archives',archived_bundle)
         p.get_by_text('Exact verified archives attached for this session. They remain external files; no history or proposal was changed.',exact=True).wait_for()
@@ -180,7 +179,7 @@ def recovery(browser,context,page,base,out,passed):
                     changed=True
                 dst.writestr(info.filename,body)
             assert changed
-        close_panels(p);open_settings(p);choose(p,'Restore workspace backup',tampered)
+        close_panels(p);open_settings(p);before_tamper=p.evaluate(RAW);choose(p,'Restore workspace backup',tampered)
         p.get_by_role('alert').wait_for()
         assert p.evaluate(RAW)==before_tamper
         passed('Reload requires exact archive reattachment; tampered recovery is rejected before replacement',archiveId=descriptor['archiveId'])
