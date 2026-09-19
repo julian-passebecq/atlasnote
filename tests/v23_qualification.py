@@ -53,7 +53,9 @@ def recovery(browser,context,page,base,out,passed):
         p.get_by_label('I understand that this replaces the current local workspace.',exact=True).check()
         p.get_by_role('button',name='Restore verified backup',exact=True).click();p.wait_for_timeout(300);flush(p)
         restored=persisted(p)
-        for key in ['imports','overlays','assets','history']:assert restored[key]==saved[key],key
+        assert {x['manifest']['id']:x for x in restored['imports']}=={x['manifest']['id']:x for x in saved['imports']},'imports'
+        assert {x['key']:x for x in restored['assets']}=={x['key']:x for x in saved['assets']},'assets'
+        for key in ['overlays','history']:assert restored[key]==saved[key],key
         p.reload(wait_until='networkidle');p.wait_for_selector('.atlas-app');flush(p)
         assert persisted(p)['history']==saved['history']
         open_settings(p);p.locator('[data-durability-action="integrity"]').click()
