@@ -1,8 +1,9 @@
-/** Deliberate fail-closed release boundary, not a runtime feature flag.
- * A candidate atomic five-store writer exists for qualification, but the Settings
- * control and WorkspaceStore entrypoint remain hard-disabled until the complete
- * real-browser concurrency/quota/abort matrix passes. Enabling release still
- * requires a reviewed source change, never a URL, environment variable or receipt.
+/** Qualification-only release boundary.
+ * This branch temporarily exposes the candidate atomic five-store writer so the
+ * mandatory real-browser fault matrix can exercise the exact production path.
+ * This is NOT a production release switch and must remain isolated from main.
+ * If any mandatory proof fails or remains blocked, the shipping candidate must
+ * restore COMPACTION_BLOCKED=true.
  */
-export const COMPACTION_BLOCKED = true;
-export const COMPACTION_BLOCK_REASON = 'Compaction is disabled in this candidate: real-browser concurrency, quota and transaction-abort verification has not passed. Archives and attachments are read-only; no history or assets will be deleted.';
+export const COMPACTION_BLOCKED = false;
+export const COMPACTION_BLOCK_REASON = 'Compaction qualification is active on this non-production candidate. Exact saved-file re-selection and explicit confirmation are required before any deletion.';
