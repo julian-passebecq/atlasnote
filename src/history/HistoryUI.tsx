@@ -1,4 +1,6 @@
-import React, {useMemo, useRef, useState} from '../vendor/react.mjs';
+import {ArchiveManager} from '../durability/ArchiveManager.js';
+import {subscribeArchives,archiveAttachmentEpoch,archiveForRevision,isArchiveAttached} from '../durability/registry.js';
+import React, {useMemo, useRef, useState, useSyncExternalStore} from '../vendor/react.mjs';
 import {Modal} from '../components/Modal.js';
 import {downloadJSON} from '../content-hub/content.js';
 import {getAgentInterface} from '../agent/service.js';
@@ -45,9 +47,9 @@ export function ChangeList({changes}: {changes: DiffEntry[]}) {
  </div>;
 }
 
-type HistoryProps = {built: any; workspace: Workspace; resourceKey: string; onClose: () => void; notify: (text: string, error?: boolean) => void};
+type HistoryProps = {built: any; assets:any; workspace: Workspace; resourceKey: string; onClose: () => void; notify: (text: string, error?: boolean) => void};
 type RestoreConfirmation = {revisionId: string; expectedHead: string};
-export function HistoryPanel({built, workspace, resourceKey, onClose, notify}: HistoryProps) {
+export function HistoryPanel({built, assets, workspace, resourceKey, onClose, notify}: HistoryProps) {
  const api = getAgentInterface();
  const [offset, setOffset] = useState(0), [busy, setBusy] = useState(false), [error, setError] = useState('');
  const inFlight = useRef(false);
@@ -55,7 +57,8 @@ export function HistoryPanel({built, workspace, resourceKey, onClose, notify}: H
  const [destination, setDestination] = useState<ReadingDestination>('here');
  const [compareA, setCompareA] = useState<string | undefined>(undefined), [compareB, setCompareB] = useState<string | undefined>(undefined);
  const [manualLink, setManualLink] = useState('');
- const index = useMemo(() => createHistoryIndex(workspace.history), [workspace.history]);
+ const archiveEpoch=useSyncExternalStore(subscribeArchives,archiveAttachmentEpoch);
+ const index = useMemo(() => createHistoryIndex(workspace.history), [workspace.history,archiveEpoch]);
  const versions = api.listResourceVersions(resourceKey, offset, 25), head = index.heads.get(resourceKey);
  const currentRevision = head ? index.revisions.get(head.revisionId) : undefined;
  const title = currentRevision?.snapshot;
@@ -117,16 +120,18 @@ export function HistoryPanel({built, workspace, resourceKey, onClose, notify}: H
      <strong>{review.id}</strong> / {review.status} <button disabled={busy} data-agent-action="agent-review" onClick={() => void run(() => api.openAgentSystemSurface('agent-review'))}>Open Agent Review</button>
     </p>)}
    </details>}
+   <ArchiveManager built={built} assets={assets} resourceKey={resourceKey} disabled={busy}/>
    {!head && <p role="status">No history is available for this resource. Complete initialization or import its full backup.</p>}
    {versions.items.map(revision => {
+    const owner=archiveForRevision(workspace.history,revision.revisionId);
     const restoring = confirm?.revisionId === revision.revisionId;
     const headChanged = restoring && confirm?.expectedHead !== head?.revisionId;
     return <article className="revision-row" key={revision.revisionId} {...identity} data-revision-id={revision.revisionId} data-current-revision={revision.revisionId === head?.revisionId}>
      <header><strong>Version {revision.number}{revision.revisionId === head?.revisionId ? ' / Current' : ''}</strong><span>{revision.source}</span><time dateTime={new Date(revision.createdAt).toISOString()}>{new Date(revision.createdAt).toLocaleString()}</time></header>
-     <p>{revision.summary || 'Content revision'}</p>
+     <p>{revision.summary || 'Content revision'}</p>{owner&&<p className="secondary" data-archive-owner={owner.archiveId}>Archived / {isArchiveAttached(workspace.history,owner.archiveId)?'Verified file attached':'Attach required file'}: <code>{owner.archiveId}</code><br/>Root: <code>{owner.rootHash}</code></p>}
      <details><summary>Revision identity and provenance</summary><code>{revision.revisionId}</code><p>Content SHA-256: <code>{revision.contentHash}</code></p>
       {revision.restoredFromRevisionId && <p>Restored from: <code>{revision.restoredFromRevisionId}</code></p>}<p>{revision.sourceDetail}</p>
-      {revision.resourceType === 'pdf' && <pre>{JSON.stringify(index.revisions.get(revision.revisionId)?.snapshot.pdfProvenance, null, 2)}</pre>}
+      {revision.resourceType === 'pdf' && <pre>{JSON.stringify(index.revisions.get(revision.revisionId)?.snapshot?.pdfProvenance, null, 2)}</pre>}
      </details>
      <div className="button-row">
       <button disabled={busy} data-agent-action="revision-open" data-destination={destination} onClick={() => void run(() => api.navigateAgentTarget(api.getResource(resourceKey, revision.revisionId).target, destination), true)}>Open version {revision.number}</button>

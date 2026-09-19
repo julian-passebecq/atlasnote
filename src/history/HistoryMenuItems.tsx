@@ -18,7 +18,7 @@ export function HistoryMenuItems({context, onHistory, onComparePrevious, onOpenP
   <div role="separator" />
   <button role="menuitem" {...attrs} data-agent-action="version-history"
    disabled={!!context.unavailableReason} title={context.unavailableReason}
-   onClick={() => onHistory(context.resourceKey)}><Icon name="clock" />Version history...</button>
+   onClick={() => onHistory(context.resourceKey)}><Icon name="history" />Version history...</button>
   <button role="menuitem" {...attrs} data-agent-action="compare-previous-version"
    disabled={!context.previousRevisionId || !onComparePrevious} title={context.previousUnavailableReason}
    onClick={() => onComparePrevious?.(context.resourceKey, context.historyRevisionId)}><Icon name="compare" />Compare with previous version</button>

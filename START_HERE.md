@@ -1,19 +1,20 @@
-# AtlasNote V2.2 - executed Windows QA candidate
+# AtlasNote V2.3 durability/access candidate - BLOCKED
 
-Read [V22_QA_REPORT.md](V22_QA_REPORT.md) for the actual repairs, 50/50 release
-gates, 813 unit tests, 15 expanded browser scenarios, artifacts and scope limits.
-The integrated build is newly generated. No remote push, merge or deployment
-occurred; no existing user browser profile was reset.
+Baseline: `5202f8a2afa388192789349307c9436c3c4403e2`.
+Local branch: `final/atlasnote-2.3-durability-access`.
+Read `V23_DURABILITY_ACCESS_RELEASE_REPORT.md` and `docs/v23/QA_MATRIX.md` first.
 
-One handoff requirement conflicts with the current schema: separate Article/QCM
-document and wrapper IDs. The established equality rule remains enforced. The
-user explicitly retained that invariant during QA. Independent document IDs are
-outside V2.2; the handoff wording is a documented, accepted bounded exception.
+This is the safety-bounded archive/read-only attachment fallback, not a completed release.
+Destructive compaction is not in the production database implementation. No bypass
+can enable it. Exact candidate commit and checksums are in the external delivery
+manifest; a Git bundle/patch preserves the baseline-parent relationship.
 
-Original coding-only reports and received source manifest are preserved under
-`docs/history/v22-before-qa-20260918/`. `SOURCE_MANIFEST.json` describes this
-delivery; the original recorded baseline is not used as its source identity.
+Use the source in an actual Git checkout (or restore the included bundle) before
+building, so provenance is exact. Integrated path: Node >=22.12, `npm ci`,
+`npm run typecheck:online`, `npm run build`. Preserve failures from all gates.
+Offline bootstrap/build is compatibility-only; do not publish dist-offline or a static
+ZIP without the Netlify Edge Functions. No production deployment/secret was configured.
 
-Use Node >=22.12 to build: `npm ci`, `npm run build`, `npm run preview`.
-The existing five-subject/type/workspace architecture, canonical targets, shared
-history engine, reviewed writes and metadata-only PDF Atlas contract remain.
+The five Subjects, five content types, five workspaces, A/B readers, canonical
+Article/QCM identity and immutable PDFAtlas/history/Agent contracts are retained.
+V22_QA_REPORT.md is historical evidence for the released baseline, NOT V2.3 certification.
