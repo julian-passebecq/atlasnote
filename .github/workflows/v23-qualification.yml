@@ -1,15 +1,15 @@
-name: V2.3 consolidated qualification
+name: V2.3 final-finish qualification (non-production)
 on:
   push:
     branches:
-      - final/atlasnote-2.3-consolidated
+      - final/atlasnote-2.3-pro-finish
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   v23-qualification:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,14 +20,30 @@ jobs:
         with:
           python-version: '3.12'
       - run: npm ci
+      # Package only registry content for offline engineering; never .npmrc,
+      # environment variables, authentication, user files or runner credentials.
+      - run: tar -czf "$RUNNER_TEMP/atlasnote-npm-cache.tgz" -C "$HOME/.npm" _cacache
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlasnote-v23-registry-cache
+          path: ${{ runner.temp }}/atlasnote-npm-cache.tgz
+          retention-days: 1
       - run: python -m pip install -r requirements-test.txt
       - run: python -m playwright install --with-deps chromium
+      - run: npm run build:offline
       - run: npm run build
       - run: npm run check:v23:build
-      - run: npm run test:v23:recovery
-        continue-on-error: true
+      # This is an exact-candidate integrated artifact, not a release approval.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlasnote-v23-qualification-dist
+          path: dist
+          if-no-files-found: error
+      # Exit 2 remains a failing workflow. No continue-on-error or success masking.
+      - run: npm run test:v23:release
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: atlasnote-v23-consolidated-qualification
+          name: atlasnote-v23-finish-qualification
           path: docs/evidence/v23
+          if-no-files-found: error
