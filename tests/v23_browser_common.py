@@ -35,8 +35,14 @@ def persisted(page):
 def seed_demo(page):
     open_settings(page)
     page.get_by_text('Optional V2.3 durability demo data',exact=True).click()
-    page.locator('[data-durability-action="load-demo"]').click()
-    page.wait_for_function('async()=>{const a='+AGENT+';return !a.getStorageDiagnostics().saving&&a.listResourceVersions("notebook-page:demo.v23.notebook").total===8;}')
+    button=page.locator('[data-durability-action="load-demo"]')
+    button.click()
+    # Revision 8 is not the end of loadDurabilityDemo(): a final reviewed personal-state
+    # mutation follows it. Wait for the owning UI operation to leave its busy state and
+    # expose its completion message so qualification cannot race that last durable write.
+    page.get_by_text('Optional V2.3 corpus loaded. Repeated loading retains the same content; no user content is replaced.',exact=True).wait_for()
+    page.wait_for_function('async()=>{const a='+AGENT+';const d=a.getStorageDiagnostics();return !d.saving&&!d.storageError&&a.listResourceVersions("notebook-page:demo.v23.notebook").total===8;}')
+    assert button.is_enabled()
     flush(page)
 
 def choose(page, label, filename):
