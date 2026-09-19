@@ -135,9 +135,16 @@ function exactStoredEqual(a:any,b:any):boolean{
  if(Object.is(a,b))return true;
  if(a instanceof ArrayBuffer&&b instanceof ArrayBuffer){a=new Uint8Array(a);b=new Uint8Array(b);}
  if(ArrayBuffer.isView(a)&&ArrayBuffer.isView(b)){const aa=new Uint8Array(a.buffer,a.byteOffset,a.byteLength),bb=new Uint8Array(b.buffer,b.byteOffset,b.byteLength);if(aa.length!==bb.length)return false;for(let i=0;i<aa.length;i++)if(aa[i]!==bb[i])return false;return true;}
- if(a instanceof Date&&b instanceof Date)return a.getTime()===b.getTime();
- if(Array.isArray(a)&&Array.isArray(b))return a.length===b.length&&a.every((v,i)=>exactStoredEqual(v,b[i]));
- if(a&&b&&typeof a==='object'&&typeof b==='object'){const ak=Object.keys(a).sort(),bk=Object.keys(b).sort();return ak.length===bk.length&&ak.every((k,i)=>k===bk[i]&&exactStoredEqual(a[k],b[k]));}
+ if(a instanceof Date||b instanceof Date)return a instanceof Date&&b instanceof Date&&a.getTime()===b.getTime();
+ if(typeof Blob!=='undefined'&&(a instanceof Blob||b instanceof Blob))return false; // Cannot byte-compare synchronously inside the live transaction.
+ if(a instanceof Map||b instanceof Map){if(!(a instanceof Map&&b instanceof Map)||a.size!==b.size)return false;const aa=[...a.entries()],bb=[...b.entries()];return aa.every(([k,v],i)=>exactStoredEqual(k,bb[i]?.[0])&&exactStoredEqual(v,bb[i]?.[1]));}
+ if(a instanceof Set||b instanceof Set){if(!(a instanceof Set&&b instanceof Set)||a.size!==b.size)return false;const aa=[...a.values()],bb=[...b.values()];return aa.every((v,i)=>exactStoredEqual(v,bb[i]));}
+ if(a instanceof RegExp||b instanceof RegExp)return a instanceof RegExp&&b instanceof RegExp&&a.source===b.source&&a.flags===b.flags;
+ if(Array.isArray(a)||Array.isArray(b))return Array.isArray(a)&&Array.isArray(b)&&a.length===b.length&&Object.keys(a).length===Object.keys(b).length&&a.every((v,i)=>exactStoredEqual(v,b[i]));
+ if(a&&b&&typeof a==='object'&&typeof b==='object'){
+  const ap=Object.getPrototypeOf(a),bp=Object.getPrototypeOf(b);if(ap!==bp&&!(ap===null&&bp===null))return false;
+  const ak=Object.keys(a).sort(),bk=Object.keys(b).sort();return ak.length===bk.length&&ak.every((k,i)=>k===bk[i]&&exactStoredEqual(a[k],b[k]));
+ }
  return false;
 }
 function rawStateEqual(a:RawState,b:RawState){return STORES.every(name=>exactStoredEqual(a[name]?.keys,b[name]?.keys)&&exactStoredEqual(a[name]?.values,b[name]?.values));}
