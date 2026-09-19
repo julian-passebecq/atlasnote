@@ -13,11 +13,11 @@ def unload_is_guarded(page):
 
 def pending_write(page,passed):
     close_panels(page);open_settings(page);flush(page)
-    current=page.get_by_label('Theme',exact=True).input_value()
-    theme=next(x for x in page.get_by_label('Theme',exact=True).locator('option').evaluate_all('(xs)=>xs.map(x=>x.value)') if x!=current)
+    current=page.locator('select[aria-label="Theme"]').input_value()
+    theme=next(x for x in page.locator('select[aria-label="Theme"]').locator('option').evaluate_all('(xs)=>xs.map(x=>x.value)') if x!=current)
     page.evaluate("""()=>{window.__holdWrite=true;const original=IDBDatabase.prototype.transaction;window.__undoHold=()=>{IDBDatabase.prototype.transaction=original;};IDBDatabase.prototype.transaction=function(names,mode,...args){const tx=original.call(this,names,mode,...args);const list=typeof names==='string'?[names]:Array.from(names);if(mode==='readwrite'&&list.length===1&&list[0]==='personal'&&window.__holdWrite){window.__heldTransaction=true;const keep=()=>{if(window.__holdWrite){const r=tx.objectStore('personal').get('active');r.onsuccess=keep;}};keep();}return tx;};}""")
     try:
-        page.get_by_label('Theme',exact=True).select_option(theme)
+        page.locator('select[aria-label="Theme"]').select_option(theme)
         page.wait_for_function('async()=>window.__heldTransaction&&('+AGENT+').getStorageDiagnostics().saving>0')
         assert page.locator('[data-save-safety]').inner_text().startswith('Pending writes /')
         unload_is_guarded(page)

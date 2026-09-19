@@ -44,6 +44,7 @@ console.log(JSON.stringify({ws,partial,complete}));"""
         h=f['complete'] if case=='populated-v22-v3' else f['partial'] if case=='interrupted-baseline' else None
         c,p=fixture_context(browser,base,f['ws'],h,3 if h else 2)
         try:
+            original_history=p.evaluate(RAW)['history'] if case=='populated-v22-v3' else None
             if case=='aborted-upgrade':
                 evidence=p.evaluate("""async()=>{const r=indexedDB.open('knowledge-atlas',3);let aborted=false;r.onupgradeneeded=()=>{r.result.createObjectStore('history');r.transaction.abort();};await new Promise(ok=>{r.onerror=()=>{aborted=true;ok();};r.onsuccess=()=>{r.result.close();ok();};});const q=indexedDB.open('knowledge-atlas');const db=await new Promise((ok,no)=>{q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error);});const state={aborted,version:db.version,stores:Array.from(db.objectStoreNames)};db.close();return state;}""")
                 assert evidence['aborted'] and evidence['version']==2 and len(evidence['stores'])==4,evidence
@@ -56,7 +57,7 @@ console.log(JSON.stringify({ws,partial,complete}));"""
             assert sorted(p.evaluate(RAW))==STORES
             for key in ['imports','overlays','assets']:assert s[key]==f['ws'][key],(case,key)
             assert s['personal']['bookmarks']==f['ws']['personal']['bookmarks']
-            if case=='populated-v22-v3':assert s['history']==f['complete']
+            if case=='populated-v22-v3':assert p.evaluate(RAW)['history']==original_history,'Every original persisted key/value must survive; IDB key order is not fixture insertion order'
             if h:assert {r['revisionId'] for r in h['revisions']}<={r['revisionId'] for r in s['history']['revisions']}
             initial=s['history'];ready(p,base);assert persisted(p)['history']==initial
             passed('Native migration/reload: '+case,stores=STORES,historyRows=len(initial['revisions']))
@@ -71,7 +72,7 @@ def advisory(page,passed):
         page.evaluate("""name=>{window.__originalStorage??=navigator.storage;const fail=async()=>{throw Error('Injected advisory failure');};let persistent=name==='persistent';const storage=name==='unsupported'?{}:{estimate:name==='throw'?fail:async()=>name==='invalid'?{usage:-1,quota:0}:{usage:1024,quota:1073741824},persisted:name==='throw'?fail:async()=>persistent,persist:name==='throw'?fail:async()=>{if(name==='granted'){persistent=true;return true;}return false;}};Object.defineProperty(navigator,'storage',{configurable:true,value:storage});}""",case)
         page.get_by_role('button',name='Refresh storage health',exact=True).click()
         section=page.locator('section[aria-label="Storage and recovery health"]')
-        if estimate=='available':section.get_by_text('1.00 KiB used /',exact=False).wait_for()
+        if estimate=='available':section.get_by_text('1.0 KiB used /',exact=False).wait_for()
         else:section.get_by_text('Quota estimate: '+estimate+'. Unknown quota does not imply free space.',exact=True).wait_for()
         section.get_by_text('Persistence: '+persistence+'. Persistence reduces automatic eviction risk; it is not a backup or protection against clearing site data.',exact=True).wait_for()
         page.get_by_role('button',name='Request persistent storage',exact=True).click()

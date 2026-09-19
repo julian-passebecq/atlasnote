@@ -12,6 +12,8 @@ jobs:
     timeout-minutes: 30
     env:
       ATLAS_V23_TIMEOUT_MS: 600000
+      ATLAS_V23_PREVIEW_URL: https://deploy-preview-21--atlasnotej.netlify.app
+      ATLAS_GITHUB_READ_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
