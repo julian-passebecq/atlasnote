@@ -7,6 +7,15 @@ const encode = value => new TextEncoder().encode(stable(value));
 const decode = bytes => JSON.parse(new TextDecoder('utf-8', {fatal:true}).decode(bytes));
 const extension = type => ({'application/pdf':'pdf','image/svg+xml':'svg','image/png':'png','image/jpeg':'jpg','image/webp':'webp','text/plain':'txt'})[type];
 const auditIdentity = ({plan,selectedOperationIds,reason,...row}) => structuredClone(row);
+const canonicalHistoryForHash = h => ({
+ schemaVersion:h.schemaVersion,
+ meta:h.meta,
+ heads:[...(h.heads??[])].sort((a,b)=>String(a.resourceKey).localeCompare(String(b.resourceKey))),
+ revisions:[...(h.revisions??[])].sort((a,b)=>String(a.revisionId).localeCompare(String(b.revisionId))),
+ reviews:[...(h.reviews??[])].sort((a,b)=>String(a.id).localeCompare(String(b.id))),
+ ...(h.archives?.length?{archives:[...h.archives].sort((a,b)=>String(a.archiveId).localeCompare(String(b.archiveId)))}:{})
+});
+const historyHash = h => sha256(stable(canonicalHistoryForHash(h)));
 function shards(records, prefix, files) {
  const paths=[];let batch=[],size=2,index=0;
  const flush=()=>{if(!batch.length)return;const path=prefix+'/'+String(index++).padStart(5,'0')+'.json';files.set(path,encode(batch));paths.push(path);batch=[];size=2;};
@@ -58,7 +67,7 @@ export async function makeHistoryArchive(workspace, provenance, resolveAsset, op
  }
  const revisionShards=shards(selected,'revisions',files),reviewShards=shards(reviews,'reviews',files),fileHashes={};
  for(const [path,bytes] of files)fileHashes[path]=await sha256(bytes);
- const descriptor={kind:'archive',schemaVersion:1,archiveSchema:1,archiveId:'archive.'+randomUuid(),rootHash:'0'.repeat(64),createdAt:Date.now(),provenance:structuredClone(provenance),sourceEpoch:h.meta.epoch,sourceHistoryHash:await sha256(stable(h)),ranges,assets,reviews:reviews.map(auditIdentity),counts:{revisions:selected.length,reviews:reviews.length,assets:assets.length,assetBytes:assets.reduce((n,a)=>n+a.bytes,0),structuredBytes:encode(selected).length+encode(reviews).length}};
+ const descriptor={kind:'archive',schemaVersion:1,archiveSchema:1,archiveId:'archive.'+randomUuid(),rootHash:'0'.repeat(64),createdAt:Date.now(),provenance:structuredClone(provenance),sourceEpoch:h.meta.epoch,sourceHistoryHash:await historyHash(h),ranges,assets,reviews:reviews.map(auditIdentity),counts:{revisions:selected.length,reviews:reviews.length,assets:assets.length,assetBytes:assets.reduce((n,a)=>n+a.bytes,0),structuredBytes:encode(selected).length+encode(reviews).length}};
  const manifest={format:'atlas-history-archive',archiveSchema:1,descriptor,ancestors,revisionShards,reviewShards,fileHashes};
  descriptor.rootHash=await manifestRoot(manifest);validateDescriptor(descriptor);
  files.set('archive.json',encode(manifest));const bytes=await zipFiles(files,'history-archive');
@@ -121,7 +130,7 @@ export function liveAssetReachability(ws, retainedRevisions, builtPacks=[], curr
 }
 export async function planCompaction(workspace, archive, builtPacks=[], currentResources=[], resolveAsset) {
  const ws=structuredClone(workspace),h=ws.history,d=archive.descriptor;
- if(!h||h.meta.epoch!==d.sourceEpoch||await sha256(stable(h))!==d.sourceHistoryHash)throw Error('History changed after archive preparation. Prepare and save a new archive.');
+ if(!h||h.meta.epoch!==d.sourceEpoch||await historyHash(h)!==d.sourceHistoryHash)throw Error('History changed after archive preparation. Prepare and save a new archive.');
  await validateHistory(h);
  if(h.archives?.some(a=>a.archiveId===d.archiveId))throw Error('Archive was already compacted.');
  const removeIds=new Set(archive.revisions.map(r=>r.revisionId)),liveById=new Map(h.revisions.map(r=>[r.revisionId,r])),reviewsById=new Map(h.reviews.map(r=>[r.id,r]));
