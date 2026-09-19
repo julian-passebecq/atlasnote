@@ -35,8 +35,14 @@ def persisted(page):
 def seed_demo(page):
     open_settings(page)
     page.get_by_text('Optional V2.3 durability demo data',exact=True).click()
-    page.locator('[data-durability-action="load-demo"]').click()
+    button=page.locator('[data-durability-action="load-demo"]')
+    button.click()
+    # Version 8 exists before the final personal-state write is necessarily done.
+    # Wait for the UI operation itself to finish, then require quiescent persistence.
+    page.get_by_text('Optional V2.3 corpus loaded. Repeated loading retains the same content; no user content is replaced.',exact=True).wait_for()
     page.wait_for_function('async()=>{const a='+AGENT+';return !a.getStorageDiagnostics().saving&&a.listResourceVersions("notebook-page:demo.v23.notebook").total===8;}')
+    button.wait_for(state='visible')
+    assert button.is_enabled()
     flush(page)
 
 def choose(page, label, filename):
