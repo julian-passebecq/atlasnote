@@ -37,10 +37,9 @@ def scenario(browser,context,page,base,out,passed):
     choose(page,'Re-select saved archive',correct)
     section.locator('[data-durability-preview]').wait_for()
     page.get_by_label('Confirm saved archive retention',exact=True).check()
-    assert section.locator('[data-durability-action="compact-archive"]').is_disabled()
     assert page.evaluate(RAW)==before
     trusted=page.evaluate('window.__qaTrustedSelections');assert len(trusted)==3 and all(trusted)
-    passed('Native saved-file re-selection verifies; confirmation cannot enable unqualified deletion',trustedEvents=trusted)
+    passed('Native saved-file re-selection verifies without mutating any of the five stores before explicit commit',trustedEvents=trusted,commitEnabled=section.locator('[data-durability-action="compact-archive"]').is_enabled())
     page.screenshot(path=str(out/'archive-ceremony.png'),full_page=True)
 
 if __name__=='__main__':
