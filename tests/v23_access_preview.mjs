@@ -45,10 +45,10 @@ async function run(){
   catch(e){results.push({name:'Anonymous GET '+origin.origin+'/'+route,status:'BLOCKED',reason:'Transport failure is not fail-closed authentication evidence',error:e.cause?.code??e.code??e.name});}
  }
  const methodRows=observations.filter(r=>r.route==='__atlasnote_unlock'||r.route==='__atlasnote_lock');
- if(methodRows.length===4&&methodRows.every(r=>r.status===405&&r.noStore&&!r.setCookiePresent))results.push({name:'get-unlock-lock',status:'PASS',scope:'Both GET endpoints reject with 405/no-store on alias and immutable deploy'});
+ if(methodRows.length===4&&methodRows.every(r=>[403,405].includes(r.status)&&r.noStore&&!r.setCookiePresent))results.push({name:'get-unlock-lock',status:'PASS',scope:'Both configured GET endpoints deny without setting a cookie on alias and immutable deploy'});
  const cross=[];
  for(const route of ['__atlasnote_unlock','__atlasnote_lock'])try{cross.push(await probe(immutable,route,'POST',{Origin:'https://cross-origin-qa.invalid','Content-Type':'application/x-www-form-urlencoded'}));}catch(e){results.push({name:'Cross-origin transport /'+route,status:'BLOCKED',error:e.cause?.code??e.name});}
- if(cross.length===2)results.push({name:'cross-origin-unlock-lock',status:cross.every(r=>r.status===403&&r.noStore&&!r.setCookiePresent&&!r.clearSiteDataPresent)?'PASS':'FAIL',observations:cross});
+ if(cross.length===2){const safe=cross.every(r=>[403,503].includes(r.status)&&r.noStore&&!r.setCookiePresent&&!r.clearSiteDataPresent);results.push({name:'cross-origin-unlock-lock',status:!safe?'FAIL':cross.every(r=>r.status===403)?'PASS':'BLOCKED',observations:cross,reason:cross.some(r=>r.status===503)?'Unavailable verifier denies requests before origin-specific authorization; this is not configured cross-origin proof.':undefined});}
  finish();
 }
 try{await run();}catch(e){results.push({name:'Exact disposable preview prerequisite',status:'BLOCKED',error:e.message});finish();}

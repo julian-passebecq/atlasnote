@@ -1,83 +1,108 @@
-# Finalization scope and reproducible qualification
+# V2.3 final-finish scope and reproducible qualification
 
-Status: **BLOCKED**, safe read-only archive fallback only.
+Status: **BLOCKED** until all required gates pass on the exact final SHA.
 
-## Running the candidate
+## Authoritative lineage and preserved implementation
 
-Use a real Git checkout containing the candidate commit. Restore it with the delivered
-bundle into a clone which already contains the exact base commit, or apply the delivered
-patch on that base. A copy of files alone is not an exact Git commit identity.
-Run the unchanged pinned `npm ci` in a registry-enabled environment. Then:
+Start: `final/atlasnote-2.3-consolidated`, commit
+`84b8ba2addbfe3cb2527dc4a57039416ceabbb52`, tree
+`19eadf07aa7485d5d07cb8bfabb22e02539940be`.
+Final-finish branch: `final/atlasnote-2.3-pro-finish`.
+No main/older-branch merge, production deploy or tag is part of this pass.
+
+This is not the earlier disabled-compactor candidate. The consolidated native atomic
+compactor and recovery fixes remain intact. Final-finish changes are qualification
+code and documentation, not a replacement writer, migration, UI redesign or schema
+change. The database remains version 3 with the same five stores. Dependency pins,
+released V2.2 readers and PDFAtlas provenance remain unchanged.
+
+`tools/v23-release-contract.mjs` and the inherited `.github/workflows/ci.yml` are not
+weakened or replaced. All 13 V2.3 commands must exit zero. Missing assertions,
+transport errors, exit 2, timed-out commands and BLOCKED subcases are not passes.
+The additional non-production workflow saves source/build diagnostics even when
+qualification fails; those artifacts are NOT production release approvals.
+
+## Executable evidence
+
+The native compaction suite covers the positive all-or-nothing commit/reload and
+all 13 required stale/history/personal/import/asset/concurrency/abort/request/quota
+faults. It reopens all five stores and compares normalized keys, values and raw bytes.
+The writer implementation is unchanged from the consolidated baseline.
+
+Capacity qualification now requires real browser transactions at 2,000 revisions per
+resource, 25,000 total revisions, 500 reviews and exactly 64 MiB structured history.
+Each case proves a blocked next write without persistent mutation; prepares and saves
+an archive; re-selects the actual saved file; confirms and commits; reloads; accepts
+an already-staged proposal and creates/accepts a fresh reviewed edit; reattaches the
+archive, reads an old version and passes integrity. Pure planning tests remain but
+cannot by themselves make the gate pass. Thin indexes still consume real capacity;
+this does not promise unlimited archived history or physical-disk reclamation.
+
+Version comparison uses actual archived notebook/PDF entries, current/archived and
+archived/archived pairs, explicit restore-as-new confirmation, increasing head numbers
+and unchanged prior records. Recovery restores a complete archive-bearing bundle in a
+fresh browser profile. A visible physical historical PDF page, original-byte download
+hash/length, reload/missing-file refusal, exact reattachment and tamper rejection are
+mandatory. Hidden thumbnails and current-document substitution are not accepted.
+
+Runtime qualification includes populated v3, legacy-v2, partial-baseline, blocked old
+tab and interrupted upgrade cases; injected storage-estimate/persistence outcomes in
+the real Settings UI; actual corrupt stored fixtures; late transaction quota failure
+following an optimistic estimate; retry; and repeated committed archive lineage.
+Advisory API injection is labeled explicitly: it is not evidence of hardware failure,
+actual OS quota exhaustion or browser eviction guarantees.
+
+Safe-close tests hold and abort actual native transactions. They require the browser's
+real beforeunload dialog, a persistent unsaved indication, an independently verified
+emergency export, recovery of unsaved content in another profile and explicit saving
+retry. HTTP lock refusal is not proof of HTTPS authenticated logout safety.
+
+## Remaining provider boundary
+
+The complete 20-case provider contract is still required. Exact-candidate anonymous
+route/method/origin probes cannot certify valid-key authentication, browser-enforced
+HttpOnly/Secure/SameSite, expiry, duplicate cookies, verifier rotation, authenticated
+cache isolation, logout with identical IndexedDB bytes or actual provider throttling.
+Recognizing three Edge Functions also cannot certify those behaviors.
+
+Only an explicitly identified non-production preview may be probed. Resolve its SHA
+and immutable deployment before attributing HTTP observations. No default to an old
+PR or production is permitted. A missing preview, configuration or transport remains
+BLOCKED. Temporary credential handling must not expose a verifier (also signing
+material), alter production configuration or imply cleanup without evidence.
+
+No Netlify runtime environment variable or access credential was created/read/changed
+in this pass. No production key was requested. A disposable draft PR creates the
+preview automatically; closing that PR is not evidence that immutable deployments
+were deleted. The delivery's cleanup record states precisely what was done.
+
+## Reproduction
+
+Use the exact delivered Git commit, not a manually re-uploaded tree with another SHA.
+The source ZIP is the full tree for inspection; the branch/commit preserves ancestry.
 
 ```sh
+npm ci
+python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
+python -m playwright install --with-deps chromium
 npm run build:offline
 npm run typecheck:online
 npm run build
-npm run test:release
+npm run check:v23:build
 npm run test:v23:release
+npm run test:release
 ```
 
-CI runs the V2.3 aggregate immediately after the integrated release check, before
-later inherited example generators rewrite synthetic fixture files. This preserves
-the exact clean-build identity check without ignoring real source changes. All
-inherited commands and their order relative to each other remain unchanged.
+Provider qualification requires a separately controlled disposable environment.
+Without that prerequisite, local data-safety results may pass while the aggregate
+correctly returns BLOCKED. Do not suppress that exit or weaken the required matrix.
 
-The final runner runs all commands in `tools/v23-release-contract.mjs` and stores raw
-stdout/stderr plus exit codes under `docs/evidence/v23/release/`. `check:v23:build`
-requires an integrated clean artifact for HEAD and its exact source hash/PDFAtlas pin.
-The inherited integrated artifact used for diagnostics intentionally fails that check
-because it is the baseline, not a newly built candidate. The delivery records its
-GitHub Actions provenance; no new exact-candidate integrated ZIP is supplied.
+## Artifact provenance
 
-Current smoke suites expose missing proof as explicit BLOCKED rows. They do **not**
-become a completed destructive/provider test matrix merely by running on a new machine.
-Replace each blocker with reviewed executable assertions and retained actual evidence;
-never delete a required case merely to turn CI green.
-
-## Matrix that remains unqualified
-
-Compaction: all 13 `COMPACTION_FAULTS` entries, byte-equivalent reopened five-store
-rollback, every current projection/head/staged-review/private-PDF byte, positive
-all-or-nothing descriptor/delete success, exact read-only attachment and restore-as-new.
-The guard suite only confirms destructive code is disabled, including six fake receipts.
-
-Capacity: unchanged 2,000/resource, 25,000 total, 500 reviews and 64 MiB bounds. Existing
-pure diagnostics test rejection and detached plans. All four require actual limit ->
-prepare -> save -> native re-select -> compact -> reload -> integrity -> new revision ->
-attach -> browse -> restore-as-new. No limit was raised or removed.
-
-Browser: populated V2.2 migration; old-tab/blocked/interrupted upgrade; real storage API
-outcomes; quota after successful estimate; stored-corruption read-only checks; complete
-trusted chooser and stale-preview races; all Version History UI modes/types; archived
-compare/missing-file no-substitution; repeated lineage; complete archived/private PDF
-recovery into a fresh profile; pending/failing/retrying/emergency close; provider unlock
-layout and four integrated application viewports. The new common helper only reads
-five stores and uses public navigation/read APIs; it does not patch production storage.
-
-Provider: all 20 `PROVIDER_CASES` entries, real HTTPS and cookie enforcement, exact
-all-path denial, wrong-method/origin/key, provider rate enforcement/warnings, successful
-303/secure cookie, reload/fresh profile, invalid/expired/duplicate cookie, rotation,
-warm authenticated cache -> anonymous denial, logout IDB preservation and cleanup.
-Read-only preview probes do not cover configured-session behavior. They default to the
-inherited PR #18 preview and record that target, not a claim that it hosts this candidate.
-No deployment write or environment secret operation is automated in CI.
-
-## Safety boundaries
-
-Do not change the shipping compaction guard without the full real-IDB proof. Do not
-add client secrets or production test backdoors. Do not use static upload as a gated
-deployment. Do not disable Chromium policy or count about:blank/MemoryBackend as actual
-normal-origin qualification. Never rewrite a prior build identity to match HEAD.
-
-The original DOM-only layout diagnostic is still available as
-`npm run test:v23:layout:diagnostic`; it is not the required integrated layout gate.
-
-## Evidence classification
-
-- Downloaded inherited green evidence: prior GitHub run, not new-candidate proof.
-- Current command outputs: actual runs, including failures, timeouts and blockers.
-- Synthetic binary fixture inventory: exact public baseline bytes, not user data.
-- Raw logs may include diagnostic runtime paths; they are retained only in evidence,
-  inventoried by the scanner and must not be published as application content.
-- `SOURCE_MANIFEST.json`, older release reports and archived initial reports are
-  historical. The external `CANDIDATE.json`/checksums identify this delivery.
+Every current build must identify HEAD, the exact tracked-source fingerprint, a clean
+checkout, integrated build kind, database 3 and the immutable PDFAtlas commit. Never
+rewrite an inherited build identity. The delivery records source/dist/evidence ZIP
+SHA-256 values, GitHub run/artifact IDs, candidate SHA/tree and preview identity.
+Prior run evidence is labeled by its own SHA and never substituted for the final run.
+Historical `SOURCE_MANIFEST.json`, older reports and docs under history are not current
+release approval. The final external candidate/report/checksum records are authoritative.

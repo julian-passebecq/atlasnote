@@ -1,91 +1,80 @@
-# V2.3 qualification matrix A-X
+# V2.3 final-finish qualification matrix A-X
 
-Overall **BLOCKED**. Current finalization starts from exact 66f9387, not main.
-The inherited GitHub integrated matrix is green and PR #18 reports three Edge Functions.
-That corrects the initial environmental claims; it does not certify the new candidate.
-All original run commands are retained. A mandatory V2.3 aggregate is added to CI;
-its present blocked outcomes intentionally prevent a green final release.
-See FINALIZATION.md and the external exact-candidate evidence for current results.
+Overall **BLOCKED** until every required V2.3 gate and the complete inherited workflow
+pass on one exact SHA. Authoritative starting point is consolidated commit
+`84b8ba2addbfe3cb2527dc4a57039416ceabbb52`, not main or an older upload branch.
+The existing atomic writer is present and unchanged; claims in historical reports that
+it is absent do not describe this candidate.
 
-Historical context (initial report retained under history/): Raw initial failures, intermediate repairs and exact-candidate
-reruns are preserved in the delivery evidence. PASS below means only the stated scope;
-it never promotes simulated storage to a real browser proof. Original V2.2 assertions
-and release command list are unchanged. No paid agent or production deployment used.
+The table identifies executable coverage, not blanket approval. Actual final statuses,
+errors, screenshots, source identities and durations are in the delivered current
+`release/results.json` and per-gate evidence. Earlier run 35475962006 at `36dd84a`
+proved compaction (positive + all 13 faults), all four real capacity cases, archived
+Version Compare/restore and complete private-PDF recovery. Those observations are
+retained under their own SHA; a later candidate must rerun them.
 
-| Matrix | Implemented evidence | Remaining qualification |
+| Matrix | Executable qualification | Evidence boundary |
 |---|---|---|
-| A existing gates | inherited 66f9387 GitHub integrated matrix green; current all-tests rerun in delivery | freshly built exact finalization candidate and its complete matrix |
-| B migration | empty and populated strict five-store readers; backup 2/3/4 tests | real V2.2 profile, reload, old-tab upgrade and interruption |
-| C storage | unsupported/throwing/unavailable/healthy estimates; persistence variants | real browser API outcomes |
-| D preflight | enough/insufficient/unknown estimates; no preflight mutation | IDB failure after optimistic estimate, exact rollback |
-| E integrity | healthy and corrupt parent/head/hash/assets/PDF/descriptor; zero mutation | actual stored corrupt fixtures and read-only transaction |
-| F verifier | schemas 2..5, traversal, corrupt/missing shards/assets, head/projection/canonical/PDF | browser file UI agrees with restore; saved file handling |
-| G generation | oldest prefixes, one/multiple resources, retained heads, hashes/audit/assets | normal-origin generation/download exercise |
-| H re-selection | exact ZIP vs wrong/altered bytes; synthetic events rejected | trusted native chooser; exact file intentionally cannot enable deletion |
-| I compaction | pure stale-state rejection; production delete implementation absent | ALL real transaction fault injection; release blocking |
-| J reachability | historic-only/shared/current/import/personal/same-SHA/missing/corrupt bytes | atomic deletion never shipped; actual IDB proof required |
-| K Compare | all five type targets, stable IDs, A-old/B-current regardless prior B in unit logic | visible Changes/Side-by-side/A-only/B-only and PDF render |
-| L archived browsing | exact missing/attached resolution, no fallback, clone-safe restore/Agent | normal-origin links, visual diffs and archived/archived rendering |
-| M repeated archives | exact A/B lineage, overlap rejection, attachment independence | reload and saved-file UI for repeated archives |
-| N Agent/audit | pending/spanning review retention, reviewed restore, no archive/delete API | real reviewed write failure rollback |
-| O capacity | 2000 pure-plan capacity experiment; 25000 count, 500 review, byte overflow guards | all four committed limit-recovery end-to-end cases BLOCKED |
-| P complete recovery | all exact dependency closure; corruption rejects; projection/hash equivalence | fresh real profile, reload, private PDF and integrity |
-| Q pending close | safety-state unit coverage; existing queue/unload integration | real pending/failed/retry/unload dialogs and emergency export |
-| R demo | opt-in/idempotent, revision counts, synthetic bytes, safe removal | load/reload/compare/archive UI |
-| S icon | separate semantic icons and accessible labels in source | visible/keyboard verification |
-| T access | real Web Crypto + Request/Response tests: key, cookie, expiry, rotation, path, errors | actual browser HttpOnly/Secure enforcement and logout keeps IDB |
-| U Netlify | three wrappers recognized by Netlify on PR #18; stricter static declaration checks added | three functions recognized on inherited preview; current provider cache/cookie/rate enforcement still unqualified |
-| V layout | four unlock HTML viewport/keyboard cases attempted; app harness separately | all four integrated new-control viewports |
-| W privacy | static graph/distribution secret checks; original ZIP/security tests | scoped final source/present-dist/evidence scan added; fresh candidate dist and provider audit remain required |
-| X performance | synthetic 2000-generation/verification/pure-plan timing | actual compaction timing absent by design |
+| A inherited gates | unchanged CI workflow and command ordering | complete workflow must be green on final SHA; V2.3 failure blocks later steps |
+| B migration | populated v3, legacy v2, interrupted baseline, aborted upgrade, old tab blocks upgrade | native disposable IndexedDB; records and idempotent reload checked |
+| C storage | six estimate/persistence API outcomes through Settings | browser API responses injected and labeled; no physical eviction guarantee |
+| D preflight | optimistic estimate then late quota fault, five-store rollback and retry | actual native restore transaction; simulated quota exception |
+| E integrity | unknown history key, bad revision hash, missing head, private-asset corruption | corrupt stored fixtures preserved byte-for-byte after read-only rejection |
+| F verifier | strict schemas/provenance/hash/PDF validation plus chooser/restore flows | saved file verification is not indefinite retention proof |
+| G generation | real demo and capacity archive generation/download | bounded transport; current heads and staged reviews retained |
+| H re-selection | wrong saved file, one-byte alteration, trusted native chooser, confirmation toggling | no history write before explicit commit; generated bytes are insufficient |
+| I compaction | positive native commit/reload and all 13 faults below | unchanged consolidated writer, reopened full five-store equality on failure |
+| J reachability | old private PDFs/images removed only with verified archive ownership | shared/current bytes retained; successful and rollback cases cover raw assets |
+| K Compare | five live canonical types with A-old/B-current, Changes and Side-by-side | released A-only/B-only controls retained; no new generic mode introduced |
+| L archived browsing | notebook/PDF archived-current and archived-archived UI, restore-as-new | visible physical private PDF plus original download hash, missing-file refusal |
+| M repeated archives | two committed generations, reload and independent exact attachments | contiguous historical IDs; no rebasing or fallback |
+| N Agent/audit | retained pending plans, explicit staged acceptance and restored lineage | no automatic acceptance or public destructive-compaction method added |
+| O capacity | actual committed recovery at all four unchanged bounds | blocked next write, saved-file ceremony, reload, two later reviewed writes, integrity |
+| P complete recovery | fresh live and externalized-archive recovery, private PDF, reload, tamper | exact five-state restoration; archives remain session attachments |
+| Q pending close | native pending/aborted transactions, unload dialog, emergency copy and retry | HTTPS authenticated lock/persistence interaction remains provider qualification |
+| R demo | opt-in seed/reload/idempotence and archive use | original synthetic fixtures only; not real private user data |
+| S icon | dedicated History and Read Later icons/labels retained | released UI not redesigned |
+| T access | Web Crypto unit tests and exact-preview anonymous probes | configured browser/session/rotation/cache/logout matrix remains mandatory |
+| U Netlify | exact SHA/status/deploy binding and three Edge Function discovery | discovery and safe anonymous errors are not rate/session proof |
+| V layout | integrated controls/keyboard at 1366x768, 1440x900, 1920x1080, 390x844 | real HTTPS unlock form/keyboard remains provider qualification |
+| W privacy | tracked-source/dist/evidence rule scan and public-fixture hash allowlist | bounded scanner, not universal secret detection or live-provider audit |
+| X performance | measured real capacity generation/commit/reload suites plus pure timings | logical structured-byte recovery, not promised storage-engine disk shrinkage |
 
-## Exact commands
-`npm run test:release` retains every original V2.2 gate. Diagnostic environment may set
-ATLAS_GATE_TIMEOUT_MS=45000, npm fetch retries=0 and fetch timeout=10000; timeout is a
-nonzero failure, never a passing skip. Exact commands/statuses/logs are in results.json.
-Then restore the separately labeled compatibility dependency fallback:
-`npm run bootstrap:offline && npm run build:offline`.
-`npm run typecheck`, `node --test tests/*.test.mjs`, `npm run check:access`,
-`npm run test:v23:capacity`, `npm run test:v23:runtime`, `npm run test:v23:layout`.
-`npm run test:v23:release` runs the added sequence and retains each exit code.
-Normal runtime uses dist by default; a compatibility attempt with ATLAS_DIST=dist-offline
-must be labeled compatibility, never production PDF proof. Required layout now uses the unmodified integrated normal-origin entrypoint at all four sizes.
-The old opaque-origin layout script is retained only as test:v23:layout:diagnostic.
-Compare/recovery/safe-close/compaction/provider/identity/scan now have dedicated mandatory
-commands in tools/v23-release-contract.mjs. Unimplemented proof remains explicitly BLOCKED.
+## Closed-world native fault list
 
-## Required fault experiment before any compactor can ship
-Use disposable real browser profiles and the exact integrated candidate. Capture every
-key/value of imports, overlays, personal, assets and history, including asset bytes.
-After a trusted saved-file re-selection inject, individually: stale history epoch;
-second-tab write before transaction; abort during descriptor put; simulated quota at
-put; descriptor failure; revision deletion failure; closed-review deletion failure;
-asset deletion failure. Reopen all stores and require exact pre-state equality after
-EACH failed attempt, including heads, pending review, current projection and private PDF.
-Inject a concurrent personal/asset/import write as well as a history edit. A stale preview
-must require a NEW generation/save/reselection, not quietly recompute destructive intent.
-On success require descriptor and all deletions together, reopen and validate the entire
-workspace, attach exact archive, read every removed revision/asset and restore-as-new.
-A control flag or MemoryBackend success is not sufficient proof.
+`test:v23:compaction` must execute every unchanged `COMPACTION_FAULTS` entry:
+stale-source-epoch; stale-history-hash; stale-preview-hash; second-tab-history-write;
+concurrent-personal-write; concurrent-imports-write; concurrent-assets-write;
+abort-during-descriptor-write; descriptor-put-failure; revision-delete-failure;
+closed-review-delete-failure; asset-delete-failure; transaction-quota-failure.
+Every rejected attempt must reopen imports, overlays, personal, assets and history and
+match all original keys/values/raw bytes, current projections, heads and staged reviews.
+The success case requires the descriptor and intended deletions to survive reload
+indivisibly. MemoryBackend, an opaque origin and an enabled button are not this proof.
 
-## Provider security qualification (disposable preview, never production)
-Run normal Netlify tooling and inspect declarations/rate warnings. Without config, all
-HTML, JS, PDF worker, PDF, content JSON, build identity, SPA deep links and direct paths
-must return locked/error, never static app bytes. Repeat with invalid config/function
-error, tampered/expired/duplicate cookie. Warm caches with authorized requests, then
-retry anonymously; all remain gated. POST valid disposable key once, reload browser,
-confirm HttpOnly cookie not exposed to JavaScript, and verify session expiry/rotation.
-Test cross-origin and GET unlock/lock, repeated failed unlocks and provider throttle.
-Logout clears cookie, no Clear-Site-Data, IndexedDB bytes identical. Delete/misconfigure
-a middleware in a test checkout and require the build to fail; never deploy the result.
+## Real capacity measurements already observed at 36dd84a
 
-## Exact destructive fault list (no omissions)
-Stale source epoch; stale history hash; stale preview/removal hash; second-tab history;
-concurrent personal, imports and assets; abort during descriptor write; descriptor put
-failure; revision delete failure; closed-review delete failure; asset delete failure;
-quota during transaction. For each, reopen all five stores and compare every key/value
-and raw byte, current projections/heads and pending/staged reviews. Positive success
-must be indivisible and support exact archive attachment and restore-as-new.
+| Boundary | Before compaction | After compaction | Later write proof |
+|---|---|---|---|
+| Per resource | target head 2000; 2059 live revisions | 60 live revisions | same target advances to 2002 |
+| Total revisions | 25000 live; 22108636 structured bytes | 60 live; 10991187 structured bytes | target advances from 2 to 4 |
+| Reviews | 500 rows including one staged proposal | staged proposal retained; 499 closed rows externalized | retained proposal accepted and fresh reviewed edit committed |
+| Structured bytes | exactly 67108864 bytes | 235703 bytes | target advances from 2 to 4 |
 
-These are release-blocking missing proofs, not failing application features claimed
-to have been fixed. The shipping compactor remains absent.
+These values describe the named run, not a relabeled result for later commits. Archive
+index overhead remains real and bounded; repeated compaction cannot erase all local
+metadata. Current-run measurements are stored under the capacity browser evidence.
+
+## Provider matrix and release decision
+
+All unchanged `PROVIDER_CASES` are required: missing/malformed config, handler failure,
+GET/cross-origin unlock and lock, wrong key, provider rate enforcement, valid-key 303
+and cookie flags, same/fresh profiles, tampered/expired/duplicate cookies, rotation,
+authenticated cache then anonymous denial, logout preserving IndexedDB, all static/SPA
+paths, three functions, rate-rule recognition and disposable configuration cleanup.
+No production secret/configuration is used for qualification. A missing config which
+returns 503 is useful fail-closed evidence but not proof of configured cookie behavior.
+
+The aggregate intentionally returns exit 2 for any BLOCKED/FAIL/missing gate. All 13
+commands, the contract lists, original writer and original inherited workflow remain
+unchanged. A diagnostic source or dist artifact is not a green release artifact.

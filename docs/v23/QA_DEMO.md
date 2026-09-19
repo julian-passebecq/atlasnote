@@ -38,9 +38,16 @@ The History icon is a dedicated layered history/pages symbol; Read Later keeps i
 Accessible Version History labels are preserved. No reader redesign/new content type.
 
 ## This candidate's exercise boundary
-You can generate/download/re-select/self-verify the demo archive and inspect a removal
-preview. You CANNOT compact it: the last control is disabled because real-browser fault
-proof is missing. Missing/attached archived states in Node tests use a detached pure-plan
-workspace; they are NOT evidence that compaction was committed safely. Do not manually
-inject those workspaces into a real user's browser. Use QA fixtures in a disposable
-profile after the coordinator has reviewed them. See QA_MATRIX.md.
+Use a disposable profile, not a user's sole copy of data. The candidate preserves the
+consolidated atomic compactor. Generate, download and independently re-select the exact
+archive; inspect the removal preview; explicitly confirm retention; then compact.
+Reopened current content and heads remain unchanged. Attachments last only for the
+current session, so retain and re-select the real files after reload.
+
+The mandatory browser tests exercise actual committed archives, Version History UI,
+restore-as-new and private-PDF rendering. All four capacity boundaries have a native
+commit/reload/new-edit test, separate from pure planning assertions. Synthetic fixture
+seeding in these tests is limited to disposable profiles and is not the writer under
+qualification. Pending proposals remain pending until the explicit QA human accept
+step. The release is still BLOCKED while required provider/session gates are unproven;
+the demo and successful data-safety tests are not permission to deploy production.

@@ -1,12 +1,21 @@
 # Single-owner Netlify Edge access gate
 
-Status: **BLOCKED for current finalization**. The inherited exact source passed its
-integrated GitHub build and PR #18 preview reports three deployed Edge Functions.
-Discovery is proven; actual configured HTTPS cookies, logout/rotation/cache isolation,
-all-path denial and rate enforcement are still not certified for this candidate.
-No disposable or production key/environment/deployment was created in this pass.
-The source handlers are unchanged; static declaration validation is now stricter.
-See `FINALIZATION.md` and the current release report for evidence-stage separation.
+Status: **BLOCKED for release** until the complete provider matrix is qualified.
+The final-finish branch uses a disposable Deploy Preview on PR #21. At commit
+`36dd84a43f9451ba0890b8c67bbbbd42ec184687`, Netlify confirmed deploy
+`6aaf19477323b500081c7336`, context `deploy-preview`, no production publication and
+three Edge Functions. That historical observation is not evidence for a later SHA.
+Current provider probes bind the candidate SHA to the Netlify status, bot comment and
+immutable deploy identity before making HTTP assertions. Missing target/identity or
+transport failure is BLOCKED, never proof of fail-closed authentication.
+
+No access key, verifier or other Netlify environment variable was created, replaced,
+read or deleted during this final-finish pass. No production deployment was requested.
+Anonymous denial/method/origin checks do not certify configured secure cookies,
+rotation, expiry, authenticated cache isolation, logout or rate enforcement. Those
+remain required even when the three functions are recognized. See the exact-current
+report and cleanup record in the delivery; never infer successful cleanup from a
+closed pull request alone.
 
 ## Scope and threat model
 The gate protects the remotely served application shell/assets/deep links, not encryption
@@ -44,8 +53,9 @@ Missing/malformed runtime config, unavailable crypto, invalid/expired/ambiguous 
 or handler errors never continue to static content. Wrappers use `onError:'fail'`, never
 bypass or a static custom error rewrite. Both build commands check function declarations
 and client-secret exclusion before compiling. Removing a function invalidates the build.
-Provider discovery was verified on the inherited PR #18 preview; a manually uploaded static dist without Edge
-functions would be ungated and is NOT a supported deployment.
+Provider discovery must be verified on the same candidate as the tests. A manually
+uploaded static dist without Edge Functions would be ungated and is NOT a supported
+deployment.
 
 No Edge cache opt-in. Authenticated and rejected responses enforce browser/CDN no-store
 and Vary:Cookie; pre-existing application security/PDF headers remain intact. An unlock

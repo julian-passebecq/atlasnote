@@ -1,13 +1,15 @@
 # Storage, backup verification and complete recovery
 
 ## Finalization evidence status
-The inherited integrated build and V2.2 recovery regression matrix are green at
-66f9387. This candidate leaves all recovery/runtime code unchanged. New normal-origin
-live-demo recovery smoke and explicit complete-archive/private-PDF/reload requirements
-are wired into mandatory CI, but this environment blocks normal-origin Chromium.
-Neither the new test source nor existing pure recovery validation proves complete
-fresh-profile archived recovery. The included integrated build retains its prior SHA;
-a new exact-candidate build and real recovery run remain BLOCKED. See FINALIZATION.md.
+The final-finish source starts at the exact consolidated commit
+`84b8ba2addbfe3cb2527dc4a57039416ceabbb52`. Existing recovery/runtime code is preserved.
+`test:v23:recovery` now performs live and externalized-archive recovery into separate
+real Chromium profiles. It compares restored state, renders the historical private PDF
+in the physical reader, verifies the original downloaded bytes, reloads to exercise
+missing-archive refusal, reattaches the exact saved bundle and rejects tampering with
+zero store mutation. This full recovery suite passed on qualification commit `36dd84a`;
+the delivery contains a fresh exact-final-SHA rerun, not relabeled prior artifacts.
+Full release qualification remains BLOCKED until all provider and inherited gates pass.
 
 ## Database and compatibility
 No database version bump: `knowledge-atlas`, version 3, with exactly imports, overlays,
@@ -16,8 +18,9 @@ existing history store. No sixth store, cloud ownership or new workspace is intr
 No destructive V2.2 migration is scheduled. The read-only integrity path reads all five
 stores in a consistent transaction and checks keys against stored values, unknown
 records and schema/projection/head/asset relationships without repairing anything.
-Normal-origin migration, blocked upgrade and interrupted-upgrade evidence is still
-required; format tests alone do not certify a browser migration.
+Native populated-v3, legacy-v2, partial-baseline, blocked-old-tab and aborted-upgrade
+fixtures are covered by the mandatory runtime matrix. Only actual successful runs
+certify those cases; format tests alone do not certify a browser migration.
 
 | Artifact / caller | Read | Write / note |
 |---|---|---|
@@ -33,8 +36,10 @@ required; format tests alone do not certify a browser migration.
 The Agent's old contract marker is not the application build identity. Exact V2.3 build
 identity is separate: appVersion, full sourceCommit, SHA-256 over sorted tracked source
 paths/bytes, dirty flag, databaseVersion, immutable PDFAtlas commit and
-integrated/compatibility buildKind. Builds require an actual Git checkout; the delivery
-bundle/patch preserves the exact commit for coordinators restoring from a source ZIP.
+integrated/compatibility buildKind. Builds require an actual Git checkout. The source
+ZIP reproduces the candidate tree; fetch the named branch/commit to preserve Git
+ancestry when rebuilding. A manual upload produces a different commit and needs a
+new build and qualification.
 Never represent a compatibility build as the integrated production reader.
 
 ## Schema 5 backups
@@ -70,7 +75,8 @@ On confirmed restore the existing atomic five-store replacement installs live st
 assets and descriptors. Verified external archives are attached in session memory,
 not re-inflated as permanent live history. Reload requires selecting the saved archive
 or recovery bundle again for historical browsing; the archive index remains durable.
-Fresh-profile/reload recovery with actual historical PDF rendering is still BLOCKED.
+The browser recovery gate requires fresh-profile/reload recovery and actual historical
+PDF rendering. A successful original-byte digest alone is not a visual rendering proof.
 
 ## Owner migration procedure (after candidate QA)
 On the old origin: wait for saved status, create a complete recovery bundle with every

@@ -14,16 +14,22 @@ requires retention. Unknown or unrelated orphan assets are retained, not garbage
 collected. Assets referenced by both live and archived revisions remain local.
 
 The optional corpus has a historical-only synthetic image, a shared image, and two
-original synthetic PDFs with different hashes. The first archive pure preview identifies
+original synthetic PDFs with different hashes. The first archive removal preview identifies
 the historic image and old PDF as exclusive; the current PDF and shared image remain.
 Exact byte counts and hashes are in the evidence, not estimated from filenames.
 
-**No local asset deletion occurs in this candidate.** These are conservative planning
-and verifier tests, not proof of safe IndexedDB garbage collection. A later compactor
-must update descriptor, revisions, reviews and asset removals atomically and must
-re-check all ownership after concurrent writes. Restore-as-new from an attached
-revision places any required verified historical assets into the same existing reviewed
-write transaction as the new revision. The old immutable revision remains unchanged.
+Local removal is permitted only through the preserved, proven atomic compactor.
+The real-browser positive case and 13 abort/stale/concurrency/request/quota cases
+verify the descriptor/revision/review/asset transition across all five stores. Faults
+preserve every original key/value and raw byte, including current projections and
+pending proposals. Closed-world capacity tests exercise the same writer after genuine
+saved-file selection, never a replacement test implementation.
+
+Restore-as-new from an attached revision places required verified historical assets
+in the existing reviewed write transaction with a newly numbered revision. Original
+immutable records remain unchanged. Archived private-PDF comparison and complete
+recovery verify a visible physical page plus the original download SHA-256/byte count;
+rendering a current replacement or a hidden thumbnail is not sufficient evidence.
 
 Remote images and HTTPS PDF dependencies are reported as external, not downloaded
 or counted as protected local bytes. An offline complete recovery bundle guarantees
