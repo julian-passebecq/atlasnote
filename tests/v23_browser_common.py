@@ -25,8 +25,19 @@ RAW = """async()=>{
 
 def flush(page):
     page.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
-    state=page.evaluate('async()=>('+AGENT+').getStorageDiagnostics()')
-    assert state['saving']==0 and not state['storageError'], state
+    # Source-anchor flushing can enqueue one final durable write immediately after
+    # the first snapshot promise resolves. Require a short stable zero-saving
+    # window instead of sampling the counter at a single microtask boundary.
+    state=None
+    for _ in range(40):
+        state=page.evaluate('async()=>('+AGENT+').getStorageDiagnostics()')
+        if state['saving']==0 and not state['storageError']:
+            page.wait_for_timeout(50)
+            confirm=page.evaluate('async()=>('+AGENT+').getStorageDiagnostics()')
+            if confirm['saving']==0 and not confirm['storageError']:
+                return confirm
+        page.wait_for_timeout(25)
+    assert state and state['saving']==0 and not state['storageError'], state
     return state
 
 def persisted(page):
