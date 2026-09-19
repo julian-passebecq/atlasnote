@@ -1,3 +1,4 @@
+import {requireHistoricalRevision} from '../durability/registry.js';
 import {resolveStudy} from '../companion/tree.js';
 import {companionKey} from '../companion/validation.mjs';
 import type {Catalogue,Workspace,Overlays,Project,Page,DocumentEntry} from '../core/model.js';
@@ -75,8 +76,7 @@ export function resourceKeyForTarget(c:Catalogue,t:ResourceTarget):string|undefi
 }
 /** Return a pane-local projection only. Historical data never replaces shared current content. */
 export function historicalCatalogue(c:Catalogue,ws:Workspace,revisionId?:string):{catalogue:Catalogue;revision?:ResourceRevision;warning?:string}{
- if(!revisionId)return {catalogue:c};const revision=ws.history?.revisions.find(r=>r.revisionId===revisionId);
- if(!revision)return {catalogue:c,warning:'This historical revision is missing. Import its full backup; current content was not substituted.'};
+ if(!revisionId)return {catalogue:c};let revision:ResourceRevision;try{revision=requireHistoricalRevision(ws.history,revisionId);}catch(error){return {catalogue:c,warning:error instanceof Error?error.message:String(error)};}
  const s=revision.snapshot;
  return {revision,catalogue:{...c,pages:s.page?[...c.pages.filter(p=>p.id!==s.page!.id),s.page]:c.pages,documents:s.document?[...c.documents.filter(d=>d.id!==s.document!.id&&d.pageId!==s.document!.pageId),s.document]:c.documents,projects:s.project?[...c.projects.filter(p=>p.id!==s.project!.id),s.project]:c.projects}};
 }

@@ -16,7 +16,7 @@ export function ReaderRail({onHistory,onAgentReview,hasHistory,onDashboard,onCap
  <IconButton name="bookmark" label="Open bookmarks" active={managerMode==='bookmark'} onClick={onBookmarks}/>
  <IconButton name="clock" label="Open read later" active={managerMode==='later'} onClick={onReadLater}/>
  <span className="rail-separator"/>
- <IconButton name="clock" data-agent-action="version-history" label="Version History" disabled={!hasHistory} onClick={onHistory}/>
+ <IconButton name="history" data-agent-action="version-history" label="Version History" disabled={!hasHistory} onClick={onHistory}/>
  <IconButton name="export" label="Export to AI" disabled={!page} onClick={onExport}/>
  <IconButton name="theme" label="Theme" active={popover==='theme'} aria-haspopup="dialog" aria-expanded={popover==='theme'} onClick={()=>toggle('theme')}/>
  <IconButton name="settings" label="More / Settings" title="Settings and document actions" active={popover==='more'} aria-haspopup="dialog" aria-expanded={popover==='more'} onClick={()=>toggle('more')}/>

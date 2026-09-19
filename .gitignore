@@ -21,3 +21,10 @@ docs/evidence/*
 docs/evidence/v22/*
 !docs/evidence/v22/FINAL_QA_MANIFEST.json
 handoff/
+
+# Owner-only access/recovery files, never source or CI artifacts.
+.atlasnote/
+access-key*.txt
+*.atlas-history.zip
+*.atlas-recovery.zip
+.netlify/

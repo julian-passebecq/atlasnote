@@ -1,9 +1,10 @@
+import {historicalRevision} from '../durability/registry.js';
 import type {DocumentEntry,Workspace} from '../core/model.js';
 import type {PdfCompanion,PdfCategory} from './model.js';
 import {builtinCompanion,builtinRevisionMismatch} from './sample.js';
 import {companionKey} from './validation.mjs';
 export function resolveStudy(doc:DocumentEntry,ws:Workspace):{companion?:PdfCompanion;stale:boolean}{
- if(ws.viewHistoryRevisionId){const revision=ws.history?.revisions.find(r=>r.revisionId===ws.viewHistoryRevisionId&&r.snapshot.document?.id===doc.id);return {companion:revision?.snapshot.companion??undefined,stale:false};}
+ if(ws.viewHistoryRevisionId){const candidate=historicalRevision(ws.history,ws.viewHistoryRevisionId),revision=candidate?.snapshot.document?.id===doc.id?candidate:undefined;return {companion:revision?.snapshot.companion??undefined,stale:false};}
  const candidate=ws.overlays.companions?.[companionKey(doc)]??builtinCompanion(doc);
  const valid=candidate&&candidate.documentId===doc.id&&candidate.documentSha256===doc.sha256&&(!doc.pageCount||candidate.pageCount===doc.pageCount);
  return {companion:valid?candidate:undefined,stale:!!candidate&&!valid||builtinRevisionMismatch(doc)||Object.values(ws.overlays.companions??{}).some(c=>c.documentId===doc.id&&c.documentSha256!==doc.sha256)};
