@@ -81,7 +81,7 @@ def scenario(browser,context,page,base,out,passed):
     try:
         sec,pr,_=prepare(p,out,'stale-preview-hash',1);assert pr['assetKeys'],pr
         asset=pr['assetKeys'][0]
-        p.evaluate("""async(asset)=>{const m=await import(new URL('app/storage/database.js',document.baseURI).href);m.store.personal(x=>{x.notes['qa.preview.note']={text:asset,pageId:'demo.v23.notebook',updatedAt:Date.now()};});await m.store.flush();}""",asset)
+        p.evaluate("""async(asset)=>{const db=await new Promise((ok,no)=>{const r=indexedDB.open('knowledge-atlas');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);});const tx=db.transaction('personal','readwrite'),st=tx.objectStore('personal'),req=st.get('active');await new Promise((ok,no)=>{req.onsuccess=ok;req.onerror=()=>no(req.error);});const x=req.result;x.notes['qa.preview.note']={text:asset,pageId:'demo.v23.notebook',updatedAt:Date.now()};st.put(x,'active');await new Promise((ok,no)=>{tx.oncomplete=ok;tx.onabort=()=>no(tx.error);});db.close();}""",asset)
         expected=p.evaluate(RAW)
         assert_rejected_exact(p,sec,expected,'stale-preview-hash',passed)
     finally:c.close()
