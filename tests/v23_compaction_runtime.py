@@ -20,7 +20,7 @@ def prepare(page,out,name,retain=1):
     target=out/(name+'.atlas-history.zip');pending.value.save_as(str(target))
     choose(page,'Re-select saved archive',target)
     preview=section.locator('[data-durability-preview]');preview.wait_for()
-    details=json.loads(preview.locator('pre').inner_text())
+    details=json.loads(preview.locator('pre').text_content())
     page.get_by_label('Confirm saved archive retention',exact=True).check()
     assert section.locator('[data-durability-action="compact-archive"]').is_enabled()
     return section,details,target
