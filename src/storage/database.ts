@@ -133,7 +133,7 @@ export class WorkspaceStore{
     await done;
     const reopened=await readIntegrityWorkspace();
     await validateHistory(reopened.history!,reopened.assets,true);
-    this.state={...next,generation:this.state.generation+1};
+    this.state={...reopened,generation:this.state.generation+1};
     this.error='';
     this.emit();
     return structuredClone(preview);
