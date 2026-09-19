@@ -53,6 +53,8 @@ def visible_historical_pdf(page,key,revision,out,name):
     page.locator('[data-agent-action="compare-mode"][data-compare-mode="side-by-side"]').click()
     assert compare_targets(page,revision)['compareMode']=='side-by-side'
     pane=page.locator('.document-pane').nth(0)
+    controls=pane.get_by_role('button',name='Show reader controls',exact=True)
+    if controls.count():controls.click()
     physical=pane.locator('.pdf-physical-pages [data-physical-page="1"][data-page-rendered="true"] canvas').first
     physical.wait_for(state='visible',timeout=30000)
     physical.scroll_into_view_if_needed()

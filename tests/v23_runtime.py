@@ -1,5 +1,6 @@
 """Integrated archive authorization on the non-production compaction candidate."""
 from v23_browser_common import *
+from v23_runtime_matrix import finish_runtime
 
 def scenario(browser,context,page,base,out,passed):
     raw=page.evaluate(RAW);assert sorted(raw)==STORES
@@ -46,12 +47,7 @@ def scenario(browser,context,page,base,out,passed):
     trusted=page.evaluate('window.__qaTrustedSelections');assert len(trusted)==3 and all(trusted)
     passed('Native saved-file re-selection and explicit confirmation jointly authorize the qualified writer; neither writes by itself',trustedEvents=trusted)
     page.screenshot(path=str(out/'archive-ceremony.png'),full_page=True)
+    finish_runtime(browser,context,page,base,out,passed)
 
 if __name__=='__main__':
-    raise SystemExit(run_suite('runtime',scenario,(
-        'V2.2 populated migration and blocked/old-tab/interrupted-upgrade matrix',
-        'Storage estimate and persistence granted/denied/unsupported/error browser matrix',
-        'Actual quota failure after optimistic preflight in a real transaction',
-        'Corrupt persisted fixtures: integrity checker rejects with zero five-store mutation',
-        'Repeated archived lineage after reload and exact attachment',
-    )))
+    raise SystemExit(run_suite('runtime',scenario))

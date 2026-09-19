@@ -10,6 +10,8 @@ jobs:
   v23-qualification:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      ATLAS_V23_TIMEOUT_MS: 600000
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,19 +22,17 @@ jobs:
         with:
           python-version: '3.12'
       - run: npm ci
-      # Package only registry content for offline engineering; never .npmrc,
-      # environment variables, authentication, user files or runner credentials.
-      - run: tar -czf "$RUNNER_TEMP/atlasnote-npm-cache.tgz" -C "$HOME/.npm" _cacache
-      - uses: actions/upload-artifact@v4
-        with:
-          name: atlasnote-v23-registry-cache
-          path: ${{ runner.temp }}/atlasnote-npm-cache.tgz
-          retention-days: 1
       - run: python -m pip install -r requirements-test.txt
       - run: python -m playwright install --with-deps chromium
       - run: npm run build:offline
       - run: npm run build
       - run: npm run check:v23:build
+      - run: git archive --format=zip --output="$RUNNER_TEMP/AtlasNote_Source.zip" HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlasnote-v23-candidate-source
+          path: ${{ runner.temp }}/AtlasNote_Source.zip
+          if-no-files-found: error
       # This is an exact-candidate integrated artifact, not a release approval.
       - uses: actions/upload-artifact@v4
         with:

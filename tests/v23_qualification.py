@@ -2,6 +2,7 @@
 import sys
 import zipfile
 from v23_browser_common import *
+from v23_safe_close_matrix import safe_close_matrix
 from v23_finish_helpers import compact_saved, compare_targets, visible_historical_pdf, archived_compare, ATTACHED
 
 VIEWPORTS=[(1366,768),(1440,900),(1920,1080),(390,844)]
@@ -118,12 +119,13 @@ def safe_close(browser,context,page,base,out,passed):
     page.get_by_text('This is an ungated local HTTP development origin. Use Netlify HTTPS/Netlify Dev integration to test access control.',exact=True).wait_for()
     assert page.evaluate(RAW)==before
     passed('Healthy saved state visible; HTTP lock refuses and does not clear IndexedDB',scope='Not HTTPS logout, pending-write or emergency-export proof')
+    safe_close_matrix(browser,context,page,base,out,passed)
 
 SUITES={
  'layout':(layout,('Integrated unlock-page layout/keyboard under a real Netlify HTTPS gate',)),
  'compare':(compare,()),
  'recovery':(recovery,()),
- 'safe-close':(safe_close,('Real pending/failed-write unload dialogs','Failed transaction retry and emergency-export copy','Lock waits for pending writes and refuses failed persistence under HTTPS')),
+ 'safe-close':(safe_close,('Lock waits for pending writes and refuses failed persistence under HTTPS',)),
 }
 if __name__=='__main__':
     if len(sys.argv)!=2 or sys.argv[1] not in SUITES:raise SystemExit('Expected layout, compare, recovery or safe-close')
