@@ -1,5 +1,5 @@
 """Normal-origin qualification entrypoints, separate from old DOM-only diagnostics."""
-import sys
+import sys,zipfile
 from v23_browser_common import *
 
 VIEWPORTS=[(1366,768),(1440,900),(1920,1080),(390,844)]
@@ -100,6 +100,92 @@ def recovery(browser,context,page,base,out,passed):
         p.screenshot(path=str(out/'fresh-recovery.png'),full_page=True)
     finally:fresh.close()
 
+    # Now exercise complete recovery after real capacity recovery has externalized
+    # old versions and their exclusively historical private PDF bytes.
+    open_settings(page) if not page.get_by_role('dialog',name='Workspace settings',exact=True).is_visible() else None
+    section=page.locator('section[aria-label="History archival and attachments"]')
+    summary=section.get_by_text('Prepare a verified history archive',exact=True)
+    if not section.locator('[data-durability-action="prepare-archive"]').is_visible():summary.click()
+    page.get_by_label('Live versions to retain',exact=True).fill('1')
+    section.locator('[data-durability-action="prepare-archive"]').click()
+    section.locator('[data-archive-id]').wait_for()
+    with page.expect_download() as pending:section.locator('[data-durability-action="download-archive"]').click()
+    archive_file=out/'recovery-history.atlas-history.zip';pending.value.save_as(str(archive_file))
+    choose(page,'Re-select saved archive',archive_file)
+    preview=section.locator('[data-durability-preview]');preview.wait_for()
+    removal=json.loads(preview.locator('pre').text_content())
+    removed_pdf=[key for key in removal['assetKeys'] if key.endswith('.pdf')]
+    assert removed_pdf,removal
+    page.get_by_label('Confirm saved archive retention',exact=True).check()
+    section.locator('[data-durability-action="compact-archive"]').click()
+    page.get_by_text('Compaction committed atomically. Current content and all heads are unchanged. The saved archive is attached for this session.',exact=True).wait_for()
+    compacted=persisted(page)
+    assert all(key not in {a['key'] for a in compacted['assets']} for key in removed_pdf)
+    descriptor=next(a for a in compacted['history']['archives'] if a['archiveId']==removal['archiveId'])
+
+    with page.expect_download() as pending:page.locator('[data-durability-action="complete-recovery"]').click()
+    archived_bundle=out/'archived-demo.atlas-recovery.zip';pending.value.save_as(str(archived_bundle))
+    choose(page,'Verify backup file',archived_bundle)
+    page.get_by_text('Saved file verified without restoring or changing IndexedDB. This proves these file bytes, not permanent external retention.',exact=True).wait_for()
+    flush(page);compacted_saved=persisted(page)
+
+    archived_context=browser.new_context(viewport={'width':1440,'height':900},accept_downloads=True)
+    try:
+        p=archived_context.new_page();p.set_default_timeout(15000);p.goto(base,wait_until='networkidle');p.wait_for_selector('.atlas-app');flush(p)
+        open_settings(p);choose(p,'Restore workspace backup',archived_bundle)
+        p.get_by_role('heading',name='Restore preview',exact=True).wait_for()
+        p.get_by_label('I understand that this replaces the current local workspace.',exact=True).check()
+        p.get_by_role('button',name='Restore verified backup',exact=True).click()
+        p.wait_for_timeout(500)
+        dialog=p.get_by_role('dialog',name='Workspace settings',exact=True)
+        if dialog.is_visible():
+            alert=dialog.get_by_role('alert');raise AssertionError('archived-restore-rejected: '+(alert.text_content() if alert.count() else 'unknown'))
+        p.wait_for_function('async()=>{const a='+AGENT+';const s=a.getStorageDiagnostics();return !s.saving&&!s.storageError;}')
+        restored=persisted(p)
+        for key in ['imports','overlays','assets','history']:
+            assert restored[key]==compacted_saved[key],key
+        diag=p.evaluate('async()=>('+AGENT+').getStorageDiagnostics()')
+        assert diag['archiveCount']>=1 and diag['archivedRevisions']>=descriptor['counts']['revisions']
+
+        pdf_key=next(h['resourceKey'] for h in restored['history']['heads'] if h['resourceKey'].startswith('pdf:demo.v23'))
+        versions=p.evaluate('async(key)=>('+AGENT+').listResourceVersions(key)',pdf_key)
+        assert versions['total']>=4,versions
+        oldest=versions['items'][-1]['revisionId']
+        historical=p.evaluate('async(x)=>('+AGENT+').getResource(x.key,x.rev)',{'key':pdf_key,'rev':oldest})
+        assert historical['snapshot']['document']['assetKey'] in removed_pdf,historical
+        p.evaluate('async(x)=>{const a='+AGENT+';await a.compareRevisions(x.key,x.rev);}',{'key':pdf_key,'rev':oldest})
+        p.locator('.document-pane').nth(0).locator('.integrated-pdf[data-pdf-state="ready"] canvas').first.wait_for(timeout=15000)
+        passed('Fresh-profile complete recovery restores external archive and renders historical private PDF',archiveId=descriptor['archiveId'],archivedRevisions=descriptor['counts']['revisions'],historicalPdfAsset=historical['snapshot']['document']['assetKey'])
+        p.screenshot(path=str(out/'archived-pdf-recovery.png'),full_page=True)
+
+        # Reload deliberately drops session-only archive payloads. Identities remain,
+        # but current content must never substitute for the missing historical bytes.
+        p.reload(wait_until='networkidle');p.wait_for_selector('.atlas-app');flush(p)
+        missing=p.evaluate("""async(x)=>{try{('+AGENT+').getResource(x.key,x.rev);return null;}catch(e){return String(e.message||e);}}""",{'key':pdf_key,'rev':oldest})
+        assert missing and 'Attach the exact archive' in missing and 'Current content was not substituted' in missing,missing
+        before_tamper=p.evaluate(RAW)
+
+        open_settings(p);choose(p,'Attach history archives',archived_bundle)
+        p.get_by_text('Exact verified archives attached for this session. They remain external files; no history or proposal was changed.',exact=True).wait_for()
+        exact=p.evaluate('async(x)=>('+AGENT+').getResource(x.key,x.rev)',{'key':pdf_key,'rev':oldest})
+        assert exact['revision']['revisionId']==oldest
+
+        tampered=out/'tampered-recovery.zip'
+        with zipfile.ZipFile(archived_bundle,'r') as src,zipfile.ZipFile(tampered,'w',zipfile.ZIP_DEFLATED) as dst:
+            changed=False
+            for info in src.infolist():
+                body=src.read(info.filename)
+                if not changed and info.filename.startswith('archives/') and not info.is_dir():
+                    body=body+b' '
+                    changed=True
+                dst.writestr(info.filename,body)
+            assert changed
+        close_panels(p);open_settings(p);choose(p,'Restore workspace backup',tampered)
+        p.get_by_role('alert').wait_for()
+        assert p.evaluate(RAW)==before_tamper
+        passed('Reload requires exact archive reattachment; tampered recovery is rejected before replacement',archiveId=descriptor['archiveId'])
+    finally:archived_context.close()
+
 def safe_close(browser,context,page,base,out,passed):
     seed_demo(page);flush(page)
     assert page.locator('[data-save-safety]').inner_text().startswith('Saved /')
@@ -112,7 +198,7 @@ def safe_close(browser,context,page,base,out,passed):
 SUITES={
  'layout':(layout,('Integrated unlock-page layout/keyboard under a real Netlify HTTPS gate',)),
  'compare':(compare,('Version History UI selection, archived A/current B, missing archive no substitution and restore-as-new',)),
- 'recovery':(recovery,('Fresh-profile complete recovery with externalized archives and historical private-PDF bytes/rendering','Repeated lineage, exact reattachment after reload, missing/tampered dependencies rejected before replacement')),
+ 'recovery':(recovery,()),
  'safe-close':(safe_close,('Real pending/failed-write unload dialogs','Failed transaction retry and emergency-export copy','Lock waits for pending writes and refuses failed persistence under HTTPS')),
 }
 if __name__=='__main__':
