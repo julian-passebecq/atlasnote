@@ -54,7 +54,19 @@ def recovery(browser,context,page,base,out,passed):
         open_settings(p);choose(p,'Restore workspace backup',target)
         p.get_by_role('heading',name='Restore preview',exact=True).wait_for()
         p.get_by_label('I understand that this replaces the current local workspace.',exact=True).check()
-        p.get_by_role('button',name='Restore verified backup',exact=True).click();p.wait_for_timeout(300);flush(p)
+        p.get_by_role('button',name='Restore verified backup',exact=True).click()
+        p.get_by_text('Workspace restored from verified bytes.',exact=True).wait_for()
+        immediate=p.evaluate(RAW)
+        immediate_overlays=next(row['value'] for row in immediate['overlays'] if row['key']=='active')
+        immediate_keys=sorted(immediate_overlays.keys())
+        expected_keys=sorted(saved['overlays'].keys())
+        if immediate_keys!=expected_keys:
+            raise AssertionError('restore-commit-overlays: '+json.dumps({'expectedKeys':expected_keys,'immediateKeys':immediate_keys}))
+        flush(p)
+        after_flush=p.evaluate(RAW)
+        after_flush_overlays=next(row['value'] for row in after_flush['overlays'] if row['key']=='active')
+        if sorted(after_flush_overlays.keys())!=expected_keys:
+            raise AssertionError('post-flush-overlays: '+json.dumps({'expectedKeys':expected_keys,'afterFlushKeys':sorted(after_flush_overlays.keys())}))
         restored=persisted(p)
         def first_diff(a,b,path='$'):
             if type(a)!=type(b): return {'path':path,'savedType':type(a).__name__,'restoredType':type(b).__name__,'saved':a,'restored':b}
