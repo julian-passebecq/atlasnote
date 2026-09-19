@@ -55,7 +55,12 @@ def recovery(browser,context,page,base,out,passed):
         p.get_by_role('heading',name='Restore preview',exact=True).wait_for()
         p.get_by_label('I understand that this replaces the current local workspace.',exact=True).check()
         p.get_by_role('button',name='Restore verified backup',exact=True).click()
-        p.get_by_role('dialog',name='Workspace settings',exact=True).wait_for(state='detached')
+        p.wait_for_timeout(400)
+        dialog=p.get_by_role('dialog',name='Workspace settings',exact=True)
+        if dialog.is_visible():
+            alert=dialog.get_by_role('alert')
+            detail=alert.text_content() if alert.count() else 'Restore remained open without an error message'
+            raise AssertionError('restore-rejected: '+detail)
         p.wait_for_function('async()=>{const a='+AGENT+';const s=a.getStorageDiagnostics();return !s.saving&&!s.storageError;}')
         immediate=p.evaluate(RAW)
         immediate_overlays=next(row['value'] for row in immediate['overlays'] if row['key']=='active')
