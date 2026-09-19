@@ -59,16 +59,18 @@ def scenario(browser,context,page,base,out,passed):
     # before any IndexedDB write and consume the one-use receipt.
     c,p=fresh(browser,base)
     try:
-        sec,_,_=prepare(p,out,'stale-source-epoch',1);expected=p.evaluate(RAW)
-        p.evaluate("""async()=>{const m=await import(new URL('app/storage/database.js',document.baseURI).href);m.store.state.history.meta.epoch++;}""")
+        sec,_,_=prepare(p,out,'stale-source-epoch',1)
+        p.evaluate("""async()=>{const db=await new Promise((ok,no)=>{const r=indexedDB.open('knowledge-atlas');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);});const tx=db.transaction('history','readwrite'),st=tx.objectStore('history'),req=st.get('meta');await new Promise((ok,no)=>{req.onsuccess=ok;req.onerror=()=>no(req.error);});const meta=req.result;meta.epoch++;st.put(meta,'meta');await new Promise((ok,no)=>{tx.oncomplete=ok;tx.onabort=()=>no(tx.error);});db.close();}""")
+        expected=p.evaluate(RAW)
         assert_rejected_exact(p,sec,expected,'stale-source-epoch',passed)
     finally:c.close()
 
     # Same epoch, different history hash.
     c,p=fresh(browser,base)
     try:
-        sec,_,_=prepare(p,out,'stale-history-hash',1);expected=p.evaluate(RAW)
-        p.evaluate("""async()=>{const m=await import(new URL('app/storage/database.js',document.baseURI).href);const r=m.store.state.history.reviews[0];r.reason=(r.reason||'')+' qa-hash';}""")
+        sec,_,_=prepare(p,out,'stale-history-hash',1)
+        p.evaluate("""async()=>{const db=await new Promise((ok,no)=>{const r=indexedDB.open('knowledge-atlas');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);});const tx=db.transaction('history','readwrite'),st=tx.objectStore('history'),req=st.getAll();await new Promise((ok,no)=>{req.onsuccess=ok;req.onerror=()=>no(req.error);});const row=req.result.find(x=>x.kind==='review');if(!row)throw Error('No review fixture');row.reason=(row.reason||'')+' qa-hash';st.put(row,'review:'+row.id);await new Promise((ok,no)=>{tx.oncomplete=ok;tx.onabort=()=>no(tx.error);});db.close();}""")
+        expected=p.evaluate(RAW)
         assert_rejected_exact(p,sec,expected,'stale-history-hash',passed)
     finally:c.close()
 
