@@ -35,8 +35,12 @@ def persisted(page):
 def seed_demo(page):
     open_settings(page)
     page.get_by_text('Optional V2.3 durability demo data',exact=True).click()
-    page.locator('[data-durability-action="load-demo"]').click()
-    page.wait_for_function('async()=>{const a='+AGENT+';return !a.getStorageDiagnostics().saving&&a.listResourceVersions("notebook-page:demo.v23.notebook").total===8;}')
+    button=page.locator('[data-durability-action="load-demo"]')
+    button.click()
+    # Version 8 can exist briefly before the final personal-state mutation starts.
+    # The action button is re-enabled only after DurabilityPanel.run() has fully
+    # completed, so require both UI completion and a drained storage queue.
+    page.wait_for_function('async()=>{const a='+AGENT+';const b=document.querySelector("[data-durability-action=\\\"load-demo\\\"]");return b&&!b.disabled&&!a.getStorageDiagnostics().saving&&a.listResourceVersions("notebook-page:demo.v23.notebook").total===8;}')
     flush(page)
 
 def choose(page, label, filename):
