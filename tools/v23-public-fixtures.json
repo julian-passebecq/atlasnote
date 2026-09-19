@@ -1,0 +1,53 @@
+{
+  "baseCommit": "66f938796f06edfdf8764774bcb5e363f589fc07",
+  "fixtures": [
+    {
+      "path": "content/packs/atlas.reader-guide/assets/atlas-reader-fixture.pdf",
+      "sha256": "0eea0f025b7a63a0c83ee83bafdef900d3bf4ab99ff39db1122eea16ad17c1af",
+      "bytes": 50938,
+      "scope": "Exact pre-existing public/synthetic baseline fixture, not owner private content"
+    },
+    {
+      "path": "content/packs/atlas.reader-guide/assets/atlas-reader-password-fixture.pdf",
+      "sha256": "a969df047c1ad3ecd0e0ee8fc5ebc3d787bd5bfad5af4d17e1bb8acdf14b47ae",
+      "bytes": 51414,
+      "scope": "Exact pre-existing public/synthetic baseline fixture, not owner private content"
+    },
+    {
+      "path": "content/packs/atlas.reader-guide/assets/atlas-reader-rotated-fixture.pdf",
+      "sha256": "d6633f587f1f36026058c9fbf11d9761c0aab70b9d90224ece4a5aa96786330e",
+      "bytes": 50862,
+      "scope": "Exact pre-existing public/synthetic baseline fixture, not owner private content"
+    },
+    {
+      "path": "templates/pdf-library/assets/pdf/pdf.example.fabric/fabric-cheatsheet.pdf",
+      "sha256": "24e77167c001589fef7322e968c06f3c739a15395ce8fa308d2f7fb744af2dc8",
+      "bytes": 51033,
+      "scope": "Exact pre-existing public/synthetic baseline fixture, not owner private content"
+    },
+    {
+      "path": "templates/pdf-library/assets/pdf/pdf.example.spark/spark-reference.pdf",
+      "sha256": "be191591aac7c2f42da11447b016d4ee0ab8988fe0cbd1bd8026d79fcca4936d",
+      "bytes": 51031,
+      "scope": "Exact pre-existing public/synthetic baseline fixture, not owner private content"
+    },
+    {
+      "path": "tests/fixtures/atlas-audit-stress-library-1.0.0.zip",
+      "sha256": "30a3d518cd7c91ba52b5809283db036bca3e5ed8fc4b3f6947f1960f00ff1681",
+      "bytes": 6313,
+      "scope": "Exact pre-existing public/synthetic baseline fixture, not owner private content"
+    },
+    {
+      "path": "tests/fixtures/atlas-audit-stress-library-1.1.0.zip",
+      "sha256": "73a2af271f09f4cfcf1f1090554a268a4dcf0d3868ce3eb99649f9a734dae005",
+      "bytes": 6779,
+      "scope": "Exact pre-existing public/synthetic baseline fixture, not owner private content"
+    },
+    {
+      "path": "tests/fixtures/atlas-image-only.pdf",
+      "sha256": "6884e1590216af0f51f721b185d37d0bf7b8ab221ffc3b3e583a6a69897e2398",
+      "bytes": 44789,
+      "scope": "Exact pre-existing public/synthetic baseline fixture, not owner private content"
+    }
+  ]
+}

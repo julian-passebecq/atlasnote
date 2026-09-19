@@ -1,3 +1,6 @@
+import {writeBuildIdentity} from './build-identity.mjs';
+import {checkAccessBuild} from './check-access-build.mjs';
+await checkAccessBuild();
 import {checkPdfatlasProvenance} from './check-pdfatlas-provenance.mjs';
 await checkPdfatlasProvenance();
 import fs from 'node:fs/promises';import path from 'node:path';import {createRequire} from 'node:module';import {execFileSync} from 'node:child_process';import {compileContent} from './compile-content.mjs';
@@ -9,5 +12,6 @@ await fs.copyFile('LICENSE','.vite-public/LICENSE.txt');await fs.copyFile('THIRD
 await fs.writeFile('.vite-public/pdf-assets/engine.json',JSON.stringify({reactPdf:reactPDF.p.version,pdfjs:pdfjs.p.version}));
 const payload=await readFiles('.vite-public/pdf-assets');
 await fs.writeFile('.vite-public/pdf-assets/integrity.json',JSON.stringify({format:'atlas-pdf-assets',reactPdf:reactPDF.p.version,pdfjs:pdfjs.p.version,files:Object.fromEntries([...payload].map(([n,b])=>[n,createHash('sha256').update(b).digest('hex')]))},null,2));
+await writeBuildIdentity('.vite-public','integrated');
 execFileSync(process.execPath,[path.join(vite.dir,'bin/vite.js'),'build','--config','vite.config.mjs'],{stdio:'inherit'});
 console.log('Integrated hosted build completed in dist/. Compatibility tests cannot overwrite it. Run normal-origin PDF and IndexedDB browser tests before release.');

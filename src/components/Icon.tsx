@@ -1,5 +1,6 @@
 import React from '../vendor/react.mjs';
 const paths:Record<string,string>={
+ history:'M6 3h14v15H6V3zM3 6v15h14M10 7h6M10 11h6M10 15h3',
  grid:'M3 3h7v7H3V3zm11 0h7v7h-7V3zM3 14h7v7H3v-7zm11 0h7v7h-7v-7',
  clock:'M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0M12 6v6l4 3',
  save:'M5 3h14v18l-7-4-7 4V3zM8 9h8M12 5v8',
