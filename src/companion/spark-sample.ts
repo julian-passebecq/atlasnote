@@ -1,0 +1,610 @@
+import type {PdfCompanion} from "./model.js";
+/** Original AI-authored study aid grounded in all six pages of the pinned public
+ * reference. Not user-reviewed or an official Spark manual. PDF bytes and
+ * original attribution remain external and unchanged. */
+export const SPARK_COMPANION:PdfCompanion = {
+  "schemaVersion": 1,
+  "id": "companion.pdfatlas.spark-concepts",
+  "documentId": "doc.pdfatlas.spark-concepts",
+  "documentSha256": "b6761e0907cb28ff660936c79ad2a2dcafd500cc01c5fa5a613470396a0af095",
+  "pageCount": 6,
+  "title": "Apache Spark - a six-page concept map",
+  "generatedBy": "ai",
+  "createdAt": 1789315200000,
+  "reviewed": false,
+  "categories": [
+    {
+      "id": "foundations",
+      "title": "1. From MapReduce to Spark",
+      "pageRefs": [
+        1
+      ]
+    },
+    {
+      "id": "architecture",
+      "title": "2. Cluster architecture",
+      "pageRefs": [
+        2
+      ],
+      "children": [
+        {
+          "id": "resources",
+          "title": "Cluster, manager and containers",
+          "pageRefs": [
+            2
+          ]
+        },
+        {
+          "id": "processes",
+          "title": "Driver, executors and PySpark",
+          "pageRefs": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "id": "deployment",
+      "title": "3. Deployment modes",
+      "pageRefs": [
+        3
+      ]
+    },
+    {
+      "id": "operations",
+      "title": "4. Transformations and actions",
+      "pageRefs": [
+        3
+      ],
+      "children": [
+        {
+          "id": "lazy",
+          "title": "Lazy evaluation",
+          "pageRefs": [
+            3
+          ]
+        },
+        {
+          "id": "shuffle",
+          "title": "Narrow, wide and shuffle",
+          "pageRefs": [
+            3,
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "planning",
+      "title": "5. Plans, jobs, stages and tasks",
+      "pageRanges": [
+        [
+          4,
+          5
+        ]
+      ],
+      "children": [
+        {
+          "id": "optimizer",
+          "title": "Logical and physical planning",
+          "pageRefs": [
+            4
+          ]
+        },
+        {
+          "id": "execution",
+          "title": "Jobs, stages and tasks",
+          "pageRefs": [
+            5
+          ]
+        }
+      ]
+    },
+    {
+      "id": "memory",
+      "title": "6. Executor memory",
+      "pageRefs": [
+        6
+      ]
+    }
+  ],
+  "pages": {
+    "1": {
+      "page": 1,
+      "title": "From disk stages to a computation graph",
+      "summary": "The opening page contrasts MapReduce and Spark, then introduces six subject groups covering 30 numbered concepts.",
+      "categoryIds": [
+        "foundations"
+      ],
+      "termIds": [
+        "mapreduce",
+        "in-memory",
+        "dag",
+        "action",
+        "job",
+        "stage",
+        "task"
+      ]
+    },
+    "2": {
+      "page": 2,
+      "title": "What happens after spark-submit",
+      "summary": "Follow the example resource request, driver, executors and Python/JVM boundary.",
+      "categoryIds": [
+        "architecture"
+      ],
+      "termIds": [
+        "cluster",
+        "cluster-manager",
+        "container",
+        "driver",
+        "executor",
+        "pyspark"
+      ]
+    },
+    "3": {
+      "page": 3,
+      "title": "Deployment, laziness and shuffle",
+      "summary": "Compare driver placement, then follow queued transformations, an action and rows redistributed by key.",
+      "categoryIds": [
+        "operations"
+      ],
+      "termIds": [
+        "cluster-manager",
+        "driver",
+        "cluster-mode",
+        "client-mode",
+        "transformation",
+        "action",
+        "lazy-evaluation",
+        "narrow-wide",
+        "shuffle"
+      ]
+    },
+    "4": {
+      "page": 4,
+      "title": "How code becomes an execution plan",
+      "summary": "Follow syntax and catalog checks, Catalyst rewrites, physical-plan selection and scheduling.",
+      "categoryIds": [
+        "planning"
+      ],
+      "termIds": [
+        "dag",
+        "driver",
+        "unresolved-plan",
+        "catalog",
+        "catalyst",
+        "filter-pushdown",
+        "projection-pushdown",
+        "physical-plan",
+        "dag-scheduler"
+      ]
+    },
+    "5": {
+      "page": 5,
+      "title": "Follow a sales-data job",
+      "summary": "Read the worked pipeline in three stages and locate both shuffle exchanges. The stage/task counts are the guide's particular example, not a universal sizing rule.",
+      "categoryIds": [
+        "planning"
+      ],
+      "termIds": [
+        "dag",
+        "executor",
+        "transformation",
+        "action",
+        "narrow-wide",
+        "shuffle",
+        "dag-scheduler",
+        "job",
+        "stage",
+        "task"
+      ]
+    },
+    "6": {
+      "page": 6,
+      "title": "Read the executor memory map",
+      "summary": "Locate on-heap, unified, off-heap and overhead regions, then relate the diagram to the configuration names shown below it.",
+      "categoryIds": [
+        "memory"
+      ],
+      "termIds": [
+        "container",
+        "executor",
+        "on-heap",
+        "unified-memory",
+        "off-heap",
+        "overhead"
+      ]
+    }
+  },
+  "terms": [
+    {
+      "id": "mapreduce",
+      "label": "MapReduce",
+      "definition": "The guide contrasts a disk-backed map/shuffle/reduce workflow with Spark's longer computation pipeline.",
+      "pageRefs": [
+        1
+      ],
+      "categoryIds": [
+        "foundations"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "in-memory",
+      "label": "In-memory processing",
+      "definition": "Spark can retain intermediate data in memory; the opening diagram uses this to explain the motivation for moving beyond repeated disk round trips.",
+      "pageRefs": [
+        1
+      ],
+      "categoryIds": [
+        "foundations"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "dag",
+      "label": "DAG",
+      "definition": "A directed acyclic graph represents the ordered work. This guide connects the graph to jobs, stages and tasks.",
+      "pageRefs": [
+        1,
+        4,
+        5
+      ],
+      "categoryIds": [
+        "foundations",
+        "planning"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "cluster",
+      "label": "Cluster",
+      "definition": "Several networked machines provide a shared pool of computing resources. Page 2 illustrates a seven-machine example.",
+      "pageRefs": [
+        2
+      ],
+      "categoryIds": [
+        "resources"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "cluster-manager",
+      "label": "Cluster manager",
+      "definition": "The resource-allocation component in the example. The illustrated YARN manager supplies requested CPU and memory resources.",
+      "pageRefs": [
+        2,
+        3
+      ],
+      "categoryIds": [
+        "resources",
+        "deployment"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "container",
+      "label": "Container",
+      "definition": "A resource allocation on a worker node, shown in this YARN example as a specified amount of CPU and memory.",
+      "pageRefs": [
+        2,
+        6
+      ],
+      "categoryIds": [
+        "resources",
+        "memory"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "driver",
+      "label": "Driver",
+      "definition": "The coordinating process in the illustrated application: it requests executors, schedules work and receives results.",
+      "pageRefs": [
+        2,
+        3,
+        4
+      ],
+      "categoryIds": [
+        "processes",
+        "deployment",
+        "optimizer"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "executor",
+      "label": "Executor",
+      "definition": "A worker-side process that carries out scheduled tasks. Page 2 follows tasks from the driver to three executors and back.",
+      "pageRefs": [
+        2,
+        5,
+        6
+      ],
+      "categoryIds": [
+        "processes",
+        "execution",
+        "memory"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "pyspark",
+      "label": "PySpark",
+      "definition": "The Python interface shown connecting Python code to Spark's JVM-based engine. Page 2 also depicts Python processes beside executor JVMs for Python-side work.",
+      "pageRefs": [
+        2
+      ],
+      "categoryIds": [
+        "processes"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "cluster-mode",
+      "label": "Cluster mode",
+      "definition": "The deployment illustration places the driver inside the cluster rather than on the submitting computer.",
+      "pageRefs": [
+        3
+      ],
+      "categoryIds": [
+        "deployment"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "client-mode",
+      "label": "Client mode",
+      "definition": "The deployment illustration places the driver on the submitting computer while executors run on cluster workers.",
+      "pageRefs": [
+        3
+      ],
+      "categoryIds": [
+        "deployment"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "transformation",
+      "label": "Transformation",
+      "definition": "An operation such as select, filter or withColumn that contributes a step to the planned computation.",
+      "pageRefs": [
+        3,
+        5
+      ],
+      "categoryIds": [
+        "lazy",
+        "execution"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "action",
+      "label": "Action",
+      "definition": "An operation that asks Spark to produce a result. The guide uses show, count, collect and saving output as examples.",
+      "pageRefs": [
+        1,
+        3,
+        5
+      ],
+      "categoryIds": [
+        "lazy",
+        "execution"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "lazy-evaluation",
+      "label": "Lazy evaluation",
+      "definition": "Work is described before it is executed. The word-count example queues operations until an action requests the result.",
+      "pageRefs": [
+        3
+      ],
+      "categoryIds": [
+        "lazy"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "narrow-wide",
+      "label": "Narrow versus wide",
+      "definition": "The guide distinguishes operations without a shuffle from operations that redistribute rows across partitions.",
+      "pageRefs": [
+        3,
+        5
+      ],
+      "categoryIds": [
+        "shuffle"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "shuffle",
+      "label": "Shuffle",
+      "definition": "Redistribution of rows between partitions. The word-count and regional-sales examples bring equal keys together before aggregation.",
+      "pageRefs": [
+        3,
+        5
+      ],
+      "categoryIds": [
+        "shuffle",
+        "execution"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "unresolved-plan",
+      "label": "Unresolved logical plan",
+      "definition": "The first planning representation shown after syntax checking; names still need to be checked against available metadata.",
+      "pageRefs": [
+        4
+      ],
+      "categoryIds": [
+        "optimizer"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "catalog",
+      "label": "Catalog",
+      "definition": "Metadata about available tables, columns and types, used in the guide's semantic check of a query.",
+      "pageRefs": [
+        4
+      ],
+      "categoryIds": [
+        "optimizer"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "catalyst",
+      "label": "Catalyst optimizer",
+      "definition": "The planning component shown rewriting a logical plan before physical execution alternatives are chosen.",
+      "pageRefs": [
+        4
+      ],
+      "categoryIds": [
+        "optimizer"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "filter-pushdown",
+      "label": "Filter pushdown",
+      "definition": "The illustrated optimization moves filtering toward the data source so fewer unwanted rows need further processing.",
+      "pageRefs": [
+        4
+      ],
+      "categoryIds": [
+        "optimizer"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "projection-pushdown",
+      "label": "Projection pushdown",
+      "definition": "The illustrated optimization limits the columns read to the ones needed by the query.",
+      "pageRefs": [
+        4
+      ],
+      "categoryIds": [
+        "optimizer"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "physical-plan",
+      "label": "Physical plan",
+      "definition": "A concrete execution strategy. Page 4 shows alternative physical plans and a cost-based choice before scheduling.",
+      "pageRefs": [
+        4
+      ],
+      "categoryIds": [
+        "optimizer"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "dag-scheduler",
+      "label": "DAG scheduler",
+      "definition": "The scheduler in the guide connects the selected execution plan to jobs containing stages and tasks.",
+      "pageRefs": [
+        4,
+        5
+      ],
+      "categoryIds": [
+        "optimizer",
+        "execution"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "job",
+      "label": "Job",
+      "definition": "The execution work requested by an action. Page 5 follows a collect action through its illustrated sales-data pipeline.",
+      "pageRefs": [
+        1,
+        5
+      ],
+      "categoryIds": [
+        "execution"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "stage",
+      "label": "Stage",
+      "definition": "A group of work separated from other groups by shuffle boundaries in the illustrated pipeline.",
+      "pageRefs": [
+        1,
+        5
+      ],
+      "categoryIds": [
+        "execution"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "task",
+      "label": "Task",
+      "definition": "The partition-level unit of execution. Page 5 illustrates parallel work on three partitions.",
+      "pageRefs": [
+        1,
+        5
+      ],
+      "categoryIds": [
+        "execution"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "on-heap",
+      "label": "On-heap memory",
+      "definition": "JVM-managed executor memory. The last page divides it into execution/storage, user and reserved regions.",
+      "pageRefs": [
+        6
+      ],
+      "categoryIds": [
+        "memory"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "unified-memory",
+      "label": "Unified memory",
+      "definition": "The shared execution-and-storage region shown with a movable boundary and borrowing between the two uses.",
+      "pageRefs": [
+        6
+      ],
+      "categoryIds": [
+        "memory"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "off-heap",
+      "label": "Off-heap memory",
+      "definition": "Memory outside the JVM heap, configured separately in the guide. The page discusses it in relation to garbage-collection pressure.",
+      "pageRefs": [
+        6
+      ],
+      "categoryIds": [
+        "memory"
+      ],
+      "importance": "core"
+    },
+    {
+      "id": "overhead",
+      "label": "Overhead memory",
+      "definition": "Additional executor-container memory requested for operations outside the main heap, as shown in the last-page diagram.",
+      "pageRefs": [
+        6
+      ],
+      "categoryIds": [
+        "memory"
+      ],
+      "importance": "core"
+    }
+  ]
+};

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "example.project",
+    "title": "Example project",
+    "icon": "book",
+    "description": "Neutral schema demonstration",
+    "nodes": [
+      {
+        "id": "example.folder",
+        "title": "Category",
+        "children": [
+          {
+            "id": "example.subfolder",
+            "title": "Optional deeper category",
+            "children": [
+              {
+                "id": "example.leaf.overview",
+                "title": "A portable page",
+                "pageId": "example.page.overview"
+              },
+              {
+                "id": "example.leaf.second",
+                "title": "Another linked page",
+                "pageId": "example.page.second"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

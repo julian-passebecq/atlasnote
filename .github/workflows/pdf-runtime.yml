@@ -1,0 +1,32 @@
+name: Optional integrated PDF runtime gate
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  integrated-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npm run enable:online
+      - run: npm run typecheck:online
+      - run: npm run build:vite
+      - run: python -m pip install -r requirements-test.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: npm run test:pdf
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integrated-pdf-gate-evidence-and-resolved-lock
+          path: |
+            docs/evidence/hardening/pdf-runtime
+            package-lock.json
+      # No deployment and no commit of the network-resolved lockfile is automatic.

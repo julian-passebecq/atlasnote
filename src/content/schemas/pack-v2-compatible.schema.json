@@ -1,0 +1,120 @@
+{
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "atlas-content-pack"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "payloadSchema": {
+      "enum": [
+        "atlas.bundle@1",
+        "atlas.bundle@2"
+      ]
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "title": {
+      "type": "string"
+    },
+    "visibility": {
+      "enum": [
+        "public",
+        "private",
+        "unreviewed"
+      ]
+    },
+    "files": {
+      "type": "object",
+      "properties": {
+        "projects": {
+          "type": "string"
+        },
+        "pages": {
+          "type": "string"
+        },
+        "glossary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "projects",
+        "pages",
+        "glossary"
+      ],
+      "additionalProperties": false
+    },
+    "requires": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+          },
+          "version": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "version"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "mediaType": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "provenance": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "path",
+          "mediaType",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "provenance": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "format",
+    "schemaVersion",
+    "payloadSchema",
+    "id",
+    "version",
+    "title",
+    "visibility",
+    "files",
+    "requires",
+    "assets"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knowledge-atlas.invalid/schemas/pack-v2-compatible.schema.json"
+}

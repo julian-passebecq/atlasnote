@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "atlas-workspace"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "title": {
+      "type": "string"
+    },
+    "packsDirectory": {
+      "type": "string"
+    },
+    "disabledPackIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+      }
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+          },
+          "title": {
+            "type": "string"
+          },
+          "projectIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "projectIds"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "format",
+    "schemaVersion",
+    "title",
+    "packsDirectory",
+    "disabledPackIds",
+    "groups"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

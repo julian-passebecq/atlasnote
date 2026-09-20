@@ -1,0 +1,1315 @@
+{
+  "id": "page.cheatsheet.pyspark-execution",
+  "kind": "cheatsheet",
+  "title": "PySpark Execution Model",
+  "summary": "Laziness, the DAG, the shuffle and what to tune",
+  "blocks": [],
+  "cheatsheet": {
+    "schemaVersion": "1.1",
+    "id": "pyspark-execution",
+    "title": "PySpark Execution Model",
+    "subtitle": "Laziness, the DAG, the shuffle and what to tune",
+    "pageSize": {
+      "width": 1200,
+      "height": 1600
+    },
+    "meta": {
+      "audience": "Data engineers running Spark on Databricks, EMR or Synapse",
+      "difficulty": "intermediate",
+      "goal": "Read a Spark UI, name the shuffle boundary, and know which knob to turn",
+      "provenance": "Reconstructed from TEST_PACK.md and the supplied PNG previews. Reference wording retained; layout and style refined. Original grammar JSON was not supplied."
+    },
+    "theme": {
+      "name": "atlas-calm"
+    },
+    "pages": [
+      {
+        "id": "pyspark-execution.p1",
+        "title": "PySpark - Execution Model",
+        "blocks": [
+          {
+            "type": "text",
+            "role": "title",
+            "text": "PySpark - Execution Model",
+            "style": {
+              "fontSize": 38,
+              "minFontSize": 29,
+              "overflow": "shrink",
+              "lineHeight": 1.16
+            },
+            "id": "pyspark-execution.p1.title"
+          },
+          {
+            "type": "text",
+            "role": "section",
+            "text": "1. DataFrame vs RDD",
+            "style": {
+              "fontSize": 27,
+              "minFontSize": 23,
+              "overflow": "shrink",
+              "lineHeight": 1.2
+            },
+            "id": "pyspark-execution.p1.s1"
+          },
+          {
+            "type": "text",
+            "text": "Both are distributed collections. Only one of them gets optimised.",
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32
+            },
+            "id": "pyspark-execution.p1.b1"
+          },
+          {
+            "type": "list",
+            "items": [
+              "DataFrame: use it unless you have a reason not to.",
+              "RDD: custom partitioners, non-tabular data, low-level control.",
+              "Python UDFs break Catalyst's view - prefer built-in functions."
+            ],
+            "gap": 24,
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32,
+              "overflow": "shrink",
+              "minFontSize": 20
+            },
+            "id": "pyspark-execution.p1.b2"
+          },
+          {
+            "type": "text",
+            "role": "section",
+            "text": "2. Lazy Evaluation",
+            "style": {
+              "fontSize": 27,
+              "minFontSize": 23,
+              "overflow": "shrink",
+              "lineHeight": 1.2
+            },
+            "id": "pyspark-execution.p1.s2"
+          },
+          {
+            "type": "text",
+            "text": "Transformations build a plan. Nothing executes until an action asks for a result.",
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32
+            },
+            "id": "pyspark-execution.p1.b3"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Plan stages: parsed -> analyzed -> optimized -> physical -> RDDs.",
+              "df.explain(True) prints all four.",
+              "Errors in a typo'd column surface at analysis, not at write."
+            ],
+            "gap": 24,
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32,
+              "overflow": "shrink",
+              "minFontSize": 20
+            },
+            "id": "pyspark-execution.p1.b4"
+          },
+          {
+            "type": "text",
+            "role": "section",
+            "text": "3. Transformations vs Actions",
+            "style": {
+              "fontSize": 27,
+              "minFontSize": 23,
+              "overflow": "shrink",
+              "lineHeight": 1.2
+            },
+            "id": "pyspark-execution.p1.s3"
+          },
+          {
+            "type": "text",
+            "text": "If it returns a DataFrame it is lazy. If it returns data, a number, or writes files, it runs.",
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32
+            },
+            "id": "pyspark-execution.p1.b5"
+          },
+          {
+            "type": "list",
+            "items": [
+              [
+                {
+                  "text": "Narrow",
+                  "marks": [
+                    "key"
+                  ]
+                },
+                {
+                  "text": " - select, filter, withColumn - no data movement."
+                }
+              ],
+              [
+                {
+                  "text": "Wide",
+                  "marks": [
+                    "key"
+                  ]
+                },
+                {
+                  "text": " - groupBy, join, distinct, orderBy - shuffle."
+                }
+              ]
+            ],
+            "gap": 24,
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32,
+              "overflow": "shrink",
+              "minFontSize": 20
+            },
+            "id": "pyspark-execution.p1.b6"
+          },
+          {
+            "type": "text",
+            "role": "section",
+            "text": "4. Job / Stage / Task",
+            "style": {
+              "fontSize": 27,
+              "minFontSize": 23,
+              "overflow": "shrink",
+              "lineHeight": 1.2
+            },
+            "id": "pyspark-execution.p1.s4"
+          },
+          {
+            "type": "text",
+            "text": "The unit you tune is the task; the unit you read in the UI is the stage.",
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32
+            },
+            "id": "pyspark-execution.p1.b7"
+          },
+          {
+            "type": "list",
+            "items": [
+              [
+                {
+                  "text": "Job",
+                  "marks": [
+                    "key"
+                  ]
+                },
+                {
+                  "text": " - one per action."
+                }
+              ],
+              [
+                {
+                  "text": "Stage",
+                  "marks": [
+                    "key"
+                  ]
+                },
+                {
+                  "text": " - work between two shuffle boundaries."
+                }
+              ],
+              [
+                {
+                  "text": "Task",
+                  "marks": [
+                    "key"
+                  ]
+                },
+                {
+                  "text": " - one per partition, per stage."
+                }
+              ]
+            ],
+            "gap": 24,
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32,
+              "overflow": "shrink",
+              "minFontSize": 20
+            },
+            "id": "pyspark-execution.p1.b8"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "",
+              "RDD",
+              "DataFrame"
+            ],
+            "rows": [
+              [
+                "API",
+                "functional",
+                "relational"
+              ],
+              [
+                "Optimizer",
+                "none",
+                "Catalyst"
+              ],
+              [
+                "Memory",
+                "JVM objects",
+                "Tungsten binary"
+              ],
+              [
+                "Schema",
+                "no",
+                "yes"
+              ]
+            ],
+            "widths": [
+              0.27,
+              0.31,
+              0.42
+            ],
+            "style": {
+              "fontSize": 17,
+              "lineHeight": 1.25,
+              "overflow": "shrink",
+              "minFontSize": 16
+            },
+            "id": "pyspark-execution.p1.b9"
+          },
+          {
+            "id": "plan-chain",
+            "type": "diagram",
+            "family": "graph",
+            "layout": "manual",
+            "nodes": [
+              {
+                "id": "n0",
+                "label": "Unresolved"
+              },
+              {
+                "id": "n1",
+                "label": "Analyzed"
+              },
+              {
+                "id": "n2",
+                "label": "Optimized"
+              },
+              {
+                "id": "n3",
+                "label": "Physical"
+              }
+            ],
+            "nodeFrames": {
+              "n0": {
+                "x": 2,
+                "y": 24,
+                "width": 110,
+                "height": 44
+              },
+              "n1": {
+                "x": 126,
+                "y": 24,
+                "width": 110,
+                "height": 44
+              },
+              "n2": {
+                "x": 250,
+                "y": 24,
+                "width": 110,
+                "height": 44
+              },
+              "n3": {
+                "x": 374,
+                "y": 24,
+                "width": 110,
+                "height": 44
+              }
+            },
+            "edges": [
+              {
+                "from": "n0",
+                "to": "n1"
+              },
+              {
+                "from": "n1",
+                "to": "n2"
+              },
+              {
+                "from": "n2",
+                "to": "n3"
+              }
+            ],
+            "caption": "Catalyst: what explain(True) shows",
+            "style": {
+              "fontSize": 19,
+              "lineHeight": 1.33,
+              "overflow": "shrink",
+              "minFontSize": 16
+            }
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Transformation (lazy)",
+              "Action (runs)"
+            ],
+            "rows": [
+              [
+                "select, filter, withColumn",
+                "show, count, collect"
+              ],
+              [
+                "join, groupBy().agg()",
+                "write, save, take"
+              ],
+              [
+                "repartition, cache",
+                "toPandas, first"
+              ]
+            ],
+            "widths": [
+              0.54,
+              0.46
+            ],
+            "style": {
+              "fontSize": 17,
+              "lineHeight": 1.25,
+              "overflow": "shrink",
+              "minFontSize": 16
+            },
+            "id": "pyspark-execution.p1.b10"
+          },
+          {
+            "type": "box",
+            "variant": "warning",
+            "title": "Common trap",
+            "text": "collect() and toPandas() pull every row to the driver - OOM at scale.\ncache() is a transformation: it does nothing until the next action.",
+            "style": {
+              "fontSize": 18,
+              "lineHeight": 1.25,
+              "overflow": "shrink",
+              "minFontSize": 16
+            },
+            "id": "pyspark-execution.p1.b11"
+          },
+          {
+            "id": "job-stage-task",
+            "type": "diagram",
+            "family": "graph",
+            "layout": "manual",
+            "nodes": [
+              {
+                "id": "job",
+                "label": "Job (write)"
+              },
+              {
+                "id": "s0",
+                "label": "Stage 0"
+              },
+              {
+                "id": "s1",
+                "label": "Stage 1"
+              },
+              {
+                "id": "a0",
+                "label": "T0",
+                "shape": "circle"
+              },
+              {
+                "id": "a1",
+                "label": "T1",
+                "shape": "circle"
+              },
+              {
+                "id": "a2",
+                "label": "T2",
+                "shape": "circle"
+              },
+              {
+                "id": "b0",
+                "label": "T0",
+                "shape": "circle"
+              },
+              {
+                "id": "b1",
+                "label": "T1",
+                "shape": "circle"
+              }
+            ],
+            "nodeFrames": {
+              "job": {
+                "x": 185,
+                "y": 0,
+                "width": 124,
+                "height": 38
+              },
+              "s0": {
+                "x": 58,
+                "y": 79,
+                "width": 134,
+                "height": 38
+              },
+              "s1": {
+                "x": 306,
+                "y": 79,
+                "width": 134,
+                "height": 38
+              },
+              "a0": {
+                "x": 22,
+                "y": 171,
+                "width": 44,
+                "height": 40
+              },
+              "a1": {
+                "x": 110,
+                "y": 171,
+                "width": 44,
+                "height": 40
+              },
+              "a2": {
+                "x": 198,
+                "y": 171,
+                "width": 44,
+                "height": 40
+              },
+              "b0": {
+                "x": 314,
+                "y": 171,
+                "width": 44,
+                "height": 40
+              },
+              "b1": {
+                "x": 423,
+                "y": 171,
+                "width": 44,
+                "height": 40
+              }
+            },
+            "edges": [
+              {
+                "from": "job",
+                "to": "s0"
+              },
+              {
+                "from": "job",
+                "to": "s1"
+              },
+              {
+                "from": "s0",
+                "to": "s1",
+                "dashed": true,
+                "label": "shuffle"
+              },
+              {
+                "from": "s0",
+                "to": "a0"
+              },
+              {
+                "from": "s0",
+                "to": "a1"
+              },
+              {
+                "from": "s0",
+                "to": "a2"
+              },
+              {
+                "from": "s1",
+                "to": "b0"
+              },
+              {
+                "from": "s1",
+                "to": "b1"
+              }
+            ],
+            "caption": "One task per partition, per stage",
+            "style": {
+              "fontSize": 19,
+              "lineHeight": 1.33,
+              "overflow": "shrink",
+              "minFontSize": 16
+            }
+          }
+        ],
+        "frames": {
+          "pyspark-execution.p1.title": {
+            "x": 92,
+            "y": 42,
+            "width": 1038,
+            "height": 112
+          },
+          "pyspark-execution.p1.s1": {
+            "x": 94,
+            "y": 184,
+            "width": 510,
+            "height": 37.4
+          },
+          "pyspark-execution.p1.b1": {
+            "x": 94,
+            "y": 235.4,
+            "width": 510,
+            "height": 57.440000000000005
+          },
+          "pyspark-execution.p1.b2": {
+            "x": 94,
+            "y": 306.84000000000003,
+            "width": 510,
+            "height": 217.88
+          },
+          "pyspark-execution.p1.s2": {
+            "x": 94,
+            "y": 552.72,
+            "width": 510,
+            "height": 37.4
+          },
+          "pyspark-execution.p1.b3": {
+            "x": 94,
+            "y": 604.12,
+            "width": 510,
+            "height": 57.440000000000005
+          },
+          "pyspark-execution.p1.b4": {
+            "x": 94,
+            "y": 675.56,
+            "width": 510,
+            "height": 217.8800000000001
+          },
+          "pyspark-execution.p1.s3": {
+            "x": 94,
+            "y": 921.44,
+            "width": 510,
+            "height": 37.4
+          },
+          "pyspark-execution.p1.b5": {
+            "x": 94,
+            "y": 972.84,
+            "width": 510,
+            "height": 57.440000000000005
+          },
+          "pyspark-execution.p1.b6": {
+            "x": 94,
+            "y": 1044.28,
+            "width": 510,
+            "height": 152.44000000000005
+          },
+          "pyspark-execution.p1.s4": {
+            "x": 94,
+            "y": 1224.72,
+            "width": 510,
+            "height": 37.4
+          },
+          "pyspark-execution.p1.b7": {
+            "x": 94,
+            "y": 1276.1200000000001,
+            "width": 510,
+            "height": 57.440000000000005
+          },
+          "pyspark-execution.p1.b8": {
+            "x": 94,
+            "y": 1347.5600000000002,
+            "width": 510,
+            "height": 162.43999999999983
+          },
+          "pyspark-execution.p1.b9": {
+            "x": 638,
+            "y": 184,
+            "width": 494,
+            "height": 186.25
+          },
+          "plan-chain": {
+            "x": 638,
+            "y": 494.6875,
+            "width": 494,
+            "height": 102
+          },
+          "pyspark-execution.p1.b10": {
+            "x": 638,
+            "y": 721.125,
+            "width": 494,
+            "height": 149
+          },
+          "pyspark-execution.p1.b11": {
+            "x": 638,
+            "y": 994.5625,
+            "width": 494,
+            "height": 146
+          },
+          "job-stage-task": {
+            "x": 638,
+            "y": 1265,
+            "width": 494,
+            "height": 245
+          }
+        },
+        "outline": [
+          {
+            "id": "pyspark-execution.s1",
+            "label": "DataFrame vs RDD",
+            "blockId": "pyspark-execution.p1.s1"
+          },
+          {
+            "id": "pyspark-execution.s2",
+            "label": "Lazy Evaluation",
+            "blockId": "pyspark-execution.p1.s2"
+          },
+          {
+            "id": "pyspark-execution.s3",
+            "label": "Transformations vs Actions",
+            "blockId": "pyspark-execution.p1.s3"
+          },
+          {
+            "id": "pyspark-execution.s4",
+            "label": "Job / Stage / Task",
+            "blockId": "pyspark-execution.p1.s4"
+          }
+        ]
+      },
+      {
+        "id": "pyspark-execution.p2",
+        "title": "PySpark - Shuffle, Partitions & Caching",
+        "blocks": [
+          {
+            "type": "text",
+            "role": "title",
+            "text": "PySpark - Shuffle, Partitions & Caching",
+            "style": {
+              "fontSize": 38,
+              "minFontSize": 29,
+              "overflow": "shrink",
+              "lineHeight": 1.16
+            },
+            "id": "pyspark-execution.p2.title"
+          },
+          {
+            "type": "text",
+            "role": "section",
+            "text": "5. Shuffle",
+            "style": {
+              "fontSize": 27,
+              "minFontSize": 23,
+              "overflow": "shrink",
+              "lineHeight": 1.2
+            },
+            "id": "pyspark-execution.p2.s1"
+          },
+          {
+            "type": "text",
+            "text": "A shuffle redistributes rows across partitions by key. It writes to disk, crosses the network, and ends a stage.",
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32
+            },
+            "id": "pyspark-execution.p2.b1"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Triggered by groupBy, join, distinct, orderBy, repartition.",
+              "spark.sql.shuffle.partitions defaults to 200 - often wrong both ways.",
+              "Broadcast the small side of a join to avoid the shuffle entirely."
+            ],
+            "gap": 21.814999999999955,
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32,
+              "overflow": "shrink",
+              "minFontSize": 20
+            },
+            "id": "pyspark-execution.p2.b2"
+          },
+          {
+            "type": "text",
+            "role": "section",
+            "text": "6. Partitions",
+            "style": {
+              "fontSize": 27,
+              "minFontSize": 23,
+              "overflow": "shrink",
+              "lineHeight": 1.2
+            },
+            "id": "pyspark-execution.p2.s2"
+          },
+          {
+            "type": "text",
+            "text": "Partitions are the unit of parallelism. Aim for 100-200 MB each and a multiple of your total cores.",
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32
+            },
+            "id": "pyspark-execution.p2.b3"
+          },
+          {
+            "type": "list",
+            "items": [
+              [
+                {
+                  "text": "repartition(n)",
+                  "marks": [
+                    "key"
+                  ]
+                },
+                {
+                  "text": " - full shuffle, up or down, rebalances."
+                }
+              ],
+              [
+                {
+                  "text": "coalesce(n)",
+                  "marks": [
+                    "key"
+                  ]
+                },
+                {
+                  "text": " - no shuffle, down only, may leave skew."
+                }
+              ],
+              "Partition on write by a low-cardinality column, never by an id."
+            ],
+            "gap": 21.814999999999998,
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32,
+              "overflow": "shrink",
+              "minFontSize": 20
+            },
+            "id": "pyspark-execution.p2.b4"
+          },
+          {
+            "type": "text",
+            "role": "section",
+            "text": "7. cache / persist",
+            "style": {
+              "fontSize": 27,
+              "minFontSize": 23,
+              "overflow": "shrink",
+              "lineHeight": 1.2
+            },
+            "id": "pyspark-execution.p2.s3"
+          },
+          {
+            "type": "text",
+            "text": "Caching pays off only when a DataFrame is reused. Otherwise it is memory you took from the shuffle.",
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32
+            },
+            "id": "pyspark-execution.p2.b5"
+          },
+          {
+            "type": "list",
+            "items": [
+              "cache() = persist(MEMORY_AND_DISK) for DataFrames.",
+              "Lazy: the first action materialises it.",
+              "unpersist() when done - cached blocks evict live ones."
+            ],
+            "gap": 21.814999999999998,
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32,
+              "overflow": "shrink",
+              "minFontSize": 20
+            },
+            "id": "pyspark-execution.p2.b6"
+          },
+          {
+            "type": "text",
+            "role": "section",
+            "text": "8. Tuning Checklist",
+            "style": {
+              "fontSize": 27,
+              "minFontSize": 23,
+              "overflow": "shrink",
+              "lineHeight": 1.2
+            },
+            "id": "pyspark-execution.p2.s4"
+          },
+          {
+            "type": "list",
+            "items": [
+              "Read the SQL tab: find the widest stage, not the slowest line.",
+              "Filter and select before the join, not after.",
+              "Enable AQE - it coalesces partitions and handles skewed joins.",
+              "Check the max/median task time ratio: > 3 means skew."
+            ],
+            "gap": 17.87666666666661,
+            "style": {
+              "fontSize": 21,
+              "lineHeight": 1.32,
+              "overflow": "shrink",
+              "minFontSize": 20
+            },
+            "id": "pyspark-execution.p2.b7"
+          },
+          {
+            "type": "box",
+            "variant": "note",
+            "title": "Narrow vs wide dependency",
+            "children": [
+              {
+                "id": "narrow-dependency",
+                "type": "diagram",
+                "family": "graph",
+                "layout": "manual",
+                "nodes": [
+                  {
+                    "id": "P0",
+                    "label": "P0",
+                    "shape": "circle"
+                  },
+                  {
+                    "id": "P1",
+                    "label": "P1",
+                    "shape": "circle"
+                  },
+                  {
+                    "id": "P2",
+                    "label": "P2",
+                    "shape": "circle"
+                  },
+                  {
+                    "id": "Q0",
+                    "label": "Q0",
+                    "shape": "circle"
+                  },
+                  {
+                    "id": "Q1",
+                    "label": "Q1",
+                    "shape": "circle"
+                  },
+                  {
+                    "id": "Q2",
+                    "label": "Q2",
+                    "shape": "circle"
+                  }
+                ],
+                "nodeFrames": {
+                  "P0": {
+                    "x": 10,
+                    "y": 0,
+                    "width": 40,
+                    "height": 34
+                  },
+                  "P1": {
+                    "x": 82,
+                    "y": 0,
+                    "width": 40,
+                    "height": 34
+                  },
+                  "P2": {
+                    "x": 154,
+                    "y": 0,
+                    "width": 40,
+                    "height": 34
+                  },
+                  "Q0": {
+                    "x": 10,
+                    "y": 84,
+                    "width": 40,
+                    "height": 34
+                  },
+                  "Q1": {
+                    "x": 82,
+                    "y": 84,
+                    "width": 40,
+                    "height": 34
+                  },
+                  "Q2": {
+                    "x": 154,
+                    "y": 84,
+                    "width": 40,
+                    "height": 34
+                  }
+                },
+                "edges": [
+                  {
+                    "from": "P0",
+                    "to": "Q0"
+                  },
+                  {
+                    "from": "P1",
+                    "to": "Q1"
+                  },
+                  {
+                    "from": "P2",
+                    "to": "Q2"
+                  }
+                ],
+                "caption": "Narrow - no shuffle"
+              },
+              {
+                "id": "wide-dependency",
+                "type": "diagram",
+                "family": "graph",
+                "layout": "manual",
+                "nodes": [
+                  {
+                    "id": "P0",
+                    "label": "P0",
+                    "shape": "circle"
+                  },
+                  {
+                    "id": "P1",
+                    "label": "P1",
+                    "shape": "circle"
+                  },
+                  {
+                    "id": "P2",
+                    "label": "P2",
+                    "shape": "circle"
+                  },
+                  {
+                    "id": "Q0",
+                    "label": "Q0",
+                    "shape": "circle"
+                  },
+                  {
+                    "id": "Q1",
+                    "label": "Q1",
+                    "shape": "circle"
+                  },
+                  {
+                    "id": "Q2",
+                    "label": "Q2",
+                    "shape": "circle"
+                  }
+                ],
+                "nodeFrames": {
+                  "P0": {
+                    "x": 10,
+                    "y": 0,
+                    "width": 40,
+                    "height": 34
+                  },
+                  "P1": {
+                    "x": 82,
+                    "y": 0,
+                    "width": 40,
+                    "height": 34
+                  },
+                  "P2": {
+                    "x": 154,
+                    "y": 0,
+                    "width": 40,
+                    "height": 34
+                  },
+                  "Q0": {
+                    "x": 10,
+                    "y": 84,
+                    "width": 40,
+                    "height": 34
+                  },
+                  "Q1": {
+                    "x": 82,
+                    "y": 84,
+                    "width": 40,
+                    "height": 34
+                  },
+                  "Q2": {
+                    "x": 154,
+                    "y": 84,
+                    "width": 40,
+                    "height": 34
+                  }
+                },
+                "edges": [
+                  {
+                    "from": "P0",
+                    "to": "Q0"
+                  },
+                  {
+                    "from": "P0",
+                    "to": "Q1"
+                  },
+                  {
+                    "from": "P1",
+                    "to": "Q1"
+                  },
+                  {
+                    "from": "P1",
+                    "to": "Q2"
+                  },
+                  {
+                    "from": "P2",
+                    "to": "Q2"
+                  },
+                  {
+                    "from": "P2",
+                    "to": "Q0"
+                  }
+                ],
+                "caption": "Wide - shuffle"
+              }
+            ],
+            "style": {
+              "fontSize": 18,
+              "lineHeight": 1.25,
+              "overflow": "shrink",
+              "minFontSize": 16
+            },
+            "id": "pyspark-execution.p2.b8"
+          },
+          {
+            "type": "code",
+            "language": "python",
+            "code": "spark.conf.set(\"spark.sql.shuffle.partitions\", 400)\nspark.conf.set(\"spark.sql.adaptive.enabled\", True)\nbig.join(broadcast(small), \"id\", \"left\")",
+            "title": "Example - configuration and broadcast",
+            "style": {
+              "fontSize": 16,
+              "lineHeight": 1.35,
+              "overflow": "shrink",
+              "minFontSize": 14
+            },
+            "id": "pyspark-execution.p2.b9"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "",
+              "repartition(n)",
+              "coalesce(n)"
+            ],
+            "rows": [
+              [
+                "Shuffle",
+                "yes (full)",
+                "no"
+              ],
+              [
+                "Direction",
+                "up or down",
+                "down only"
+              ],
+              [
+                "Balance",
+                "even",
+                "may be skewed"
+              ],
+              [
+                "Use for",
+                "before wide op",
+                "before write"
+              ]
+            ],
+            "widths": [
+              0.26,
+              0.37,
+              0.37
+            ],
+            "style": {
+              "fontSize": 17,
+              "lineHeight": 1.25,
+              "overflow": "shrink",
+              "minFontSize": 16
+            },
+            "id": "pyspark-execution.p2.b10"
+          },
+          {
+            "type": "table",
+            "columns": [
+              "Level",
+              "Behaviour"
+            ],
+            "rows": [
+              [
+                "MEMORY_ONLY",
+                "recompute if it does not fit"
+              ],
+              [
+                "MEMORY_AND_DISK",
+                "spill to disk (DF default)"
+              ],
+              [
+                "DISK_ONLY",
+                "always on disk, no RAM cost"
+              ],
+              [
+                "*_SER",
+                "serialized: smaller, more CPU"
+              ]
+            ],
+            "widths": [
+              0.44,
+              0.56
+            ],
+            "style": {
+              "fontSize": 17,
+              "lineHeight": 1.25,
+              "overflow": "shrink",
+              "minFontSize": 16
+            },
+            "id": "pyspark-execution.p2.b11"
+          },
+          {
+            "type": "box",
+            "variant": "warning",
+            "title": "Common trap",
+            "text": "Caching a DataFrame used once is pure overhead.\nCaching before a filter caches the unfiltered rows too.",
+            "style": {
+              "fontSize": 18,
+              "lineHeight": 1.25,
+              "overflow": "shrink",
+              "minFontSize": 16
+            },
+            "id": "pyspark-execution.p2.b12"
+          }
+        ],
+        "frames": {
+          "pyspark-execution.p2.title": {
+            "x": 92,
+            "y": 42,
+            "width": 1038,
+            "height": 112
+          },
+          "pyspark-execution.p2.s1": {
+            "x": 94,
+            "y": 184,
+            "width": 510,
+            "height": 37.4
+          },
+          "pyspark-execution.p2.b1": {
+            "x": 94,
+            "y": 235.4,
+            "width": 510,
+            "height": 57.440000000000005
+          },
+          "pyspark-execution.p2.b2": {
+            "x": 94,
+            "y": 306.84000000000003,
+            "width": 510,
+            "height": 209.94999999999993
+          },
+          "pyspark-execution.p2.s2": {
+            "x": 94,
+            "y": 544.79,
+            "width": 510,
+            "height": 37.4
+          },
+          "pyspark-execution.p2.b3": {
+            "x": 94,
+            "y": 596.1899999999999,
+            "width": 510,
+            "height": 57.440000000000005
+          },
+          "pyspark-execution.p2.b4": {
+            "x": 94,
+            "y": 667.6299999999999,
+            "width": 510,
+            "height": 182.23000000000002
+          },
+          "pyspark-execution.p2.s3": {
+            "x": 94,
+            "y": 877.8599999999999,
+            "width": 510,
+            "height": 37.4
+          },
+          "pyspark-execution.p2.b5": {
+            "x": 94,
+            "y": 929.2599999999999,
+            "width": 510,
+            "height": 57.440000000000005
+          },
+          "pyspark-execution.p2.b6": {
+            "x": 94,
+            "y": 1000.6999999999998,
+            "width": 510,
+            "height": 182.23000000000002
+          },
+          "pyspark-execution.p2.s4": {
+            "x": 94,
+            "y": 1210.9299999999998,
+            "width": 510,
+            "height": 37.4
+          },
+          "pyspark-execution.p2.b7": {
+            "x": 94,
+            "y": 1262.33,
+            "width": 510,
+            "height": 247.66999999999985
+          },
+          "pyspark-execution.p2.b8": {
+            "x": 638,
+            "y": 184,
+            "width": 494,
+            "height": 220
+          },
+          "narrow-dependency": {
+            "x": 654,
+            "y": 237,
+            "width": 221,
+            "height": 156
+          },
+          "wide-dependency": {
+            "x": 901,
+            "y": 237,
+            "width": 221,
+            "height": 156
+          },
+          "pyspark-execution.p2.b9": {
+            "x": 638,
+            "y": 519.625,
+            "width": 494,
+            "height": 170
+          },
+          "pyspark-execution.p2.b10": {
+            "x": 638,
+            "y": 805.25,
+            "width": 494,
+            "height": 186.25
+          },
+          "pyspark-execution.p2.b11": {
+            "x": 638,
+            "y": 1107.125,
+            "width": 494,
+            "height": 186.25
+          },
+          "pyspark-execution.p2.b12": {
+            "x": 638,
+            "y": 1409,
+            "width": 494,
+            "height": 101
+          }
+        },
+        "outline": [
+          {
+            "id": "pyspark-execution.s5",
+            "label": "Shuffle",
+            "blockId": "pyspark-execution.p2.s1"
+          },
+          {
+            "id": "pyspark-execution.s6",
+            "label": "Partitions",
+            "blockId": "pyspark-execution.p2.s2"
+          },
+          {
+            "id": "pyspark-execution.s7",
+            "label": "cache / persist",
+            "blockId": "pyspark-execution.p2.s3"
+          },
+          {
+            "id": "pyspark-execution.s8",
+            "label": "Tuning Checklist",
+            "blockId": "pyspark-execution.p2.s4"
+          }
+        ]
+      }
+    ]
+  },
+  "related": [
+    "page.interview.hybrid-lazy",
+    "page.interview.theory-layout"
+  ],
+  "terms": [],
+  "sources": [
+    {
+      "title": "AtlasNote structured cheatsheet source",
+      "note": "Reconstructed from TEST_PACK.md and the supplied PNG previews. Reference wording retained; layout and style refined. Original grammar JSON was not supplied."
+    }
+  ],
+  "tags": [
+    "cheatsheet",
+    "pyspark-execution"
+  ],
+  "provenance": "Reconstructed from TEST_PACK.md and the supplied PNG previews. Reference wording retained; layout and style refined. Original grammar JSON was not supplied."
+}

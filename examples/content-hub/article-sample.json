@@ -1,0 +1,18 @@
+{
+  "id": "sample-norsk-transcript",
+  "title": "Norsk podcast transcript example",
+  "url": "https://example.invalid/original",
+  "publisher": "Example",
+  "sourceType": "transcript",
+  "taxonomy": {
+    "subject": "norsk",
+    "path": [
+      "Lytting",
+      "Arbeidsliv"
+    ]
+  },
+  "status": "inbox",
+  "important": false,
+  "note": "User-pasted transcript; no remote page embedding required.",
+  "text": "Dette er et eksempel på en transkripsjon som brukeren limer inn lokalt."
+}

@@ -1,0 +1,112 @@
+{
+  "id": "page.interview.theory-batch",
+  "title": "Batch vs streaming: choose the freshness budget",
+  "summary": "Theory / ETL / ELT & Pipelines / Processing modes / Latency and correctness",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "page.interview.theory-batch.prompt",
+      "title": "Question",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.theory-batch.question",
+          "text": "A dashboard is refreshed daily, but operations wants a five-minute fraud alert. When would you use batch versus streaming?"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-batch.reasoning",
+      "title": "Reasoning",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.theory-batch.reasoning-points",
+          "ordered": true,
+          "items": [
+            "Ask how stale each output is allowed to be.",
+            "Separate event time from arrival time.",
+            "Define late-data and duplicate handling.",
+            "Compare operating cost, recovery and support capacity."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-batch.answer",
+      "title": "Answer / mental model",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.theory-batch.explanation",
+          "text": "Batch processes a bounded collection. Streaming incrementally processes arriving data and needs explicit decisions about late events, state and recovery. Choose a freshness objective and operational model for each consumer; one architecture need not serve every latency requirement."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-batch.trap",
+      "title": "Common mistake / trap",
+      "children": [
+        {
+          "type": "callout",
+          "id": "page.interview.theory-batch.trap-note",
+          "tone": "warning",
+          "title": "Watch for this",
+          "text": "Streaming is not automatically real time or exactly once end-to-end. Source, state and sink behavior all matter."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-batch.followup",
+      "title": "Follow-up",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.theory-batch.followups",
+          "items": [
+            "How would a late event update yesterday's aggregate?"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-batch.intent",
+      "title": "Interviewer intent",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.theory-batch.intent-points",
+          "items": [
+            "Translate business freshness into architecture.",
+            "Mention correctness and failure handling, not just speed."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-batch.reflection",
+      "title": "Reflection",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.theory-batch.reflection-prompt",
+          "text": "What pattern did I recognize, where did I get stuck, and what would I change in my first approach?\n\nUse Context > Remarks for your personal reflection. It is saved separately from this reference."
+        }
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "interview",
+    "theory"
+  ],
+  "provenance": "Original educational prototype. Prompts Q1-Q5 preserve the user-provided canonical SQL sequence. Examples are reference code, not executable tasks."
+}

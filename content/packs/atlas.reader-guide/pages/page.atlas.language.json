@@ -1,0 +1,59 @@
+{
+  "id": "page.atlas.language",
+  "title": "Read in Norwegian, keep English nearby",
+  "summary": "Aligned bilingual pairs are ordinary content blocks, reusable in any project.",
+  "blocks": [
+    {
+      "type": "section",
+      "title": "A few sentences for the reader",
+      "children": [
+        {
+          "type": "bilingual",
+          "no": "Jeg vil samle notatene mine på ett sted.",
+          "en": "I want to collect my notes in one place.",
+          "hint": "samle = collect; på ett sted = in one place",
+          "id": "block.atlas.language.0.0"
+        },
+        {
+          "type": "bilingual",
+          "no": "Kan du forklare sammenhengen mellom disse begrepene?",
+          "en": "Can you explain the connection between these concepts?",
+          "hint": "sammenheng = connection / relationship",
+          "id": "block.atlas.language.0.1"
+        },
+        {
+          "type": "bilingual",
+          "no": "Jeg kommer tilbake til denne siden senere.",
+          "en": "I will come back to this page later.",
+          "id": "block.atlas.language.0.2"
+        },
+        {
+          "type": "bilingual",
+          "no": "La meg tenke litt før jeg svarer.",
+          "en": "Let me think a little before I answer.",
+          "id": "block.atlas.language.0.3"
+        }
+      ],
+      "id": "block.atlas.language.0"
+    },
+    {
+      "type": "question",
+      "question": "What changes when you hide English?",
+      "answer": "Only the English display in this view changes. The source text remains stored. Export and print use their own explicit language settings.",
+      "id": "block.atlas.language.1"
+    },
+    {
+      "type": "markdown",
+      "text": "Open **Parallel** to emphasize the aligned pairs. On a narrow screen, each pair stacks Norwegian above English. The two parts still belong to the same block, and the English toggle applies only to this view.",
+      "id": "block.atlas.language.2"
+    }
+  ],
+  "related": [
+    "page.atlas.welcome"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "Reader guide"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "exclude": [
+    "src/vendor/mermaid",
+    "src/vendor/prism.js",
+    "src/vendor/jszip.js"
+  ]
+}
