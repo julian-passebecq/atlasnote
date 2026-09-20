@@ -1,3 +1,12 @@
+# Current V2.3 migration scope
+
+`START_HERE.md` and the explicit user request supersede historical release boundaries.
+Use supplied source, not GitHub main. GitHub is read-only. No production is authorized.
+Provider-neutral core and Vercel managed protection are mandatory; Netlify internals
+are optional legacy. Keep atomic compaction and all 13 rollback cases unchanged.
+Do not label offline/browser mocks or historical results as integrated/live proof.
+The full inherited workflow may start only after same-source complete V23 success.
+
 # AtlasNote V2.2 working agreement
 
 Read `START_HERE.md`, `V22_ARCHITECTURE.md`, `V22_MIGRATION_AND_BACKUP.md`, `V22_AI_CHANGESET_SPEC.md` and `docs/v22/PDFATLAS_CONTRACT.md` before changing architecture. The copied authoritative V2.2 handoff overrides historical 1.x/V2 documents.

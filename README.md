@@ -1,4 +1,17 @@
-**Current delivery: V2.3 BLOCKED durability/access candidate.** Read [START_HERE.md](START_HERE.md) and [the V2.3 report](V23_DURABILITY_ACCESS_RELEASE_REPORT.md). Destructive compaction is absent pending real-browser safety proof. The notes below describe the released V2.2 baseline, not V2.3 certification.
+# AtlasNote V2.3 - provider-neutral Vercel migration candidate
+
+**Source migration provided; production release requires fresh green qualification.**
+Start with [START_HERE.md](START_HERE.md). Vercel managed protection is the active access
+boundary; Netlify is optional legacy. The existing atomic compactor, archive/recovery,
+Compare, PDF/history, backups and Agent Interface are retained, not replaced.
+
+Use `npm ci && npm run build` for the integrated `dist`. See
+[the preview procedure](docs/v23/VERCEL_QUALIFICATION.md) and
+[manual upload instructions](00_READ_ME_V23_ZIP.md). Do not deploy compatibility output
+or assume `vercel.json` enables access protection. A host change creates a new origin;
+verify a complete recovery bundle before moving browser-local data.
+
+## Historical V2.2 product notes (not V2.3 certification)
 
 # AtlasNote V2.2.0 - local-first knowledge reader
 

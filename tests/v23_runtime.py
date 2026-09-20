@@ -1,7 +1,44 @@
 """Integrated archive authorization, migration and read-only integrity proof."""
 from v23_browser_common import *
+from v23_runtime_matrix import storage_matrix, migration_matrix, corruption_matrix
+
+def native_quota():
+    """Execute a fresh native proof, directly on Linux or through the retained WSL path."""
+    distro=os.environ.get('ATLAS_V23_QUOTA_WSL')
+    native=os.environ.get('ATLAS_V23_NATIVE_QUOTA')=='1'
+    if not distro and not native:
+        return {'status':'BLOCKED','reason':'Native capacity requires ATLAS_V23_NATIVE_QUOTA=1 on Linux, or the explicit WSL runner. Portable proof is not native proof.'}
+    out=Path(os.environ.get('ATLAS_EVIDENCE','docs/evidence/v23/runtime')).resolve()/'native-quota'
+    out.mkdir(parents=True,exist_ok=True)
+    if distro:
+        if os.name!='nt':raise RuntimeError('ATLAS_V23_QUOTA_WSL requires the Windows WSL runner')
+        runner=os.environ.get('ATLAS_V23_QUOTA_PYTHON')
+        if not runner:raise RuntimeError('Set ATLAS_V23_QUOTA_PYTHON to the Linux Playwright Python executable')
+        def linux(p):
+            p=Path(p).resolve();return '/mnt/'+p.drive[0].lower()+p.as_posix()[2:]
+        command=['wsl','-d',distro,'-u','root','--',runner,linux(Path(__file__).with_name('v23_native_quota.py')),linux(out)]
+    else:
+        import sys
+        if not sys.platform.startswith('linux'):return {'status':'BLOCKED','reason':'Native tmpfs proof needs Linux.'}
+        command=[sys.executable,str(Path(__file__).with_name('v23_native_quota.py')),str(out)]
+    child=subprocess.run(command,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,encoding='utf-8',timeout=180)
+    (out/'command.log').write_text(child.stdout,encoding='utf-8')
+    report_file=out/'probe.json'
+    if not report_file.exists():return {'status':'FAIL','reason':'Native proof produced no fresh report.'}
+    result=json.loads(report_file.read_text())
+    assert result['sourceCommit']==subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+    if child.returncode==0:assert result['status']=='PASS'
+    elif child.returncode==2:assert result['status']=='BLOCKED'
+    else:result['status']='FAIL'
+    return result
 
 def scenario(browser,context,page,base,out,passed):
+    if '--portable' not in __import__('sys').argv:
+        proof=native_quota()
+        passed('Actual quota failure after optimistic preflight in a real transaction',status=proof['status'],mechanism=proof.get('mechanism'),reason=proof.get('reason'),evidence='native-quota/probe.json')
+    storage_matrix(browser,base,passed)
+    migration_matrix(browser,base,passed)
+    corruption_matrix(browser,base,passed)
     raw=page.evaluate(RAW);assert sorted(raw)==STORES
     state=persisted(page)
     assert not any('demo.v23' in h['resourceKey'] for h in state['history']['heads'])
@@ -48,10 +85,6 @@ def scenario(browser,context,page,base,out,passed):
     page.screenshot(path=str(out/'archive-ceremony.png'),full_page=True)
 
 if __name__=='__main__':
-    raise SystemExit(run_suite('runtime',scenario,(
-        'V2.2 populated migration and blocked/old-tab/interrupted-upgrade matrix',
-        'Storage estimate and persistence granted/denied/unsupported/error browser matrix',
-        'Actual quota failure after optimistic preflight in a real transaction',
-        'Corrupt persisted fixtures: integrity checker rejects with zero five-store mutation',
-        'Repeated archived lineage after reload and exact attachment',
-    )))
+    import sys
+    # Portable scope is deliberately distinct and cannot satisfy the full release gate.
+    raise SystemExit(run_suite('runtime-portable' if '--portable' in sys.argv else 'runtime',scenario))

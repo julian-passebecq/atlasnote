@@ -28,3 +28,7 @@ access-key*.txt
 *.atlas-history.zip
 *.atlas-recovery.zip
 .netlify/
+
+# Provider-local state and one-shot evidence.
+.vercel/
+.vercel-proof/

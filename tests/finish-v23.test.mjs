@@ -64,7 +64,7 @@ test('V23 capacity boundaries, five-store atomic compactor and closed-world gate
  const {HISTORY_LIMITS}=await import('../dist-offline/app/history/validation.mjs');
  assert.deepEqual([HISTORY_LIMITS.perResource,HISTORY_LIMITS.totalRevisions,HISTORY_LIMITS.reviewRecords,HISTORY_LIMITS.bytes],[2000,25000,500,64*1024*1024]);
  const {releaseStatus,V23_GATES,COMPACTION_FAULTS,PROVIDER_CASES}=await import('../tools/v23-release-contract.mjs');
- assert.equal(V23_GATES.length,13);assert.equal(COMPACTION_FAULTS.length,13);assert.equal(PROVIDER_CASES.length,20);
+ assert.equal(V23_GATES.length,13);assert.equal(COMPACTION_FAULTS.length,13);assert.equal(PROVIDER_CASES.length,13);
  const rows=V23_GATES.map(id=>({id,status:'PASS',exitCode:0}));assert.equal(releaseStatus(rows),'READY FOR COORDINATOR QA');
  rows[0].exitCode=2;assert.equal(releaseStatus(rows),'BLOCKED');
  const source=await fs.readFile('src/storage/database.ts','utf8');
@@ -96,7 +96,7 @@ test('V23 browser qualification cannot silently replace real historical PDF rend
  assert.match(helper,/pixelHash.*!=.*pixelHash/);
  const workflow=await fs.readFile('.github/workflows/v23-qualification.yml','utf8');
  assert.doesNotMatch(workflow,/continue-on-error:\s*true/);
- assert.match(workflow,/final\/atlasnote-2\.3-pro-finish/);
+ assert.match(workflow,/workflow_dispatch/);assert.match(workflow,/migration\/vercel-provider-neutral-v23/);
  const runtime=await fs.readFile('tests/v23_runtime.py','utf8');
  assert.match(runtime,/confirm\.uncheck\(\);assert commit\.is_disabled\(\)/);
 });

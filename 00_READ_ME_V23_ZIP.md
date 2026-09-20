@@ -1,39 +1,30 @@
-# AtlasNote V2.3 ZIP candidate
+# Upload the repository, not the report folders
 
-**Status: BLOCKED - qualification only, not a production release.**
+The delivery ZIP contains a complete repository in `SOURCE/`, plus reports, evidence
+and the baseline diff outside it. It is not a patches-only handoff.
 
-This source continues `julian-passebecq/atlasnote` from exact commit
-`84b8ba2addbfe3cb2527dc4a57039416ceabbb52`, tree
-`19eadf07aa7485d5d07cb8bfabb22e02539940be`, on local branch
-`final/atlasnote-2.3-pro-finish`.
+Use the existing `julian-passebecq/atlasnote` repository. Do not create a replacement
+repository and do not substitute code from `main` or any historical branch.
 
-Read `V23_DURABILITY_ACCESS_RELEASE_REPORT.md`, then `docs/v23/QA_MATRIX.md`.
-The outer delivery supplies exact final identity, source/evidence checksums and an
-incremental Git bundle. Use that bundle to preserve the exact local candidate SHA;
-copying source and making a different commit creates a new candidate needing a new
-build and QA run.
+1. Extract the final ZIP into a new directory and retain it as the audited copy.
+2. In your own local checkout of the existing repository, select an owner-managed
+   non-production branch, such as `migration/vercel-provider-neutral-v23`. Preserve
+   the checkout's `.git` directory. Back up uncommitted work before replacing files.
+3. Replace the repository's tracked working files with **the contents inside
+   `SOURCE/`**, including `.github/`, `.gitattributes`, `.gitignore` and
+   `.vercelignore`. Do not create an extra `SOURCE/` level in the repository.
+   The supplied source is complete; remove files shown as deleted in the diff.
+   In particular, the Netlify tests moved from `tests/access-v23.test.mjs` into
+   `tests/legacy/` and must not remain duplicated at their old location.
+4. Do not upload `00_RESULT/`, `PATCH/`, `EVIDENCE/`, `.git`, `node_modules`, built
+   `dist` folders, `.vercel`, environment files, browser profiles or private backups.
+   Review Git status and the supplied change inventory, then commit/push yourself.
+   Folder upload in GitHub's web UI may omit dotfiles or fail to apply deletions;
+   a local checkout with GitHub Desktop is less error-prone for this complete tree.
+5. Install/build from the resulting clean checkout. The new owner commit changes
+   build identity, so create and qualify a new protected disposable Vercel preview.
+   Do not promote it to production while any mandatory gate is BLOCKED or FAIL.
 
-The compactor is the preserved qualification writer, not an approved production
-feature. Do not merge into main, deploy this as production, or test destructive
-compaction on irreplaceable data. No GitHub push or Netlify deployment was performed.
-
-No integrated production dist is supplied: locked dependency installation and real
-normal-origin browser execution were unavailable in this environment. Any included
-compatibility build is **DIAGNOSTIC-NOT-PRODUCTION**, not an integrated PDF substitute.
-
-For unit diagnostics only:
-
-```sh
-npm run bootstrap:offline
-npm run build:offline
-npm run typecheck
-npm test
-```
-
-For actual qualification, install the lockfile dependencies with `npm ci`, install
-`requirements-test.txt` and Playwright Chromium, run `npm run build`, and execute the
-complete existing GitHub Actions release workflow. The still-open runtime/provider
-matrix must be completed; rerunning alone is not guaranteed to close it.
-
-The four exact-boundary fixture tests and valid 64 MiB ZIP experiment are model
-checks. The mandatory real-browser gate is `npm run test:v23:capacity`.
+The ZIP intentionally excludes `.git`. Exact original ancestry could not be
+reconstructed from the incremental bundle; the local snapshot ancestry is documented
+honestly in the external result. No replacement Git bundle is claimed to be original.

@@ -63,7 +63,9 @@ def write_result(out, rows, suite, build, source):
 def run_suite(suite, body, remaining=()):
     out=Path(os.environ.get('ATLAS_EVIDENCE','docs/evidence/v23/'+suite));out.mkdir(parents=True,exist_ok=True)
     rows=[];build=None;source=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
-    def passed(name,**detail):rows.append({'name':name,'status':'PASS',**detail})
+    def passed(name,**detail):
+        rows.append({'name':name,'status':'PASS',**detail})
+        print(json.dumps(rows[-1]),flush=True)
     try:
         build_path=Path(os.environ.get('ATLAS_DIST','dist'))/'build-identity.json'
         if not build_path.is_file():
@@ -73,6 +75,10 @@ def run_suite(suite, body, remaining=()):
         assert build['buildKind']=='integrated','This suite refuses a compatibility-only build'
         if build['sourceCommit']!=source or build['sourceDirty']:
             rows.append({'name':'Exact candidate build identity','status':'BLOCKED','reason':'Runtime artifact is inherited or dirty; exercised results cannot certify this source candidate.'})
+        check=subprocess.run(['node','tools/check-v23-build.mjs'],capture_output=True,text=True,env={**os.environ,'ATLAS_EVIDENCE':str(out/'build-check')})
+        if check.returncode:
+            rows.append({'name':'Exact integrated fingerprint prerequisite','status':'BLOCKED','reason':'Current source/build fingerprint check failed; no browser result may certify a different artifact.'})
+            return write_result(out,rows,suite,build,source)
         base=start_server(dist=os.environ.get('ATLAS_DIST','dist'))
         with sync_playwright() as pw:
             browser=launch(pw)

@@ -60,6 +60,9 @@ export function HistoryPanel({built, assets, workspace, resourceKey, onClose, no
  const archiveEpoch=useSyncExternalStore(subscribeArchives,archiveAttachmentEpoch);
  const index = useMemo(() => createHistoryIndex(workspace.history), [workspace.history,archiveEpoch]);
  const versions = api.listResourceVersions(resourceKey, offset, 25), head = index.heads.get(resourceKey);
+ // Exact descriptor checks can traverse 25,000 archived identities. Resolve each
+ // archive once per render instead of repeating that work for every visible row.
+ const attachedArchiveIds = new Set((workspace.history?.archives ?? []).filter(a => isArchiveAttached(workspace.history, a.archiveId)).map(a => a.archiveId));
  const currentRevision = head ? index.revisions.get(head.revisionId) : undefined;
  const title = currentRevision?.snapshot;
  const type = currentRevision?.resourceType, resourceId = currentRevision?.resourceId;
@@ -128,7 +131,7 @@ export function HistoryPanel({built, assets, workspace, resourceKey, onClose, no
     const headChanged = restoring && confirm?.expectedHead !== head?.revisionId;
     return <article className="revision-row" key={revision.revisionId} {...identity} data-revision-id={revision.revisionId} data-current-revision={revision.revisionId === head?.revisionId}>
      <header><strong>Version {revision.number}{revision.revisionId === head?.revisionId ? ' / Current' : ''}</strong><span>{revision.source}</span><time dateTime={new Date(revision.createdAt).toISOString()}>{new Date(revision.createdAt).toLocaleString()}</time></header>
-     <p>{revision.summary || 'Content revision'}</p>{owner&&<p className="secondary" data-archive-owner={owner.archiveId}>Archived / {isArchiveAttached(workspace.history,owner.archiveId)?'Verified file attached':'Attach required file'}: <code>{owner.archiveId}</code><br/>Root: <code>{owner.rootHash}</code></p>}
+     <p>{revision.summary || 'Content revision'}</p>{owner&&<p className="secondary" data-archive-owner={owner.archiveId}>Archived / {attachedArchiveIds.has(owner.archiveId)?'Verified file attached':'Attach required file'}: <code>{owner.archiveId}</code><br/>Root: <code>{owner.rootHash}</code></p>}
      <details><summary>Revision identity and provenance</summary><code>{revision.revisionId}</code><p>Content SHA-256: <code>{revision.contentHash}</code></p>
       {revision.restoredFromRevisionId && <p>Restored from: <code>{revision.restoredFromRevisionId}</code></p>}<p>{revision.sourceDetail}</p>
       {revision.resourceType === 'pdf' && <pre>{JSON.stringify(index.revisions.get(revision.revisionId)?.snapshot?.pdfProvenance, null, 2)}</pre>}

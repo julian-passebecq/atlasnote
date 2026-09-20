@@ -1,0 +1,16 @@
+.git
+node_modules
+dist
+dist-offline
+.build
+.vite-public
+.vercel
+.netlify
+.env*
+.atlasnote
+private-library
+docs/evidence
+# Deploy source, not private backups or generated test evidence.
+*.atlas-backup.zip
+*.atlas-history.zip
+*.atlas-recovery.zip

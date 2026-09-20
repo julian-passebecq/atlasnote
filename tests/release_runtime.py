@@ -211,6 +211,15 @@ try:
             # Built-in content and attachments are intentionally snapshotted too.
             for imported in before_backup['imports']:
                 assert imported in expected_backup['imports']
+            # Schema 5 carries portable built-in snapshots separately from the
+            # exact locally owned import/asset inventory restored to IndexedDB.
+            assert all(a['sha256']==a['actualSha256'] for a in expected_backup['assets'])
+            if package['schemaVersion']==5:
+                assert package['retainedImportedRevisions']==before_backup['imports']
+                assert sorted(package['retainedAssetKeys'])==sorted(a['key'] for a in before_backup['assets'])
+                expected_backup['imports']=package['retainedImportedRevisions']
+                retained=set(package['retainedAssetKeys'])
+                expected_backup['assets']=[a for a in expected_backup['assets'] if a['key'] in retained]
         record(phase,{'bytes':backup_path.stat().st_size,'sha256':hashlib.sha256(backup_path.read_bytes()).hexdigest(),'files':len(members),'downloadedByBrowser':True})
         context.close()
 

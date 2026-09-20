@@ -11,6 +11,9 @@ export function secretRules(text){const rules=[];
  if(/sk-(?:proj-)?[A-Za-z0-9_-]{32,}/.test(text))rules.push('api-token');
  if(/ATLASNOTE_(?:ACCESS_KEY_SHA256|SESSION_SECRET)["']?\s*[:=]\s*["']?[a-f0-9]{64}(?![a-f0-9])/i.test(text))rules.push('literal-runtime-verifier');
  if(/VITE_[A-Z0-9_]*(?:SECRET|PRIVATE_KEY|ACCESS_KEY|TOKEN)\s*[:=]\s*["'][^"']{16,}/.test(text))rules.push('vite-secret');
+ if(/(?:VERCEL_TOKEN|VERCEL_AUTOMATION_BYPASS_SECRET)[\"']?\s*[:=]\s*[\"']?[A-Za-z0-9_=-]{24,}/.test(text))rules.push('literal-vercel-credential');
+ if(/vcp_[A-Za-z0-9_]{24,}/.test(text))rules.push('vercel-token');
+ if(/[?&](?:_vercel_share|x-vercel-protection-bypass)=[A-Za-z0-9_-]{16,}/.test(text))rules.push('vercel-secret-url');
  return rules;
 }
 export function scanSecrets(){const source=sourceIdentity(),names=[...new Set(execFileSync('git',['ls-files','--cached','--others','--exclude-standard','-z'],{encoding:'utf8'}).split('\0').filter(Boolean))];
@@ -18,13 +21,13 @@ export function scanSecrets(){const source=sourceIdentity(),names=[...new Set(ex
  const allowed=new Set(known.map(r=>r.sha256));const findings=[],mentions=[],absolutePaths=[],maps=[],inventory=[];
  function inspect(file,kind){if(!fs.existsSync(file)||!fs.statSync(file).isFile())return;
   const bytes=fs.readFileSync(file),name=file.replaceAll('\\','/');inventory.push({path:name,kind,bytes:bytes.length});
-  if(/(?:^|\/)(?:\.env[^/]*|access-key[^/]*\.txt|\.netlify(?:\/|$)|\.atlasnote(?:\/|$))/.test(name))findings.push({path:name,rule:'private-file-path'});
+  if(/(?:^|\/)(?:\.env[^/]*|access-key[^/]*\.txt|\.(?:netlify|vercel)(?:\/|$)|\.atlasnote(?:\/|$))/.test(name))findings.push({path:name,rule:'private-file-path'});
   if(/\.(?:pdf|zip)$/i.test(name)){if(kind!=='evidence'&&!allowed.has(createHash('sha256').update(bytes).digest('hex')))findings.push({path:name,rule:'unapproved-binary-fixture'});return;}
   if(/\.(?:png|jpg|jpeg|webp|woff2?|ttf)$/i.test(name))return;
   const text=bytes.toString('utf8');for(const rule of secretRules(text))findings.push({path:name,rule});
   if(/atlas1_|ATLASNOTE_ACCESS_KEY_SHA256|access-key\.txt|VITE_.*SECRET/.test(text))mentions.push({path:name,kind,scope:'Identifier/reference inspected; not inherently a secret'});
   if(/\/(?:mnt\/data|home\/oai|Users\/)[^\s"'<>]*/.test(text)||/[A-Z]:[\\/](?:Users|PROJ)[\\/]/.test(text)){absolutePaths.push({path:name,kind});if(kind==='dist'||name.startsWith('src/')||name.startsWith('public/'))findings.push({path:name,rule:'local-absolute-path-in-client'});}
-  if(kind==='dist'&&/ATLASNOTE_ACCESS_KEY_SHA256|ATLASNOTE_SESSION_SECRET|netlify\/lib\/access/.test(text))findings.push({path:name,rule:'server-material-in-client'});
+  if(kind==='dist'&&/ATLASNOTE_ACCESS_KEY_SHA256|ATLASNOTE_SESSION_SECRET|netlify\/lib\/access|VERCEL_TOKEN|VERCEL_AUTOMATION_BYPASS_SECRET|x-vercel-protection-bypass|_vercel_share/.test(text))findings.push({path:name,rule:'server-material-in-client'});
   if(name.endsWith('.map'))maps.push(name);
  }
  for(const name of names)inspect(name,'source');

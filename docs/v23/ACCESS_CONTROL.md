@@ -1,3 +1,5 @@
+> HISTORICAL REPORT / LEGACY CONTRACT. This document predates the provider-neutral Vercel migration. It is not fresh qualification evidence. Read `START_HERE.md` and the final delivery result; previous statements that compaction is absent or Netlify is mandatory are superseded.
+
 # Single-owner Netlify Edge access gate
 
 Status: **BLOCKED for current finalization**. The inherited exact source passed its

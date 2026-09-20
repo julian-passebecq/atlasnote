@@ -1,3 +1,5 @@
+> HISTORICAL REPORT / LEGACY CONTRACT. This document predates the provider-neutral Vercel migration. It is not fresh qualification evidence. Read `START_HERE.md` and the final delivery result; previous statements that compaction is absent or Netlify is mandatory are superseded.
+
 # Finalization scope and reproducible qualification
 
 Status: **BLOCKED**, safe read-only archive fallback only.

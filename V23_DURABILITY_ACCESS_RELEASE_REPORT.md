@@ -1,3 +1,5 @@
+> HISTORICAL REPORT / LEGACY CONTRACT. This document predates the provider-neutral Vercel migration. It is not fresh qualification evidence. Read `START_HERE.md` and the final delivery result; previous statements that compaction is absent or Netlify is mandatory are superseded.
+
 # AtlasNote V2.3 ZIP final-finish candidate - 20 September 2026
 
 ## Decision: BLOCKED

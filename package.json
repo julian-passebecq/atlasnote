@@ -77,7 +77,7 @@
     "test:pdf:lifecycle": "python tests/pdf_lifecycle_runtime.py",
     "generate:v22:examples": "node tools/generate-v22-examples.mjs",
     "access-key:generate": "node tools/access-key-generate.mjs",
-    "test:v23": "node --test --test-concurrency=2 tests/access-v23.test.mjs tests/durability-v23.test.mjs tests/finalization-v23.test.mjs tests/finish-v23.test.mjs tests/capacity-fixtures-v23.test.mjs",
+    "test:v23": "node --test --test-concurrency=2 tests/durability-v23.test.mjs tests/finalization-v23.test.mjs tests/finish-v23.test.mjs tests/capacity-fixtures-v23.test.mjs tests/provider-neutral-v23.test.mjs",
     "test:v23:runtime": "python tests/v23_runtime.py",
     "test:v23:layout": "python tests/v23_qualification.py layout",
     "test:v23:capacity": "python tests/v23_capacity_runtime.py",
@@ -93,7 +93,16 @@
     "test:v23:access:preview": "node tests/v23_access_preview.mjs",
     "check:v23:secrets": "node tools/check-v23-secrets.mjs",
     "test:v23:capacity:diagnostic": "node tests/v23_capacity.mjs",
-    "test:v23:capacity:byte-diagnostic": "node tests/v23/byte-archive-diagnostic.mjs"
+    "test:v23:capacity:byte-diagnostic": "node tests/v23/byte-archive-diagnostic.mjs",
+    "check:access:netlify": "node tools/check-access-netlify.mjs",
+    "test:access:netlify": "node --test tests/legacy/*.test.mjs",
+    "test:v23:access:netlify:legacy": "node tests/v23_access_netlify_legacy.mjs",
+    "test:v23:provider:unit": "node --test tests/provider-neutral-v23.test.mjs",
+    "test:v23:runtime:portable": "python tests/v23_runtime.py --portable",
+    "test:v23:native-capacity": "python tests/v23_native_quota.py",
+    "test:inherited:after-v23": "node tools/run-inherited-after-v23.mjs",
+    "test:v23:core:portable": "node tools/run-v23-release.mjs --portable",
+    "test:v23:access:diagnostic": "python tests/v23_access_boundary_diagnostic.py"
   },
   "dependencies": {
     "jszip": "3.10.1",

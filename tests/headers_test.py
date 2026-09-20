@@ -1,4 +1,4 @@
-"""Verify distribution header file and real local HTTP headers. Netlify live is separate."""
+"""Verify distribution header file and real local HTTP headers. Live provider checks are separate."""
 import json
 import os
 from pathlib import Path
@@ -8,10 +8,14 @@ expected={'X-Content-Type-Options':'nosniff','Referrer-Policy':'no-referrer','X-
 base=start_server()
 distribution=Path(os.environ.get('ATLAS_DIST',ROOT/'dist'));text=(distribution/'_headers').read_text();assert text.splitlines()[0]=='/*'
 for key,value in expected.items():assert f'{key}: {value}' in text
+vercel=json.loads((ROOT/'vercel.json').read_text())
+configured={h['key']:h['value'] for rule in vercel['headers'] for h in rule['headers']}
+for key,value in expected.items():assert configured[key]==value
+assert 'no-store' in configured['Cache-Control']
 checks=[]
 for relative in ['','app/storage/workspace-snapshot.js','content.json']:
  with urllib.request.urlopen(base+relative) as response:
   for key,value in expected.items():assert response.headers[key]==value,(key,response.headers[key])
   checks.append({'path':relative or '/','status':'PASS','actualHeaders':{key:response.headers[key] for key in expected}})
-report={'scope':'Actual localhost HTTP headers and selected distribution header file; no remote hosting verification.','distribution':str(distribution),'hostedProduction':distribution.name=='dist','status':'PASS','checks':checks,'liveNetlify':{'status':'BLOCKED','reason':'Remote deployed response verification was not run; this is local/package evidence only.'}}
+report={'scope':'Actual localhost HTTP headers and selected distribution header file; no remote hosting verification.','distribution':str(distribution),'hostedProduction':distribution.name=='dist','status':'PASS','checks':checks,'liveProvider':{'status':'BLOCKED','reason':'Remote deployed response verification was not run; this is local/package evidence only.'}}
 out=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/hardening'))/'headers.json';out.parent.mkdir(parents=True,exist_ok=True);out.write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))

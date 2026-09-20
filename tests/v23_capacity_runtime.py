@@ -67,6 +67,7 @@ VERIFY='''async(preview)=>{
 
 def scenario(browser,context,page,base,out,passed):
     for boundary,metric,limit in BOUNDARIES:
+        print('Starting native capacity boundary: '+boundary,flush=True)
         started=time.monotonic();c,p=fresh(browser,base)
         try:
             p.set_default_timeout(180000);seed_demo(p);flush(p)
@@ -86,6 +87,7 @@ def scenario(browser,context,page,base,out,passed):
             assert refusal and any(text in refusal for text in ['history is full','64 MiB']),refusal
             assert digest(p)==before,'A rejected normal edit must leave all five stores exact'
             assert not p.evaluate('async()=>('+AGENT+').getStorageDiagnostics().storageError')
+            print(boundary+': refusal verified; preparing native archive',flush=True)
             section,preview,file=prepare_archive(p,out,boundary,1)
             p.evaluate('async(key)=>{const m='+SNAPSHOT+';window.__qaCapacityBefore=await m.readPersistedWorkspace();window.__qaCapacityKey=key;}',fixture['resourceKey'])
             compact(p,section)
@@ -121,6 +123,11 @@ def scenario(browser,context,page,base,out,passed):
             still_pending=p.evaluate('async(id)=>{const m='+SNAPSHOT+';return (await m.readPersistedWorkspace()).history.reviews.find(r=>r.id===id)?.status;}',fixture['pendingId'])
             assert still_pending=='staged','A retained proposal must never be auto-accepted'
             passed(boundary,boundaryCounts=actual,removedRevisions=len(preview['revisionIds']),removedReviews=len(preview['reviewIds']),removedAssets=len(preview['assetKeys']),liveAfter=proof['liveAfter'],archiveId=preview['archiveId'],rootHash=preview['rootHash'],postRecoveryRevision=head['revisionId'],durationSeconds=round(time.monotonic()-started,3),historicalPdf=render['historical'])
+        except Exception as exc:
+            # Preserve this failure and still exercise the independent boundaries.
+            passed('Native capacity recovery: '+boundary,status='FAIL',error=str(exc),traceback=traceback.format_exc())
+            try:p.screenshot(path=str(out/(boundary+'-failure.png')),full_page=True)
+            except Exception:pass
         finally:c.close()
 
 if __name__=='__main__':raise SystemExit(run_suite('capacity',scenario))
