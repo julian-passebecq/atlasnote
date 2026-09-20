@@ -1,5 +1,6 @@
 /** Synthetic examples only. Run after build:offline; no network or live database. */
 import fs from 'node:fs/promises';
+import path from 'node:path';
 import {built,setup,authoredFixtures,basePage,assetResolver,plan,edit,personal} from '../tests/v22/fixtures.mjs';
 import {makeBackup,readBackup,unzipBounded} from '../src/storage/archives.mjs';
 import {loadSchemas} from '../src/core/packs.mjs';
@@ -8,7 +9,14 @@ import {compose} from '../dist-offline/app/core/workspace.js';
 import {migratePersonal} from '../dist-offline/app/core/workspace-slots.js';
 import {knowledgeOf} from '../dist-offline/app/references/knowledge.js';
 import {operationRegistry} from '../dist-offline/app/agent/registry.js';
-const out='docs/examples/v22';await fs.mkdir(out,{recursive:true});
+// The default is the explicit documentation-authoring command. Runtime tests
+// always supply a private temporary directory; never regenerate tracked docs.
+const args=process.argv.slice(2);
+if(args.length && (args.length!==2 || args[0]!=='--output-dir' || !args[1].trim() || args[1].startsWith('--'))) {
+ throw Error('Usage: node tools/generate-v22-examples.mjs [--output-dir DIRECTORY]');
+}
+const out=path.resolve(args.length?args[1]:'docs/examples/v22');
+await fs.mkdir(out,{recursive:true});
 const {api,backend}=await setup();const N='notebook-page:page.atlas.welcome',A='article:page.v22.article',T='notebook-tree:project.atlas.guide',P='pdf:doc.atlas.pdf';
 let sequence=0;const plans=[];
 async function example(ops,label){const p=plan(ops,'example.'+(++sequence));p.summary=label;api.preview(p);await fs.writeFile(out+'/changeset-'+String(sequence).padStart(2,'0')+'.json',JSON.stringify(p,null,2));await api.stage(p);await api.accept(p.id);plans.push({file:'changeset-'+String(sequence).padStart(2,'0')+'.json',label,operations:ops.map(o=>o.kind)});return p;}

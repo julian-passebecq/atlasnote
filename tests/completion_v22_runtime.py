@@ -18,6 +18,9 @@ from browser_support import ROOT, start_server, open_settings, close_panels, sho
 
 OUT = Path(os.environ.get('ATLAS_EVIDENCE', ROOT / 'docs/evidence/v22/completion-runtime'))
 OUT.mkdir(parents=True, exist_ok=True)
+# The npm runner supplies fresh, per-run fixtures outside the tracked source tree.
+# Direct/manual invocation retains the historical documentation path.
+EXAMPLES = Path(os.environ.get('ATLAS_V22_EXAMPLES_DIR', ROOT / 'docs/examples/v22')).resolve()
 PUBLIC = "(await import(new URL('app/agent/public.js',document.baseURI).href)).getAgentInterface()"
 NOTE = 'notebook-page:page.atlas.welcome'
 PDF = 'pdf:doc.qa.history'
@@ -280,7 +283,7 @@ def legacy_restores():
     for version in [2,3]:
         c,p=context()
         try:
-            path=ROOT / ('docs/examples/v22/synthetic-v21-schema-'+str(version)+'.atlas-backup.zip')
+            path=EXAMPLES / ('synthetic-v21-schema-'+str(version)+'.atlas-backup.zip')
             restore(p,path);ready(p)
             diag=api(p,'return api.getStorageDiagnostics();')
             assert diag['initialized'] and diag['resources']==diag['revisions']
@@ -489,8 +492,8 @@ def all_action_kinds():
     c,p=context()
     kinds=set()
     try:
-        restore(p,ROOT/'docs/examples/v22/synthetic-v21-schema-3.atlas-backup.zip');ready(p)
-        for path in sorted((ROOT/'docs/examples/v22').glob('changeset-*.json')):
+        restore(p,EXAMPLES/'synthetic-v21-schema-3.atlas-backup.zip');ready(p)
+        for path in sorted(EXAMPLES.glob('changeset-*.json')):
             proposal=json.loads(path.read_text(encoding='utf-8'))
             personal=read_db(p)['data']['personal'][0]
             proposal=api(p,"""const plan=arg.plan;plan.id='qa.browser.'+plan.id;plan.createdAt=Date.now();
@@ -573,7 +576,7 @@ def history_pagination_and_structure():
 def all_resource_menus():
     c,p=context()
     try:
-        restore(p,ROOT/'docs/examples/v22/synthetic-v21-schema-3.atlas-backup.zip');ready(p)
+        restore(p,EXAMPLES/'synthetic-v21-schema-3.atlas-backup.zip');ready(p)
         keys=[NOTE,'pdf:doc.atlas.pdf','cheatsheet:page.cheatsheet.azure-data-factory','article:page.v22.article','qcm:page.v22.qcm','notebook-tree:project.atlas.guide']
         checks=[]
         for key in keys:
@@ -605,7 +608,7 @@ def all_resource_menus():
 def deleted_source_pinned_startup():
     c,p=context()
     try:
-        restore(p,ROOT/'docs/examples/v22/synthetic-v21-schema-3.atlas-backup.zip');ready(p)
+        restore(p,EXAMPLES/'synthetic-v21-schema-3.atlas-backup.zip');ready(p)
         key='article:page.v22.article'
         old=api(p,'return api.getResource(arg);',key)
         review(p,plan(p,key,'later source'))
@@ -629,7 +632,7 @@ def deleted_source_pinned_startup():
 def exact_historical_targets():
     c,p=context()
     try:
-        restore(p,ROOT/'docs/examples/v22/synthetic-v21-schema-3.atlas-backup.zip');ready(p)
+        restore(p,EXAMPLES/'synthetic-v21-schema-3.atlas-backup.zip');ready(p)
         failures=api(p,"""const keys=['notebook-page:page.atlas.welcome','article:page.v22.article','qcm:page.v22.qcm','cheatsheet:page.cheatsheet.azure-data-factory','pdf:doc.atlas.pdf'];
         const before=JSON.stringify(api.getWorkspaceSummary()),count=api.getStorageDiagnostics().revisions,failures=[];
         for(const key of keys){const r=api.getResource(key),t=api.getResource(key,r.head.revisionId).target;

@@ -1,5 +1,16 @@
 # AtlasNote V2.3 - provider-neutral access / Cloudflare candidate
 
+## Current finishing repair
+
+The published Cloudflare candidate `f9b426938e6c531754374dfb73bf71f6a4c40172`
+passed V2.3 and hosted-provider qualification, but inherited command 52 changed
+tracked example files. This source isolates runtime-generated examples in a
+temporary directory and supplies the missing compatibility fixture build in
+V2.3 CI. See [INHERITED_FIXTURE_ISOLATION.md](docs/v23/INHERITED_FIXTURE_ISOLATION.md).
+No application source, storage contract, provider gate or source-drift rule changed.
+Those prior green results are not certification of this new candidate.
+
+
 This full source tree is the Cloudflare migration candidate, not an approved production
 release. It starts from the verified GitHub source tree on branch
 `final/atlasnote-2.3-vercel-migration`, commit

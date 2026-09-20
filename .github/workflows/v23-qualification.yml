@@ -47,6 +47,8 @@ jobs:
       - run: npm ci
       - run: python -m pip install -r requirements-test.txt
       - run: python -m playwright install --with-deps chromium
+      # V2.3 unit fixtures import dist-offline; hosted proof still uses only dist.
+      - run: npm run build:offline
       - run: npm run build
       - run: npm run test:v23:core:portable
       - uses: actions/upload-artifact@v4
@@ -78,6 +80,8 @@ jobs:
       - run: npm ci
       - run: python -m pip install -r requirements-test.txt
       - run: python -m playwright install --with-deps chromium
+      # V2.3 unit fixtures import dist-offline; hosted proof still uses only dist.
+      - run: npm run build:offline
       - run: npm run build
       # Read-only qualification only. This workflow never invokes Wrangler deploy/upload commands.
       - run: npm run test:v23:release
