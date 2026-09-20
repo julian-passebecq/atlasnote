@@ -65,7 +65,11 @@ def run_suite(suite, body, remaining=()):
     rows=[];build=None;source=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
     def passed(name,**detail):rows.append({'name':name,'status':'PASS',**detail})
     try:
-        build=json.loads((Path(os.environ.get('ATLAS_DIST','dist'))/'build-identity.json').read_text())
+        build_path=Path(os.environ.get('ATLAS_DIST','dist'))/'build-identity.json'
+        if not build_path.is_file():
+            rows.append({'name':'Integrated build prerequisite','status':'BLOCKED','reason':'The exact integrated dist/build-identity.json is absent. No browser case was executed and no compatibility artifact was substituted.'})
+            return write_result(out,rows,suite,build,source)
+        build=json.loads(build_path.read_text())
         assert build['buildKind']=='integrated','This suite refuses a compatibility-only build'
         if build['sourceCommit']!=source or build['sourceDirty']:
             rows.append({'name':'Exact candidate build identity','status':'BLOCKED','reason':'Runtime artifact is inherited or dirty; exercised results cannot certify this source candidate.'})

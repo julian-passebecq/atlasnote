@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - final/atlasnote-2.3-consolidated
+      - final/atlasnote-2.3-pro-finish
   workflow_dispatch:
 permissions:
   contents: read
@@ -25,7 +26,6 @@ jobs:
       - run: npm run build
       - run: npm run check:v23:build
       - run: npm run test:v23:recovery
-        continue-on-error: true
       - uses: actions/upload-artifact@v4
         if: always()
         with:

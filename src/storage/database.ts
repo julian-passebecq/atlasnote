@@ -20,10 +20,13 @@ let connection:Promise<IDBDatabase>|null=null;
 let builtSource:any={packs:[],groups:[]};
 export function openDatabase():Promise<IDBDatabase>{
  if(connection)return connection;
- connection=new Promise<IDBDatabase>((resolve,reject)=>{const req=indexedDB.open(DB_NAME,DB_VERSION);
+ connection=new Promise<IDBDatabase>((resolve,reject)=>{const req=indexedDB.open(DB_NAME,DB_VERSION);let rejected=false;
+  const fail=(error:unknown)=>{rejected=true;reject(error);};
   req.onupgradeneeded=()=>{const db=req.result;for(const name of ['imports','overlays','personal','assets'])if(!db.objectStoreNames.contains(name))db.createObjectStore(name);
    if(!db.objectStoreNames.contains('history')){const history=req.transaction!.db.createObjectStore('history');history.createIndex('kind','kind',{unique:false});history.createIndex('resourceKey','resourceKey',{unique:false});}};
-  req.onsuccess=()=>{req.result.onversionchange=()=>{req.result.close();connection=null;};resolve(req.result);};req.onerror=()=>reject(req.error);req.onblocked=()=>reject(Error('Database upgrade is blocked by another Atlas tab. Close the other tab, then reload.'));
+  // A blocked open can succeed later after the caller has already seen an
+  // error. Close that orphan immediately instead of leaking an owner connection.
+  req.onsuccess=()=>{if(rejected){req.result.close();return;}req.result.onversionchange=()=>{req.result.close();connection=null;};resolve(req.result);};req.onerror=()=>fail(req.error);req.onblocked=()=>fail(Error('Database upgrade is blocked by another Atlas tab. Close the other tab, then reload.'));
  }).catch(e=>{connection=null;throw e;});return connection;
 }
 function request<T>(req:IDBRequest<T>):Promise<T>{return new Promise((resolve,reject)=>{req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
