@@ -63,7 +63,9 @@ def write_result(out, rows, suite, build, source):
 def run_suite(suite, body, remaining=()):
     out=Path(os.environ.get('ATLAS_EVIDENCE','docs/evidence/v23/'+suite));out.mkdir(parents=True,exist_ok=True)
     rows=[];build=None;source=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
-    def passed(name,**detail):rows.append({'name':name,'status':'PASS',**detail})
+    def passed(name,**detail):
+        rows.append({'name':name,'status':'PASS',**detail})
+        print(json.dumps(rows[-1]),flush=True)
     try:
         build_path=Path(os.environ.get('ATLAS_DIST','dist'))/'build-identity.json'
         if not build_path.is_file():

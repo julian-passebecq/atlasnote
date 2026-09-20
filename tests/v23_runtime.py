@@ -1,7 +1,11 @@
 """Integrated archive authorization, migration and read-only integrity proof."""
 from v23_browser_common import *
+from v23_runtime_matrix import storage_matrix, migration_matrix, corruption_matrix
 
 def scenario(browser,context,page,base,out,passed):
+    storage_matrix(browser,base,passed)
+    migration_matrix(browser,base,passed)
+    corruption_matrix(browser,base,passed)
     raw=page.evaluate(RAW);assert sorted(raw)==STORES
     state=persisted(page)
     assert not any('demo.v23' in h['resourceKey'] for h in state['history']['heads'])
@@ -48,10 +52,7 @@ def scenario(browser,context,page,base,out,passed):
     page.screenshot(path=str(out/'archive-ceremony.png'),full_page=True)
 
 if __name__=='__main__':
+    # Repeated archived lineage is exercised by mandatory test:v23:compare.
     raise SystemExit(run_suite('runtime',scenario,(
-        'V2.2 populated migration and blocked/old-tab/interrupted-upgrade matrix',
-        'Storage estimate and persistence granted/denied/unsupported/error browser matrix',
         'Actual quota failure after optimistic preflight in a real transaction',
-        'Corrupt persisted fixtures: integrity checker rejects with zero five-store mutation',
-        'Repeated archived lineage after reload and exact attachment',
     )))

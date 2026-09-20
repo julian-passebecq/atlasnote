@@ -106,7 +106,7 @@ def recovery(browser,context,page,base,out,passed):
         p.get_by_role('heading',name='Restore preview',exact=True).wait_for()
         p.get_by_label('I understand that this replaces the current local workspace.',exact=True).check()
         p.get_by_role('button',name='Restore verified backup',exact=True).click()
-        p.wait_for_timeout(400)
+        p.get_by_role('dialog',name='Workspace settings',exact=True).wait_for(state='hidden',timeout=30000)
         dialog=p.get_by_role('dialog',name='Workspace settings',exact=True)
         if dialog.is_visible():
             alert=dialog.get_by_role('alert')
@@ -187,7 +187,7 @@ def recovery(browser,context,page,base,out,passed):
         p.get_by_role('heading',name='Restore preview',exact=True).wait_for()
         p.get_by_label('I understand that this replaces the current local workspace.',exact=True).check()
         p.get_by_role('button',name='Restore verified backup',exact=True).click()
-        p.wait_for_timeout(500)
+        p.get_by_role('dialog',name='Workspace settings',exact=True).wait_for(state='hidden',timeout=30000)
         dialog=p.get_by_role('dialog',name='Workspace settings',exact=True)
         if dialog.is_visible():
             alert=dialog.get_by_role('alert');raise AssertionError('archived-restore-rejected: '+(alert.text_content() if alert.count() else 'unknown'))
@@ -264,7 +264,7 @@ def safe_close(browser,context,page,base,out,passed):
       tx.oncomplete=()=>db.close();tx.onabort=()=>db.close();
       const keep=()=>{const r=st.get('active');r.onsuccess=()=>{if(window.__qaHoldPersonal)keep();};};keep();
     }""")
-    field=page.get_by_label('Theme',exact=True)
+    field=page.get_by_role('combobox',name='Theme',exact=True)
     old_theme=field.input_value()
     themes=field.locator('option').evaluate_all('(es)=>es.map(e=>e.value)')
     new_theme=next(t for t in themes if t!=old_theme)
@@ -309,10 +309,10 @@ def safe_close(browser,context,page,base,out,passed):
     page.wait_for_function('async()=>{const s=('+AGENT+').getStorageDiagnostics();return !s.storageError&&!s.saving;}')
     flush(page)
     assert page.locator('[data-save-safety]').inner_text().startswith('Saved /')
-    assert page.get_by_label('Theme',exact=True).input_value()==old_theme
+    assert page.get_by_role('combobox',name='Theme',exact=True).input_value()==old_theme
     page.reload(wait_until='networkidle');page.wait_for_selector('.atlas-app');flush(page)
     open_settings(page)
-    assert page.get_by_label('Theme',exact=True).input_value()==old_theme
+    assert page.get_by_role('combobox',name='Theme',exact=True).input_value()==old_theme
     passed('Aborted IndexedDB transaction: exact rollback, visible failure, native unload warning, unsaved emergency copy and real retry survive reload')
 
 

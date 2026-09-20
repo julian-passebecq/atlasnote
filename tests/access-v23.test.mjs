@@ -12,6 +12,8 @@ import authWrapper,{config as authConfig} from '../netlify/edge-functions/atlas-
 import unlockWrapper,{config as unlockConfig} from '../netlify/edge-functions/atlas-unlock.js';
 import lockWrapper,{config as lockConfig} from '../netlify/edge-functions/atlas-lock.js';
 const origin='https://atlasnote-test.invalid';
+// os.homedir uses USERPROFILE on Windows; never write a fixture to the real home.
+const homeVariable=process.platform==='win32'?'USERPROFILE':'HOME';
 const material=generateAccessMaterial(); // Ephemeral test data: never logged or packaged.
 const get=name=>name==='ATLASNOTE_ACCESS_KEY_SHA256'?material.verifier:undefined;
 const config=readAccessConfig(get);
@@ -71,13 +73,13 @@ test('V23 T/W: helper refuses CI/redirected output without emitting any secret',
  const r=spawnSync(process.execPath,['tools/access-key-generate.mjs'],{env:{...process.env,CI:'1'},encoding:'utf8'});assert.notEqual(r.status,0);assert.equal(r.stdout,'');assert(!/atlas1_[A-Za-z0-9_-]{43}/.test(r.stderr));
 });
 test('V23 T/W: owner-only file is exclusive, private and not overwritten (temporary test home)',async()=>{
- const home=await fs.mkdtemp(path.join(os.tmpdir(),'atlas-key-test-'));const previous=process.env.HOME;process.env.HOME=home;
+ const home=await fs.mkdtemp(path.join(os.tmpdir(),'atlas-key-test-'));const previous=process.env[homeVariable];process.env[homeVariable]=home;
  try {const filename=await saveOwnerKey(material.key);assert.equal(filename,path.join(home,'.atlasnote','access-key.txt'));assert.equal(await fs.readFile(filename,'utf8'),material.key+'\n');if(process.platform!=='win32'){assert.equal((await fs.stat(filename)).mode&0o777,0o600);assert.equal((await fs.stat(path.dirname(filename))).mode&0o777,0o700);}await assert.rejects(()=>saveOwnerKey(generateAccessMaterial().key));assert.equal(await fs.readFile(filename,'utf8'),material.key+'\n');}
- finally{if(previous===undefined)delete process.env.HOME;else process.env.HOME=previous;await fs.rm(home,{recursive:true,force:true});}
+ finally{if(previous===undefined)delete process.env[homeVariable];else process.env[homeVariable]=previous;await fs.rm(home,{recursive:true,force:true});}
 });
 test('V23 T/W: a symlinked key directory is rejected',async()=>{
- const home=await fs.mkdtemp(path.join(os.tmpdir(),'atlas-key-link-test-')),target=await fs.mkdtemp(path.join(os.tmpdir(),'atlas-key-link-target-')),previous=process.env.HOME;process.env.HOME=home;
- try{await fs.symlink(target,path.join(home,'.atlasnote'));await assert.rejects(()=>saveOwnerKey(material.key));assert.deepEqual(await fs.readdir(target),[]);}finally{if(previous===undefined)delete process.env.HOME;else process.env.HOME=previous;await fs.rm(home,{recursive:true,force:true});await fs.rm(target,{recursive:true,force:true});}
+ const home=await fs.mkdtemp(path.join(os.tmpdir(),'atlas-key-link-test-')),target=await fs.mkdtemp(path.join(os.tmpdir(),'atlas-key-link-target-')),previous=process.env[homeVariable];process.env[homeVariable]=home;
+ try{await fs.symlink(target,path.join(home,'.atlasnote'),process.platform==='win32'?'junction':'dir');await assert.rejects(()=>saveOwnerKey(material.key));assert.deepEqual(await fs.readdir(target),[]);}finally{if(previous===undefined)delete process.env[homeVariable];else process.env[homeVariable]=previous;await fs.rm(home,{recursive:true,force:true});await fs.rm(target,{recursive:true,force:true});}
 });
 test('V23 W: ephemeral test key and verifier are absent from all client distribution files',async()=>{
  const walk=async dir=>{for(const e of await fs.readdir(dir,{withFileTypes:true})){const p=path.join(dir,e.name);if(e.isDirectory())await walk(p);else {const bytes=await fs.readFile(p);assert(!bytes.includes(Buffer.from(material.key)),p);assert(!bytes.includes(Buffer.from(material.verifier)),p);}}};await walk('dist-offline');
