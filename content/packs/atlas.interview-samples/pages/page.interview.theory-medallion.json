@@ -1,0 +1,135 @@
+{
+  "id": "page.interview.theory-medallion",
+  "title": "Bronze / Silver / Gold: define the contracts",
+  "summary": "Theory / Modern Data Stack & Governance / Layered architecture / Quality and ownership",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "page.interview.theory-medallion.prompt",
+      "title": "Question",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.theory-medallion.question",
+          "text": "Explain a medallion data architecture and what belongs in Bronze, Silver and Gold."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-medallion.reasoning",
+      "title": "Reasoning",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.theory-medallion.reasoning-points",
+          "ordered": true,
+          "items": [
+            "Keep replayable inputs and ingestion metadata in Bronze.",
+            "Define keys, types, quality rules and deduplication in Silver.",
+            "Publish business measures and usable contracts in Gold.",
+            "Explain lineage, access and ownership across layers."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-medallion.answer",
+      "title": "Answer / mental model",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.theory-medallion.explanation",
+          "text": "Bronze retains source-like data for replay. Silver validates and standardizes data at a documented grain. Gold exposes consumer-oriented products such as customer revenue aggregates. These are logical quality contracts, not a requirement to copy every dataset three times."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-medallion.architecture",
+      "title": "Architecture",
+      "children": [
+        {
+          "type": "diagram",
+          "id": "page.interview.theory-medallion.diagram",
+          "format": "mermaid",
+          "code": "flowchart LR\n  A[Source systems] --> B[Bronze: source-like data]\n  B --> C[Silver: validated records]\n  C --> D[Gold: business products]\n  C --> E[Quarantine and review]",
+          "caption": "Original conceptual illustration; implementation boundaries depend on the system.",
+          "source": {
+            "title": "AtlasNote interview samples",
+            "note": "Author-created conceptual diagram."
+          }
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-medallion.trap",
+      "title": "Common mistake / trap",
+      "children": [
+        {
+          "type": "callout",
+          "id": "page.interview.theory-medallion.trap-note",
+          "tone": "warning",
+          "title": "Watch for this",
+          "text": "Calling a table Gold does not validate its metric definition. Preserve raw inputs and specify who owns quality failures."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-medallion.followup",
+      "title": "Follow-up",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.theory-medallion.followups",
+          "items": [
+            "Where would you quarantine invalid records and how would you reprocess them?"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-medallion.intent",
+      "title": "Interviewer intent",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.theory-medallion.intent-points",
+          "items": [
+            "Place transformations according to data quality and consumer needs.",
+            "Connect governance to concrete boundaries."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-medallion.reflection",
+      "title": "Reflection",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.theory-medallion.reflection-prompt",
+          "text": "What pattern did I recognize, where did I get stuck, and what would I change in my first approach?\n\nUse Context > Remarks for your personal reflection. It is saved separately from this reference."
+        }
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [
+    {
+      "title": "Microsoft - medallion architecture",
+      "url": "https://learn.microsoft.com/en-us/azure/databricks/lakehouse/medallion"
+    }
+  ],
+  "tags": [
+    "interview",
+    "theory"
+  ],
+  "provenance": "Original educational prototype. Prompts Q1-Q5 preserve the user-provided canonical SQL sequence. Examples are reference code, not executable tasks."
+}

@@ -1,0 +1,112 @@
+{
+  "id": "page.interview.theory-layout",
+  "title": "Partitioning vs clustering / indexing",
+  "summary": "Theory / Data Modeling / Physical layout / Workload-led choices",
+  "blocks": [
+    {
+      "type": "section",
+      "id": "page.interview.theory-layout.prompt",
+      "title": "Question",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.theory-layout.question",
+          "text": "How would you explain partitioning versus clustering or indexing to a teammate choosing storage for a large orders table?"
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-layout.reasoning",
+      "title": "Reasoning",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.theory-layout.reasoning-points",
+          "ordered": true,
+          "items": [
+            "Ask which database or table format is in use.",
+            "Identify selective predicates, common date ranges and write patterns.",
+            "Consider partition count, skew and small-file overhead.",
+            "Measure pruning, read volume and maintenance cost."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-layout.answer",
+      "title": "Answer / mental model",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.theory-layout.explanation",
+          "text": "Partitioning divides data by a partition rule. Clustering often organizes nearby values within storage, while an index supplies an access structure. Exact meanings differ by engine. Start with filtering patterns and data distribution rather than assuming a universal layout."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-layout.trap",
+      "title": "Common mistake / trap",
+      "children": [
+        {
+          "type": "callout",
+          "id": "page.interview.theory-layout.trap-note",
+          "tone": "warning",
+          "title": "Watch for this",
+          "text": "A high-cardinality customer key is not automatically a good partition column. The word clustering does not promise identical behavior in every engine."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-layout.followup",
+      "title": "Follow-up",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.theory-layout.followups",
+          "items": [
+            "What would change if queries filter on dates but updates arrive for old customers?"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-layout.intent",
+      "title": "Interviewer intent",
+      "children": [
+        {
+          "type": "list",
+          "id": "page.interview.theory-layout.intent-points",
+          "items": [
+            "Distinguish logical keys from physical layout.",
+            "Reason from workload rather than labels."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "page.interview.theory-layout.reflection",
+      "title": "Reflection",
+      "children": [
+        {
+          "type": "markdown",
+          "id": "page.interview.theory-layout.reflection-prompt",
+          "text": "What pattern did I recognize, where did I get stuck, and what would I change in my first approach?\n\nUse Context > Remarks for your personal reflection. It is saved separately from this reference."
+        }
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "interview",
+    "theory"
+  ],
+  "provenance": "Original educational prototype. Prompts Q1-Q5 preserve the user-provided canonical SQL sequence. Examples are reference code, not executable tasks."
+}

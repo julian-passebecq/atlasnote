@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "repository": "julian-passebecq/pdfatlas",
+  "commit": "fa5e83f7825cdc837078f87c5e130cb012332195",
+  "path": "library.json",
+  "gitBlobSha": "20ea3cae33fd386a3f4924e76f8c4e9d18fa14af",
+  "sha256": "dc1f76c02e4e3fa4e3ed1d8fb0679e46147680c882d9991f57d0b076d45a4a0d",
+  "verifiedAt": "2026-09-18",
+  "method": "Read-only GitHub fetch_file at the configured commit; exact original UTF-8 bytes verified against returned Git blob SHA. No PDF bytes downloaded."
+}

@@ -1,0 +1,32 @@
+{
+  "id": "page.samples.azure.pipeline",
+  "title": "Pipeline reading checklist",
+  "summary": "Use this small checklist while reading a pipeline design.",
+  "blocks": [
+    {
+      "id": "block.samples.azure.pipeline",
+      "type": "section",
+      "title": "Pipeline reading checklist",
+      "children": [
+        {
+          "type": "list",
+          "items": [
+            "Identify the input and the destination.",
+            "Describe each transformation.",
+            "Check how failures and retries are handled.",
+            "Keep credentials out of study notes and exports."
+          ],
+          "id": "block.samples.azure.pipeline.example"
+        }
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "lang:en"
+  ],
+  "provenance": "Original miniature study sample created for AtlasNote 1.2.2. Not official vendor documentation."
+}

@@ -1,0 +1,18 @@
+{
+  "id": "page.atlas.rotated",
+  "title": "Rotated PDF fixture",
+  "summary": "Includes a pre-rotated page for future integrated-engine verification.",
+  "blocks": [
+    {
+      "type": "markdown",
+      "text": "This author-created fixture contains no private study material. The offline build offers the browser PDF preview/download only. Integrated Atlas PDF controls require the optional online engine described in the release report.",
+      "id": "block.atlas.rotated.0"
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "Reader guide"
+  ]
+}

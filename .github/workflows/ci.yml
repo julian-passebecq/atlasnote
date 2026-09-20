@@ -1,0 +1,117 @@
+name: Integrated production and compatibility release gates
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      preview_url:
+        description: Fresh protected disposable Vercel preview for this exact commit
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  v23-prerequisite:
+    uses: ./.github/workflows/v23-qualification.yml
+    with:
+      preview_url: ${{ inputs.preview_url || '' }}
+    secrets: inherit
+  production-release:
+    needs: v23-prerequisite
+    env:
+      ATLAS_V23_PROVIDER: vercel
+      ATLAS_V23_PREVIEW_URL: ${{ inputs.preview_url || '' }}
+      ATLAS_V23_NATIVE_QUOTA: '1'
+      ATLAS_V23_QUOTA_SUDO: '1'
+      ATLAS_VERCEL_TEAM_ID: ${{ vars.ATLAS_VERCEL_TEAM_ID }}
+      ATLAS_VERCEL_PROJECT_ID: ${{ vars.ATLAS_VERCEL_PROJECT_ID }}
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      # Exact committed dependencies only. Never author a new lockfile in CI.
+      - run: npm ci
+      - run: npm run check:integrated-deps
+      - run: npm audit
+      - run: npm run typecheck
+      # pretest builds dist-offline, never dist.
+      - run: npm test
+      - run: npm run check:release:offline
+      - run: npm run test:online:syntax
+      - run: npm run audit:local
+      - run: python -m pip install -r requirements-test.txt -r requirements-pdf-authoring.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: npm run test:dom
+      - run: npm run test:hardening:ui
+      - run: npm run test:reader:ui
+      - run: npm run test:compact:ui
+      - run: npm run test:finish:ui
+      - run: npm run test:workspaces:ui
+      - run: npm run test:simplified:ui
+      - run: npm run test:reading:ui
+      - run: npm run test:interviews
+      - run: npm run test:polish:ui
+      - run: npm run test:cheatsheets
+      - run: npm run test:cheatsheets:ui
+      - run: npm run test:content-hub:ui
+      - run: npm run test:stabilization:ui
+      - run: npm run test:backup:diagnostic
+      - run: npm run test:pdf:authoring
+      # Build the exact hosted distribution after all compatibility suites.
+      - run: npm run typecheck:online
+      - run: npm run build
+      - run: npm run check:release
+      # Verify the clean candidate before later example generators alter fixtures.
+      # V2.3 is mandatory. Exit 2 (BLOCKED) is deliberately non-green.
+      # No production credentials or deployment writes run in this workflow.
+      - run: npm run test:v23:release
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+      - run: npm run build:test-harness
+      - run: npm run test:pdf:component
+      - run: npm run test:pdf:grid
+      - run: npm run test:pdf:wheel
+      - run: npm run test:pdf
+      - run: npm run test:finish:integrated
+      # Actual normal origin + IndexedDB + real browser download/fresh restore.
+      # A FAIL or BLOCKED result deliberately prevents the release artifact.
+      - run: npm run test:runtime
+      - run: npm run test:workspaces:runtime
+      - run: npm run test:savedstates:runtime
+      - run: npm run test:reading:runtime
+      - run: npm run test:cheatsheets:runtime
+      - run: npm run test:content-hub:runtime
+      - run: npm run test:references
+      - run: npm run test:references:ui
+      - run: npm run test:references:runtime
+      - run: npm run test:stabilization:runtime
+      - run: npm run test:final-polish:runtime
+      - run: npm run test:release-blockers:runtime
+      # V2.2 release gates: immutable history, universal agent interface,
+      # pinned PDF Atlas provenance and real normal-origin migration/runtime QA.
+      - run: npm run test:history
+      - run: npm run test:agent
+      - run: npm run check:pdfatlas
+      - run: npm run test:v22:runtime
+      - run: npm run test:completion:runtime
+      - run: npm run test:pdf:lifecycle
+      - run: npm run test:headers
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlasnote-release-evidence
+          path: docs/evidence
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlasnote-integrated-production-dist
+          path: dist
+          if-no-files-found: error
