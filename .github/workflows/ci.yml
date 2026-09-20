@@ -5,7 +5,11 @@ on:
   workflow_dispatch:
     inputs:
       preview_url:
-        description: Fresh protected disposable Vercel preview for this exact commit
+        description: Fresh protected immutable Cloudflare Worker version preview for this exact commit
+        type: string
+        required: true
+      version_id:
+        description: Exact Cloudflare Worker version UUID for the same preview
         type: string
         required: true
 permissions:
@@ -15,16 +19,18 @@ jobs:
     uses: ./.github/workflows/v23-qualification.yml
     with:
       preview_url: ${{ inputs.preview_url || '' }}
+      version_id: ${{ inputs.version_id || '' }}
     secrets: inherit
   production-release:
     needs: v23-prerequisite
     env:
-      ATLAS_V23_PROVIDER: vercel
+      ATLAS_V23_PROVIDER: cloudflare
       ATLAS_V23_PREVIEW_URL: ${{ inputs.preview_url || '' }}
+      ATLAS_CF_VERSION_ID: ${{ inputs.version_id || '' }}
+      ATLAS_CF_WORKER_NAME: ${{ vars.ATLAS_CF_WORKER_NAME || 'atlasnote-v23-qa' }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
       ATLAS_V23_NATIVE_QUOTA: '1'
       ATLAS_V23_QUOTA_SUDO: '1'
-      ATLAS_VERCEL_TEAM_ID: ${{ vars.ATLAS_VERCEL_TEAM_ID }}
-      ATLAS_VERCEL_PROJECT_ID: ${{ vars.ATLAS_VERCEL_PROJECT_ID }}
 
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -74,8 +80,9 @@ jobs:
       # No production credentials or deployment writes run in this workflow.
       - run: npm run test:v23:release
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
       - run: npm run build:test-harness
       - run: npm run test:pdf:component
       - run: npm run test:pdf:grid

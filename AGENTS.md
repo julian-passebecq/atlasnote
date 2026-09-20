@@ -2,7 +2,7 @@
 
 `START_HERE.md` and the explicit user request supersede historical release boundaries.
 Use supplied source, not GitHub main. GitHub is read-only. No production is authorized.
-Provider-neutral core and Vercel managed protection are mandatory; Netlify internals
+Provider-neutral core and Cloudflare Access managed protection are mandatory; Netlify/Vercel internals
 are optional legacy. Keep atomic compaction and all 13 rollback cases unchanged.
 Do not label offline/browser mocks or historical results as integrated/live proof.
 The full inherited workflow may start only after same-source complete V23 success.

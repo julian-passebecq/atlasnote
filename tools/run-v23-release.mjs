@@ -9,14 +9,14 @@ const cli=process.env.npm_execpath;if(!cli)throw Error('Use npm run test:v23:rel
 const source={...sourceIdentity(),sourceHash:sourceHash()},rows=[],runId=randomUUID(),startedAt=new Date().toISOString();
 const override=process.env.ATLAS_V23_TIMEOUT_MS;
 if(override!==undefined&&(!Number.isFinite(Number(override))||Number(override)<1000))throw Error('Invalid timeout');
-const secrets=[process.env.VERCEL_TOKEN,process.env.VERCEL_AUTOMATION_BYPASS_SECRET];
+const secrets=[process.env.CLOUDFLARE_API_TOKEN,process.env.CF_ACCESS_CLIENT_ID,process.env.CF_ACCESS_CLIENT_SECRET];
 const status=()=>{const result=releaseStatus(rows,required);return portable&&result==='READY FOR COORDINATOR QA'?'PORTABLE CORE PASS - NOT A RELEASE':result;};
-function save(){fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({schemaVersion:2,runId,startedAt,finishedAt:new Date().toISOString(),...source,scope:portable?'portable-core':'full-v23',status:status(),provider:'vercel',required,counts:Object.fromEntries(['PASS','BLOCKED','FAIL'].map(s=>[s,rows.filter(r=>r.status===s).length])),results:rows},null,2));}
+function save(){fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({schemaVersion:2,runId,startedAt,finishedAt:new Date().toISOString(),...source,scope:portable?'portable-core':'full-v23',status:status(),provider:'cloudflare',required,counts:Object.fromEntries(['PASS','BLOCKED','FAIL'].map(s=>[s,rows.filter(r=>r.status===s).length])),results:rows},null,2));}
 for(const id of required){
  const at=Date.now(),log=id.replaceAll(':','-')+'.log',evidenceDir=path.join(out,id.replaceAll(':','-'));
  const timeout=Number(override??(id==='test:v23:capacity'?900000:240000));
  const env={...process.env,ATLAS_EVIDENCE:evidenceDir,ATLAS_V23_RUN_ID:runId};
- if(id!=='test:v23:access:preview'){delete env.VERCEL_TOKEN;delete env.VERCEL_AUTOMATION_BYPASS_SECRET;}
+ if(id!=='test:v23:access:preview'){delete env.CLOUDFLARE_API_TOKEN;delete env.CF_ACCESS_CLIENT_ID;delete env.CF_ACCESS_CLIENT_SECRET;delete env.VERCEL_TOKEN;delete env.VERCEL_AUTOMATION_BYPASS_SECRET;}
  const child=spawnSync(process.execPath,[cli,'run',id],{encoding:'utf8',env,timeout,maxBuffer:16*1024*1024});
  fs.writeFileSync(path.join(out,log),secretFreeText((child.stdout??'')+(child.stderr??'')+(child.error?'\n'+child.error.name+': '+child.error.code:''),secrets));
  let rowStatus=child.status===0&&!child.error&&!child.signal?'PASS':child.status===2?'BLOCKED':'FAIL';

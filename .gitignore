@@ -32,3 +32,8 @@ access-key*.txt
 # Provider-local state and one-shot evidence.
 .vercel/
 .vercel-proof/
+
+# Cloudflare Wrangler local/auth state; never source or evidence.
+.wrangler/
+.dev.vars
+.dev.vars.*

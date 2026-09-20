@@ -1,0 +1,11 @@
+Use the installed official Cloudflare plugin and current Cloudflare docs. This is a bounded PRE-FLIGHT ONLY: do not edit AtlasNote source yet.
+
+1. Confirm the Cloudflare plugin/MCP is connected in Codex Desktop and complete OAuth if requested. Report the account name/ID but never print tokens/cookies/secrets.
+2. Check whether Zero Trust / Cloudflare Access is enabled and whether Workers preview URLs + Access protection are available on this account.
+3. Create or reuse ONLY a disposable QA Worker named `atlasnote-v23-qa`. If it does not exist, Cloudflare requires the first Worker creation via C3 or `wrangler deploy`; do that from a TEMPORARY harmless placeholder directory, NOT from AtlasNote. Attach no custom domain/DNS route.
+4. Ensure preview URLs are enabled. Configure Cloudflare Access for this Worker's PREVIEWS ONLY before any AtlasNote upload. Add a human owner policy and a dedicated Service Auth policy/service token for automation. Never paste or echo the Client Secret; place credentials only in secure local/CI secret storage.
+5. Verify anonymously that a harmless preview is denied/redirected by Access and that a service-token request can authenticate. Do not disable Access to make the test pass.
+6. Do not upload AtlasNote, do not run `wrangler versions deploy`, do not touch production/custom domains, DNS, unrelated Workers, or GitHub.
+7. Finish with a compact PRE-FLIGHT RESULT containing: account ID, Worker name/ID, whether previews are enabled, whether Access protects previews, whether human auth works, whether service auth works, and any blocker. Never include credential values.
+
+If all checks are green, say exactly: `CLOUDFLARE PREFLIGHT READY FOR ATLASNOTE`.

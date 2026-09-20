@@ -1,38 +1,40 @@
-# AtlasNote V2.3 - provider-neutral access / Vercel candidate
+# AtlasNote V2.3 - provider-neutral access / Cloudflare candidate
 
-This full source tree is the migration candidate, not an approved production release.
-The authoritative starting tree was supplied in the handoff `06_SOURCE/`, not fetched
-from GitHub. Baseline candidate: `2ece94b4e07e3179e8aee5dad4b32970c5be2242`;
-baseline tree: `1a57e4db16efaf1ee4ac25f52da0462e388c93e9`.
-App version remains 2.3.0; IndexedDB version remains 3.
+This full source tree is the Cloudflare migration candidate, not an approved production
+release. It starts from the verified GitHub source tree on branch
+`final/atlasnote-2.3-vercel-migration`, commit
+`2128a455199abc2a9a71bf8156508c0bbc69af95`, tree
+`832c1f199ac6b8d335f31ced3e2f723831c3e89e`. The inherited V2.3 release-contract baseline
+remains `2ece94b4e07e3179e8aee5dad4b32970c5be2242`, tree
+`1a57e4db16efaf1ee4ac25f52da0462e388c93e9`. App version remains 2.3.0 and IndexedDB
+version remains 3.
 
-Read `docs/v23/PROVIDER_NEUTRAL_ACCESS.md`, `docs/v23/VERCEL_QUALIFICATION.md`,
-`docs/v23/NATIVE_CAPACITY.md` and `docs/v23/QA_MATRIX.md`. The final delivery's
-`00_RESULT/FINAL_IDENTITY.json` and `FINAL_RESULT.md` contain the exact final identity
-and observed outcomes. Historical reports and `SOURCE_MANIFEST.json` are not current
-release evidence. The delivery's external SHA-256 manifest is authoritative.
+Read `docs/v23/PROVIDER_NEUTRAL_ACCESS.md`, `docs/v23/CLOUDFLARE_QUALIFICATION.md`,
+`docs/v23/NATIVE_CAPACITY.md` and `docs/v23/QA_MATRIX.md`. Historical reports are not
+fresh release evidence.
 
-The atomic compactor **is present and preserved**. Historical statements that
-compaction is absent or Netlify is mandatory are superseded. All 13 fault cases,
-archive/recovery semantics, five-store persistence, immutable history, Compare,
-PDFAtlas and the Agent Interface retain their contracts.
+The atomic compactor is present and preserved. All 13 fault cases, archive/recovery
+semantics, five-store persistence, immutable history, Compare, PDFAtlas and the Agent
+Interface retain their existing contracts.
 
 ## Build and verify
 
-Work in an actual Git checkout. Keep Node >=22.12, the supplied lockfile and dependency
-pins. `npm ci && npm run build` is the integrated production build, producing `dist`.
-Run `npm run typecheck:online` as well. Never publish `dist-offline`.
-`npm run bootstrap:offline` and `npm test` can exercise the existing separately
-labeled compatibility toolchain where integrated dependencies are unavailable;
-that does not prove the integrated build, PDF renderer, native quota or hosted app.
+Work in a real Git checkout. Keep Node >=22.12 and the supplied dependency lockfile.
+`npm ci && npm run build` is the integrated hosted build, producing `dist/`. Never
+publish `dist-offline`. Portable/compatibility results do not prove the integrated PDF
+renderer, native quota behavior or managed hosted access.
 
-Vercel is the active provider. A protected disposable preview and its environment-only
-automation credentials must be supplied explicitly. `vercel.json` is **not** an access
-control switch; managed protection must be configured and independently tested.
-No production deployment is authorized. No GitHub write is part of this pass.
+Cloudflare is the active provider adapter. `wrangler.jsonc` configures only Workers
+Static Assets, SPA fallback and preview URL capability. It does **not** enable Cloudflare
+Access. Managed Access must be configured on the disposable QA Worker and independently
+proved with anonymous and service-token requests.
 
-Run `npm run test:v23:release` with the fresh preview and native Linux proof enabled.
-Only a completely green result permits `npm run test:inherited:after-v23` on the exact
-same clean source. Missing capability, stale evidence and unexecuted gates stay BLOCKED.
-For a source copied into the owner's checkout, rebuild and requalify: the owner's new
-Git commit is different from the local snapshot identity used in this delivery.
+Do not deploy AtlasNote to a production/custom domain. For a brand-new Cloudflare Worker,
+complete the harmless bootstrap described in `CLOUDFLARE_QUALIFICATION.md`, protect
+**Previews only** with Access, then upload the exact AtlasNote candidate with
+`wrangler versions upload` and qualify its immutable version preview URL. The candidate
+version must not appear in the active Worker deployment.
+
+Only a completely green `npm run test:v23:release` permits
+`npm run test:inherited:after-v23` on the exact same clean source. Missing capability,
+stale evidence and unexecuted gates remain BLOCKED.

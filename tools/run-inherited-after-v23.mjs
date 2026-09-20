@@ -10,11 +10,11 @@ const green=acceptsInheritedPrerequisite(prerequisite,source);
 const report={...source,prerequisiteRunId:prerequisite?.runId??null,status:green?'RUNNING':'NOT_RUN',reason:green?null:'A fresh fully green provider-neutral V23 release on this exact clean source is required.',results:commands.map(command=>({command,status:'NOT_RUN'}))};
 const save=()=>fs.writeFileSync(path.join(out,'results.json'),JSON.stringify(report,null,2));save();
 if(!green){console.log(report.reason);process.exitCode=2;}else{
- const inheritedEnv={...process.env};delete inheritedEnv.VERCEL_TOKEN;delete inheritedEnv.VERCEL_AUTOMATION_BYPASS_SECRET;
+ const inheritedEnv={...process.env};for(const key of ['CLOUDFLARE_API_TOKEN','CF_ACCESS_CLIENT_ID','CF_ACCESS_CLIENT_SECRET','VERCEL_TOKEN','VERCEL_AUTOMATION_BYPASS_SECRET'])delete inheritedEnv[key];
  for(const row of report.results){
   const start=Date.now(),log=String(report.results.indexOf(row)+1).padStart(2,'0')+'.log';
   const child=spawnSync(row.command,{shell:true,encoding:'utf8',timeout:900000,maxBuffer:32*1024*1024,env:inheritedEnv});
-  fs.writeFileSync(path.join(out,log),secretFreeText((child.stdout??'')+(child.stderr??''),[process.env.VERCEL_TOKEN,process.env.VERCEL_AUTOMATION_BYPASS_SECRET]));
+  fs.writeFileSync(path.join(out,log),secretFreeText((child.stdout??'')+(child.stderr??''),[process.env.CLOUDFLARE_API_TOKEN,process.env.CF_ACCESS_CLIENT_ID,process.env.CF_ACCESS_CLIENT_SECRET,process.env.VERCEL_TOKEN,process.env.VERCEL_AUTOMATION_BYPASS_SECRET]));
   Object.assign(row,{status:child.status===0&&!child.signal&&!child.error?'PASS':child.status===2?'BLOCKED':'FAIL',exitCode:child.status,signal:child.signal,durationMs:Date.now()-start,log});
   if(sourceHash()!==source.sourceHash||sourceIdentity().sourceDirty){row.status='FAIL';row.reason='Inherited command changed candidate source; freeze and requalify rather than relabeling evidence.';}
   save();console.log(row.status,row.command);if(row.status!=='PASS')break;

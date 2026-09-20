@@ -1,0 +1,10 @@
+{
+  "name": "atlasnote-v23-qa",
+  "compatibility_date": "2026-09-20",
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

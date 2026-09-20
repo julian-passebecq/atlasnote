@@ -5,58 +5,69 @@
 AtlasNote owns local authored content, immutable history, five IndexedDB stores,
 backup/recovery and pending-write safety. A hosting provider owns remote application
 access. Authentication is not encryption or deletion of browser-local data, and losing
-remote access cannot retract code or data already loaded into an unlocked profile.
-Moving to a new hostname creates a different browser origin: existing IndexedDB data
+remote access cannot retract code or data already loaded into an authorized browser
+profile.
+
+Moving to a new hostname creates a different browser origin. Existing IndexedDB data
 does **not** transfer automatically. Before changing hosts, create a verified complete
 recovery bundle and preserve required external archive files; restore deliberately on
-the new origin. Do not erase the old origin until the restored data has been verified.
+the new origin and verify it before deleting old-origin data.
 
-Vercel Authentication / Deployment Protection is the active managed adapter. No custom
-session/cookie/password function was added. No IP/MAC identity mechanism was added.
-`netlify/`, `netlify.toml` and `public/_headers` remain byte-preserved optional legacy
-support. They neither configure Vercel nor define the active release gate.
+Cloudflare Access is the active managed access adapter. No custom Cloudflare session,
+password, cookie or login function is implemented inside AtlasNote. The previous Vercel
+configuration/procedure is preserved under `docs/history/vercel-provider-20260920/` and
+Netlify remains optional legacy support. Neither can satisfy the active Cloudflare gate.
 
 ## Observable behavior
 
 An anonymous visitor must not receive application entry HTML, representative static
 assets or deep-link content. Authorized access must serve the exact current integrated
-build identity. Warming the same URLs with authorization must not leak content through
-a shared cache to an anonymous request. Invalid authorization must be denied. No test
-invents undocumented Vercel handler/cookie internals. Missing protection is a failure,
-not a reason to weaken the app contract.
+build identity. Warming the same URLs with authorization must not leak content through a
+shared cache to a later anonymous request. Invalid authorization must fail closed.
 
-The bypass mechanism is an environment-only, exact-origin request header. It is never
-part of a Vite variable, source constant, query string, screenshot, retained network
-trace or storage-state file. Browser probe requests disable redirect following before
-fulfilling the intercepted response, so the injected header cannot follow a redirect
-to another origin. Provider API credentials are used only by the metadata probe.
+The automated Access mechanism uses the documented request headers
+`CF-Access-Client-Id` and `CF-Access-Client-Secret`, injected only for the exact approved
+preview origin. They are never Vite variables, source constants, query strings,
+screenshots, retained traces or browser storage-state files. Redirect following is
+disabled on intercepted authorized requests so credentials cannot follow a redirect to
+an identity-provider origin. `CLOUDFLARE_API_TOKEN` is used only for read-only Worker
+version/deployment metadata checks.
 
-Tests verify that clearing provider cookies/removing authorization and restoring access
-leave all five stores byte-for-byte unchanged in an ephemeral synthetic-data profile.
-No provider token/cookie value or raw store contents are retained as evidence.
+Qualification verifies that clearing provider cookies/removing service-token headers and
+restoring access leave all five stores byte-for-byte unchanged in an ephemeral synthetic
+profile. No Access cookie/JWT, service-token value or raw store contents are retained.
 
 ## App controls and routing
 
-The former Netlify POST logout form is replaced by **Check saved state before leaving**.
-It dispatches the existing reader-save event, awaits the existing store flush, refuses
-pending/failed writes and never claims to sign out. Native beforeunload protection,
-failed-write emergency export, retry and reload behavior remain required. Provider
-sign-in/sign-out happens outside AtlasNote; there is no client cookie manipulation.
+The old Netlify POST logout form remains removed. **Check saved state before leaving**
+dispatches the existing reader-save event, awaits the existing store flush, refuses
+pending/failed writes and never claims to sign out. Provider sign-in/sign-out happens
+outside AtlasNote.
 
-Vite `base` and the HTML `<base>` are `/`. This deployment is root-hosted. The HTML base
-keeps existing content, schema, PDF worker/font and vendor URLs valid on history/workspace
-deep links without changing those subsystems. A provider SPA fallback resolves routes
-to `index.html` while serving existing files normally. Local `npm run preview` is a
-static diagnostic server, not an emulation of Vercel access protection or SPA routing.
+Vite `base` and the HTML `<base>` remain `/`. `wrangler.jsonc` points Workers Static
+Assets at `./dist` and explicitly uses `single-page-application` fallback. `public/_headers`
+is copied into the hosted distribution and applies the four security headers plus
+`private, no-store`, `CDN-Cache-Control: no-store` and
+`Cloudflare-CDN-Cache-Control: no-store`. Live qualification still proves actual hosted
+headers and post-authorization cache isolation; config text is not accepted as runtime
+proof.
 
-Four security headers and private/no-store response and CDN policies are configured in
-`vercel.json`. `public/_headers` alone never establishes Vercel headers or authentication.
-Managed protection must be enabled on the actual preview; a config file cannot prove it.
+## Preview-only release boundary
 
-## Optional legacy checks
+Cloudflare separates Worker versions from active deployments. The AtlasNote QA candidate
+must be an undeployed Worker version reachable through a versioned `*.workers.dev`
+preview URL. The live metadata gate reads the exact version and current active deployment
+through Cloudflare's API and rejects a candidate version that is actively serving the
+Worker's deployed traffic.
 
-`npm run check:access:netlify` and `npm run test:access:netlify` retain the old handler,
-verifier, cookie, CSRF and declaration assertions separately. The optional historical
-probe requires `ATLAS_V23_NETLIFY_PREVIEW_URL` explicitly and cannot satisfy the active
-Vercel gate. The old 20-case vendor-internal matrix is not silently counted as current
-provider-neutral evidence.
+Cloudflare requires `wrangler deploy` when a Worker is created for the first time. The
+safe preflight therefore creates a **disposable QA Worker with harmless bootstrap content**,
+then enables Access for **Previews only**. Only after that does the AtlasNote checkout run
+`wrangler versions upload`. This first bootstrap is infrastructure setup, not an AtlasNote
+release or production-domain deployment.
+
+## Optional legacy material
+
+Netlify legacy checks remain under their explicitly named scripts. Vercel migration
+material is historical under `docs/history/vercel-provider-20260920/`. Neither provider's
+private implementation details are part of the active Cloudflare contract.

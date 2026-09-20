@@ -1,4 +1,5 @@
-> HISTORICAL REPORT / LEGACY CONTRACT. This document predates the provider-neutral Vercel migration. It is not fresh qualification evidence. Read `START_HERE.md` and the final delivery result; previous statements that compaction is absent or Netlify is mandatory are superseded.
+> HISTORICAL REPORT / LEGACY CONTRACT. This document predates the active Cloudflare provider migration (and may also predate the earlier Vercel pass). It is not fresh qualification evidence. Read `START_HERE.md` and `docs/v23/CLOUDFLARE_QUALIFICATION.md`; older provider/release claims are superseded.
+> Cloudflare is now the active V2.3 provider adapter; see `START_HERE.md`.
 
 # Single-owner Netlify Edge access gate
 

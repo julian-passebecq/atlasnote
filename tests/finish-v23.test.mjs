@@ -96,7 +96,7 @@ test('V23 browser qualification cannot silently replace real historical PDF rend
  assert.match(helper,/pixelHash.*!=.*pixelHash/);
  const workflow=await fs.readFile('.github/workflows/v23-qualification.yml','utf8');
  assert.doesNotMatch(workflow,/continue-on-error:\s*true/);
- assert.match(workflow,/workflow_dispatch/);assert.match(workflow,/migration\/vercel-provider-neutral-v23/);
+ assert.match(workflow,/workflow_dispatch/);assert.match(workflow,/migration\/atlasnote-2\.3-cloudflare/);
  const runtime=await fs.readFile('tests/v23_runtime.py','utf8');
  assert.match(runtime,/confirm\.uncheck\(\);assert commit\.is_disabled\(\)/);
 });

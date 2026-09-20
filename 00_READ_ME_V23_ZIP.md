@@ -1,30 +1,27 @@
-# Upload the repository, not the report folders
+# Upload the repository source, not the handoff report folders
 
-The delivery ZIP contains a complete repository in `SOURCE/`, plus reports, evidence
-and the baseline diff outside it. It is not a patches-only handoff.
+This Cloudflare migration delivery contains a complete repository source tree plus
+reports, evidence and a baseline diff outside it. It is not a patches-only handoff.
 
-Use the existing `julian-passebecq/atlasnote` repository. Do not create a replacement
-repository and do not substitute code from `main` or any historical branch.
+Use the existing `julian-passebecq/atlasnote` repository. The verified input tree was
+branch `final/atlasnote-2.3-vercel-migration`, commit
+`2128a455199abc2a9a71bf8156508c0bbc69af95`, tree
+`832c1f199ac6b8d335f31ced3e2f723831c3e89e`.
 
-1. Extract the final ZIP into a new directory and retain it as the audited copy.
-2. In your own local checkout of the existing repository, select an owner-managed
-   non-production branch, such as `migration/vercel-provider-neutral-v23`. Preserve
-   the checkout's `.git` directory. Back up uncommitted work before replacing files.
-3. Replace the repository's tracked working files with **the contents inside
-   `SOURCE/`**, including `.github/`, `.gitattributes`, `.gitignore` and
-   `.vercelignore`. Do not create an extra `SOURCE/` level in the repository.
-   The supplied source is complete; remove files shown as deleted in the diff.
-   In particular, the Netlify tests moved from `tests/access-v23.test.mjs` into
-   `tests/legacy/` and must not remain duplicated at their old location.
-4. Do not upload `00_RESULT/`, `PATCH/`, `EVIDENCE/`, `.git`, `node_modules`, built
-   `dist` folders, `.vercel`, environment files, browser profiles or private backups.
-   Review Git status and the supplied change inventory, then commit/push yourself.
-   Folder upload in GitHub's web UI may omit dotfiles or fail to apply deletions;
-   a local checkout with GitHub Desktop is less error-prone for this complete tree.
-5. Install/build from the resulting clean checkout. The new owner commit changes
-   build identity, so create and qualify a new protected disposable Vercel preview.
-   Do not promote it to production while any mandatory gate is BLOCKED or FAIL.
+Recommended owner branch for this candidate:
 
-The ZIP intentionally excludes `.git`. Exact original ancestry could not be
-reconstructed from the incremental bundle; the local snapshot ancestry is documented
-honestly in the external result. No replacement Git bundle is claimed to be original.
+`migration/atlasnote-2.3-cloudflare`
+
+When using the external handoff ZIP, copy the **contents inside `06_SOURCE/`** into the
+repository root while preserving the checkout's `.git` directory. Include dotfiles and
+apply deletions: root `vercel.json` and `.vercelignore` are intentionally retired, with
+review copies preserved under `docs/history/vercel-provider-20260920/`. The active host
+configuration is root `wrangler.jsonc`.
+
+Do not upload handoff report/evidence folders, `.git`, `node_modules`, generated `dist*`,
+`.wrangler`, `.dev.vars*`, environment files, browser profiles or private backups.
+
+After the owner commits the source, the build identity changes. Run the Cloudflare
+preflight and create a fresh protected Worker **version preview** for that exact owner
+commit. Do not attach a production custom domain or promote the AtlasNote version while
+any mandatory V2.3 gate is BLOCKED or FAIL.
