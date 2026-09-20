@@ -1,9 +1,0 @@
-Suggested next-task prompt for the user to paste:
-
-Complete AtlasNote V2.2 using this handoff. Read 00_START_HERE.md, the current-status and work-to-finish files, the final-memory contract, and source/AGENTS.md before editing. Distinguish historical claims from later audit evidence. Work from audited commit 60db2cb7504503ac416ddad940441e24f82266b1 in an isolated checkout, preserving any newer user work.
-
-Implement the missing tree history actions, Windows line-ending/UTF-8 fixes, and minimal stable browser semantics. Complete the remaining real-browser acceptance work, including non-empty migration/backup fixtures, historical read-only/restore behavior, maintained two-tab and rendered-PDF tests, and the required keyboard/viewport matrix. Preserve all old release assertions and failed logs; do not substitute compatibility builds or weaken browser policies.
-
-Run the complete release suite after final changes and produce source/build/evidence ZIPs with checksums and a truthful release report. Treat live AI-provider/MCP integration, OCR and history pruning as deferred scope. Do not push, merge main, deploy, publish private libraries, reset real browser data, or restore a real backup without a separate explicit user request.
-
-The handoff contains all source and relevant evidence. No application fixes were applied during its preparation. Diagnose failures and continue until the specified V2.2 work is complete or identify a concrete blocker without inventing passes.
