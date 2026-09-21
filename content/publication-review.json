@@ -17,8 +17,8 @@
       "sha256": "c90a3406521453872d5e2f854478b56effe7c24d82be08183ebd85c2bf20029d"
     },
     "study.samples": {
-      "review": "Original miniature sample notes; no private data or third-party assets. Human-readable source reviewed for this UI exercise.",
-      "sha256": "5c26037dec7c26cd01f02fd870cbcc2316e13dd61ab5ebdfc46a964b5763edc1"
+      "review": "Original miniature sample notes plus the 11 synthetic playground pages and project placements merged in e6ba7f3. Source reviewed on 2026-09-22: illustrative text/code only; no private data, credentials or third-party assets.",
+      "sha256": "0f68b4973dc675136f43776f78f39bb2c5c68a8730eb7984441547ef492248da"
     },
     "atlas.interview-samples": {
       "review": "Original educational prototype: 5 canonical SQL prompts, 4 theory, 3 hybrid and 3 coding variants. Public reference examples; no private data. Existing renderer blocks only.",
