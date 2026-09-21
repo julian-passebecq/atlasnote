@@ -1,0 +1,150 @@
+{
+  "id": "page.mockhub.qcm.sql",
+  "title": "Mock QCM / SQL joins & grain",
+  "summary": "Synthetic QCM set for exercising AtlasNote question, attempt and review flows.",
+  "blocks": [],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "mock",
+    "sample"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data, credentials or third-party content.",
+  "kind": "qcm",
+  "qcm": {
+    "schemaVersion": 1,
+    "id": "page.mockhub.qcm.sql",
+    "title": "Mock QCM / SQL joins & grain",
+    "taxonomy": {
+      "subject": "job",
+      "path": [
+        "Mock playground",
+        "Mock QCM / SQL joins & grain"
+      ]
+    },
+    "questions": [
+      {
+        "id": "mockhub.sql.q1",
+        "prompt": "An orders table has one row per order and order_lines has many rows per order. What is the safest first step before summing order-level revenue after a join?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Aggregate order_lines to one row per order before joining.",
+            "explanation": "This aligns the detail table with order grain."
+          },
+          {
+            "id": "b",
+            "text": "Join first and use DISTINCT on the final result.",
+            "explanation": "DISTINCT can hide duplicates without preserving correct measures."
+          },
+          {
+            "id": "c",
+            "text": "Switch the join to FULL OUTER JOIN.",
+            "explanation": "Join type does not solve grain mismatch."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Align grains before joining measures from different levels.",
+        "followUp": "Which checks would prove the result is still at order grain?",
+        "tags": [
+          "sql",
+          "grain",
+          "joins"
+        ]
+      },
+      {
+        "id": "mockhub.sql.q2",
+        "prompt": "Which window expression is best for selecting one latest row per customer when timestamps can tie?",
+        "options": [
+          {
+            "id": "a",
+            "text": "RANK() OVER (PARTITION BY customer_id ORDER BY updated_at DESC)",
+            "explanation": "RANK can return multiple rows on ties."
+          },
+          {
+            "id": "b",
+            "text": "ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY updated_at DESC, event_id DESC)",
+            "explanation": "A deterministic tie-breaker gives one stable row."
+          },
+          {
+            "id": "c",
+            "text": "COUNT(*) OVER (PARTITION BY customer_id)",
+            "explanation": "COUNT does not identify the latest row."
+          }
+        ],
+        "correctOptionIds": [
+          "b"
+        ],
+        "explanation": "Use ROW_NUMBER with a deterministic ordering when exactly one row is required.",
+        "followUp": "When would RANK be more appropriate?",
+        "tags": [
+          "sql",
+          "window"
+        ]
+      },
+      {
+        "id": "mockhub.sql.q3",
+        "prompt": "What does HAVING filter?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Rows before grouping.",
+            "explanation": "That is WHERE."
+          },
+          {
+            "id": "b",
+            "text": "Groups after aggregation.",
+            "explanation": "HAVING is evaluated after GROUP BY."
+          },
+          {
+            "id": "c",
+            "text": "Only NULL values.",
+            "explanation": "HAVING is not specific to NULLs."
+          }
+        ],
+        "correctOptionIds": [
+          "b"
+        ],
+        "explanation": "HAVING applies to grouped/aggregate results.",
+        "followUp": "Why can moving a row filter from HAVING to WHERE improve performance?",
+        "tags": [
+          "sql",
+          "aggregation"
+        ]
+      },
+      {
+        "id": "mockhub.sql.q4",
+        "prompt": "A LEFT JOIN followed by WHERE right.status = 'active' often behaves like what?",
+        "options": [
+          {
+            "id": "a",
+            "text": "An INNER JOIN for that condition.",
+            "explanation": "Rows with no right match have NULL status and are removed by WHERE."
+          },
+          {
+            "id": "b",
+            "text": "A CROSS JOIN.",
+            "explanation": "No Cartesian product is introduced."
+          },
+          {
+            "id": "c",
+            "text": "A FULL OUTER JOIN.",
+            "explanation": "No unmatched right-side rows are added."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Filtering the right table in WHERE can remove unmatched left rows.",
+        "followUp": "Where would you place the right-side filter to preserve all left rows?",
+        "tags": [
+          "sql",
+          "joins"
+        ]
+      }
+    ]
+  }
+}

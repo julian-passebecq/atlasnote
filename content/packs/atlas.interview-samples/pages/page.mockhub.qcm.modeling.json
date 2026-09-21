@@ -1,0 +1,149 @@
+{
+  "id": "page.mockhub.qcm.modeling",
+  "title": "Mock QCM / Data modeling & SCD",
+  "summary": "Synthetic QCM set for exercising AtlasNote question, attempt and review flows.",
+  "blocks": [],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "mock",
+    "sample"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data, credentials or third-party content.",
+  "kind": "qcm",
+  "qcm": {
+    "schemaVersion": 1,
+    "id": "page.mockhub.qcm.modeling",
+    "title": "Mock QCM / Data modeling & SCD",
+    "taxonomy": {
+      "subject": "it",
+      "path": [
+        "Mock playground",
+        "Mock QCM / Data modeling & SCD"
+      ]
+    },
+    "questions": [
+      {
+        "id": "mockhub.model.q1",
+        "prompt": "What does an SCD Type 2 dimension preserve?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Historical versions of a dimension row.",
+            "explanation": "Type 2 keeps previous states with validity metadata."
+          },
+          {
+            "id": "b",
+            "text": "Only the latest value.",
+            "explanation": "That describes Type 1 behavior."
+          },
+          {
+            "id": "c",
+            "text": "Only deleted rows.",
+            "explanation": "Deletion handling is separate."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Type 2 represents change over time with multiple versions.",
+        "followUp": "Which columns would you add for validity tracking?",
+        "tags": [
+          "modeling",
+          "scd2"
+        ]
+      },
+      {
+        "id": "mockhub.model.q2",
+        "prompt": "What should a fact table's grain statement describe?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Exactly what one row represents.",
+            "explanation": "Grain is the semantic unit of each row."
+          },
+          {
+            "id": "b",
+            "text": "The color of the dashboard.",
+            "explanation": "Presentation is unrelated."
+          },
+          {
+            "id": "c",
+            "text": "Only the database engine.",
+            "explanation": "Technology does not define business grain."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "A precise grain prevents ambiguous joins and measures.",
+        "followUp": "Give a grain statement for an order-line fact table.",
+        "tags": [
+          "modeling",
+          "grain"
+        ]
+      },
+      {
+        "id": "mockhub.model.q3",
+        "prompt": "Why use surrogate keys in a Type 2 dimension?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Different historical versions of the same business entity need distinct dimension rows.",
+            "explanation": "The business key remains shared across versions."
+          },
+          {
+            "id": "b",
+            "text": "They make every natural key unnecessary in source systems.",
+            "explanation": "Sources still need their own identifiers."
+          },
+          {
+            "id": "c",
+            "text": "They automatically deduplicate facts.",
+            "explanation": "Fact deduplication is separate."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Surrogate keys allow facts to reference the correct historical dimension version.",
+        "followUp": "When should the fact lookup use event time?",
+        "tags": [
+          "modeling",
+          "scd2"
+        ]
+      },
+      {
+        "id": "mockhub.model.q4",
+        "prompt": "A KPI changes after joining a dimension. What should you inspect first?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Join cardinality and the grain of both sides.",
+            "explanation": "Unexpected fan-out is a common cause."
+          },
+          {
+            "id": "b",
+            "text": "Chart colors.",
+            "explanation": "Visualization does not alter row counts."
+          },
+          {
+            "id": "c",
+            "text": "Only the SQL formatting.",
+            "explanation": "Formatting is irrelevant to semantics."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Measure changes after a join often indicate cardinality or filtering effects.",
+        "followUp": "How would you prove the join is many-to-one?",
+        "tags": [
+          "modeling",
+          "joins"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "id": "page.mockhub.qcm.pipeline",
+  "title": "Mock QCM / Pipeline reliability",
+  "summary": "Synthetic QCM set for exercising AtlasNote question, attempt and review flows.",
+  "blocks": [],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "mock",
+    "sample"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data, credentials or third-party content.",
+  "kind": "qcm",
+  "qcm": {
+    "schemaVersion": 1,
+    "id": "page.mockhub.qcm.pipeline",
+    "title": "Mock QCM / Pipeline reliability",
+    "taxonomy": {
+      "subject": "cloud",
+      "path": [
+        "Mock playground",
+        "Mock QCM / Pipeline reliability"
+      ]
+    },
+    "questions": [
+      {
+        "id": "mockhub.pipe.q1",
+        "prompt": "What property allows the same batch to be safely retried?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Idempotency.",
+            "explanation": "Repeated execution leads to the same intended state."
+          },
+          {
+            "id": "b",
+            "text": "Random filenames.",
+            "explanation": "Randomness can create duplicates."
+          },
+          {
+            "id": "c",
+            "text": "Manual cleanup after every run.",
+            "explanation": "That is operationally fragile."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Idempotent writes make retry and replay safer.",
+        "followUp": "Give one idempotency strategy for a daily partition load.",
+        "tags": [
+          "pipeline",
+          "reliability"
+        ]
+      },
+      {
+        "id": "mockhub.pipe.q2",
+        "prompt": "A copy activity reports success. What should happen before publishing the dataset?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Validate expected counts, schema and business constraints.",
+            "explanation": "Transport success does not prove data correctness."
+          },
+          {
+            "id": "b",
+            "text": "Assume the source was complete.",
+            "explanation": "The source can be stale or incomplete."
+          },
+          {
+            "id": "c",
+            "text": "Delete the previous dataset immediately.",
+            "explanation": "Deletion before validation increases recovery risk."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Publication should follow explicit validation.",
+        "followUp": "Which validation would catch a duplicated primary key?",
+        "tags": [
+          "pipeline",
+          "quality"
+        ]
+      },
+      {
+        "id": "mockhub.pipe.q3",
+        "prompt": "What is the safest retry target after a transient sink failure?",
+        "options": [
+          {
+            "id": "a",
+            "text": "The smallest idempotent boundary whose inputs are known.",
+            "explanation": "This limits duplicated work while preserving correctness."
+          },
+          {
+            "id": "b",
+            "text": "Always rerun the entire platform.",
+            "explanation": "That is often unnecessary."
+          },
+          {
+            "id": "c",
+            "text": "Skip the failed records silently.",
+            "explanation": "Silent loss is not recovery."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Retry design should match transactional/idempotent boundaries.",
+        "followUp": "What metadata should be stored for replay?",
+        "tags": [
+          "pipeline",
+          "retry"
+        ]
+      },
+      {
+        "id": "mockhub.pipe.q4",
+        "prompt": "Why record run IDs and source watermarks?",
+        "options": [
+          {
+            "id": "a",
+            "text": "They support traceability and reproducible replay decisions.",
+            "explanation": "You need to know what input range a run consumed."
+          },
+          {
+            "id": "b",
+            "text": "They make the UI prettier.",
+            "explanation": "That is not their purpose."
+          },
+          {
+            "id": "c",
+            "text": "They remove the need for validation.",
+            "explanation": "Observability complements validation."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Operational metadata makes incident analysis and recovery bounded.",
+        "followUp": "What else would you record per run?",
+        "tags": [
+          "pipeline",
+          "observability"
+        ]
+      }
+    ]
+  }
+}

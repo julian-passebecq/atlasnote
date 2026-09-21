@@ -1,0 +1,149 @@
+{
+  "id": "page.mockhub.qcm.spark",
+  "title": "Mock QCM / Spark execution & shuffle",
+  "summary": "Synthetic QCM set for exercising AtlasNote question, attempt and review flows.",
+  "blocks": [],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "mock",
+    "sample"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data, credentials or third-party content.",
+  "kind": "qcm",
+  "qcm": {
+    "schemaVersion": 1,
+    "id": "page.mockhub.qcm.spark",
+    "title": "Mock QCM / Spark execution & shuffle",
+    "taxonomy": {
+      "subject": "it",
+      "path": [
+        "Mock playground",
+        "Mock QCM / Spark execution & shuffle"
+      ]
+    },
+    "questions": [
+      {
+        "id": "mockhub.spark.q1",
+        "prompt": "Which operation most clearly introduces a wide dependency and likely shuffle?",
+        "options": [
+          {
+            "id": "a",
+            "text": "select()",
+            "explanation": "Projection is typically narrow."
+          },
+          {
+            "id": "b",
+            "text": "groupBy().agg()",
+            "explanation": "Grouping usually redistributes rows by key."
+          },
+          {
+            "id": "c",
+            "text": "withColumn()",
+            "explanation": "A row-local expression is typically narrow."
+          }
+        ],
+        "correctOptionIds": [
+          "b"
+        ],
+        "explanation": "Grouping by key generally requires data movement between partitions.",
+        "followUp": "Which metrics would you inspect to diagnose skew?",
+        "tags": [
+          "spark",
+          "shuffle"
+        ]
+      },
+      {
+        "id": "mockhub.spark.q2",
+        "prompt": "Why can one Spark task run much longer than the others?",
+        "options": [
+          {
+            "id": "a",
+            "text": "A hot key may concentrate far more data in one partition.",
+            "explanation": "Skew can create a straggler partition."
+          },
+          {
+            "id": "b",
+            "text": "Spark always runs one task serially.",
+            "explanation": "Tasks normally execute in parallel subject to resources."
+          },
+          {
+            "id": "c",
+            "text": "Every transformation forces a cluster restart.",
+            "explanation": "Transformations do not restart the cluster."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Uneven partition sizes are a common cause of stragglers.",
+        "followUp": "How could salting help a heavily skewed aggregation?",
+        "tags": [
+          "spark",
+          "skew"
+        ]
+      },
+      {
+        "id": "mockhub.spark.q3",
+        "prompt": "What does lazy evaluation mean in Spark?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Transformations build a plan and execution waits for an action.",
+            "explanation": "Spark can optimize a lineage before running it."
+          },
+          {
+            "id": "b",
+            "text": "Spark sleeps between each row.",
+            "explanation": "It is not about timing delays."
+          },
+          {
+            "id": "c",
+            "text": "Only Python code is deferred.",
+            "explanation": "The concept applies to Spark transformations generally."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Transformations describe work; actions trigger execution.",
+        "followUp": "Name two actions that would execute a DataFrame plan.",
+        "tags": [
+          "spark",
+          "lazy-evaluation"
+        ]
+      },
+      {
+        "id": "mockhub.spark.q4",
+        "prompt": "What is the best first diagnostic when a join suddenly becomes much slower?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Inspect the physical plan, join strategy, input sizes and skew.",
+            "explanation": "Those reveal whether the execution shape changed."
+          },
+          {
+            "id": "b",
+            "text": "Increase every cluster setting immediately.",
+            "explanation": "Blind tuning can make diagnosis harder."
+          },
+          {
+            "id": "c",
+            "text": "Convert all data to strings.",
+            "explanation": "Data type conversion is unrelated to most join slowdowns."
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Start with evidence from the plan and runtime metrics.",
+        "followUp": "What could make Spark stop using a broadcast join?",
+        "tags": [
+          "spark",
+          "join"
+        ]
+      }
+    ]
+  }
+}

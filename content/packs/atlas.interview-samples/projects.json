@@ -277,6 +277,58 @@
             ]
           }
         ]
+      },
+      {
+        "id": "node.mockhub.qcm",
+        "title": "Mock QCM playground",
+        "children": [
+          {
+            "id": "node.mockhub.qcm.sql",
+            "title": "SQL joins & grain",
+            "pageId": "page.mockhub.qcm.sql"
+          },
+          {
+            "id": "node.mockhub.qcm.spark",
+            "title": "Spark execution & shuffle",
+            "pageId": "page.mockhub.qcm.spark"
+          },
+          {
+            "id": "node.mockhub.qcm.pipeline",
+            "title": "Pipeline reliability",
+            "pageId": "page.mockhub.qcm.pipeline"
+          },
+          {
+            "id": "node.mockhub.qcm.modeling",
+            "title": "Data modeling & SCD",
+            "pageId": "page.mockhub.qcm.modeling"
+          }
+        ]
+      },
+      {
+        "id": "node.mockhub.articles",
+        "title": "Mock article playground",
+        "children": [
+          {
+            "id": "node.mockhub.article.contracts",
+            "title": "Data contracts",
+            "pageId": "page.mockhub.article.contracts"
+          },
+          {
+            "id": "node.mockhub.article.idempotency",
+            "title": "Idempotent pipelines",
+            "pageId": "page.mockhub.article.idempotency"
+          },
+          {
+            "id": "node.mockhub.article.scd2",
+            "title": "SCD Type 2 reasoning",
+            "pageId": "page.mockhub.article.scd2"
+          },
+          {
+            "id": "node.mockhub.article.debug",
+            "title": "Debugging a warehouse load",
+            "pageId": "page.mockhub.article.debug"
+          }
+        ]
       }
     ]
   }
