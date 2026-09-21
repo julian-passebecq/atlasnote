@@ -1,0 +1,218 @@
+{
+  "id": "page.cheatsheet.mock.pipeline",
+  "kind": "cheatsheet",
+  "title": "Reliable Data Pipeline",
+  "summary": "Ingest, validate, transform, publish, recover",
+  "blocks": [],
+  "cheatsheet": {
+    "schemaVersion": "1.1",
+    "id": "mock-pipeline",
+    "title": "Reliable Data Pipeline",
+    "subtitle": "Ingest, validate, transform, publish, recover",
+    "pageSize": {
+      "width": 1200,
+      "height": 1600
+    },
+    "meta": {
+      "audience": "AtlasNote UI testing",
+      "goal": "Exercise fixed-page cheatsheet rendering, navigation and search",
+      "difficulty": "intro",
+      "provenance": "Original synthetic cheatsheet created for AtlasNote UI testing. No private data or third-party assets.",
+      "preset": "architecture"
+    },
+    "theme": {
+      "name": "atlas-calm"
+    },
+    "pages": [
+      {
+        "id": "mock-pipeline.p1",
+        "title": "Reliable Data Pipeline",
+        "blocks": [
+          {
+            "id": "mock-pipeline.title",
+            "type": "text",
+            "role": "title",
+            "text": "Reliable Data Pipeline",
+            "style": {
+              "fontSize": 40,
+              "minFontSize": 36,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-pipeline.subtitle",
+            "type": "text",
+            "role": "body",
+            "text": "A compact operational checklist for batch and ELT pipelines.",
+            "style": {
+              "fontSize": 22,
+              "minFontSize": 18,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-pipeline.flow",
+            "type": "diagram",
+            "family": "sequence",
+            "preset": "steps",
+            "direction": "horizontal",
+            "items": [
+              "Source",
+              "Land",
+              "Validate",
+              "Transform",
+              "Publish"
+            ],
+            "link": "arrow",
+            "caption": "Happy-path stages",
+            "style": {
+              "fontSize": 18,
+              "minFontSize": 14,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-pipeline.table",
+            "type": "table",
+            "columns": [
+              "Boundary",
+              "Question",
+              "Evidence"
+            ],
+            "rows": [
+              [
+                "Source",
+                "What range should arrive?",
+                "watermark / batch ID"
+              ],
+              [
+                "Landing",
+                "Did bytes/rows arrive intact?",
+                "count + checksum"
+              ],
+              [
+                "Transform",
+                "Did logic preserve grain?",
+                "tests + reconciliation"
+              ],
+              [
+                "Publish",
+                "Is output safe to expose?",
+                "quality gate"
+              ],
+              [
+                "Recovery",
+                "Can we replay safely?",
+                "idempotent key"
+              ]
+            ],
+            "widths": [
+              0.2,
+              0.45,
+              0.35
+            ],
+            "style": {
+              "fontSize": 17,
+              "minFontSize": 14,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-pipeline.box",
+            "type": "box",
+            "variant": "warning",
+            "title": "Common failure",
+            "text": "A successful transport step does not prove the business data is complete or correct.",
+            "style": {
+              "fontSize": 19,
+              "minFontSize": 15,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-pipeline.code",
+            "type": "code",
+            "language": "text",
+            "title": "Run metadata",
+            "code": "run_id\nsource_watermark\nstarted_at\nfinished_at\nrows_in / rows_out\nvalidation_status\nreplay_of",
+            "style": {
+              "fontSize": 17,
+              "minFontSize": 14,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          }
+        ],
+        "frames": {
+          "mock-pipeline.title": {
+            "x": 70,
+            "y": 55,
+            "width": 1060,
+            "height": 90
+          },
+          "mock-pipeline.subtitle": {
+            "x": 70,
+            "y": 150,
+            "width": 1060,
+            "height": 65
+          },
+          "mock-pipeline.flow": {
+            "x": 70,
+            "y": 245,
+            "width": 1060,
+            "height": 220
+          },
+          "mock-pipeline.table": {
+            "x": 70,
+            "y": 500,
+            "width": 1060,
+            "height": 500
+          },
+          "mock-pipeline.box": {
+            "x": 70,
+            "y": 1030,
+            "width": 1060,
+            "height": 170
+          },
+          "mock-pipeline.code": {
+            "x": 70,
+            "y": 1230,
+            "width": 1060,
+            "height": 300
+          }
+        },
+        "outline": [
+          {
+            "id": "mock-pipeline.out.flow",
+            "label": "Pipeline stages",
+            "blockId": "mock-pipeline.flow"
+          },
+          {
+            "id": "mock-pipeline.out.controls",
+            "label": "Controls",
+            "blockId": "mock-pipeline.table"
+          },
+          {
+            "id": "mock-pipeline.out.metadata",
+            "label": "Run metadata",
+            "blockId": "mock-pipeline.code"
+          }
+        ]
+      }
+    ]
+  },
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "cheatsheet",
+    "mock",
+    "sample"
+  ],
+  "provenance": "Original synthetic cheatsheet created for AtlasNote UI testing. No private data or third-party assets."
+}

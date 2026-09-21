@@ -24,6 +24,21 @@
         "id": "node.cheatsheet.pandas-essentials",
         "title": "pandas Essentials",
         "pageId": "page.cheatsheet.pandas-essentials"
+      },
+      {
+        "id": "node.cheatsheet.mock.pipeline",
+        "title": "Mock / Reliable data pipeline",
+        "pageId": "page.cheatsheet.mock.pipeline"
+      },
+      {
+        "id": "node.cheatsheet.mock.scd2",
+        "title": "Mock / SCD Type 2",
+        "pageId": "page.cheatsheet.mock.scd2"
+      },
+      {
+        "id": "node.cheatsheet.mock.python",
+        "title": "Mock / Python collections",
+        "pageId": "page.cheatsheet.mock.python"
       }
     ]
   }

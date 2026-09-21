@@ -1,0 +1,223 @@
+{
+  "id": "page.cheatsheet.mock.python",
+  "kind": "cheatsheet",
+  "title": "Python Collections",
+  "summary": "List, dict, set and tuple at a glance",
+  "blocks": [],
+  "cheatsheet": {
+    "schemaVersion": "1.1",
+    "id": "mock-python-collections",
+    "title": "Python Collections",
+    "subtitle": "List, dict, set and tuple at a glance",
+    "pageSize": {
+      "width": 1200,
+      "height": 1600
+    },
+    "meta": {
+      "audience": "AtlasNote UI testing",
+      "goal": "Exercise fixed-page cheatsheet rendering, navigation and search",
+      "difficulty": "intro",
+      "provenance": "Original synthetic cheatsheet created for AtlasNote UI testing. No private data or third-party assets.",
+      "preset": "summary"
+    },
+    "theme": {
+      "name": "atlas-calm"
+    },
+    "pages": [
+      {
+        "id": "mock-python-collections.p1",
+        "title": "Python Collections",
+        "blocks": [
+          {
+            "id": "mock-python.title",
+            "type": "text",
+            "role": "title",
+            "text": "Python Collections",
+            "style": {
+              "fontSize": 40,
+              "minFontSize": 36,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-python.table",
+            "type": "table",
+            "columns": [
+              "Type",
+              "Ordered",
+              "Mutable",
+              "Typical use"
+            ],
+            "rows": [
+              [
+                "list",
+                "yes",
+                "yes",
+                "sequence of values"
+              ],
+              [
+                "dict",
+                "insertion order",
+                "yes",
+                "key → value lookup"
+              ],
+              [
+                "set",
+                "no semantic order",
+                "yes",
+                "membership / uniqueness"
+              ],
+              [
+                "tuple",
+                "yes",
+                "no",
+                "fixed record-like grouping"
+              ]
+            ],
+            "widths": [
+              0.18,
+              0.22,
+              0.18,
+              0.42
+            ],
+            "style": {
+              "fontSize": 18,
+              "minFontSize": 14,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-python.code",
+            "type": "code",
+            "language": "python",
+            "title": "Small example",
+            "code": "rows = [{\"id\": 1, \"status\": \"ok\"}, {\"id\": 2, \"status\": \"bad\"}]\nby_id = {r[\"id\"]: r for r in rows}\nstatuses = {r[\"status\"] for r in rows}\nfirst_id = rows[0][\"id\"]",
+            "style": {
+              "fontSize": 17,
+              "minFontSize": 14,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-python.rules",
+            "type": "list",
+            "items": [
+              "Use a list when position/order matters.",
+              "Use a dict when a stable key should find a value quickly.",
+              "Use a set for uniqueness or membership tests.",
+              "Use a tuple when the grouping should not be mutated."
+            ],
+            "gap": 18,
+            "style": {
+              "fontSize": 20,
+              "minFontSize": 16,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-python.trap",
+            "type": "box",
+            "variant": "warning",
+            "title": "Interview trap",
+            "text": "Do not choose a structure only from habit. State the operation you need: ordered iteration, lookup, membership, deduplication or immutable grouping.",
+            "style": {
+              "fontSize": 19,
+              "minFontSize": 15,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-python.sequence",
+            "type": "diagram",
+            "family": "sequence",
+            "preset": "array",
+            "direction": "horizontal",
+            "items": [
+              "rows[0]",
+              "rows[1]",
+              "rows[2]",
+              "..."
+            ],
+            "link": "none",
+            "caption": "List positions",
+            "style": {
+              "fontSize": 18,
+              "minFontSize": 14,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          }
+        ],
+        "frames": {
+          "mock-python.title": {
+            "x": 70,
+            "y": 55,
+            "width": 1060,
+            "height": 90
+          },
+          "mock-python.table": {
+            "x": 70,
+            "y": 180,
+            "width": 1060,
+            "height": 390
+          },
+          "mock-python.code": {
+            "x": 70,
+            "y": 600,
+            "width": 1060,
+            "height": 320
+          },
+          "mock-python.rules": {
+            "x": 70,
+            "y": 950,
+            "width": 1060,
+            "height": 280
+          },
+          "mock-python.trap": {
+            "x": 70,
+            "y": 1260,
+            "width": 1060,
+            "height": 180
+          },
+          "mock-python.sequence": {
+            "x": 70,
+            "y": 1460,
+            "width": 1060,
+            "height": 100
+          }
+        },
+        "outline": [
+          {
+            "id": "mock-python.out.table",
+            "label": "Collection comparison",
+            "blockId": "mock-python.table"
+          },
+          {
+            "id": "mock-python.out.code",
+            "label": "Example",
+            "blockId": "mock-python.code"
+          },
+          {
+            "id": "mock-python.out.rules",
+            "label": "Selection rules",
+            "blockId": "mock-python.rules"
+          }
+        ]
+      }
+    ]
+  },
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "cheatsheet",
+    "mock",
+    "sample"
+  ],
+  "provenance": "Original synthetic cheatsheet created for AtlasNote UI testing. No private data or third-party assets."
+}
