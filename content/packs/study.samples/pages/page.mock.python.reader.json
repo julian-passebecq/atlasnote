@@ -1,0 +1,102 @@
+{
+  "id": "page.mock.python.reader",
+  "title": "Long reader stress page",
+  "summary": "A longer synthetic page combining sections, tables, lists and code so scrolling and layout are easier to exercise.",
+  "blocks": [
+    {
+      "id": "block.mock.python.reader.section1",
+      "type": "section",
+      "title": "Dataset assumptions",
+      "children": [
+        {
+          "id": "block.mock.python.reader.list",
+          "type": "list",
+          "ordered": true,
+          "items": [
+            "Rows represent events.",
+            "event_id is unique.",
+            "event_time is UTC.",
+            "amount may be null."
+          ]
+        },
+        {
+          "id": "block.mock.python.reader.table",
+          "type": "table",
+          "columns": [
+            "Column",
+            "Type",
+            "Example",
+            "Nullable"
+          ],
+          "rows": [
+            [
+              "event_id",
+              "string",
+              "evt-001",
+              "no"
+            ],
+            [
+              "event_time",
+              "timestamp",
+              "2026-09-21T08:00:00Z",
+              "no"
+            ],
+            [
+              "category",
+              "string",
+              "purchase",
+              "no"
+            ],
+            [
+              "amount",
+              "decimal",
+              "42.50",
+              "yes"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "block.mock.python.reader.section2",
+      "type": "section",
+      "title": "Transform",
+      "children": [
+        {
+          "id": "block.mock.python.reader.code",
+          "type": "code",
+          "language": "python",
+          "code": "clean = [r for r in rows if r.get(\"event_id\")]\namounts = [r[\"amount\"] for r in clean if r.get(\"amount\") is not None]",
+          "title": "Small transformation"
+        },
+        {
+          "id": "block.mock.python.reader.callout",
+          "type": "callout",
+          "title": "Mock content",
+          "text": "These rows are invented only to exercise AtlasNote. They are not production records.",
+          "tone": "warning"
+        }
+      ]
+    },
+    {
+      "id": "block.mock.python.reader.separator",
+      "type": "separator"
+    },
+    {
+      "id": "block.mock.python.reader.notes",
+      "type": "markdown",
+      "text": "Scroll through this page, switch panes, change font size, toggle the reader chrome and use browser zoom. The goal is to expose layout regressions with content that is longer than the original miniature samples."
+    }
+  ],
+  "related": [
+    "page.mock.python.functions"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:en"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}
