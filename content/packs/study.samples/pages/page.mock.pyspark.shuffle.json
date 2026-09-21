@@ -1,0 +1,48 @@
+{
+  "id": "page.mock.pyspark.shuffle",
+  "title": "Shuffle and skew",
+  "summary": "Synthetic PySpark notes designed to exercise longer code and list blocks.",
+  "blocks": [
+    {
+      "id": "block.mock.pyspark.shuffle.md",
+      "type": "markdown",
+      "text": "A shuffle moves data between partitions. Large or uneven keys can make one task much slower than the others."
+    },
+    {
+      "id": "block.mock.pyspark.shuffle.code",
+      "type": "code",
+      "language": "python",
+      "title": "Illustrative aggregation",
+      "code": "from pyspark.sql import functions as F\n\nsummary = (\n    events.groupBy(\"customer_id\")\n          .agg(F.count(\"*\").alias(\"events\"),\n               F.sum(\"amount\").alias(\"amount\"))\n)\nsummary.explain(\"formatted\")"
+    },
+    {
+      "id": "block.mock.pyspark.shuffle.list",
+      "type": "list",
+      "items": [
+        "Inspect partition sizes.",
+        "Look for hot keys.",
+        "Check the physical plan.",
+        "Compare task duration and shuffle read/write.",
+        "Repartition only with a reason."
+      ]
+    },
+    {
+      "id": "block.mock.pyspark.shuffle.warning",
+      "type": "callout",
+      "title": "Important",
+      "text": "This code is illustrative mock content; AtlasNote does not execute Spark here.",
+      "tone": "warning"
+    }
+  ],
+  "related": [
+    "page.samples.pyspark.transform"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:en"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}
