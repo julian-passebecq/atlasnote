@@ -1,0 +1,41 @@
+{
+  "id": "page.mock.sql.windows",
+  "title": "Window functions",
+  "summary": "A second SQL mock page for navigation and search testing.",
+  "blocks": [
+    {
+      "id": "block.mock.sql.windows.code",
+      "type": "code",
+      "language": "sql",
+      "title": "Latest row per customer",
+      "code": "SELECT customer_id, status, updated_at\nFROM (\n  SELECT *, ROW_NUMBER() OVER (\n    PARTITION BY customer_id\n    ORDER BY updated_at DESC, event_id DESC\n  ) AS rn\n  FROM customer_events\n) s\nWHERE rn = 1;"
+    },
+    {
+      "id": "block.mock.sql.windows.list",
+      "type": "list",
+      "items": [
+        "PARTITION BY defines the group.",
+        "ORDER BY defines rank order inside the group.",
+        "A deterministic tie-breaker avoids unstable results."
+      ]
+    },
+    {
+      "id": "block.mock.sql.windows.callout",
+      "type": "callout",
+      "title": "Interview trap",
+      "text": "ROW_NUMBER chooses one row; RANK may return ties. Choose based on the required semantics.",
+      "tone": "info"
+    }
+  ],
+  "related": [
+    "page.mock.sql.joins"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:en"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}

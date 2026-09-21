@@ -1,0 +1,77 @@
+{
+  "id": "page.mock.personal.weekly",
+  "title": "Weekly test note",
+  "summary": "A neutral mock personal note for exercising editing, history and layout without using real personal information.",
+  "blocks": [
+    {
+      "id": "block.mock.personal.weekly.md",
+      "type": "markdown",
+      "text": "This is intentionally synthetic. Edit it, create versions, compare revisions, bookmark it and restore an older revision."
+    },
+    {
+      "id": "block.mock.personal.weekly.list",
+      "type": "list",
+      "items": [
+        "Review one technical topic.",
+        "Write one short summary.",
+        "Test one AtlasNote feature.",
+        "Archive an obsolete draft.",
+        "Export a backup after meaningful changes."
+      ]
+    },
+    {
+      "id": "block.mock.personal.weekly.table",
+      "type": "table",
+      "columns": [
+        "Day",
+        "Mock focus",
+        "Status"
+      ],
+      "rows": [
+        [
+          "Monday",
+          "Python",
+          "planned"
+        ],
+        [
+          "Tuesday",
+          "SQL",
+          "planned"
+        ],
+        [
+          "Wednesday",
+          "Spark",
+          "planned"
+        ],
+        [
+          "Thursday",
+          "Cloud",
+          "planned"
+        ],
+        [
+          "Friday",
+          "Review",
+          "planned"
+        ]
+      ]
+    },
+    {
+      "id": "block.mock.personal.weekly.callout",
+      "type": "callout",
+      "title": "Safe to edit",
+      "text": "This page contains no real personal data. Use it freely to exercise history and editing flows.",
+      "tone": "info"
+    }
+  ],
+  "related": [
+    "page.samples.personal.scratchpad"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:en"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}

@@ -1,0 +1,45 @@
+{
+  "id": "page.mock.python.functions",
+  "title": "Functions and exceptions",
+  "summary": "A mixed-block Python page for reader, search and code rendering tests.",
+  "blocks": [
+    {
+      "id": "block.mock.python.functions.intro",
+      "type": "markdown",
+      "text": "Use small functions with explicit inputs and outputs. Handle only errors you understand."
+    },
+    {
+      "id": "block.mock.python.functions.code",
+      "type": "code",
+      "language": "python",
+      "title": "Parse a positive integer",
+      "code": "def parse_positive(value: str) -> int:\n    number = int(value)\n    if number <= 0:\n        raise ValueError(\"expected a positive integer\")\n    return number",
+      "explanation": "The conversion and domain validation fail for different reasons."
+    },
+    {
+      "id": "block.mock.python.functions.warning",
+      "type": "callout",
+      "title": "Testing idea",
+      "text": "Try search, copy, selection, history, split-pane and narrow-window rendering on this page.",
+      "tone": "info"
+    },
+    {
+      "id": "block.mock.python.functions.question",
+      "type": "question",
+      "question": "Why avoid a bare except clause?",
+      "answer": "It catches errors you may not intend to handle and can hide programming mistakes.",
+      "followUp": "Which exception would you catch around int(value)?"
+    }
+  ],
+  "related": [
+    "page.samples.python.collections"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:en"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}

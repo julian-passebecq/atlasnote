@@ -1,0 +1,43 @@
+{
+  "id": "page.mock.norsk.work",
+  "title": "Norsk på jobb",
+  "summary": "Bilingual mock notes for testing language rendering and search.",
+  "blocks": [
+    {
+      "id": "block.mock.norsk.work.bi1",
+      "type": "bilingual",
+      "no": "Jeg bygger datapipelines som henter, validerer og transformerer data.",
+      "en": "I build data pipelines that ingest, validate and transform data.",
+      "hint": "å hente = to fetch / ingest; å validere = to validate"
+    },
+    {
+      "id": "block.mock.norsk.work.bi2",
+      "type": "bilingual",
+      "no": "Når noe feiler, sjekker jeg først logger, datakvalitet og avhengigheter.",
+      "en": "When something fails, I first check logs, data quality and dependencies.",
+      "hint": "noe feiler = something fails"
+    },
+    {
+      "id": "block.mock.norsk.work.list",
+      "type": "list",
+      "items": [
+        "datakilde — data source",
+        "datakvalitet — data quality",
+        "arbeidsflyt — workflow",
+        "feilhåndtering — error handling",
+        "avhengighet — dependency"
+      ]
+    }
+  ],
+  "related": [
+    "page.samples.norsk.sentences"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:nb"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}

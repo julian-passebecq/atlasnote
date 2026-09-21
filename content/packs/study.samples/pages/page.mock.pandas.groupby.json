@@ -1,0 +1,58 @@
+{
+  "id": "page.mock.pandas.groupby",
+  "title": "GroupBy and merge",
+  "summary": "Synthetic Pandas content for code and table rendering.",
+  "blocks": [
+    {
+      "id": "block.mock.pandas.groupby.code",
+      "type": "code",
+      "language": "python",
+      "title": "Aggregate and merge",
+      "code": "totals = (\n    orders.groupby(\"customer_id\", as_index=False)\n          .agg(order_count=(\"order_id\", \"nunique\"),\n               revenue=(\"amount\", \"sum\"))\n)\nresult = customers.merge(totals, on=\"customer_id\", how=\"left\")"
+    },
+    {
+      "id": "block.mock.pandas.groupby.table",
+      "type": "table",
+      "columns": [
+        "Check",
+        "Reason"
+      ],
+      "rows": [
+        [
+          "dtypes",
+          "String/numeric mismatches can break joins."
+        ],
+        [
+          "duplicates",
+          "Unexpected duplicate keys can multiply rows."
+        ],
+        [
+          "nulls",
+          "Missing group keys and amounts need an explicit policy."
+        ],
+        [
+          "row count",
+          "Validate before and after merge."
+        ]
+      ]
+    },
+    {
+      "id": "block.mock.pandas.groupby.callout",
+      "type": "callout",
+      "title": "Mock test",
+      "text": "Try selecting text, opening in a second pane, bookmarking and searching for revenue.",
+      "tone": "info"
+    }
+  ],
+  "related": [
+    "page.samples.pandas.filter"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:en"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}
