@@ -1,1 +1,237 @@
-[]
+[
+  {
+    "id": "term.mock.python.list",
+    "label": "list",
+    "definition": "An ordered, mutable Python collection.",
+    "example": "rows = [1, 2, 3]",
+    "pageIds": [
+      "page.samples.python.collections",
+      "page.mock.python.reader"
+    ]
+  },
+  {
+    "id": "term.mock.python.dict",
+    "label": "dictionary",
+    "definition": "A Python mapping from unique keys to values.",
+    "example": "by_id = {1: \"Ada\"}",
+    "pageIds": [
+      "page.samples.python.collections",
+      "page.mock.python.functions"
+    ]
+  },
+  {
+    "id": "term.mock.python.set",
+    "label": "set",
+    "definition": "A collection of unique hashable values, useful for membership and deduplication.",
+    "example": "statuses = {\"ok\", \"bad\"}",
+    "pageIds": [
+      "page.mock.python.reader"
+    ]
+  },
+  {
+    "id": "term.mock.python.exception",
+    "label": "exception",
+    "definition": "A runtime error object that can be raised and handled explicitly.",
+    "example": "raise ValueError(\"bad input\")",
+    "pageIds": [
+      "page.mock.python.functions"
+    ]
+  },
+  {
+    "id": "term.mock.sql.grain",
+    "label": "grain",
+    "definition": "The exact business meaning of one row in a dataset or query result.",
+    "example": "one row per order",
+    "pageIds": [
+      "page.mock.sql.joins",
+      "page.interview.sql-q2"
+    ]
+  },
+  {
+    "id": "term.mock.sql.having",
+    "label": "HAVING",
+    "definition": "A SQL clause that filters groups after aggregation.",
+    "example": "HAVING COUNT(*) > 1",
+    "pageIds": [
+      "page.samples.sql.select",
+      "page.mock.sql.joins"
+    ]
+  },
+  {
+    "id": "term.mock.sql.window",
+    "label": "window function",
+    "definition": "A SQL calculation across related rows that preserves the input row count.",
+    "example": "ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY updated_at DESC)",
+    "pageIds": [
+      "page.mock.sql.windows",
+      "page.interview.sql-q3"
+    ]
+  },
+  {
+    "id": "term.mock.sql.fanout",
+    "label": "join fan-out",
+    "definition": "Row multiplication caused by matching one input row to multiple rows on the other side of a join.",
+    "example": "one order joined to three order lines becomes three rows",
+    "pageIds": [
+      "page.mock.sql.joins",
+      "page.interview.hybrid-fanout"
+    ]
+  },
+  {
+    "id": "term.mock.pandas.groupby",
+    "label": "groupby",
+    "definition": "A Pandas split-apply-combine operation used to aggregate rows by one or more keys.",
+    "example": "df.groupby(\"customer_id\").agg(...)",
+    "pageIds": [
+      "page.mock.pandas.groupby",
+      "page.samples.pandas.filter"
+    ]
+  },
+  {
+    "id": "term.mock.pandas.merge",
+    "label": "merge",
+    "definition": "A Pandas join operation that combines DataFrames using key columns.",
+    "example": "left.merge(right, on=\"customer_id\", how=\"left\")",
+    "pageIds": [
+      "page.mock.pandas.groupby"
+    ]
+  },
+  {
+    "id": "term.mock.spark.shuffle",
+    "label": "shuffle",
+    "definition": "Redistribution of Spark records across partitions, commonly caused by grouping or joins.",
+    "example": "groupBy(\"customer_id\")",
+    "pageIds": [
+      "page.mock.pyspark.shuffle",
+      "page.interview.hybrid-lazy"
+    ]
+  },
+  {
+    "id": "term.mock.spark.skew",
+    "label": "data skew",
+    "definition": "Uneven distribution of records across keys or partitions that can create slow straggler tasks.",
+    "example": "one hot customer_id owns most rows",
+    "pageIds": [
+      "page.mock.pyspark.shuffle"
+    ]
+  },
+  {
+    "id": "term.mock.spark.lazy",
+    "label": "lazy evaluation",
+    "definition": "Spark transformations build a plan; execution normally starts only when an action requires a result.",
+    "example": "df.filter(...).select(...) is planned before count()",
+    "pageIds": [
+      "page.samples.pyspark.transform",
+      "page.interview.hybrid-lazy"
+    ]
+  },
+  {
+    "id": "term.mock.pipeline.idempotency",
+    "label": "idempotency",
+    "definition": "A property where repeating the same logical operation does not create additional unintended effects.",
+    "example": "reloading the same daily partition yields one correct partition",
+    "pageIds": [
+      "page.mock.azure.reliability",
+      "page.interview.hybrid-retry"
+    ]
+  },
+  {
+    "id": "term.mock.pipeline.watermark",
+    "label": "watermark",
+    "definition": "A recorded boundary that identifies how far a source has been processed.",
+    "example": "last_processed_timestamp = 2026-09-20T23:00:00Z",
+    "pageIds": [
+      "page.mock.azure.reliability"
+    ]
+  },
+  {
+    "id": "term.mock.pipeline.replay",
+    "label": "replay",
+    "definition": "Reprocessing a known source range or batch after failure or correction.",
+    "example": "rerun batch 2026-09-20 after fixing a transient sink error",
+    "pageIds": [
+      "page.mock.azure.reliability",
+      "page.interview.hybrid-retry"
+    ]
+  },
+  {
+    "id": "term.mock.databricks.bronze",
+    "label": "Bronze layer",
+    "definition": "A medallion layer that keeps source-shaped or minimally processed data.",
+    "example": "raw_events",
+    "pageIds": [
+      "page.mock.databricks.medallion",
+      "page.interview.theory-medallion"
+    ]
+  },
+  {
+    "id": "term.mock.databricks.silver",
+    "label": "Silver layer",
+    "definition": "A medallion layer for cleaned, validated and conformed data.",
+    "example": "events_clean",
+    "pageIds": [
+      "page.mock.databricks.medallion",
+      "page.interview.theory-medallion"
+    ]
+  },
+  {
+    "id": "term.mock.databricks.gold",
+    "label": "Gold layer",
+    "definition": "A medallion layer optimized for business consumption or analytics use cases.",
+    "example": "daily_kpis",
+    "pageIds": [
+      "page.mock.databricks.medallion",
+      "page.interview.theory-medallion"
+    ]
+  },
+  {
+    "id": "term.mock.model.scd2",
+    "label": "SCD Type 2",
+    "definition": "A dimensional modeling technique that preserves historical versions of changed dimension attributes.",
+    "example": "new surrogate key and validity range for each customer version",
+    "pageIds": [
+      "page.interview.hybrid-fanout"
+    ]
+  },
+  {
+    "id": "term.mock.norsk.datakilde",
+    "label": "datakilde",
+    "definition": "Norwegian term for data source.",
+    "translation": "data source",
+    "example": "Vi leser data fra en ekstern datakilde.",
+    "pageIds": [
+      "page.mock.norsk.work",
+      "page.samples.norsk.sentences"
+    ]
+  },
+  {
+    "id": "term.mock.norsk.datakvalitet",
+    "label": "datakvalitet",
+    "definition": "Norwegian term for data quality.",
+    "translation": "data quality",
+    "example": "Vi kontrollerer datakvaliteten før publisering.",
+    "pageIds": [
+      "page.mock.norsk.work"
+    ]
+  },
+  {
+    "id": "term.mock.norsk.arbeidsflyt",
+    "label": "arbeidsflyt",
+    "definition": "Norwegian term for workflow.",
+    "translation": "workflow",
+    "example": "Arbeidsflyten kjører hver natt.",
+    "pageIds": [
+      "page.mock.norsk.work"
+    ]
+  },
+  {
+    "id": "term.mock.interview.star",
+    "label": "STAR",
+    "definition": "A structured interview answer format: Situation, Task, Action, Result.",
+    "example": "Describe the context, your responsibility, your actions and the measurable outcome.",
+    "pageIds": [
+      "page.mock.job.star",
+      "page.samples.job.explain"
+    ]
+  }
+]
