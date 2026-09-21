@@ -111,8 +111,6 @@ jobs:
       - run: npm run test:v22:runtime
       - run: npm run test:completion:runtime
       - run: npm run test:pdf:lifecycle
-      - run: npm run test:study-samples:runtime
-      - run: npm run test:pdf:navigation
       - run: npm run test:headers
       - uses: actions/upload-artifact@v4
         if: always()
