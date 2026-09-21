@@ -1,0 +1,85 @@
+{
+  "id": "page.mockhub.article.debug",
+  "kind": "article",
+  "title": "Mock article / Debugging a warehouse load",
+  "summary": "A synthetic troubleshooting walkthrough for exercising Article navigation.",
+  "blocks": [
+    {
+      "id": "mockhub.article.debug.intro",
+      "type": "markdown",
+      "text": "Start an incident from observable symptoms, then narrow the failing boundary. Avoid changing several systems at once before you understand whether the issue is transport, schema, data quality or downstream semantics."
+    },
+    {
+      "id": "mockhub.article.debug.steps",
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Capture the failed run ID and time window.",
+        "Compare source and landed row counts.",
+        "Check schema drift and rejected records.",
+        "Inspect transformation logs and partition/watermark boundaries.",
+        "Reconcile target counts and key uniqueness.",
+        "Only then choose replay, repair or rollback."
+      ]
+    },
+    {
+      "id": "mockhub.article.debug.table",
+      "type": "table",
+      "columns": [
+        "Symptom",
+        "First evidence"
+      ],
+      "rows": [
+        [
+          "Missing rows",
+          "source vs landed counts"
+        ],
+        [
+          "Duplicate rows",
+          "business-key multiplicity"
+        ],
+        [
+          "Slow load",
+          "stage/task timings and data volume"
+        ],
+        [
+          "Wrong KPI",
+          "grain, filters and join cardinality"
+        ]
+      ]
+    },
+    {
+      "id": "mockhub.article.debug.callout",
+      "type": "callout",
+      "title": "Operational rule",
+      "text": "A fix is not complete until you can explain why the failure happened and how the recovery avoided additional damage.",
+      "tone": "info"
+    }
+  ],
+  "article": {
+    "id": "page.mockhub.article.debug",
+    "title": "Mock article / Debugging a warehouse load",
+    "publisher": "AtlasNote synthetic playground",
+    "sourceType": "article",
+    "taxonomy": {
+      "subject": "job",
+      "path": [
+        "Mock playground",
+        "Mock article / Debugging a warehouse load"
+      ]
+    },
+    "status": "unread",
+    "addedAt": 1789948800000
+  },
+  "related": [
+    "page.interview.theory-behavioral"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "mock",
+    "sample",
+    "article"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data, credentials or third-party content."
+}

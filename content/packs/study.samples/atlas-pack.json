@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "payloadSchema": "atlas.bundle@2",
   "id": "study.samples",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "title": "AtlasNote study starters",
   "visibility": "public",
   "files": {
@@ -15,6 +15,6 @@
   "assets": [],
   "provenance": {
     "kind": "author-created",
-    "note": "Original small sample notebooks only. No private content, credentials or third-party PDF copies."
+    "note": "Original small sample notebooks plus synthetic UI playground pages and glossary terms. No private content, credentials or third-party PDF copies."
   }
 }

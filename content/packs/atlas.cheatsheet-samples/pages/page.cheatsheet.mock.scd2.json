@@ -1,0 +1,221 @@
+{
+  "id": "page.cheatsheet.mock.scd2",
+  "kind": "cheatsheet",
+  "title": "SCD Type 2",
+  "summary": "Preserve dimension history without losing grain",
+  "blocks": [],
+  "cheatsheet": {
+    "schemaVersion": "1.1",
+    "id": "mock-scd2",
+    "title": "SCD Type 2",
+    "subtitle": "Preserve dimension history without losing grain",
+    "pageSize": {
+      "width": 1200,
+      "height": 1600
+    },
+    "meta": {
+      "audience": "AtlasNote UI testing",
+      "goal": "Exercise fixed-page cheatsheet rendering, navigation and search",
+      "difficulty": "intermediate",
+      "provenance": "Original synthetic cheatsheet created for AtlasNote UI testing. No private data or third-party assets.",
+      "preset": "summary"
+    },
+    "theme": {
+      "name": "atlas-calm"
+    },
+    "pages": [
+      {
+        "id": "mock-scd2.p1",
+        "title": "SCD Type 2",
+        "blocks": [
+          {
+            "id": "mock-scd2.title",
+            "type": "text",
+            "role": "title",
+            "text": "SCD Type 2",
+            "style": {
+              "fontSize": 40,
+              "minFontSize": 36,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-scd2.mental",
+            "type": "box",
+            "variant": "note",
+            "title": "Mental model",
+            "text": "Same business entity, multiple historical rows. Each version has its own surrogate key and validity range.",
+            "style": {
+              "fontSize": 20,
+              "minFontSize": 16,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-scd2.table",
+            "type": "table",
+            "columns": [
+              "customer_bk",
+              "customer_sk",
+              "tier",
+              "valid_from",
+              "valid_to",
+              "current"
+            ],
+            "rows": [
+              [
+                "C100",
+                "501",
+                "Silver",
+                "2026-01-01",
+                "2026-06-30",
+                "no"
+              ],
+              [
+                "C100",
+                "884",
+                "Gold",
+                "2026-07-01",
+                "9999-12-31",
+                "yes"
+              ],
+              [
+                "C200",
+                "612",
+                "Bronze",
+                "2026-03-15",
+                "9999-12-31",
+                "yes"
+              ]
+            ],
+            "widths": [
+              0.17,
+              0.17,
+              0.14,
+              0.18,
+              0.18,
+              0.16
+            ],
+            "style": {
+              "fontSize": 16,
+              "minFontSize": 14,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-scd2.steps",
+            "type": "list",
+            "ordered": true,
+            "items": [
+              "Match incoming row on the business key.",
+              "Compare tracked attributes with the current dimension version.",
+              "Expire the current version when a meaningful change occurs.",
+              "Insert a new version with a new surrogate key.",
+              "Resolve facts to the version valid at event time."
+            ],
+            "gap": 18,
+            "style": {
+              "fontSize": 20,
+              "minFontSize": 16,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-scd2.traps",
+            "type": "box",
+            "variant": "warning",
+            "title": "Traps",
+            "text": "Updating the current row in place destroys history. Joining a fact to every historical version creates fan-out.",
+            "style": {
+              "fontSize": 19,
+              "minFontSize": 15,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          },
+          {
+            "id": "mock-scd2.code",
+            "type": "code",
+            "language": "sql",
+            "title": "Validity predicate",
+            "code": "fact.event_time >= dim.valid_from\nAND fact.event_time < dim.valid_to",
+            "style": {
+              "fontSize": 18,
+              "minFontSize": 14,
+              "overflow": "shrink",
+              "lineHeight": 1.25
+            }
+          }
+        ],
+        "frames": {
+          "mock-scd2.title": {
+            "x": 70,
+            "y": 55,
+            "width": 1060,
+            "height": 90
+          },
+          "mock-scd2.mental": {
+            "x": 70,
+            "y": 170,
+            "width": 1060,
+            "height": 170
+          },
+          "mock-scd2.table": {
+            "x": 70,
+            "y": 375,
+            "width": 1060,
+            "height": 350
+          },
+          "mock-scd2.steps": {
+            "x": 70,
+            "y": 755,
+            "width": 1060,
+            "height": 390
+          },
+          "mock-scd2.traps": {
+            "x": 70,
+            "y": 1170,
+            "width": 1060,
+            "height": 170
+          },
+          "mock-scd2.code": {
+            "x": 70,
+            "y": 1360,
+            "width": 1060,
+            "height": 170
+          }
+        },
+        "outline": [
+          {
+            "id": "mock-scd2.out.model",
+            "label": "Mental model",
+            "blockId": "mock-scd2.mental"
+          },
+          {
+            "id": "mock-scd2.out.steps",
+            "label": "Load steps",
+            "blockId": "mock-scd2.steps"
+          },
+          {
+            "id": "mock-scd2.out.traps",
+            "label": "Traps",
+            "blockId": "mock-scd2.traps"
+          }
+        ]
+      }
+    ]
+  },
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "cheatsheet",
+    "mock",
+    "sample"
+  ],
+  "provenance": "Original synthetic cheatsheet created for AtlasNote UI testing. No private data or third-party assets."
+}

@@ -1,0 +1,63 @@
+{
+  "id": "page.mock.sql.joins",
+  "title": "Joins and grain",
+  "summary": "A synthetic SQL example for checking code, tables and explanatory blocks.",
+  "blocks": [
+    {
+      "id": "block.mock.sql.joins.md",
+      "type": "markdown",
+      "text": "State the grain of each table before joining. One-to-many joins can multiply rows."
+    },
+    {
+      "id": "block.mock.sql.joins.table",
+      "type": "table",
+      "columns": [
+        "Table",
+        "Grain",
+        "Key"
+      ],
+      "rows": [
+        [
+          "orders",
+          "one row per order",
+          "order_id"
+        ],
+        [
+          "order_lines",
+          "one row per order line",
+          "order_id + line_id"
+        ],
+        [
+          "customers",
+          "one row per customer",
+          "customer_id"
+        ]
+      ]
+    },
+    {
+      "id": "block.mock.sql.joins.code",
+      "type": "code",
+      "language": "sql",
+      "title": "Aggregate lines before joining",
+      "code": "WITH line_totals AS (\n  SELECT order_id, SUM(quantity * unit_price) AS line_amount\n  FROM order_lines\n  GROUP BY order_id\n)\nSELECT o.order_id, o.customer_id, l.line_amount\nFROM orders o\nLEFT JOIN line_totals l USING (order_id);"
+    },
+    {
+      "id": "block.mock.sql.joins.q",
+      "type": "question",
+      "question": "What should you check after a join?",
+      "answer": "Check row counts, key uniqueness at the intended grain, unmatched keys and aggregate reconciliation.",
+      "followUp": "How would you detect duplicated order_id values?"
+    }
+  ],
+  "related": [
+    "page.samples.sql.select"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:en"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}

@@ -1,0 +1,91 @@
+{
+  "id": "page.mockhub.article.contracts",
+  "kind": "article",
+  "title": "Mock article / Data contracts",
+  "summary": "A synthetic article for testing long-form Article reading, sections and callouts.",
+  "blocks": [
+    {
+      "id": "mockhub.article.contracts.intro",
+      "type": "markdown",
+      "text": "A data contract makes assumptions explicit between producers and consumers. It should describe schema, semantics, ownership and change expectations rather than only file format."
+    },
+    {
+      "id": "mockhub.article.contracts.section",
+      "type": "section",
+      "title": "Minimum useful contract",
+      "children": [
+        {
+          "id": "mockhub.article.contracts.list",
+          "type": "list",
+          "items": [
+            "Dataset owner and contact boundary",
+            "Row grain and business keys",
+            "Required and optional fields",
+            "Allowed nullability and value constraints",
+            "Freshness expectation",
+            "Compatibility policy for schema changes"
+          ]
+        },
+        {
+          "id": "mockhub.article.contracts.table",
+          "type": "table",
+          "columns": [
+            "Change",
+            "Risk",
+            "Typical response"
+          ],
+          "rows": [
+            [
+              "Add nullable column",
+              "low",
+              "backward-compatible review"
+            ],
+            [
+              "Rename field",
+              "high",
+              "version or coordinated migration"
+            ],
+            [
+              "Change grain",
+              "very high",
+              "new contract and consumer migration"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mockhub.article.contracts.callout",
+      "type": "callout",
+      "title": "Testing note",
+      "text": "Use this article to exercise Article view, search, remarks, bookmarks, split panes and history without relying on external content.",
+      "tone": "info"
+    }
+  ],
+  "article": {
+    "id": "page.mockhub.article.contracts",
+    "title": "Mock article / Data contracts",
+    "publisher": "AtlasNote synthetic playground",
+    "sourceType": "article",
+    "taxonomy": {
+      "subject": "it",
+      "path": [
+        "Mock playground",
+        "Mock article / Data contracts"
+      ]
+    },
+    "status": "unread",
+    "addedAt": 1789948800000
+  },
+  "related": [
+    "page.interview.theory-medallion"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "mock",
+    "sample",
+    "article"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data, credentials or third-party content."
+}

@@ -25,6 +25,22 @@
             "pageId": "page.samples.python.collections"
           }
         ]
+      },
+      {
+        "id": "node.mock.python.playground",
+        "title": "Mock playground",
+        "children": [
+          {
+            "id": "node.mock.python.functions",
+            "title": "Functions and exceptions",
+            "pageId": "page.mock.python.functions"
+          },
+          {
+            "id": "node.mock.python.reader",
+            "title": "Long reader stress page",
+            "pageId": "page.mock.python.reader"
+          }
+        ]
       }
     ]
   },
@@ -47,6 +63,22 @@
             "id": "node.samples.sql.select",
             "title": "Select and filter",
             "pageId": "page.samples.sql.select"
+          }
+        ]
+      },
+      {
+        "id": "node.mock.sql.playground",
+        "title": "Mock playground",
+        "children": [
+          {
+            "id": "node.mock.sql.joins",
+            "title": "Joins and grain",
+            "pageId": "page.mock.sql.joins"
+          },
+          {
+            "id": "node.mock.sql.windows",
+            "title": "Window functions",
+            "pageId": "page.mock.sql.windows"
           }
         ]
       }
@@ -73,6 +105,17 @@
             "pageId": "page.samples.pandas.filter"
           }
         ]
+      },
+      {
+        "id": "node.mock.pandas.playground",
+        "title": "Mock playground",
+        "children": [
+          {
+            "id": "node.mock.pandas.groupby",
+            "title": "GroupBy and merge",
+            "pageId": "page.mock.pandas.groupby"
+          }
+        ]
       }
     ]
   },
@@ -95,6 +138,17 @@
             "id": "node.samples.pyspark.transform",
             "title": "Transform then inspect",
             "pageId": "page.samples.pyspark.transform"
+          }
+        ]
+      },
+      {
+        "id": "node.mock.pyspark.playground",
+        "title": "Mock playground",
+        "children": [
+          {
+            "id": "node.mock.pyspark.shuffle",
+            "title": "Shuffle and skew",
+            "pageId": "page.mock.pyspark.shuffle"
           }
         ]
       }
@@ -121,6 +175,17 @@
             "pageId": "page.samples.azure.pipeline"
           }
         ]
+      },
+      {
+        "id": "node.mock.azure.playground",
+        "title": "Mock playground",
+        "children": [
+          {
+            "id": "node.mock.azure.reliability",
+            "title": "Pipeline reliability",
+            "pageId": "page.mock.azure.reliability"
+          }
+        ]
       }
     ]
   },
@@ -143,6 +208,17 @@
             "id": "node.samples.databricks.workflow",
             "title": "Describe a notebook workflow",
             "pageId": "page.samples.databricks.workflow"
+          }
+        ]
+      },
+      {
+        "id": "node.mock.databricks.playground",
+        "title": "Mock playground",
+        "children": [
+          {
+            "id": "node.mock.databricks.medallion",
+            "title": "Medallion and Delta",
+            "pageId": "page.mock.databricks.medallion"
           }
         ]
       }
@@ -169,6 +245,17 @@
             "pageId": "page.samples.norsk.sentences"
           }
         ]
+      },
+      {
+        "id": "node.mock.norsk.playground",
+        "title": "Mock playground",
+        "children": [
+          {
+            "id": "node.mock.norsk.work",
+            "title": "Norsk på jobb",
+            "pageId": "page.mock.norsk.work"
+          }
+        ]
       }
     ]
   },
@@ -193,6 +280,17 @@
             "pageId": "page.samples.job.explain"
           }
         ]
+      },
+      {
+        "id": "node.mock.job.playground",
+        "title": "Mock playground",
+        "children": [
+          {
+            "id": "node.mock.job.star",
+            "title": "STAR project walkthrough",
+            "pageId": "page.mock.job.star"
+          }
+        ]
       }
     ]
   },
@@ -215,6 +313,17 @@
             "id": "node.samples.personal.scratchpad",
             "title": "Study scratchpad",
             "pageId": "page.samples.personal.scratchpad"
+          }
+        ]
+      },
+      {
+        "id": "node.mock.personal.playground",
+        "title": "Mock playground",
+        "children": [
+          {
+            "id": "node.mock.personal.weekly",
+            "title": "Weekly test note",
+            "pageId": "page.mock.personal.weekly"
           }
         ]
       }

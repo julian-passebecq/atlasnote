@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "payloadSchema": "atlas.bundle@2",
   "id": "atlas.interview-samples",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Interview Preparation",
   "visibility": "public",
   "files": {
@@ -15,6 +15,6 @@
   "assets": [],
   "provenance": {
     "kind": "author-created",
-    "note": "Original reasoning-first samples. Canonical SQL prompts supplied by the user; no private library content or third-party assets."
+    "note": "Original reasoning-first samples plus synthetic Article/QCM playground data for AtlasNote UI testing. No private library content, credentials or third-party assets."
   }
 }

@@ -1,0 +1,66 @@
+{
+  "id": "page.mockhub.article.idempotency",
+  "kind": "article",
+  "title": "Mock article / Idempotent pipelines",
+  "summary": "Synthetic long-form notes about retries and replay.",
+  "blocks": [
+    {
+      "id": "mockhub.article.idempotency.intro",
+      "type": "markdown",
+      "text": "A pipeline is easier to operate when rerunning the same logical batch does not create duplicate business effects. Idempotency is therefore a design property of the write boundary, not merely a retry setting."
+    },
+    {
+      "id": "mockhub.article.idempotency.steps",
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Assign a stable batch or source-range identity.",
+        "Write to a staging or deterministic partition.",
+        "Validate the staged result.",
+        "Commit or swap the intended target atomically where possible.",
+        "Record the successful run and source watermark."
+      ]
+    },
+    {
+      "id": "mockhub.article.idempotency.code",
+      "type": "code",
+      "language": "sql",
+      "title": "Illustrative deterministic load boundary",
+      "code": "DELETE FROM fact_daily WHERE business_date = :d;\nINSERT INTO fact_daily\nSELECT * FROM staged_daily\nWHERE business_date = :d;",
+      "explanation": "This is only illustrative; transaction semantics depend on the actual platform."
+    },
+    {
+      "id": "mockhub.article.idempotency.warn",
+      "type": "callout",
+      "title": "Trap",
+      "text": "Retrying a non-idempotent append can duplicate rows even when orchestration reports only one final successful run.",
+      "tone": "warning"
+    }
+  ],
+  "article": {
+    "id": "page.mockhub.article.idempotency",
+    "title": "Mock article / Idempotent pipelines",
+    "publisher": "AtlasNote synthetic playground",
+    "sourceType": "article",
+    "taxonomy": {
+      "subject": "cloud",
+      "path": [
+        "Mock playground",
+        "Mock article / Idempotent pipelines"
+      ]
+    },
+    "status": "unread",
+    "addedAt": 1789948800000
+  },
+  "related": [
+    "page.interview.hybrid-retry"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "mock",
+    "sample",
+    "article"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data, credentials or third-party content."
+}

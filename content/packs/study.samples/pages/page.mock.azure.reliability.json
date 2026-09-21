@@ -1,0 +1,67 @@
+{
+  "id": "page.mock.azure.reliability",
+  "title": "Pipeline reliability",
+  "summary": "A mock cloud pipeline checklist with a compact design table.",
+  "blocks": [
+    {
+      "id": "block.mock.azure.reliability.table",
+      "type": "table",
+      "columns": [
+        "Concern",
+        "Example control"
+      ],
+      "rows": [
+        [
+          "Idempotency",
+          "Write using deterministic batch keys."
+        ],
+        [
+          "Retries",
+          "Retry transient failures with bounded backoff."
+        ],
+        [
+          "Validation",
+          "Check counts, schema and business constraints."
+        ],
+        [
+          "Observability",
+          "Record start, end, rows and failure reason."
+        ],
+        [
+          "Recovery",
+          "Define replay and partial-write behavior."
+        ]
+      ]
+    },
+    {
+      "id": "block.mock.azure.reliability.list",
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Copy raw source data.",
+        "Validate arrival.",
+        "Transform to curated form.",
+        "Publish only after checks pass.",
+        "Record lineage and run metadata."
+      ]
+    },
+    {
+      "id": "block.mock.azure.reliability.question",
+      "type": "question",
+      "question": "Why is a successful copy activity insufficient proof?",
+      "answer": "The activity may succeed while the source is incomplete, stale or semantically wrong.",
+      "followUp": "Which business-level check would you add?"
+    }
+  ],
+  "related": [
+    "page.samples.azure.pipeline"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:en"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}

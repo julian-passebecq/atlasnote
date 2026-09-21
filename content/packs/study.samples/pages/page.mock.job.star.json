@@ -1,0 +1,62 @@
+{
+  "id": "page.mock.job.star",
+  "title": "STAR project walkthrough",
+  "summary": "A synthetic interview page for testing question blocks and long-form reading.",
+  "blocks": [
+    {
+      "id": "block.mock.job.star.table",
+      "type": "table",
+      "columns": [
+        "Part",
+        "Prompt"
+      ],
+      "rows": [
+        [
+          "Situation",
+          "What problem and context existed?"
+        ],
+        [
+          "Task",
+          "What were you responsible for?"
+        ],
+        [
+          "Action",
+          "What did you personally do?"
+        ],
+        [
+          "Result",
+          "What changed and how was it measured?"
+        ]
+      ]
+    },
+    {
+      "id": "block.mock.job.star.q1",
+      "type": "question",
+      "question": "How do you keep the answer technical without becoming too long?",
+      "answer": "Name the architecture and your decisions, then spend detail only on the difficult trade-off or failure you solved.",
+      "followUp": "Can you explain the same example in 60 seconds and 3 minutes?"
+    },
+    {
+      "id": "block.mock.job.star.list",
+      "type": "list",
+      "items": [
+        "State scale with concrete units.",
+        "Separate team work from your contribution.",
+        "Mention one trade-off.",
+        "Give a measurable result where available.",
+        "Finish with what you learned."
+      ]
+    }
+  ],
+  "related": [
+    "page.samples.job.explain"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:en"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}

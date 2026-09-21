@@ -1,0 +1,58 @@
+{
+  "id": "page.mock.databricks.medallion",
+  "title": "Medallion and Delta",
+  "summary": "A synthetic Databricks page with three-layer terminology and SQL.",
+  "blocks": [
+    {
+      "id": "block.mock.databricks.medallion.table",
+      "type": "table",
+      "columns": [
+        "Layer",
+        "Purpose",
+        "Example"
+      ],
+      "rows": [
+        [
+          "Bronze",
+          "Preserve source-shaped data",
+          "raw_events"
+        ],
+        [
+          "Silver",
+          "Clean and conform",
+          "events_clean"
+        ],
+        [
+          "Gold",
+          "Serve business use cases",
+          "daily_kpis"
+        ]
+      ]
+    },
+    {
+      "id": "block.mock.databricks.medallion.code",
+      "type": "code",
+      "language": "sql",
+      "title": "Illustrative merge",
+      "code": "MERGE INTO silver.customers AS t\nUSING updates AS s\nON t.customer_id = s.customer_id\nWHEN MATCHED THEN UPDATE SET *\nWHEN NOT MATCHED THEN INSERT *;"
+    },
+    {
+      "id": "block.mock.databricks.medallion.callout",
+      "type": "callout",
+      "title": "Design question",
+      "text": "Layer names do not replace data contracts. Define grain, keys, schema expectations and retention separately.",
+      "tone": "info"
+    }
+  ],
+  "related": [
+    "page.samples.databricks.workflow"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "sample",
+    "mock",
+    "lang:en"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data or third-party content."
+}

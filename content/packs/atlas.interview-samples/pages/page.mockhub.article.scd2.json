@@ -1,0 +1,87 @@
+{
+  "id": "page.mockhub.article.scd2",
+  "kind": "article",
+  "title": "Mock article / SCD Type 2 reasoning",
+  "summary": "Synthetic SCD2 notes for testing tables and long-form Article content.",
+  "blocks": [
+    {
+      "id": "mockhub.article.scd2.intro",
+      "type": "markdown",
+      "text": "SCD Type 2 keeps multiple historical versions of the same business entity. Each version is valid for a bounded time range and receives its own surrogate key."
+    },
+    {
+      "id": "mockhub.article.scd2.table",
+      "type": "table",
+      "columns": [
+        "customer_bk",
+        "customer_sk",
+        "tier",
+        "valid_from",
+        "valid_to",
+        "is_current"
+      ],
+      "rows": [
+        [
+          "C100",
+          "501",
+          "Silver",
+          "2026-01-01",
+          "2026-06-30",
+          "false"
+        ],
+        [
+          "C100",
+          "884",
+          "Gold",
+          "2026-07-01",
+          "9999-12-31",
+          "true"
+        ]
+      ]
+    },
+    {
+      "id": "mockhub.article.scd2.list",
+      "type": "list",
+      "items": [
+        "Detect meaningful attribute changes.",
+        "Expire the current row.",
+        "Insert a new version.",
+        "Resolve facts to the dimension version valid at event time.",
+        "Keep business and surrogate keys conceptually separate."
+      ]
+    },
+    {
+      "id": "mockhub.article.scd2.callout",
+      "type": "callout",
+      "title": "Common mistake",
+      "text": "Updating the existing dimension row in place destroys history and behaves like Type 1.",
+      "tone": "warning"
+    }
+  ],
+  "article": {
+    "id": "page.mockhub.article.scd2",
+    "title": "Mock article / SCD Type 2 reasoning",
+    "publisher": "AtlasNote synthetic playground",
+    "sourceType": "article",
+    "taxonomy": {
+      "subject": "it",
+      "path": [
+        "Mock playground",
+        "Mock article / SCD Type 2 reasoning"
+      ]
+    },
+    "status": "unread",
+    "addedAt": 1789948800000
+  },
+  "related": [
+    "page.interview.hybrid-fanout"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "mock",
+    "sample",
+    "article"
+  ],
+  "provenance": "Original synthetic mock content created for AtlasNote UI testing. No private data, credentials or third-party content."
+}

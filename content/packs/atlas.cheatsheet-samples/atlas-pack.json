@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "payloadSchema": "atlas.bundle@2",
   "id": "atlas.cheatsheet-samples",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Cheatsheets",
   "visibility": "public",
   "files": {
@@ -20,6 +20,6 @@
   "assets": [],
   "provenance": {
     "kind": "author-created",
-    "note": "Structured reconstructions of user-supplied TEST_PACK and previews. ADF page 1 is explicitly reconstructed from the outline; original grammar JSON was absent. No private library, third-party fonts or embedded preview images."
+    "note": "Structured AtlasNote cheatsheets plus synthetic fixed-page mock sheets for UI testing. No private library, third-party fonts or embedded external images."
   }
 }
