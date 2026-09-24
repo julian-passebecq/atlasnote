@@ -9,6 +9,8 @@ const listeners=new Set<()=>void>();let epoch=0;
 function changed(){epoch++;listeners.forEach(fn=>fn());}
 export const subscribeArchives=(fn:()=>void)=>{listeners.add(fn);return()=>{listeners.delete(fn);};};
 export const archiveAttachmentEpoch=()=>epoch;
+/** Diagnostic only: retained archive subscribers (V3 resolver lifecycle gate). */
+export const archiveListenerCount=()=>listeners.size;
 export async function attachArchive(input:File|Uint8Array,history:HistoryData){const archive=await verifyHistoryArchive(input);assertArchiveAttachment(history,archive);attached.set(archive.descriptor.archiveId,archive as VerifiedArchive);changed();return structuredClone(archive.descriptor);}
 export function detachArchive(archiveId:string){if(attached.delete(archiveId))changed();}
 export function clearArchiveAttachments(){attached.clear();changed();}

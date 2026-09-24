@@ -65,3 +65,17 @@
 .pdf-physical-pages.pdf-grid{display:grid;grid-template-columns:repeat(2,max-content);grid-auto-rows:max-content;justify-content:center;align-items:start;align-content:start;gap:12px;width:max-content;min-width:100%}
 .pdf-physical-pages.pdf-grid.grid-single{grid-template-columns:max-content}
 .pdf-grid .physical-page{min-height:0!important}
+/* V3: one always-reachable physical-page control. Shares the full toolbar's
+   input state and navigation command; shown only when that toolbar is hidden. */
+.integrated-pdf{position:relative}
+.pdf-page-compact{display:none}
+.reader-chrome-hidden .pdf-page-compact{display:flex;align-items:center;gap:4px;position:absolute;right:12px;bottom:12px;z-index:24;padding:3px 6px;background:var(--surface,#fff);color:var(--text,#263648);border:1px solid var(--line,#d9e1ec);border-radius:8px;box-shadow:0 2px 10px #17232f24;font-size:11px;font-variant-numeric:tabular-nums}
+.focus-mode .pdf-page-compact,.reader-chrome-hidden .focus-mode .pdf-page-compact{display:none!important}
+.pdf-page-compact label{display:flex;align-items:center;gap:4px}
+.pdf-page-compact input{width:44px;height:24px;padding:2px 4px;text-align:right;font:inherit}
+.pdf-page-compact .icon-button{width:24px;height:24px;min-height:24px;padding:3px}
+.pdf-page-compact .pdf-page-message{position:absolute;right:0;bottom:calc(100% + 6px);white-space:nowrap}
+.pdf-page-message{font-size:11px;color:#9b1c1c;background:var(--surface,#fff);padding:2px 6px;border-radius:6px;border:1px solid #e7b4b4}
+.pdf-page-range{margin-left:3px;color:var(--muted,#5b6b7d)}
+.pdf-trace-note{font-size:11px;color:var(--muted,#5b6b7d);margin-top:10px}
+@media(max-width:650px){.reader-chrome-hidden .pdf-page-compact{right:8px;bottom:8px}}
