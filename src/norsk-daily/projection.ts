@@ -61,7 +61,9 @@ function articleFor(feed:NorskDailyFeed,item:NorskDailyItem):ProjectedArticle{
   {id:b('vocabulary'),type:'section',title:'Vocabulary (generated)',children:[{id:b('vocabulary.table'),type:'table',columns:vocabColumns,rows:vocabRows}]},
   ...(grammar.length?[{id:b('grammar'),type:'section',title:'Grammar links',children:grammar.map((g,i)=>({id:b('grammar.'+(i+1)),type:'resource-link',label:g.label,...(g.note?{description:g.note.text+' (generated note)'}:{}),target:{kind:'page',pageId:g.pageId}}))} as Block]:[])
  ];
- const tags=[NORSK_TAG.feed,...(synthetic?[NORSK_TAG.synthetic]:[]),'lang:'+item.language,'level:'+item.difficulty,NORSK_TAG.item+item.itemId,NORSK_TAG.revision+item.revision,NORSK_TAG.content+hash,NORSK_TAG.source+feed.source.publisherId+'/'+item.sourceId];
+ // The study day/batch tags place the story in the daily queue. They are not part of the item hash, so an
+ // unchanged story that reappears in a later batch stays 'unchanged' and keeps its first study day.
+ const tags=[NORSK_TAG.feed,...(synthetic?[NORSK_TAG.synthetic]:[]),'lang:'+item.language,'level:'+item.difficulty,NORSK_TAG.item+item.itemId,NORSK_TAG.revision+item.revision,NORSK_TAG.content+hash,NORSK_TAG.source+feed.source.publisherId+'/'+item.sourceId,NORSK_TAG.date+feed.studyDate,NORSK_TAG.batch+feed.batchId];
  const url=item.sourceUrl??undefined;
  const page:Page={id:pageId,title:item.headline.text,summary:'Norsk Daily study item ('+LANGUAGE_LABEL[item.language]+', '+item.difficulty+'). Headline = source wording; translation, paraphrase, vocabulary and notes = generated study text.',
   blocks,related:[],terms:[],sources:[{title:'Headline metadata: '+feed.source.publisher,publisher:feed.source.publisher,...(url?{url}:{}),note:'Only the headline wording is source material. The article body is not mirrored.'}],tags,
