@@ -1,0 +1,32 @@
+{
+  "id": "page.v3seed.adls-gen2-organization-and-access",
+  "title": "ADLS Gen2 organization and access",
+  "summary": "Separate storage layout from access-control design and lifecycle policy.",
+  "blocks": [
+    {
+      "id": "block.v3seed.adls-gen2-organization-and-access.overview",
+      "type": "markdown",
+      "text": "Separate storage layout from access-control design and lifecycle policy."
+    },
+    {
+      "id": "block.v3seed.adls-gen2-organization-and-access.points",
+      "type": "list",
+      "items": [
+        "Use predictable zones such as raw/bronze, refined/silver and curated/gold only when they map to real contracts.",
+        "Prefer Microsoft Entra identities/managed identities over shared account keys.",
+        "Directory ACLs and role assignments solve different layers of authorization.",
+        "Lifecycle policies can move/delete old data, but should respect retention requirements."
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:azure-fabric",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

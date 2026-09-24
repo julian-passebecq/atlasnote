@@ -1,0 +1,33 @@
+{
+  "id": "page.v3seed.troubleshooting-a-slow-pipeline",
+  "title": "Troubleshooting a slow pipeline",
+  "summary": "Diagnose before proposing technology changes.",
+  "blocks": [
+    {
+      "id": "block.v3seed.troubleshooting-a-slow-pipeline.overview",
+      "type": "markdown",
+      "text": "Diagnose before proposing technology changes."
+    },
+    {
+      "id": "block.v3seed.troubleshooting-a-slow-pipeline.points",
+      "type": "list",
+      "items": [
+        "Locate the slow stage/activity/query first.",
+        "Compare current run with a known-good baseline.",
+        "Check input volume and data distribution changes.",
+        "Inspect CPU, memory, I/O, network, spill and retries.",
+        "Change one bottleneck hypothesis at a time and measure again."
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:job",
+    "topic:interview",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

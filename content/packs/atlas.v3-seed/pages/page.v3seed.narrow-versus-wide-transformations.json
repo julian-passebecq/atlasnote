@@ -1,0 +1,39 @@
+{
+  "id": "page.v3seed.narrow-versus-wide-transformations",
+  "title": "Narrow versus wide transformations",
+  "summary": "Classify transformations by whether data must move across partitions.",
+  "blocks": [
+    {
+      "id": "block.v3seed.narrow-versus-wide-transformations.overview",
+      "type": "markdown",
+      "text": "Classify transformations by whether data must move across partitions."
+    },
+    {
+      "id": "block.v3seed.narrow-versus-wide-transformations.points",
+      "type": "list",
+      "items": [
+        "Narrow transformations can compute an output partition from a small number of input partitions.",
+        "Wide transformations such as groupBy or many joins generally require a shuffle.",
+        "Shuffles cost network, serialization, disk and scheduling time.",
+        "Avoiding every shuffle is not the goal; making necessary shuffles efficient is."
+      ]
+    },
+    {
+      "id": "block.v3seed.narrow-versus-wide-transformations.code",
+      "type": "code",
+      "language": "python",
+      "code": "events.select(\"customer_id\", \"amount\").filter(\"amount > 0\")  # narrow\nevents.groupBy(\"customer_id\").count()  # wide / shuffle",
+      "title": "Example"
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

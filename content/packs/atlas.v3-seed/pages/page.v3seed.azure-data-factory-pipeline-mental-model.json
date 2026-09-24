@@ -1,0 +1,38 @@
+{
+  "id": "page.v3seed.azure-data-factory-pipeline-mental-model",
+  "title": "Azure Data Factory pipeline mental model",
+  "summary": "Separate connectivity, data shape and orchestration when reasoning about ADF.",
+  "blocks": [
+    {
+      "id": "block.v3seed.azure-data-factory-pipeline-mental-model.overview",
+      "type": "markdown",
+      "text": "Separate connectivity, data shape and orchestration when reasoning about ADF."
+    },
+    {
+      "id": "block.v3seed.azure-data-factory-pipeline-mental-model.points",
+      "type": "list",
+      "items": [
+        "Linked services describe connections/compute endpoints.",
+        "Datasets describe data structure/location metadata used by activities.",
+        "Activities perform movement, transformation or control flow.",
+        "Pipelines compose activities; triggers decide when a pipeline starts."
+      ]
+    },
+    {
+      "id": "block.v3seed.azure-data-factory-pipeline-mental-model.question",
+      "type": "question",
+      "question": "Where should a secret normally live instead of being hardcoded in a pipeline JSON?",
+      "answer": "Use managed identity where possible or reference a secret manager such as Azure Key Vault; do not commit credentials into pipeline definitions."
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:azure-fabric",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

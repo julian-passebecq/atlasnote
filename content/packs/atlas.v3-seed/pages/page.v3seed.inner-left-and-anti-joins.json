@@ -1,0 +1,91 @@
+{
+  "id": "page.v3seed.inner-left-and-anti-joins",
+  "title": "Inner, left and anti joins",
+  "summary": "Choose join semantics from the question, not from habit.",
+  "blocks": [
+    {
+      "id": "block.v3seed.inner-left-and-anti-joins.overview",
+      "type": "markdown",
+      "text": "Choose join semantics from the question, not from habit."
+    },
+    {
+      "id": "block.v3seed.inner-left-and-anti-joins.points",
+      "type": "list",
+      "items": [
+        "INNER keeps only matching rows.",
+        "LEFT keeps every left row and adds nullable right columns.",
+        "LEFT ANTI (or NOT EXISTS) finds left rows without a match.",
+        "Filtering a nullable right column in WHERE after a LEFT JOIN can accidentally turn it into an inner join."
+      ]
+    },
+    {
+      "id": "block.v3seed.inner-left-and-anti-joins.code",
+      "type": "code",
+      "language": "sql",
+      "code": "SELECT c.customer_id\nFROM customers c\nWHERE NOT EXISTS (\n  SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id\n);",
+      "title": "Example"
+    },
+    {
+      "id": "block.v3seed.inner-left-and-anti-joins.on-versus-where",
+      "type": "code",
+      "language": "sql",
+      "title": "LEFT JOIN: right-side filters belong in ON",
+      "code": "-- Keeps every customer; only orders from 2026 are matched.\nSELECT c.customer_id, o.order_id\nFROM customers c\nLEFT JOIN orders o\n  ON  o.customer_id = c.customer_id\n  AND o.order_date >= DATE '2026-01-01';\n\n-- The same predicate in WHERE removes customers without a 2026 order,\n-- because o.order_date IS NULL for them: the query now behaves like an INNER JOIN."
+    },
+    {
+      "id": "block.v3seed.inner-left-and-anti-joins.anti-variants",
+      "type": "code",
+      "language": "sql",
+      "title": "Anti join written with LEFT JOIN",
+      "code": "SELECT c.customer_id\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.customer_id\nWHERE o.customer_id IS NULL;  -- NULL here only when nothing matched"
+    },
+    {
+      "id": "block.v3seed.inner-left-and-anti-joins.spark-anti",
+      "type": "code",
+      "language": "python",
+      "title": "The same anti join in PySpark",
+      "code": "customers_without_orders = customers.join(orders, on=\"customer_id\", how=\"left_anti\")"
+    },
+    {
+      "id": "block.v3seed.inner-left-and-anti-joins.not-in-trap",
+      "type": "callout",
+      "tone": "warning",
+      "title": "NOT IN trap",
+      "text": "NOT IN (SELECT customer_id FROM orders) returns no rows at all if the subquery produces a NULL. Prefer NOT EXISTS or the LEFT JOIN ... IS NULL form."
+    },
+    {
+      "id": "block.v3seed.inner-left-and-anti-joins.next",
+      "type": "link",
+      "pageId": "page.v3seed.window-functions",
+      "label": "Next: window functions",
+      "description": "Keep row detail while computing per-group results."
+    }
+  ],
+  "related": [
+    "page.v3seed.sql-grain-before-joins",
+    "page.v3seed.merge-validation-and-cardinality",
+    "page.v3seed.null-semantics",
+    "page.v3seed.window-functions",
+    "page.v3seed.qcm.grain-joins-windows"
+  ],
+  "terms": [
+    "term.v3seed.anti-join",
+    "term.v3seed.join-cardinality"
+  ],
+  "sources": [
+    {
+      "title": "PySpark - DataFrame.join API reference",
+      "url": "https://spark.apache.org/docs/latest/api/python/reference/pyspark.sql/api/pyspark.sql.DataFrame.join.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:sql",
+    "lang:en",
+    "path:grain-joins-windows"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

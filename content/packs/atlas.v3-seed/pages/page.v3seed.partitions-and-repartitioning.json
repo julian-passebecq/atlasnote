@@ -1,0 +1,39 @@
+{
+  "id": "page.v3seed.partitions-and-repartitioning",
+  "title": "Partitions and repartitioning",
+  "summary": "Treat partition count as a workload parameter, not a magic constant.",
+  "blocks": [
+    {
+      "id": "block.v3seed.partitions-and-repartitioning.overview",
+      "type": "markdown",
+      "text": "Treat partition count as a workload parameter, not a magic constant."
+    },
+    {
+      "id": "block.v3seed.partitions-and-repartitioning.points",
+      "type": "list",
+      "items": [
+        "Too few partitions underuse parallelism and create large tasks.",
+        "Too many tiny partitions increase scheduling and file overhead.",
+        "repartition can increase/decrease partitions with a shuffle; coalesce usually reduces with less movement.",
+        "Partitioning strategy should reflect data size, cluster resources and downstream operations."
+      ]
+    },
+    {
+      "id": "block.v3seed.partitions-and-repartitioning.code",
+      "type": "code",
+      "language": "python",
+      "code": "balanced = df.repartition(200, \"customer_id\")\nsmaller = balanced.coalesce(50)",
+      "title": "Example"
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

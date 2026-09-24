@@ -1,0 +1,39 @@
+{
+  "id": "page.v3seed.null-semantics",
+  "title": "NULL semantics",
+  "summary": "NULL means unknown or missing, so ordinary equality and Boolean reasoning need special handling.",
+  "blocks": [
+    {
+      "id": "block.v3seed.null-semantics.overview",
+      "type": "markdown",
+      "text": "NULL means unknown or missing, so ordinary equality and Boolean reasoning need special handling."
+    },
+    {
+      "id": "block.v3seed.null-semantics.points",
+      "type": "list",
+      "items": [
+        "Use IS NULL / IS NOT NULL, not = NULL.",
+        "COALESCE chooses the first non-NULL expression.",
+        "Comparisons with NULL yield UNKNOWN, which WHERE does not keep.",
+        "Be careful with NOT IN when the subquery can contain NULL; NOT EXISTS is often safer."
+      ]
+    },
+    {
+      "id": "block.v3seed.null-semantics.code",
+      "type": "code",
+      "language": "sql",
+      "code": "SELECT COALESCE(country, 'Unknown') AS country, COUNT(*)\nFROM customers\nGROUP BY COALESCE(country, 'Unknown');",
+      "title": "Example"
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:sql",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

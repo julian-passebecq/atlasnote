@@ -1,0 +1,110 @@
+{
+  "id": "page.v3seed.sql-grain-before-joins",
+  "title": "SQL grain before joins",
+  "summary": "State the row grain of every relation before joining; most duplicate-row bugs are grain mismatches.",
+  "blocks": [
+    {
+      "id": "block.v3seed.sql-grain-before-joins.overview",
+      "type": "markdown",
+      "text": "State the row grain of every relation before joining; most duplicate-row bugs are grain mismatches."
+    },
+    {
+      "id": "block.v3seed.sql-grain-before-joins.points",
+      "type": "list",
+      "items": [
+        "Ask: what does one row represent before and after each transformation?",
+        "A one-to-many join legitimately multiplies rows; it is not automatically a bug.",
+        "Aggregate to the target grain before joining when downstream metrics assume one row per key.",
+        "Validate cardinality with counts and distinct-key checks."
+      ]
+    },
+    {
+      "id": "block.v3seed.sql-grain-before-joins.code",
+      "type": "code",
+      "language": "sql",
+      "code": "SELECT customer_id, COUNT(*) AS orders\nFROM orders\nGROUP BY customer_id;",
+      "title": "Example"
+    },
+    {
+      "id": "block.v3seed.sql-grain-before-joins.grain-table",
+      "type": "table",
+      "columns": [
+        "Relation",
+        "One row represents",
+        "Key at that grain"
+      ],
+      "rows": [
+        [
+          "orders",
+          "one order",
+          "order_id"
+        ],
+        [
+          "order_lines",
+          "one line of one order",
+          "order_id + line_no"
+        ],
+        [
+          "customers",
+          "one customer",
+          "customer_id"
+        ],
+        [
+          "result of the example below",
+          "one customer (including customers without orders)",
+          "customer_id"
+        ]
+      ]
+    },
+    {
+      "id": "block.v3seed.sql-grain-before-joins.aggregate-first",
+      "type": "code",
+      "language": "sql",
+      "title": "Aggregate to the target grain, then join",
+      "code": "-- Target grain: one row per customer.\nWITH order_totals AS (\n  SELECT o.customer_id,\n         COUNT(DISTINCT o.order_id)      AS order_count,\n         SUM(l.quantity * l.unit_price)  AS revenue\n  FROM orders o\n  JOIN order_lines l ON l.order_id = o.order_id\n  GROUP BY o.customer_id\n)\nSELECT c.customer_id,\n       c.country,\n       COALESCE(t.order_count, 0) AS order_count,\n       COALESCE(t.revenue, 0)     AS revenue\nFROM customers c\nLEFT JOIN order_totals t ON t.customer_id = c.customer_id;",
+      "explanation": "order_totals is already one row per customer, so the LEFT JOIN cannot multiply customers. COUNT(DISTINCT order_id) is needed because the inner join to order_lines is at line grain. Illustrative schema; not executed during preparation."
+    },
+    {
+      "id": "block.v3seed.sql-grain-before-joins.key-check",
+      "type": "code",
+      "language": "sql",
+      "title": "Prove the key before trusting the grain",
+      "code": "-- Returns rows only when customer_id is NOT unique in customers.\nSELECT customer_id, COUNT(*) AS rows_per_key\nFROM customers\nGROUP BY customer_id\nHAVING COUNT(*) > 1;"
+    },
+    {
+      "id": "block.v3seed.sql-grain-before-joins.next",
+      "type": "link",
+      "pageId": "page.v3seed.merge-validation-and-cardinality",
+      "label": "Next: merge validation and cardinality",
+      "description": "Turn the expected cardinality into an executable check."
+    }
+  ],
+  "related": [
+    "page.v3seed.merge-validation-and-cardinality",
+    "page.v3seed.inner-left-and-anti-joins",
+    "page.v3seed.aggregations-having-and-conditional-metrics",
+    "page.v3seed.window-functions",
+    "page.v3seed.qcm.grain-joins-windows"
+  ],
+  "terms": [
+    "term.v3seed.grain",
+    "term.v3seed.join-cardinality",
+    "term.v3seed.join-fan-out"
+  ],
+  "sources": [
+    {
+      "title": "PostgreSQL - aggregate functions tutorial",
+      "url": "https://www.postgresql.org/docs/current/tutorial-agg.html",
+      "publisher": "PostgreSQL Global Development Group",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:sql",
+    "lang:en",
+    "path:grain-joins-windows"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

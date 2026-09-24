@@ -1,0 +1,39 @@
+{
+  "id": "page.v3seed.pandas-selection-filtering-and-assign",
+  "title": "Pandas selection, filtering and assign",
+  "summary": "Keep transformations explicit and chainable; separate row filters from new-column logic.",
+  "blocks": [
+    {
+      "id": "block.v3seed.pandas-selection-filtering-and-assign.overview",
+      "type": "markdown",
+      "text": "Keep transformations explicit and chainable; separate row filters from new-column logic."
+    },
+    {
+      "id": "block.v3seed.pandas-selection-filtering-and-assign.points",
+      "type": "list",
+      "items": [
+        "Use .loc for label-based row/column selection.",
+        "Prefer vectorized expressions over Python loops for column operations.",
+        "assign can make a transformation pipeline readable without mutating intermediate variables.",
+        "Check dtypes after ingest because strings and missing values can silently change behavior."
+      ]
+    },
+    {
+      "id": "block.v3seed.pandas-selection-filtering-and-assign.code",
+      "type": "code",
+      "language": "python",
+      "code": "result = (\n    df.loc[df[\"amount\"].gt(0), [\"customer_id\", \"amount\"]]\n      .assign(amount_eur=lambda x: x[\"amount\"] * 0.93)\n)",
+      "title": "Example"
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:pandas",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

@@ -12,14 +12,16 @@ function bundle(page){return {schemaVersion:2,title:'Test',projects:[],pages:[pa
 function personalWorkspace(){const ws=blankWorkspace();const page=makeMarkdownPage('My retained page','A personal addition.');const project={id:'project.personal',title:'Personal',icon:'book',description:'Personal notebook',nodes:[{id:'node.personal',title:page.title,pageId:page.id}]};ws.overlays.pages[page.id]={page};ws.overlays.projects.push(project);const view=newView('page.atlas.layouts',{blockId:'block.atlas.layouts.0',offset:6});view.history[0].presentation='book';ws.personal.session.panes[0].views=[view];ws.personal.session.panes[0].active=view.id;ws.personal.session.screen='reader';ws.personal.notes['page.atlas.layouts']={text:'My own remark, not source content.',pageId:'page.atlas.layouts',updatedAt:42};ws.personal.ratings['page.atlas.layouts']='green';ws.personal.bookmarks=[{id:'bookmark.test',pageId:'page.atlas.layouts',title:'Return here',anchor:{blockId:'block.atlas.layouts.0',offset:6},createdAt:40}];ws.overlays.archived.push(page.id);return ws;}
 
 test('public catalogue retains the 1.2.1 core, ten original study samples and eleven playground pages',()=>{
- const original=seed.packs.filter(p=>!['study.samples','atlas.interview-samples','atlas.cheatsheet-samples'].includes(p.manifest.id));
+ // atlas.v3-seed (V3 foundation draft) is counted separately below so the 1.2.1/V2 baselines stay exact.
+ const original=seed.packs.filter(p=>!['study.samples','atlas.interview-samples','atlas.cheatsheet-samples','atlas.v3-seed'].includes(p.manifest.id));
  assert.equal(original.reduce((n,p)=>n+p.pages.length,0),10);
  assert.equal(original.filter(p=>p.manifest.id!=='pdfatlas.public').reduce((n,p)=>n+p.pages.length,0),8);
  assert.equal(original.reduce((n,p)=>n+p.projects.length,0),3);
- const pages=seed.packs.flatMap(p=>p.pages);
+ const v3=seed.packs.find(p=>p.manifest.id==='atlas.v3-seed');assert.equal(v3.pages.length,66);assert.equal(v3.glossary.length,10);assert.equal(v3.projects.length,5);
+ const pages=seed.packs.filter(p=>p!==v3).flatMap(p=>p.pages);
  assert.equal(pages.filter(p=>!p.id.startsWith('page.mock.')).length,39);
  assert.equal(pages.filter(p=>p.id.startsWith('page.mock.')).length,11);
- assert.equal(seed.packs.find(p=>p.manifest.id==='atlas.cheatsheet-samples').pages.length,4);assert.equal(seed.validation.pages,50);assert.equal(seed.validation.terms,1);assert.equal(seed.validation.projects,14);assert.deepEqual(seed.validation.missing,[]);
+ assert.equal(seed.packs.find(p=>p.manifest.id==='atlas.cheatsheet-samples').pages.length,4);assert.equal(seed.validation.pages,50+v3.pages.length);assert.equal(seed.validation.terms,1+v3.glossary.length);assert.equal(seed.validation.projects,14+v3.projects.length);assert.deepEqual(seed.validation.missing,[]);
 });
 test('strict schemas refuse unknown page fields',()=>{const p=clone(seed.packs[0].pages[0]);p.quiz='not supported';assert.throws(()=>validateSchema(bundle(p),schemas.v2),/unsupported/);});
 test('strict @2 schema requires stable IDs on all blocks',()=>{const p=clone(seed.packs.flatMap(p=>p.pages).find(p=>p.id==='page.atlas.layouts'));delete p.blocks[0].id;assert.throws(()=>validateSchema(bundle(p),schemas.v2));});

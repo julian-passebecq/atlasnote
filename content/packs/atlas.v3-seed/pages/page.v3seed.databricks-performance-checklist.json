@@ -1,0 +1,32 @@
+{
+  "id": "page.v3seed.databricks-performance-checklist",
+  "title": "Databricks performance checklist",
+  "summary": "Begin with the query plan, scan size and task distribution before changing cluster size.",
+  "blocks": [
+    {
+      "id": "block.v3seed.databricks-performance-checklist.overview",
+      "type": "markdown",
+      "text": "Begin with the query plan, scan size and task distribution before changing cluster size."
+    },
+    {
+      "id": "block.v3seed.databricks-performance-checklist.points",
+      "type": "list",
+      "items": [
+        "Check file pruning and partition/data-skipping behavior.",
+        "Inspect shuffle volume and skew.",
+        "Use Photon/vectorized execution where available and suitable, but still fix avoidable scans/shuffles.",
+        "Autoscaling changes resource supply, not inefficient data layout or query semantics."
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:databricks",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

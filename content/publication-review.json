@@ -27,6 +27,10 @@
     "atlas.cheatsheet-samples": {
       "review": "User-supplied reference previews reconstructed as canonical JSON. Reference terminology retained; this is renderer acceptance content, not independently vendor-verified guidance. ADF page 1 reconstruction is disclosed in its metadata and page caption.",
       "sha256": "79cb4a1da1faf3c65f84df209b1b31ad71b136f2b7b9abfd3972ef461778b051"
+    },
+    "atlas.v3-seed": {
+      "review": "Prepared by Claude Code on 2026-09-24 from the V3 seed; original text/code, no private data or third-party text. OWNER REVIEW REQUIRED before publication.",
+      "sha256": "dfdefdafb9eb6f6ae7bc61a09cd166e3f75755dd5b254680c06d978f9144cac2"
     }
   }
 }

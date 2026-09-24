@@ -1,0 +1,39 @@
+{
+  "id": "page.v3seed.groupby-and-aggregation",
+  "title": "GroupBy and aggregation",
+  "summary": "Use named aggregations to make output columns predictable and readable.",
+  "blocks": [
+    {
+      "id": "block.v3seed.groupby-and-aggregation.overview",
+      "type": "markdown",
+      "text": "Use named aggregations to make output columns predictable and readable."
+    },
+    {
+      "id": "block.v3seed.groupby-and-aggregation.points",
+      "type": "list",
+      "items": [
+        "GroupBy is split-apply-combine.",
+        "Named aggregation avoids opaque MultiIndex columns.",
+        "Decide whether missing grouping keys should be dropped or retained.",
+        "Resetting the index is a presentation/schema choice, not a mathematical requirement."
+      ]
+    },
+    {
+      "id": "block.v3seed.groupby-and-aggregation.code",
+      "type": "code",
+      "language": "python",
+      "code": "summary = (df.groupby(\"country\", dropna=False)\n             .agg(customers=(\"customer_id\", \"nunique\"),\n                  revenue=(\"amount\", \"sum\"))\n             .reset_index())",
+      "title": "Example"
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:pandas",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}
