@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "atlas.norsk-daily@1",
+  "title": "AtlasNote Norsk Daily feed",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion","feedId","date","items"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "feedId": {"const": "norsk.daily"},
+    "date": {"type": "string", "format": "date"},
+    "source": {"type":"object","required":["name"],"properties":{"name":{"type":"string"},"homepage":{"type":"string"},"retrievalNote":{"type":"string"}}},
+    "items": {
+      "type":"array","maxItems":200,
+      "items":{
+        "type":"object","additionalProperties":false,
+        "required":["id","url","publishedAt","no","en","vocabulary","difficulty"],
+        "properties":{
+          "id":{"type":"string"},"url":{"type":"string"},"publishedAt":{"type":"string"},"section":{"type":"string"},
+          "no":{"type":"object","required":["headline"],"properties":{"headline":{"type":"string","maxLength":300},"paraphrase":{"type":"string","maxLength":800}}},
+          "en":{"type":"object","required":["translation"],"properties":{"translation":{"type":"string","maxLength":800}}},
+          "vocabulary":{"type":"array","maxItems":12,"items":{"type":"object","required":["no","en"],"properties":{"no":{"type":"string"},"en":{"type":"string"},"lemma":{"type":"string"},"pos":{"type":"string"},"note":{"type":"string"}}}},
+          "grammar":{"type":"array","maxItems":8,"items":{"type":"string"}},
+          "difficulty":{"enum":["A2","B1","B2","C1"]},
+          "studyPrompts":{"type":"array","maxItems":8,"items":{"type":"string"}},
+          "provenance":{"type":"string"}
+        }
+      }
+    }
+  }
+}
