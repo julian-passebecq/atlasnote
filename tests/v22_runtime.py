@@ -107,8 +107,8 @@ try:
         phase = 'synthetic agent discovers and revises all six canonical resource adapters'
         result = agent(page, """
         const manifest=api.getAgentCapabilities();if(manifest.actions.length<20)throw Error('Missing capabilities');
-        const list=api.listResources({includeStructures:true,limit:100}).items;
-        const chosen=['notebook-page','article','cheatsheet','qcm','pdf','notebook-tree'].map(type=>list.find(r=>r.resourceType===type&&!r.resourceId.includes('manual')));
+        // Per-type discovery: independent of total library size (V3 seed pack added 66 resources).
+        const chosen=['notebook-page','article','cheatsheet','qcm','pdf','notebook-tree'].map(type=>api.listResources({type,includeStructures:true,limit:100}).items.find(r=>!r.resourceId.includes('manual')));
         const base=chosen.map(r=>api.getResource(r.resourceKey));
         const ops=base.map((r,i)=>{const s=structuredClone(r.snapshot);if(r.resourceType==='notebook-tree')s.project.title+=' V22 review';else if(r.resourceType==='qcm')s.page.qcm.questions[0].prompt+=' Explain.';else if(r.resourceType==='cheatsheet')s.page.cheatsheet.pages[0].blocks[0].text+=' Reviewed';else if(r.resourceType==='pdf'){s.page.title+=' Reviewed';s.document.title=s.page.title;}else s.page.blocks.push({id:s.page.id+'.browser',type:'markdown',text:'Normal-origin accepted explanation.'});return {id:'operation.browser.'+i,kind:'resource.update',resourceKey:r.resourceKey,baseRevisionId:r.head.revisionId,payload:{resourceType:r.resourceType,snapshot:s}};});
         const plan={schemaVersion:1,kind:'atlas-agent-changeset',id:'plan.browser.all',source:'Synthetic agent; explicit QA human decision',createdAt:Date.now(),operations:ops};
