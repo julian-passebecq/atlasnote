@@ -44,6 +44,10 @@ export function ProjectTree({onNorskDaily,onExperience,onHistory,onComparePrevio
  const visible=(n:TreeNode):boolean=>!archived.has(n.id)&&(!n.pageId||!archived.has(n.pageId));
  // V3: without a text filter this is just visibility; with one, pages resolve through a memoized map.
  const pageById=useMemo(()=>new Map<string,any>(source.pages.map((p:any)=>[p.id,p])),[source.pages]);
+ const docByPage=useMemo(()=>new Map<string,any>(source.documents.map((d:any)=>[d.pageId,d])),[source.documents]);
+ // V3 PERF-07: long folders render in batches of FOLDER_BATCH rows; the branch holding the open or
+ // A/B-displayed page is always revealed. Text filtering shows every match (no batching).
+ const FOLDER_BATCH=80,[folderLimits,setFolderLimits]=useState<Record<string,number>>({});
  const matches=(n:TreeNode):boolean=>{if(!visible(n))return false;if(!query)return true;const p=pageById.get(n.pageId??(n.target?readingTargetId(n.target):''));const words=normalize([n.title,...(p?.tags??[])].join(' ').replace(/[-_]/g,' '));return words.includes(query)||!!n.children?.some(matches);};
  const hidden=(p:Project)=>ws.overlays.projectPrefs[p.id]?.hidden||archived.has(p.id);
  function dismiss(restoreFocus=true){const target=menu?.returnFocus;setMenu(null);if(restoreFocus&&target?.isConnected)target.focus();}
@@ -80,10 +84,13 @@ export function ProjectTree({onNorskDaily,onExperience,onHistory,onComparePrevio
   else if(e.key==='Tab'){dismiss(false);}
   else if(moveMenuFocus(menuRef.current,e.key)){e.preventDefault();e.stopPropagation();}
  }
- function nodes(ns:TreeNode[],p:Project,depth:number,matchedPath=false):any{
-  return ns.filter(n=>visible(n)&&(matchedPath||matches(n))).map(n=>{
-   const doc=c.documents.find((d:any)=>d.pageId===n.pageId),pdfKey=doc?studyTreeKey(doc,'document'):'',pdfOpen=doc&&(activeSession(ws.personal).pdfTreeExpanded??[]).includes(pdfKey);
-   const owners=[0,1].filter(i=>(n.pageId??(n.target?readingTargetId(n.target):undefined))&&panePages[i]===(n.pageId??(n.target?readingTargetId(n.target):undefined)));const open=expanded.has(n.id)||!!query,page=c.pages.find((p:any)=>p.id===n.pageId);
+ const holdsShown=(n:TreeNode):boolean=>{const id=n.pageId??(n.target?readingTargetId(n.target):undefined);return !!id&&(id===activePage||panePages.includes(id))||!!n.children?.some(holdsShown);};
+ function nodes(ns:TreeNode[],p:Project,depth:number,matchedPath=false,parentKey=p.id):any{
+  const list=ns.filter(n=>visible(n)&&(matchedPath||matches(n))),limit=folderLimits[parentKey]??FOLDER_BATCH;
+  const shown=query||list.length<=limit?list:list.filter((n,i)=>i<limit||holdsShown(n)),hidden=list.length-shown.length;
+  return [...shown.map(n=>{
+   const doc=n.pageId?docByPage.get(n.pageId):undefined,pdfKey=doc?studyTreeKey(doc,'document'):'',pdfOpen=doc&&(activeSession(ws.personal).pdfTreeExpanded??[]).includes(pdfKey);
+   const owners=[0,1].filter(i=>(n.pageId??(n.target?readingTargetId(n.target):undefined))&&panePages[i]===(n.pageId??(n.target?readingTargetId(n.target):undefined)));const open=expanded.has(n.id)||!!query,page=n.pageId?pageById.get(n.pageId):undefined;
    return <div className="tree-node" key={n.id}>
     <div className={'tree-row '+(n.pageId&&n.pageId===activePage?'active ':'')+owners.map(i=>'pane-owner-'+(i===0?'a':'b')).join(' ')} data-node-id={n.id} {...historyIdentityAttributes(historyFor(p,n))} draggable={!!n.pageId&&mode!=='notes'} data-resource-drag={n.pageId&&mode!=='notes'?'true':undefined} onDragStart={e=>{if(!n.pageId||mode==='notes')return;e.dataTransfer.setData(RESOURCE_DRAG_TYPE,encodeResourceDrag(targetForPage(source,n.pageId),page?.title??n.title));e.dataTransfer.effectAllowed='copy';}} onDragOver={e=>allowDrop(e,n.id)} onDrop={e=>drop(e,n.id)} data-pane-owners={owners.map(i=>i===0?'a':'b').join(' ')} style={{paddingLeft:(mode==='pdfs'?4+depth*8:10+depth*14)+'px'}} onContextMenu={e=>showMenu(e,p,n)} onKeyDown={e=>keyboardMenu(e,p,n)}>
      <>{n.pageId&&mode!=='notes'&&<span className="resource-drag-grip" aria-hidden="true" title="Drag to a Notebook folder, or use Manage resource">⠿</span>}{doc?<button className="tree-expander" aria-label={(pdfOpen?'Collapse PDF ':'Expand PDF ')+n.title} aria-expanded={pdfOpen} onClick={()=>onPdfToggle(pdfKey)}><Icon name={pdfOpen?'down':'chevron'} size={12}/></button>:n.children&&<button className="tree-expander" aria-label={(open?'Collapse ':'Expand ')+n.title} aria-expanded={open} onClick={()=>onToggle(n.id)}><Icon name={open?'down':'chevron'} size={12}/></button>}<button className="tree-target" data-agent-action="resource-open" title={n.title} aria-expanded={n.children?open:undefined} aria-current={n.pageId&&n.pageId===activePage?'page':undefined}
@@ -91,7 +98,7 @@ export function ProjectTree({onNorskDaily,onExperience,onHistory,onComparePrevio
       onMouseDown={e=>{if(e.button===1)e.preventDefault();}}
       onAuxClick={e=>{if(e.button===1){e.preventDefault();if(n.target)onResourceOpen(n.target,'tab');else onOpen(n.pageId??n.id,undefined,true);}}}>
       {!n.children&&!doc&&<span className="tree-indent"/>}
-      <Icon name={n.children?'folder':c.documents.some((d:any)=>d.pageId===n.pageId)?'pdf':n.target?(n.target.kind.startsWith('pdf-')?'pdf':n.target.kind==='cheatsheet-page'?'grid':n.target.kind==='qcm'?'help':n.target.kind==='article'?'page':'link'):page?.cheatsheet?'grid':page?.qcm?'help':'page'} size={15}/><span>{n.target?n.title:page?.title??n.title}</span>{n.target&&<small className="reference-kind">{n.target.kind==='page'?'Notebook':n.target.kind.startsWith('pdf-')?'PDF':n.target.kind==='cheatsheet-page'?'Cheatsheet':n.target.kind==='qcm'?'QCM':n.target.kind==='article'?'Article':'Reference'}</small>}
+      <Icon name={n.children?'folder':n.pageId&&docByPage.has(n.pageId)?'pdf':n.target?(n.target.kind.startsWith('pdf-')?'pdf':n.target.kind==='cheatsheet-page'?'grid':n.target.kind==='qcm'?'help':n.target.kind==='article'?'page':'link'):page?.cheatsheet?'grid':page?.qcm?'help':'page'} size={15}/><span>{n.target?n.title:page?.title??n.title}</span>{n.target&&<small className="reference-kind">{n.target.kind==='page'?'Notebook':n.target.kind.startsWith('pdf-')?'PDF':n.target.kind==='cheatsheet-page'?'Cheatsheet':n.target.kind==='qcm'?'QCM':n.target.kind==='article'?'Article':'Reference'}</small>}
      </button></>
      {owners.length>0&&<span className="tree-pane-markers" aria-label={owners.length===2?'Open in panes A and B':'Open in pane '+(owners[0]===0?'A':'B')}>{owners.map(i=><button key={i} title={'Reveal pane '+(i===0?'A':'B')} aria-label={'Reveal pane '+(i===0?'A':'B')+' for '+n.title} onClick={()=>onPaneMarker(i)} className={'tree-pane-marker marker-'+(i===0?'a':'b')+(i===activePaneIndex?' is-active':'')}>{i===0?'A':'B'}</button>)}</span>}
      {n.pageId&&activeSession(ws.personal).showFlags&&ws.personal.ratings[n.pageId]&&<span className={'flag-dot '+ws.personal.ratings[n.pageId]} title={ws.personal.ratings[n.pageId]}/>}
@@ -101,9 +108,9 @@ export function ProjectTree({onNorskDaily,onExperience,onHistory,onComparePrevio
     </div>
     {doc&&pdfOpen&&<PdfStudyTree onActions={onReadingActions} key={pdfKey} doc={doc} workspace={ws} depth={depth+1} onToggle={onPdfToggle} onNavigate={onPdfNavigate} onTerm={onPdfTerm} onManage={onPdfManage}/>}
     {mode==='notes'&&ws.personal.referenceLens&&references&&<ReferenceLens {...references} target={n.target??(n.pageId?targetForPage(source,n.pageId):{kind:'collection',collectionId:n.id})}/>}
-    {n.children&&open&&<div className="tree-children">{n.children.length?nodes(n.children,p,depth+1):<button className="empty-folder" style={{marginLeft:(30+depth*14)+'px'}} onClick={()=>onCreate('page',p,n)}>Add a page</button>}</div>}
+    {n.children&&open&&<div className="tree-children">{n.children.length?nodes(n.children,p,depth+1,false,n.id):<button className="empty-folder" style={{marginLeft:(30+depth*14)+'px'}} onClick={()=>onCreate('page',p,n)}>Add a page</button>}</div>}
    </div>;
-  });
+  }),...(hidden>0?[<button key={'more:'+parentKey} className="text-button tree-more-rows" style={{marginLeft:(30+depth*14)+'px'}} onClick={()=>setFolderLimits(l=>({...l,[parentKey]:(l[parentKey]??FOLDER_BATCH)+FOLDER_BATCH}))}>Show next {Math.min(FOLDER_BATCH,hidden)} ({hidden} more)</button>]:[])];
  }
  function project(p:Project){
   if(hidden(p)||p.nodes.length>0&&!p.nodes.some(visible))return null;const open=expanded.has(p.id)||!!query;
