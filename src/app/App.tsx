@@ -72,6 +72,13 @@ import {NorskDailyView} from '../norsk-daily/NorskDailyView.js';
 import {vocabularyChangeSet} from '../norsk-daily/daily.js';
 import {resourceFacts,sessionProfile,inExperience} from '../experience/facts.js';
 import {includeResource} from '../experience/profile.mjs';
+/** V3: StudyWorkspace remounts on every workspace switch (per-slot UI state is
+ * reset by design). These pure derivations depend only on the identities below,
+ * which a switch does not change, so the last result is reused across mounts. */
+let lastCatalogue:{built:any;imports:unknown;overlays:unknown;value:ReturnType<typeof compose>}|undefined;
+function composeAcrossMounts(built:any,ws:any){if(lastCatalogue&&lastCatalogue.built===built&&lastCatalogue.imports===ws.imports&&lastCatalogue.overlays===ws.overlays)return lastCatalogue.value;const value=compose(built,ws);lastCatalogue={built,imports:ws.imports,overlays:ws.overlays,value};return value;}
+let lastReferenceIndex:{catalogue:unknown;knowledge:unknown;items:unknown;overlays:unknown;value:ReturnType<typeof createReferenceIndex>}|undefined;
+function referenceIndexAcrossMounts(catalogue:any,ws:any){const l=lastReferenceIndex;if(l&&l.catalogue===catalogue&&l.knowledge===ws.personal.knowledge&&l.items===ws.personal.dashboardItems&&l.overlays===ws.overlays)return l.value;const value=createReferenceIndex(catalogue,ws);lastReferenceIndex={catalogue,knowledge:ws.personal.knowledge,items:ws.personal.dashboardItems,overlays:ws.overlays,value};return value;}
 export function App({built}:any){
  const ws=useSyncExternalStore(store.subscribe,store.getSnapshot);
  const [toast,setToast]=useState({text:'',error:false});
@@ -80,7 +87,7 @@ export function App({built}:any){
 function StudyWorkspace({ built,toast,setToast }: any) {
     const archiveEpoch=useSyncExternalStore(subscribeArchives,archiveAttachmentEpoch);
     const ws = useSyncExternalStore(store.subscribe, store.getSnapshot), slotId=ws.personal.activeWorkspaceSlot??1, session = activeSession(ws.personal);
-    const catalogue = useMemo(() => compose(built, ws), [built, ws.imports, ws.overlays]), catalogueRef = useRef(catalogue);
+    const catalogue = useMemo(() => composeAcrossMounts(built, ws), [built, ws.imports, ws.overlays]), catalogueRef = useRef(catalogue);
     catalogueRef.current = catalogue;
     // V3 Experience: one metadata facts index per catalogue/overlay generation.
     const experienceFacts=useMemo(()=>resourceFacts(catalogue,ws.overlays),[catalogue,ws.overlays]),experience=sessionProfile(session);
@@ -88,7 +95,7 @@ function StudyWorkspace({ built,toast,setToast }: any) {
     const outsideExperience=(id?:string)=>!!id&&!inExperience(experience,experienceFacts.get(id));
     function applyExperience(slot:import('../core/model.js').WorkspaceNumber,profile:any){store.personal(p=>{const s=slot===1?p.session:p.workspaceSlots?.[slot];if(!s)throw Error('Workspace '+slot+' is not initialized.');if(profile)s.experience=structuredClone(profile);else delete s.experience;});notify('Workspace '+slot+' Experience updated. Nothing was deleted.');}
     function addToExperience(id:string){const facts=experienceFacts.get(id);if(!facts)return;const label=LIBRARY_TYPES.find(t=>t.id===facts.type)?.label??facts.type;const enable=!experience.types[facts.type];if(enable&&!window.confirm(label+' is turned off in Workspace '+slotId+'. Turn it on for this workspace and add this resource?'))return;try{applyExperience(slotId,includeResource(experience,id,facts.type,enable));}catch(e){notify((e as Error).message,true);}}
-    const referenceIndex=useMemo(()=>createReferenceIndex(catalogue,ws),[catalogue,ws.personal.knowledge,ws.personal.dashboardItems,ws.overlays]);
+    const referenceIndex=useMemo(()=>referenceIndexAcrossMounts(catalogue,ws),[catalogue,ws.personal.knowledge,ws.personal.dashboardItems,ws.overlays]);
     useEffect(()=>{document.documentElement.dataset.theme=session.theme;},[session.theme]);
     const assets = useMemo(() => assetResolver(built, () => catalogueRef.current), [built]);
     useEffect(() => () => assets.dispose(), [assets]);

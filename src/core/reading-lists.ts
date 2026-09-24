@@ -1,3 +1,4 @@
+import {catalogueLookup} from './catalogue-index.js';
 import type {Catalogue,Workspace,Personal,Bookmark,Anchor,CategoryId} from './model.js';
 import {readingTargetId} from './reading-types.js';
 import {SUBJECT_COMPAT} from '../content-hub/model.js';
@@ -14,8 +15,8 @@ export function inferReadingCategory(c:Catalogue,ws:Workspace,target:ReadingTarg
  return project?(Object.hasOwn(ws.overlays.categories??{},project)?ws.overlays.categories![project]:BUILTIN_CATEGORIES[project]??'personal'):'personal';
 }
 export function targetForPage(c:Catalogue,id:string,anchor?:Anchor):ReadingTarget{
- if(c.projects.some(p=>p.id===id)||!c.pages.some(p=>p.id===id))return {kind:'collection',collectionId:id};
- const page=c.pages.find(p=>p.id===id);if(page?.article)return {kind:'article',articleId:page.article.id,pageId:id,...(anchor?{anchor:structuredClone(anchor)}:{})};if(page?.qcm)return {kind:'qcm',setId:page.qcm.id,pageId:id,...(anchor?.questionId?{questionId:anchor.questionId}:{})};
+ const lookup=catalogueLookup(c);if(lookup.projectIds.has(id)||!lookup.pageById.has(id))return {kind:'collection',collectionId:id};
+ const page=lookup.pageById.get(id);if(page?.article)return {kind:'article',articleId:page.article.id,pageId:id,...(anchor?{anchor:structuredClone(anchor)}:{})};if(page?.qcm)return {kind:'qcm',setId:page.qcm.id,pageId:id,...(anchor?.questionId?{questionId:anchor.questionId}:{})};
  const sheet=page?.cheatsheet;if(sheet&&anchor?.sheetPage)return {kind:'cheatsheet-page',pageId:id,documentId:sheet.id,sheetPage:anchor.sheetPage,anchor:structuredClone(anchor)};
  const doc=c.documents.find(d=>d.pageId===id);
  if(doc&&anchor?.pdfPage)return {kind:'pdf-page',pageId:id,documentId:doc.id,pdfPage:anchor.pdfPage,...(doc.sha256?{revision:doc.sha256}:{}),anchor:structuredClone(anchor)};

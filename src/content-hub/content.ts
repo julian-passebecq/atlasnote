@@ -1,3 +1,4 @@
+import {catalogueLookup} from '../core/catalogue-index.js';
 import type {Page,Personal,Overlays,Catalogue,Workspace,Location} from '../core/model.js';
 import type {ArticleSource,QcmDocument,QcmAttempt,TaxonomyRef,DashboardItem,NotebookReference,LibraryMode} from './model.js';
 import type {ReadingTarget} from '../core/reading-types.js';
@@ -6,7 +7,7 @@ import {validateArticleSource,validateQcm,validateHubPage,validateHubPersonal,va
 import {normaliseReadingUrl,validateReadingTarget} from '../storage/reading-validation.mjs';
 import {targetForPage} from '../core/reading-lists.js';
 export function libraryModeForPage(c:Catalogue,id:string):LibraryMode {
- const p=c.pages.find(p=>p.id===id);return c.documents.some(d=>d.pageId===id)?'pdfs':p?.kind==='cheatsheet'?'cheatsheets':p?.kind==='article'?'articles':p?.kind==='qcm'?'qcm':'notes';
+ const lookup=catalogueLookup(c),p=lookup.pageById.get(id);return lookup.docByPage.has(id)?'pdfs':p?.kind==='cheatsheet'?'cheatsheets':p?.kind==='article'?'articles':p?.kind==='qcm'?'qcm':'notes';
 }
 const wrapper=(id:string,title:string):Page=>({id,title,summary:'',blocks:[],related:[],terms:[],sources:[],tags:[]});
 export function articlePage(source:ArticleSource,now=Date.now()):Page {

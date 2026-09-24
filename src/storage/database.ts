@@ -172,7 +172,15 @@ export class WorkspaceStore{
  private async persistPersonal(checkpoint=false){this.assertWritable();const ours=this.state.personal;const result=await writePersonalChecked(ours,this.persistedPersonal,checkpoint);this.persistedPersonal=result.persisted;this.announce('personal');
   if(result.merged){if(result.conflicts.length)this.conflictNotice='Another tab changed the same workspace data; '+(checkpoint?'its version was kept for: ':'this tab\'s version was kept for: ')+result.conflicts.slice(0,5).join(', ');const latest=this.state.personal,merged=latest===ours?result.persisted:mergePersonal(ours,latest,result.persisted).personal;this.state={...this.state,personal:preparePersonal({...merged,activeWorkspaceSlot:latest.activeWorkspaceSlot} as Personal),generation:this.state.generation+1};this.emit();}}
  private flushCheckpoint(){if(this.checkpointTimer!==undefined){clearTimeout(this.checkpointTimer);this.checkpointTimer=undefined;}if(!this.checkpointDirty)return;this.checkpointDirty=false;void this.enqueue(()=>this.persistPersonal(true)).catch(()=>{});}
- checkpoint(fn:(p:Personal)=>void){if(this.reviewPreparing)return this.personal(fn);const p=structuredClone(this.state.personal);fn(p);validateHubPersonal(p);this.state={...this.state,personal:repairAbsentPersonalOptionals(p),generation:this.state.generation+1};this.emit();this.checkpointDirty=true;this.checkpointTimer??=setTimeout(()=>this.flushCheckpoint(),CHECKPOINT_INTERVAL_MS);return Promise.resolve();}
+ checkpoint(fn:(p:Personal)=>void){if(this.reviewPreparing)return this.personal(fn);
+  // Structural sharing: a reading checkpoint may only move positions inside the
+  // workspace sessions. Everything else keeps its identity, so derived indexes
+  // keyed on e.g. `knowledge` are not rebuilt on every scroll frame.
+  const prev=this.state.personal,p:Personal={...prev,session:structuredClone(prev.session),...(prev.workspaceSlots?{workspaceSlots:structuredClone(prev.workspaceSlots)}:{})};fn(p);validateHubPersonal(p);
+  // Contract: callers (App.setSession in checkpoint mode) only mutate sessions. The other keys are
+  // the previous canonical objects themselves, so they are restored by identity after the repair copy.
+  const next:any=repairAbsentPersonalOptionals(p);for(const key of Object.keys(prev) as (keyof Personal)[])if(key!=='session'&&key!=='workspaceSlots')next[key]=prev[key];
+  this.state={...this.state,personal:next,generation:this.state.generation+1};this.emit();this.checkpointDirty=true;this.checkpointTimer??=setTimeout(()=>this.flushCheckpoint(),CHECKPOINT_INTERVAL_MS);return Promise.resolve();}
  flushPending(){this.flushCheckpoint();}
  fail=(e:any)=>{this.error=`Changes could not be saved: ${e?.message??e}. Keep this tab open. Free browser storage, then retry, or download an emergency backup.`;this.state={...this.state};this.emit();};
  private enqueue(fn:()=>Promise<void>,reportFailure=true){this.saving++;this.state={...this.state};this.emit();const result=this.queue.then(fn);this.queue=result.catch(e=>{if(reportFailure)this.fail(e);}).finally(()=>{this.saving--;this.state={...this.state};this.emit();});return result;}
