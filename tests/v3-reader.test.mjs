@@ -126,3 +126,21 @@ test('V3 Continuous window: small PDFs unchanged, long PDFs bounded and geometry
  assert.equal(pageAtOffset(99999,1,3,heights,est,16).page,3,'clamped to the last page of the range');
  assert(windowRadius(900,300)>=9&&windowRadius(900,3000)===6);
 });
+
+test('MEM-02 verified PDF cache: one download for concurrent readers, lease-safe eviction, abort when abandoned',async()=>{
+ const {createVerifiedCache}=await import('../dist-offline/app/pdf/verified-cache.js');
+ const calls=[],live=new Set();let n=0;
+ const urls={create:()=>{const u='blob:c'+(++n);live.add(u);return u;},revoke:u=>live.delete(u)};
+ const pending=new Map();
+ const fetcher=(key,signal)=>new Promise((ok,no)=>{calls.push(key);pending.set(key,()=>ok(new Uint8Array(key==='big'?80:40)));signal.addEventListener('abort',()=>no(Object.assign(Error('aborted'),{name:'AbortError'})));});
+ const cache=createVerifiedCache(fetcher,100,urls);
+ const a=cache.acquire('x'),b=cache.acquire('x');assert.equal(calls.length,1,'A and B share one download');
+ pending.get('x')();assert.equal(await a.url,await b.url);
+ a.release();b.release();const again=cache.acquire('x');assert.equal(calls.length,1,'reused after release, no re-download');assert.equal(await again.url,[...live][0]);
+ const big=cache.acquire('big');pending.get('big')();await big.url;
+ assert.equal(cache.stats().bytes,120);assert.equal(live.size,2,'over budget but both leased: nothing revoked');
+ again.release();assert.equal(live.size,1,'least-recently-used unleased entry evicted');assert.equal(cache.stats().entries,1);
+ big.release();
+ const abandoned=cache.acquire('y');abandoned.release();await assert.rejects(abandoned.url,/aborted/);assert.equal(cache.stats().inFlight,0,'abandoned download aborted and forgotten');
+ const failing=createVerifiedCache(()=>Promise.reject(Error('hash mismatch')),100,urls);const f=failing.acquire('z');await assert.rejects(f.url,/hash mismatch/);await new Promise(r=>setTimeout(r,0));assert.equal(failing.stats().entries,0,'a failed verification is never cached');
+});
