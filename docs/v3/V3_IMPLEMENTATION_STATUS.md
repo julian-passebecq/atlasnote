@@ -22,6 +22,10 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | `ccd0d87` | Live cross-tab sync (BroadcastChannel + 3-way merge, reload notice) and single-owner PDF bytes |
 | `43c9711` | Content: all 64 seed pages linked; 41 glossary terms; 6 native QCMs (45 questions); pack 0.2.0, still **OWNER REVIEW REQUIRED** |
 
+| `f7e346a` | Norsk Daily vocabulary review (reveal-on-demand word cards from the accepted stories) |
+| `db83c44`, `866646f`, `1bfe42b` | **Owner-approved agent contract extension:** `concept.create` (25 → 26 operations). Norsk Daily vocabulary goes to the Concept Index through preview, stage and explicit accept |
+| `2356368` | Fix: pinned-revision deep links wait for the complete history under staged boot (found by `completion_v22_runtime`) |
+
 ## New state: owner, persistence and migration boundary
 
 | State | Owner | Persistence | Migration |
@@ -104,7 +108,7 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | Check | Result |
 | --- | --- |
 | `npx tsc --noEmit` / `-p tsconfig.online.json` | PASS |
-| `npm test` | PASS 1109/1109 (baseline 1053) |
+| `npm test` | PASS 1115/1115 (baseline 1053) |
 | `npm run test:v23` | PASS 214/214 |
 | `npm run validate`, `npm run check:pdfatlas`, `npm run build` | PASS |
 | `tests/v3_runtime.py`, `tests/v3_pdf_window.py`, `tests/v3_norsk_daily.py`, `tests/v3_tabs.py` (new) | PASS 6/6, 5/5, 5/5, 4/4 |
@@ -114,6 +118,8 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 `content_hub_127_runtime`, `references_v2_runtime` and `v22_runtime` each failed once in a long sequential run: two `goto(networkidle)` timeouts of 12 s on a fresh profile, and one readiness race. All three passed when re-run individually.
 - The readiness race was a real test assumption. `v22_runtime` expected history to be initialized as soon as the shell appeared. With staged boot that happens about 0.2 s later, so the test now waits for it explicitly.
 - A fresh profile measures about 1 s to the shell and 1.1–1.2 s to initialized (100 resources), so the 12 s timeouts are not explained by boot cost. They are recorded as intermittent.
+
+`npm run test:completion:runtime` passes completely on `1bfe42b`. That covers 26 action kinds, all 24 example proposals replayed through review in the browser, pinned links, deleted-source pinned startup, quota atomicity and corrupt-backup rejection. Two staged-boot regressions it found (pinned-revision deep links) are fixed.
 
 Run the build-gated Python suites from the repository root, on a clean committed tree, after `npm run build`.
 
@@ -136,4 +142,4 @@ Browser runs used Playwright wheel injection. **This is not physical mouse or tr
   - Full virtualization of very long expanded Notebook trees (PDF study trees are already bounded).
 - **Not run:** the full `test:v23:release` gates including the compaction fault matrix, offline or auth-expiry transitions, and a browser-level 1,500-resource UI run. The 1,500/10,000-resource figures above are computation benchmarks in Node.
 - **Content:** all 64 pages are now linked. The whole pack (Norwegian text, quiz answers, reference URLs) still needs the owner's review. Presets are subject-based, so they don't depend on the seed's project IDs.
-- **Norsk Daily:** feed vocabulary still stays in each article's table, because Agent Review has no glossary-create operation. Dropping stale questions from a batch QCM requires a delete operation that doesn't exist yet.
+- **Norsk Daily:** vocabulary now reaches the Concept Index through the reviewed `concept.create` operation. Dropping stale questions from a batch QCM still requires a delete operation that doesn't exist yet.
