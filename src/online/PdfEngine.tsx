@@ -53,8 +53,11 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
   }).catch(e=>{if(alive&&e.name!=='AbortError')setError(e.message||'Unable to load PDF bytes.');});
   return()=>{alive=false;controller.abort();};
  },[url,retry]);
- // PDF.js transfers its input buffer to the worker; keep our retry copy intact.
- const source=useMemo(()=>sourceBytes&&sourceBytes.url===url?{data:sourceBytes.bytes.slice()}:null,[sourceBytes,url,retry]);
+ // V3: hand the fetched bytes to PDF.js without a retained main-thread copy. PDF.js
+ // transfers the buffer to its worker, which releases it here. Every Document
+ // remount (document, bytes or Retry) follows a fresh fetch above, so no retry copy
+ // is needed; the original bytes stay owned by their source (IndexedDB/blob/host).
+ const source=useMemo(()=>sourceBytes&&sourceBytes.url===url?{data:sourceBytes.bytes}:null,[sourceBytes,url]);
  const capturing=useRef(false),scrolling=useRef(false),restoreFrame=useRef(0),scrollFrame=useRef(0),settleTimer=useRef<ReturnType<typeof setTimeout>>();
  useEffect(()=>{let alive=true;setWorkerOK(false);setWorkerError('');fetch(new URL('pdf-assets/engine.json',document.baseURI),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('PDF worker metadata missing');return r.json();}).then(meta=>{if(meta.pdfjs!==pdfjs.version)throw Error('PDF worker version does not match React-PDF: '+meta.pdfjs+' vs '+pdfjs.version);if(alive)setWorkerOK(true);}).catch(e=>{if(alive)setWorkerError(e.message);});return()=>{alive=false;};},[retry]);
  useEffect(()=>{setPDF(null);setError('');setHits([]);setFindStatus('');setPassword('');setPasswordReason('');passwordCallback.current=null;job.current++;return()=>{job.current++;passwordCallback.current=null;};},[doc.id,doc.sha256,url,retry]);

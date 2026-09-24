@@ -18,7 +18,7 @@ async function main(){
  ReactDOM.createRoot(document.getElementById('root')!).render(<App built={built}/>);
  requestAnimationFrame(()=>mark('first-render'));
  if(!shellOk)return;
- try{await store.hydrate();mark('hydrated');await store.initializeHistory(built);mark('reconciled');store.markReady();mark('ready');}
+ try{await store.hydrate();mark('hydrated');await store.initializeHistory(built);mark('reconciled');store.markReady();store.connectTabs();mark('ready');}
  catch(e){store.markFailed(e);store.fail(e);}
 }
 main().catch(e=>{const root=document.getElementById('root')!;root.textContent='Knowledge Atlas could not start: '+e.message+'. Serve the extracted build over localhost or HTTPS; do not open index.html as a file.';});

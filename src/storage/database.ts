@@ -3,7 +3,7 @@ import {planCompaction} from '../durability/archive.mjs';
 import {clearArchiveAttachments,setHistoryComplete} from '../durability/registry.js';
 import {preflightStorage,workspaceImportBytes} from '../durability/storage-health.mjs';
 import {validateHubOverlays,validateHubPersonal} from '../content-hub/validation.mjs';
-import {migratePersonal} from '../core/workspace-slots.js';
+import {migratePersonal,activeSession} from '../core/workspace-slots.js';
 import {validatePersonal} from './personal-validation.mjs';
 import {repairAbsentPersonalOptionals} from '../core/personal-state.js';
 import type {Workspace,Personal,Overlays,Pack,Asset} from '../core/model.js';
@@ -100,6 +100,7 @@ export async function writePersonalChecked(personal:Personal,base:Personal|undef
  * Explicit navigation, workspace switches, saved states, backups and every other
  * personal() write flush it. Documented loss window on abrupt termination. */
 export const CHECKPOINT_INTERVAL_MS=500;
+async function readPersistedPersonal():Promise<Personal|undefined>{const db=await openDatabase(),tx=db.transaction('personal','readonly'),value=await request(tx.objectStore('personal').get('active'));return value?preparePersonal(value):undefined;}
 async function writeContent(patch:Partial<Workspace>,writes:string[],context:RevisionContext={source:'manual'}){const before=await loadWorkspace(),next=await prepareWorkspaceHistory(builtSource,{...before,...patch},context);await commitProjection(next,before.history!,writes);return next;}
 export async function writeOverlays(overlays:Overlays){return writeContent({overlays},['overlays']);}
 export async function writeShared(personal:Personal,overlays:Overlays){return writeContent({personal:preparePersonal(personal),overlays},['personal','overlays']);}
@@ -133,12 +134,33 @@ export class WorkspaceStore{
  get isReady(){return this.ready;}
  whenReady(){return this.ready?Promise.resolve():this.readyWaiter;}
  private async gate(tolerateFailure=false){if(this.ready)return;try{await this.readyWaiter;}catch(e){if(!tolerateFailure)throw Error('The local library did not finish loading: '+((e as Error)?.message??e)+'. Nothing was changed.');}}private checkpointTimer:ReturnType<typeof setTimeout>|undefined;private checkpointDirty=false;conflictNotice='';
+ /** V3 cross-tab invalidation. A committed write is announced on a BroadcastChannel.
+  * Idle peers adopt another tab's personal changes through the same 3-way merge,
+  * never replacing the session of the workspace they are displaying. A content or
+  * history commit elsewhere only raises a reload notice: this tab's projection is
+  * stale and its authored writes are already rejected by the history epoch check. */
+ staleNotice='';private channel:BroadcastChannel|null=null;private readonly tabId=Math.random().toString(36).slice(2);
+ connectTabs(){if(this.channel||typeof BroadcastChannel==='undefined')return;this.channel=new BroadcastChannel('knowledge-atlas-sync');this.channel.onmessage=e=>{void this.onPeer(e.data).catch(()=>{});};}
+ dismissNotices(){this.staleNotice='';this.conflictNotice='';this.state={...this.state};this.emit();}
+ private announce(kind:'personal'|'content'){try{this.channel?.postMessage({kind,tab:this.tabId,at:Date.now()});}catch{}}
+ private async onPeer(message:any){
+  if(!message||message.tab===this.tabId||!['personal','content'].includes(message.kind))return;
+  if(message.kind==='content'){this.staleNotice='Another tab changed your library or its version history. Reload to see those changes; nothing in this tab was lost.';this.state={...this.state};this.emit();return;}
+  if(!this.ready||this.saving>0||this.checkpointDirty||this.reviewPreparing)return; // a local write will CAS-merge instead
+  const persisted=await readPersistedPersonal();if(!persisted||this.saving>0||this.checkpointDirty)return;
+  const ours=this.state.personal,base=this.persistedPersonal??ours;if(stable(persisted)===stable(base))return;
+  const {personal:merged}=mergePersonal(base,ours,persisted),slot=ours.activeWorkspaceSlot??1,shown=structuredClone(activeSession(ours,slot));
+  // Keep this tab's displayed workspace exactly as the user left it.
+  if(slot===1)merged.session=shown;else merged.workspaceSlots={...(merged.workspaceSlots??{}),[slot]:shown};merged.activeWorkspaceSlot=slot;
+  const next=preparePersonal(merged);validatePersonal(next);this.persistedPersonal=persisted;
+  if(stable(next)!==stable(ours)){this.state={...this.state,personal:next,generation:this.state.generation+1};this.emit();}
+ }
  subscribe=(fn:()=>void)=>{this.listeners.add(fn);return ()=>{this.listeners.delete(fn);};};getSnapshot=()=>this.state;
  emit(){this.listeners.forEach(f=>f());}
  setLoaded(ws:Workspace){this.state={...ws,personal:preparePersonal(ws.personal)};this.persistedPersonal=this.state.personal;this.emit();}
  /** Persist the latest personal state through the cross-tab guard. Another tab's
   * independent changes are merged into memory too (this tab's slot navigation kept). */
- private async persistPersonal(checkpoint=false){const ours=this.state.personal;const result=await writePersonalChecked(ours,this.persistedPersonal,checkpoint);this.persistedPersonal=result.persisted;
+ private async persistPersonal(checkpoint=false){const ours=this.state.personal;const result=await writePersonalChecked(ours,this.persistedPersonal,checkpoint);this.persistedPersonal=result.persisted;this.announce('personal');
   if(result.merged){if(result.conflicts.length)this.conflictNotice='Another tab changed the same workspace data; '+(checkpoint?'its version was kept for: ':'this tab\'s version was kept for: ')+result.conflicts.slice(0,5).join(', ');const latest=this.state.personal,merged=latest===ours?result.persisted:mergePersonal(ours,latest,result.persisted).personal;this.state={...this.state,personal:preparePersonal({...merged,activeWorkspaceSlot:latest.activeWorkspaceSlot} as Personal),generation:this.state.generation+1};this.emit();}}
  private flushCheckpoint(){if(this.checkpointTimer!==undefined){clearTimeout(this.checkpointTimer);this.checkpointTimer=undefined;}if(!this.checkpointDirty)return;this.checkpointDirty=false;void this.enqueue(()=>this.persistPersonal(true)).catch(()=>{});}
  checkpoint(fn:(p:Personal)=>void){if(this.reviewPreparing)return this.personal(fn);const p=structuredClone(this.state.personal);fn(p);validateHubPersonal(p);this.state={...this.state,personal:repairAbsentPersonalOptionals(p),generation:this.state.generation+1};this.emit();this.checkpointDirty=true;this.checkpointTimer??=setTimeout(()=>this.flushCheckpoint(),CHECKPOINT_INTERVAL_MS);return Promise.resolve();}
@@ -151,7 +173,7 @@ export class WorkspaceStore{
   // V3: only resources whose fingerprint changed go through advanceHistory, so an
   // unchanged library no longer clones/serializes the whole history per 50 items.
   const resources=await changedResources(history,captureResources(compose(built,this.state),this.state));
-  for(let at=0;at<resources.length;at+=50){const next=await advanceHistory(history,resources.slice(at,at+50),{source:history.meta.initialized?'system':'migration',summary:history.meta.initialized?'Reviewed application source update':'V2.1.0 production baseline',sourceDetail:'Source b50c27a987fa65eee1c51d36225908621e322da7'},false);if(next.meta.epoch!==history.meta.epoch){await commitProjection({...this.state,history:next},history,[]);history=next;this.state={...this.state,history};}}
+  for(let at=0;at<resources.length;at+=50){const next=await advanceHistory(history,resources.slice(at,at+50),{source:history.meta.initialized?'system':'migration',summary:history.meta.initialized?'Reviewed application source update':'V2.1.0 production baseline',sourceDetail:'Source b50c27a987fa65eee1c51d36225908621e322da7'},false);if(next.meta.epoch!==history.meta.epoch){await commitProjection({...this.state,history:next},history,[]);history=next;this.state={...this.state,history};this.announce('content');}}
   if(!history.meta.initialized){const next=await advanceHistory(history,[],{source:'migration'},true);await commitProjection({...this.state,history:next},history,[]);history=next;}this.state={...this.state,history};this.emit();
  }finally{this.saving--;this.emit();}
  }
@@ -159,12 +181,12 @@ export class WorkspaceStore{
   // Any explicit write persists the latest state, which includes a pending checkpoint.
   this.checkpointDirty=false;if(this.checkpointTimer!==undefined){clearTimeout(this.checkpointTimer);this.checkpointTimer=undefined;}
   return this.enqueue(()=>this.persistPersonal());}
- private content(next:Workspace,writes:string[],context:RevisionContext){this.state={...next,generation:this.state.generation+1};this.emit();return this.enqueue(async()=>{const previous=this.state.history??emptyHistory(),ready=await prepareWorkspaceHistory(builtSource,{...next,history:previous},context);await commitProjection(ready,previous,writes);if(writes.includes('personal'))this.persistedPersonal=ready.personal;this.state={...this.state,history:ready.history};this.emit();});}
+ private content(next:Workspace,writes:string[],context:RevisionContext){this.state={...next,generation:this.state.generation+1};this.emit();return this.enqueue(async()=>{const previous=this.state.history??emptyHistory(),ready=await prepareWorkspaceHistory(builtSource,{...next,history:previous},context);await commitProjection(ready,previous,writes);if(writes.includes('personal'))this.persistedPersonal=ready.personal;this.state={...this.state,history:ready.history};this.announce('content');this.emit();});}
  overlays(fn:(o:Overlays)=>void):Promise<void>{if(!this.ready)return this.gate().then(()=>this.overlays(fn));if(this.reviewPreparing)return Promise.reject(Error('A reviewed change is being committed. Reopen this edit after it finishes.'));const o=structuredClone(this.state.overlays);fn(o);validateHubOverlays(o);return this.content({...this.state,overlays:o},['overlays'],{source:'manual'});}
  shared(fn:(p:Personal,o:Overlays)=>void):Promise<void>{if(!this.ready)return this.gate().then(()=>this.shared(fn));if(this.reviewPreparing)return Promise.reject(Error('A reviewed change is being committed. Reopen this edit after it finishes.'));const p=structuredClone(this.state.personal),o=structuredClone(this.state.overlays);fn(p,o);validateHubOverlays(o);return this.content({...this.state,personal:preparePersonal(p),overlays:o},['personal','overlays'],{source:'manual'});}
  async importPacks(imports:Pack[],assets:Asset[],overlays:Overlays){await this.gate();await this.flush();if(this.error)throw Error('Resolve the storage warning before importing.');await preflightStorage(workspaceImportBytes(imports,assets,overlays));const byPack=new Map(this.state.imports.map(p=>[p.manifest.id,p]));imports.forEach(p=>byPack.set(p.manifest.id,p));const byAsset=new Map(this.state.assets.map(a=>[a.key,a]));assets.forEach(a=>{const old=byAsset.get(a.key);if(old&&(old.sha256!==a.sha256||old.mediaType!==a.mediaType))throw Error('A historical asset key cannot be overwritten; import a new asset/pack version.');byAsset.set(a.key,a);});await this.content({...this.state,imports:[...byPack.values()],assets:[...byAsset.values()],overlays},['imports','assets','overlays'],{source:'import'});}
- async restore(ws:Workspace,resolveAsset?:(key:string)=>Promise<Asset|undefined>){await this.gate(true);await this.flush();this.saving++;this.reviewPreparing=true;this.state={...this.state};this.emit();try{await preflightStorage(workspaceImportBytes(ws.imports,ws.assets,ws.overlays)+new TextEncoder().encode(JSON.stringify(ws.history??{})).length);const restored=await restoreWorkspace(ws,resolveAsset);clearArchiveAttachments();this.persistedPersonal=restored.personal;this.state={...restored,generation:this.state.generation+1};this.error='';this.emit();}finally{this.reviewPreparing=false;this.saving--;this.state={...this.state};this.emit();}}
- async addAsset(asset:Asset){await this.gate();await this.flush();return this.enqueue(async()=>{await preflightStorage(asset.bytes.length);if(await sha256(asset.bytes)!==asset.sha256)throw Error('Attachment SHA-256 mismatch');const existing=this.state.assets.find(a=>a.key===asset.key);if(existing&&existing.sha256!==asset.sha256)throw Error('A content-addressed asset cannot be overwritten');const db=await openDatabase(),tx=db.transaction('assets','readwrite'),done=complete(tx);tx.objectStore('assets').put(asset,asset.key);await done;this.state={...this.state,assets:[...this.state.assets.filter(a=>a.key!==asset.key),asset]};this.emit();});}
+ async restore(ws:Workspace,resolveAsset?:(key:string)=>Promise<Asset|undefined>){await this.gate(true);await this.flush();this.saving++;this.reviewPreparing=true;this.state={...this.state};this.emit();try{await preflightStorage(workspaceImportBytes(ws.imports,ws.assets,ws.overlays)+new TextEncoder().encode(JSON.stringify(ws.history??{})).length);const restored=await restoreWorkspace(ws,resolveAsset);clearArchiveAttachments();this.persistedPersonal=restored.personal;this.announce('content');this.state={...restored,generation:this.state.generation+1};this.error='';this.emit();}finally{this.reviewPreparing=false;this.saving--;this.state={...this.state};this.emit();}}
+ async addAsset(asset:Asset){await this.gate();await this.flush();return this.enqueue(async()=>{await preflightStorage(asset.bytes.length);if(await sha256(asset.bytes)!==asset.sha256)throw Error('Attachment SHA-256 mismatch');const existing=this.state.assets.find(a=>a.key===asset.key);if(existing&&existing.sha256!==asset.sha256)throw Error('A content-addressed asset cannot be overwritten');const db=await openDatabase(),tx=db.transaction('assets','readwrite'),done=complete(tx);tx.objectStore('assets').put(asset,asset.key);await done;this.announce('content');this.state={...this.state,assets:[...this.state.assets.filter(a=>a.key!==asset.key),asset]};this.emit();});}
  /** Reviewed actions run against the live state inside the existing write queue.
   * Nothing is exposed on window. The agent facade is the only public orchestrator. */
  async reviewedMutation(fn:(ws:Workspace)=>void,context:RevisionContext){await this.gate();await this.flush();if(this.error)throw Error('Resolve the storage warning before accepting or staging a proposal.');return this.enqueue(async()=>{this.reviewPreparing=true;try{const before=this.state,previous=before.history??emptyHistory(),next=structuredClone(before);fn(next);next.personal=preparePersonal(next.personal);validateHubOverlays(next.overlays);const ready=await prepareWorkspaceHistory(builtSource,next,context);
@@ -175,11 +197,11 @@ export class WorkspaceStore{
    for(const old of before.assets){const kept=ready.assets.find(a=>a.key===old.key);if(!kept||stable(kept)!==stable(old))throw Error('Reviewed actions cannot remove or replace existing immutable assets.');}
    for(const asset of addedAssets)if(await sha256(asset.bytes)!==asset.sha256)throw Error('Restored historical asset hash mismatch');
    if(addedAssets.length)await preflightStorage(addedAssets.reduce((n,a)=>n+a.bytes.length,0));
-   await validateHistory(ready.history!);try{await commitProjection(ready,previous,['overlays','personal',...(addedAssets.length?['assets']:[])],false,this.persistedPersonal??before.personal);}catch(e){this.fail(e);throw e;}this.persistedPersonal=ready.personal;this.state={...ready,generation:this.state.generation+1};this.emit();}finally{this.reviewPreparing=false;}
+   await validateHistory(ready.history!);try{await commitProjection(ready,previous,['overlays','personal',...(addedAssets.length?['assets']:[])],false,this.persistedPersonal??before.personal);}catch(e){this.fail(e);throw e;}this.persistedPersonal=ready.personal;this.announce('content');this.state={...ready,generation:this.state.generation+1};this.emit();}finally{this.reviewPreparing=false;}
   },false);}
  async flush(){this.flushCheckpoint();let pending;do{pending=this.queue;await pending;}while(pending!==this.queue);}
  async backupSnapshot(){await this.gate();await this.flush();return this.error&&this.state.history?prepareEmergencySnapshot(builtSource,this.state):structuredClone(this.state);}
- async retry(){await this.gate(true);await this.flush();return this.enqueue(async()=>{const previous=await loadWorkspace();if((previous.history?.meta.epoch??0)!==(this.state.history?.meta.epoch??0))throw Error('Another tab advanced history. Export your unsaved recovery copy, then reload.');const next=await prepareWorkspaceHistory(builtSource,this.state,{source:'manual',summary:'Retry unsaved changes'});await commitProjection(next,previous.history!,['imports','assets','overlays','personal']);this.persistedPersonal=next.personal;this.state={...next};this.error='';this.emit();});}
+ async retry(){await this.gate(true);await this.flush();return this.enqueue(async()=>{const previous=await loadWorkspace();if((previous.history?.meta.epoch??0)!==(this.state.history?.meta.epoch??0))throw Error('Another tab advanced history. Export your unsaved recovery copy, then reload.');const next=await prepareWorkspaceHistory(builtSource,this.state,{source:'manual',summary:'Retry unsaved changes'});await commitProjection(next,previous.history!,['imports','assets','overlays','personal']);this.persistedPersonal=next.personal;this.announce('content');this.state={...next};this.error='';this.emit();});}
  get unsafeClose(){return this.saving>0||!!this.error;}
  /** Destructive execution remains fail-closed until the browser fault matrix passes.
   * The implementation is present behind a compile-time release boundary so QA can
@@ -193,7 +215,7 @@ export class WorkspaceStore{
    const plan=await planCompaction(persisted,selection.archive,builtSource.packs,captureResources(compose(builtSource,persisted),persisted),resolveAsset);
    if(plan.previewHash!==selection.previewHash)throw Error('Compaction preview changed. Prepare, save and re-select a new archive.');
    await commitPreparedCompaction(selection.raw,plan.workspace.history!,selection.archive.descriptor,plan.preview);
-   this.persistedPersonal=plan.workspace.personal;this.state={...plan.workspace,generation:this.state.generation+1};this.error='';this.emit();
+   this.persistedPersonal=plan.workspace.personal;this.announce('content');this.state={...plan.workspace,generation:this.state.generation+1};this.error='';this.emit();
   }finally{this.reviewPreparing=false;}},false);
  }
 }
