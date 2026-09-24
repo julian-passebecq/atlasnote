@@ -75,6 +75,8 @@
     "test:completion": "node --test tests/completion-v22.test.mjs",
     "test:completion:runtime": "node tools/run-completion-runtime.mjs",
     "test:pdf:lifecycle": "python tests/pdf_lifecycle_runtime.py",
+    "test:study-samples:runtime": "python tests/study_samples_runtime.py",
+    "test:pdf:navigation": "python tests/pdf_navigation_runtime.py",
     "generate:v22:examples": "node tools/generate-v22-examples.mjs",
     "access-key:generate": "node tools/access-key-generate.mjs",
     "test:v23": "node --test --test-concurrency=2 tests/durability-v23.test.mjs tests/finalization-v23.test.mjs tests/finish-v23.test.mjs tests/capacity-fixtures-v23.test.mjs tests/provider-neutral-v23.test.mjs",
