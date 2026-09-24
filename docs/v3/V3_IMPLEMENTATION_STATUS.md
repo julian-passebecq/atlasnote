@@ -27,6 +27,7 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | `2356368` | Fix: pinned-revision deep links wait for the complete history under staged boot (found by `completion_v22_runtime`) |
 
 | `b6b1de3` | DATA-03: fail closed when the stored workspace cannot be read; DATA-02: backup completeness under Experiences |
+| `ac75cda` | PERF-07: batched Notebook folders (80 rows plus explicit Show next, open page always revealed) and map lookups per tree row |
 | `de21297` | MEM-02: shared verified PDF cache; browser gates MEM-01 (50 switches), DATA-03 (unreadable record never overwritten), UI-01 (390px) |
 
 ## New state: owner, persistence and migration boundary
@@ -148,7 +149,7 @@ Browser runs used Playwright wheel injection. **This is not physical mouse or tr
 | PERF-04 | PASS | Coalesced checkpoints, `v3_runtime` |
 | PERF-05 | PARTIAL | Cached index with an explicit scope; no worker (decision recorded with measurements) |
 | PERF-06 | PASS | Memoized projection and facts index |
-| PERF-07 | PARTIAL | PDF windowing done; Notebook tree batching in progress |
+| PERF-07 | PASS (batching) | PDF windowing (`v3_pdf_window`). Notebook folders render in batches of 80 rows and always reveal the open page (`v3_tree_batch`). This is batching, not full virtualization. |
 | DATA-01 | PASS | `v3_tabs`, `v3_runtime` cross-tab |
 | DATA-02 | PASS | `v3-data-safety`, portable compaction gate |
 | DATA-03 | PASS | `v3-data-safety`, `v3_gates` |
