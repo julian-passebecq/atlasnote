@@ -295,7 +295,7 @@ def legacy_restores():
 def capabilities_and_menus():
     c,p=context()
     try:
-        detail=api(p,"""const m=api.getAgentCapabilities();if(m.actions.length!==25)throw Error('action count');
+        detail=api(p,"""const m=api.getAgentCapabilities();if(m.actions.length!==26)throw Error('action count'); // V3 adds concept.create
         const keys=api.listResources({includeStructures:true,limit:100}).items.map(r=>r.resourceKey);
         for(const n of [0,1,20]){const c=api.getAgentContext({resourceKeys:keys.slice(0,n)});if(c.resources.length!==n||c.personal)throw Error('context scope');}
         return {actions:m.actions.length,resources:keys.length};""")

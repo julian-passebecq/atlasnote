@@ -106,7 +106,7 @@ test('two real generations validate 4 backup archives and all 26 operation kinds
     if(++calls===1){
      const child=spawnSync(command,args,{...options,stdio:'pipe',encoding:'utf8'});
      assert.equal(child.status,0,child.stderr);
-     assert.match(child.stdout,/"operationKinds": 26/); // V3 adds concept.createreturn child;
+     assert.match(child.stdout,/"operationKinds": 26/);return child;
     }
     const directory=options.env.ATLAS_V22_EXAMPLES_DIR;
     const names=fs.readdirSync(directory),index=JSON.parse(fs.readFileSync(path.join(directory,'INDEX.json')));
