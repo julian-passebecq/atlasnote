@@ -513,9 +513,9 @@ def all_action_kinds():
             print('PASS browser action plan',path.name,flush=True)
         expected=read_db(p)['data']['history'];ready(p)
         assert read_db(p)['data']['history']==expected
-        assert len(kinds)==25
-        assert len([r for r in expected if r['kind']=='review' and r['status']=='accepted'])==23
-        return {'kinds':sorted(kinds),'reviewedPlans':23,'acceptedAuditRetainedAfterReload':True}
+        assert len(kinds)==26  # V3 adds concept.create
+        assert len([r for r in expected if r['kind']=='review' and r['status']=='accepted'])==24
+        return {'kinds':sorted(kinds),'reviewedPlans':24,'acceptedAuditRetainedAfterReload':True}
     finally:c.close()
 
 def corrupt_backups():
@@ -661,7 +661,7 @@ base=start_server(dist='dist')
 with sync_playwright() as pw:
     browser=pw.chromium.launch(headless=True)
     print('Chromium',browser.version,flush=True)
-    for name,fn in [('capabilities-context-keyboard-menus',capabilities_and_menus),('review-invalid-import-subset-double-click',review_safety),('history-compare-real-tab-concurrency',history_and_concurrency),('distinct-byte-pdf-reload-backup',distinct_pdf),('legacy-schema-2-3-fresh-profile-restores',legacy_restores),('rich-nonempty-v2-migration',rich_migration),('five-theme-responsive-matrix',responsive_matrix),('pinned-links-and-restore',pinned_links_and_restore),('quota-failure-atomicity',quota_failure_atomicity),('all-25-action-kinds-through-review',all_action_kinds),('corrupt-backups-rejected-atomically',corrupt_backups),('history-pagination-and-structure',history_pagination_and_structure),('all-resource-keyboard-menus',all_resource_menus),('deleted-source-pinned-startup',deleted_source_pinned_startup),('exact-historical-targets-and-wrappers',exact_historical_targets)]:
+    for name,fn in [('capabilities-context-keyboard-menus',capabilities_and_menus),('review-invalid-import-subset-double-click',review_safety),('history-compare-real-tab-concurrency',history_and_concurrency),('distinct-byte-pdf-reload-backup',distinct_pdf),('legacy-schema-2-3-fresh-profile-restores',legacy_restores),('rich-nonempty-v2-migration',rich_migration),('five-theme-responsive-matrix',responsive_matrix),('pinned-links-and-restore',pinned_links_and_restore),('quota-failure-atomicity',quota_failure_atomicity),('all-26-action-kinds-through-review',all_action_kinds),('corrupt-backups-rejected-atomically',corrupt_backups),('history-pagination-and-structure',history_pagination_and_structure),('all-resource-keyboard-menus',all_resource_menus),('deleted-source-pinned-startup',deleted_source_pinned_startup),('exact-historical-targets-and-wrappers',exact_historical_targets)]:
         if not os.environ.get('ATLAS_COMPLETION_CASE') or os.environ['ATLAS_COMPLETION_CASE'] in name: check(name,fn)
     browser.close()
 (OUT / 'results.json').write_text(json.dumps({'status':'PASS' if all(r['status']=='PASS' for r in results) and not errors else 'FAIL','distribution':'dist','normalOriginRequired':True,'browser':'Chromium '+browser.version,'results':results,'pageErrors':errors,'requestFailures':network},indent=2),encoding='utf-8')

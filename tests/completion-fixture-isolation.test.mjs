@@ -33,7 +33,7 @@ test('browser references a single fixture root; all 15 acceptance cases remain r
  assert.equal(source.match(/docs\/examples\/v22/g)?.length,1); // manual fallback only
  assert(source.includes("EXAMPLES = Path(os.environ.get('ATLAS_V22_EXAMPLES_DIR'"));
  assert(source.includes("EXAMPLES.glob('changeset-*.json')"));
- for(const name of ['capabilities-context-keyboard-menus','review-invalid-import-subset-double-click','history-compare-real-tab-concurrency','distinct-byte-pdf-reload-backup','legacy-schema-2-3-fresh-profile-restores','rich-nonempty-v2-migration','five-theme-responsive-matrix','pinned-links-and-restore','quota-failure-atomicity','all-25-action-kinds-through-review','corrupt-backups-rejected-atomically','history-pagination-and-structure','all-resource-keyboard-menus','deleted-source-pinned-startup','exact-historical-targets-and-wrappers'])assert(source.includes("('"+name+"',"),name);
+ for(const name of ['capabilities-context-keyboard-menus','review-invalid-import-subset-double-click','history-compare-real-tab-concurrency','distinct-byte-pdf-reload-backup','legacy-schema-2-3-fresh-profile-restores','rich-nonempty-v2-migration','five-theme-responsive-matrix','pinned-links-and-restore','quota-failure-atomicity','all-26-action-kinds-through-review','corrupt-backups-rejected-atomically','history-pagination-and-structure','all-resource-keyboard-menus','deleted-source-pinned-startup','exact-historical-targets-and-wrappers'])assert(source.includes("('"+name+"',"),name);
 });
 
 test('generator then original browser receive the same fresh root, no shell, and caller env is unchanged',()=>temporary(tempRoot=>{
