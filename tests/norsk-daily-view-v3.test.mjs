@@ -39,3 +39,11 @@ test('V3 Norsk Daily progress survives a corrected item revision and a later bat
  assert.equal(after.status,'known','same stable page ID keeps progress across revisions');
  assert(after.page.tags.includes('norsk-daily-revision:'+item.revision));
 });
+test('V3 Norsk Daily vocabulary review reads the accepted vocabulary tables, deduplicated',async()=>{
+ const {dailyVocabulary}=await import('../dist-offline/app/norsk-daily/daily.js');
+ const c=catalogueWith(fixture),batch=dailyBatches(c,{})[0],words=dailyVocabulary(batch);
+ const expected=new Set(fixture.items.flatMap(i=>i.vocabulary.map(v=>v.lemma.toLocaleLowerCase('nb')+'|'+v.partOfSpeech)));
+ assert.equal(words.length,expected.size,'one card per distinct lemma + part of speech');
+ assert(words.every(w=>w.english&&w.pageId.startsWith('norsk-daily.item.')&&w.headline));
+ assert.deepEqual(dailyVocabulary(undefined),[]);
+});

@@ -1,7 +1,7 @@
 import React,{useMemo,useState} from '../vendor/react.mjs';
 import {Icon,IconButton} from '../components/Icon.js';
 import type {Catalogue,Personal} from '../core/model.js';
-import {dailyBatches,dailyCounts,STATUS_RATING} from './daily.js';
+import {dailyBatches,dailyCounts,dailyVocabulary,STATUS_RATING} from './daily.js';
 import type {DailyStatus} from './daily.js';
 type Props={catalogue:Catalogue;personal:Personal;onOpen:(pageId:string,newTab?:boolean)=>void;onStatus:(pageId:string,rating:'gray'|'orange'|'green')=>void;onImport:()=>void;onClose:()=>void};
 const LABEL:Record<DailyStatus,string>={new:'New',learning:'Learning',known:'Known'};
@@ -10,10 +10,11 @@ const LABEL:Record<DailyStatus,string>={new:'New',learning:'Learning',known:'Kno
  * Headlines are source wording; everything else is labelled generated text. */
 export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onClose}:Props){
  const batches=useMemo(()=>dailyBatches(catalogue,personal.ratings),[catalogue,personal.ratings]);
- const [date,setDate]=useState<string|undefined>(batches[0]?.date),[english,setEnglish]=useState(false),[filter,setFilter]=useState<DailyStatus|'all'>('all');
+ const [date,setDate]=useState<string|undefined>(batches[0]?.date),[english,setEnglish]=useState(false),[filter,setFilter]=useState<DailyStatus|'all'>('all'),[view,setView]=useState<'stories'|'vocabulary'>('stories'),[revealed,setRevealed]=useState<Record<string,boolean>>({});
  const index=Math.max(0,batches.findIndex(b=>b.date===date)),batch=batches[index];
  const counts=batch?dailyCounts(batch.items):{new:0,learning:0,known:0};
  const shown=batch?batch.items.filter(i=>filter==='all'||i.status===filter):[];
+ const words=useMemo(()=>dailyVocabulary(batch),[batch]);
  return <section className="norsk-daily" aria-label="Norsk Daily">
   <header className="norsk-daily-header">
    <div><p className="eyebrow">Norsk</p><h1>Norsk Daily</h1></div>
@@ -28,6 +29,14 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onCl
     <p>Transform permitted headline metadata with the exported prompt, then import the JSON. It becomes study material only after you accept it in review.</p>
     <button className="primary" onClick={onImport}>Open review to import a feed</button></div>:<>
    {batch.synthetic&&<p className="norsk-daily-synthetic" role="note"><strong>Synthetic fixture.</strong> Invented study text for testing, not real news.</p>}
+   <div className="norsk-daily-views" role="tablist" aria-label="Norsk Daily view"><button role="tab" aria-selected={view==='stories'} onClick={()=>setView('stories')}>Stories ({batch.items.length})</button><button role="tab" aria-selected={view==='vocabulary'} onClick={()=>setView('vocabulary')}>Vocabulary ({words.length})</button></div>
+   {view==='vocabulary'?<div className="norsk-daily-vocab">
+    <p className="norsk-daily-note">Generated vocabulary from the day's accepted stories. Say the meaning, then reveal it. <button className="text-button" onClick={()=>setRevealed(Object.fromEntries(words.map(w=>[w.lemma+'|'+(w.partOfSpeech??''),true])))}>Reveal all</button> <button className="text-button" onClick={()=>setRevealed({})}>Hide all</button></p>
+    <ul>{words.map(w=>{const key=w.lemma+'|'+(w.partOfSpeech??''),open=!!revealed[key];return <li key={key} className="norsk-daily-word"><div><strong lang="no">{w.lemma}</strong>{w.form&&w.form!==w.lemma&&<span className="norsk-daily-form" lang="no">{w.form}</span>}{w.partOfSpeech&&<small>{w.partOfSpeech}</small>}</div>
+     {open?<p className="norsk-daily-meaning">{w.english}{w.french&&<span> / {w.french}</span>}{w.example&&<em lang="no"> {w.example}</em>}</p>:<button className="text-button" aria-label={'Reveal meaning of '+w.lemma} onClick={()=>setRevealed({...revealed,[key]:true})}>Reveal</button>}
+     <button className="text-button norsk-daily-source" title={'From: '+w.headline} onClick={()=>onOpen(w.pageId)}>Story</button></li>;})}</ul>
+    {!words.length&&<p className="experience-note">No vocabulary in this day's stories.</p>}
+   </div>:<>
    <div className="norsk-daily-toolbar">
     <div className="norsk-daily-filters" role="group" aria-label="Filter by progress">
      {(['all','new','learning','known'] as const).map(f=><button key={f} aria-pressed={filter===f} onClick={()=>setFilter(f)}>{f==='all'?'All ('+batch.items.length+')':LABEL[f]+' ('+counts[f]+')'}</button>)}
@@ -49,6 +58,7 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onCl
     </div>
    </li>)}</ol>
    {!shown.length&&<p className="experience-note">No items with this progress on {batch.date}.</p>}
+   </>}
    <p className="norsk-daily-note">Progress uses your learning flags (Learning / Understood) on each stable story, so it survives corrections and re-imports. Study day: {batch.date}, Europe/Oslo.</p>
   </>}
  </section>;

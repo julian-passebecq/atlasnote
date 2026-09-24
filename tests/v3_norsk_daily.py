@@ -55,6 +55,14 @@ with sync_playwright() as pw:
   btn('Practice '+str(p.locator('.norsk-daily-toolbar .primary').inner_text().split()[1])+' questions').click()
   expect(p.locator('.active-pane h1')).to_contain_text('Norsk Daily')
   shot('practice');return {}
+ def vocabulary():
+  if not p.locator('.norsk-daily').count():btn('Norsk Daily').click()
+  p.get_by_role('tab',name=__import__('re').compile(r'^Vocabulary \(\d+\)$')).click()
+  cards=p.locator('.norsk-daily-word');expect(cards.first).to_be_visible();n=cards.count();assert n>=3
+  expect(p.locator('.norsk-daily-meaning')).to_have_count(0)
+  lemma=cards.first.locator('strong').inner_text();btn('Reveal meaning of '+lemma).click()
+  expect(p.locator('.norsk-daily-meaning')).to_have_count(1);shot('vocabulary');return {'words':n}
+ check('Vocabulary review lists the day’s words and reveals meanings on demand',vocabulary)
  check('Progress persists across reload; the day QCM opens as a native quiz',persists)
  def no_errors():assert not errors,errors
  check('No uncaught page errors',no_errors)

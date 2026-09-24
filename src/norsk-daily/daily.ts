@@ -30,4 +30,20 @@ export function dailyBatches(c:Catalogue,ratings:Personal['ratings']):DailyBatch
  for(const b of byDate.values())b.items.sort((x,y)=>ORDER[x.status]-ORDER[y.status]||x.page.title.localeCompare(y.page.title,'nb'));
  return [...byDate.values()].sort((a,b)=>b.date.localeCompare(a.date));
 }
+export type DailyWord={lemma:string;form?:string;partOfSpeech?:string;english?:string;french?:string;example?:string;pageId:string;headline:string};
+/** The day's vocabulary, read from each accepted article's generated vocabulary
+ * table (no second store). Deduplicated by lemma + part of speech, first story wins. */
+export function dailyVocabulary(batch:DailyBatch|undefined):DailyWord[]{
+ const out:DailyWord[]=[],seen=new Set<string>();
+ for(const item of batch?.items??[]){
+  const table=(page=>{let found:any;const walk=(bs:any[])=>bs.forEach(b=>{if(!found&&b.type==='table'&&String(b.id).endsWith('.vocabulary.table'))found=b;if(b.children)walk(b.children);});walk(page.blocks);return found;})(item.page);
+  if(!table)continue;const col=(name:string)=>table.columns.indexOf(name);
+  for(const row of table.rows as string[][]){
+   const cell=(name:string)=>{const i=col(name);return i>=0&&row[i]?row[i]:undefined;},lemma=cell('Lemma');if(!lemma)continue;
+   const key=lemma.toLocaleLowerCase('nb')+'|'+(cell('Part of speech')??'');if(seen.has(key))continue;seen.add(key);
+   out.push({lemma,form:cell('Form'),partOfSpeech:cell('Part of speech'),english:cell('English'),french:cell('French'),example:cell('Example (generated)'),pageId:item.page.id,headline:item.page.title});
+  }
+ }
+ return out;
+}
 export function dailyCounts(items:DailyItem[]){return {new:items.filter(i=>i.status==='new').length,learning:items.filter(i=>i.status==='learning').length,known:items.filter(i=>i.status==='known').length};}
