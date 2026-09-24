@@ -13,6 +13,11 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | `de5bd3c` | Phase E: V3 seed integrated as draft pack `atlas.v3-seed`, with linked data-engineering and Norsk slices |
 | `f9a516e` | Phase F (partial): Norsk Daily feed adapter against synthetic fixtures |
 | `c788035`, `644114b` | V3 browser checks; compact-control fixes; two legacy tests made robust to library growth (exact sets instead of hard-coded counts) |
+| `498c12b` | Phase D: staged boot and change-only history reconciliation |
+| `c2fbb1c` | Phase D: bounded (windowed) Continuous PDF rendering |
+| `9e2ebbf` | Phase D: compute-once search index, proven equivalent to the legacy search |
+| `b5242b8` | Phase D: the tree stops rescanning the library on every state change |
+| `3d60619` | Study-samples test selects results by page ID; `data-page-id` added to search results |
 
 ## New state: owner, persistence and migration boundary
 
@@ -62,16 +67,37 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 - Import goes only through the existing Agent Review flow: preview, stage, then an explicit human accept.
 - Only a synthetic fixture is included; there are no real headlines.
 
+## Phase D: loading and rendering (measured, same machine)
+
+| Change | Before | After | Evidence |
+| --- | --- | --- | --- |
+| Staged boot: first render after `content.json` plus a shell read (imports, overlays, personal, history meta/heads/reviews/archive descriptors via the `kind` index); asset bytes and revisions hydrate afterwards | Time to shell with 12 × 16 MB local assets: 404–431 ms | 146–160 ms (one outlier run: 307 ms); first render 83–121 ms after start, independent of asset volume | `tests/v3_boot_scale.py` with `atlas:boot:*` marks |
+| Boot reconciliation only sends changed resources through `advanceHistory` | Unchanged library: one full-history deep clone plus JSON serialization per 50 resources, every boot | Zero history clones for an unchanged library | `tests/v3-loading.test.mjs` |
+| Windowed Continuous PDF (above 40 pages) with measured spacers | 400-page PDF: 400 wrappers and 800 observers | 13 wrappers; jump to page 250 in 87 ms with 0 px anchor error; monotonic wheel across window shifts; scrollbar at 30% maps to page 118 | `tests/v3_pdf_window.py` (generated 400-page PDF) |
+| Compute-once search index | 1,500 resources: 14.3 ms per keystroke; 10,000: 118 ms | 1.15 ms and 7 ms (one-time index 17 ms and 108 ms); identical results for 20 queries | `tests/v3-search-scale.test.mjs` (legacy oracle) |
+| Memoized, early-exit tree filtering | `pages.find` for every node on every render | Map lookup, and only while a text filter is active | Full DOM/runtime suites |
+
+**Safety boundary.** Staged boot is opt-in from `main.tsx` only.
+- Authored, import, asset, reviewed-change, compaction and backup commands **wait** for the complete, hydrated and reconciled state. If hydration fails, they fail closed ("Nothing was changed"). Restore and retry remain available for recovery.
+- A pinned revision that isn't loaded yet reports "still loading", never "missing".
+- The history writer, compactor, backups and the 13 rollback cases are unchanged.
+
+**Deliberately not done, with reasons:**
+- **Web Worker search:** the measured costs above don't warrant a second search path.
+- **Asset bytes on demand:** asset bytes still hydrate into memory after the first render. Making them lazy means replacing the synchronous `Asset.bytes` contract used by about 20 durability and backup call sites. That needs its own equivalence and rollback proof.
+- **Split compiler output:** today's reviewed catalogue is 548 KB. At 1,500 or 10,000 synthetic resources the costs measured above are dominated by computation, which is now bounded, not by transfer.
+
 ## Test evidence (clean tree, Windows 11, Node 26.9, Python 3.14, Playwright Chromium headless)
 
 | Check | Result |
 | --- | --- |
 | `npx tsc --noEmit` / `-p tsconfig.online.json` | PASS |
-| `npm test` | PASS 1094/1094 (baseline 1053) |
+| `npm test` | PASS 1102/1102 (baseline 1053) |
 | `npm run test:v23` | PASS 214/214 |
 | `npm run validate`, `npm run check:pdfatlas`, `npm run build` | PASS |
-| `tests/v3_runtime.py` (new) | PASS 6/6 |
-| `pdf_navigation_runtime`, `workspace_122_runtime`, `workspace_122_dom`, `v22_runtime`, `wheel_125_dom`, `reading_124_dom`, `saved_states_runtime`, `pdf_lifecycle_runtime`, `stabilization_v2_runtime` | PASS |
+| `tests/v3_runtime.py`, `tests/v3_pdf_window.py` (new) | PASS 6/6, 5/5 |
+| `pdf_navigation_runtime`, `workspace_122_runtime`, `workspace_122_dom`, `wheel_125_dom`, `reading_124_dom`, `v22_runtime`, `saved_states_runtime`, `stabilization_v2_runtime`, `reading_124_runtime`, `content_hub_127_runtime`, `references_v2_runtime`, `release_blockers_runtime`, `final_polish_runtime`, `pdf_lifecycle_runtime`, `study_samples_runtime`, `simplified_123_dom`, `hardening_dom`, `compact_12_dom` | PASS |
+| `v23_runtime` | Every case PASS except one BLOCKED gate: native quota failure requires Linux or WSL (`ATLAS_V23_NATIVE_QUOTA=1`) |
 
 Run the build-gated Python suites from the repository root, on a clean committed tree, after `npm run build`.
 
@@ -87,11 +113,11 @@ Browser runs used Playwright wheel injection. **This is not physical mouse or tr
 - **BLOCKED: real-device PDF wheel trace.** This needs the owner's affected mouse or trackpad and the trace export. The Spread backward jump is hardened against stale restores but not proven fixed.
 - **BLOCKED: protected preview and Access qualification.** It needs the owner's credentials and explicit authorization. No deployment was done.
 - **BLOCKED: Norsk Daily with real sources.** The publisher's permission is unverified.
-- **Not started (phase D core):**
-  - Metadata-first split compiler output and lazy body loading. Boot still fetches the full `content.json`, and `loadWorkspace()` still calls `getAll()` on assets and history.
-  - Worker-based search shards.
-  - A windowed list of Continuous PDF page wrappers and true tree virtualization.
+- **Phase D remaining:**
+  - Loading asset bytes on demand (see above).
+  - Split compiler output.
   - Reducing the PDF byte copies.
-- **Not run:** 1,500/10,000-resource scale fixtures and budgets, the full `test:v23:release` gates including the compaction fault matrix, and offline or auth-expiry transitions.
+  - Full virtualization of very long expanded Notebook trees (PDF study trees are already bounded).
+- **Not run:** the full `test:v23:release` gates including the compaction fault matrix, offline or auth-expiry transitions, and a browser-level 1,500-resource UI run. The 1,500/10,000-resource figures above are computation benchmarks in Node.
 - **Content:** 59 of the 64 seed pages remain unlinked drafts, and the whole pack needs the owner's review. Presets are subject-based, so they don't depend on the seed's project IDs.
 - **Norsk Daily UI** (daily queue, New/Learning/Known progress) and adding vocabulary to the glossary are not built.
