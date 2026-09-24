@@ -6,6 +6,9 @@ import type {AgentChangeSet} from './model.js';
 import {ChangeList} from '../history/HistoryUI.js';
 import {downloadJSON} from '../content-hub/content.js';
 import type {Workspace} from '../core/model.js';
+import {planNorskDailyImport,lookupFromAgent} from '../norsk-daily/import.js';
+import {buildTransformationPrompt,norskDailyJsonSchema} from '../norsk-daily/contract.js';
+import {NORSK_DAILY_LIMITS} from '../norsk-daily/validation.mjs';
 
 type Preview = ReturnType<AgentInterface['preview']>;
 const sameSelection = (a: string[], b: string[]) => a.length === b.length && a.every(id => b.includes(id));
@@ -90,6 +93,22 @@ export function AgentReviewDialog({workspace, resourceKey, onClose}: {workspace:
      resetDraft('');
      void run(async () => {if (file.size > 1024 * 1024) throw Error('ChangeSet exceeds 1 MiB'); const value = await file.text(); setText(value); inspect(value);});
     }} /></label>
+    {/* Norsk Daily: a validated feed becomes an ordinary ChangeSet proposal in this
+      same dialog. It is only previewed here; staging and accept/reject stay human clicks. */}
+    <label className="history-file">Import Norsk Daily feed<input type="file" accept=".json,application/json" aria-label="Import Norsk Daily feed JSON" data-agent-action="norsk-daily-import" disabled={busy} onChange={e => {
+     const file = e.target.files?.[0]; e.target.value = '';
+     if (!file) return;
+     resetDraft('');
+     void run(async () => {
+      if (file.size > NORSK_DAILY_LIMITS.bytes) throw Error('Norsk Daily feed exceeds ' + NORSK_DAILY_LIMITS.bytes / 1024 + ' KiB');
+      const now = Date.now(), result = planNorskDailyImport(await file.text(), lookupFromAgent(api), {createdAt: now, now, changeSetSuffix: now.toString(36)});
+      if (result.blocked) throw Error('Norsk Daily import blocked: ' + result.messages.join(' '));
+      if (!result.changeSet) { setStatus('Norsk Daily: ' + result.messages[0] + ' Nothing to review.'); return; }
+      setText(JSON.stringify(result.changeSet, null, 2)); inspect(result.changeSet);
+      setStatus('Norsk Daily feed converted to a proposal: ' + result.messages[0] + ' Review the preview, then stage and explicitly accept or reject.');
+     });
+    }} /></label>
+    <button disabled={busy} data-agent-action="norsk-daily-prompt-export" onClick={() => void run(() => downloadJSON({schemaVersion: 1, kind: 'atlas-norsk-daily-transformation', prompt: buildTransformationPrompt(), schema: norskDailyJsonSchema()}, 'atlasnote-norsk-daily-prompt.json'))}>Export Norsk Daily prompt</button>
     <button disabled={busy || !text || decided || active?.status === 'stale'} data-agent-action="changeset-preview" onClick={() => void run(() => inspect(text))}>Preview ChangeSet</button>
     <button disabled={busy || !preview || !!activeId} data-agent-action="changeset-stage" onClick={() => void run(async () => {
      if (!preview) return;
