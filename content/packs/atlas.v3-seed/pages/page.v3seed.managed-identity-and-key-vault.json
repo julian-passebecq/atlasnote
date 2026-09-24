@@ -1,0 +1,32 @@
+{
+  "id": "page.v3seed.managed-identity-and-key-vault",
+  "title": "Managed identity and Key Vault",
+  "summary": "Remove long-lived application secrets where platform identity can authenticate directly.",
+  "blocks": [
+    {
+      "id": "block.v3seed.managed-identity-and-key-vault.overview",
+      "type": "markdown",
+      "text": "Remove long-lived application secrets where platform identity can authenticate directly."
+    },
+    {
+      "id": "block.v3seed.managed-identity-and-key-vault.points",
+      "type": "list",
+      "items": [
+        "A managed identity is an Azure-managed service principal associated with a resource.",
+        "Grant only the required role/secret permissions.",
+        "Key Vault centralizes secrets/keys/certificates when a secret is unavoidable.",
+        "Log access and rotate credentials without changing application source where possible."
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:azure-fabric",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

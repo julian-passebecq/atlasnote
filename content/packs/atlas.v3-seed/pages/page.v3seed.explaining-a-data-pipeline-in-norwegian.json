@@ -1,0 +1,32 @@
+{
+  "id": "page.v3seed.explaining-a-data-pipeline-in-norwegian",
+  "title": "Explaining a data pipeline in Norwegian",
+  "summary": "Practice a reusable B2 explanation with sequencing and cause/effect language.",
+  "blocks": [
+    {
+      "id": "block.v3seed.explaining-a-data-pipeline-in-norwegian.overview",
+      "type": "markdown",
+      "text": "Practice a reusable B2 explanation with sequencing and cause/effect language."
+    },
+    {
+      "id": "block.v3seed.explaining-a-data-pipeline-in-norwegian.points",
+      "type": "list",
+      "items": [
+        "Først henter vi inn rådata fra kildesystemet.",
+        "Deretter validerer og transformerer vi dataene.",
+        "Til slutt publiserer vi et datasett som rapportene kan bruke.",
+        "Hvis valideringen feiler, stopper vi kjøringen slik at feil data ikke blir publisert."
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:norsk",
+    "topic:norsk",
+    "lang:nb"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

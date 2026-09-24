@@ -1,0 +1,32 @@
+{
+  "id": "page.v3seed.unity-catalog-mental-model",
+  "title": "Unity Catalog mental model",
+  "summary": "Organize governed data and permissions around stable catalog/schema/object boundaries.",
+  "blocks": [
+    {
+      "id": "block.v3seed.unity-catalog-mental-model.overview",
+      "type": "markdown",
+      "text": "Organize governed data and permissions around stable catalog/schema/object boundaries."
+    },
+    {
+      "id": "block.v3seed.unity-catalog-mental-model.points",
+      "type": "list",
+      "items": [
+        "Centralized governance should make ownership and access reviewable.",
+        "Grant privileges to groups/service principals rather than individual ad-hoc users where possible.",
+        "Separate dev/test/prod boundaries deliberately.",
+        "Lineage and discovery improve only when object naming and ownership are maintained."
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:databricks",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

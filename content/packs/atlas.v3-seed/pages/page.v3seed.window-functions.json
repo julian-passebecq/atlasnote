@@ -1,0 +1,106 @@
+{
+  "id": "page.v3seed.window-functions",
+  "title": "Window functions",
+  "summary": "Use windows when you need group-aware calculations while retaining row-level detail.",
+  "blocks": [
+    {
+      "id": "block.v3seed.window-functions.overview",
+      "type": "markdown",
+      "text": "Use windows when you need group-aware calculations while retaining row-level detail."
+    },
+    {
+      "id": "block.v3seed.window-functions.points",
+      "type": "list",
+      "items": [
+        "PARTITION BY defines the independent groups.",
+        "ORDER BY defines sequence for ranking, running totals and lag/lead.",
+        "ROW_NUMBER is deterministic only when the ordering is deterministic.",
+        "Window functions run after WHERE/GROUP BY in logical query processing."
+      ]
+    },
+    {
+      "id": "block.v3seed.window-functions.code",
+      "type": "code",
+      "language": "sql",
+      "code": "SELECT *,\n       ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY event_ts DESC, event_id DESC) AS rn\nFROM events;",
+      "title": "Example"
+    },
+    {
+      "id": "block.v3seed.window-functions.grain-note",
+      "type": "markdown",
+      "text": "A window keeps the input grain: every input row stays in the output. GROUP BY collapses rows to the grouping grain. Filtering on a ranking result (for example rn = 1) is how you change the grain deliberately, and it needs an outer query or QUALIFY because WHERE is evaluated before window functions."
+    },
+    {
+      "id": "block.v3seed.window-functions.ranking-ties",
+      "type": "table",
+      "columns": [
+        "score",
+        "ROW_NUMBER()",
+        "RANK()",
+        "DENSE_RANK()"
+      ],
+      "rows": [
+        [
+          "100",
+          "1",
+          "1",
+          "1"
+        ],
+        [
+          "100",
+          "2",
+          "1",
+          "1"
+        ],
+        [
+          "90",
+          "3",
+          "3",
+          "2"
+        ]
+      ]
+    },
+    {
+      "id": "block.v3seed.window-functions.latest-row",
+      "type": "code",
+      "language": "sql",
+      "title": "Latest event per customer (new grain: one row per customer)",
+      "code": "WITH ranked AS (\n  SELECT e.*,\n         ROW_NUMBER() OVER (\n           PARTITION BY e.customer_id\n           ORDER BY e.event_ts DESC, e.event_id DESC  -- tie-breaker makes it deterministic\n         ) AS rn\n  FROM events e\n)\nSELECT *\nFROM ranked\nWHERE rn = 1;"
+    },
+    {
+      "id": "block.v3seed.window-functions.next",
+      "type": "link",
+      "pageId": "page.v3seed.rows-versus-range-window-frames",
+      "label": "Next: ROWS versus RANGE window frames",
+      "description": "See which rows a running aggregate actually includes."
+    }
+  ],
+  "related": [
+    "page.v3seed.sql-grain-before-joins",
+    "page.v3seed.inner-left-and-anti-joins",
+    "page.v3seed.qualify-and-deduplication",
+    "page.v3seed.rows-versus-range-window-frames",
+    "page.v3seed.qcm.grain-joins-windows"
+  ],
+  "terms": [
+    "term.v3seed.window-function",
+    "term.v3seed.grain",
+    "term.v3seed.peer-rows"
+  ],
+  "sources": [
+    {
+      "title": "PostgreSQL - window functions tutorial",
+      "url": "https://www.postgresql.org/docs/current/tutorial-window.html",
+      "publisher": "PostgreSQL Global Development Group",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:sql",
+    "lang:en",
+    "path:grain-joins-windows"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

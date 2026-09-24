@@ -1,0 +1,211 @@
+{
+  "id": "page.v3seed.qcm.norsk-word-order",
+  "title": "Practice: Norwegian word order",
+  "summary": "5 questions on V2 word order, subordinate clauses and the position of ikke. Practice and review, without a timer.",
+  "blocks": [],
+  "related": [
+    "page.v3seed.v2-word-order-in-main-clauses",
+    "page.v3seed.subordinate-clauses-and-ikke"
+  ],
+  "terms": [
+    "term.v3seed.v2-word-order",
+    "term.v3seed.sentence-adverbial",
+    "term.v3seed.subordinate-clause"
+  ],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:norsk",
+    "topic:norsk",
+    "lang:nb",
+    "path:norsk-word-order"
+  ],
+  "provenance": "Prepared by Claude Code on 2026-09-24 from the AtlasNote V3 seed; original questions, no private data or third-party text. Owner review required before publication.",
+  "kind": "qcm",
+  "qcm": {
+    "schemaVersion": 1,
+    "id": "page.v3seed.qcm.norsk-word-order",
+    "title": "Practice: Norwegian word order",
+    "taxonomy": {
+      "subject": "norsk",
+      "folderId": "node.v3seed.norsk.path"
+    },
+    "questions": [
+      {
+        "id": "question.v3seed.no.q1",
+        "prompt": "Choose the correct main clause that starts with \"I morgen\".",
+        "options": [
+          {
+            "id": "option.v3seed.no.q1.a",
+            "text": "I morgen jeg skal jobbe hjemme."
+          },
+          {
+            "id": "option.v3seed.no.q1.b",
+            "text": "I morgen skal jeg jobbe hjemme."
+          },
+          {
+            "id": "option.v3seed.no.q1.c",
+            "text": "I morgen jobbe jeg skal hjemme."
+          },
+          {
+            "id": "option.v3seed.no.q1.d",
+            "text": "I morgen jeg jobber hjemme skal."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.no.q1.b"
+        ],
+        "explanation": "I morgen fills position 1, so the finite verb skal takes position 2 and the subject jeg follows it (V2).",
+        "links": [
+          {
+            "label": "Review: V2 word order in main clauses",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.v2-word-order-in-main-clauses"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.no.q2",
+        "prompt": "Which sentence is standard written Bokmål?",
+        "options": [
+          {
+            "id": "option.v3seed.no.q2.a",
+            "text": "Jeg vet at hun kommer ikke i dag."
+          },
+          {
+            "id": "option.v3seed.no.q2.b",
+            "text": "Jeg vet at hun ikke kommer i dag."
+          },
+          {
+            "id": "option.v3seed.no.q2.c",
+            "text": "Jeg vet at ikke hun kommer i dag."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.no.q2.b"
+        ],
+        "explanation": "In a subordinate clause the sentence adverbial ikke comes before the finite verb: at hun ikke kommer.",
+        "links": [
+          {
+            "label": "Review: subordinate clauses and ikke",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.subordinate-clauses-and-ikke"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.no.q3",
+        "prompt": "Which main clause is correct?",
+        "options": [
+          {
+            "id": "option.v3seed.no.q3.a",
+            "text": "Han ikke kommer i dag."
+          },
+          {
+            "id": "option.v3seed.no.q3.b",
+            "text": "Han kommer ikke i dag."
+          },
+          {
+            "id": "option.v3seed.no.q3.c",
+            "text": "Ikke han kommer i dag."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.no.q3.b"
+        ],
+        "explanation": "In a main clause ikke follows the finite verb.",
+        "links": [
+          {
+            "label": "Review: subordinate clauses and ikke",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.subordinate-clauses-and-ikke"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.no.q4",
+        "prompt": "Which words normally introduce a subordinate clause? Select all that apply.",
+        "options": [
+          {
+            "id": "option.v3seed.no.q4.a",
+            "text": "fordi"
+          },
+          {
+            "id": "option.v3seed.no.q4.b",
+            "text": "hvis"
+          },
+          {
+            "id": "option.v3seed.no.q4.c",
+            "text": "selv om"
+          },
+          {
+            "id": "option.v3seed.no.q4.d",
+            "text": "men",
+            "explanation": "men is a coordinating conjunction: main-clause order follows."
+          },
+          {
+            "id": "option.v3seed.no.q4.e",
+            "text": "og"
+          },
+          {
+            "id": "option.v3seed.no.q4.f",
+            "text": "derfor",
+            "explanation": "derfor is an adverb; in position 1 it triggers V2 inversion: Derfor kommer jeg."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.no.q4.a",
+          "option.v3seed.no.q4.b",
+          "option.v3seed.no.q4.c"
+        ],
+        "explanation": "fordi, hvis and selv om are subjunctions. og and men join main clauses; derfor is an adverb.",
+        "links": [
+          {
+            "label": "Review: subordinate clauses and ikke",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.subordinate-clauses-and-ikke"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.no.q5",
+        "prompt": "Complete the sentence: \"Fordi jeg ikke hadde tid, ...\"",
+        "options": [
+          {
+            "id": "option.v3seed.no.q5.a",
+            "text": "jeg gjorde det senere."
+          },
+          {
+            "id": "option.v3seed.no.q5.b",
+            "text": "gjorde jeg det senere."
+          },
+          {
+            "id": "option.v3seed.no.q5.c",
+            "text": "jeg det gjorde senere."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.no.q5.b"
+        ],
+        "explanation": "The whole fronted subordinate clause is position 1, so the finite verb gjorde comes next and the subject jeg follows it.",
+        "links": [
+          {
+            "label": "Review: V2 word order in main clauses",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.v2-word-order-in-main-clauses"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

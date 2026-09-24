@@ -1,0 +1,32 @@
+{
+  "id": "page.v3seed.bronze-silver-and-gold-contracts",
+  "title": "Bronze, Silver and Gold contracts",
+  "summary": "Use medallion layers as data-quality contracts, not as mandatory folder names.",
+  "blocks": [
+    {
+      "id": "block.v3seed.bronze-silver-and-gold-contracts.overview",
+      "type": "markdown",
+      "text": "Use medallion layers as data-quality contracts, not as mandatory folder names."
+    },
+    {
+      "id": "block.v3seed.bronze-silver-and-gold-contracts.points",
+      "type": "list",
+      "items": [
+        "Bronze preserves source fidelity and ingestion metadata.",
+        "Silver applies validated, conformed and deduplicated logic.",
+        "Gold serves stable business-ready aggregates/data products.",
+        "A small project may not need every layer; avoid copying data without adding a clear contract."
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:databricks",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

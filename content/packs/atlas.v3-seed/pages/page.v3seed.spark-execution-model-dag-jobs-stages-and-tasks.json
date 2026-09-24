@@ -1,0 +1,39 @@
+{
+  "id": "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+  "title": "Spark execution model: DAG, jobs, stages and tasks",
+  "summary": "Read a Spark workload from logical transformations down to distributed tasks.",
+  "blocks": [
+    {
+      "id": "block.v3seed.spark-execution-model-dag-jobs-stages-and-tasks.overview",
+      "type": "markdown",
+      "text": "Read a Spark workload from logical transformations down to distributed tasks."
+    },
+    {
+      "id": "block.v3seed.spark-execution-model-dag-jobs-stages-and-tasks.points",
+      "type": "list",
+      "items": [
+        "Lazy transformations build a plan; an action asks Spark to execute it.",
+        "An action typically creates a job.",
+        "Shuffle boundaries split execution into stages.",
+        "Tasks are per-partition units of work inside a stage."
+      ]
+    },
+    {
+      "id": "block.v3seed.spark-execution-model-dag-jobs-stages-and-tasks.code",
+      "type": "code",
+      "language": "python",
+      "code": "result = (events\n    .filter(\"amount > 0\")\n    .groupBy(\"country\")\n    .sum(\"amount\"))\nresult.explain(\"formatted\")\nresult.show()",
+      "title": "Example"
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

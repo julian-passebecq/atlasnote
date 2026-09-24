@@ -1,0 +1,103 @@
+[
+  {
+    "id": "term.v3seed.grain",
+    "label": "Grain (row grain)",
+    "definition": "What exactly one row of a table or query result represents, for example one row per order or one row per customer per day. State it before and after every join or aggregation.",
+    "example": "orders: one row per order; order_lines: one row per order line.",
+    "pageIds": [
+      "page.v3seed.sql-grain-before-joins",
+      "page.v3seed.merge-validation-and-cardinality",
+      "page.v3seed.window-functions"
+    ]
+  },
+  {
+    "id": "term.v3seed.join-cardinality",
+    "label": "Join cardinality",
+    "definition": "How many rows on each side can share a join key: one-to-one, one-to-many, many-to-one or many-to-many. It decides whether a join keeps, multiplies or drops rows.",
+    "example": "pandas: merge(..., validate=\"many_to_one\")",
+    "pageIds": [
+      "page.v3seed.sql-grain-before-joins",
+      "page.v3seed.merge-validation-and-cardinality",
+      "page.v3seed.inner-left-and-anti-joins"
+    ]
+  },
+  {
+    "id": "term.v3seed.join-fan-out",
+    "label": "Join fan-out",
+    "definition": "Row multiplication caused by joining to a relation at a finer grain. Measures from the coarser side repeat and are over-counted when summed.",
+    "example": "Summing orders.shipping_fee after joining order_lines.",
+    "pageIds": [
+      "page.v3seed.sql-grain-before-joins",
+      "page.v3seed.merge-validation-and-cardinality"
+    ]
+  },
+  {
+    "id": "term.v3seed.anti-join",
+    "label": "Anti join",
+    "definition": "Returns the left rows that have no matching right row. Written as NOT EXISTS, LEFT JOIN ... WHERE right key IS NULL, or how=\"left_anti\" in PySpark.",
+    "example": "Customers without orders.",
+    "pageIds": [
+      "page.v3seed.inner-left-and-anti-joins"
+    ]
+  },
+  {
+    "id": "term.v3seed.window-function",
+    "label": "Window function",
+    "definition": "A function evaluated over a set of related rows (the partition, optionally ordered and framed) that returns one value per input row instead of collapsing rows like GROUP BY.",
+    "example": "ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY event_ts DESC, event_id DESC)",
+    "pageIds": [
+      "page.v3seed.window-functions",
+      "page.v3seed.rows-versus-range-window-frames"
+    ]
+  },
+  {
+    "id": "term.v3seed.window-frame",
+    "label": "Window frame",
+    "definition": "The subset of the ordered partition that an aggregate window function sees for the current row, declared with ROWS or RANGE (GROUPS in some engines) BETWEEN ... AND .... With ORDER BY and no frame, standard SQL engines such as PostgreSQL and Spark SQL default to RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW.",
+    "example": "ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+    "pageIds": [
+      "page.v3seed.rows-versus-range-window-frames"
+    ]
+  },
+  {
+    "id": "term.v3seed.peer-rows",
+    "label": "Peer rows",
+    "definition": "Rows in the same partition whose ORDER BY values are equal. RANGE frames include or exclude peers together; ROWS frames count them one by one.",
+    "example": "Two events with the same event_ts.",
+    "pageIds": [
+      "page.v3seed.rows-versus-range-window-frames",
+      "page.v3seed.window-functions"
+    ]
+  },
+  {
+    "id": "term.v3seed.v2-word-order",
+    "label": "V2 word order",
+    "translation": "V2-regelen (verbet på andreplass)",
+    "definition": "In Norwegian main clauses the finite verb is the second sentence element. When something other than the subject comes first, the subject follows the verb.",
+    "example": "I dag jobber jeg hjemme.",
+    "pageIds": [
+      "page.v3seed.v2-word-order-in-main-clauses",
+      "page.v3seed.subordinate-clauses-and-ikke"
+    ]
+  },
+  {
+    "id": "term.v3seed.sentence-adverbial",
+    "label": "Sentence adverbial",
+    "translation": "setningsadverbial",
+    "definition": "An adverb such as ikke, alltid, ofte or aldri that modifies the whole clause. It follows the finite verb in main clauses and precedes it in subordinate clauses.",
+    "example": "Han kommer ikke. / ... at han ikke kommer.",
+    "pageIds": [
+      "page.v3seed.subordinate-clauses-and-ikke"
+    ]
+  },
+  {
+    "id": "term.v3seed.subordinate-clause",
+    "label": "Subordinate clause",
+    "translation": "leddsetning",
+    "definition": "A clause introduced by a subjunction such as at, fordi, hvis or selv om. It cannot stand alone, and sentence adverbials come before its finite verb.",
+    "example": "Fordi jeg ikke hadde tid, gjorde jeg det senere.",
+    "pageIds": [
+      "page.v3seed.subordinate-clauses-and-ikke"
+    ]
+  }
+]

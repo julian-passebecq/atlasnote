@@ -1,0 +1,38 @@
+{
+  "id": "page.v3seed.pandas-performance-boundaries",
+  "title": "Pandas performance boundaries",
+  "summary": "Know when a single-machine DataFrame is no longer the right execution model.",
+  "blocks": [
+    {
+      "id": "block.v3seed.pandas-performance-boundaries.overview",
+      "type": "markdown",
+      "text": "Know when a single-machine DataFrame is no longer the right execution model."
+    },
+    {
+      "id": "block.v3seed.pandas-performance-boundaries.points",
+      "type": "list",
+      "items": [
+        "Vectorization usually beats row-wise apply for standard numeric/string operations.",
+        "Reduce columns and rows before expensive operations.",
+        "Profile memory as well as runtime.",
+        "Move to a distributed engine when data or workload no longer fits the memory/latency envelope of one machine."
+      ]
+    },
+    {
+      "id": "block.v3seed.pandas-performance-boundaries.question",
+      "type": "question",
+      "question": "When should you not replace Pandas with Spark?",
+      "answer": "When the dataset fits comfortably on one machine and the workload is interactive or low-latency; Spark adds scheduler, serialization and distributed-system overhead."
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:pandas",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

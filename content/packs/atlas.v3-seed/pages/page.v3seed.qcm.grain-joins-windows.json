@@ -1,0 +1,338 @@
+{
+  "id": "page.v3seed.qcm.grain-joins-windows",
+  "title": "Practice: grain, joins and window frames",
+  "summary": "8 questions on row grain, join cardinality, anti joins and window frames. Practice and review, without a timer.",
+  "blocks": [],
+  "related": [
+    "page.v3seed.sql-grain-before-joins",
+    "page.v3seed.merge-validation-and-cardinality",
+    "page.v3seed.inner-left-and-anti-joins",
+    "page.v3seed.window-functions",
+    "page.v3seed.rows-versus-range-window-frames"
+  ],
+  "terms": [
+    "term.v3seed.grain",
+    "term.v3seed.join-cardinality",
+    "term.v3seed.join-fan-out",
+    "term.v3seed.anti-join",
+    "term.v3seed.window-function",
+    "term.v3seed.window-frame",
+    "term.v3seed.peer-rows"
+  ],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:sql",
+    "lang:en",
+    "path:grain-joins-windows"
+  ],
+  "provenance": "Prepared by Claude Code on 2026-09-24 from the AtlasNote V3 seed; original questions, no private data or third-party text. Owner review required before publication.",
+  "kind": "qcm",
+  "qcm": {
+    "schemaVersion": 1,
+    "id": "page.v3seed.qcm.grain-joins-windows",
+    "title": "Practice: grain, joins and window frames",
+    "taxonomy": {
+      "subject": "it",
+      "folderId": "node.v3seed.de.path"
+    },
+    "questions": [
+      {
+        "id": "question.v3seed.de.q1",
+        "prompt": "orders has one row per order and a shipping_fee column; order_lines has one row per order line. Every order has at least one line. You INNER JOIN them on order_id and compute SUM(o.shipping_fee). What happens?",
+        "options": [
+          {
+            "id": "option.v3seed.de.q1.a",
+            "text": "The total is correct because each order is joined once.",
+            "explanation": "Each order is repeated once per line after the join."
+          },
+          {
+            "id": "option.v3seed.de.q1.b",
+            "text": "The shipping fee is counted once per order line, so orders with several lines are over-counted."
+          },
+          {
+            "id": "option.v3seed.de.q1.c",
+            "text": "The query fails because the grains differ.",
+            "explanation": "SQL does not check grain; the query runs and silently returns an inflated sum."
+          },
+          {
+            "id": "option.v3seed.de.q1.d",
+            "text": "Orders are removed by the join.",
+            "explanation": "Every order has at least one line, so no order disappears here."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.de.q1.b"
+        ],
+        "explanation": "The join changes the grain to one row per order line, so order-level measures repeat (fan-out). Sum shipping_fee from orders alone, or aggregate lines to order grain before joining.",
+        "links": [
+          {
+            "label": "Review: SQL grain before joins",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.sql-grain-before-joins"
+            }
+          }
+        ],
+        "followUp": "How would you detect this fan-out with two COUNT(*) queries?"
+      },
+      {
+        "id": "question.v3seed.de.q2",
+        "prompt": "What is the grain of: SELECT customer_id, COUNT(*) FROM orders GROUP BY customer_id?",
+        "options": [
+          {
+            "id": "option.v3seed.de.q2.a",
+            "text": "One row per order."
+          },
+          {
+            "id": "option.v3seed.de.q2.b",
+            "text": "One row per customer that has at least one order."
+          },
+          {
+            "id": "option.v3seed.de.q2.c",
+            "text": "One row per customer in the customers table.",
+            "explanation": "customers is not read; customers without orders are absent."
+          },
+          {
+            "id": "option.v3seed.de.q2.d",
+            "text": "One row per order line."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.de.q2.b"
+        ],
+        "explanation": "GROUP BY customer_id collapses orders to one row per customer_id present in orders. To include customers without orders, start from customers and LEFT JOIN the aggregated orders.",
+        "links": [
+          {
+            "label": "Review: SQL grain before joins",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.sql-grain-before-joins"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.de.q3",
+        "prompt": "orders.merge(customers, on=\"customer_id\", how=\"left\", validate=\"many_to_one\") raises pandas.errors.MergeError. What does that tell you?",
+        "options": [
+          {
+            "id": "option.v3seed.de.q3.a",
+            "text": "orders contains repeated customer_id values.",
+            "explanation": "Repeated keys on the left are allowed: that is the \"many\" side."
+          },
+          {
+            "id": "option.v3seed.de.q3.b",
+            "text": "customers contains repeated customer_id values."
+          },
+          {
+            "id": "option.v3seed.de.q3.c",
+            "text": "Some orders have no matching customer.",
+            "explanation": "Unmatched keys are allowed in a left merge; audit them with indicator=True."
+          },
+          {
+            "id": "option.v3seed.de.q3.d",
+            "text": "The key columns have different dtypes.",
+            "explanation": "validate only checks key uniqueness; dtype problems surface differently."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.de.q3.b"
+        ],
+        "explanation": "many_to_one requires the right-hand keys to be unique, which guarantees that a left merge keeps exactly one output row per left row.",
+        "links": [
+          {
+            "label": "Review: merge validation and cardinality",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.merge-validation-and-cardinality"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.de.q4",
+        "prompt": "Which queries return the customers that have no orders? Select all that apply.",
+        "options": [
+          {
+            "id": "option.v3seed.de.q4.a",
+            "text": "SELECT c.customer_id FROM customers c WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.customer_id = c.customer_id)"
+          },
+          {
+            "id": "option.v3seed.de.q4.b",
+            "text": "SELECT c.customer_id FROM customers c LEFT JOIN orders o ON o.customer_id = c.customer_id WHERE o.customer_id IS NULL"
+          },
+          {
+            "id": "option.v3seed.de.q4.c",
+            "text": "SELECT c.customer_id FROM customers c INNER JOIN orders o ON o.customer_id = c.customer_id WHERE o.customer_id IS NULL",
+            "explanation": "An inner join keeps only matched rows, whose join key cannot be NULL: this returns nothing."
+          },
+          {
+            "id": "option.v3seed.de.q4.d",
+            "text": "SELECT customer_id FROM customers WHERE customer_id NOT IN (SELECT customer_id FROM orders), where orders.customer_id can be NULL",
+            "explanation": "If the subquery yields a NULL, NOT IN is never true and the query returns no rows."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.de.q4.a",
+          "option.v3seed.de.q4.b"
+        ],
+        "explanation": "NOT EXISTS and LEFT JOIN ... IS NULL are both anti joins. NOT IN is only safe when the subquery column cannot be NULL.",
+        "links": [
+          {
+            "label": "Review: inner, left and anti joins",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.inner-left-and-anti-joins"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.de.q5",
+        "prompt": "FROM customers c LEFT JOIN orders o ON o.customer_id = c.customer_id WHERE o.status = 'PAID'. What is the effect of the WHERE clause?",
+        "options": [
+          {
+            "id": "option.v3seed.de.q5.a",
+            "text": "Every customer is still returned."
+          },
+          {
+            "id": "option.v3seed.de.q5.b",
+            "text": "Customers without a PAID order are removed, so the query behaves like an INNER JOIN with that filter."
+          },
+          {
+            "id": "option.v3seed.de.q5.c",
+            "text": "It is a syntax error to filter a right-side column after a LEFT JOIN."
+          },
+          {
+            "id": "option.v3seed.de.q5.d",
+            "text": "Only customers without orders are returned."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.de.q5.b"
+        ],
+        "explanation": "Unmatched customers have o.status = NULL, and NULL = 'PAID' is not true, so WHERE removes them. Move the predicate into ON to keep every customer.",
+        "links": [
+          {
+            "label": "Review: inner, left and anti joins",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.inner-left-and-anti-joins"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.de.q6",
+        "prompt": "What is the essential difference between SUM(amount) OVER (PARTITION BY customer_id) and SUM(amount) with GROUP BY customer_id?",
+        "options": [
+          {
+            "id": "option.v3seed.de.q6.a",
+            "text": "The window version keeps one output row per input row; GROUP BY returns one row per customer."
+          },
+          {
+            "id": "option.v3seed.de.q6.b",
+            "text": "The window version is always faster.",
+            "explanation": "Performance depends on the engine and plan; the semantic difference is the output grain."
+          },
+          {
+            "id": "option.v3seed.de.q6.c",
+            "text": "GROUP BY cannot be combined with SUM."
+          },
+          {
+            "id": "option.v3seed.de.q6.d",
+            "text": "The window version counts NULL amounts as zero.",
+            "explanation": "SUM ignores NULL inputs in both forms."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.de.q6.a"
+        ],
+        "explanation": "A window function computes over related rows without collapsing them; GROUP BY changes the output grain.",
+        "links": [
+          {
+            "label": "Review: window functions",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.window-functions"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.de.q7",
+        "prompt": "You keep ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY event_ts DESC) = 1 as the latest event. Two events of one customer share the latest event_ts. What is true?",
+        "options": [
+          {
+            "id": "option.v3seed.de.q7.a",
+            "text": "The row inserted first is always kept."
+          },
+          {
+            "id": "option.v3seed.de.q7.b",
+            "text": "Which of the two rows is kept is not guaranteed; add a tie-breaker such as event_id DESC."
+          },
+          {
+            "id": "option.v3seed.de.q7.c",
+            "text": "Both rows get rn = 1.",
+            "explanation": "That describes RANK(), not ROW_NUMBER()."
+          },
+          {
+            "id": "option.v3seed.de.q7.d",
+            "text": "The query fails because of the tie."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.de.q7.b"
+        ],
+        "explanation": "ROW_NUMBER always assigns distinct numbers, but with tied ORDER BY values the assignment is arbitrary and can change between runs. A deterministic tie-breaker makes deduplication reproducible.",
+        "links": [
+          {
+            "label": "Review: window functions",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.window-functions"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.de.q8",
+        "prompt": "SUM(amount) OVER (PARTITION BY account_id ORDER BY event_ts) has no explicit frame. Two rows share the same event_ts. In PostgreSQL or Spark SQL, what do those two rows show?",
+        "options": [
+          {
+            "id": "option.v3seed.de.q8.a",
+            "text": "The same running total, which already includes both rows."
+          },
+          {
+            "id": "option.v3seed.de.q8.b",
+            "text": "Different running totals, increasing row by row.",
+            "explanation": "That requires an explicit ROWS frame and a tie-breaker."
+          },
+          {
+            "id": "option.v3seed.de.q8.c",
+            "text": "An error, because the frame is missing."
+          },
+          {
+            "id": "option.v3seed.de.q8.d",
+            "text": "NULL for the second row."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.de.q8.a"
+        ],
+        "explanation": "The implicit frame is RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW, so peer rows with equal ORDER BY values are included together. Write ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW with a tie-breaker for a row-by-row total.",
+        "links": [
+          {
+            "label": "Review: ROWS versus RANGE window frames",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.rows-versus-range-window-frames"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

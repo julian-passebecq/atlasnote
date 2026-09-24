@@ -1,0 +1,32 @@
+{
+  "id": "page.v3seed.lakeflow-jobs-and-task-dependencies",
+  "title": "Lakeflow Jobs and task dependencies",
+  "summary": "Model production workflows as explicit tasks with inputs, dependencies, retries and observable outputs.",
+  "blocks": [
+    {
+      "id": "block.v3seed.lakeflow-jobs-and-task-dependencies.overview",
+      "type": "markdown",
+      "text": "Model production workflows as explicit tasks with inputs, dependencies, retries and observable outputs."
+    },
+    {
+      "id": "block.v3seed.lakeflow-jobs-and-task-dependencies.points",
+      "type": "list",
+      "items": [
+        "Keep task boundaries meaningful enough to retry independently.",
+        "Pass small parameters/metadata between tasks instead of large in-memory objects.",
+        "Use cluster/serverless policies appropriate to workload and cost.",
+        "Attach alerts and inspect run history instead of relying on notebook UI state."
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:databricks",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

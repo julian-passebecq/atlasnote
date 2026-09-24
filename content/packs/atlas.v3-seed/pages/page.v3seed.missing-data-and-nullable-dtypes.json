@@ -1,0 +1,39 @@
+{
+  "id": "page.v3seed.missing-data-and-nullable-dtypes",
+  "title": "Missing data and nullable dtypes",
+  "summary": "Distinguish missing values from valid zeros, empty strings and false values.",
+  "blocks": [
+    {
+      "id": "block.v3seed.missing-data-and-nullable-dtypes.overview",
+      "type": "markdown",
+      "text": "Distinguish missing values from valid zeros, empty strings and false values."
+    },
+    {
+      "id": "block.v3seed.missing-data-and-nullable-dtypes.points",
+      "type": "list",
+      "items": [
+        "Use isna/notna for missingness tests.",
+        "Prefer nullable integer/string/boolean dtypes when missing values are valid.",
+        "Fillna should encode a real business assumption, not merely silence an error.",
+        "Convert dates and numerics with explicit error handling during ingestion."
+      ]
+    },
+    {
+      "id": "block.v3seed.missing-data-and-nullable-dtypes.code",
+      "type": "code",
+      "language": "python",
+      "code": "df[\"qty\"] = pd.to_numeric(df[\"qty\"], errors=\"coerce\").astype(\"Int64\")",
+      "title": "Example"
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:pandas",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

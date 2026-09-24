@@ -1,0 +1,109 @@
+{
+  "id": "page.v3seed.merge-validation-and-cardinality",
+  "title": "Merge validation and cardinality",
+  "summary": "Use merge validation to turn expected join cardinality into an executable assertion.",
+  "blocks": [
+    {
+      "id": "block.v3seed.merge-validation-and-cardinality.overview",
+      "type": "markdown",
+      "text": "Use merge validation to turn expected join cardinality into an executable assertion."
+    },
+    {
+      "id": "block.v3seed.merge-validation-and-cardinality.points",
+      "type": "list",
+      "items": [
+        "validate=\"one_to_one\" and similar modes catch accidental duplication.",
+        "Check the merge indicator when you need to audit unmatched keys.",
+        "Normalize key dtypes before joining.",
+        "Do not silently deduplicate keys unless the business rule defines which row to retain."
+      ]
+    },
+    {
+      "id": "block.v3seed.merge-validation-and-cardinality.code",
+      "type": "code",
+      "language": "python",
+      "code": "joined = left.merge(right, on=\"customer_id\", how=\"left\", validate=\"many_to_one\", indicator=True)",
+      "title": "Example"
+    },
+    {
+      "id": "block.v3seed.merge-validation-and-cardinality.validate-modes",
+      "type": "table",
+      "columns": [
+        "validate=",
+        "Checks that",
+        "Typical use"
+      ],
+      "rows": [
+        [
+          "\"one_to_one\" / \"1:1\"",
+          "keys are unique in left and right",
+          "joining two tables at the same grain"
+        ],
+        [
+          "\"one_to_many\" / \"1:m\"",
+          "keys are unique in left",
+          "expanding a dimension to its facts"
+        ],
+        [
+          "\"many_to_one\" / \"m:1\"",
+          "keys are unique in right",
+          "enriching facts with a dimension (keeps the left grain)"
+        ],
+        [
+          "\"many_to_many\" / \"m:m\"",
+          "nothing (always passes)",
+          "only when row multiplication is intended"
+        ]
+      ]
+    },
+    {
+      "id": "block.v3seed.merge-validation-and-cardinality.worked-example",
+      "type": "code",
+      "language": "python",
+      "title": "Worked example: pass, then fail loudly",
+      "code": "import pandas as pd\n\norders = pd.DataFrame({\"order_id\": [1, 2, 3], \"customer_id\": [10, 10, 20]})\ncustomers = pd.DataFrame({\"customer_id\": [10, 20, 30], \"country\": [\"NO\", \"CH\", \"NO\"]})\n\njoined = orders.merge(customers, on=\"customer_id\", how=\"left\",\n                      validate=\"many_to_one\", indicator=True)\nprint(len(orders), len(joined))            # 3 3: the order grain is kept\nprint(joined[\"_merge\"].value_counts())     # all \"both\": no unmatched orders\n\nduplicated = pd.concat([customers, customers.iloc[[0]]])  # customer 10 twice\ntry:\n    orders.merge(duplicated, on=\"customer_id\", how=\"left\", validate=\"many_to_one\")\nexcept pd.errors.MergeError as err:\n    print(\"cardinality violated:\", err)",
+      "explanation": "validate checks key uniqueness only. It does not report unmatched keys (use indicator=True) and does not fix dtype mismatches. Bounded toy data; not executed during preparation."
+    },
+    {
+      "id": "block.v3seed.merge-validation-and-cardinality.sql-equivalent",
+      "type": "callout",
+      "tone": "info",
+      "title": "SQL has no validate argument",
+      "text": "In SQL, run the duplicate-key query from the grain step on the side that must be unique, or compare COUNT(*) before and after the join. An unexpected increase is fan-out."
+    },
+    {
+      "id": "block.v3seed.merge-validation-and-cardinality.next",
+      "type": "link",
+      "pageId": "page.v3seed.inner-left-and-anti-joins",
+      "label": "Next: inner, left and anti joins",
+      "description": "Choose which rows survive the join."
+    }
+  ],
+  "related": [
+    "page.v3seed.sql-grain-before-joins",
+    "page.v3seed.inner-left-and-anti-joins",
+    "page.v3seed.groupby-and-aggregation",
+    "page.v3seed.qcm.grain-joins-windows"
+  ],
+  "terms": [
+    "term.v3seed.join-cardinality",
+    "term.v3seed.join-fan-out",
+    "term.v3seed.grain"
+  ],
+  "sources": [
+    {
+      "title": "pandas - DataFrame.merge API reference",
+      "url": "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.merge.html",
+      "publisher": "pandas development team",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:pandas",
+    "lang:en",
+    "path:grain-joins-windows"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

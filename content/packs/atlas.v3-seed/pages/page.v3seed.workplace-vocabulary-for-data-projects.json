@@ -1,0 +1,36 @@
+{
+  "id": "page.v3seed.workplace-vocabulary-for-data-projects",
+  "title": "Workplace vocabulary for data projects",
+  "summary": "Build vocabulary around actions you actually need in meetings and status updates.",
+  "blocks": [
+    {
+      "id": "block.v3seed.workplace-vocabulary-for-data-projects.overview",
+      "type": "markdown",
+      "text": "Build vocabulary around actions you actually need in meetings and status updates."
+    },
+    {
+      "id": "block.v3seed.workplace-vocabulary-for-data-projects.points",
+      "type": "list",
+      "items": [
+        "å feilsøke = to troubleshoot",
+        "å hente inn data = to ingest/retrieve data",
+        "datakilde = data source",
+        "tilgang = access",
+        "frist = deadline",
+        "avhengighet = dependency",
+        "utrulling = deployment/rollout",
+        "forbedring = improvement"
+      ]
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:norsk",
+    "topic:norsk",
+    "lang:nb"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

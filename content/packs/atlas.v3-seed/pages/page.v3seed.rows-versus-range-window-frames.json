@@ -1,0 +1,122 @@
+{
+  "id": "page.v3seed.rows-versus-range-window-frames",
+  "title": "ROWS versus RANGE window frames",
+  "summary": "Understand window frames before relying on running or moving aggregates.",
+  "blocks": [
+    {
+      "id": "block.v3seed.rows-versus-range-window-frames.overview",
+      "type": "markdown",
+      "text": "Understand window frames before relying on running or moving aggregates."
+    },
+    {
+      "id": "block.v3seed.rows-versus-range-window-frames.points",
+      "type": "list",
+      "items": [
+        "ROWS counts physical ordered rows.",
+        "RANGE groups peers with the same ordering value and can include multiple rows at once.",
+        "Always make the intended frame explicit in interview or production-critical queries.",
+        "Duplicates in the ORDER BY column are where ROWS and RANGE often diverge."
+      ]
+    },
+    {
+      "id": "block.v3seed.rows-versus-range-window-frames.code",
+      "type": "code",
+      "language": "sql",
+      "code": "SUM(amount) OVER (\n  PARTITION BY account_id\n  ORDER BY event_ts\n  ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n)",
+      "title": "Example"
+    },
+    {
+      "id": "block.v3seed.rows-versus-range-window-frames.default-frame",
+      "type": "callout",
+      "tone": "warning",
+      "title": "The implicit frame is RANGE",
+      "text": "With ORDER BY and no explicit frame, PostgreSQL and Spark SQL use RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW. Rows that tie on the ORDER BY value are peers and enter the running total together. Check your engine documentation before relying on a default."
+    },
+    {
+      "id": "block.v3seed.rows-versus-range-window-frames.worked-table",
+      "type": "table",
+      "columns": [
+        "event_id",
+        "event_ts",
+        "amount",
+        "ROWS (ORDER BY event_ts, event_id)",
+        "RANGE (ORDER BY event_ts)"
+      ],
+      "rows": [
+        [
+          "1",
+          "09:00",
+          "10",
+          "10",
+          "15"
+        ],
+        [
+          "2",
+          "09:00",
+          "5",
+          "15",
+          "15"
+        ],
+        [
+          "3",
+          "10:00",
+          "20",
+          "35",
+          "35"
+        ]
+      ]
+    },
+    {
+      "id": "block.v3seed.rows-versus-range-window-frames.full-query",
+      "type": "code",
+      "language": "sql",
+      "title": "Both frames side by side",
+      "code": "SELECT account_id, event_id, event_ts, amount,\n       SUM(amount) OVER (\n         PARTITION BY account_id\n         ORDER BY event_ts, event_id\n         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n       ) AS running_rows,\n       SUM(amount) OVER (\n         PARTITION BY account_id\n         ORDER BY event_ts\n         RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW\n       ) AS running_range\nFROM account_events;",
+      "explanation": "running_rows grows row by row thanks to the event_id tie-breaker; running_range gives both 09:00 peers the same value. Illustrative schema; not executed during preparation."
+    },
+    {
+      "id": "block.v3seed.rows-versus-range-window-frames.practice",
+      "type": "resource-link",
+      "label": "Practice: grain, joins and window frames (8 questions)",
+      "description": "Native QCM with explanations. Your answers are saved as personal attempts, not as content edits.",
+      "target": {
+        "kind": "qcm",
+        "setId": "page.v3seed.qcm.grain-joins-windows",
+        "pageId": "page.v3seed.qcm.grain-joins-windows"
+      }
+    }
+  ],
+  "related": [
+    "page.v3seed.window-functions",
+    "page.v3seed.sql-grain-before-joins",
+    "page.v3seed.qualify-and-deduplication",
+    "page.v3seed.qcm.grain-joins-windows"
+  ],
+  "terms": [
+    "term.v3seed.window-frame",
+    "term.v3seed.peer-rows",
+    "term.v3seed.window-function"
+  ],
+  "sources": [
+    {
+      "title": "PostgreSQL - window function calls (frame clause)",
+      "url": "https://www.postgresql.org/docs/current/sql-expressions.html#SYNTAX-WINDOW-FUNCTIONS",
+      "publisher": "PostgreSQL Global Development Group",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Spark SQL - window functions reference",
+      "url": "https://spark.apache.org/docs/latest/sql-ref-syntax-qry-select-window.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:sql",
+    "lang:en",
+    "path:grain-joins-windows"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

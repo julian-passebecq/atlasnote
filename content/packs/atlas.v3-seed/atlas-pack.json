@@ -1,0 +1,20 @@
+{
+  "format": "atlas-content-pack",
+  "schemaVersion": 1,
+  "payloadSchema": "atlas.bundle@2",
+  "id": "atlas.v3-seed",
+  "version": "0.1.0",
+  "title": "AtlasNote V3 foundations (draft)",
+  "visibility": "public",
+  "files": {
+    "projects": "projects.json",
+    "pages": "pages",
+    "glossary": "glossary.json"
+  },
+  "requires": [],
+  "assets": [],
+  "provenance": {
+    "kind": "author-created",
+    "note": "Original AtlasNote V3 foundation seed (64 Notebook pages, stable IDs) plus a linked data-engineering and Norsk slice with 2 native QCM sets, prepared by Claude Code on 2026-09-24. No private data or third-party text; source links are references only. Code examples were not executed. Owner review required before publication."
+  }
+}

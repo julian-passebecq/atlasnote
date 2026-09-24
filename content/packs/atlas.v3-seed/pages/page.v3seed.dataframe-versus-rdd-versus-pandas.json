@@ -1,0 +1,38 @@
+{
+  "id": "page.v3seed.dataframe-versus-rdd-versus-pandas",
+  "title": "DataFrame versus RDD versus Pandas",
+  "summary": "Choose the abstraction that preserves optimizer visibility and matches the workload.",
+  "blocks": [
+    {
+      "id": "block.v3seed.dataframe-versus-rdd-versus-pandas.overview",
+      "type": "markdown",
+      "text": "Choose the abstraction that preserves optimizer visibility and matches the workload."
+    },
+    {
+      "id": "block.v3seed.dataframe-versus-rdd-versus-pandas.points",
+      "type": "list",
+      "items": [
+        "DataFrames expose schema and expressions to Catalyst/SQL optimization.",
+        "RDDs are lower-level and useful for specialized transformations not naturally expressed in DataFrames.",
+        "Pandas is single-machine and often simpler for moderate data.",
+        "Python UDFs can reduce optimizer visibility; prefer built-in expressions when possible."
+      ]
+    },
+    {
+      "id": "block.v3seed.dataframe-versus-rdd-versus-pandas.question",
+      "type": "question",
+      "question": "Why are built-in Spark SQL functions usually preferred to Python UDFs?",
+      "answer": "They preserve optimizer visibility and usually avoid extra Python serialization/execution overhead."
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

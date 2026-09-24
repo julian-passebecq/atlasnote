@@ -1,0 +1,38 @@
+{
+  "id": "page.v3seed.adaptive-query-execution",
+  "title": "Adaptive Query Execution",
+  "summary": "AQE can revise parts of the physical plan using runtime statistics.",
+  "blocks": [
+    {
+      "id": "block.v3seed.adaptive-query-execution.overview",
+      "type": "markdown",
+      "text": "AQE can revise parts of the physical plan using runtime statistics."
+    },
+    {
+      "id": "block.v3seed.adaptive-query-execution.points",
+      "type": "list",
+      "items": [
+        "AQE can coalesce post-shuffle partitions.",
+        "It can change some join strategies when runtime sizes allow it.",
+        "Skew handling can split skewed shuffle partitions.",
+        "AQE does not fix poor business logic, incorrect grain or pathological source layout."
+      ]
+    },
+    {
+      "id": "block.v3seed.adaptive-query-execution.question",
+      "type": "question",
+      "question": "Why can the final plan differ from the initial Spark plan?",
+      "answer": "With Adaptive Query Execution, runtime statistics can trigger plan changes such as coalescing partitions, skew handling, or changing eligible join strategies."
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

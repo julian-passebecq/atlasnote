@@ -1,0 +1,39 @@
+{
+  "id": "page.v3seed.qualify-and-deduplication",
+  "title": "QUALIFY and deduplication",
+  "summary": "QUALIFY can filter window-function results without an extra subquery on engines that support it.",
+  "blocks": [
+    {
+      "id": "block.v3seed.qualify-and-deduplication.overview",
+      "type": "markdown",
+      "text": "QUALIFY can filter window-function results without an extra subquery on engines that support it."
+    },
+    {
+      "id": "block.v3seed.qualify-and-deduplication.points",
+      "type": "list",
+      "items": [
+        "Use a deterministic tie-breaker in ROW_NUMBER.",
+        "Do not use DISTINCT as a generic fix for unexplained duplication.",
+        "On engines without QUALIFY, wrap the window expression in a CTE/subquery.",
+        "Define which record wins when timestamps tie."
+      ]
+    },
+    {
+      "id": "block.v3seed.qualify-and-deduplication.code",
+      "type": "code",
+      "language": "sql",
+      "code": "SELECT *\nFROM events\nQUALIFY ROW_NUMBER() OVER (PARTITION BY business_key ORDER BY updated_at DESC, ingest_id DESC) = 1;",
+      "title": "Example"
+    }
+  ],
+  "related": [],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:sql",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}
