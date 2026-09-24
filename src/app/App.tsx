@@ -348,6 +348,9 @@ function toggleChrome(paneId:string){document.dispatchEvent(new CustomEvent('atl
         const onHash=(initial=false)=>{try{
           const route=parseHashRoute(location.hash);
           if(!route||initial&&!shouldOpenStartupRoute(activeSession(store.state.personal),route))return;
+          // V3 staged boot: a pinned revision resolves against the COMPLETE history, so wait for it
+          // instead of reporting a still-loading revision as missing. Current-page routes stay immediate.
+          if(route.historyRevisionId&&!store.isReady){void store.whenReady().then(()=>onHash(initial),e=>notify(e instanceof Error?e.message:String(e),true));return;}
           if(route.historyRevisionId){
             const projected=historicalCatalogue(catalogueRef.current,store.state,route.historyRevisionId);
             if(projected.warning)throw Error(projected.warning);
