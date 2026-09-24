@@ -19,6 +19,7 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | `b5242b8` | Phase D: the tree stops rescanning the library on every state change |
 | `3d60619` | Study-samples test selects results by page ID; `data-page-id` added to search results |
 | `1a61fd1` | Norsk Daily study queue: date navigation, New/Learning/Known progress on the existing learning flags, English reveal, grammar links, the day's QCM |
+| `ccd0d87` | Live cross-tab sync (BroadcastChannel + 3-way merge, reload notice) and single-owner PDF bytes |
 | `43c9711` | Content: all 64 seed pages linked; 41 glossary terms; 6 native QCMs (45 questions); pack 0.2.0, still **OWNER REVIEW REQUIRED** |
 
 ## New state: owner, persistence and migration boundary
@@ -81,6 +82,7 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | Boot reconciliation only sends changed resources through `advanceHistory` | Unchanged library: one full-history deep clone plus JSON serialization per 50 resources, every boot | Zero history clones for an unchanged library | `tests/v3-loading.test.mjs` |
 | Windowed Continuous PDF (above 40 pages) with measured spacers | 400-page PDF: 400 wrappers and 800 observers | 13 wrappers; jump to page 250 in 87 ms with 0 px anchor error; monotonic wheel across window shifts; scrollbar at 30% maps to page 118 | `tests/v3_pdf_window.py` (generated 400-page PDF) |
 | Compute-once search index | 1,500 resources: 14.3 ms per keystroke; 10,000: 118 ms | 1.15 ms and 7 ms (one-time index 17 ms and 108 ms); identical results for 20 queries | `tests/v3-search-scale.test.mjs` (legacy oracle) |
+| PDF bytes handed to PDF.js without a retained copy | 48 MB PDF open: 50.6 MB of page ArrayBuffer backing store | 2.6 MB (after GC); Retry still works | `tests/v3_pdf_memory.py`, `pdf_runtime` |
 | Memoized, early-exit tree filtering | `pages.find` for every node on every render | Map lookup, and only while a text filter is active | Full DOM/runtime suites |
 
 **Safety boundary.** Staged boot is opt-in from `main.tsx` only.
@@ -93,6 +95,10 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 - **Asset bytes on demand:** asset bytes still hydrate into memory after the first render. Making them lazy means replacing the synchronous `Asset.bytes` contract used by about 20 durability and backup call sites. That needs its own equivalence and rollback proof.
 - **Split compiler output:** today's reviewed catalogue is 548 KB. At 1,500 or 10,000 synthetic resources the costs measured above are dominated by computation, which is now bounded, not by transfer.
 
+## V2.3 portable release core (clean worktree at `4fe5995`)
+
+`npm run test:v23:core:portable` passed all 12 gates: typecheck, check:access, test:v23, check:v23:build, test:v23:runtime:portable, layout, compare, recovery, safe-close, compaction (the 13 rollback cases), capacity and check:v23:secrets. The runner's verdict is **PORTABLE CORE PASS - NOT A RELEASE**. The full release additionally needs the protected Cloudflare preview and the Linux/WSL native-quota proof, and both remain BLOCKED here.
+
 ## Test evidence (clean tree, Windows 11, Node 26.9, Python 3.14, Playwright Chromium headless)
 
 | Check | Result |
@@ -101,7 +107,7 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | `npm test` | PASS 1109/1109 (baseline 1053) |
 | `npm run test:v23` | PASS 214/214 |
 | `npm run validate`, `npm run check:pdfatlas`, `npm run build` | PASS |
-| `tests/v3_runtime.py`, `tests/v3_pdf_window.py`, `tests/v3_norsk_daily.py` (new) | PASS 6/6, 5/5, 5/5 |
+| `tests/v3_runtime.py`, `tests/v3_pdf_window.py`, `tests/v3_norsk_daily.py`, `tests/v3_tabs.py` (new) | PASS 6/6, 5/5, 5/5, 4/4 |
 | `pdf_navigation_runtime`, `workspace_122_runtime`, `workspace_122_dom`, `wheel_125_dom`, `reading_124_dom`, `v22_runtime`, `saved_states_runtime`, `stabilization_v2_runtime`, `reading_124_runtime`, `content_hub_127_runtime`, `references_v2_runtime`, `release_blockers_runtime`, `final_polish_runtime`, `pdf_lifecycle_runtime`, `study_samples_runtime`, `simplified_123_dom`, `hardening_dom`, `compact_12_dom` | PASS |
 | `v23_runtime` | Every case PASS except one BLOCKED gate: native quota failure requires Linux or WSL (`ATLAS_V23_NATIVE_QUOTA=1`) |
 
