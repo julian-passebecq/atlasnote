@@ -17,16 +17,19 @@ import {createWheelPager,consumeWheelRestore,wheelBoundaries} from '../pdf/wheel
 import {parsePageInput,pageRangeLabel} from '../pdf/page-input.mjs';
 import {navigationTrace} from '../pdf/navigation-trace.mjs';
 import {publishPosition,clearPosition,publishVerifiedCount} from '../pdf/reader-state';
+import {continuousWindow,estimateHeight,spacerHeight,pageAtOffset,windowRadius} from '../pdf/continuous-window.mjs';
 import './pdf.css';
 pdfjs.GlobalWorkerOptions.workerSrc=new URL('pdf-assets/pdf.worker.min.mjs',document.baseURI).href;
 const options={isEvalSupported:false,standardFontDataUrl:new URL('pdf-assets/standard_fonts/',document.baseURI).href,cMapUrl:new URL('pdf-assets/cmaps/',document.baseURI).href,cMapPacked:true,wasmUrl:new URL('pdf-assets/wasm/',document.baseURI).href};
 type PDF=Awaited<ReturnType<typeof pdfjs.getDocument>['promise']>;
 type Props={paneId?:string;slotId?:WorkspaceNumber;document:DocumentEntry;location:Location;onLocation:(l:Location,meta?:{checkpoint?:boolean})=>void;url?:string;requestExternal:()=>void;onFallback?:(reason?:string)=>void};
-function PhysicalPage({pdf,n,width,rotation,root,virtual,onVisible,onRendered}:{pdf:PDF;n:number;width:number;rotation:number;root:HTMLDivElement|null;virtual:boolean;onVisible:(n:number)=>void;onRendered:()=>void}){
+function PhysicalPage({pdf,n,width,rotation,root,virtual,onVisible,onRendered,onHeight}:{pdf:PDF;n:number;width:number;rotation:number;root:HTMLDivElement|null;virtual:boolean;onVisible:(n:number)=>void;onRendered:()=>void;onHeight?:(n:number,h:number)=>void}){
  const ref=useRef<HTMLDivElement>(null),[near,setNear]=useState(!virtual),[size,setSize]=useState({ratio:1.414,intrinsic:0});
  useEffect(()=>{if(!virtual){setNear(true);return;}const observer=new IntersectionObserver(entries=>{setNear(entries[0].isIntersecting);},{root,rootMargin:'900px 0px'});if(ref.current)observer.observe(ref.current);return()=>observer.disconnect();},[virtual,root]);
  useEffect(()=>{let alive=true;if(near)pdf.getPage(n).then(p=>{if(!alive)return;const v=p.getViewport({scale:1,rotation:combinedRotation(p.rotate,rotation)});setSize({ratio:v.height/v.width,intrinsic:p.rotate});}).catch(()=>{});return()=>{alive=false;};},[near,pdf,n,rotation]);
  useEffect(()=>{if(!virtual)return;const observer=new IntersectionObserver(entries=>{if(entries[0].isIntersecting)onVisible(n);},{root,rootMargin:'-10% 0px -75% 0px',threshold:0});if(ref.current)observer.observe(ref.current);return()=>observer.disconnect();},[root,virtual,n,onVisible]);
+ // V3: measured wrapper height feeds the Continuous window spacers.
+ useEffect(()=>{const el=ref.current;if(!el||!onHeight)return;const ro=new ResizeObserver(()=>{if(el.offsetHeight)onHeight(n,el.offsetHeight);});ro.observe(el);return()=>ro.disconnect();},[n,onHeight]);
  const dpr=Math.max(0.5,Math.min(window.devicePixelRatio||1,2,Math.sqrt(5000000/(width*width*size.ratio))));
  return <section ref={ref} className="physical-page" data-physical-page={n} style={{width,minHeight:Math.ceil(width*size.ratio)+20}} aria-label={'Physical PDF page '+n}>
   <div className="physical-label">Page {n}</div>{near?<Page pageNumber={n} width={width} rotate={combinedRotation(size.intrinsic,rotation)} devicePixelRatio={dpr} renderAnnotationLayer renderTextLayer onRenderSuccess={()=>{ref.current?.setAttribute('data-page-rendered','true');onRendered();}} error={<p role="alert">This physical page could not be rendered. The original PDF remains available.</p>} loading={<p>Rendering page {n}...</p>}/>:<div className="pdf-placeholder" style={{height:width*size.ratio}}>Page {n}</div>}
@@ -67,6 +70,9 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  // still exactly there; once the reader moved without a newer navigation
  // command, the viewport wins and the stale anchor is never revived.
  const generation=useRef(0),restoreReason=useRef('open'),settledTop=useRef<number|null>(null);
+ // V3 Continuous window: measured wrapper heights (reset when geometry changes) and the real row gap.
+ const heights=useRef(new Map<number,number>()),gapRef=useRef(16),layoutRef=useRef(''),estimateRef=useRef(900),countRef=useRef(0);
+ const recordHeight=useRef((n:number,h:number)=>{if(h>0)heights.current.set(n,h);}).current;
  const trace=(type:string,fields:Record<string,unknown>={})=>navigationTrace.record(type,{pane:paneId,slot:slotId,doc:doc.id,gen:generation.current,mode:locationRef.current.pdfMode,page:locationRef.current.pdfPage,...fields});
  const positionKey=(l:Location)=>JSON.stringify([l.pdfPage,l.anchor?.pdfOffset??0,l.anchor?.pdfRevision]);
  function restorePosition(force=false,trigger='frame'){
@@ -100,10 +106,19 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
   const el=host.current,l=locationRef.current;if(capturing.current||!el||!scrolling.current||restoring.current)return;
   const nodes=Array.from(el.querySelectorAll<HTMLElement>('[data-physical-page]'));
   const line=el.getBoundingClientRect().top+2;
+  let n:number,offset:number;
+  // V3: the viewport can sit inside a window spacer after a fast scrollbar drag;
+  // map it to the physical page there from measured heights instead of the edge node.
+  const topSpacer=l.pdfMode==='continuous'?el.querySelector<HTMLElement>('[data-window-spacer="top"]'):null,bottomSpacer=l.pdfMode==='continuous'?el.querySelector<HTMLElement>('[data-window-spacer="bottom"]'):null;
+  const firstNode=nodes[0],lastNode=nodes.at(-1);
+  if(topSpacer&&firstNode&&firstNode.getBoundingClientRect().top>line){const at=pageAtOffset(line-topSpacer.getBoundingClientRect().top,1,Number(firstNode.dataset.physicalPage)-1,heights.current,estimateRef.current,gapRef.current);n=at.page;offset=Math.round(at.fraction*1000000)/1000000;}
+  else if(bottomSpacer&&lastNode&&lastNode.getBoundingClientRect().bottom<=line){const at=pageAtOffset(line-bottomSpacer.getBoundingClientRect().top,Number(lastNode.dataset.physicalPage)+1,countRef.current,heights.current,estimateRef.current,gapRef.current);n=at.page;offset=Math.round(at.fraction*1000000)/1000000;}
+  else{
   const node=l.pdfMode==='grid'?el.querySelector<HTMLElement>('.pdf-physical-pages'):l.pdfMode==='continuous'?(nodes.find(n=>n.getBoundingClientRect().bottom>line)??nodes.at(-1)):(nodes.find(n=>Number(n.dataset.physicalPage)===l.pdfPage)??nodes[0]);
-  if(!node)return;const n=l.pdfMode==='grid'?l.pdfPage:Number(node.dataset.physicalPage),rect=node.getBoundingClientRect();
+  if(!node)return;n=l.pdfMode==='grid'?l.pdfPage:Number(node.dataset.physicalPage);const rect=node.getBoundingClientRect();
   if(!rect.height)return;
-  const offset=Math.round(Math.max(-10,Math.min(10,(el.getBoundingClientRect().top-rect.top)/rect.height))*1000000)/1000000;
+  offset=Math.round(Math.max(-10,Math.min(10,(el.getBoundingClientRect().top-rect.top)/rect.height))*1000000)/1000000;
+  }
   if(n!==l.pdfPage||Math.abs((l.anchor?.pdfOffset??0)-offset)>0.00001){
    const next={...l,pdfPage:n,anchor:{...pdfAnchor(n,doc.sha256),pdfOffset:offset}};
    capturing.current=true;lastCapture.current=positionKey(next);try{onLocationRef.current(next,{checkpoint:true});}finally{capturing.current=false;}
@@ -157,6 +172,11 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  useEffect(()=>{let alive=true;if(grid&&pdf){Promise.all(pages.map(async n=>{const p=await pdf.getPage(n),v=p.getViewport({scale:1,rotation:combinedRotation(p.rotate,loc.rotation)});return [n,v.height/v.width] as const;})).then(pairs=>{if(alive)setGridRatios(Object.fromEntries(pairs));}).catch(()=>{});}return()=>{alive=false;};},[pdf,grid,shownKey,loc.rotation]);
  const labels=!host.current?.closest('.reader-chrome-hidden'),pageWidth=grid?gridPageWidth(width,height,pages.map(n=>gridRatios[n]??1.414),labels)*loc.zoom:Math.max(64,Math.floor((width-32-(paired?16:0))/(paired?2:1)*loc.zoom));
  const groupSize=grid?4:paired;
+ const layoutKey=[doc.id,doc.sha256,pageWidth,loc.rotation,labels].join('|');if(layoutRef.current!==layoutKey){layoutRef.current=layoutKey;heights.current=new Map();}
+ const estimate=estimateHeight(heights.current,Math.ceil(pageWidth*1.414)+28);estimateRef.current=estimate;countRef.current=count;
+ const win=loc.pdfMode==='continuous'?continuousWindow(page,count,windowRadius(height,estimate)):{first:1,last:0,windowed:false};
+ const rendered=win.windowed?Array.from({length:win.last-win.first+1},(_,i)=>win.first+i):pages;
+ useLayoutEffect(()=>{const c=host.current?.querySelector<HTMLElement>('.pdf-physical-pages');if(c){const g=parseFloat(getComputedStyle(c).rowGap);if(Number.isFinite(g))gapRef.current=g;}});
  // Runtime-only position for the study tree (current row, A/B markers, count).
  useEffect(()=>{if(!pdf||!paneId)return;publishPosition({slot:slotId??1,paneId,documentId:doc.id,sha256:doc.sha256,page,visible:loc.pdfMode==='continuous'?[page]:pages,numPages:count});},[pdf,paneId,slotId,doc.id,doc.sha256,page,shownKey,count]);
  useEffect(()=>()=>{if(paneId)clearPosition(slotId??1,paneId,doc.id);},[paneId,slotId,doc.id]);
@@ -205,7 +225,7 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
    onScroll={()=>{cancelAnimationFrame(scrollFrame.current);scrollFrame.current=requestAnimationFrame(captureScroll);clearTimeout(settleTimer.current);settleTimer.current=setTimeout(()=>{captureScroll();scrolling.current=false;},180);}}>
    {workerOK&&source&&!error&&!workerError?<Document key={doc.id+':'+doc.sha256+':'+retry} file={source} options={options} externalLinkTarget="_blank" externalLinkRel="noopener noreferrer" onLoadSuccess={async p=>{setPDF(p);setLoading('');publishVerifiedCount(doc.id,doc.sha256,p.numPages);trace('open',{count:p.numPages});const n=clampPage(locationRef.current.pdfPage,p.numPages);const l=locationRef.current;if(l.pdfPage!==n||l.anchor?.pdfPage!==n||l.anchor?.pdfRevision!==doc.sha256)onLocationRef.current({...l,pdfPage:n,anchor:pdfAnchor(n,doc.sha256)});queueRestore('open');}} onLoadError={e=>setError(e.message)} onSourceError={e=>setError(e.message)} onLoadProgress={({loaded,total})=>setLoading(total?'Loading '+Math.round(loaded/total*100)+'%':'Loading PDF bytes...')} onPassword={(callback,reason)=>{passwordCallback.current=callback;setPasswordReason(reason===2?'Incorrect password. Try again.':'This PDF is password protected.');}} onItemClick={onPdfItemClick} loading={<p role="status">{loading}</p>}>
     {pdf&&<aside className="pdf-outline" hidden={!outline}><IconButton name="close" label="Close PDF outline" onClick={()=>setOutline(false)}/><h3>Document outline</h3><Outline onItemClick={onPdfItemClick}/></aside>}
-    <div className={'pdf-physical-pages '+(grid?'pdf-grid '+(pages.length===1?'grid-single':''):paired?'pdf-spread':'')} data-grid={grid?'four-pages':undefined} onPointerDown={e=>{if(!grid||(e.target as HTMLElement).closest('a'))return;const n=Number((e.target as HTMLElement).closest<HTMLElement>('[data-physical-page]')?.dataset.physicalPage);if(n&&n!==loc.pdfPage)setPage(n);}}>{pdf&&pages.map(n=><PhysicalPage key={n} pdf={pdf} n={n} width={pageWidth} rotation={loc.rotation} root={host.current} virtual={loc.pdfMode==='continuous'} onVisible={seen} onRendered={()=>restorePosition(true,'render')}/>)}</div>
+    <div className={'pdf-physical-pages '+(grid?'pdf-grid '+(pages.length===1?'grid-single':''):paired?'pdf-spread':'')} data-grid={grid?'four-pages':undefined} onPointerDown={e=>{if(!grid||(e.target as HTMLElement).closest('a'))return;const n=Number((e.target as HTMLElement).closest<HTMLElement>('[data-physical-page]')?.dataset.physicalPage);if(n&&n!==loc.pdfPage)setPage(n);}}>{pdf&&win.windowed&&win.first>1&&<div className="pdf-window-spacer" data-window-spacer="top" aria-hidden="true" style={{height:spacerHeight(1,win.first-1,heights.current,estimate,gapRef.current)}}/>}{pdf&&rendered.map(n=><PhysicalPage key={n} pdf={pdf} n={n} width={pageWidth} rotation={loc.rotation} root={host.current} virtual={loc.pdfMode==='continuous'} onVisible={seen} onRendered={()=>restorePosition(true,'render')} onHeight={win.windowed?recordHeight:undefined}/>)}{pdf&&win.windowed&&win.last<count&&<div className="pdf-window-spacer" data-window-spacer="bottom" aria-hidden="true" style={{height:spacerHeight(win.last+1,count,heights.current,estimate,gapRef.current)}}/>}</div>
    </Document>:!error&&!workerError&&<p>{workerOK?'Loading PDF bytes...':'Checking compatible local PDF worker...'}</p>}
   </div>
  </div>;

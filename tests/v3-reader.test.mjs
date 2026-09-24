@@ -110,3 +110,19 @@ test('V3 asset resolver lifecycle: 24 lifetimes retain no archive listeners or o
   again.dispose();assert.equal(archiveListenerCount(),before);assert.equal(live.size,0);
  }finally{URL.createObjectURL=created;URL.revokeObjectURL=revoked;store.state={...store.state,assets:[]};}
 });
+
+test('V3 Continuous window: small PDFs unchanged, long PDFs bounded and geometry-consistent',async()=>{
+ const {continuousWindow,spacerHeight,pageAtOffset,estimateHeight,windowRadius}=await import('../dist-offline/app/pdf/continuous-window.mjs');
+ assert.deepEqual(continuousWindow(3,40),{first:1,last:40,windowed:false},'<=40 pages keep every wrapper');
+ const w=continuousWindow(250,400,8);assert.deepEqual(w,{first:242,last:258,windowed:true});
+ assert.deepEqual(continuousWindow(1,400,8),{first:1,last:17,windowed:true},'constant size at the start');
+ assert.deepEqual(continuousWindow(400,400,8),{first:384,last:400,windowed:true},'constant size at the end');
+ const heights=new Map([[1,1000],[2,1200]]),est=estimateHeight(heights,500);assert.equal(est,1100);
+ // Pages 1..3 with gap 16: 1000 + 1200 + 1100(estimate) + 2 gaps.
+ assert.equal(spacerHeight(1,3,heights,est,16),3332);assert.equal(spacerHeight(5,4,heights,est,16),0);
+ assert.deepEqual(pageAtOffset(0,1,3,heights,est,16),{page:1,fraction:0});
+ assert.equal(pageAtOffset(1016,1,3,heights,est,16).page,2,'gap after page 1 belongs to page 2 start');
+ assert.equal(pageAtOffset(1016+600,1,3,heights,est,16).fraction,0.5);
+ assert.equal(pageAtOffset(99999,1,3,heights,est,16).page,3,'clamped to the last page of the range');
+ assert(windowRadius(900,300)>=9&&windowRadius(900,3000)===6);
+});
