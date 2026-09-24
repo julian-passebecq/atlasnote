@@ -37,11 +37,14 @@ export function ProjectTree({onExperience,onHistory,onComparePrevious,onOpenPrev
  // temporary type/subject/text filters below still narrow within it.
  const profile=sessionProfile(activeSession(ws.personal)),facts=useMemo(()=>resourceFacts(source,ws.overlays),[source,ws.overlays]),scoped=!isAllContent(profile);
  const typeOn=(id:string)=>profile.types[id as keyof typeof profile.types]!==false,subjectOn=(category:string)=>{const s=canonicalSubject(category);return profile.subjects.mode==='all'||profile.subjects.mode==='selected'&&!!s&&!!profile.subjects.ids?.includes(s);};
- const c={...source,projects:filterProjects(projectLibrary(source,ws.overlays,currentMode,subjectFromCategory(activeSession(ws.personal).categoryFilter)),profile,facts)};
+ const experienceRef=activeSession(ws.personal).experience,categoryFilter=activeSession(ws.personal).categoryFilter;
+ const c=useMemo(()=>({...source,projects:filterProjects(projectLibrary(source,ws.overlays,currentMode,subjectFromCategory(categoryFilter)),profile,facts)}),[source,ws.overlays,currentMode,categoryFilter,experienceRef,facts]);
  const expanded=new Set(activeSession(ws.personal).expanded),archived=new Set<string>(ws.overlays.archived),query=normalize(filter);
  const mode=activeSession(ws.personal).libraryMode??'notes',pdfPages=new Set<string>(c.documents.map((d:any)=>d.pageId));
  const visible=(n:TreeNode):boolean=>!archived.has(n.id)&&(!n.pageId||!archived.has(n.pageId));
- const matches=(n:TreeNode):boolean=>{const p=source.pages.find((p:any)=>p.id===(n.pageId??(n.target?readingTargetId(n.target):'')));const words=normalize([n.title,...(p?.tags??[])].join(' ').replace(/[-_]/g,' '));return visible(n)&&(!query||words.includes(query)||!!n.children?.some(matches));};
+ // V3: without a text filter this is just visibility; with one, pages resolve through a memoized map.
+ const pageById=useMemo(()=>new Map<string,any>(source.pages.map((p:any)=>[p.id,p])),[source.pages]);
+ const matches=(n:TreeNode):boolean=>{if(!visible(n))return false;if(!query)return true;const p=pageById.get(n.pageId??(n.target?readingTargetId(n.target):''));const words=normalize([n.title,...(p?.tags??[])].join(' ').replace(/[-_]/g,' '));return words.includes(query)||!!n.children?.some(matches);};
  const hidden=(p:Project)=>ws.overlays.projectPrefs[p.id]?.hidden||archived.has(p.id);
  function dismiss(restoreFocus=true){const target=menu?.returnFocus;setMenu(null);if(restoreFocus&&target?.isConnected)target.focus();}
  function showMenu(e:any,project:Project,node?:TreeNode){
