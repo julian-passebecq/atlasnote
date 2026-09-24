@@ -19,10 +19,12 @@ import type {Catalogue,TreeNode,Project,Workspace} from '../core/model.js';
 import {Icon,IconButton} from './Icon.js';
 import {visibleLibraryNode} from '../core/library-projection.js';
 import {normalize} from '../core/workspace.js';
+import {resourceFacts,sessionProfile,filterProjects} from '../experience/facts.js';
+import {isAllContent,canonicalSubject} from '../experience/profile.mjs';
 
 type MenuState={project:Project;node?:TreeNode;x:number;y:number;returnFocus:HTMLElement};
 /** All tree actions also have an ordinary, keyboard-focusable Actions button. */
-export function ProjectTree({onHistory,onComparePrevious,onOpenPrevious,onManageResource,notify,references,onReferenceLens,catalogue:source,workspace:ws,onTypeAdd,onResourceOpen,onReferenceEdit,onManageLibrary,activePage,panePages=[],activePaneIndex=0,navigation,onLibraryMode,onReadingActions,onReadLater,onPdfToggle,onPdfNavigate,onPdfTerm,onPdfManage,onWorkspace,onCategory,onSidebar,onPaneMarker,onGroupToggle,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
+export function ProjectTree({onExperience,onHistory,onComparePrevious,onOpenPrevious,onManageResource,notify,references,onReferenceLens,catalogue:source,workspace:ws,onTypeAdd,onResourceOpen,onReferenceEdit,onManageLibrary,activePage,panePages=[],activePaneIndex=0,navigation,onLibraryMode,onReadingActions,onReadLater,onPdfToggle,onPdfNavigate,onPdfTerm,onPdfManage,onWorkspace,onCategory,onSidebar,onPaneMarker,onGroupToggle,onCollection,onOpen,onOther,onBookmark,onToggle,onItem,onCreate}:any){
  const [filterOpen,setFilterOpen]=useState(false),[filter,setFilter]=useState(''),[menu,setMenu]=useState<MenuState|null>(null);
  const [dropError,setDropError]=useState('');
  const historyIndex=useMemo(()=>createHistoryIndex(ws.history),[ws.history]);
@@ -30,7 +32,12 @@ export function ProjectTree({onHistory,onComparePrevious,onOpenPrevious,onManage
  function allowDrop(e:any,id:string){if(mode==='notes'&&e.dataTransfer.types.includes(RESOURCE_DRAG_TYPE)&&sharedFolders(source,ws.overlays).some(f=>f.id===id)){e.preventDefault();e.dataTransfer.dropEffect='copy';}}
  function drop(e:any,id:string){e.preventDefault();e.stopPropagation();try{const next=applyReferenceDrop(e.dataTransfer.getData(RESOURCE_DRAG_TYPE),source,store.state,id);void store.overlays(o=>{o.references=next.references;}).then(()=>{setDropError('');notify?.('Notebook reference added. Source retained.');}).catch(e=>setDropError(e.message));}catch(e){setDropError((e as Error).message);}}
  const menuRef=useRef<HTMLDivElement|null>(null);
- const currentMode=activeSession(ws.personal).libraryMode??'notes';const c={...source,projects:projectLibrary(source,ws.overlays,currentMode,subjectFromCategory(activeSession(ws.personal).categoryFilter))};
+ const currentMode=activeSession(ws.personal).libraryMode??'notes';
+ // V3: the workspace Experience is applied to the projection before rendering; the
+ // temporary type/subject/text filters below still narrow within it.
+ const profile=sessionProfile(activeSession(ws.personal)),facts=useMemo(()=>resourceFacts(source,ws.overlays),[source,ws.overlays]),scoped=!isAllContent(profile);
+ const typeOn=(id:string)=>profile.types[id as keyof typeof profile.types]!==false,subjectOn=(category:string)=>{const s=canonicalSubject(category);return profile.subjects.mode==='all'||profile.subjects.mode==='selected'&&!!s&&!!profile.subjects.ids?.includes(s);};
+ const c={...source,projects:filterProjects(projectLibrary(source,ws.overlays,currentMode,subjectFromCategory(activeSession(ws.personal).categoryFilter)),profile,facts)};
  const expanded=new Set(activeSession(ws.personal).expanded),archived=new Set<string>(ws.overlays.archived),query=normalize(filter);
  const mode=activeSession(ws.personal).libraryMode??'notes',pdfPages=new Set<string>(c.documents.map((d:any)=>d.pageId));
  const visible=(n:TreeNode):boolean=>!archived.has(n.id)&&(!n.pageId||!archived.has(n.pageId));
@@ -114,9 +121,9 @@ export function ProjectTree({onHistory,onComparePrevious,onOpenPrevious,onManage
  const manage=(intent:string)=>{if(menu)action(()=>onItem({project:menu.project,node:menu.node,intent}));};
  return <aside className={"library-sidebar "+(mode==='pdfs'?'pdf-library-sidebar':'')} aria-label={LIBRARY_TYPES.find(t=>t.id===mode)!.label+' library'}>
   <div className="sidebar-heading">{navigation}</div>
-  <div className="content-type-selector" role="group" aria-label="Content types">{LIBRARY_TYPES.map(t=><button key={t.id} aria-label={t.label+' content'} aria-pressed={mode===t.id} onDragEnter={e=>{if(t.id==='notes'&&e.dataTransfer.types.includes(RESOURCE_DRAG_TYPE))onLibraryMode('notes');}} onClick={()=>onLibraryMode(t.id)} title={t.id==='notes'?'Drag over Notebook to choose a reference folder':t.label}><Icon name={t.icon} size={16}/><span>{t.label}</span></button>)}</div>
-  <div className="category-filters subject-selector" role="group" aria-label="Subject filters">{CATEGORIES.map(category=><button key={category.id} aria-label={category.label+' filter'} aria-pressed={activeSession(ws.personal).categoryFilter===category.id} onClick={()=>onCategory(category.id)}>{category.label}</button>)}</div>
-  <div className="filter-status"><span>{CATEGORIES.find(c=>c.id===activeSession(ws.personal).categoryFilter)?.label??'All subjects'}</span>{mode!=='notes'&&<button className="text-button" onClick={onManageLibrary}>Manage library</button>}<IconButton name="search" label="Filter tree" active={filterOpen} onClick={()=>setFilterOpen(!filterOpen)}/></div>
+  <div className="content-type-selector" role="group" aria-label="Content types">{LIBRARY_TYPES.filter(t=>typeOn(t.id)||t.id===mode).map(t=><button key={t.id} aria-label={t.label+' content'} aria-pressed={mode===t.id} onDragEnter={e=>{if(t.id==='notes'&&e.dataTransfer.types.includes(RESOURCE_DRAG_TYPE))onLibraryMode('notes');}} onClick={()=>onLibraryMode(t.id)} title={t.id==='notes'?'Drag over Notebook to choose a reference folder':t.label}><Icon name={t.icon} size={16}/><span>{t.label}</span></button>)}</div>
+  <div className="category-filters subject-selector" role="group" aria-label="Subject filters">{CATEGORIES.filter(category=>subjectOn(category.id)||activeSession(ws.personal).categoryFilter===category.id).map(category=><button key={category.id} aria-label={category.label+' filter'} aria-pressed={activeSession(ws.personal).categoryFilter===category.id} onClick={()=>onCategory(category.id)}>{category.label}</button>)}</div>
+  <div className="filter-status"><span>{CATEGORIES.find(c=>c.id===activeSession(ws.personal).categoryFilter)?.label??'All subjects'}</span>{mode!=='notes'&&<button className="text-button" onClick={onManageLibrary}>Manage library</button>}{scoped&&<button className="experience-chip" data-panel-toggle title="This workspace shows a selected Experience. Stored resources are unchanged." onClick={onExperience}>{profile.name??'Custom'}</button>}<IconButton name="search" label="Filter tree" active={filterOpen} onClick={()=>setFilterOpen(!filterOpen)}/></div>
   {filterOpen&&<div className="tree-filter"><Icon name="search" size={15}/><input aria-label="Filter notebook tree" placeholder="Filter notebooks" value={filter} onChange={e=>setFilter(e.target.value)}/>{filter&&<IconButton name="close" label="Clear tree filter" onClick={()=>setFilter('')}/>}</div>}
   {mode==='notes'&&onReferenceLens&&<label className="reference-lens-preference"><input type="checkbox" aria-label="Show references in tree" checked={ws.personal.referenceLens??false} onChange={e=>onReferenceLens(e.target.checked)}/>Show references in tree</label>}
   {dropError&&<p className="tree-drop-error" role="alert">{dropError}</p>}
@@ -125,7 +132,7 @@ export function ProjectTree({onHistory,onComparePrevious,onOpenPrevious,onManage
    {c.projects.some((p:Project)=>!grouped.has(p.id)&&!hidden(p)&&(p.nodes.length===0||p.nodes.some(visible)))&&<section className="tree-group"><h3><button aria-expanded={!activeSession(ws.personal).collapsedGroups?.includes('group.ungrouped')} aria-label={(activeSession(ws.personal).collapsedGroups?.includes('group.ungrouped')?'Expand group ':'Collapse group ')+(mode==='notes'?'NOTEBOOKS':'RESOURCES')} onClick={()=>onGroupToggle('group.ungrouped')}><Icon name="folder" size={21}/><span>{mode==='notes'?'NOTEBOOKS':'RESOURCES'}</span><Icon name="down" size={12}/></button></h3>{!activeSession(ws.personal).collapsedGroups?.includes('group.ungrouped')&&c.projects.filter((p:any)=>!grouped.has(p.id)).map(project)}</section>}
 
   </nav>
-  <div className="sidebar-footer-row"><button className="sidebar-add" onClick={()=>onTypeAdd(mode)}><Icon name="plus" size={16}/> {LIBRARY_TYPES.find(t=>t.id===mode)!.add}</button></div><div className="local-status"><span className="status-dot"/> Stored on this device</div>
+  <div className="sidebar-footer-row"><button className="sidebar-add" onClick={()=>onTypeAdd(mode)}><Icon name="plus" size={16}/> {LIBRARY_TYPES.find(t=>t.id===mode)!.add}</button>{onExperience&&<IconButton name="settings" data-panel-toggle label={'Workspace '+(ws.personal.activeWorkspaceSlot??1)+' setup'} title="Choose what this workspace shows (Experience)" onClick={onExperience}/>}</div>{mode!=='notes'&&!typeOn(mode)&&<p className="experience-note outside-scope-note" role="status">{LIBRARY_TYPES.find(t=>t.id===mode)!.label} is outside this workspace's Experience. Nothing is deleted.</p>}<div className="local-status"><span className="status-dot"/> Stored on this device</div>
   {menu&&<div ref={menuRef} className="tree-context-menu" role="menu" aria-label={'Actions for '+(menu.node?.title??menu.project.title)} style={{left:menu.x,top:menu.y}} onKeyDown={menuKey}>
    <div className="tree-menu-title">{menu.node?.title??menu.project.title}</div>
    {menuPage?<>

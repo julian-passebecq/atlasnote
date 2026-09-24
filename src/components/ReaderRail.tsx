@@ -4,7 +4,7 @@ import {FloatingPanel} from './FloatingPanel.js';
 import {FLAG_LABELS,THEME_LABELS} from '../core/model.js';
 import type {Session,Page,View,Location,DocumentEntry} from '../core/model.js';
 export type RailPopover='reading'|'theme'|'more'|'workspaces'|null;
-export function ReaderRail({onHistory,onAgentReview,hasHistory,onDashboard,onCapture,onWorkspace,onNewWorkspace,hasEmptyWorkspace,onImportCheatsheet,slotId=1,stateBusy=false,hasWorkspaceSave,hasAppSave,onSaveWorkspace,onRestoreWorkspace,onSaveApp,onRestoreApp,onSavedStates,onReadLater,managerMode,onPdfManage,onExport,pdfRenderer,session,page,view,location:loc,doc,leftVisible,contextOpen,popover,setPopover,onTree,onFocus,onContext,onCompare,onSwap,onBookmark,onTheme,onView,onSettings,onHome,onBookmarks,onEdit,onPrint,onFlags,onRating,rating}:any){
+export function ReaderRail({onExperience,experienceActive,onHistory,onAgentReview,hasHistory,onDashboard,onCapture,onWorkspace,onNewWorkspace,hasEmptyWorkspace,onImportCheatsheet,slotId=1,stateBusy=false,hasWorkspaceSave,hasAppSave,onSaveWorkspace,onRestoreWorkspace,onSaveApp,onRestoreApp,onSavedStates,onReadLater,managerMode,onPdfManage,onExport,pdfRenderer,session,page,view,location:loc,doc,leftVisible,contextOpen,popover,setPopover,onTree,onFocus,onContext,onCompare,onSwap,onBookmark,onTheme,onView,onSettings,onHome,onBookmarks,onEdit,onPrint,onFlags,onRating,rating}:any){
  const toggle=(name:RailPopover)=>setPopover(popover===name?null:name);
  const choose=(fn:()=>void)=>{fn();setPopover(null);};
  const integrated=pdfRenderer==='integrated';
@@ -26,6 +26,7 @@ export function ReaderRail({onHistory,onAgentReview,hasHistory,onDashboard,onCap
  <IconButton name="grid" className="compact-workspace-toggle" label="Choose workspace" title={'Workspace '+slotId} aria-haspopup="dialog" aria-expanded={popover==='workspaces'} onClick={()=>toggle('workspaces')}/>
  <div className="workspace-slots" role="group" aria-label="Study workspaces">{[1,2,3,4,5].map(n=><button key={n} data-agent-action="workspace-navigate" data-workspace-id={n} aria-label={'Workspace '+n} aria-pressed={slotId===n} onClick={()=>onWorkspace(n)}>{n}</button>)}</div>
 
+ {onExperience&&<IconButton name="settings" data-panel-toggle className="workspace-setup" label={'Workspace '+slotId+' setup'} title="Choose what this workspace shows (Experience)" active={experienceActive} aria-haspopup="dialog" aria-expanded={!!experienceActive} onClick={onExperience}/>}
  <IconButton name="save" label="Save current workspace" disabled={stateBusy} onClick={onSaveWorkspace}/>
  <IconButton name="save-all" label="Workspace States" active={managerMode==='states'} aria-haspopup="dialog" aria-expanded={contextOpen&&managerMode==='states'} onClick={onSavedStates}/>
  </div>

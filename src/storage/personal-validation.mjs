@@ -3,6 +3,7 @@ import {validateHubPersonal,validateTaxonomy} from '../content-hub/validation.mj
 import {validateReadingLists,validateBookmarkReading} from './reading-validation.mjs';
 import {validateSavedStates} from './saved-states-validation.mjs';
 import {inspectObject,ID} from '../core/validation.mjs';
+import {validateExperience} from '../experience/profile.mjs';
 export function validatePersonal(p){
  inspectObject(p);validateHubPersonal(p);validateKnowledge(p.knowledge);
  const fail=m=>{throw Error('Invalid saved workspace: '+m);};
@@ -29,7 +30,7 @@ export function validatePersonal(p){
  }else if(p.workspaceSlots!==undefined||p.activeWorkspaceSlot!==undefined)fail('numbered workspaces require personal schema 3');
  if(p.savedStates!==undefined){if(p.schemaVersion!==3)fail('saved states require personal schema 3');validateSavedStates(p.savedStates,sessions);}
  for(const s of sessions){
-  obj(s,'session');if(s.revisionCompareMode!==undefined&&!['changes','side-by-side','a','b'].includes(s.revisionCompareMode))fail('version comparison mode');arr(s.panes,'panes',2);if(!s.panes.length)fail('no pane');const paneIds=new Set(),viewIds=new Set();
+  obj(s,'session');validateExperience(s.experience);if(s.revisionCompareMode!==undefined&&!['changes','side-by-side','a','b'].includes(s.revisionCompareMode))fail('version comparison mode');arr(s.panes,'panes',2);if(!s.panes.length)fail('no pane');const paneIds=new Set(),viewIds=new Set();
   for(const pane of s.panes){
    id(pane.id,'pane ID');if(paneIds.has(pane.id))fail('duplicate pane');paneIds.add(pane.id);arr(pane.views,'views',5);
    if(pane.readerChromeCollapsed!==undefined)bool(pane.readerChromeCollapsed,'reader chrome');
