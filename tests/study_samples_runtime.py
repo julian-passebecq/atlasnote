@@ -13,10 +13,11 @@ identity=json.loads(check.stdout)
 rows=[];errors=[]
 def record(name,**detail):
     rows.append(dict(name=name,status='PASS',**detail));print(name,flush=True)
-def search(p,title):
+def search(p,title,page_id=None):
     p.get_by_role('button',name='Global search',exact=True).click()
     p.get_by_label('Search all pages and glossary',exact=True).fill(title)
-    p.locator('.search-result').filter(has=p.get_by_text(title,exact=True)).click()
+    # Titles are not unique once the V3 seed pack ships ("Window functions"); pick the exact page.
+    (p.locator('.search-result[data-page-id="'+page_id+'"]') if page_id else p.locator('.search-result').filter(has=p.get_by_text(title,exact=True))).click()
 def navigate(p,key,where='here'):
     p.evaluate('async([key,where])=>{const a='+AGENT+';return a.navigateAgentTarget(a.getResource(key).target,where)}',[key,where])
 def waitpdf(p):
@@ -38,7 +39,7 @@ try:
     expect(p.locator('.active-pane h1')).to_have_text('Functions and exceptions')
     record('Python sidebar expands project and playground to reachable page')
     for page in [x for x in pack['pages'] if x['id'].startswith('page.mock.')]:
-        search(p,page['title']);expect(p.locator('.active-pane h1')).to_have_text(page['title'])
+        search(p,page['title'],page['id']);expect(p.locator('.active-pane h1')).to_have_text(page['title'])
         body=p.locator('.active-pane').inner_text()
         assert page['summary'] in body
         blocks=[]
