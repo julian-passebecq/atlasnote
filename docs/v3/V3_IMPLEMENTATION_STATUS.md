@@ -18,6 +18,8 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | `9e2ebbf` | Phase D: compute-once search index, proven equivalent to the legacy search |
 | `b5242b8` | Phase D: the tree stops rescanning the library on every state change |
 | `3d60619` | Study-samples test selects results by page ID; `data-page-id` added to search results |
+| `1a61fd1` | Norsk Daily study queue: date navigation, New/Learning/Known progress on the existing learning flags, English reveal, grammar links, the day's QCM |
+| `43c9711` | Content: all 64 seed pages linked; 41 glossary terms; 6 native QCMs (45 questions); pack 0.2.0, still **OWNER REVIEW REQUIRED** |
 
 ## New state: owner, persistence and migration boundary
 
@@ -61,6 +63,10 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 - `publication-review.json` marks the pack **OWNER REVIEW REQUIRED before publication**.
 
 **Norsk Daily** (`src/norsk-daily/*`, `examples/norsk-daily/*`)
+- Study screen (`NorskDailyView`), opened from the sidebar "Norsk Daily" entry, which appears when the Norsk subject is in scope.
+  - Europe/Oslo study days, a queue ordered New → Learning → Known, and reveal/hide English.
+  - Grammar links and the day's native QCM.
+  - Progress is the existing learning flag on each stable story ID. There is no second progress store, and progress survives corrections and re-imports.
 - A strict, bounded validator for feed schemaVersion 2 with Europe/Oslo day boundaries.
 - Source wording and generated study text are labelled separately, and a claim to cover all of a day's headlines is rejected without evidence of complete coverage.
 - Projection to Article and QCM pages is deterministic, with stable IDs and item revisions.
@@ -92,12 +98,16 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | Check | Result |
 | --- | --- |
 | `npx tsc --noEmit` / `-p tsconfig.online.json` | PASS |
-| `npm test` | PASS 1102/1102 (baseline 1053) |
+| `npm test` | PASS 1109/1109 (baseline 1053) |
 | `npm run test:v23` | PASS 214/214 |
 | `npm run validate`, `npm run check:pdfatlas`, `npm run build` | PASS |
-| `tests/v3_runtime.py`, `tests/v3_pdf_window.py` (new) | PASS 6/6, 5/5 |
+| `tests/v3_runtime.py`, `tests/v3_pdf_window.py`, `tests/v3_norsk_daily.py` (new) | PASS 6/6, 5/5, 5/5 |
 | `pdf_navigation_runtime`, `workspace_122_runtime`, `workspace_122_dom`, `wheel_125_dom`, `reading_124_dom`, `v22_runtime`, `saved_states_runtime`, `stabilization_v2_runtime`, `reading_124_runtime`, `content_hub_127_runtime`, `references_v2_runtime`, `release_blockers_runtime`, `final_polish_runtime`, `pdf_lifecycle_runtime`, `study_samples_runtime`, `simplified_123_dom`, `hardening_dom`, `compact_12_dom` | PASS |
 | `v23_runtime` | Every case PASS except one BLOCKED gate: native quota failure requires Linux or WSL (`ATLAS_V23_NATIVE_QUOTA=1`) |
+
+`content_hub_127_runtime`, `references_v2_runtime` and `v22_runtime` each failed once in a long sequential run: two `goto(networkidle)` timeouts of 12 s on a fresh profile, and one readiness race. All three passed when re-run individually.
+- The readiness race was a real test assumption. `v22_runtime` expected history to be initialized as soon as the shell appeared. With staged boot that happens about 0.2 s later, so the test now waits for it explicitly.
+- A fresh profile measures about 1 s to the shell and 1.1–1.2 s to initialized (100 resources), so the 12 s timeouts are not explained by boot cost. They are recorded as intermittent.
 
 Run the build-gated Python suites from the repository root, on a clean committed tree, after `npm run build`.
 
@@ -119,5 +129,5 @@ Browser runs used Playwright wheel injection. **This is not physical mouse or tr
   - Reducing the PDF byte copies.
   - Full virtualization of very long expanded Notebook trees (PDF study trees are already bounded).
 - **Not run:** the full `test:v23:release` gates including the compaction fault matrix, offline or auth-expiry transitions, and a browser-level 1,500-resource UI run. The 1,500/10,000-resource figures above are computation benchmarks in Node.
-- **Content:** 59 of the 64 seed pages remain unlinked drafts, and the whole pack needs the owner's review. Presets are subject-based, so they don't depend on the seed's project IDs.
-- **Norsk Daily UI** (daily queue, New/Learning/Known progress) and adding vocabulary to the glossary are not built.
+- **Content:** all 64 pages are now linked. The whole pack (Norwegian text, quiz answers, reference URLs) still needs the owner's review. Presets are subject-based, so they don't depend on the seed's project IDs.
+- **Norsk Daily:** feed vocabulary still stays in each article's table, because Agent Review has no glossary-create operation. Dropping stale questions from a batch QCM requires a delete operation that doesn't exist yet.

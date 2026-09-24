@@ -39,6 +39,9 @@ def ready(p, base):
     p.goto(base, wait_until='networkidle')
     expect(p.locator('.atlas-app')).to_be_visible(timeout=30000)
     # The module is a stable build entry; no window/private store bridge is used.
+    # V3 staged boot renders the shell first; history reconciliation completes right
+    # after. Wait for it explicitly instead of assuming it precedes the first render.
+    p.wait_for_function("async()=>{const d=(await import(new URL('app/agent/public.js',document.baseURI).href)).getAgentInterface().getStorageDiagnostics();return d.initialized&&d.ready!==false;}", timeout=30000, polling=100)
     assert agent(p, 'return api.getStorageDiagnostics().initialized;')
 
 def read(p):
