@@ -70,6 +70,7 @@
     "test:release-blockers:runtime": "python tests/release_blockers_runtime.py",
     "test:history": "node --test tests/history-v22.test.mjs",
     "test:agent": "node --test tests/agent-v22.test.mjs",
+    "test:norsk-daily": "node --test tests/norsk-daily-v3.test.mjs",
     "check:pdfatlas": "node tools/check-pdfatlas-provenance.mjs",
     "test:v22:runtime": "python tests/v22_runtime.py",
     "test:completion": "node --test tests/completion-v22.test.mjs",

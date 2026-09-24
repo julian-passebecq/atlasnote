@@ -1,0 +1,240 @@
+{
+  "schema": "atlas.norsk-daily",
+  "schemaVersion": 2,
+  "kind": "atlas-norsk-daily-batch",
+  "feedId": "synthetic-norsk-daily",
+  "batchId": "synthetic-2026-09-24",
+  "batchRevision": 1,
+  "studyDate": "2026-09-24",
+  "timezone": "Europe/Oslo",
+  "collectionInterval": {
+    "start": "2026-09-24T06:00:00+02:00",
+    "end": "2026-09-24T07:00:00+02:00"
+  },
+  "generatedAt": "2026-09-24T07:30:00+02:00",
+  "source": {
+    "publisher": "SYNTHETIC-FIXTURE",
+    "publisherId": "synthetic-fixture",
+    "permission": {
+      "status": "synthetic-fixture",
+      "note": "Invented neutral sentences written for AtlasNote tests. Not news, not copied from any publisher, and not evidence of any publisher permission."
+    },
+    "hosts": ["example.invalid"]
+  },
+  "coverage": {
+    "kind": "partial-snapshot",
+    "statement": "Three invented items for one synthetic morning snapshot. This is a test fixture, not a record of any real day."
+  },
+  "transform": {
+    "method": "synthetic-fixture",
+    "promptId": "atlas.norsk-daily.prompt@2",
+    "tool": "Hand-written AtlasNote test fixture"
+  },
+  "review": {
+    "status": "proposal"
+  },
+  "items": [
+    {
+      "itemId": "synthetic-fixture-0001",
+      "revision": 1,
+      "sourceId": "synthetic-0001",
+      "sourceUrl": "https://example.invalid/synthetic/0001",
+      "sourcePublishedAt": "2026-09-24T05:45:00+02:00",
+      "observedAt": "2026-09-24T06:10:00+02:00",
+      "section": "Synthetic local",
+      "language": "nb",
+      "difficulty": "B1",
+      "headline": {
+        "text": "Kommunen tester en ny sykkelvei langs fjorden",
+        "origin": "source"
+      },
+      "study": {
+        "paraphrase": {
+          "text": "En kommune prøver ut en ny vei for sykler ved fjorden.",
+          "origin": "generated"
+        },
+        "translations": {
+          "en": {
+            "text": "The municipality is testing a new cycle path along the fjord.",
+            "origin": "generated"
+          },
+          "fr": {
+            "text": "La commune teste une nouvelle piste cyclable le long du fjord.",
+            "origin": "generated"
+          }
+        },
+        "uncertainty": [
+          "The headline does not say how long the test lasts."
+        ]
+      },
+      "vocabulary": [
+        {
+          "lemma": "å teste",
+          "form": "tester",
+          "partOfSpeech": "verb",
+          "en": "to test",
+          "fr": "tester",
+          "example": {
+            "text": "Vi tester en ny plan i dag.",
+            "origin": "generated"
+          }
+        },
+        {
+          "lemma": "sykkelvei",
+          "form": "en sykkelvei",
+          "partOfSpeech": "noun",
+          "en": "cycle path",
+          "fr": "piste cyclable"
+        },
+        {
+          "lemma": "langs",
+          "partOfSpeech": "preposition",
+          "en": "along",
+          "fr": "le long de"
+        }
+      ],
+      "grammar": [
+        {
+          "pageId": "page.samples.norsk.sentences",
+          "label": "V2 word order in main clauses",
+          "note": {
+            "text": "Kommunen (1) tester (2): the finite verb stays in second position.",
+            "origin": "generated"
+          }
+        }
+      ],
+      "questions": [
+        {
+          "questionId": "meaning",
+          "origin": "generated",
+          "prompt": "What is the municipality doing, according to the headline?",
+          "options": [
+            {"optionId": "a", "text": "Testing a new cycle path"},
+            {"optionId": "b", "text": "Closing a road"},
+            {"optionId": "c", "text": "Building a bridge"}
+          ],
+          "correctOptionIds": ["a"],
+          "explanation": "tester = is testing; sykkelvei = cycle path."
+        }
+      ]
+    },
+    {
+      "itemId": "synthetic-fixture-0002",
+      "revision": 1,
+      "sourceId": "synthetic-0002",
+      "sourceUrl": null,
+      "sourcePublishedAt": null,
+      "observedAt": "2026-09-24T06:20:00+02:00",
+      "language": "nn",
+      "difficulty": "B2",
+      "headline": {
+        "text": "Biblioteket opnar ein ny lesesal for studentar",
+        "origin": "source"
+      },
+      "study": {
+        "paraphrase": {
+          "text": "Biblioteket har laga eit nytt rom der studentar kan lese.",
+          "origin": "generated"
+        },
+        "translations": {
+          "en": {
+            "text": "The library is opening a new reading room for students.",
+            "origin": "generated"
+          }
+        }
+      },
+      "vocabulary": [
+        {
+          "lemma": "å opne",
+          "form": "opnar",
+          "partOfSpeech": "verb",
+          "en": "to open",
+          "example": {
+            "text": "Butikken opnar klokka ni.",
+            "origin": "generated"
+          }
+        },
+        {
+          "lemma": "lesesal",
+          "form": "ein lesesal",
+          "partOfSpeech": "noun",
+          "en": "reading room"
+        },
+        {
+          "lemma": "student",
+          "form": "studentar",
+          "partOfSpeech": "noun",
+          "en": "student"
+        }
+      ],
+      "grammar": [
+        {
+          "pageId": "page.mock.norsk.work",
+          "label": "Nynorsk plural endings (-ar)",
+          "note": {
+            "text": "Nynorsk studentar corresponds to Bokmal studenter.",
+            "origin": "generated"
+          }
+        }
+      ],
+      "questions": [
+        {
+          "questionId": "variant",
+          "origin": "generated",
+          "prompt": "Which written standard does this headline use?",
+          "options": [
+            {"optionId": "nb", "text": "Bokmal"},
+            {"optionId": "nn", "text": "Nynorsk"}
+          ],
+          "correctOptionIds": ["nn"],
+          "explanation": "opnar, ein and studentar are Nynorsk forms."
+        }
+      ]
+    },
+    {
+      "itemId": "synthetic-fixture-0003",
+      "revision": 1,
+      "sourceId": "synthetic-0003",
+      "sourcePublishedAt": "2026-09-23T18:00:00+02:00",
+      "observedAt": "2026-09-24T06:30:00+02:00",
+      "language": "nb",
+      "difficulty": "A2",
+      "headline": {
+        "text": "Skolen får nye bøker til høsten",
+        "origin": "source"
+      },
+      "study": {
+        "paraphrase": {
+          "text": "Skolen skal få flere nye bøker i høst.",
+          "origin": "generated"
+        },
+        "translations": {
+          "en": {
+            "text": "The school is getting new books for the autumn.",
+            "origin": "generated"
+          }
+        }
+      },
+      "vocabulary": [
+        {
+          "lemma": "å få",
+          "form": "får",
+          "partOfSpeech": "verb",
+          "en": "to get, to receive"
+        },
+        {
+          "lemma": "bok",
+          "form": "bøker",
+          "partOfSpeech": "noun",
+          "en": "book"
+        },
+        {
+          "lemma": "høst",
+          "form": "høsten",
+          "partOfSpeech": "noun",
+          "en": "autumn"
+        }
+      ]
+    }
+  ]
+}
