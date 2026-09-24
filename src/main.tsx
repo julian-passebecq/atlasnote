@@ -13,7 +13,7 @@ async function main(){
  mark('start');
  const r=await fetch(new URL('content.json',document.baseURI));if(!r.ok)throw Error('The reviewed content catalogue could not be loaded.');const built=await r.json();mark('catalogue');
  store.configure(built);store.beginStagedBoot();
- let shellOk=true;try{store.setShell(await loadShell());}catch(e){shellOk=false;store.fail(e);store.markFailed(e);}mark('shell');
+ let shellOk=true;try{store.setShell(await loadShell());}catch(e){shellOk=false;store.fail(e);store.markShellFailed(e);}mark('shell');
  configureAgentInterface(built);
  ReactDOM.createRoot(document.getElementById('root')!).render(<App built={built}/>);
  requestAnimationFrame(()=>mark('first-render'));
