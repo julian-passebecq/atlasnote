@@ -27,6 +27,7 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | `2356368` | Fix: pinned-revision deep links wait for the complete history under staged boot (found by `completion_v22_runtime`) |
 
 | `b6b1de3` | DATA-03: fail closed when the stored workspace cannot be read; DATA-02: backup completeness under Experiences |
+| `ffd8bd5` | PDF-03: printed page labels shown beside, never instead of, physical page numbers |
 | `ac75cda` | PERF-07: batched Notebook folders (80 rows plus explicit Show next, open page always revealed) and map lookups per tree row |
 | `de21297` | MEM-02: shared verified PDF cache; browser gates MEM-01 (50 switches), DATA-03 (unreadable record never overwritten), UI-01 (390px) |
 
@@ -112,7 +113,7 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | Check | Result |
 | --- | --- |
 | `npx tsc --noEmit` / `-p tsconfig.online.json` | PASS |
-| `npm test` | PASS 1118/1118 (baseline 1053) |
+| `npm test` | PASS 1119/1119 (baseline 1053) |
 | `npm run test:v23` | PASS 214/214 |
 | `npm run validate`, `npm run check:pdfatlas`, `npm run build` | PASS |
 | `tests/v3_runtime.py`, `tests/v3_pdf_window.py`, `tests/v3_norsk_daily.py`, `tests/v3_tabs.py`, `tests/v3_gates.py` (new) | PASS 6/6, 5/5, 7/7, 4/4, 4/4 |
@@ -140,7 +141,7 @@ Browser runs used Playwright wheel injection. **This is not physical mouse or tr
 | --- | --- | --- |
 | PDF-01 | BLOCKED | Needs a trace from the owner's affected device (the Document info download is in place). Synthetic wheel suites pass. |
 | PDF-02, PDF-04 | PASS | `v3_runtime`, `v3-reader` |
-| PDF-03 | PARTIAL | Verified count against metadata is reported and the companion is never retargeted. Printed page labels are not implemented. |
+| PDF-03 | PASS | The verified count, the metadata count and the printed labels (`/PageLabels`, display only) are kept distinct, and the companion is never retargeted. Evidence: `v3_pdf_labels`, `v3-reader`. |
 | PDF-05 | PASS (synthetic) | Generation guard, `v3_pdf_window`, `pdf_navigation_runtime` |
 | MEM-01 | PASS | `v3_gates` (50 switches), `v3-reader` (24 lifetimes) |
 | MEM-02 | PASS (unit) | Verified cache test. The end-to-end public-PDF path needs the real reviewed bytes, which are not in the repo. |
