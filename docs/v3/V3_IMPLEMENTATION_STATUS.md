@@ -26,6 +26,9 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | `db83c44`, `866646f`, `1bfe42b` | **Owner-approved agent contract extension:** `concept.create` (25 → 26 operations). Norsk Daily vocabulary goes to the Concept Index through preview, stage and explicit accept |
 | `2356368` | Fix: pinned-revision deep links wait for the complete history under staged boot (found by `completion_v22_runtime`) |
 
+| `b6b1de3` | DATA-03: fail closed when the stored workspace cannot be read; DATA-02: backup completeness under Experiences |
+| `de21297` | MEM-02: shared verified PDF cache; browser gates MEM-01 (50 switches), DATA-03 (unreadable record never overwritten), UI-01 (390px) |
+
 ## New state: owner, persistence and migration boundary
 
 | State | Owner | Persistence | Migration |
@@ -108,10 +111,10 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | Check | Result |
 | --- | --- |
 | `npx tsc --noEmit` / `-p tsconfig.online.json` | PASS |
-| `npm test` | PASS 1115/1115 (baseline 1053) |
+| `npm test` | PASS 1118/1118 (baseline 1053) |
 | `npm run test:v23` | PASS 214/214 |
 | `npm run validate`, `npm run check:pdfatlas`, `npm run build` | PASS |
-| `tests/v3_runtime.py`, `tests/v3_pdf_window.py`, `tests/v3_norsk_daily.py`, `tests/v3_tabs.py` (new) | PASS 6/6, 5/5, 5/5, 4/4 |
+| `tests/v3_runtime.py`, `tests/v3_pdf_window.py`, `tests/v3_norsk_daily.py`, `tests/v3_tabs.py`, `tests/v3_gates.py` (new) | PASS 6/6, 5/5, 7/7, 4/4, 4/4 |
 | `pdf_navigation_runtime`, `workspace_122_runtime`, `workspace_122_dom`, `wheel_125_dom`, `reading_124_dom`, `v22_runtime`, `saved_states_runtime`, `stabilization_v2_runtime`, `reading_124_runtime`, `content_hub_127_runtime`, `references_v2_runtime`, `release_blockers_runtime`, `final_polish_runtime`, `pdf_lifecycle_runtime`, `study_samples_runtime`, `simplified_123_dom`, `hardening_dom`, `compact_12_dom` | PASS |
 | `v23_runtime` | Every case PASS except one BLOCKED gate: native quota failure requires Linux or WSL (`ATLAS_V23_NATIVE_QUOTA=1`) |
 
@@ -129,6 +132,35 @@ Retained failures found during this work, all fixed and re-run:
 - Two legacy tests assumed a fixed library size.
 
 Browser runs used Playwright wheel injection. **This is not physical mouse or trackpad evidence.**
+
+## V3 acceptance case register (handoff `audit/ACCEPTANCE_GATES.md`)
+
+| Case | Status | Evidence |
+| --- | --- | --- |
+| PDF-01 | BLOCKED | Needs a trace from the owner's affected device (the Document info download is in place). Synthetic wheel suites pass. |
+| PDF-02, PDF-04 | PASS | `v3_runtime`, `v3-reader` |
+| PDF-03 | PARTIAL | Verified count against metadata is reported and the companion is never retargeted. Printed page labels are not implemented. |
+| PDF-05 | PASS (synthetic) | Generation guard, `v3_pdf_window`, `pdf_navigation_runtime` |
+| MEM-01 | PASS | `v3_gates` (50 switches), `v3-reader` (24 lifetimes) |
+| MEM-02 | PASS (unit) | Verified cache test. The end-to-end public-PDF path needs the real reviewed bytes, which are not in the repo. |
+| PERF-01 | NOT DONE | `content.json` still carries all reviewed bodies (548 KB) |
+| PERF-02, PERF-03 | PASS | Staged boot, `v3-loading`, `v3_boot_scale` |
+| PERF-04 | PASS | Coalesced checkpoints, `v3_runtime` |
+| PERF-05 | PARTIAL | Cached index with an explicit scope; no worker (decision recorded with measurements) |
+| PERF-06 | PASS | Memoized projection and facts index |
+| PERF-07 | PARTIAL | PDF windowing done; Notebook tree batching in progress |
+| DATA-01 | PASS | `v3_tabs`, `v3_runtime` cross-tab |
+| DATA-02 | PASS | `v3-data-safety`, portable compaction gate |
+| DATA-03 | PASS | `v3-data-safety`, `v3_gates` |
+| EXP-01..03 | PASS | `v3-experience`, `v3_runtime` |
+| CONTENT-01/02 | PASS (owner review pending) | `v3-seed`, content validation |
+| NORSK-01 | PASS | `norsk-daily-v3`, `v3_norsk_daily` |
+| NORSK-02 | BLOCKED for real sources | Publisher permission not verified; reviewed import works with the synthetic fixture |
+| SEC-01 | PASS | `check:access`, `_headers` unchanged |
+| REL-01 | PASS | Build identity and fingerprint checks |
+| REL-02 | BLOCKED | Portable core passes; the full release needs the Cloudflare preview and the Linux native-quota proof |
+| REG-01 | PASS | Inherited DOM and runtime suites and `completion_v22_runtime` |
+| UI-01 | PASS (390px Experience panel) | `v3_gates` |
 
 ## Remaining work and blockers
 
