@@ -27,8 +27,16 @@
       "explanation": "Both lazy results are consumed by actions while the cached base is retained; unpersist runs in finally. Not executed during preparation: run it once on your target Spark runtime before relying on it."
     }
   ],
-  "related": [],
-  "terms": [],
+  "related": [
+    "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+    "page.v3seed.dataframe-versus-rdd-versus-pandas",
+    "page.v3seed.explain-plans-and-troubleshooting",
+    "page.v3seed.qcm.pyspark-execution-performance"
+  ],
+  "terms": [
+    "term.v3seed.lazy-evaluation",
+    "term.v3seed.transformation-vs-action"
+  ],
   "sources": [
     {
       "title": "Apache Spark - RDD persistence (programming guide)",

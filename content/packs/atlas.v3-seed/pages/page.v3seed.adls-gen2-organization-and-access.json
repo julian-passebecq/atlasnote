@@ -19,9 +19,24 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.managed-identity-and-key-vault",
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.unity-catalog-mental-model",
+    "page.v3seed.fabric-onelake-and-lakehouse-mental-model"
+  ],
+  "terms": [
+    "term.v3seed.managed-identity",
+    "term.v3seed.medallion-architecture"
+  ],
+  "sources": [
+    {
+      "title": "Azure Data Lake Storage introduction",
+      "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction",
+      "publisher": "Microsoft",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

@@ -25,9 +25,32 @@
       "answer": "The actual workload and physical execution plan: scan volume, selectivity, join strategy, cardinality, skew/spill, and whether the bottleneck is I/O, CPU, memory or network."
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.explain-plans-and-troubleshooting",
+    "page.v3seed.join-strategies-and-broadcast-joins",
+    "page.v3seed.databricks-performance-checklist",
+    "page.v3seed.troubleshooting-a-slow-pipeline"
+  ],
+  "terms": [
+    "term.v3seed.physical-plan",
+    "term.v3seed.predicate-pushdown",
+    "term.v3seed.shuffle",
+    "term.v3seed.data-skew"
+  ],
+  "sources": [
+    {
+      "title": "PostgreSQL - using EXPLAIN",
+      "url": "https://www.postgresql.org/docs/current/using-explain.html",
+      "publisher": "PostgreSQL Global Development Group",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Spark SQL - performance tuning",
+      "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

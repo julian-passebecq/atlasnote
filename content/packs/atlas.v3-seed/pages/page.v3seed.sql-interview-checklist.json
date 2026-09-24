@@ -20,8 +20,18 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
+  "related": [
+    "page.v3seed.sql-grain-before-joins",
+    "page.v3seed.null-semantics",
+    "page.v3seed.qualify-and-deduplication",
+    "page.v3seed.window-functions",
+    "page.v3seed.qcm.grain-joins-windows"
+  ],
+  "terms": [
+    "term.v3seed.grain",
+    "term.v3seed.join-cardinality",
+    "term.v3seed.three-valued-logic"
+  ],
   "sources": [],
   "tags": [
     "seed:v3",

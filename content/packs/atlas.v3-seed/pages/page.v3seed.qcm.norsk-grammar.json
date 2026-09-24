@@ -1,0 +1,343 @@
+{
+  "id": "page.v3seed.qcm.norsk-grammar",
+  "title": "Practice: Norwegian nouns, adjectives, tenses and modals",
+  "summary": "8 questions on definite forms, adjective agreement, preterite versus perfect and modal verbs. Practice and review, without a timer.",
+  "blocks": [],
+  "related": [
+    "page.v3seed.nouns-indefinite-and-definite-forms",
+    "page.v3seed.adjective-agreement",
+    "page.v3seed.past-tense-preterite-versus-perfect",
+    "page.v3seed.modal-verbs-in-work-conversations"
+  ],
+  "terms": [
+    "term.v3seed.definite-form",
+    "term.v3seed.grammatical-gender",
+    "term.v3seed.adjective-inflection",
+    "term.v3seed.preterite",
+    "term.v3seed.present-perfect",
+    "term.v3seed.modal-verb"
+  ],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:norsk",
+    "topic:norsk",
+    "lang:nb"
+  ],
+  "provenance": "Prepared by Claude Code on 2026-09-24 from the AtlasNote V3 seed; original questions, no private data or third-party text. Owner review required before publication.",
+  "kind": "qcm",
+  "qcm": {
+    "schemaVersion": 1,
+    "id": "page.v3seed.qcm.norsk-grammar",
+    "title": "Practice: Norwegian nouns, adjectives, tenses and modals",
+    "taxonomy": {
+      "subject": "norsk",
+      "folderId": "node.v3seed.norsk.grammar"
+    },
+    "questions": [
+      {
+        "id": "question.v3seed.nog.q1",
+        "prompt": "What is the definite singular form of et møte?",
+        "options": [
+          {
+            "id": "option.v3seed.nog.q1.a",
+            "text": "møtet"
+          },
+          {
+            "id": "option.v3seed.nog.q1.b",
+            "text": "møten",
+            "explanation": "-en is the masculine suffix; møte is neuter."
+          },
+          {
+            "id": "option.v3seed.nog.q1.c",
+            "text": "møteet",
+            "explanation": "After a final -e, only -t is added."
+          },
+          {
+            "id": "option.v3seed.nog.q1.d",
+            "text": "det møte",
+            "explanation": "A determiner alone does not make the noun definite."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.nog.q1.a"
+        ],
+        "explanation": "Neuter nouns take -et in the definite singular; a noun that already ends in -e just adds -t: et møte -> møtet.",
+        "links": [
+          {
+            "label": "Review: nouns: indefinite and definite forms",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.nouns-indefinite-and-definite-forms"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.nog.q2",
+        "prompt": "Which definite forms of ei/en bok are accepted in Bokmål? Select all that apply.",
+        "options": [
+          {
+            "id": "option.v3seed.nog.q2.a",
+            "text": "boka"
+          },
+          {
+            "id": "option.v3seed.nog.q2.b",
+            "text": "boken"
+          },
+          {
+            "id": "option.v3seed.nog.q2.c",
+            "text": "boket",
+            "explanation": "-et is the neuter suffix."
+          },
+          {
+            "id": "option.v3seed.nog.q2.d",
+            "text": "bøkene",
+            "explanation": "That is the definite plural; bok has an irregular plural: bøker, bøkene."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.nog.q2.a",
+          "option.v3seed.nog.q2.b"
+        ],
+        "explanation": "Bokmål allows feminine forms (ei bok, boka) and common-gender forms (en bok, boken). Be consistent within one text.",
+        "links": [
+          {
+            "label": "Review: nouns: indefinite and definite forms",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.nouns-indefinite-and-definite-forms"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.nog.q3",
+        "prompt": "Complete: Vi har et ___ prosjekt. (stor)",
+        "options": [
+          {
+            "id": "option.v3seed.nog.q3.a",
+            "text": "stort"
+          },
+          {
+            "id": "option.v3seed.nog.q3.b",
+            "text": "stor",
+            "explanation": "The base form goes with masculine and feminine indefinite nouns."
+          },
+          {
+            "id": "option.v3seed.nog.q3.c",
+            "text": "store",
+            "explanation": "-e is used in the plural and in definite phrases."
+          },
+          {
+            "id": "option.v3seed.nog.q3.d",
+            "text": "storet"
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.nog.q3.a"
+        ],
+        "explanation": "Neuter singular indefinite adds -t to the adjective: et stort prosjekt.",
+        "links": [
+          {
+            "label": "Review: adjective agreement",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.adjective-agreement"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.nog.q4",
+        "prompt": "Complete: Det var et ___ møte. (viktig)",
+        "options": [
+          {
+            "id": "option.v3seed.nog.q4.a",
+            "text": "viktig"
+          },
+          {
+            "id": "option.v3seed.nog.q4.b",
+            "text": "viktigt",
+            "explanation": "Adjectives ending in -ig take no -t in the neuter."
+          },
+          {
+            "id": "option.v3seed.nog.q4.c",
+            "text": "viktige",
+            "explanation": "That is the plural/definite form."
+          },
+          {
+            "id": "option.v3seed.nog.q4.d",
+            "text": "viktigte"
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.nog.q4.a"
+        ],
+        "explanation": "Adjectives ending in -ig keep the base form in the neuter singular: et viktig møte, but viktige møter.",
+        "links": [
+          {
+            "label": "Review: adjective agreement",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.adjective-agreement"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.nog.q5",
+        "prompt": "Translate \"the new report\" (en rapport).",
+        "options": [
+          {
+            "id": "option.v3seed.nog.q5.a",
+            "text": "den nye rapporten"
+          },
+          {
+            "id": "option.v3seed.nog.q5.b",
+            "text": "den ny rapporten",
+            "explanation": "In a definite phrase the adjective takes -e."
+          },
+          {
+            "id": "option.v3seed.nog.q5.c",
+            "text": "den nye rapport",
+            "explanation": "The noun keeps its definite suffix as well (double definiteness)."
+          },
+          {
+            "id": "option.v3seed.nog.q5.d",
+            "text": "det nye rapporten",
+            "explanation": "rapport is masculine, so the determiner is den."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.nog.q5.a"
+        ],
+        "explanation": "A definite noun phrase with an adjective uses a determiner, the -e form of the adjective and the definite suffix on the noun.",
+        "links": [
+          {
+            "label": "Review: adjective agreement",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.adjective-agreement"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.nog.q6",
+        "prompt": "Complete: I går ___ jeg ferdig med rapporten. (bli)",
+        "options": [
+          {
+            "id": "option.v3seed.nog.q6.a",
+            "text": "ble"
+          },
+          {
+            "id": "option.v3seed.nog.q6.b",
+            "text": "har blitt",
+            "explanation": "I går places the event in a finished past time, which favours the preterite."
+          },
+          {
+            "id": "option.v3seed.nog.q6.c",
+            "text": "blir",
+            "explanation": "Present tense does not fit i går."
+          },
+          {
+            "id": "option.v3seed.nog.q6.d",
+            "text": "blitt",
+            "explanation": "A participle needs har."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.nog.q6.a"
+        ],
+        "explanation": "Preterite for a completed event located in a finished past time; note V2 as well: I går ble jeg ...",
+        "links": [
+          {
+            "label": "Review: past tense: preterite versus perfect",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.past-tense-preterite-versus-perfect"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.nog.q7",
+        "prompt": "Complete: Jeg ___ i Oslo siden 2022, og jeg bor der fortsatt. (bo)",
+        "options": [
+          {
+            "id": "option.v3seed.nog.q7.a",
+            "text": "har bodd"
+          },
+          {
+            "id": "option.v3seed.nog.q7.b",
+            "text": "bodde",
+            "explanation": "The preterite would present the situation as finished."
+          },
+          {
+            "id": "option.v3seed.nog.q7.c",
+            "text": "har bodde",
+            "explanation": "har is followed by the past participle bodd."
+          },
+          {
+            "id": "option.v3seed.nog.q7.d",
+            "text": "bodd",
+            "explanation": "The participle needs the auxiliary har."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.nog.q7.a"
+        ],
+        "explanation": "Perfect tense for a situation that started in the past and continues now, typically with siden.",
+        "links": [
+          {
+            "label": "Review: past tense: preterite versus perfect",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.past-tense-preterite-versus-perfect"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.nog.q8",
+        "prompt": "Which sentence is correct?",
+        "options": [
+          {
+            "id": "option.v3seed.nog.q8.a",
+            "text": "Jeg må sende rapporten i dag."
+          },
+          {
+            "id": "option.v3seed.nog.q8.b",
+            "text": "Jeg må å sende rapporten i dag.",
+            "explanation": "No å after a modal verb."
+          },
+          {
+            "id": "option.v3seed.nog.q8.c",
+            "text": "Jeg må sender rapporten i dag.",
+            "explanation": "The verb after a modal is an infinitive, not the present tense."
+          },
+          {
+            "id": "option.v3seed.nog.q8.d",
+            "text": "Jeg må sendt rapporten i dag.",
+            "explanation": "A participle needs a perfect construction such as har sendt."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.nog.q8.a"
+        ],
+        "explanation": "Modal verbs (kan, må, skal, vil, bør) take a bare infinitive: må sende.",
+        "links": [
+          {
+            "label": "Review: modal verbs in work conversations",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.modal-verbs-in-work-conversations"
+            }
+          }
+        ],
+        "followUp": "Say the same sentence with bør. How does the meaning change?"
+      }
+    ]
+  }
+}

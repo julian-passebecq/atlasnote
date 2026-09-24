@@ -21,8 +21,17 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
+  "related": [
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.exceptions-and-defensive-parsing",
+    "page.v3seed.merge-validation-and-cardinality",
+    "page.v3seed.system-design-batch-analytics-pipeline"
+  ],
+  "terms": [
+    "term.v3seed.data-contract",
+    "term.v3seed.join-cardinality",
+    "term.v3seed.quarantine"
+  ],
   "sources": [],
   "tags": [
     "seed:v3",

@@ -26,9 +26,25 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+    "page.v3seed.partitions-and-repartitioning",
+    "page.v3seed.join-strategies-and-broadcast-joins",
+    "page.v3seed.qcm.pyspark-execution-performance"
+  ],
+  "terms": [
+    "term.v3seed.shuffle",
+    "term.v3seed.stage-and-task",
+    "term.v3seed.spark-partition"
+  ],
+  "sources": [
+    {
+      "title": "Apache Spark - RDD programming guide",
+      "url": "https://spark.apache.org/docs/latest/rdd-programming-guide.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

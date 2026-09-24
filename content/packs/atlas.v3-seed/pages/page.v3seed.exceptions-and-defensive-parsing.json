@@ -26,9 +26,23 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.functions-arguments-and-return-values",
+    "page.v3seed.json-csv-and-file-boundaries",
+    "page.v3seed.data-quality-interview-framework",
+    "page.v3seed.qcm.python-data-engineering"
+  ],
+  "terms": [
+    "term.v3seed.quarantine"
+  ],
+  "sources": [
+    {
+      "title": "Python tutorial - errors and exceptions",
+      "url": "https://docs.python.org/3/tutorial/errors.html",
+      "publisher": "Python Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

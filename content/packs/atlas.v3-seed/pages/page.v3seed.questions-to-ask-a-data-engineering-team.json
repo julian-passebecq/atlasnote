@@ -20,8 +20,14 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
+  "related": [
+    "page.v3seed.data-engineer-interview-project-walkthrough",
+    "page.v3seed.data-quality-interview-framework",
+    "page.v3seed.cloud-cost-reading-checklist"
+  ],
+  "terms": [
+    "term.v3seed.data-contract"
+  ],
   "sources": [],
   "tags": [
     "seed:v3",

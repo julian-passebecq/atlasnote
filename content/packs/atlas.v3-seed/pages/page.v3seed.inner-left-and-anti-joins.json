@@ -70,7 +70,8 @@
   ],
   "terms": [
     "term.v3seed.anti-join",
-    "term.v3seed.join-cardinality"
+    "term.v3seed.join-cardinality",
+    "term.v3seed.three-valued-logic"
   ],
   "sources": [
     {

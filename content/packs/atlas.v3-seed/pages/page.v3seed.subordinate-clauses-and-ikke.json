@@ -72,7 +72,8 @@
   "terms": [
     "term.v3seed.sentence-adverbial",
     "term.v3seed.subordinate-clause",
-    "term.v3seed.v2-word-order"
+    "term.v3seed.v2-word-order",
+    "term.v3seed.connector"
   ],
   "sources": [],
   "tags": [

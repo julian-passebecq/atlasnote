@@ -19,8 +19,18 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
+  "related": [
+    "page.v3seed.workplace-vocabulary-for-data-projects",
+    "page.v3seed.b2-connectors-for-structured-answers",
+    "page.v3seed.v2-word-order-in-main-clauses",
+    "page.v3seed.subordinate-clauses-and-ikke",
+    "page.samples.norsk.sentences"
+  ],
+  "terms": [
+    "term.v3seed.v2-word-order",
+    "term.v3seed.connector",
+    "term.v3seed.subordinate-clause"
+  ],
   "sources": [],
   "tags": [
     "seed:v3",

@@ -20,9 +20,24 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.nrk-daily-feed-workflow-for-atlasnote",
+    "page.v3seed.v2-word-order-in-main-clauses",
+    "page.v3seed.b2-connectors-for-structured-answers",
+    "page.v3seed.reading-queue-triage"
+  ],
+  "terms": [
+    "term.v3seed.v2-word-order",
+    "term.v3seed.connector"
+  ],
+  "sources": [
+    {
+      "title": "Ordbøkene.no - Bokmålsordboka and Nynorskordboka",
+      "url": "https://ordbokene.no/",
+      "publisher": "Språkrådet and University of Bergen",
+      "note": "Official dictionaries with inflection tables; reference only, no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:norsk",

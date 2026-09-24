@@ -19,9 +19,20 @@
       ]
     }
   ],
-  "related": [],
+  "related": [
+    "page.v3seed.lakeflow-jobs-and-task-dependencies",
+    "page.v3seed.delta-lake-table-fundamentals",
+    "page.v3seed.unity-catalog-mental-model"
+  ],
   "terms": [],
-  "sources": [],
+  "sources": [
+    {
+      "title": "MLflow project",
+      "url": "https://mlflow.org/",
+      "publisher": "MLflow project (Linux Foundation)",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

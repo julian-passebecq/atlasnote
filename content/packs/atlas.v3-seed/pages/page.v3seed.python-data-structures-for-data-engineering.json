@@ -26,9 +26,24 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.functions-arguments-and-return-values",
+    "page.v3seed.iterators-and-generators",
+    "page.v3seed.dataclasses-and-typed-records",
+    "page.v3seed.qcm.python-data-engineering",
+    "page.samples.python.collections"
+  ],
+  "terms": [
+    "term.v3seed.hashable"
+  ],
+  "sources": [
+    {
+      "title": "Python tutorial - data structures",
+      "url": "https://docs.python.org/3/tutorial/datastructures.html",
+      "publisher": "Python Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

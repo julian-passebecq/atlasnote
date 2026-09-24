@@ -19,8 +19,15 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
+  "related": [
+    "page.v3seed.star-answers-without-losing-technical-depth",
+    "page.v3seed.system-design-batch-analytics-pipeline",
+    "page.v3seed.questions-to-ask-a-data-engineering-team",
+    "page.samples.job.explain"
+  ],
+  "terms": [
+    "term.v3seed.star-method"
+  ],
   "sources": [],
   "tags": [
     "seed:v3",

@@ -23,9 +23,20 @@
       ]
     }
   ],
-  "related": [],
+  "related": [
+    "page.v3seed.explaining-a-data-pipeline-in-norwegian",
+    "page.v3seed.nouns-indefinite-and-definite-forms",
+    "page.v3seed.modal-verbs-in-work-conversations"
+  ],
   "terms": [],
-  "sources": [],
+  "sources": [
+    {
+      "title": "Ordbøkene.no - Bokmålsordboka and Nynorskordboka",
+      "url": "https://ordbokene.no/",
+      "publisher": "Språkrådet and University of Bergen",
+      "note": "Official dictionaries with inflection tables; reference only, no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:norsk",

@@ -26,9 +26,25 @@
       "answer": "imidlertid, likevel, or the pair på den ene siden … på den andre siden, depending on the sentence."
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.subordinate-clauses-and-ikke",
+    "page.v3seed.explaining-a-data-pipeline-in-norwegian",
+    "page.v3seed.how-to-study-a-daily-news-headline",
+    "page.v3seed.v2-word-order-in-main-clauses"
+  ],
+  "terms": [
+    "term.v3seed.connector",
+    "term.v3seed.subordinate-clause",
+    "term.v3seed.v2-word-order"
+  ],
+  "sources": [
+    {
+      "title": "Språkrådet (Language Council of Norway)",
+      "url": "https://www.sprakradet.no/",
+      "publisher": "Språkrådet",
+      "note": "Official language guidance; reference only, no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:norsk",

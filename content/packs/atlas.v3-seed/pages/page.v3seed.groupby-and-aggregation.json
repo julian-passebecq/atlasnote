@@ -26,9 +26,23 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.aggregations-having-and-conditional-metrics",
+    "page.v3seed.pandas-selection-filtering-and-assign",
+    "page.v3seed.merge-validation-and-cardinality",
+    "page.v3seed.missing-data-and-nullable-dtypes"
+  ],
+  "terms": [
+    "term.v3seed.grain"
+  ],
+  "sources": [
+    {
+      "title": "pandas user guide - group by",
+      "url": "https://pandas.pydata.org/docs/user_guide/groupby.html",
+      "publisher": "pandas development team",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

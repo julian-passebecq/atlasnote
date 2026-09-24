@@ -19,8 +19,15 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
+  "related": [
+    "page.v3seed.data-engineer-interview-project-walkthrough",
+    "page.v3seed.troubleshooting-a-slow-pipeline",
+    "page.v3seed.questions-to-ask-a-data-engineering-team",
+    "page.samples.job.explain"
+  ],
+  "terms": [
+    "term.v3seed.star-method"
+  ],
   "sources": [],
   "tags": [
     "seed:v3",

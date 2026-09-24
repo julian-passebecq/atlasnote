@@ -20,8 +20,16 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
+  "related": [
+    "page.v3seed.explain-plans-and-troubleshooting",
+    "page.v3seed.sql-performance-reading-checklist",
+    "page.v3seed.skew-and-hot-keys",
+    "page.v3seed.databricks-performance-checklist"
+  ],
+  "terms": [
+    "term.v3seed.data-skew",
+    "term.v3seed.physical-plan"
+  ],
   "sources": [],
   "tags": [
     "seed:v3",

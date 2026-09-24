@@ -19,9 +19,23 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.adjective-agreement",
+    "page.v3seed.workplace-vocabulary-for-data-projects",
+    "page.v3seed.qcm.norsk-grammar"
+  ],
+  "terms": [
+    "term.v3seed.definite-form",
+    "term.v3seed.grammatical-gender"
+  ],
+  "sources": [
+    {
+      "title": "Ordbøkene.no - Bokmålsordboka and Nynorskordboka",
+      "url": "https://ordbokene.no/",
+      "publisher": "Språkrådet and University of Bergen",
+      "note": "Official dictionaries with inflection tables; reference only, no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:norsk",

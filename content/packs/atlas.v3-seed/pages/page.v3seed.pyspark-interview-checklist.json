@@ -20,8 +20,20 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
+  "related": [
+    "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+    "page.v3seed.narrow-versus-wide-transformations",
+    "page.v3seed.skew-and-hot-keys",
+    "page.v3seed.join-strategies-and-broadcast-joins",
+    "page.v3seed.qcm.pyspark-execution-performance"
+  ],
+  "terms": [
+    "term.v3seed.lazy-evaluation",
+    "term.v3seed.transformation-vs-action",
+    "term.v3seed.shuffle",
+    "term.v3seed.broadcast-join",
+    "term.v3seed.data-skew"
+  ],
   "sources": [],
   "tags": [
     "seed:v3",

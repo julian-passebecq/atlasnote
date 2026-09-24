@@ -19,9 +19,24 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.modal-verbs-in-work-conversations",
+    "page.v3seed.v2-word-order-in-main-clauses",
+    "page.v3seed.explaining-a-data-pipeline-in-norwegian",
+    "page.v3seed.qcm.norsk-grammar"
+  ],
+  "terms": [
+    "term.v3seed.preterite",
+    "term.v3seed.present-perfect"
+  ],
+  "sources": [
+    {
+      "title": "Ordbøkene.no - Bokmålsordboka and Nynorskordboka",
+      "url": "https://ordbokene.no/",
+      "publisher": "Språkrådet and University of Bergen",
+      "note": "Official dictionaries with inflection tables; reference only, no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:norsk",

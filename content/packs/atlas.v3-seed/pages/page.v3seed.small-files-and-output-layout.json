@@ -25,9 +25,31 @@
       "answer": "It destroys parallelism, can create a single-task bottleneck, and does not scale with large datasets."
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.partitions-and-repartitioning",
+    "page.v3seed.delta-lake-table-fundamentals",
+    "page.v3seed.databricks-performance-checklist",
+    "page.v3seed.system-design-batch-analytics-pipeline"
+  ],
+  "terms": [
+    "term.v3seed.small-files",
+    "term.v3seed.spark-partition",
+    "term.v3seed.predicate-pushdown"
+  ],
+  "sources": [
+    {
+      "title": "Spark SQL - performance tuning",
+      "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Delta Lake project",
+      "url": "https://delta.io/",
+      "publisher": "Delta Lake project (Linux Foundation)",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

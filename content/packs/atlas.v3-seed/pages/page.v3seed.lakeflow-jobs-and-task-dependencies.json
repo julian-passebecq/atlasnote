@@ -19,9 +19,23 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.adf-reliability-retries-idempotency-and-monitoring",
+    "page.v3seed.fabric-data-factory-orchestration",
+    "page.v3seed.mlflow-run-tracking-for-data-experiments",
+    "page.samples.databricks.workflow"
+  ],
+  "terms": [
+    "term.v3seed.idempotency"
+  ],
+  "sources": [
+    {
+      "title": "Databricks documentation",
+      "url": "https://docs.databricks.com/",
+      "publisher": "Databricks",
+      "note": "Documentation root; use its search for the topic of this page. No text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

@@ -17,7 +17,7 @@ test('public catalogue retains the 1.2.1 core, ten original study samples and el
  assert.equal(original.reduce((n,p)=>n+p.pages.length,0),10);
  assert.equal(original.filter(p=>p.manifest.id!=='pdfatlas.public').reduce((n,p)=>n+p.pages.length,0),8);
  assert.equal(original.reduce((n,p)=>n+p.projects.length,0),3);
- const v3=seed.packs.find(p=>p.manifest.id==='atlas.v3-seed');assert.equal(v3.pages.length,66);assert.equal(v3.glossary.length,10);assert.equal(v3.projects.length,5);
+ const v3=seed.packs.find(p=>p.manifest.id==='atlas.v3-seed');assert.equal(v3.pages.length,70);assert.equal(v3.glossary.length,41);assert.equal(v3.projects.length,5);
  const pages=seed.packs.filter(p=>p!==v3).flatMap(p=>p.pages);
  assert.equal(pages.filter(p=>!p.id.startsWith('page.mock.')).length,39);
  assert.equal(pages.filter(p=>p.id.startsWith('page.mock.')).length,11);

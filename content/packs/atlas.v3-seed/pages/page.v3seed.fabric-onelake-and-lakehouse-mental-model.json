@@ -19,9 +19,26 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.fabric-data-factory-orchestration",
+    "page.v3seed.delta-lake-table-fundamentals",
+    "page.v3seed.adls-gen2-organization-and-access",
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.qcm.cloud-data-platforms"
+  ],
+  "terms": [
+    "term.v3seed.onelake",
+    "term.v3seed.delta-transaction-log",
+    "term.v3seed.medallion-architecture"
+  ],
+  "sources": [
+    {
+      "title": "Microsoft Fabric - OneLake overview",
+      "url": "https://learn.microsoft.com/en-us/fabric/onelake/onelake-overview",
+      "publisher": "Microsoft",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

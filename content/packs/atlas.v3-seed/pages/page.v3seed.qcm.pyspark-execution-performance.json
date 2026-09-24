@@ -1,0 +1,354 @@
+{
+  "id": "page.v3seed.qcm.pyspark-execution-performance",
+  "title": "Practice: PySpark execution and performance",
+  "summary": "8 questions on lazy evaluation, actions, shuffles, partitions, broadcast joins, skew, caching and AQE. Practice and review, without a timer.",
+  "blocks": [],
+  "related": [
+    "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+    "page.v3seed.narrow-versus-wide-transformations",
+    "page.v3seed.partitions-and-repartitioning",
+    "page.v3seed.join-strategies-and-broadcast-joins",
+    "page.v3seed.skew-and-hot-keys",
+    "page.v3seed.cache-and-persistence",
+    "page.v3seed.adaptive-query-execution"
+  ],
+  "terms": [
+    "term.v3seed.lazy-evaluation",
+    "term.v3seed.transformation-vs-action",
+    "term.v3seed.shuffle",
+    "term.v3seed.spark-partition",
+    "term.v3seed.broadcast-join",
+    "term.v3seed.data-skew",
+    "term.v3seed.adaptive-query-execution"
+  ],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Prepared by Claude Code on 2026-09-24 from the AtlasNote V3 seed; original questions, no private data or third-party text. Owner review required before publication.",
+  "kind": "qcm",
+  "qcm": {
+    "schemaVersion": 1,
+    "id": "page.v3seed.qcm.pyspark-execution-performance",
+    "title": "Practice: PySpark execution and performance",
+    "taxonomy": {
+      "subject": "it",
+      "folderId": "node.v3seed.de.spark"
+    },
+    "questions": [
+      {
+        "id": "question.v3seed.spark.q1",
+        "prompt": "df is an existing DataFrame. You run df2 = df.filter(\"amount > 0\").select(\"customer_id\", \"amount\") and nothing else. What has Spark executed on the cluster for these two calls?",
+        "options": [
+          {
+            "id": "option.v3seed.spark.q1.a",
+            "text": "Nothing yet: the calls only extend the logical plan; work starts when an action such as count(), show() or a write runs."
+          },
+          {
+            "id": "option.v3seed.spark.q1.b",
+            "text": "A full scan of df to apply the filter.",
+            "explanation": "filter and select are transformations; they are evaluated lazily."
+          },
+          {
+            "id": "option.v3seed.spark.q1.c",
+            "text": "One job per transformation, so two jobs.",
+            "explanation": "Jobs are started by actions, not by transformations."
+          },
+          {
+            "id": "option.v3seed.spark.q1.d",
+            "text": "A cached copy of df2 in executor memory.",
+            "explanation": "Nothing is cached unless you call cache()/persist() and an action then computes the data."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.spark.q1.a"
+        ],
+        "explanation": "Transformations are lazy: Spark records them in a plan and optimizes the whole plan when an action finally requests a result.",
+        "links": [
+          {
+            "label": "Review: Spark execution model",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.spark.q2",
+        "prompt": "Which of these calls are actions that make Spark run a job? Select all that apply.",
+        "options": [
+          {
+            "id": "option.v3seed.spark.q2.a",
+            "text": "df.count()"
+          },
+          {
+            "id": "option.v3seed.spark.q2.b",
+            "text": "df.groupBy(\"country\").agg(F.sum(\"amount\"))",
+            "explanation": "A transformation: it returns a new DataFrame without computing it."
+          },
+          {
+            "id": "option.v3seed.spark.q2.c",
+            "text": "df.collect()"
+          },
+          {
+            "id": "option.v3seed.spark.q2.d",
+            "text": "df.cache()",
+            "explanation": "cache() only marks the DataFrame for caching; data is stored when a later action computes it."
+          },
+          {
+            "id": "option.v3seed.spark.q2.e",
+            "text": "df.write.mode(\"overwrite\").parquet(path)"
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.spark.q2.a",
+          "option.v3seed.spark.q2.c",
+          "option.v3seed.spark.q2.e"
+        ],
+        "explanation": "count, collect and write request a result or an output and therefore start execution. groupBy/agg and cache are lazy.",
+        "links": [
+          {
+            "label": "Review: Spark execution model",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.spark.q3",
+        "prompt": "Which operation normally requires a shuffle?",
+        "options": [
+          {
+            "id": "option.v3seed.spark.q3.a",
+            "text": "events.filter(\"amount > 0\")",
+            "explanation": "Narrow: each partition is filtered independently."
+          },
+          {
+            "id": "option.v3seed.spark.q3.b",
+            "text": "events.withColumn(\"amount_eur\", F.col(\"amount\") * 0.9)",
+            "explanation": "Narrow: a per-row expression."
+          },
+          {
+            "id": "option.v3seed.spark.q3.c",
+            "text": "events.groupBy(\"customer_id\").count()"
+          },
+          {
+            "id": "option.v3seed.spark.q3.d",
+            "text": "events.coalesce(10)",
+            "explanation": "coalesce merges existing partitions without a full shuffle by default."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.spark.q3.c"
+        ],
+        "explanation": "Grouping needs every row of a key in the same partition, so rows move across the cluster: a wide transformation with an Exchange in the plan and a stage boundary.",
+        "links": [
+          {
+            "label": "Review: narrow versus wide transformations",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.narrow-versus-wide-transformations"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.spark.q4",
+        "prompt": "After a selective filter you have 2,000 small partitions and want about 50 output files, without paying for a full shuffle. What is the usual choice, and its trade-off?",
+        "options": [
+          {
+            "id": "option.v3seed.spark.q4.a",
+            "text": "coalesce(50): it merges partitions without a full shuffle, but the preceding narrow work in the same stage then also runs with only 50 tasks."
+          },
+          {
+            "id": "option.v3seed.spark.q4.b",
+            "text": "repartition(50): it never shuffles.",
+            "explanation": "repartition always performs a full shuffle; that can be worth it when you need balanced partitions."
+          },
+          {
+            "id": "option.v3seed.spark.q4.c",
+            "text": "cache() first, then write.",
+            "explanation": "Caching does not change the number of partitions."
+          },
+          {
+            "id": "option.v3seed.spark.q4.d",
+            "text": "coalesce(1), because one file is always easiest downstream.",
+            "explanation": "A single task writes everything: no parallelism and a bottleneck for large data."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.spark.q4.a"
+        ],
+        "explanation": "coalesce is a narrow operation that reduces partition count cheaply; because it is narrow it can also reduce the parallelism of upstream work. repartition shuffles but produces evenly sized partitions.",
+        "links": [
+          {
+            "label": "Review: partitions and repartitioning",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.partitions-and-repartitioning"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.spark.q5",
+        "prompt": "facts is about 2 TB and dim is about 20 MB. You write facts.join(F.broadcast(dim), \"product_id\", \"left\"). What is the main effect?",
+        "options": [
+          {
+            "id": "option.v3seed.spark.q5.a",
+            "text": "A full copy of dim is sent to each executor, so the large facts side can be joined without being shuffled for this join."
+          },
+          {
+            "id": "option.v3seed.spark.q5.b",
+            "text": "facts is broadcast to every executor.",
+            "explanation": "The hint names dim; broadcasting 2 TB would be infeasible."
+          },
+          {
+            "id": "option.v3seed.spark.q5.c",
+            "text": "The whole query is guaranteed to contain no shuffle.",
+            "explanation": "Other operations such as a later groupBy can still shuffle."
+          },
+          {
+            "id": "option.v3seed.spark.q5.d",
+            "text": "The join result can now contain fewer rows than facts.",
+            "explanation": "A left join keeps every facts row; the strategy does not change semantics."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.spark.q5.a"
+        ],
+        "explanation": "A broadcast hash join avoids shuffling the large side when the other side is genuinely small. Always confirm the chosen strategy in the physical plan.",
+        "links": [
+          {
+            "label": "Review: join strategies and broadcast joins",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.join-strategies-and-broadcast-joins"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.spark.q6",
+        "prompt": "In a 200-task stage, one task runs for 40 minutes while the others finish in about a minute; its shuffle read is about 30 times the median. Which first steps are reasonable? Select all that apply.",
+        "options": [
+          {
+            "id": "option.v3seed.spark.q6.a",
+            "text": "Count rows per join/group key, including NULL, empty and default values."
+          },
+          {
+            "id": "option.v3seed.spark.q6.b",
+            "text": "Check whether AQE skew-join handling is enabled and applies to this join."
+          },
+          {
+            "id": "option.v3seed.spark.q6.c",
+            "text": "Double the cluster size immediately.",
+            "explanation": "More executors do not split one oversized partition; the hot task stays slow."
+          },
+          {
+            "id": "option.v3seed.spark.q6.d",
+            "text": "coalesce the input to a single partition to even out the work.",
+            "explanation": "That removes parallelism entirely."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.spark.q6.a",
+          "option.v3seed.spark.q6.b"
+        ],
+        "explanation": "The symptom is data skew. Confirm the hot keys first, then consider AQE skew handling, filtering or separating the hot keys, or salting as a targeted technique.",
+        "links": [
+          {
+            "label": "Review: skew and hot keys",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.skew-and-hot-keys"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.spark.q7",
+        "prompt": "Which statement about df.cache() on a DataFrame is correct?",
+        "options": [
+          {
+            "id": "option.v3seed.spark.q7.a",
+            "text": "It computes and stores df immediately.",
+            "explanation": "cache() is lazy."
+          },
+          {
+            "id": "option.v3seed.spark.q7.b",
+            "text": "It marks df for caching; partitions are stored when an action first computes them, and later actions can reuse them until unpersist() or eviction."
+          },
+          {
+            "id": "option.v3seed.spark.q7.c",
+            "text": "It writes df to durable storage that survives a cluster restart.",
+            "explanation": "The cache lives in executor memory/local disk; use a table or files for durability."
+          },
+          {
+            "id": "option.v3seed.spark.q7.d",
+            "text": "It speeds up every job that uses df, even if df is used only once.",
+            "explanation": "Without reuse, caching only adds memory pressure and materialization cost."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.spark.q7.b"
+        ],
+        "explanation": "Cache reused, expensive intermediate results; release them with unpersist() once the dependent actions have run.",
+        "links": [
+          {
+            "label": "Review: cache and persistence",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.cache-and-persistence"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.spark.q8",
+        "prompt": "What can Adaptive Query Execution change at runtime in Spark SQL? Select all that apply.",
+        "options": [
+          {
+            "id": "option.v3seed.spark.q8.a",
+            "text": "Coalesce many small post-shuffle partitions into fewer ones."
+          },
+          {
+            "id": "option.v3seed.spark.q8.b",
+            "text": "Switch a sort-merge join to a broadcast join when runtime statistics show one side is small enough."
+          },
+          {
+            "id": "option.v3seed.spark.q8.c",
+            "text": "Split skewed partitions in a sort-merge join."
+          },
+          {
+            "id": "option.v3seed.spark.q8.d",
+            "text": "Remove duplicated rows produced by joining at the wrong grain.",
+            "explanation": "AQE changes the physical execution, never the result of the query."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.spark.q8.a",
+          "option.v3seed.spark.q8.b",
+          "option.v3seed.spark.q8.c"
+        ],
+        "explanation": "AQE re-optimizes at shuffle boundaries using measured sizes. Correctness problems such as fan-out must be fixed in the query itself.",
+        "links": [
+          {
+            "label": "Review: Adaptive Query Execution",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.adaptive-query-execution"
+            }
+          }
+        ],
+        "followUp": "Where in the physical plan would you look to see that AQE changed the join?"
+      }
+    ]
+  }
+}

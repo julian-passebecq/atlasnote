@@ -19,7 +19,12 @@
       ]
     }
   ],
-  "related": [],
+  "related": [
+    "page.v3seed.databricks-performance-checklist",
+    "page.v3seed.troubleshooting-a-slow-pipeline",
+    "page.v3seed.lakeflow-jobs-and-task-dependencies",
+    "page.v3seed.questions-to-ask-a-data-engineering-team"
+  ],
   "terms": [],
   "sources": [],
   "tags": [

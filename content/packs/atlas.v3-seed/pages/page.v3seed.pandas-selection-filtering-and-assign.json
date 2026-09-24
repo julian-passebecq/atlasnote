@@ -26,9 +26,24 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.groupby-and-aggregation",
+    "page.v3seed.missing-data-and-nullable-dtypes",
+    "page.v3seed.pandas-performance-boundaries",
+    "page.v3seed.qcm.python-data-engineering",
+    "page.samples.pandas.filter"
+  ],
+  "terms": [
+    "term.v3seed.vectorization"
+  ],
+  "sources": [
+    {
+      "title": "pandas user guide - indexing and selecting data",
+      "url": "https://pandas.pydata.org/docs/user_guide/indexing.html",
+      "publisher": "pandas development team",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

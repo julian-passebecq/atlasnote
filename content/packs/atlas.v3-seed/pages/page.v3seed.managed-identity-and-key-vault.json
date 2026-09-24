@@ -19,9 +19,29 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.adls-gen2-organization-and-access",
+    "page.v3seed.azure-data-factory-pipeline-mental-model",
+    "page.v3seed.unity-catalog-mental-model",
+    "page.v3seed.qcm.cloud-data-platforms"
+  ],
+  "terms": [
+    "term.v3seed.managed-identity"
+  ],
+  "sources": [
+    {
+      "title": "Managed identities for Azure resources - overview",
+      "url": "https://learn.microsoft.com/en-us/entra/identity/managed-identities-azure-resources/overview",
+      "publisher": "Microsoft",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Azure Key Vault - overview",
+      "url": "https://learn.microsoft.com/en-us/azure/key-vault/general/overview",
+      "publisher": "Microsoft",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

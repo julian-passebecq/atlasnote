@@ -26,9 +26,23 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.python-data-structures-for-data-engineering",
+    "page.v3seed.exceptions-and-defensive-parsing",
+    "page.v3seed.json-csv-and-file-boundaries",
+    "page.v3seed.qcm.python-data-engineering"
+  ],
+  "terms": [
+    "term.v3seed.hashable"
+  ],
+  "sources": [
+    {
+      "title": "Python library - dataclasses",
+      "url": "https://docs.python.org/3/library/dataclasses.html",
+      "publisher": "Python Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",
