@@ -20,8 +20,18 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
+  "related": [
+    "page.v3seed.data-engineer-interview-project-walkthrough",
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.adf-reliability-retries-idempotency-and-monitoring",
+    "page.v3seed.data-quality-interview-framework",
+    "page.v3seed.cloud-cost-reading-checklist"
+  ],
+  "terms": [
+    "term.v3seed.medallion-architecture",
+    "term.v3seed.idempotency",
+    "term.v3seed.data-contract"
+  ],
   "sources": [],
   "tags": [
     "seed:v3",

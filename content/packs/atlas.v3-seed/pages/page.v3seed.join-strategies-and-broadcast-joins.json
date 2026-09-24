@@ -26,9 +26,26 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.skew-and-hot-keys",
+    "page.v3seed.adaptive-query-execution",
+    "page.v3seed.explain-plans-and-troubleshooting",
+    "page.v3seed.inner-left-and-anti-joins",
+    "page.v3seed.qcm.pyspark-execution-performance"
+  ],
+  "terms": [
+    "term.v3seed.broadcast-join",
+    "term.v3seed.shuffle",
+    "term.v3seed.physical-plan"
+  ],
+  "sources": [
+    {
+      "title": "Spark SQL - performance tuning",
+      "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

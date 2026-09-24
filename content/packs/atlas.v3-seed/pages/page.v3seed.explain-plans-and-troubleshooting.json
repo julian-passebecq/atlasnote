@@ -26,9 +26,33 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+    "page.v3seed.sql-performance-reading-checklist",
+    "page.v3seed.adaptive-query-execution",
+    "page.v3seed.troubleshooting-a-slow-pipeline",
+    "page.v3seed.qcm.pyspark-execution-performance"
+  ],
+  "terms": [
+    "term.v3seed.physical-plan",
+    "term.v3seed.predicate-pushdown",
+    "term.v3seed.shuffle",
+    "term.v3seed.stage-and-task"
+  ],
+  "sources": [
+    {
+      "title": "Apache Spark - web UI",
+      "url": "https://spark.apache.org/docs/latest/web-ui.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Spark SQL - performance tuning",
+      "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

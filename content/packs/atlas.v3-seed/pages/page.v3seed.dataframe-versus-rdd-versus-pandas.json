@@ -25,9 +25,24 @@
       "answer": "They preserve optimizer visibility and usually avoid extra Python serialization/execution overhead."
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.pandas-performance-boundaries",
+    "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+    "page.v3seed.explain-plans-and-troubleshooting",
+    "page.v3seed.cache-and-persistence"
+  ],
+  "terms": [
+    "term.v3seed.physical-plan",
+    "term.v3seed.lazy-evaluation"
+  ],
+  "sources": [
+    {
+      "title": "Spark SQL, DataFrames and Datasets guide",
+      "url": "https://spark.apache.org/docs/latest/sql-programming-guide.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

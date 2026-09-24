@@ -19,9 +19,31 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.small-files-and-output-layout",
+    "page.v3seed.unity-catalog-mental-model",
+    "page.v3seed.fabric-onelake-and-lakehouse-mental-model",
+    "page.v3seed.qcm.cloud-data-platforms"
+  ],
+  "terms": [
+    "term.v3seed.delta-transaction-log",
+    "term.v3seed.small-files"
+  ],
+  "sources": [
+    {
+      "title": "Delta Lake project",
+      "url": "https://delta.io/",
+      "publisher": "Delta Lake project (Linux Foundation)",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Databricks documentation",
+      "url": "https://docs.databricks.com/",
+      "publisher": "Databricks",
+      "note": "Documentation root; use its search for the topic of this page. No text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

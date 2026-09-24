@@ -26,9 +26,33 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.narrow-versus-wide-transformations",
+    "page.v3seed.partitions-and-repartitioning",
+    "page.v3seed.explain-plans-and-troubleshooting",
+    "page.v3seed.qcm.pyspark-execution-performance",
+    "page.samples.pyspark.transform"
+  ],
+  "terms": [
+    "term.v3seed.lazy-evaluation",
+    "term.v3seed.transformation-vs-action",
+    "term.v3seed.stage-and-task",
+    "term.v3seed.shuffle"
+  ],
+  "sources": [
+    {
+      "title": "Apache Spark - RDD programming guide",
+      "url": "https://spark.apache.org/docs/latest/rdd-programming-guide.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Apache Spark - web UI",
+      "url": "https://spark.apache.org/docs/latest/web-ui.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

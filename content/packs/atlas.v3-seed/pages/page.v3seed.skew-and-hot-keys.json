@@ -25,9 +25,26 @@
       "answer": "A stage where a small number of tasks process much more data or run much longer than their peers, confirmed by key-frequency and partition-size inspection."
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.adaptive-query-execution",
+    "page.v3seed.join-strategies-and-broadcast-joins",
+    "page.v3seed.partitions-and-repartitioning",
+    "page.v3seed.troubleshooting-a-slow-pipeline",
+    "page.v3seed.qcm.pyspark-execution-performance"
+  ],
+  "terms": [
+    "term.v3seed.data-skew",
+    "term.v3seed.spark-partition",
+    "term.v3seed.adaptive-query-execution"
+  ],
+  "sources": [
+    {
+      "title": "Spark SQL - performance tuning",
+      "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

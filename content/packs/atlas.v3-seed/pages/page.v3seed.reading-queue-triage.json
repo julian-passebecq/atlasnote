@@ -19,7 +19,11 @@
       ]
     }
   ],
-  "related": [],
+  "related": [
+    "page.v3seed.weekly-learning-review",
+    "page.v3seed.nrk-daily-feed-workflow-for-atlasnote",
+    "page.v3seed.how-to-study-a-daily-news-headline"
+  ],
   "terms": [],
   "sources": [],
   "tags": [

@@ -26,9 +26,25 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.inner-left-and-anti-joins",
+    "page.v3seed.aggregations-having-and-conditional-metrics",
+    "page.v3seed.missing-data-and-nullable-dtypes",
+    "page.v3seed.sql-interview-checklist",
+    "page.v3seed.qcm.grain-joins-windows"
+  ],
+  "terms": [
+    "term.v3seed.three-valued-logic",
+    "term.v3seed.anti-join"
+  ],
+  "sources": [
+    {
+      "title": "PostgreSQL - comparison functions and operators",
+      "url": "https://www.postgresql.org/docs/current/functions-comparison.html",
+      "publisher": "PostgreSQL Global Development Group",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

@@ -19,7 +19,11 @@
       ]
     }
   ],
-  "related": [],
+  "related": [
+    "page.v3seed.reading-queue-triage",
+    "page.v3seed.how-to-study-a-daily-news-headline",
+    "page.samples.personal.scratchpad"
+  ],
   "terms": [],
   "sources": [],
   "tags": [

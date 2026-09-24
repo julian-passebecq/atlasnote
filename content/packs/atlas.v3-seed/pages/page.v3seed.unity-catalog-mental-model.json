@@ -19,9 +19,24 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.managed-identity-and-key-vault",
+    "page.v3seed.adls-gen2-organization-and-access",
+    "page.v3seed.delta-lake-table-fundamentals",
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.qcm.cloud-data-platforms"
+  ],
+  "terms": [
+    "term.v3seed.unity-catalog"
+  ],
+  "sources": [
+    {
+      "title": "Databricks documentation",
+      "url": "https://docs.databricks.com/",
+      "publisher": "Databricks",
+      "note": "Documentation root; use its search for the topic of this page. No text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

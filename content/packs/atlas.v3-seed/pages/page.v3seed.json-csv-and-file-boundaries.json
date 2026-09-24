@@ -26,9 +26,30 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.exceptions-and-defensive-parsing",
+    "page.v3seed.dataclasses-and-typed-records",
+    "page.v3seed.missing-data-and-nullable-dtypes",
+    "page.v3seed.qcm.python-data-engineering"
+  ],
+  "terms": [
+    "term.v3seed.data-contract",
+    "term.v3seed.quarantine"
+  ],
+  "sources": [
+    {
+      "title": "Python library - json",
+      "url": "https://docs.python.org/3/library/json.html",
+      "publisher": "Python Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Python library - csv",
+      "url": "https://docs.python.org/3/library/csv.html",
+      "publisher": "Python Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

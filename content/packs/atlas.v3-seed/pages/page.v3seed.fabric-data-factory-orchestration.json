@@ -19,9 +19,23 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.fabric-onelake-and-lakehouse-mental-model",
+    "page.v3seed.azure-data-factory-pipeline-mental-model",
+    "page.v3seed.adf-parameters-variables-and-expressions",
+    "page.v3seed.lakeflow-jobs-and-task-dependencies"
+  ],
+  "terms": [
+    "term.v3seed.onelake"
+  ],
+  "sources": [
+    {
+      "title": "Microsoft Fabric documentation",
+      "url": "https://learn.microsoft.com/en-us/fabric/",
+      "publisher": "Microsoft",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

@@ -19,9 +19,21 @@
       ]
     }
   ],
-  "related": [],
+  "related": [
+    "page.v3seed.azure-data-factory-pipeline-mental-model",
+    "page.v3seed.adf-reliability-retries-idempotency-and-monitoring",
+    "page.v3seed.fabric-data-factory-orchestration",
+    "page.v3seed.qcm.cloud-data-platforms"
+  ],
   "terms": [],
-  "sources": [],
+  "sources": [
+    {
+      "title": "Azure Data Factory documentation",
+      "url": "https://learn.microsoft.com/en-us/azure/data-factory/",
+      "publisher": "Microsoft",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

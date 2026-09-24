@@ -25,9 +25,24 @@
       "answer": "Use managed identity where possible or reference a secret manager such as Azure Key Vault; do not commit credentials into pipeline definitions."
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.adf-parameters-variables-and-expressions",
+    "page.v3seed.adf-reliability-retries-idempotency-and-monitoring",
+    "page.v3seed.managed-identity-and-key-vault",
+    "page.v3seed.qcm.cloud-data-platforms",
+    "page.samples.azure.pipeline"
+  ],
+  "terms": [
+    "term.v3seed.managed-identity"
+  ],
+  "sources": [
+    {
+      "title": "Azure Data Factory documentation",
+      "url": "https://learn.microsoft.com/en-us/azure/data-factory/",
+      "publisher": "Microsoft",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

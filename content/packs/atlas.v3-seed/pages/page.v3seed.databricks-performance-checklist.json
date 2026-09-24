@@ -19,9 +19,27 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.explain-plans-and-troubleshooting",
+    "page.v3seed.skew-and-hot-keys",
+    "page.v3seed.small-files-and-output-layout",
+    "page.v3seed.cloud-cost-reading-checklist",
+    "page.v3seed.qcm.cloud-data-platforms"
+  ],
+  "terms": [
+    "term.v3seed.predicate-pushdown",
+    "term.v3seed.data-skew",
+    "term.v3seed.shuffle",
+    "term.v3seed.small-files"
+  ],
+  "sources": [
+    {
+      "title": "Databricks documentation",
+      "url": "https://docs.databricks.com/",
+      "publisher": "Databricks",
+      "note": "Documentation root; use its search for the topic of this page. No text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

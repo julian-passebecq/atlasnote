@@ -26,9 +26,21 @@
       "title": "Example"
     }
   ],
-  "related": [],
+  "related": [
+    "page.v3seed.python-data-structures-for-data-engineering",
+    "page.v3seed.exceptions-and-defensive-parsing",
+    "page.v3seed.dataclasses-and-typed-records",
+    "page.v3seed.qcm.python-data-engineering"
+  ],
   "terms": [],
-  "sources": [],
+  "sources": [
+    {
+      "title": "Python tutorial - more control flow tools (defining functions)",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html",
+      "publisher": "Python Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

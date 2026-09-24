@@ -25,9 +25,29 @@
       "answer": "When the dataset fits comfortably on one machine and the workload is interactive or low-latency; Spark adds scheduler, serialization and distributed-system overhead."
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.pandas-selection-filtering-and-assign",
+    "page.v3seed.iterators-and-generators",
+    "page.v3seed.dataframe-versus-rdd-versus-pandas",
+    "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks"
+  ],
+  "terms": [
+    "term.v3seed.vectorization"
+  ],
+  "sources": [
+    {
+      "title": "pandas user guide - enhancing performance",
+      "url": "https://pandas.pydata.org/docs/user_guide/enhancingperf.html",
+      "publisher": "pandas development team",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "pandas user guide - scaling to large datasets",
+      "url": "https://pandas.pydata.org/docs/user_guide/scale.html",
+      "publisher": "pandas development team",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

@@ -1,0 +1,344 @@
+{
+  "id": "page.v3seed.qcm.python-data-engineering",
+  "title": "Practice: Python for data engineering",
+  "summary": "8 questions on functions, data structures, generators, exceptions, dataclasses, file encodings and pandas nullable dtypes. Practice and review, without a timer.",
+  "blocks": [],
+  "related": [
+    "page.v3seed.functions-arguments-and-return-values",
+    "page.v3seed.python-data-structures-for-data-engineering",
+    "page.v3seed.iterators-and-generators",
+    "page.v3seed.exceptions-and-defensive-parsing",
+    "page.v3seed.dataclasses-and-typed-records",
+    "page.v3seed.json-csv-and-file-boundaries",
+    "page.v3seed.missing-data-and-nullable-dtypes"
+  ],
+  "terms": [
+    "term.v3seed.hashable",
+    "term.v3seed.lazy-evaluation",
+    "term.v3seed.quarantine",
+    "term.v3seed.nullable-dtype"
+  ],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:python",
+    "lang:en"
+  ],
+  "provenance": "Prepared by Claude Code on 2026-09-24 from the AtlasNote V3 seed; original questions, no private data or third-party text. Owner review required before publication.",
+  "kind": "qcm",
+  "qcm": {
+    "schemaVersion": 1,
+    "id": "page.v3seed.qcm.python-data-engineering",
+    "title": "Practice: Python for data engineering",
+    "taxonomy": {
+      "subject": "it",
+      "folderId": "node.v3seed.de.python"
+    },
+    "questions": [
+      {
+        "id": "question.v3seed.py.q1",
+        "prompt": "def add_row(row, batch=[]):\n    batch.append(row)\n    return batch\n\nadd_row(1)\nresult = add_row(2)\n\nWhat is result?",
+        "options": [
+          {
+            "id": "option.v3seed.py.q1.a",
+            "text": "[2]",
+            "explanation": "The default list is not recreated on each call."
+          },
+          {
+            "id": "option.v3seed.py.q1.b",
+            "text": "[1, 2]"
+          },
+          {
+            "id": "option.v3seed.py.q1.c",
+            "text": "A TypeError, because the default is mutable.",
+            "explanation": "Python allows it; it is a logic bug, not an error."
+          },
+          {
+            "id": "option.v3seed.py.q1.d",
+            "text": "[2, 1]"
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.py.q1.b"
+        ],
+        "explanation": "Default values are evaluated once, when def runs, so every call that omits batch shares the same list. Use batch=None and create a new list inside the function.",
+        "links": [
+          {
+            "label": "Review: functions, arguments and return values",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.functions-arguments-and-return-values"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.py.q2",
+        "prompt": "You must check, for millions of incoming records, whether record_id was already seen in a batch of 1,000,000 known IDs. Which structure fits best?",
+        "options": [
+          {
+            "id": "option.v3seed.py.q2.a",
+            "text": "A set of the known IDs."
+          },
+          {
+            "id": "option.v3seed.py.q2.b",
+            "text": "A list of the known IDs.",
+            "explanation": "Membership in a list scans it: linear time per lookup."
+          },
+          {
+            "id": "option.v3seed.py.q2.c",
+            "text": "A tuple of the known IDs.",
+            "explanation": "Also a linear scan; immutability does not speed up lookup."
+          },
+          {
+            "id": "option.v3seed.py.q2.d",
+            "text": "A string that concatenates all IDs.",
+            "explanation": "Substring search is slow and can produce false matches."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.py.q2.a"
+        ],
+        "explanation": "Set membership uses hashing and takes constant time on average; a list or tuple lookup takes time proportional to its length.",
+        "links": [
+          {
+            "label": "Review: Python data structures",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.python-data-structures-for-data-engineering"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.py.q3",
+        "prompt": "Which values can be used as dictionary keys? Select all that apply.",
+        "options": [
+          {
+            "id": "option.v3seed.py.q3.a",
+            "text": "(\"NO\", 2024)"
+          },
+          {
+            "id": "option.v3seed.py.q3.b",
+            "text": "frozenset({\"NO\", \"CH\"})"
+          },
+          {
+            "id": "option.v3seed.py.q3.c",
+            "text": "[\"NO\", 2024]",
+            "explanation": "Lists are mutable and not hashable."
+          },
+          {
+            "id": "option.v3seed.py.q3.d",
+            "text": "{\"country\": \"NO\"}",
+            "explanation": "Dictionaries are mutable and not hashable."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.py.q3.a",
+          "option.v3seed.py.q3.b"
+        ],
+        "explanation": "Keys must be hashable. Tuples of hashable values and frozensets are; lists, dicts and sets are not.",
+        "links": [
+          {
+            "label": "Review: Python data structures",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.python-data-structures-for-data-engineering"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.py.q4",
+        "prompt": "def non_empty(lines):\n    for line in lines:\n        value = line.strip()\n        if value:\n            yield value\n\ng = non_empty([\"a\", \" \", \"b\"])\nfirst = list(g)\nsecond = list(g)\n\nWhat are first and second?",
+        "options": [
+          {
+            "id": "option.v3seed.py.q4.a",
+            "text": "[\"a\", \"b\"] and [\"a\", \"b\"]",
+            "explanation": "A generator cannot be restarted."
+          },
+          {
+            "id": "option.v3seed.py.q4.b",
+            "text": "[\"a\", \"b\"] and []"
+          },
+          {
+            "id": "option.v3seed.py.q4.c",
+            "text": "[\"a\", \" \", \"b\"] and []",
+            "explanation": "The blank line is stripped to \"\" and skipped."
+          },
+          {
+            "id": "option.v3seed.py.q4.d",
+            "text": "A StopIteration error on the second list(g).",
+            "explanation": "list() handles exhaustion; it simply returns an empty list."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.py.q4.b"
+        ],
+        "explanation": "A generator is a one-shot iterator. Once exhausted it yields nothing; call the generator function again to iterate again.",
+        "links": [
+          {
+            "label": "Review: iterators and generators",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.iterators-and-generators"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.py.q5",
+        "prompt": "A loader parses an amount field. Bad values must go to a quarantine table while valid rows continue. Which handler fits?",
+        "options": [
+          {
+            "id": "option.v3seed.py.q5.a",
+            "text": "except: pass",
+            "explanation": "A bare except also catches KeyboardInterrupt/SystemExit and silently loses the record."
+          },
+          {
+            "id": "option.v3seed.py.q5.b",
+            "text": "except Exception: continue",
+            "explanation": "Too broad, and the bad value and reason are lost."
+          },
+          {
+            "id": "option.v3seed.py.q5.c",
+            "text": "except (TypeError, ValueError) as exc: send the raw value, the error text and the run ID to quarantine."
+          },
+          {
+            "id": "option.v3seed.py.q5.d",
+            "text": "No try at all, so the first bad value stops the batch.",
+            "explanation": "Valid when any bad record must stop the run, but this scenario asks for quarantine."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.py.q5.c"
+        ],
+        "explanation": "Catch the narrowest exceptions you expect, keep the original value and reason, and let unexpected programming errors surface.",
+        "links": [
+          {
+            "label": "Review: exceptions and defensive parsing",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.exceptions-and-defensive-parsing"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.py.q6",
+        "prompt": "@dataclass(frozen=True)\nclass JobRun:\n    job_id: str\n    rows: int\n\nWhich statements are true? Select all that apply.",
+        "options": [
+          {
+            "id": "option.v3seed.py.q6.a",
+            "text": "run.rows = 5 on an existing instance raises dataclasses.FrozenInstanceError."
+          },
+          {
+            "id": "option.v3seed.py.q6.b",
+            "text": "JobRun(job_id=\"j1\", rows=\"ten\") raises TypeError because rows is annotated as int.",
+            "explanation": "Annotations are not enforced at runtime; validate external data explicitly."
+          },
+          {
+            "id": "option.v3seed.py.q6.c",
+            "text": "Two instances with equal field values compare equal."
+          },
+          {
+            "id": "option.v3seed.py.q6.d",
+            "text": "frozen=True also makes a list stored in a field immutable.",
+            "explanation": "Freezing is shallow: a contained list can still be mutated."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.py.q6.a",
+          "option.v3seed.py.q6.c"
+        ],
+        "explanation": "A frozen dataclass blocks attribute assignment and generates __eq__ (and __hash__), but it neither checks types nor deep-freezes contents.",
+        "links": [
+          {
+            "label": "Review: dataclasses and typed records",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.dataclasses-and-typed-records"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.py.q7",
+        "prompt": "Why pass encoding=\"utf-8\" explicitly when reading a JSON or CSV file in a pipeline?",
+        "options": [
+          {
+            "id": "option.v3seed.py.q7.a",
+            "text": "Without it, the default text encoding can depend on the platform and Python configuration, so the same file may decode differently on another machine."
+          },
+          {
+            "id": "option.v3seed.py.q7.b",
+            "text": "JSON files must be read as Latin-1 unless told otherwise.",
+            "explanation": "JSON exchanged between systems is normally UTF-8."
+          },
+          {
+            "id": "option.v3seed.py.q7.c",
+            "text": "It makes reading significantly faster.",
+            "explanation": "It is about correctness and reproducibility, not speed."
+          },
+          {
+            "id": "option.v3seed.py.q7.d",
+            "text": "It validates the structure of the JSON document.",
+            "explanation": "Decoding text and validating structure are separate steps."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.py.q7.a"
+        ],
+        "explanation": "Serialization is an I/O boundary: fix the encoding, decode, validate the structure, then transform.",
+        "links": [
+          {
+            "label": "Review: JSON, CSV and file boundaries",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.json-csv-and-file-boundaries"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.py.q8",
+        "prompt": "s = pd.Series([\"3\", \"x\", None])\nout = pd.to_numeric(s, errors=\"coerce\").astype(\"Int64\")\n\nWhat is out?",
+        "options": [
+          {
+            "id": "option.v3seed.py.q8.a",
+            "text": "3, <NA>, <NA> with dtype Int64"
+          },
+          {
+            "id": "option.v3seed.py.q8.b",
+            "text": "3, 0, 0 with dtype int64",
+            "explanation": "Coercion produces missing values, not zeros."
+          },
+          {
+            "id": "option.v3seed.py.q8.c",
+            "text": "A ValueError because \"x\" is not numeric.",
+            "explanation": "errors=\"coerce\" turns unparsable values into NaN instead of raising."
+          },
+          {
+            "id": "option.v3seed.py.q8.d",
+            "text": "3.0, NaN, NaN with dtype float64",
+            "explanation": "That is the intermediate result before astype(\"Int64\")."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.py.q8.a"
+        ],
+        "explanation": "to_numeric with errors=\"coerce\" yields float64 with NaN; the nullable Int64 dtype keeps integers and shows missing values as <NA>. A value with a fractional part, such as \"2.5\", would make the cast fail.",
+        "links": [
+          {
+            "label": "Review: missing data and nullable dtypes",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.missing-data-and-nullable-dtypes"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

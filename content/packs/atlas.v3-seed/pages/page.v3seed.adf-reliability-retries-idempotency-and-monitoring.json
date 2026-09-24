@@ -19,9 +19,24 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.azure-data-factory-pipeline-mental-model",
+    "page.v3seed.adf-parameters-variables-and-expressions",
+    "page.v3seed.lakeflow-jobs-and-task-dependencies",
+    "page.v3seed.troubleshooting-a-slow-pipeline",
+    "page.v3seed.qcm.cloud-data-platforms"
+  ],
+  "terms": [
+    "term.v3seed.idempotency"
+  ],
+  "sources": [
+    {
+      "title": "Azure Data Factory documentation",
+      "url": "https://learn.microsoft.com/en-us/azure/data-factory/",
+      "publisher": "Microsoft",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

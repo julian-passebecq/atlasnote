@@ -19,9 +19,26 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.delta-lake-table-fundamentals",
+    "page.v3seed.qualify-and-deduplication",
+    "page.v3seed.data-quality-interview-framework",
+    "page.v3seed.adls-gen2-organization-and-access",
+    "page.v3seed.qcm.cloud-data-platforms"
+  ],
+  "terms": [
+    "term.v3seed.medallion-architecture",
+    "term.v3seed.data-contract",
+    "term.v3seed.idempotency"
+  ],
+  "sources": [
+    {
+      "title": "Databricks documentation",
+      "url": "https://docs.databricks.com/",
+      "publisher": "Databricks",
+      "note": "Documentation root; use its search for the topic of this page. No text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:cloud",

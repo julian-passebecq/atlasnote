@@ -26,9 +26,25 @@
       "title": "Example"
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.window-functions",
+    "page.v3seed.rows-versus-range-window-frames",
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.sql-interview-checklist",
+    "page.v3seed.qcm.grain-joins-windows"
+  ],
+  "terms": [
+    "term.v3seed.window-function",
+    "term.v3seed.grain"
+  ],
+  "sources": [
+    {
+      "title": "Databricks documentation",
+      "url": "https://docs.databricks.com/",
+      "publisher": "Databricks",
+      "note": "Documentation root; use its search for the topic of this page. No text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:it",

@@ -20,9 +20,23 @@
       ]
     }
   ],
-  "related": [],
-  "terms": [],
-  "sources": [],
+  "related": [
+    "page.v3seed.past-tense-preterite-versus-perfect",
+    "page.v3seed.subordinate-clauses-and-ikke",
+    "page.v3seed.workplace-vocabulary-for-data-projects",
+    "page.v3seed.qcm.norsk-grammar"
+  ],
+  "terms": [
+    "term.v3seed.modal-verb"
+  ],
+  "sources": [
+    {
+      "title": "Språkrådet (Language Council of Norway)",
+      "url": "https://www.sprakradet.no/",
+      "publisher": "Språkrådet",
+      "note": "Official language guidance; reference only, no text copied."
+    }
+  ],
   "tags": [
     "seed:v3",
     "subject:norsk",

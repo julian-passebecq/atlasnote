@@ -74,6 +74,11 @@
             "id": "node.v3seed.json-csv-and-file-boundaries",
             "title": "JSON, CSV and file boundaries",
             "pageId": "page.v3seed.json-csv-and-file-boundaries"
+          },
+          {
+            "id": "node.v3seed.qcm.python-data-engineering",
+            "title": "Practice: Python for data engineering",
+            "pageId": "page.v3seed.qcm.python-data-engineering"
           }
         ]
       },
@@ -182,6 +187,11 @@
             "id": "node.v3seed.small-files-and-output-layout",
             "title": "Small files and output layout",
             "pageId": "page.v3seed.small-files-and-output-layout"
+          },
+          {
+            "id": "node.v3seed.qcm.pyspark-execution-performance",
+            "title": "Practice: PySpark execution and performance",
+            "pageId": "page.v3seed.qcm.pyspark-execution-performance"
           }
         ]
       }
@@ -274,6 +284,17 @@
             "pageId": "page.v3seed.unity-catalog-mental-model"
           }
         ]
+      },
+      {
+        "id": "node.v3seed.cloud.practice",
+        "title": "Practice",
+        "children": [
+          {
+            "id": "node.v3seed.qcm.cloud-data-platforms",
+            "title": "Practice: ADF, Fabric, Databricks and Unity Catalog",
+            "pageId": "page.v3seed.qcm.cloud-data-platforms"
+          }
+        ]
       }
     ]
   },
@@ -327,6 +348,11 @@
             "id": "node.v3seed.modal-verbs-in-work-conversations",
             "title": "Modal verbs in work conversations",
             "pageId": "page.v3seed.modal-verbs-in-work-conversations"
+          },
+          {
+            "id": "node.v3seed.qcm.norsk-grammar",
+            "title": "Practice: Norwegian nouns, adjectives, tenses and modals",
+            "pageId": "page.v3seed.qcm.norsk-grammar"
           }
         ]
       },
