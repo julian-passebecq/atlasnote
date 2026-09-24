@@ -144,3 +144,11 @@ test('MEM-02 verified PDF cache: one download for concurrent readers, lease-safe
  const abandoned=cache.acquire('y');abandoned.release();await assert.rejects(abandoned.url,/aborted/);assert.equal(cache.stats().inFlight,0,'abandoned download aborted and forgotten');
  const failing=createVerifiedCache(()=>Promise.reject(Error('hash mismatch')),100,urls);const f=failing.acquire('z');await assert.rejects(f.url,/hash mismatch/);await new Promise(r=>setTimeout(r,0));assert.equal(failing.stats().entries,0,'a failed verification is never cached');
 });
+
+test('PDF-03 printed page labels are display-only and shown only when they differ',async()=>{
+ const {printedLabelFor}=await import('../dist-offline/app/pdf/page-input.mjs');
+ const labels=['i','ii','iii','1','2'];
+ assert.equal(printedLabelFor(labels,2),'ii');assert.equal(printedLabelFor(labels,5),'2');
+ assert.equal(printedLabelFor(['1','2','3'],2),undefined,'identical label is not repeated');
+ assert.equal(printedLabelFor(null,2),undefined);assert.equal(printedLabelFor(labels,9),undefined);assert.equal(printedLabelFor(['','x'],1),undefined);
+});

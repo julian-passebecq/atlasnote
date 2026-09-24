@@ -19,3 +19,11 @@ export function pageRangeLabel(pages,count){
  if(shown.length<2)return (shown[0]??1)+' / '+total;
  return shown[0]+'–'+shown[shown.length-1]+' / '+total;
 }
+/** PDF-03: the printed label (e.g. "vii") is display-only and shown only when it
+ * differs from the physical number. Navigation, links and saved positions always
+ * use the physical page; typing "2" means physical page 2, never printed "2". */
+export function printedLabelFor(labels,page){
+ if(!Array.isArray(labels)||!Number.isInteger(page)||page<1||page>labels.length)return undefined;
+ const label=typeof labels[page-1]==='string'?labels[page-1].trim():'';
+ return label&&label!==String(page)?label.slice(0,24):undefined;
+}
