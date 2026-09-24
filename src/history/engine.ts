@@ -5,6 +5,14 @@ import {captureResources,resourceAdapters} from './adapters.js';
 import {validateHistory,HISTORY_LIMITS} from './validation.mjs';
 import {sha256,stable} from '../core/validation.mjs';
 import {uid,compose} from '../core/workspace.js';
+/** Resources whose current fingerprint differs from their head (or have none).
+ * Boot reconciliation uses this so an unchanged library never clones or
+ * re-serializes the whole history just to discover that nothing changed. */
+export async function changedResources(previous:HistoryData|undefined,resources:CapturedResource[]):Promise<CapturedResource[]>{
+ const heads=new Map((previous?.heads??[]).map(h=>[h.resourceKey,h.contentHash])),out:CapturedResource[]=[];
+ for(const r of resources)if(heads.get(r.resourceKey)!==await resourceAdapters[r.resourceType].fingerprint(r.snapshot))out.push(r);
+ return out;
+}
 export async function advanceHistory(previous:HistoryData|undefined,resources:CapturedResource[],context:RevisionContext,initialize=false):Promise<HistoryData>{
  const h:HistoryData=structuredClone(previous??emptyHistory()),heads=new Map(h.heads.map(x=>[x.resourceKey,x]));let changed=false;
  for(const r of resources){const a=resourceAdapters[r.resourceType];a.validate(r.snapshot);const contentHash=await a.fingerprint(r.snapshot),old=heads.get(r.resourceKey);

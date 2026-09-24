@@ -1,6 +1,6 @@
 import {COMPACTION_BLOCKED,COMPACTION_BLOCK_REASON} from '../durability/release-state.js';
 import {planCompaction} from '../durability/archive.mjs';
-import {clearArchiveAttachments} from '../durability/registry.js';
+import {clearArchiveAttachments,setHistoryComplete} from '../durability/registry.js';
 import {preflightStorage,workspaceImportBytes} from '../durability/storage-health.mjs';
 import {validateHubOverlays,validateHubPersonal} from '../content-hub/validation.mjs';
 import {migratePersonal} from '../core/workspace-slots.js';
@@ -11,7 +11,7 @@ import {blankWorkspace,compose} from '../core/workspace.js';
 import {stable,sha256} from '../core/validation.mjs';
 import {emptyHistory} from '../history/model.js';
 import type {HistoryData,RevisionContext,AgentReviewRecord} from '../history/model.js';
-import {prepareWorkspaceHistory,advanceHistory,assertProjection,prepareEmergencySnapshot} from '../history/engine.js';
+import {prepareWorkspaceHistory,advanceHistory,assertProjection,prepareEmergencySnapshot,changedResources} from '../history/engine.js';
 import {captureResources} from '../history/adapters.js';
 import {validateHistory} from '../history/validation.mjs';
 import {mergePersonal} from './personal-merge.mjs';
@@ -37,6 +37,22 @@ export async function loadWorkspace():Promise<Workspace>{
  const db=await openDatabase(),tx=db.transaction(STORES,'readonly');const [imports,overlays,personal,assets,records]=await Promise.all([request(tx.objectStore('imports').getAll()),request(tx.objectStore('overlays').get('active')),request(tx.objectStore('personal').get('active')),request(tx.objectStore('assets').getAll()),request(tx.objectStore('history').getAll())]);
  const empty=blankWorkspace();if(overlays&&overlays.schemaVersion!==2||personal&&![2,3].includes(personal.schemaVersion))throw Error('Unknown saved-state version. Data has not been reset. Export a raw recovery backup from Settings.');
  return {...empty,imports,overlays:overlays??empty.overlays,personal:preparePersonal(personal??empty.personal),assets,history:historyFromRecords(records)};
+}
+/** V3 staged boot, phase 1: what the first render needs. Imports, overlays and
+ * personal state, plus history meta/heads/reviews/archive descriptors through
+ * the existing `kind` index. Asset bytes and revision snapshots are NOT read. */
+export async function loadShell():Promise<Workspace>{
+ const db=await openDatabase(),tx=db.transaction(['imports','overlays','personal','history'],'readonly'),kind=tx.objectStore('history').index('kind');
+ const [imports,overlays,personal,meta,heads,reviews,archives]=await Promise.all([request(tx.objectStore('imports').getAll()),request(tx.objectStore('overlays').get('active')),request(tx.objectStore('personal').get('active')),request(kind.getAll('meta')),request(kind.getAll('head')),request(kind.getAll('review')),request(kind.getAll('archive'))]);
+ const empty=blankWorkspace();if(overlays&&overlays.schemaVersion!==2||personal&&![2,3].includes(personal.schemaVersion))throw Error('Unknown saved-state version. Data has not been reset. Export a raw recovery backup from Settings.');
+ return {...empty,imports,overlays:overlays??empty.overlays,personal:preparePersonal(personal??empty.personal),assets:[],history:historyFromRecords([...meta,...heads,...reviews,...archives])};
+}
+/** Phase 2: the complete durable asset and history stores, in one transaction so
+ * heads and revisions are mutually consistent. Authored commands wait for this. */
+async function loadHeavy():Promise<{assets:Asset[];history:HistoryData}>{
+ const db=await openDatabase(),tx=db.transaction(['assets','history'],'readonly');
+ const [assets,records]=await Promise.all([request(tx.objectStore('assets').getAll()),request(tx.objectStore('history').getAll())]);
+ return {assets,history:historyFromRecords(records)};
 }
 /** The single durable authored-content boundary. Hashing/validation happens BEFORE
  * opening the transaction. A compare-and-swap epoch rejects concurrent-tab writes.
@@ -102,7 +118,21 @@ export async function rawRecovery(){const db=await openDatabase(),tx=db.transact
 export class WorkspaceStore{
  state:Workspace={...blankWorkspace(),personal:preparePersonal(blankWorkspace().personal)};error='';saving=0;private listeners=new Set<()=>void>();private queue=Promise.resolve();private reviewPreparing=false;
  /** What this tab last read from or wrote to the durable personal record. */
- private persistedPersonal:Personal|undefined;private checkpointTimer:ReturnType<typeof setTimeout>|undefined;private checkpointDirty=false;conflictNotice='';
+ private persistedPersonal:Personal|undefined;
+ /** V3 staged boot. `ready` is true for every caller that loads the complete
+  * workspace (setLoaded, tests, recovery). main.tsx opts into staging: until the
+  * full assets/history are hydrated and reconciled, authored/history/backup
+  * commands WAIT for the complete state; they never run on the shell read. */
+ hydrated=true;private ready=true;private readyWaiter:Promise<void>=Promise.resolve();private settleReady:{resolve:()=>void;reject:(e:unknown)=>void}|undefined;
+ configure(built:any){builtSource=built;}
+ beginStagedBoot(){this.ready=false;this.hydrated=false;setHistoryComplete(false);this.readyWaiter=new Promise<void>((resolve,reject)=>{this.settleReady={resolve,reject};});this.readyWaiter.catch(()=>{});}
+ setShell(ws:Workspace){this.state={...ws,personal:preparePersonal(ws.personal)};this.persistedPersonal=this.state.personal;this.emit();}
+ async hydrate(){const heavy=await loadHeavy();this.state={...this.state,assets:heavy.assets,history:heavy.history,generation:this.state.generation+1};this.hydrated=true;setHistoryComplete(true);this.emit();}
+ markReady(){this.ready=true;this.settleReady?.resolve();this.emit();}
+ markFailed(e:unknown){this.settleReady?.reject(e);}
+ get isReady(){return this.ready;}
+ whenReady(){return this.ready?Promise.resolve():this.readyWaiter;}
+ private async gate(tolerateFailure=false){if(this.ready)return;try{await this.readyWaiter;}catch(e){if(!tolerateFailure)throw Error('The local library did not finish loading: '+((e as Error)?.message??e)+'. Nothing was changed.');}}private checkpointTimer:ReturnType<typeof setTimeout>|undefined;private checkpointDirty=false;conflictNotice='';
  subscribe=(fn:()=>void)=>{this.listeners.add(fn);return ()=>{this.listeners.delete(fn);};};getSnapshot=()=>this.state;
  emit(){this.listeners.forEach(f=>f());}
  setLoaded(ws:Workspace){this.state={...ws,personal:preparePersonal(ws.personal)};this.persistedPersonal=this.state.personal;this.emit();}
@@ -117,7 +147,10 @@ export class WorkspaceStore{
  private enqueue(fn:()=>Promise<void>,reportFailure=true){this.saving++;this.state={...this.state};this.emit();const result=this.queue.then(fn);this.queue=result.catch(e=>{if(reportFailure)this.fail(e);}).finally(()=>{this.saving--;this.state={...this.state};this.emit();});return result;}
  /** Baselines are resumable in bounded transactions. An interrupted batch is all
   * or nothing; completed batches are recognized by hash and are not duplicated. */
- async initializeHistory(built:any){builtSource=built;await this.flush();this.saving++;this.emit();try{const resources=captureResources(compose(built,this.state),this.state);let history=this.state.history??emptyHistory();await validateHistory(history);
+ async initializeHistory(built:any){builtSource=built;await this.flush();this.saving++;this.emit();try{let history=this.state.history??emptyHistory();await validateHistory(history);
+  // V3: only resources whose fingerprint changed go through advanceHistory, so an
+  // unchanged library no longer clones/serializes the whole history per 50 items.
+  const resources=await changedResources(history,captureResources(compose(built,this.state),this.state));
   for(let at=0;at<resources.length;at+=50){const next=await advanceHistory(history,resources.slice(at,at+50),{source:history.meta.initialized?'system':'migration',summary:history.meta.initialized?'Reviewed application source update':'V2.1.0 production baseline',sourceDetail:'Source b50c27a987fa65eee1c51d36225908621e322da7'},false);if(next.meta.epoch!==history.meta.epoch){await commitProjection({...this.state,history:next},history,[]);history=next;this.state={...this.state,history};}}
   if(!history.meta.initialized){const next=await advanceHistory(history,[],{source:'migration'},true);await commitProjection({...this.state,history:next},history,[]);history=next;}this.state={...this.state,history};this.emit();
  }finally{this.saving--;this.emit();}
@@ -127,14 +160,14 @@ export class WorkspaceStore{
   this.checkpointDirty=false;if(this.checkpointTimer!==undefined){clearTimeout(this.checkpointTimer);this.checkpointTimer=undefined;}
   return this.enqueue(()=>this.persistPersonal());}
  private content(next:Workspace,writes:string[],context:RevisionContext){this.state={...next,generation:this.state.generation+1};this.emit();return this.enqueue(async()=>{const previous=this.state.history??emptyHistory(),ready=await prepareWorkspaceHistory(builtSource,{...next,history:previous},context);await commitProjection(ready,previous,writes);if(writes.includes('personal'))this.persistedPersonal=ready.personal;this.state={...this.state,history:ready.history};this.emit();});}
- overlays(fn:(o:Overlays)=>void){if(this.reviewPreparing)return Promise.reject(Error('A reviewed change is being committed. Reopen this edit after it finishes.'));const o=structuredClone(this.state.overlays);fn(o);validateHubOverlays(o);return this.content({...this.state,overlays:o},['overlays'],{source:'manual'});}
- shared(fn:(p:Personal,o:Overlays)=>void){if(this.reviewPreparing)return Promise.reject(Error('A reviewed change is being committed. Reopen this edit after it finishes.'));const p=structuredClone(this.state.personal),o=structuredClone(this.state.overlays);fn(p,o);validateHubOverlays(o);return this.content({...this.state,personal:preparePersonal(p),overlays:o},['personal','overlays'],{source:'manual'});}
- async importPacks(imports:Pack[],assets:Asset[],overlays:Overlays){await this.flush();if(this.error)throw Error('Resolve the storage warning before importing.');await preflightStorage(workspaceImportBytes(imports,assets,overlays));const byPack=new Map(this.state.imports.map(p=>[p.manifest.id,p]));imports.forEach(p=>byPack.set(p.manifest.id,p));const byAsset=new Map(this.state.assets.map(a=>[a.key,a]));assets.forEach(a=>{const old=byAsset.get(a.key);if(old&&(old.sha256!==a.sha256||old.mediaType!==a.mediaType))throw Error('A historical asset key cannot be overwritten; import a new asset/pack version.');byAsset.set(a.key,a);});await this.content({...this.state,imports:[...byPack.values()],assets:[...byAsset.values()],overlays},['imports','assets','overlays'],{source:'import'});}
- async restore(ws:Workspace,resolveAsset?:(key:string)=>Promise<Asset|undefined>){await this.flush();this.saving++;this.reviewPreparing=true;this.state={...this.state};this.emit();try{await preflightStorage(workspaceImportBytes(ws.imports,ws.assets,ws.overlays)+new TextEncoder().encode(JSON.stringify(ws.history??{})).length);const restored=await restoreWorkspace(ws,resolveAsset);clearArchiveAttachments();this.persistedPersonal=restored.personal;this.state={...restored,generation:this.state.generation+1};this.error='';this.emit();}finally{this.reviewPreparing=false;this.saving--;this.state={...this.state};this.emit();}}
- async addAsset(asset:Asset){await this.flush();return this.enqueue(async()=>{await preflightStorage(asset.bytes.length);if(await sha256(asset.bytes)!==asset.sha256)throw Error('Attachment SHA-256 mismatch');const existing=this.state.assets.find(a=>a.key===asset.key);if(existing&&existing.sha256!==asset.sha256)throw Error('A content-addressed asset cannot be overwritten');const db=await openDatabase(),tx=db.transaction('assets','readwrite'),done=complete(tx);tx.objectStore('assets').put(asset,asset.key);await done;this.state={...this.state,assets:[...this.state.assets.filter(a=>a.key!==asset.key),asset]};this.emit();});}
+ overlays(fn:(o:Overlays)=>void):Promise<void>{if(!this.ready)return this.gate().then(()=>this.overlays(fn));if(this.reviewPreparing)return Promise.reject(Error('A reviewed change is being committed. Reopen this edit after it finishes.'));const o=structuredClone(this.state.overlays);fn(o);validateHubOverlays(o);return this.content({...this.state,overlays:o},['overlays'],{source:'manual'});}
+ shared(fn:(p:Personal,o:Overlays)=>void):Promise<void>{if(!this.ready)return this.gate().then(()=>this.shared(fn));if(this.reviewPreparing)return Promise.reject(Error('A reviewed change is being committed. Reopen this edit after it finishes.'));const p=structuredClone(this.state.personal),o=structuredClone(this.state.overlays);fn(p,o);validateHubOverlays(o);return this.content({...this.state,personal:preparePersonal(p),overlays:o},['personal','overlays'],{source:'manual'});}
+ async importPacks(imports:Pack[],assets:Asset[],overlays:Overlays){await this.gate();await this.flush();if(this.error)throw Error('Resolve the storage warning before importing.');await preflightStorage(workspaceImportBytes(imports,assets,overlays));const byPack=new Map(this.state.imports.map(p=>[p.manifest.id,p]));imports.forEach(p=>byPack.set(p.manifest.id,p));const byAsset=new Map(this.state.assets.map(a=>[a.key,a]));assets.forEach(a=>{const old=byAsset.get(a.key);if(old&&(old.sha256!==a.sha256||old.mediaType!==a.mediaType))throw Error('A historical asset key cannot be overwritten; import a new asset/pack version.');byAsset.set(a.key,a);});await this.content({...this.state,imports:[...byPack.values()],assets:[...byAsset.values()],overlays},['imports','assets','overlays'],{source:'import'});}
+ async restore(ws:Workspace,resolveAsset?:(key:string)=>Promise<Asset|undefined>){await this.gate(true);await this.flush();this.saving++;this.reviewPreparing=true;this.state={...this.state};this.emit();try{await preflightStorage(workspaceImportBytes(ws.imports,ws.assets,ws.overlays)+new TextEncoder().encode(JSON.stringify(ws.history??{})).length);const restored=await restoreWorkspace(ws,resolveAsset);clearArchiveAttachments();this.persistedPersonal=restored.personal;this.state={...restored,generation:this.state.generation+1};this.error='';this.emit();}finally{this.reviewPreparing=false;this.saving--;this.state={...this.state};this.emit();}}
+ async addAsset(asset:Asset){await this.gate();await this.flush();return this.enqueue(async()=>{await preflightStorage(asset.bytes.length);if(await sha256(asset.bytes)!==asset.sha256)throw Error('Attachment SHA-256 mismatch');const existing=this.state.assets.find(a=>a.key===asset.key);if(existing&&existing.sha256!==asset.sha256)throw Error('A content-addressed asset cannot be overwritten');const db=await openDatabase(),tx=db.transaction('assets','readwrite'),done=complete(tx);tx.objectStore('assets').put(asset,asset.key);await done;this.state={...this.state,assets:[...this.state.assets.filter(a=>a.key!==asset.key),asset]};this.emit();});}
  /** Reviewed actions run against the live state inside the existing write queue.
   * Nothing is exposed on window. The agent facade is the only public orchestrator. */
- async reviewedMutation(fn:(ws:Workspace)=>void,context:RevisionContext){await this.flush();if(this.error)throw Error('Resolve the storage warning before accepting or staging a proposal.');return this.enqueue(async()=>{this.reviewPreparing=true;try{const before=this.state,previous=before.history??emptyHistory(),next=structuredClone(before);fn(next);next.personal=preparePersonal(next.personal);validateHubOverlays(next.overlays);const ready=await prepareWorkspaceHistory(builtSource,next,context);
+ async reviewedMutation(fn:(ws:Workspace)=>void,context:RevisionContext){await this.gate();await this.flush();if(this.error)throw Error('Resolve the storage warning before accepting or staging a proposal.');return this.enqueue(async()=>{this.reviewPreparing=true;try{const before=this.state,previous=before.history??emptyHistory(),next=structuredClone(before);fn(next);next.personal=preparePersonal(next.personal);validateHubOverlays(next.overlays);const ready=await prepareWorkspaceHistory(builtSource,next,context);
    if(stable(ready.history!.reviews)!==stable(previous.reviews)&&ready.history!.meta.epoch===previous.meta.epoch)ready.history!.meta.epoch++;
    // Link accepted audit rows to revisions created by this exact batch.
    if(context.changeSetId){const review=ready.history!.reviews.find(r=>r.id===context.changeSetId);if(review?.status==='accepted')review.revisionIds=ready.history!.revisions.filter(r=>r.changeSetId===context.changeSetId).map(r=>r.revisionId);}
@@ -145,15 +178,15 @@ export class WorkspaceStore{
    await validateHistory(ready.history!);try{await commitProjection(ready,previous,['overlays','personal',...(addedAssets.length?['assets']:[])],false,this.persistedPersonal??before.personal);}catch(e){this.fail(e);throw e;}this.persistedPersonal=ready.personal;this.state={...ready,generation:this.state.generation+1};this.emit();}finally{this.reviewPreparing=false;}
   },false);}
  async flush(){this.flushCheckpoint();let pending;do{pending=this.queue;await pending;}while(pending!==this.queue);}
- async backupSnapshot(){await this.flush();return this.error&&this.state.history?prepareEmergencySnapshot(builtSource,this.state):structuredClone(this.state);}
- async retry(){await this.flush();return this.enqueue(async()=>{const previous=await loadWorkspace();if((previous.history?.meta.epoch??0)!==(this.state.history?.meta.epoch??0))throw Error('Another tab advanced history. Export your unsaved recovery copy, then reload.');const next=await prepareWorkspaceHistory(builtSource,this.state,{source:'manual',summary:'Retry unsaved changes'});await commitProjection(next,previous.history!,['imports','assets','overlays','personal']);this.persistedPersonal=next.personal;this.state={...next};this.error='';this.emit();});}
+ async backupSnapshot(){await this.gate();await this.flush();return this.error&&this.state.history?prepareEmergencySnapshot(builtSource,this.state):structuredClone(this.state);}
+ async retry(){await this.gate(true);await this.flush();return this.enqueue(async()=>{const previous=await loadWorkspace();if((previous.history?.meta.epoch??0)!==(this.state.history?.meta.epoch??0))throw Error('Another tab advanced history. Export your unsaved recovery copy, then reload.');const next=await prepareWorkspaceHistory(builtSource,this.state,{source:'manual',summary:'Retry unsaved changes'});await commitProjection(next,previous.history!,['imports','assets','overlays','personal']);this.persistedPersonal=next.personal;this.state={...next};this.error='';this.emit();});}
  get unsafeClose(){return this.saving>0||!!this.error;}
  /** Destructive execution remains fail-closed until the browser fault matrix passes.
   * The implementation is present behind a compile-time release boundary so QA can
   * qualify the exact transaction on a disposable candidate without schema changes. */
  async compactArchive(selection:any,resolveAsset:(key:string)=>Promise<Asset|undefined>){
   if(COMPACTION_BLOCKED)throw Error(COMPACTION_BLOCK_REASON);
-  await this.flush();if(this.error)throw Error('Resolve the storage warning before compacting history.');
+  await this.gate();await this.flush();if(this.error)throw Error('Resolve the storage warning before compacting history.');
   return this.enqueue(async()=>{this.reviewPreparing=true;try{
    if(!selection?.archive||!selection?.raw||typeof selection.previewHash!=='string')throw Error('A verified saved-file selection is required.');
    const persisted=workspaceFromStoredRecords(selection.raw);
