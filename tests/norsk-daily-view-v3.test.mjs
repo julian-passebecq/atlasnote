@@ -47,3 +47,19 @@ test('V3 Norsk Daily vocabulary review reads the accepted vocabulary tables, ded
  assert(words.every(w=>w.english&&w.pageId.startsWith('norsk-daily.item.')&&w.headline));
  assert.deepEqual(dailyVocabulary(undefined),[]);
 });
+test('V3 Norsk Daily vocabulary becomes a reviewable concept.create proposal (never applied directly)',async()=>{
+ const {dailyVocabulary,vocabularyChangeSet,vocabularyConceptId,VOCABULARY_BATCH_LIMIT}=await import('../dist-offline/app/norsk-daily/daily.js');
+ const {validateChangeSet}=await import('../dist-offline/app/agent/service.js');
+ assert.equal(vocabularyConceptId({lemma:'høst',partOfSpeech:'noun'}),'concept.norsk.vocab.host-noun');
+ assert.equal(vocabularyConceptId({lemma:'å få',partOfSpeech:'verb'}),'concept.norsk.vocab.a-fa-verb');
+ assert.equal(vocabularyConceptId({lemma:'Ærlig'}),'concept.norsk.vocab.aerlig');
+ const words=dailyVocabulary(dailyBatches(catalogueWith(fixture),{})[0]);
+ const built=vocabularyChangeSet(words,fixture.studyDate,'0123456789abcdef',1);
+ assert.equal(built.changeSet.operations.length,words.length);assert.equal(built.omitted,0);
+ assert(built.changeSet.operations.every(o=>o.kind==='concept.create'&&o.payload.subject==='norsk'&&o.payload.assignTo.kind==='article'&&o.payload.parentId==='concept.norsk'));
+ validateChangeSet(built.changeSet);
+ const many=Array.from({length:60},(_,i)=>({...words[0],lemma:words[0].lemma+i}));
+ const capped=vocabularyChangeSet(many,fixture.studyDate,'0123456789abcdef',1);
+ assert.equal(capped.changeSet.operations.length,VOCABULARY_BATCH_LIMIT);assert.equal(capped.omitted,10);
+ assert.equal(vocabularyChangeSet([],fixture.studyDate,'0123456789abcdef',1),undefined);
+});

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.8",
-  "createdAt": 1789766223850,
+  "createdAt": 1790288396514,
   "source": "Synthetic test agent",
   "summary": "Assign canonical Article taxonomy",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "example.operation.8.taxonomy.assign",
       "kind": "taxonomy.assign",
       "resourceKey": "article:page.v22.article",
-      "baseRevisionId": "revision.8766f0b2ca264ff28d55b923ca829719",
+      "baseRevisionId": "revision.1aa966f54cb8421dbb411a25e9473b2b",
       "payload": {
         "taxonomy": {
           "subject": "cloud"

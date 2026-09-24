@@ -1,4 +1,4 @@
-import React, {useRef, useState} from '../vendor/react.mjs';
+import React, {useEffect, useRef, useState} from '../vendor/react.mjs';
 import {Modal} from '../components/Modal.js';
 import {getAgentInterface} from './service.js';
 import type {AgentInterface} from './service.js';
@@ -14,7 +14,7 @@ type Preview = ReturnType<AgentInterface['preview']>;
 const sameSelection = (a: string[], b: string[]) => a.length === b.length && a.every(id => b.includes(id));
 /** Only human clicks on the decision controls call accept/reject. Importing,
  * editing or inspecting a proposal never applies it. No provider is embedded. */
-export function AgentReviewDialog({workspace, resourceKey, onClose}: {workspace: Workspace; resourceKey?: string; onClose: () => void}) {
+export function AgentReviewDialog({workspace, resourceKey, onClose, initialChangeSet, initialStatus}: {workspace: Workspace; resourceKey?: string; onClose: () => void; initialChangeSet?: AgentChangeSet; initialStatus?: string}) {
  const api = getAgentInterface();
  const [text, setText] = useState(''), [plan, setPlan] = useState<AgentChangeSet | undefined>(undefined);
  const [preview, setPreview] = useState<Preview | undefined>(undefined), [selected, setSelected] = useState<string[]>([]);
@@ -62,6 +62,9 @@ export function AgentReviewDialog({workspace, resourceKey, onClose}: {workspace:
    catch (e) { setError(e instanceof Error ? e.message : String(e)); }
   }
  }
+ // V3: a caller-prepared proposal (e.g. Norsk Daily vocabulary) is only loaded for
+ // inspection; staging and the accept/reject decision remain explicit human clicks.
+ useEffect(() => { if (initialChangeSet) { setText(JSON.stringify(initialChangeSet, null, 2)); inspect(initialChangeSet); if (initialStatus) setStatus(initialStatus); } }, []);
  return <Modal title="Agent Review" onClose={close} wide>
   <div className="agent-review" aria-busy={busy}>
    <p className="eyebrow">PROVIDER-NEUTRAL / REVIEW BEFORE APPLYING</p>

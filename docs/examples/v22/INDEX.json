@@ -129,6 +129,13 @@
     },
     {
       "file": "changeset-19.json",
+      "label": "Create a subject concept and link it to an exact target (V3)",
+      "operations": [
+        "concept.create"
+      ]
+    },
+    {
+      "file": "changeset-20.json",
       "label": "Reviewed personal writes, not content history",
       "operations": [
         "bookmark.add",
@@ -137,7 +144,7 @@
       ]
     },
     {
-      "file": "changeset-20.json",
+      "file": "changeset-21.json",
       "label": "Reviewed personal update/removal",
       "operations": [
         "bookmark.remove",
@@ -146,7 +153,7 @@
       ]
     },
     {
-      "file": "changeset-21.json",
+      "file": "changeset-22.json",
       "label": "Reviewed layout/navigation, not content history",
       "operations": [
         "workspace.navigate",
@@ -154,14 +161,14 @@
       ]
     },
     {
-      "file": "changeset-22.json",
+      "file": "changeset-23.json",
       "label": "PDF metadata edit with unchanged reviewed bytes",
       "operations": [
         "pdf.metadata.update"
       ]
     },
     {
-      "file": "changeset-23.json",
+      "file": "changeset-24.json",
       "label": "PDF logical revision using already reviewed source",
       "operations": [
         "pdf.revision.propose"

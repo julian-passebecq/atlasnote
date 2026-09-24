@@ -79,6 +79,7 @@ The normative TypeScript union is `src/agent/model.ts::OperationPayloads`. The r
 | `resource.link.add/update/remove` | Typed target/label; bounded index for update/remove | Authored revision |
 | `reference.add/remove` | Exact endpoints + semantic revisions/kind, or existing edge ID | Existing semantic state |
 | `concept.assignment.propose` | Existing canonical reference-suggestion batch | Existing semantic review queue |
+| `concept.create` (V3) | Concept ID, canonical subject, label; optional aliases, parent concept, one exact target to link | Existing semantic state (local Concept Index); identical re-creation is a no-op |
 | `bookmark.add/remove` | Exact target/title, or existing bookmark ID | Personal state |
 | `readLater.add/remove` | Exact target/title, or existing reading-list ID | Personal state |
 | `capture.create/update` | Canonical kind/text and allowed fields, or existing capture ID | Personal state |
@@ -252,6 +253,16 @@ Canonical payload type: `id:string`.
 
 <a id="reference.remove.id"></a>
 `id` is the field defined above; unknown extra payload fields are rejected.
+
+### concept.create (V3 addition)
+
+Canonical payload type: `{id:string;subject:'it'|'cloud'|'job'|'kpi'|'norsk';label:string;aliases?:string[];parentId?:string;assignTo?:ResourceTarget;note?:string}`.
+
+Creates one concept in the user's local Concept Index. This is personal semantic state, never a public pack or glossary file. It goes through the same preview, stage and explicit human accept path as every other operation.
+- An existing concept with the same ID, subject and label is reused (a no-op). A different label or subject under the same ID is rejected, and nothing is changed.
+- `parentId` must name an existing, non-deprecated concept.
+- `assignTo` links the concept to one exact resource target through the existing assignment service. The target may have been created earlier in the same ChangeSet.
+- Added in V3 so reviewed vocabulary (Norsk Daily) can enter the concept model; the operation count is now 26.
 
 ### concept.assignment.propose
 

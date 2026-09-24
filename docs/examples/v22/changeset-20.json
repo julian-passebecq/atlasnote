@@ -2,34 +2,43 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.20",
-  "createdAt": 1789766231424,
+  "createdAt": 1790288401651,
   "source": "Synthetic test agent",
-  "summary": "Reviewed personal update/removal",
+  "summary": "Reviewed personal writes, not content history",
   "operations": [
     {
+      "id": "operation.10",
+      "kind": "bookmark.add",
+      "baseFingerprint": "d39cf74823307f68",
+      "payload": {
+        "target": {
+          "kind": "article",
+          "articleId": "page.v22.article",
+          "pageId": "page.v22.article"
+        },
+        "title": "Example bookmark"
+      }
+    },
+    {
+      "id": "operation.11",
+      "kind": "readLater.add",
+      "baseFingerprint": "d39cf74823307f68",
+      "payload": {
+        "target": {
+          "kind": "article",
+          "articleId": "page.v22.article",
+          "pageId": "page.v22.article"
+        },
+        "title": "Example Read Later"
+      }
+    },
+    {
       "id": "operation.12",
-      "kind": "bookmark.remove",
-      "baseFingerprint": "c5f4445ce0d2dd4a",
+      "kind": "capture.create",
+      "baseFingerprint": "d39cf74823307f68",
       "payload": {
-        "id": "bookmark.8b6f85a5287646a3b24c481c69ce1425"
-      }
-    },
-    {
-      "id": "operation.13",
-      "kind": "readLater.remove",
-      "baseFingerprint": "c5f4445ce0d2dd4a",
-      "payload": {
-        "id": "later.4be091543d3a4d5999abe21b82d4a7dc"
-      }
-    },
-    {
-      "id": "operation.14",
-      "kind": "capture.update",
-      "baseFingerprint": "c5f4445ce0d2dd4a",
-      "payload": {
-        "id": "capture.b09895918797402d8335e5bd142b7483",
-        "text": "Updated example capture",
-        "status": "done"
+        "kind": "note",
+        "text": "Example reviewed capture"
       }
     }
   ]

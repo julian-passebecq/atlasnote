@@ -2,14 +2,14 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.18",
-  "createdAt": 1789766230221,
+  "createdAt": 1790288400774,
   "source": "Synthetic test agent",
   "summary": "Stage concept assignment for the existing semantic review",
   "operations": [
     {
       "id": "operation.8",
       "kind": "concept.assignment.propose",
-      "baseFingerprint": "3e327bd330181af4",
+      "baseFingerprint": "2c6cbdd4d63a5eb0",
       "payload": {
         "batch": {
           "schemaVersion": 1,

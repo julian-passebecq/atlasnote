@@ -3,12 +3,12 @@ import {Icon,IconButton} from '../components/Icon.js';
 import type {Catalogue,Personal} from '../core/model.js';
 import {dailyBatches,dailyCounts,dailyVocabulary,STATUS_RATING} from './daily.js';
 import type {DailyStatus} from './daily.js';
-type Props={catalogue:Catalogue;personal:Personal;onOpen:(pageId:string,newTab?:boolean)=>void;onStatus:(pageId:string,rating:'gray'|'orange'|'green')=>void;onImport:()=>void;onClose:()=>void};
+type Props={catalogue:Catalogue;personal:Personal;onOpen:(pageId:string,newTab?:boolean)=>void;onStatus:(pageId:string,rating:'gray'|'orange'|'green')=>void;onImport:()=>void;onAddVocabulary?:(words:import('./daily.js').DailyWord[],date:string)=>void;onClose:()=>void};
 const LABEL:Record<DailyStatus,string>={new:'New',learning:'Learning',known:'Known'};
 /** Daily study queue over accepted Norsk Daily resources: date navigation,
  * New/Learning/Known progress, English reveal, grammar links and the day's QCM.
  * Headlines are source wording; everything else is labelled generated text. */
-export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onClose}:Props){
+export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAddVocabulary,onClose}:Props){
  const batches=useMemo(()=>dailyBatches(catalogue,personal.ratings),[catalogue,personal.ratings]);
  const [date,setDate]=useState<string|undefined>(batches[0]?.date),[english,setEnglish]=useState(false),[filter,setFilter]=useState<DailyStatus|'all'>('all'),[view,setView]=useState<'stories'|'vocabulary'>('stories'),[revealed,setRevealed]=useState<Record<string,boolean>>({});
  const index=Math.max(0,batches.findIndex(b=>b.date===date)),batch=batches[index];
@@ -31,7 +31,7 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onCl
    {batch.synthetic&&<p className="norsk-daily-synthetic" role="note"><strong>Synthetic fixture.</strong> Invented study text for testing, not real news.</p>}
    <div className="norsk-daily-views" role="tablist" aria-label="Norsk Daily view"><button role="tab" aria-selected={view==='stories'} onClick={()=>setView('stories')}>Stories ({batch.items.length})</button><button role="tab" aria-selected={view==='vocabulary'} onClick={()=>setView('vocabulary')}>Vocabulary ({words.length})</button></div>
    {view==='vocabulary'?<div className="norsk-daily-vocab">
-    <p className="norsk-daily-note">Generated vocabulary from the day's accepted stories. Say the meaning, then reveal it. <button className="text-button" onClick={()=>setRevealed(Object.fromEntries(words.map(w=>[w.lemma+'|'+(w.partOfSpeech??''),true])))}>Reveal all</button> <button className="text-button" onClick={()=>setRevealed({})}>Hide all</button></p>
+    <p className="norsk-daily-note">Generated vocabulary from the day's accepted stories. Say the meaning, then reveal it. <button className="text-button" onClick={()=>setRevealed(Object.fromEntries(words.map(w=>[w.lemma+'|'+(w.partOfSpeech??''),true])))}>Reveal all</button> <button className="text-button" onClick={()=>setRevealed({})}>Hide all</button>{onAddVocabulary&&words.length>0&&<button className="text-button norsk-daily-concepts" title="Prepares a reviewed proposal; nothing is added until you accept it" onClick={()=>onAddVocabulary(words,batch.date)}>Add to Concept Index…</button>}</p>
     <ul>{words.map(w=>{const key=w.lemma+'|'+(w.partOfSpeech??''),open=!!revealed[key];return <li key={key} className="norsk-daily-word"><div><strong lang="no">{w.lemma}</strong>{w.form&&w.form!==w.lemma&&<span className="norsk-daily-form" lang="no">{w.form}</span>}{w.partOfSpeech&&<small>{w.partOfSpeech}</small>}</div>
      {open?<p className="norsk-daily-meaning">{w.english}{w.french&&<span> / {w.french}</span>}{w.example&&<em lang="no"> {w.example}</em>}</p>:<button className="text-button" aria-label={'Reveal meaning of '+w.lemma} onClick={()=>setRevealed({...revealed,[key]:true})}>Reveal</button>}
      <button className="text-button norsk-daily-source" title={'From: '+w.headline} onClick={()=>onOpen(w.pageId)}>Story</button></li>;})}</ul>

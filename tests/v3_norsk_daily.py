@@ -63,6 +63,19 @@ with sync_playwright() as pw:
   lemma=cards.first.locator('strong').inner_text();btn('Reveal meaning of '+lemma).click()
   expect(p.locator('.norsk-daily-meaning')).to_have_count(1);shot('vocabulary');return {'words':n}
  check('Vocabulary review lists the day’s words and reveals meanings on demand',vocabulary)
+ def concepts():
+  count=lambda:len(p.evaluate('async()=>{const m='+SNAPSHOT+';const w=await m.readPersistedWorkspace();return (w.personal.knowledge?.concepts??[]).filter(c=>c.id.startsWith("concept.norsk.vocab.")).map(c=>c.id);}'))
+  before=count();n=p.locator('.norsk-daily-word').count()
+  btn('Add to Concept Index…').click()
+  expect(p.get_by_text('Vocabulary proposal prepared',exact=False)).to_be_visible()
+  assert count()==before,'preparing the proposal must not add concepts'
+  btn('Preview ChangeSet').click();btn('Stage for review').click();p.wait_for_function('async()=>!('+AGENT+').getStorageDiagnostics().saving')
+  assert count()==before,'staging must not add concepts'
+  btn('Accept selected operations').click();p.wait_for_function('async(b)=>{const m='+SNAPSHOT+';const w=await m.readPersistedWorkspace();return (w.personal.knowledge?.concepts??[]).filter(c=>c.id.startsWith("concept.norsk.vocab.")).length>b;}',arg=before)
+  after=count();btn('Close dialog').last.click()
+  assert after==before+n,'one concept per distinct word (%d -> %d, %d words)'%(before,after,n)
+  return {'conceptsBefore':before,'conceptsAfter':after}
+ check('Vocabulary enters the Concept Index only through preview, stage and explicit accept',concepts)
  check('Progress persists across reload; the day QCM opens as a native quiz',persists)
  def no_errors():assert not errors,errors
  check('No uncaught page errors',no_errors)

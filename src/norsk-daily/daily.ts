@@ -46,4 +46,21 @@ export function dailyVocabulary(batch:DailyBatch|undefined):DailyWord[]{
  }
  return out;
 }
+const ASCII:Record<string,string>={æ:'ae',ø:'o',å:'a'};
+/** Stable, ID-safe concept identity for a Norwegian word: lemma + part of speech. */
+export function vocabularyConceptId(w:Pick<DailyWord,'lemma'|'partOfSpeech'>):string{
+ const slug=(s:string)=>s.toLocaleLowerCase('nb').replace(/[æøå]/g,c=>ASCII[c]).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+ return ('concept.norsk.vocab.'+(slug(w.lemma)||'word')+(w.partOfSpeech?'-'+slug(w.partOfSpeech):'')).slice(0,120);
+}
+export const VOCABULARY_BATCH_LIMIT=50;
+/** A reviewed proposal: one `concept.create` per word (reused if it already
+ * exists), linked to the exact story it came from. Nothing is applied until a
+ * human stages and accepts it in Agent Review. */
+export function vocabularyChangeSet(words:DailyWord[],date:string,semanticFingerprint:string,createdAt:number){
+ const chosen=words.slice(0,VOCABULARY_BATCH_LIMIT);if(!chosen.length)return undefined;
+ const operations=chosen.map((w,i)=>({id:'operation.norsk-vocab.'+(i+1),kind:'concept.create' as const,baseFingerprint:semanticFingerprint,payload:{id:vocabularyConceptId(w),subject:'norsk' as const,label:w.lemma,
+  aliases:[...new Set([w.form,w.english,w.french].filter((x):x is string=>!!x&&x!==w.lemma).map(x=>x.slice(0,200)))].slice(0,30),parentId:'concept.norsk',
+  assignTo:{kind:'article' as const,articleId:w.pageId,pageId:w.pageId},note:('Norsk Daily '+date+(w.partOfSpeech?' ('+w.partOfSpeech+')':'')).slice(0,2000)}}));
+ return {changeSet:{schemaVersion:1,kind:'atlas-agent-changeset',id:'norsk-daily.vocabulary.'+date+'.'+createdAt.toString(36),createdAt,source:'Norsk Daily vocabulary review (generated study vocabulary; human review required)',summary:'Add '+chosen.length+' Norsk Daily words from '+date+' to the Concept Index',operations},omitted:words.length-chosen.length};
+}
 export function dailyCounts(items:DailyItem[]){return {new:items.filter(i=>i.status==='new').length,learning:items.filter(i=>i.status==='learning').length,known:items.filter(i=>i.status==='known').length};}

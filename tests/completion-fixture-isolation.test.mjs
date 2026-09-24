@@ -97,7 +97,7 @@ for(const args of [['--output-dir'],['--output-dir',''],['--other','somewhere'],
  assert.notEqual(child.status,0);assert.match(child.stderr,/Usage:/);assert.equal(sourceHash(),before);
 });
 
-test('two real generations validate 4 backup archives and all 25 operation kinds without source drift',async()=>{
+test('two real generations validate 4 backup archives and all 26 operation kinds without source drift',async()=>{
  const before=sourceHash(),captures=[];
  temporary(tempRoot=>{
   for(let i=0;i<2;i++){
@@ -106,13 +106,13 @@ test('two real generations validate 4 backup archives and all 25 operation kinds
     if(++calls===1){
      const child=spawnSync(command,args,{...options,stdio:'pipe',encoding:'utf8'});
      assert.equal(child.status,0,child.stderr);
-     assert.match(child.stdout,/"operationKinds": 25/);return child;
+     assert.match(child.stdout,/"operationKinds": 26/); // V3 adds concept.createreturn child;
     }
     const directory=options.env.ATLAS_V22_EXAMPLES_DIR;
     const names=fs.readdirSync(directory),index=JSON.parse(fs.readFileSync(path.join(directory,'INDEX.json')));
-    assert.equal(names.filter(n=>n.startsWith('changeset-')).length,23);
-    assert.equal(index.plans.length,23);assert.equal(new Set(index.plans.flatMap(p=>p.operations)).size,25);
-    assert.equal(names.length,31);assert.equal(names.filter(n=>n.endsWith('.atlas-backup.zip')).length,4);
+    assert.equal(names.filter(n=>n.startsWith('changeset-')).length,24);
+    assert.equal(index.plans.length,24);assert.equal(new Set(index.plans.flatMap(p=>p.operations)).size,26);
+    assert.equal(names.length,32);assert.equal(names.filter(n=>n.endsWith('.atlas-backup.zip')).length,4);
     const archives=names.filter(n=>n.endsWith('.atlas-backup.zip')).map(n=>({name:n,bytes:fs.readFileSync(path.join(directory,n))}));
     captures.push({directory,archives});return ok; // orchestration consumer, NOT a browser PASS
    }}),0);

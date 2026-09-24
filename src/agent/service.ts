@@ -15,7 +15,7 @@ import {resourceTaxonomy,scopeMatches,sharedFolders} from '../content-hub/taxono
 import {openDashboard} from '../content-hub/surfaces.js';
 import {addReadingBookmark,addReadLater,inferReadingCategory} from '../core/reading-lists.js';
 import {resolveTarget as resolveResourceTarget,requireExact,fingerprint} from '../references/targets.js';
-import {knowledgeOf,linkReference,unlinkReference,createReferenceIndex,queryReferences} from '../references/knowledge.js';
+import {knowledgeOf,linkReference,unlinkReference,createReferenceIndex,queryReferences,saveConcept,assignConcept} from '../references/knowledge.js';
 import {previewSuggestions,stageSuggestions} from '../references/review.js';
 import {openReferenceExplorer} from '../references/explorer.js';
 import {captureResources,resourceAdapters,resourceKeyForTarget,assertHistoryTarget,historicalCatalogue,canonical,pdfProvenance} from '../history/adapters.js';
@@ -73,6 +73,11 @@ const handlers:Record<AgentOperation['kind'],(ctx:ApplyContext)=>void>={
  'resource.link.add':link,'resource.link.update':link,'resource.link.remove':link,
  'reference.add':({ws,c,op,plan})=>{const p=(op as any).payload;linkReference(ws.personal,c,ws,p.source,p.target,p.kind,p.label??'',p.note??'',plan.createdAt);},
  'reference.remove':({ws,op})=>{const id=(op as any).payload.id;if(!knowledgeOf(ws.personal).edges.some(e=>e.id===id))throw Error('Reference does not exist');unlinkReference(ws.personal,id);},
+ 'concept.create':({ws,c,op,plan})=>{const p=(op as any).payload,k=knowledgeOf(ws.personal),existing=k.concepts.find(x=>x.id===p.id);
+  // Idempotent: the same concept proposed again (e.g. a word seen in a later batch) is reused, never duplicated or silently changed.
+  if(existing){if(existing.subject!==p.subject||existing.label!==p.label.trim())throw Error('Concept '+p.id+' already exists with a different label or subject. Nothing was changed.');}
+  else{if(p.parentId&&!k.concepts.some(x=>x.id===p.parentId&&!x.deprecated))throw Error('Parent concept '+p.parentId+' does not exist.');saveConcept(ws.personal,{id:p.id,subject:p.subject,label:p.label,aliases:p.aliases??[],...(p.parentId?{primaryParentId:p.parentId}:{}),relatedConceptIds:[]},plan.createdAt);}
+  if(p.assignTo)assignConcept(ws.personal,c,ws,p.id,p.assignTo,p.note??'',plan.createdAt);},
  'concept.assignment.propose':({ws,c,op,plan})=>{const batch=previewSuggestions(c,ws,JSON.stringify((op as any).payload.batch));stageSuggestions(ws.personal,c,ws,batch,plan.createdAt);},
  'bookmark.add':({ws,c,op})=>{const p=(op as any).payload;requireExact(c,ws,p.target);addReadingBookmark(ws.personal,p.target,p.title,inferReadingCategory(c,ws,p.target));},
  'bookmark.remove':({ws,op})=>{const id=(op as any).payload.id;if(!ws.personal.bookmarks.some(b=>b.id===id))throw Error('Bookmark does not exist');ws.personal.bookmarks=ws.personal.bookmarks.filter(b=>b.id!==id);},
