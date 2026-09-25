@@ -25,6 +25,7 @@ the compatibility build; it does not certify IndexedDB, reload restore or a prod
   auto-scheduled.
 - The subject/folder scope of the Dashboard applies. Project/category stays optional.
 - Multi-line notes show their first line as the title and a short preview below it.
+- Each planning task row has a quick **Reschedule** menu (Today, Tomorrow, In a week, No date).
 - The capture editor sets, changes or clears a task's due date and marks any capture Important
   (same `dueAt` / `important` fields). Clearing the date returns the task to Unscheduled. Imported
   items show their Power Ops origin; edits made here are kept on the next import unless replaced.

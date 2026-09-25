@@ -73,3 +73,4 @@ a.planning-title{color:var(--accent)}
 .handoff-warning{color:#b45309!important}
 @media(max-width:540px){.planning-counts{margin-left:0;flex-basis:100%}.planning-title{flex-basis:100%;white-space:normal}}
 .capture-schedule{display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin:8px 0}.capture-schedule label{display:flex;flex-direction:column;gap:4px;font-size:12px}
+.planning-reschedule{font-size:11px;min-height:26px;max-width:130px}.planning-list>li>.planning-reschedule{margin-left:auto}.planning-list>li>.planning-reschedule+button{margin-left:0!important}

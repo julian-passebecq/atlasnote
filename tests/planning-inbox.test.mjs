@@ -124,3 +124,11 @@ test('documented sample handoff previews cleanly',async()=>{
  const fs=await import('node:fs/promises'),source=await fs.readFile('docs/galaxy/examples/powerops-atlasnote-handoff.sample.json','utf8');
  const plan=planning.planHandoff(personal(),source,NOW);assert.deepEqual(plan.counts,{create:4,update:0,unchanged:0,conflict:0,skip:0,refuse:0});assert.deepEqual(plan.warnings,[]);assert.ok(plan.rows.every(r=>!r.warnings.length));
 });
+
+test('quick reschedule reuses dueAt and can return a task to Unscheduled',()=>{
+ const p=personal();p.dashboardItems=[task('t.1','Pay invoice'),{id:'n.1',kind:'note',text:'note',status:'inbox',createdAt:1}];
+ planning.rescheduleTask(p,'t.1','2026-09-26',NOW);assert.equal(planning.dueDateOf(p.dashboardItems[0]),'2026-09-26');assert.equal(p.dashboardItems[0].updatedAt,NOW);
+ assert.equal(planning.planningView(p,DAY).tasks[0].bucket,'soon');
+ planning.rescheduleTask(p,'t.1',null,NOW+1);assert.equal(p.dashboardItems[0].dueAt,undefined);assert.equal(planning.planningView(p,DAY).tasks[0].bucket,'unscheduled');
+ assert.throws(()=>planning.rescheduleTask(p,'n.1','2026-09-26'),/unavailable/);assert.throws(()=>planning.rescheduleTask(p,'t.1','2026-02-30'),/valid calendar date/);validatePersonal(p);
+});

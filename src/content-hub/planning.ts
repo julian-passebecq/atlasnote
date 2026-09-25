@@ -49,6 +49,12 @@ export function planningView(p:Pick<Personal,'dashboardItems'|'readLater'>,today
   reading:(p.readLater??[]).filter(r=>!r.read&&include('later.'+r.id)).sort((a,b)=>b.createdAt-a.createdAt||a.id.localeCompare(b.id))};
 }
 
+/** Quick reschedule of a task from the planning view; `null` returns it to Unscheduled. */
+export function rescheduleTask(p:Personal,id:string,day:string|null,now=Date.now()){
+ const next=structuredClone(p),item=next.dashboardItems?.find(x=>x.id===id);if(!item||item.kind!=='task')throw Error('This task is unavailable.');
+ if(day===null)delete item.dueAt;else item.dueAt=dueAtFromDate(day);item.updatedAt=now;validateHubPersonal(next);p.dashboardItems=next.dashboardItems;
+}
+
 // ---------------------------------------------------------------- service reference templates
 export type ServiceField={name:string;what:string;where:string;usedBy?:string};
 export type ServiceTemplate={id:string;label:string;identifiers:ServiceField[];secrets:{name:string;where:string}[];env:string[];links:string[];pitfalls:string[]};

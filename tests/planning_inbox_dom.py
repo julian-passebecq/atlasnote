@@ -80,7 +80,11 @@ with sync_playwright() as pw:
   expect(dialog.get_by_role('alert')).to_contain_text('does not store secret values');dialog.locator('textarea').fill('Someday cleanup');click('Save captured item',dialog);expect(p.locator('dialog[open]')).to_have_count(0)
   item=next(i for i in state()['personal']['dashboardItems'] if i['text']=='Someday cleanup');assert 'dueAt' not in item and 'Synthetic-Only' not in json.dumps(state()['personal'])
   expect(panel.locator('.planning-list > li')).to_have_count(3);shot('reschedule')
- check('Capture editor reschedules, clears dates and surfaces the secret guard',reschedule)
+  click('Open tasks 4',panel);panel.get_by_label('Reschedule Someday cleanup',exact=True).select_option('1');click('Next up 4',panel);expect(panel.locator('.planning-list > li')).to_have_count(4)
+  item=next(i for i in state()['personal']['dashboardItems'] if i['text']=='Someday cleanup');assert item['dueAt']
+  panel.get_by_label('Reschedule Someday cleanup',exact=True).select_option('none');expect(panel.locator('.planning-list > li')).to_have_count(3)
+  assert 'dueAt' not in next(i for i in state()['personal']['dashboardItems'] if i['text']=='Someday cleanup')
+ check('Capture editor and quick reschedule set, move and clear dates; secret guard is visible',reschedule)
  def narrow():
   reset();dashboard();import_handoff(HANDOFF);click('Import 6 item(s)',p.locator('dialog[open]'));click('Close',p.locator('dialog[open]'))
   p.set_viewport_size({'width':390,'height':844});p.wait_for_timeout(200);over=p.evaluate('()=>{const d=document.querySelector(".dashboard-page");return d.scrollWidth-d.clientWidth}');assert over<=1,over;shot('planning-390')

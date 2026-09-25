@@ -6,7 +6,7 @@ import type {DashboardItem,TaxonomyRef} from './model.js';
 import {captureRows,downloadJSON} from './content.js';
 import {splitCaptureText} from './dashboard.js';
 import {TaxonomyPicker} from './TaxonomyPicker.js';
-import {planningView,localDateKey,planHandoff,applyHandoff,planningOverview,canonicalJSON,serviceReferenceNote,SERVICE_TEMPLATES,HANDOFF_SCHEMA,OVERVIEW_SCHEMA,DUE_SOON_DAYS} from './planning.js';
+import {planningView,localDateKey,addDays,rescheduleTask,planHandoff,applyHandoff,planningOverview,canonicalJSON,serviceReferenceNote,SERVICE_TEMPLATES,HANDOFF_SCHEMA,OVERVIEW_SCHEMA,DUE_SOON_DAYS} from './planning.js';
 import type {PlanningTask,HandoffPlan,HandoffReceipt} from './planning.js';
 import {detectSecrets,secretMessage} from './secrets.js';
 
@@ -16,13 +16,15 @@ async function copyText(text:string){await navigator.clipboard.writeText(text);}
 
 /** Read-only planning projection of the existing captures; tasks without a date stay unscheduled. */
 export function PlanningPanel({workspace,include,onOpen,onEdit,onStatus}:{workspace:Workspace;include:(id:string)=>boolean;onOpen:(t:any)=>void;onEdit:(i:DashboardItem)=>void;onStatus:(id:string,status:string)=>void}){
- const [focus,setFocus]=useState<Focus>('next'),[all,setAll]=useState(false),today=localDateKey();
+ const [focus,setFocus]=useState<Focus>('next'),[all,setAll]=useState(false),[error,setError]=useState(''),today=localDateKey();
+ function reschedule(id:string,choice:string){if(!choice)return;setError('');const day=choice==='none'?null:addDays(today,Number(choice));void Promise.resolve().then(()=>store.personal(p=>rescheduleTask(p,id,day))).catch(e=>setError((e as Error).message));}
  const view=useMemo(()=>planningView(workspace.personal,today,include),[workspace.personal.dashboardItems,workspace.personal.readLater,today,include]);
  const next=view.tasks.filter(t=>t.bucket==='overdue'||t.bucket==='today'||t.bucket==='soon'),count=(b:string)=>view.tasks.filter(t=>t.bucket===b).length,dated=view.tasks.filter(t=>t.dueDate).length;
  const tabs:[Focus,string,number][]=[['next','Next up',next.length],['open','Open tasks',view.tasks.length],['agenda','Agenda',dated],['notes','Notes',view.notes.length],['reading','Reading queue',view.reading.length]];
  function task(t:PlanningTask){const {title}=splitCaptureText(t.item.text);return <li key={t.item.id} className={'planning-task '+t.bucket} data-planning-item={t.item.id}>
   <button className="planning-title" aria-label={'Planning task: '+title} onClick={()=>onEdit(t.item)}>{title}</button>
   <span className="planning-meta">{t.dueDate?<time dateTime={t.dueDate} className={'planning-due '+t.bucket}>{BUCKET_LABEL[t.bucket]} · {t.dueDate}</time>:<small>Unscheduled</small>}{t.item.important&&<small className="important-label">Important</small>}{t.item.origin&&<small title={'Imported from Power Ops ('+t.item.origin.objectId+')'}>Power Ops</small>}</span>
+  <select className="planning-reschedule" aria-label={'Reschedule '+title} value="" onChange={e=>reschedule(t.item.id,e.target.value)}><option value="">Reschedule…</option><option value="0">Today</option><option value="1">Tomorrow</option><option value="7">In a week</option>{t.dueDate&&<option value="none">No date</option>}</select>
   <button aria-label={'Mark done from planning: '+title} onClick={()=>onStatus(t.item.id,'done')}>Done</button></li>;}
  function limited<T>(rows:T[],render:(x:T)=>any){const shown=all?rows:rows.slice(0,8);return <>{shown.map(render)}{rows.length>8&&<li><button className="text-button" onClick={()=>setAll(!all)}>{all?'Show less':'Show all ('+rows.length+')'}</button></li>}</>;}
  let body:any=null;
@@ -35,6 +37,7 @@ export function PlanningPanel({workspace,include,onOpen,onEdit,onStatus}:{worksp
   <div className="planning-summary" role="group" aria-label="Planning views">{tabs.map(([id,label,n])=><button key={id} aria-pressed={focus===id} onClick={()=>{setFocus(focus===id?'none':id);setAll(false);}}>{label} <strong>{n}</strong></button>)}
    <span className="planning-counts" aria-label="Due summary">{count('overdue')>0&&<small className="planning-due overdue">{count('overdue')} overdue</small>}<small>{count('today')} today</small><small>{count('soon')} in {DUE_SOON_DAYS} days</small></span></div>
   {focus!=='none'&&body}
+  {error&&<p role="alert" className="error-message">{error}</p>}
  </section>;
 }
 
