@@ -165,6 +165,19 @@ Browser runs used Playwright wheel injection. **This is not physical mouse or tr
 | REG-01 | PASS | Inherited DOM and runtime suites and `completion_v22_runtime` |
 | UI-01 | PASS (390px Experience panel) | `v3_gates` |
 
+## Preview qualification log
+
+The following happened on 2026-09-25 (UTC).
+
+1. At owner request, a disposable QA Worker, `atlasnote-v23-qa`, was created from a placeholder that contains no AtlasNote code (version `ca514280`). It serves only `https://atlasnote-v23-qa.datapass.workers.dev`. The production Worker `atlasnote` was not touched: it was last modified 2026-09-24 14:40 and still redirects to Access.
+2. The preview-only AtlasNote version `09756ec7-6d70-44d0-94b0-e2ed00d4c518` (build `e236211`) was uploaded with `wrangler versions upload` and was never deployed.
+3. **Incident:** Access had not yet been configured, contrary to an earlier message. For about 1 to 2 minutes, the version and alias preview URLs served the build without authentication (HTTP 200).
+   - Exposed: the public reviewed content and the not-yet-approved `atlas.v3-seed` draft pack.
+   - Not exposed: personal data, backups or IndexedDB content, which live only in the browser.
+   - The URLs were unpublished and random.
+4. **Mitigation:** the QA placeholder was redeployed with `preview_urls: false` (version `d8753f37`). Both preview URLs now return 404 / Cloudflare error 1042.
+5. **Next:** the owner enables Cloudflare Access for the QA Worker's Preview URLs, including a Service Auth token. Previews are re-enabled only after an unauthenticated request is verified to be redirected to Access. Then `test:v23:release` runs with the owner's environment-only secrets.
+
 ## Remaining work and blockers
 
 - **BLOCKED: real-device PDF wheel trace.** This needs the owner's affected mouse or trackpad and the trace export. The Spread backward jump is hardened against stale restores but not proven fixed.
