@@ -1,4 +1,7 @@
 /* V3 workspace Experience: one right-side editor (existing floating-panel style). */
+/* Theme-aware error colours for V3 messages (readable on Dark Slate). */
+:root{--v3-danger-text:#9b1c1c;--v3-danger-border:#e7b4b4}
+.theme-slate,:root[data-theme="slate"]{--v3-danger-text:#ffb3b3;--v3-danger-border:#8a4b4b}
 .floating-panel.experience-panel{position:fixed;top:66px;right:56px;width:360px;max-height:calc(100dvh - 96px);overflow:auto;display:block}
 .experience-panel .floating-panel-heading{position:sticky;top:0;background:var(--surface);z-index:1}
 .experience-panel>*:not(.floating-panel-heading){margin-left:12px;margin-right:12px}
@@ -17,7 +20,7 @@
 .experience-exception{display:flex;align-items:center;gap:6px;font-size:12px;padding:2px 0}
 .experience-exception span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .experience-note{font-size:11px;color:var(--muted);margin:4px 0}
-.experience-warning{font-size:12px;color:#9b1c1c;margin:4px 0}
+.experience-warning{font-size:12px;color:var(--v3-danger-text,#9b1c1c);margin:4px 0}
 .experience-advanced{font-size:12px;margin-bottom:10px}
 .experience-advanced summary{cursor:pointer;color:var(--muted)}
 .experience-advanced dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin:8px 0 0}

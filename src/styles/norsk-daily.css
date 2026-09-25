@@ -6,7 +6,7 @@
 .norsk-daily-header .eyebrow{margin:0;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .norsk-daily-dates{display:flex;align-items:center;gap:4px}
 .norsk-daily-dates select{min-width:220px}
-.norsk-daily-synthetic{border:1px dashed #c98a00;background:#fff7e0;color:#6b4a00;padding:6px 10px;border-radius:8px;font-size:12px}
+.norsk-daily-synthetic{border:1px dashed var(--warning-border,#c98a00);background:var(--warning-bg,#fff7e0);color:var(--warning-text,#6b4a00);padding:6px 10px;border-radius:8px;font-size:12px}
 .norsk-daily-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:10px 0 12px}
 .norsk-daily-filters{display:flex;gap:6px;flex:1;flex-wrap:wrap}
 .norsk-daily-filters button,.norsk-daily-status button{font-size:12px;padding:3px 10px;border-radius:14px}
