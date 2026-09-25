@@ -196,6 +196,16 @@ The following happened on 2026-09-25 (UTC).
 10. **Owner decision: stop REL-02 here.** The service token is not accepted by the Access application (cause not isolated: token value or policy attachment). The test and its policy were not relaxed. REL-02 stays BLOCKED, as on `main`. No product feature depends on it.
 11. **Cleanup:** at owner request, the disposable QA Worker `atlasnote-v23-qa` was deleted with `wrangler delete`. Its URL and its preview URLs now return 404. Production `atlasnote` is untouched and still redirects to Access (302).
 
+## Merge with main (2026-09-25)
+
+`main` at `d4a8880` (galaxy planning/inbox pass, PR #24, and the AGENTS.md merge policy, PR #25) was merged into this branch without conflicts.
+
+- A full release run found one real V3 regression, now fixed in `5a363bb`: the V3 page-input contract stopped every Escape on the physical-page field, so Focus mode could not be left while that field had focus (`finish-integrated`, phase `exit`). Escape now cancels a pending draft or message first and propagates when there is nothing to cancel. `tests/v3_runtime.py` still proves that Escape restores the committed page.
+- `backup-diagnostic` failed once (`jszip.js` failed to load in the DOM harness) and passed when re-run alone. It is recorded as intermittent.
+- On clean commit `5a363bb`, `npm run test:release` gives **52/52 PASS**. Evidence was kept outside the repository.
+- On the merged tree: `npm test` 1128/1128, `npm run test:v23` 214/214, both typechecks, `validate`, `check:pdfatlas`, `check:v23:secrets`, `build` and `check:release` all pass. `test:planning:ui` passes 5/5, and `v3_runtime`, `v3_pdf_window`, `v3_norsk_daily`, `v3_tabs` and `v3_gates` pass 6/6, 5/5, 7/7, 4/4 and 4/4.
+- The blockers below are unchanged, and the Access preview gate stays BLOCKED in CI, the same as on `main`.
+
 ## Remaining work and blockers
 
 - **BLOCKED: real-device PDF wheel trace.** This needs the owner's affected mouse or trackpad and the trace export. The Spread backward jump is hardened against stale restores but not proven fixed.
