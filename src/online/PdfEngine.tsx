@@ -187,7 +187,8 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  useEffect(()=>{if(!pdf||!paneId)return;publishPosition({slot:slotId??1,paneId,documentId:doc.id,sha256:doc.sha256,page,visible:loc.pdfMode==='continuous'?[page]:pages,numPages:count});},[pdf,paneId,slotId,doc.id,doc.sha256,page,shownKey,count]);
  useEffect(()=>()=>{if(paneId)clearPosition(slotId??1,paneId,doc.id);},[paneId,slotId,doc.id]);
  function commitPageInput(){const parsed=parsePageInput(pageInput,count) as {ok:true;page:number}|{ok:false;message:string};if(!parsed.ok){setPageMessage(parsed.message);return;}setPageMessage('');setPage(parsed.page,false,'page-input');}
- function pageInputKeys(e:React.KeyboardEvent<HTMLInputElement>){if(e.key==='Escape'){e.preventDefault();e.stopPropagation();setPageInput(String(page));setPageMessage('');}}
+ // Escape first cancels a pending page draft or message; with nothing to cancel it propagates (e.g. to exit Focus mode).
+ function pageInputKeys(e:React.KeyboardEvent<HTMLInputElement>){if(e.key==='Escape'&&(pageInput!==String(page)||pageMessage)){e.preventDefault();e.stopPropagation();setPageInput(String(page));setPageMessage('');}}
  function downloadTrace(){const blob=new Blob([JSON.stringify(navigationTrace.snapshot(),null,2)+'\n'],{type:'application/json'}),href=URL.createObjectURL(blob),a=window.document.createElement('a');a.href=href;a.download='atlas-pdf-navigation-trace.json';a.click();setTimeout(()=>URL.revokeObjectURL(href),1000);}
  function changeMode(mode:Location['pdfMode']){onLocation({...loc,pdfMode:mode,...(mode==='grid'?{zoom:1}:{})});}
 
