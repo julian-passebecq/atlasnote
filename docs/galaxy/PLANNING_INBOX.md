@@ -25,6 +25,9 @@ the compatibility build; it does not certify IndexedDB, reload restore or a prod
   auto-scheduled.
 - The subject/folder scope of the Dashboard applies. Project/category stays optional.
 - Multi-line notes show their first line as the title and a short preview below it.
+- The capture editor sets, changes or clears a task's due date and marks any capture Important
+  (same `dueAt` / `important` fields). Clearing the date returns the task to Unscheduled. Imported
+  items show their Power Ops origin; edits made here are kept on the next import unless replaced.
 
 ## 2. Power Ops intake — `powerops.atlasnote-handoff/1`
 
@@ -123,3 +126,16 @@ history, credentials or environment values.
 
 No password storage, no `.env` values, no Mongo migration, no two-way or real-time sync, no external
 writes, no change to the IndexedDB/recovery/history model, no calendar subsystem.
+
+## Verification (2026-09-25)
+
+Evidence kept outside the repository (scratchpad); historical evidence folders were not overwritten.
+
+- Commit `530564b`: full release runner `npm run test:release` — **52/52 PASS** (clean install,
+  typecheck, 1060 unit tests, compatibility/integrated builds, DOM, runtime, PDF, V2.2 and completion
+  runtimes). `npm run test:v23` 214/214, `check:v23:secrets` PASS, `test:planning:ui` 5/5.
+- Trial merge with the unmerged `feat/atlasnote-v3-experiences-performance` branch (temporary
+  worktree, not pushed): no conflicts, typecheck clean, 1127/1127 unit tests, planning 5/5,
+  content-hub 30/30 and stabilization browser checks PASS.
+- Not covered: live Power Ops output (the envelope above is AtlasNote's contract), live Mongoku
+  consumption, Cloudflare Access protected preview, production. Nothing was merged or deployed.
