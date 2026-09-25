@@ -1,0 +1,466 @@
+[
+  {
+    "id": "term.v3seed.grain",
+    "label": "Grain (row grain)",
+    "definition": "What exactly one row of a table or query result represents, for example one row per order or one row per customer per day. State it before and after every join or aggregation.",
+    "example": "orders: one row per order; order_lines: one row per order line.",
+    "pageIds": [
+      "page.v3seed.sql-grain-before-joins",
+      "page.v3seed.merge-validation-and-cardinality",
+      "page.v3seed.window-functions",
+      "page.v3seed.aggregations-having-and-conditional-metrics",
+      "page.v3seed.groupby-and-aggregation",
+      "page.v3seed.qualify-and-deduplication",
+      "page.v3seed.sql-interview-checklist"
+    ]
+  },
+  {
+    "id": "term.v3seed.join-cardinality",
+    "label": "Join cardinality",
+    "definition": "How many rows on each side can share a join key: one-to-one, one-to-many, many-to-one or many-to-many. It decides whether a join keeps, multiplies or drops rows.",
+    "example": "pandas: merge(..., validate=\"many_to_one\")",
+    "pageIds": [
+      "page.v3seed.sql-grain-before-joins",
+      "page.v3seed.merge-validation-and-cardinality",
+      "page.v3seed.inner-left-and-anti-joins",
+      "page.v3seed.data-quality-interview-framework",
+      "page.v3seed.sql-interview-checklist"
+    ]
+  },
+  {
+    "id": "term.v3seed.join-fan-out",
+    "label": "Join fan-out",
+    "definition": "Row multiplication caused by joining to a relation at a finer grain. Measures from the coarser side repeat and are over-counted when summed.",
+    "example": "Summing orders.shipping_fee after joining order_lines.",
+    "pageIds": [
+      "page.v3seed.sql-grain-before-joins",
+      "page.v3seed.merge-validation-and-cardinality",
+      "page.v3seed.aggregations-having-and-conditional-metrics"
+    ]
+  },
+  {
+    "id": "term.v3seed.anti-join",
+    "label": "Anti join",
+    "definition": "Returns the left rows that have no matching right row. Written as NOT EXISTS, LEFT JOIN ... WHERE right key IS NULL, or how=\"left_anti\" in PySpark.",
+    "example": "Customers without orders.",
+    "pageIds": [
+      "page.v3seed.inner-left-and-anti-joins",
+      "page.v3seed.null-semantics"
+    ]
+  },
+  {
+    "id": "term.v3seed.window-function",
+    "label": "Window function",
+    "definition": "A function evaluated over a set of related rows (the partition, optionally ordered and framed) that returns one value per input row instead of collapsing rows like GROUP BY.",
+    "example": "ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY event_ts DESC, event_id DESC)",
+    "pageIds": [
+      "page.v3seed.window-functions",
+      "page.v3seed.rows-versus-range-window-frames",
+      "page.v3seed.qualify-and-deduplication"
+    ]
+  },
+  {
+    "id": "term.v3seed.window-frame",
+    "label": "Window frame",
+    "definition": "The subset of the ordered partition that an aggregate window function sees for the current row, declared with ROWS or RANGE (GROUPS in some engines) BETWEEN ... AND .... With ORDER BY and no frame, standard SQL engines such as PostgreSQL and Spark SQL default to RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW.",
+    "example": "ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW",
+    "pageIds": [
+      "page.v3seed.rows-versus-range-window-frames"
+    ]
+  },
+  {
+    "id": "term.v3seed.peer-rows",
+    "label": "Peer rows",
+    "definition": "Rows in the same partition whose ORDER BY values are equal. RANGE frames include or exclude peers together; ROWS frames count them one by one.",
+    "example": "Two events with the same event_ts.",
+    "pageIds": [
+      "page.v3seed.rows-versus-range-window-frames",
+      "page.v3seed.window-functions"
+    ]
+  },
+  {
+    "id": "term.v3seed.v2-word-order",
+    "label": "V2 word order",
+    "translation": "V2-regelen (verbet på andreplass)",
+    "definition": "In Norwegian main clauses the finite verb is the second sentence element. When something other than the subject comes first, the subject follows the verb.",
+    "example": "I dag jobber jeg hjemme.",
+    "pageIds": [
+      "page.v3seed.v2-word-order-in-main-clauses",
+      "page.v3seed.subordinate-clauses-and-ikke",
+      "page.v3seed.b2-connectors-for-structured-answers",
+      "page.v3seed.explaining-a-data-pipeline-in-norwegian",
+      "page.v3seed.how-to-study-a-daily-news-headline"
+    ]
+  },
+  {
+    "id": "term.v3seed.sentence-adverbial",
+    "label": "Sentence adverbial",
+    "translation": "setningsadverbial",
+    "definition": "An adverb such as ikke, alltid, ofte or aldri that modifies the whole clause. It follows the finite verb in main clauses and precedes it in subordinate clauses.",
+    "example": "Han kommer ikke. / ... at han ikke kommer.",
+    "pageIds": [
+      "page.v3seed.subordinate-clauses-and-ikke"
+    ]
+  },
+  {
+    "id": "term.v3seed.subordinate-clause",
+    "label": "Subordinate clause",
+    "translation": "leddsetning",
+    "definition": "A clause introduced by a subjunction such as at, fordi, hvis or selv om. It cannot stand alone, and sentence adverbials come before its finite verb.",
+    "example": "Fordi jeg ikke hadde tid, gjorde jeg det senere.",
+    "pageIds": [
+      "page.v3seed.subordinate-clauses-and-ikke",
+      "page.v3seed.b2-connectors-for-structured-answers",
+      "page.v3seed.explaining-a-data-pipeline-in-norwegian"
+    ]
+  },
+  {
+    "id": "term.v3seed.lazy-evaluation",
+    "label": "Lazy evaluation",
+    "definition": "Deferring computation until a result is actually needed. Spark transformations only extend a plan and nothing runs until an action asks for output; a Python generator likewise produces each value only when it is requested.",
+    "example": "df.filter(\"amount > 0\") returns at once; df.count() starts a job.",
+    "pageIds": [
+      "page.v3seed.cache-and-persistence",
+      "page.v3seed.dataframe-versus-rdd-versus-pandas",
+      "page.v3seed.iterators-and-generators",
+      "page.v3seed.pyspark-interview-checklist",
+      "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks"
+    ]
+  },
+  {
+    "id": "term.v3seed.transformation-vs-action",
+    "label": "Transformation versus action",
+    "definition": "A Spark transformation (select, filter, join, groupBy) describes a new DataFrame and returns immediately. An action (count, collect, show, write) requests a result and starts one or more jobs.",
+    "example": "filter/withColumn: transformations; count/show/write: actions.",
+    "pageIds": [
+      "page.v3seed.cache-and-persistence",
+      "page.v3seed.pyspark-interview-checklist",
+      "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks"
+    ]
+  },
+  {
+    "id": "term.v3seed.shuffle",
+    "label": "Shuffle",
+    "definition": "Redistribution of rows across partitions so that rows with the same key end up together. Intermediate data is written and read over disk and network, and the shuffle is a stage boundary; physical plans show it as an Exchange.",
+    "example": "events.groupBy(\"customer_id\").count()",
+    "pageIds": [
+      "page.v3seed.databricks-performance-checklist",
+      "page.v3seed.explain-plans-and-troubleshooting",
+      "page.v3seed.join-strategies-and-broadcast-joins",
+      "page.v3seed.narrow-versus-wide-transformations",
+      "page.v3seed.partitions-and-repartitioning",
+      "page.v3seed.pyspark-interview-checklist",
+      "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+      "page.v3seed.sql-performance-reading-checklist"
+    ]
+  },
+  {
+    "id": "term.v3seed.spark-partition",
+    "label": "Partition (Spark)",
+    "definition": "A chunk of a distributed dataset that one task processes. Partition count and size set a stage's parallelism and influence how many files a write produces. Not the same as a table partition column, which is a directory layout on storage.",
+    "example": "df.rdd.getNumPartitions()",
+    "pageIds": [
+      "page.v3seed.narrow-versus-wide-transformations",
+      "page.v3seed.partitions-and-repartitioning",
+      "page.v3seed.skew-and-hot-keys",
+      "page.v3seed.small-files-and-output-layout"
+    ]
+  },
+  {
+    "id": "term.v3seed.stage-and-task",
+    "label": "Job, stage and task",
+    "definition": "An action starts a Spark job. The job is split into stages at shuffle boundaries, and each stage runs one task per partition on the executors.",
+    "example": "read -> filter | shuffle | groupBy aggregate: two stages.",
+    "pageIds": [
+      "page.v3seed.explain-plans-and-troubleshooting",
+      "page.v3seed.narrow-versus-wide-transformations",
+      "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks"
+    ]
+  },
+  {
+    "id": "term.v3seed.broadcast-join",
+    "label": "Broadcast join",
+    "definition": "A join strategy that copies a small relation to every executor so each partition of the large side is joined locally, without shuffling the large side. Only safe when the broadcast side fits comfortably in executor memory.",
+    "example": "facts.join(F.broadcast(dim), \"product_id\")",
+    "pageIds": [
+      "page.v3seed.adaptive-query-execution",
+      "page.v3seed.join-strategies-and-broadcast-joins",
+      "page.v3seed.pyspark-interview-checklist"
+    ]
+  },
+  {
+    "id": "term.v3seed.data-skew",
+    "label": "Data skew (hot key)",
+    "definition": "Uneven distribution of rows across keys or partitions, so a few tasks process far more data than their peers and dominate stage duration. NULL, empty or default keys are frequent accidental hot keys.",
+    "example": "One task reads 30x the median shuffle bytes.",
+    "pageIds": [
+      "page.v3seed.adaptive-query-execution",
+      "page.v3seed.databricks-performance-checklist",
+      "page.v3seed.pyspark-interview-checklist",
+      "page.v3seed.skew-and-hot-keys",
+      "page.v3seed.sql-performance-reading-checklist",
+      "page.v3seed.troubleshooting-a-slow-pipeline"
+    ]
+  },
+  {
+    "id": "term.v3seed.adaptive-query-execution",
+    "label": "Adaptive Query Execution (AQE)",
+    "definition": "Spark SQL re-optimization of the remaining plan at shuffle boundaries using runtime statistics: it can coalesce small shuffle partitions, switch a join to a broadcast join and split skewed partitions in joins. It does not change query semantics or fix a wrong grain.",
+    "example": "spark.sql.adaptive.enabled",
+    "pageIds": [
+      "page.v3seed.adaptive-query-execution",
+      "page.v3seed.skew-and-hot-keys"
+    ]
+  },
+  {
+    "id": "term.v3seed.physical-plan",
+    "label": "Physical plan",
+    "definition": "The executable strategy an optimizer chose for a query: scans, filters, exchanges and concrete join algorithms. Read it with EXPLAIN in SQL engines or df.explain() in Spark, then relate it to runtime metrics.",
+    "example": "df.explain(\"formatted\")",
+    "pageIds": [
+      "page.v3seed.dataframe-versus-rdd-versus-pandas",
+      "page.v3seed.explain-plans-and-troubleshooting",
+      "page.v3seed.join-strategies-and-broadcast-joins",
+      "page.v3seed.sql-performance-reading-checklist",
+      "page.v3seed.troubleshooting-a-slow-pipeline"
+    ]
+  },
+  {
+    "id": "term.v3seed.predicate-pushdown",
+    "label": "Predicate pushdown and partition pruning",
+    "definition": "Optimizations that apply filters as early as possible. Pushdown hands a filter to the scan or data source so fewer rows are read; pruning skips whole partitions or files whose metadata cannot match the filter.",
+    "example": "WHERE event_date = '2026-09-01' on a table partitioned by event_date.",
+    "pageIds": [
+      "page.v3seed.databricks-performance-checklist",
+      "page.v3seed.explain-plans-and-troubleshooting",
+      "page.v3seed.small-files-and-output-layout",
+      "page.v3seed.sql-performance-reading-checklist"
+    ]
+  },
+  {
+    "id": "term.v3seed.small-files",
+    "label": "Small-files problem",
+    "definition": "Overhead when a table consists of many files far smaller than an efficient read size: more listing, metadata and task scheduling per byte read. Addressed by right-sizing writes and by compaction.",
+    "example": "Thousands of files of a few kilobytes per daily partition.",
+    "pageIds": [
+      "page.v3seed.databricks-performance-checklist",
+      "page.v3seed.delta-lake-table-fundamentals",
+      "page.v3seed.small-files-and-output-layout"
+    ]
+  },
+  {
+    "id": "term.v3seed.hashable",
+    "label": "Hashable (Python)",
+    "definition": "An object whose hash value never changes during its lifetime and that supports equality comparison. Only hashable objects can be set members or dictionary keys: str, int, frozenset and tuples of hashable values are hashable; list and dict are not.",
+    "example": "by_key = {(\"NO\", 2024): 12}",
+    "pageIds": [
+      "page.v3seed.dataclasses-and-typed-records",
+      "page.v3seed.python-data-structures-for-data-engineering"
+    ]
+  },
+  {
+    "id": "term.v3seed.quarantine",
+    "label": "Quarantine (reject) path",
+    "definition": "A destination for records that fail parsing or validation, stored with the original value, the reason and run metadata, so valid records continue and rejected ones can be inspected and replayed.",
+    "example": "rejects/run_id=.../bad_amounts.jsonl",
+    "pageIds": [
+      "page.v3seed.data-quality-interview-framework",
+      "page.v3seed.exceptions-and-defensive-parsing",
+      "page.v3seed.json-csv-and-file-boundaries"
+    ]
+  },
+  {
+    "id": "term.v3seed.vectorization",
+    "label": "Vectorization (pandas)",
+    "definition": "Expressing a computation as whole-column operations that run in optimized native code instead of a Python-level loop or row-wise apply.",
+    "example": "df[\"amount\"] * 1.25 instead of df.apply(f, axis=1)",
+    "pageIds": [
+      "page.v3seed.pandas-performance-boundaries",
+      "page.v3seed.pandas-selection-filtering-and-assign"
+    ]
+  },
+  {
+    "id": "term.v3seed.nullable-dtype",
+    "label": "Nullable extension dtype (pandas)",
+    "definition": "pandas dtypes such as Int64, boolean and string that represent missing values with pd.NA while keeping the logical type. Without them, a missing value in an integer column forces the column to float64.",
+    "example": "pd.Series([1, None], dtype=\"Int64\")",
+    "pageIds": [
+      "page.v3seed.missing-data-and-nullable-dtypes"
+    ]
+  },
+  {
+    "id": "term.v3seed.three-valued-logic",
+    "label": "Three-valued logic (NULL)",
+    "definition": "SQL Boolean logic with TRUE, FALSE and UNKNOWN. An ordinary comparison involving NULL is UNKNOWN, and WHERE, HAVING and JOIN ... ON keep only rows that evaluate to TRUE. The pandas boolean dtype follows the same Kleene logic with pd.NA.",
+    "example": "NULL = NULL is UNKNOWN; NULL IS NULL is TRUE.",
+    "pageIds": [
+      "page.v3seed.aggregations-having-and-conditional-metrics",
+      "page.v3seed.inner-left-and-anti-joins",
+      "page.v3seed.missing-data-and-nullable-dtypes",
+      "page.v3seed.null-semantics",
+      "page.v3seed.sql-interview-checklist"
+    ]
+  },
+  {
+    "id": "term.v3seed.idempotency",
+    "label": "Idempotency",
+    "definition": "Property of an operation whose repeated execution with the same input leaves the target in the same state as a single execution. It makes retries and reruns safe; typical techniques are overwriting the loaded partition, MERGE on a business key and run-scoped staging with atomic promotion.",
+    "example": "Rerunning the 2026-09-01 load replaces that date instead of appending it twice.",
+    "pageIds": [
+      "page.v3seed.adf-reliability-retries-idempotency-and-monitoring",
+      "page.v3seed.bronze-silver-and-gold-contracts",
+      "page.v3seed.lakeflow-jobs-and-task-dependencies",
+      "page.v3seed.system-design-batch-analytics-pipeline"
+    ]
+  },
+  {
+    "id": "term.v3seed.data-contract",
+    "label": "Data contract",
+    "definition": "An explicit, testable agreement about a dataset between producer and consumers: schema, grain and keys, allowed values, freshness and ownership. Breaking changes are caught at the boundary instead of downstream.",
+    "example": "orders_silver: one row per order_id, amount >= 0, available by 06:00.",
+    "pageIds": [
+      "page.v3seed.bronze-silver-and-gold-contracts",
+      "page.v3seed.data-quality-interview-framework",
+      "page.v3seed.json-csv-and-file-boundaries",
+      "page.v3seed.questions-to-ask-a-data-engineering-team",
+      "page.v3seed.system-design-batch-analytics-pipeline"
+    ]
+  },
+  {
+    "id": "term.v3seed.medallion-architecture",
+    "label": "Medallion architecture",
+    "definition": "A layered lakehouse convention: Bronze keeps source-faithful data with ingestion metadata, Silver holds validated, conformed and deduplicated data, Gold serves business-level aggregates and data products. Each layer should correspond to a contract, not only a folder name.",
+    "example": "bronze.orders_raw -> silver.orders -> gold.daily_revenue",
+    "pageIds": [
+      "page.v3seed.adls-gen2-organization-and-access",
+      "page.v3seed.bronze-silver-and-gold-contracts",
+      "page.v3seed.fabric-onelake-and-lakehouse-mental-model",
+      "page.v3seed.system-design-batch-analytics-pipeline"
+    ]
+  },
+  {
+    "id": "term.v3seed.delta-transaction-log",
+    "label": "Delta transaction log",
+    "definition": "The ordered _delta_log directory of commit files that records every change to a Delta table. A write becomes visible only when its commit is recorded, which gives readers a consistent snapshot and allows time travel to earlier versions until old files are vacuumed.",
+    "example": "SELECT * FROM orders VERSION AS OF 12",
+    "pageIds": [
+      "page.v3seed.delta-lake-table-fundamentals",
+      "page.v3seed.fabric-onelake-and-lakehouse-mental-model"
+    ]
+  },
+  {
+    "id": "term.v3seed.unity-catalog",
+    "label": "Unity Catalog",
+    "definition": "The Databricks governance layer for data and AI assets. Objects are addressed as catalog.schema.object, and privileges, ownership, lineage and audit are managed centrally for the workspaces attached to the same metastore.",
+    "example": "GRANT SELECT ON TABLE prod.sales.orders TO `analysts`",
+    "pageIds": [
+      "page.v3seed.unity-catalog-mental-model"
+    ]
+  },
+  {
+    "id": "term.v3seed.managed-identity",
+    "label": "Managed identity",
+    "definition": "A Microsoft Entra identity that Azure manages for a resource, so code can obtain tokens without storing a secret. A system-assigned identity shares the lifecycle of one resource; a user-assigned identity is a standalone resource that can be attached to several resources.",
+    "example": "A data factory reads ADLS Gen2 through its managed identity and a scoped role assignment.",
+    "pageIds": [
+      "page.v3seed.adls-gen2-organization-and-access",
+      "page.v3seed.azure-data-factory-pipeline-mental-model",
+      "page.v3seed.managed-identity-and-key-vault"
+    ]
+  },
+  {
+    "id": "term.v3seed.onelake",
+    "label": "OneLake",
+    "definition": "The single logical data lake that comes with a Microsoft Fabric tenant. Fabric items store their data there, tables use the Delta Parquet format, and shortcuts reference data in other locations without copying it.",
+    "example": "A lakehouse shortcut to an existing ADLS Gen2 folder.",
+    "pageIds": [
+      "page.v3seed.fabric-data-factory-orchestration",
+      "page.v3seed.fabric-onelake-and-lakehouse-mental-model"
+    ]
+  },
+  {
+    "id": "term.v3seed.definite-form",
+    "label": "Definite form",
+    "translation": "bestemt form",
+    "definition": "Norwegian marks definiteness with a suffix on the noun: -en (masculine), -a or -en (feminine), -et (neuter; only -t after a final -e) in the singular, and -ene in the plural.",
+    "example": "en jobb -> jobben, ei bok -> boka, et møte -> møtet, jobbene",
+    "pageIds": [
+      "page.v3seed.adjective-agreement",
+      "page.v3seed.nouns-indefinite-and-definite-forms"
+    ]
+  },
+  {
+    "id": "term.v3seed.grammatical-gender",
+    "label": "Grammatical gender",
+    "translation": "grammatisk kjønn (hankjønn, hunkjønn, intetkjønn)",
+    "definition": "Every Norwegian noun is masculine (en), feminine (ei, or en in the common-gender Bokmål style) or neuter (et). Gender selects the article, the definite suffix and adjective agreement, so learn it together with the noun.",
+    "example": "en rapport, ei/en uke, et prosjekt",
+    "pageIds": [
+      "page.v3seed.adjective-agreement",
+      "page.v3seed.nouns-indefinite-and-definite-forms"
+    ]
+  },
+  {
+    "id": "term.v3seed.adjective-inflection",
+    "label": "Adjective inflection",
+    "translation": "adjektivbøying (adjektivbøyning)",
+    "definition": "Norwegian adjectives agree with the noun phrase: base form with masculine and feminine singular indefinite nouns, -t with neuter singular indefinite, and -e in the plural and after a determiner in definite phrases (den/det/de ...), which also keep the definite suffix on the noun. Adjectives ending in -ig, and some others, take no -t.",
+    "example": "en stor jobb, et stort møte, store møter, det store møtet, et viktig møte",
+    "pageIds": [
+      "page.v3seed.adjective-agreement"
+    ]
+  },
+  {
+    "id": "term.v3seed.preterite",
+    "label": "Preterite",
+    "translation": "preteritum",
+    "definition": "The simple past tense, used for completed events placed in a finished past time, often with an expression such as i går, i fjor or i 2024.",
+    "example": "Jeg jobbet i Genève i 2024.",
+    "pageIds": [
+      "page.v3seed.past-tense-preterite-versus-perfect"
+    ]
+  },
+  {
+    "id": "term.v3seed.present-perfect",
+    "label": "Present perfect",
+    "translation": "perfektum",
+    "definition": "har + past participle. Used for past events that matter now, for experience, and for situations that continue up to now (often with siden or i ... år).",
+    "example": "Jeg har jobbet med Power BI i flere år.",
+    "pageIds": [
+      "page.v3seed.past-tense-preterite-versus-perfect"
+    ]
+  },
+  {
+    "id": "term.v3seed.modal-verb",
+    "label": "Modal verb",
+    "translation": "modalverb",
+    "definition": "An auxiliary such as kan, må, skal, vil or bør that expresses ability, obligation, plan, wish or advice. It is followed by a bare infinitive, without å.",
+    "example": "Vi må teste endringen før utrullingen.",
+    "pageIds": [
+      "page.v3seed.modal-verbs-in-work-conversations"
+    ]
+  },
+  {
+    "id": "term.v3seed.connector",
+    "label": "Connector",
+    "translation": "bindeord / konnektor",
+    "definition": "A word or phrase that signals how ideas relate: sequence, cause, consequence or contrast. An adverbial connector such as derfor or likevel in position 1 triggers V2 inversion; a subjunction such as fordi or selv om starts a subordinate clause.",
+    "example": "Derfor stoppet vi kjøringen. / ... fordi testen ikke passerte.",
+    "pageIds": [
+      "page.v3seed.b2-connectors-for-structured-answers",
+      "page.v3seed.explaining-a-data-pipeline-in-norwegian",
+      "page.v3seed.how-to-study-a-daily-news-headline",
+      "page.v3seed.subordinate-clauses-and-ikke"
+    ]
+  },
+  {
+    "id": "term.v3seed.star-method",
+    "label": "STAR method",
+    "definition": "Situation, Task, Action, Result: a structure for behavioural interview answers. Keep Situation and Task short and put the technical decisions you personally made into Action.",
+    "example": "S: nightly load missed its SLA. T: I owned the fix. A: ... R: runtime 3 h -> 40 min.",
+    "pageIds": [
+      "page.v3seed.data-engineer-interview-project-walkthrough",
+      "page.v3seed.star-answers-without-losing-technical-depth"
+    ]
+  }
+]

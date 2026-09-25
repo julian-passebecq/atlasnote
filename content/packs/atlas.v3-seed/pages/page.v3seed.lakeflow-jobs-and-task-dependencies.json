@@ -1,0 +1,46 @@
+{
+  "id": "page.v3seed.lakeflow-jobs-and-task-dependencies",
+  "title": "Lakeflow Jobs and task dependencies",
+  "summary": "Model production workflows as explicit tasks with inputs, dependencies, retries and observable outputs.",
+  "blocks": [
+    {
+      "id": "block.v3seed.lakeflow-jobs-and-task-dependencies.overview",
+      "type": "markdown",
+      "text": "Model production workflows as explicit tasks with inputs, dependencies, retries and observable outputs."
+    },
+    {
+      "id": "block.v3seed.lakeflow-jobs-and-task-dependencies.points",
+      "type": "list",
+      "items": [
+        "Keep task boundaries meaningful enough to retry independently.",
+        "Pass small parameters/metadata between tasks instead of large in-memory objects.",
+        "Use cluster/serverless policies appropriate to workload and cost.",
+        "Attach alerts and inspect run history instead of relying on notebook UI state."
+      ]
+    }
+  ],
+  "related": [
+    "page.v3seed.adf-reliability-retries-idempotency-and-monitoring",
+    "page.v3seed.fabric-data-factory-orchestration",
+    "page.v3seed.mlflow-run-tracking-for-data-experiments",
+    "page.samples.databricks.workflow"
+  ],
+  "terms": [
+    "term.v3seed.idempotency"
+  ],
+  "sources": [
+    {
+      "title": "Databricks documentation",
+      "url": "https://docs.databricks.com/",
+      "publisher": "Databricks",
+      "note": "Documentation root; use its search for the topic of this page. No text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:databricks",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

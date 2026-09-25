@@ -2,31 +2,34 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.21",
-  "createdAt": 1789766231991,
+  "createdAt": 1790288402102,
   "source": "Synthetic test agent",
-  "summary": "Reviewed layout/navigation, not content history",
+  "summary": "Reviewed personal update/removal",
   "operations": [
     {
-      "id": "operation.15",
-      "kind": "workspace.navigate",
-      "baseFingerprint": "9d82ff3956cad720",
+      "id": "operation.13",
+      "kind": "bookmark.remove",
+      "baseFingerprint": "f9ff9ff4c2e4e40c",
       "payload": {
-        "target": {
-          "kind": "article",
-          "articleId": "page.v22.article",
-          "pageId": "page.v22.article"
-        },
-        "destination": 5
+        "id": "bookmark.faee465d51734c99811779564f1d8d0f"
       }
     },
     {
-      "id": "operation.16",
-      "kind": "workspace.compare",
-      "baseFingerprint": "9d82ff3956cad720",
+      "id": "operation.14",
+      "kind": "readLater.remove",
+      "baseFingerprint": "f9ff9ff4c2e4e40c",
       "payload": {
-        "enabled": true,
-        "mode": "side-by-side",
-        "pane": "B"
+        "id": "later.cb9ff50617664ef390cd670a6006a974"
+      }
+    },
+    {
+      "id": "operation.15",
+      "kind": "capture.update",
+      "baseFingerprint": "f9ff9ff4c2e4e40c",
+      "payload": {
+        "id": "capture.6d083a1854184fe6a0b894bdd13f1c31",
+        "text": "Updated example capture",
+        "status": "done"
       }
     }
   ]

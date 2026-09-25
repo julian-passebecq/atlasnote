@@ -33,7 +33,7 @@ test('browser references a single fixture root; all 15 acceptance cases remain r
  assert.equal(source.match(/docs\/examples\/v22/g)?.length,1); // manual fallback only
  assert(source.includes("EXAMPLES = Path(os.environ.get('ATLAS_V22_EXAMPLES_DIR'"));
  assert(source.includes("EXAMPLES.glob('changeset-*.json')"));
- for(const name of ['capabilities-context-keyboard-menus','review-invalid-import-subset-double-click','history-compare-real-tab-concurrency','distinct-byte-pdf-reload-backup','legacy-schema-2-3-fresh-profile-restores','rich-nonempty-v2-migration','five-theme-responsive-matrix','pinned-links-and-restore','quota-failure-atomicity','all-25-action-kinds-through-review','corrupt-backups-rejected-atomically','history-pagination-and-structure','all-resource-keyboard-menus','deleted-source-pinned-startup','exact-historical-targets-and-wrappers'])assert(source.includes("('"+name+"',"),name);
+ for(const name of ['capabilities-context-keyboard-menus','review-invalid-import-subset-double-click','history-compare-real-tab-concurrency','distinct-byte-pdf-reload-backup','legacy-schema-2-3-fresh-profile-restores','rich-nonempty-v2-migration','five-theme-responsive-matrix','pinned-links-and-restore','quota-failure-atomicity','all-26-action-kinds-through-review','corrupt-backups-rejected-atomically','history-pagination-and-structure','all-resource-keyboard-menus','deleted-source-pinned-startup','exact-historical-targets-and-wrappers'])assert(source.includes("('"+name+"',"),name);
 });
 
 test('generator then original browser receive the same fresh root, no shell, and caller env is unchanged',()=>temporary(tempRoot=>{
@@ -97,7 +97,7 @@ for(const args of [['--output-dir'],['--output-dir',''],['--other','somewhere'],
  assert.notEqual(child.status,0);assert.match(child.stderr,/Usage:/);assert.equal(sourceHash(),before);
 });
 
-test('two real generations validate 4 backup archives and all 25 operation kinds without source drift',async()=>{
+test('two real generations validate 4 backup archives and all 26 operation kinds without source drift',async()=>{
  const before=sourceHash(),captures=[];
  temporary(tempRoot=>{
   for(let i=0;i<2;i++){
@@ -106,13 +106,13 @@ test('two real generations validate 4 backup archives and all 25 operation kinds
     if(++calls===1){
      const child=spawnSync(command,args,{...options,stdio:'pipe',encoding:'utf8'});
      assert.equal(child.status,0,child.stderr);
-     assert.match(child.stdout,/"operationKinds": 25/);return child;
+     assert.match(child.stdout,/"operationKinds": 26/);return child;
     }
     const directory=options.env.ATLAS_V22_EXAMPLES_DIR;
     const names=fs.readdirSync(directory),index=JSON.parse(fs.readFileSync(path.join(directory,'INDEX.json')));
-    assert.equal(names.filter(n=>n.startsWith('changeset-')).length,23);
-    assert.equal(index.plans.length,23);assert.equal(new Set(index.plans.flatMap(p=>p.operations)).size,25);
-    assert.equal(names.length,31);assert.equal(names.filter(n=>n.endsWith('.atlas-backup.zip')).length,4);
+    assert.equal(names.filter(n=>n.startsWith('changeset-')).length,24);
+    assert.equal(index.plans.length,24);assert.equal(new Set(index.plans.flatMap(p=>p.operations)).size,26);
+    assert.equal(names.length,32);assert.equal(names.filter(n=>n.endsWith('.atlas-backup.zip')).length,4);
     const archives=names.filter(n=>n.endsWith('.atlas-backup.zip')).map(n=>({name:n,bytes:fs.readFileSync(path.join(directory,n))}));
     captures.push({directory,archives});return ok; // orchestration consumer, NOT a browser PASS
    }}),0);

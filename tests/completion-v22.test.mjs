@@ -149,7 +149,7 @@ test('Completion: manual-reference structure is navigable through the same curre
 
 test('Completion: capabilities expose concrete envelopes, all navigation methods and exact system-surface names', async () => {
  const {api} = await setup(), caps = api.getAgentCapabilities();
- assert(caps.navigation.includes('compareRevisions')); assert.equal(caps.actions.length, 25);
+ assert(caps.navigation.includes('compareRevisions')); assert.equal(caps.actions.length, 26); // V3 adds concept.create
  assert.deepEqual(caps.navigationContract.systemSurfaces, ['history','agent-review','references','dashboard','capture','states']);
  assert.equal(caps.browserSemantics.actionAttribute, 'data-agent-action');
  assert.equal(JSON.stringify(caps).includes('schemaRef'), false);

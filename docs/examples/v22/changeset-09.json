@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.9",
-  "createdAt": 1789766224505,
+  "createdAt": 1790288396970,
   "source": "Synthetic test agent",
   "summary": "Create a Notebook structural folder",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "example.operation.9.notebook.tree.createNode",
       "kind": "notebook.tree.createNode",
       "resourceKey": "notebook-tree:project.atlas.guide",
-      "baseRevisionId": "revision.4a5a11183cc74a15b16f5087cab0682c",
+      "baseRevisionId": "revision.4413d680dc2c45a8a558b6ff2964ed6a",
       "payload": {
         "operation": {
           "kind": "add",

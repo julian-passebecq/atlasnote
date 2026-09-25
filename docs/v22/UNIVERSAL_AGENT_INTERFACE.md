@@ -147,6 +147,7 @@ Example conceptual entries:
 - `workspace.navigate`
 - `workspace.compare`
 - `concept.assignment.propose`
+- `concept.create` (V3 addition: reviewed creation of a local Concept Index concept, optionally linked to an exact target)
 
 The implementation may use more precise names, but capability discovery must be first-class.
 

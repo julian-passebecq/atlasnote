@@ -1,0 +1,36 @@
+{
+  "id": "page.v3seed.reading-queue-triage",
+  "title": "Reading queue triage",
+  "summary": "Use Read Later as a finite queue, not a second permanent library.",
+  "blocks": [
+    {
+      "id": "block.v3seed.reading-queue-triage.overview",
+      "type": "markdown",
+      "text": "Use Read Later as a finite queue, not a second permanent library."
+    },
+    {
+      "id": "block.v3seed.reading-queue-triage.points",
+      "type": "list",
+      "items": [
+        "Keep a reason for each saved item.",
+        "Promote durable knowledge into a note, glossary concept or bookmark.",
+        "Archive items that are no longer relevant.",
+        "Prefer a small active queue per workspace experience."
+      ]
+    }
+  ],
+  "related": [
+    "page.v3seed.weekly-learning-review",
+    "page.v3seed.nrk-daily-feed-workflow-for-atlasnote",
+    "page.v3seed.how-to-study-a-daily-news-headline"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:kpi",
+    "topic:study-workflow",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

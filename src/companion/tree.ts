@@ -21,11 +21,27 @@ export function directCategoryPages(c:PdfCategory,companion:PdfCompanion):number
 
 /** Flatten the old category hierarchy into exactly category -> physical-page rows.
  * A repeated physical page under a different heading is an intentional link. */
-export function categoryPageRows(category:PdfCategory,companion:PdfCompanion):{id:string;page:number;title:string}[]{
- const rows:{id:string;page:number;title:string}[]=[],seen=new Set<string>();
+export function categoryPageRows(category:PdfCategory,companion:PdfCompanion):StudyRow[]{
+ const rows:StudyRow[]=[],seen=new Set<string>();
  const add=(page:number,title:string)=>{const key=JSON.stringify([page,title]);if(!seen.has(key)){seen.add(key);rows.push({id:key,page,title});}};
  for(const n of directCategoryPages(category,companion))add(n,companion.pages[String(n)]?.title??'Page '+n);
  const walk=(children:PdfCategory[])=>{for(const child of children){for(const n of directCategoryPages(child,companion))add(n,child.title);walk(child.children??[]);}};walk(category.children??[]);
  return rows.sort((a,b)=>a.page-b.page);
 }
 export function shortPageTitle(title:string,max=52):string{const clean=title.replace(/\s+/g,' ').trim();return clean.length>max?clean.slice(0,max-1).trimEnd()+'\u2026':clean;}
+
+export type StudyRow={id:string;page:number;title:string;generic?:boolean};
+/** Without categories, reviewed Companion page titles are still used; only an
+ * untitled page falls back to a single generic "Page N" row (no "p.N" repeat). */
+export function fallbackPageRows(count:number,companion?:PdfCompanion):StudyRow[]{
+ return Array.from({length:Math.max(0,Math.min(count||0,10000))},(_,i)=>{const page=i+1,title=companion?.pages[String(page)]?.title?.trim();return title?{id:String(page),page,title}:{id:String(page),page,title:'Page '+page,generic:true};});
+}
+/** Batched rows plus a small window around the reader's page, so page 190 is
+ * revealed without expanding every preceding batch. -1 marks an elided gap. */
+export function visibleRowIndexes(rows:{page:number}[],limit:number,current?:number,radius=4):number[]{
+ const shown=new Set<number>();for(let i=0;i<Math.min(limit,rows.length);i++)shown.add(i);
+ if(current!==undefined){const hits=rows.map((r,i)=>r.page===current?i:-1).filter(i=>i>=limit);for(const hit of hits)for(let i=Math.max(0,hit-radius);i<=Math.min(rows.length-1,hit+radius);i++)shown.add(i);}
+ const sorted=[...shown].sort((a,b)=>a-b),out:number[]=[];let gap=0;
+ sorted.forEach((i,k)=>{if(k&&i!==sorted[k-1]+1)out.push(-(++gap));out.push(i);});
+ return out;
+}

@@ -1,0 +1,54 @@
+{
+  "id": "page.v3seed.delta-lake-table-fundamentals",
+  "title": "Delta Lake table fundamentals",
+  "summary": "Delta adds transaction-log semantics around Parquet data to support reliable table operations.",
+  "blocks": [
+    {
+      "id": "block.v3seed.delta-lake-table-fundamentals.overview",
+      "type": "markdown",
+      "text": "Delta adds transaction-log semantics around Parquet data to support reliable table operations."
+    },
+    {
+      "id": "block.v3seed.delta-lake-table-fundamentals.points",
+      "type": "list",
+      "items": [
+        "The transaction log records committed table versions and metadata.",
+        "ACID semantics help coordinate concurrent readers/writers.",
+        "Schema enforcement/evolution should be deliberate.",
+        "Table optimization and retention operations must respect time-travel/recovery requirements."
+      ]
+    }
+  ],
+  "related": [
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.small-files-and-output-layout",
+    "page.v3seed.unity-catalog-mental-model",
+    "page.v3seed.fabric-onelake-and-lakehouse-mental-model",
+    "page.v3seed.qcm.cloud-data-platforms"
+  ],
+  "terms": [
+    "term.v3seed.delta-transaction-log",
+    "term.v3seed.small-files"
+  ],
+  "sources": [
+    {
+      "title": "Delta Lake project",
+      "url": "https://delta.io/",
+      "publisher": "Delta Lake project (Linux Foundation)",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Databricks documentation",
+      "url": "https://docs.databricks.com/",
+      "publisher": "Databricks",
+      "note": "Documentation root; use its search for the topic of this page. No text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:databricks",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

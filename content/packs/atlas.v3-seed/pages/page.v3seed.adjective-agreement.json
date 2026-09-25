@@ -1,0 +1,94 @@
+{
+  "id": "page.v3seed.adjective-agreement",
+  "title": "Adjective agreement",
+  "summary": "Adjectives change with neuter singular, plural and definite noun phrases.",
+  "blocks": [
+    {
+      "id": "block.v3seed.adjective-agreement.overview",
+      "type": "markdown",
+      "text": "Adjectives change with neuter singular, plural and definite noun phrases."
+    },
+    {
+      "id": "block.v3seed.adjective-agreement.points",
+      "type": "list",
+      "items": [
+        "en viktig rapport",
+        "et viktig møte",
+        "viktige rapporter",
+        "den viktige rapporten"
+      ]
+    },
+    {
+      "id": "block.v3seed.adjective-agreement.pattern",
+      "type": "table",
+      "columns": [
+        "Noun phrase",
+        "Masculine / feminine",
+        "Neuter",
+        "Plural"
+      ],
+      "rows": [
+        [
+          "Indefinite",
+          "en stor jobb",
+          "et stort møte",
+          "store jobber, store møter"
+        ],
+        [
+          "Definite",
+          "den store jobben",
+          "det store møtet",
+          "de store jobbene"
+        ],
+        [
+          "Adjective in -ig",
+          "en viktig rapport",
+          "et viktig møte",
+          "viktige rapporter"
+        ]
+      ]
+    },
+    {
+      "id": "block.v3seed.adjective-agreement.ig-note",
+      "type": "markdown",
+      "text": "Most adjectives add -t in the neuter singular indefinite (et stort møte). Adjectives ending in -ig, such as viktig, do not: et viktig møte. That is why the neuter example above looks unchanged. In definite phrases the adjective takes -e and the noun keeps its definite suffix: den viktige rapporten."
+    },
+    {
+      "id": "block.v3seed.adjective-agreement.question",
+      "type": "question",
+      "question": "Complete: et ___ prosjekt (viktig).",
+      "answer": "et viktig prosjekt"
+    }
+  ],
+  "related": [
+    "page.v3seed.nouns-indefinite-and-definite-forms",
+    "page.v3seed.workplace-vocabulary-for-data-projects",
+    "page.v3seed.qcm.norsk-grammar"
+  ],
+  "terms": [
+    "term.v3seed.adjective-inflection",
+    "term.v3seed.grammatical-gender",
+    "term.v3seed.definite-form"
+  ],
+  "sources": [
+    {
+      "title": "Ordbøkene.no - Bokmålsordboka and Nynorskordboka",
+      "url": "https://ordbokene.no/",
+      "publisher": "Språkrådet and University of Bergen",
+      "note": "Official dictionaries with inflection tables; reference only, no text copied."
+    },
+    {
+      "title": "Språkrådet (Language Council of Norway)",
+      "url": "https://www.sprakradet.no/",
+      "publisher": "Språkrådet",
+      "note": "Official language guidance; reference only, no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:norsk",
+    "topic:norsk",
+    "lang:nb"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

@@ -2,16 +2,16 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.17",
-  "createdAt": 1789766229591,
+  "createdAt": 1790288400334,
   "source": "Synthetic test agent",
   "summary": "Remove semantic edge",
   "operations": [
     {
       "id": "operation.7",
       "kind": "reference.remove",
-      "baseFingerprint": "a33f98b5bf4eef83",
+      "baseFingerprint": "241d92924e53dca0",
       "payload": {
-        "id": "edge.4645b7bab9674514bd1b6ba65c348a09"
+        "id": "edge.0ee21621c2724b2a9efb51568fed3da9"
       }
     }
   ]

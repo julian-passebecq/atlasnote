@@ -1,0 +1,51 @@
+{
+  "id": "page.v3seed.functions-arguments-and-return-values",
+  "title": "Functions, arguments and return values",
+  "summary": "Write small functions with explicit inputs and outputs so data transformations are testable and composable.",
+  "blocks": [
+    {
+      "id": "block.v3seed.functions-arguments-and-return-values.overview",
+      "type": "markdown",
+      "text": "Write small functions with explicit inputs and outputs so data transformations are testable and composable."
+    },
+    {
+      "id": "block.v3seed.functions-arguments-and-return-values.points",
+      "type": "list",
+      "items": [
+        "Prefer a returned value over mutating hidden global state.",
+        "Use keyword-only parameters for options that are easy to confuse.",
+        "Default arguments are evaluated once; avoid mutable defaults such as [].",
+        "Type hints document contracts but do not enforce runtime types by themselves."
+      ]
+    },
+    {
+      "id": "block.v3seed.functions-arguments-and-return-values.code",
+      "type": "code",
+      "language": "python",
+      "code": "def normalize_name(value: str, *, upper: bool = False) -> str:\n    cleaned = value.strip()\n    return cleaned.upper() if upper else cleaned.casefold()",
+      "title": "Example"
+    }
+  ],
+  "related": [
+    "page.v3seed.python-data-structures-for-data-engineering",
+    "page.v3seed.exceptions-and-defensive-parsing",
+    "page.v3seed.dataclasses-and-typed-records",
+    "page.v3seed.qcm.python-data-engineering"
+  ],
+  "terms": [],
+  "sources": [
+    {
+      "title": "Python tutorial - more control flow tools (defining functions)",
+      "url": "https://docs.python.org/3/tutorial/controlflow.html",
+      "publisher": "Python Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:python",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

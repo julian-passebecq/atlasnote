@@ -1,0 +1,36 @@
+{
+  "id": "page.v3seed.weekly-learning-review",
+  "title": "Weekly learning review",
+  "summary": "Keep a short weekly loop that converts reading into retrieval practice and next actions.",
+  "blocks": [
+    {
+      "id": "block.v3seed.weekly-learning-review.overview",
+      "type": "markdown",
+      "text": "Keep a short weekly loop that converts reading into retrieval practice and next actions."
+    },
+    {
+      "id": "block.v3seed.weekly-learning-review.points",
+      "type": "list",
+      "items": [
+        "List 3 concepts you can explain without notes.",
+        "List 2 concepts that still feel fuzzy.",
+        "Choose 1 small exercise or interview question for deliberate practice.",
+        "Archive or hide stale material so the workspace stays focused."
+      ]
+    }
+  ],
+  "related": [
+    "page.v3seed.reading-queue-triage",
+    "page.v3seed.how-to-study-a-daily-news-headline",
+    "page.samples.personal.scratchpad"
+  ],
+  "terms": [],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:kpi",
+    "topic:study-workflow",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

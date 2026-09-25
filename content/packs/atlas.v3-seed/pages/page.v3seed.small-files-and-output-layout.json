@@ -1,0 +1,60 @@
+{
+  "id": "page.v3seed.small-files-and-output-layout",
+  "title": "Small files and output layout",
+  "summary": "Output file count is part of pipeline design because it affects downstream listing, scan and metadata overhead.",
+  "blocks": [
+    {
+      "id": "block.v3seed.small-files-and-output-layout.overview",
+      "type": "markdown",
+      "text": "Output file count is part of pipeline design because it affects downstream listing, scan and metadata overhead."
+    },
+    {
+      "id": "block.v3seed.small-files-and-output-layout.points",
+      "type": "list",
+      "items": [
+        "One file per tiny partition creates small-file overhead.",
+        "Do not coalesce to one file for large production data just for convenience.",
+        "Choose partition columns with query patterns and cardinality in mind.",
+        "Compaction/optimization should preserve correctness while improving file layout."
+      ]
+    },
+    {
+      "id": "block.v3seed.small-files-and-output-layout.question",
+      "type": "question",
+      "question": "What is wrong with always coalescing to one output file?",
+      "answer": "It destroys parallelism, can create a single-task bottleneck, and does not scale with large datasets."
+    }
+  ],
+  "related": [
+    "page.v3seed.partitions-and-repartitioning",
+    "page.v3seed.delta-lake-table-fundamentals",
+    "page.v3seed.databricks-performance-checklist",
+    "page.v3seed.system-design-batch-analytics-pipeline"
+  ],
+  "terms": [
+    "term.v3seed.small-files",
+    "term.v3seed.spark-partition",
+    "term.v3seed.predicate-pushdown"
+  ],
+  "sources": [
+    {
+      "title": "Spark SQL - performance tuning",
+      "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Delta Lake project",
+      "url": "https://delta.io/",
+      "publisher": "Delta Lake project (Linux Foundation)",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

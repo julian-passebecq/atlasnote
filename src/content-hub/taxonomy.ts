@@ -5,6 +5,7 @@ import {SUBJECTS,SUBJECT_COMPAT,subjectFromCategory} from './model.js';
 import {BUILTIN_CATEGORIES} from '../core/workspace-slots.js';
 import {locations,isArchived} from '../core/workspace.js';
 import {libraryModeForPage} from './content.js';
+import {catalogueLookup} from '../core/catalogue-index.js';
 export const targetId=(t:ReadingTarget):string=>t.kind==='url'?t.url:t.kind==='collection'?t.collectionId:t.kind==='article'?t.pageId??t.articleId:t.kind==='qcm'?t.pageId??t.setId:t.kind==='dashboard-item'?t.itemId:t.pageId;
 export function projectSubject(projectId:string,o:Overlays):SubjectKey|undefined {return subjectFromCategory(Object.hasOwn(o.categories??{},projectId)?o.categories![projectId]:BUILTIN_CATEGORIES[projectId]);}
 /** One stable folder catalogue, seeded from the Notebook source tree. A type projection never owns folders. */
@@ -21,11 +22,12 @@ export function sharedFolders(c:Catalogue,o:Overlays):TaxonomyFolder[]{
   }};walk(p.nodes,p.id,[p.title]);
  }return result;
 }
-export function resourceTaxonomy(c:Catalogue,o:Overlays,id:string):TaxonomyRef|undefined {
+/** `ctx` lets a caller that classifies many resources compute folders/locations once. */
+export function resourceTaxonomy(c:Catalogue,o:Overlays,id:string,ctx?:{folders:TaxonomyFolder[];locs:ReturnType<typeof locations>}):TaxonomyRef|undefined {
  if(Object.hasOwn(o.taxonomy??{},id))return o.taxonomy![id]??undefined;
- const p=c.pages.find(p=>p.id===id),explicit=p?.article?.taxonomy??p?.qcm?.taxonomy;if(explicit)return explicit;
- const l=locations(c).get(id);if(!l)return;const subject=projectSubject(l.project.id,o);if(!subject)return;
- const folders=sharedFolders(c,o),folderId=[...l.ancestors].reverse().find(a=>folders.some(f=>f.id===a&&f.subject===subject));
+ const p=catalogueLookup(c).pageById.get(id),explicit=p?.article?.taxonomy??p?.qcm?.taxonomy;if(explicit)return explicit;
+ const l=(ctx?.locs??locations(c)).get(id);if(!l)return;const subject=projectSubject(l.project.id,o);if(!subject)return;
+ const folders=ctx?.folders??sharedFolders(c,o),folderId=[...l.ancestors].reverse().find(a=>folders.some(f=>f.id===a&&f.subject===subject));
  return {subject,...(folderId?{folderId}:{}),path:l.path.slice(0,-1)};
 }
 /** Invalid IDs/path hints remain stored. Only the display falls back, never the canonical metadata. */
@@ -43,9 +45,9 @@ export function projectLibrary(c:Catalogue,o:Overlays,mode:LibraryMode,subject?:
  const ensureUnfiled=(key:SubjectKey|undefined)=>{const id='project.unfiled.'+(key??'unclassified');if(!projects.has(id))projects.set(id,{id,title:key?SUBJECTS.find(s=>s.id===key)!.label+' / Unfiled':'Unclassified',icon:'folder',description:'Original placement metadata is retained.',nodes:[]});return projects.get(id)!.nodes;};
  for(const f of folders){if(subject&&f.subject!==subject)continue;if(f.id===f.projectId){const original=c.projects.find(p=>p.id===f.id)!;projects.set(f.id,{...original,nodes:[]});}else {const node:TreeNode={id:f.id,title:f.title,children:[]};nodes.set(f.id,node);const parent=nodes.get(f.parentId!);(parent?.children??projects.get(f.projectId)?.nodes)?.push(node);}}
  function append(node:TreeNode,t?:TaxonomyRef){if(subject&&t?.subject!==subject)return;const place=resolveTaxonomy(t,folders);const destination=place?.folderId?(nodes.get(place.folderId)?.children??projects.get(place.folderId)?.nodes):undefined;(destination??ensureUnfiled(t?.subject)).push(node);}
- const locs=locations(c),unclassifiedNative=new Set<string>();
+ const locs=locations(c),unclassifiedNative=new Set<string>(),ctx={folders,locs};
  if(mode==='notes'&&!subject){const native=(ns:TreeNode[]):TreeNode[]=>ns.flatMap(n=>{if(n.pageId)return libraryModeForPage(c,n.pageId)==='notes'&&!Object.hasOwn(o.taxonomy??{},n.pageId)&&!isArchived(n.pageId,c,o)?[structuredClone(n)]:[];return n.children&&!o.archived.includes(n.id)?[{...n,children:native(n.children)}]:[];});for(const p of c.projects)if(!projectSubject(p.id,o)&&!o.archived.includes(p.id)&&!o.projectPrefs[p.id]?.hidden){const tree=native(p.nodes);if(tree.length||o.projects.some(x=>x.id===p.id)){projects.set(p.id,{...p,nodes:tree});unclassifiedNative.add(p.id);}}}
- for(const p of c.pages){if(libraryModeForPage(c,p.id)!==mode||isArchived(p.id,c,o)||o.projectPrefs[locs.get(p.id)?.project.id??'']?.hidden)continue;const l=locs.get(p.id);if(l&&unclassifiedNative.has(l.project.id)&&!Object.hasOwn(o.taxonomy??{},p.id))continue;append({id:l?.nodeId??'node.'+p.id.slice(0,110),title:p.title,pageId:p.id},resourceTaxonomy(c,o,p.id));}
+ for(const p of c.pages){if(libraryModeForPage(c,p.id)!==mode||isArchived(p.id,c,o,locs)||o.projectPrefs[locs.get(p.id)?.project.id??'']?.hidden)continue;const l=locs.get(p.id);if(l&&unclassifiedNative.has(l.project.id)&&!Object.hasOwn(o.taxonomy??{},p.id))continue;append({id:l?.nodeId??'node.'+p.id.slice(0,110),title:p.title,pageId:p.id},resourceTaxonomy(c,o,p.id,ctx));}
  if(mode==='notes')for(const r of o.references??[])append({id:r.id,title:r.title,target:r.target},r.taxonomy);
  // Empty native folders remain discoverable in Notebook; specialized projections show only matching branches.
  const siblingOrder=new Map<string,Map<string,number>>();

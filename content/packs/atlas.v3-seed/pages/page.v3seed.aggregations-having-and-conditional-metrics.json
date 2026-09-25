@@ -1,0 +1,56 @@
+{
+  "id": "page.v3seed.aggregations-having-and-conditional-metrics",
+  "title": "Aggregations, HAVING and conditional metrics",
+  "summary": "Group only after defining the intended grain and metric semantics.",
+  "blocks": [
+    {
+      "id": "block.v3seed.aggregations-having-and-conditional-metrics.overview",
+      "type": "markdown",
+      "text": "Group only after defining the intended grain and metric semantics."
+    },
+    {
+      "id": "block.v3seed.aggregations-having-and-conditional-metrics.points",
+      "type": "list",
+      "items": [
+        "WHERE filters input rows before aggregation; HAVING filters groups after aggregation.",
+        "COUNT(*) counts rows; COUNT(col) ignores NULL values.",
+        "Conditional aggregates let one scan compute several metrics.",
+        "Beware summing a measure after a join that duplicated the original grain."
+      ]
+    },
+    {
+      "id": "block.v3seed.aggregations-having-and-conditional-metrics.code",
+      "type": "code",
+      "language": "sql",
+      "code": "SELECT country,\n       COUNT(*) AS customers,\n       SUM(CASE WHEN active THEN 1 ELSE 0 END) AS active_customers\nFROM customer_snapshot\nGROUP BY country\nHAVING COUNT(*) >= 10;",
+      "title": "Example"
+    }
+  ],
+  "related": [
+    "page.v3seed.sql-grain-before-joins",
+    "page.v3seed.groupby-and-aggregation",
+    "page.v3seed.null-semantics",
+    "page.v3seed.window-functions",
+    "page.samples.sql.select"
+  ],
+  "terms": [
+    "term.v3seed.grain",
+    "term.v3seed.join-fan-out",
+    "term.v3seed.three-valued-logic"
+  ],
+  "sources": [
+    {
+      "title": "PostgreSQL - aggregate functions tutorial",
+      "url": "https://www.postgresql.org/docs/current/tutorial-agg.html",
+      "publisher": "PostgreSQL Global Development Group",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:sql",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

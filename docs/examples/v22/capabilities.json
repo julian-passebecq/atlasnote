@@ -5515,6 +5515,550 @@
       "description": "Remove one explicit semantic reference"
     },
     {
+      "kind": "concept.create",
+      "classification": "write",
+      "resourceTypes": [],
+      "baseRequired": "fingerprint",
+      "payloadSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+          },
+          "subject": {
+            "enum": [
+              "it",
+              "cloud",
+              "job",
+              "kpi",
+              "norsk"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "aliases": {
+            "type": "array",
+            "maxItems": 30,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            }
+          },
+          "parentId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+          },
+          "assignTo": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "page"
+                  },
+                  "pageId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "anchor": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "blockId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "questionId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "sheetId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "sheetPage": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 64
+                      },
+                      "pdfPage": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000000
+                      },
+                      "pdfRevision": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 256
+                      },
+                      "unit": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 256
+                      },
+                      "atStart": {
+                        "type": "boolean"
+                      },
+                      "offset": {
+                        "type": "number",
+                        "minimum": -1000000,
+                        "maximum": 1000000
+                      },
+                      "viewportOffset": {
+                        "type": "number",
+                        "minimum": -1000000,
+                        "maximum": 1000000
+                      },
+                      "pdfOffset": {
+                        "type": "number",
+                        "minimum": -10,
+                        "maximum": 10
+                      }
+                    },
+                    "required": []
+                  },
+                  "historyRevisionId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "pageId"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "article"
+                  },
+                  "articleId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "pageId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "anchor": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "blockId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "questionId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "sheetId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "sheetPage": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 64
+                      },
+                      "pdfPage": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000000
+                      },
+                      "pdfRevision": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 256
+                      },
+                      "unit": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 256
+                      },
+                      "atStart": {
+                        "type": "boolean"
+                      },
+                      "offset": {
+                        "type": "number",
+                        "minimum": -1000000,
+                        "maximum": 1000000
+                      },
+                      "viewportOffset": {
+                        "type": "number",
+                        "minimum": -1000000,
+                        "maximum": 1000000
+                      },
+                      "pdfOffset": {
+                        "type": "number",
+                        "minimum": -10,
+                        "maximum": 10
+                      }
+                    },
+                    "required": []
+                  },
+                  "historyRevisionId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "articleId"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "qcm"
+                  },
+                  "setId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "pageId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "questionId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "historyRevisionId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "setId"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "collection"
+                  },
+                  "collectionId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "historyRevisionId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "collectionId"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "cheatsheet-page"
+                  },
+                  "pageId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "documentId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "sheetPage": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 64
+                  },
+                  "anchor": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "blockId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "questionId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "sheetId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "sheetPage": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 64
+                      },
+                      "pdfPage": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000000
+                      },
+                      "pdfRevision": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 256
+                      },
+                      "unit": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 256
+                      },
+                      "atStart": {
+                        "type": "boolean"
+                      },
+                      "offset": {
+                        "type": "number",
+                        "minimum": -1000000,
+                        "maximum": 1000000
+                      },
+                      "viewportOffset": {
+                        "type": "number",
+                        "minimum": -1000000,
+                        "maximum": 1000000
+                      },
+                      "pdfOffset": {
+                        "type": "number",
+                        "minimum": -10,
+                        "maximum": 10
+                      }
+                    },
+                    "required": []
+                  },
+                  "historyRevisionId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "pageId",
+                  "documentId",
+                  "sheetPage"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "pdf-page"
+                  },
+                  "pageId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "documentId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "pdfPage": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000000
+                  },
+                  "revision": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "anchor": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "blockId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "questionId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "sheetId": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                      },
+                      "sheetPage": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 64
+                      },
+                      "pdfPage": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 1000000
+                      },
+                      "pdfRevision": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 256
+                      },
+                      "unit": {
+                        "type": "string",
+                        "minLength": 0,
+                        "maxLength": 256
+                      },
+                      "atStart": {
+                        "type": "boolean"
+                      },
+                      "offset": {
+                        "type": "number",
+                        "minimum": -1000000,
+                        "maximum": 1000000
+                      },
+                      "viewportOffset": {
+                        "type": "number",
+                        "minimum": -1000000,
+                        "maximum": 1000000
+                      },
+                      "pdfOffset": {
+                        "type": "number",
+                        "minimum": -10,
+                        "maximum": 10
+                      }
+                    },
+                    "required": []
+                  },
+                  "historyRevisionId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "pageId",
+                  "documentId",
+                  "pdfPage"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "pdf-category"
+                  },
+                  "pageId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "documentId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "pdfPage": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1000000
+                  },
+                  "revision": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "pdfCategoryId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  },
+                  "historyRevisionId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "pageId",
+                  "documentId",
+                  "pdfPage",
+                  "pdfCategoryId"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "dashboard-item"
+                  },
+                  "itemId": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$"
+                  }
+                },
+                "required": [
+                  "kind",
+                  "itemId"
+                ]
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "kind": {
+                    "const": "url"
+                  },
+                  "url": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 2048,
+                    "pattern": "^https?://",
+                    "description": "Credential-free address. Requires an explicit external-link action, not internal navigation."
+                  }
+                },
+                "required": [
+                  "kind",
+                  "url"
+                ]
+              }
+            ]
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "id",
+          "subject",
+          "label"
+        ],
+        "description": "Create a subject concept in the local Concept Index (identical re-creation is a no-op) and optionally link it to one exact target",
+        "x-validation-scope": "Payload envelope and navigation shapes. Canonical source and cross-resource invariants are additionally checked by validateChangeSet and live preview; this is not permission to write."
+      },
+      "limits": {
+        "perResource": 2000,
+        "totalRevisions": 25000,
+        "bytes": 67108864,
+        "snapshotBytes": 4194304,
+        "reviewRecords": 500,
+        "drafts": 100,
+        "operations": 50,
+        "changeSetBytes": 1048576,
+        "queryLimit": 100
+      },
+      "reviewRequired": true,
+      "resultingStateClass": "semantic-reference",
+      "atomic": true,
+      "description": "Create a subject concept in the local Concept Index (identical re-creation is a no-op) and optionally link it to one exact target"
+    },
+    {
       "kind": "concept.assignment.propose",
       "classification": "write",
       "resourceTypes": [],

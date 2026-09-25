@@ -1,0 +1,482 @@
+[
+  {
+    "id": "project.v3seed.data-engineering",
+    "title": "Data engineering foundations",
+    "icon": "database",
+    "description": "V3 seed draft: Python, SQL, Pandas and Spark foundations with a linked grain -> joins -> windows path. Owner review required.",
+    "nodes": [
+      {
+        "id": "node.v3seed.de.path",
+        "title": "Guided path: grain, joins and window frames",
+        "children": [
+          {
+            "id": "node.v3seed.sql-grain-before-joins",
+            "title": "SQL grain before joins",
+            "pageId": "page.v3seed.sql-grain-before-joins"
+          },
+          {
+            "id": "node.v3seed.merge-validation-and-cardinality",
+            "title": "Merge validation and cardinality",
+            "pageId": "page.v3seed.merge-validation-and-cardinality"
+          },
+          {
+            "id": "node.v3seed.inner-left-and-anti-joins",
+            "title": "Inner, left and anti joins",
+            "pageId": "page.v3seed.inner-left-and-anti-joins"
+          },
+          {
+            "id": "node.v3seed.window-functions",
+            "title": "Window functions",
+            "pageId": "page.v3seed.window-functions"
+          },
+          {
+            "id": "node.v3seed.rows-versus-range-window-frames",
+            "title": "ROWS versus RANGE window frames",
+            "pageId": "page.v3seed.rows-versus-range-window-frames"
+          },
+          {
+            "id": "node.v3seed.qcm.grain-joins-windows",
+            "title": "Practice: grain, joins and window frames",
+            "pageId": "page.v3seed.qcm.grain-joins-windows"
+          }
+        ]
+      },
+      {
+        "id": "node.v3seed.de.python",
+        "title": "Python",
+        "children": [
+          {
+            "id": "node.v3seed.python-data-structures-for-data-engineering",
+            "title": "Python data structures for data engineering",
+            "pageId": "page.v3seed.python-data-structures-for-data-engineering"
+          },
+          {
+            "id": "node.v3seed.functions-arguments-and-return-values",
+            "title": "Functions, arguments and return values",
+            "pageId": "page.v3seed.functions-arguments-and-return-values"
+          },
+          {
+            "id": "node.v3seed.exceptions-and-defensive-parsing",
+            "title": "Exceptions and defensive parsing",
+            "pageId": "page.v3seed.exceptions-and-defensive-parsing"
+          },
+          {
+            "id": "node.v3seed.iterators-and-generators",
+            "title": "Iterators and generators",
+            "pageId": "page.v3seed.iterators-and-generators"
+          },
+          {
+            "id": "node.v3seed.dataclasses-and-typed-records",
+            "title": "Dataclasses and typed records",
+            "pageId": "page.v3seed.dataclasses-and-typed-records"
+          },
+          {
+            "id": "node.v3seed.json-csv-and-file-boundaries",
+            "title": "JSON, CSV and file boundaries",
+            "pageId": "page.v3seed.json-csv-and-file-boundaries"
+          },
+          {
+            "id": "node.v3seed.qcm.python-data-engineering",
+            "title": "Practice: Python for data engineering",
+            "pageId": "page.v3seed.qcm.python-data-engineering"
+          }
+        ]
+      },
+      {
+        "id": "node.v3seed.de.sql",
+        "title": "SQL",
+        "children": [
+          {
+            "id": "node.v3seed.aggregations-having-and-conditional-metrics",
+            "title": "Aggregations, HAVING and conditional metrics",
+            "pageId": "page.v3seed.aggregations-having-and-conditional-metrics"
+          },
+          {
+            "id": "node.v3seed.qualify-and-deduplication",
+            "title": "QUALIFY and deduplication",
+            "pageId": "page.v3seed.qualify-and-deduplication"
+          },
+          {
+            "id": "node.v3seed.null-semantics",
+            "title": "NULL semantics",
+            "pageId": "page.v3seed.null-semantics"
+          },
+          {
+            "id": "node.v3seed.sql-performance-reading-checklist",
+            "title": "SQL performance reading checklist",
+            "pageId": "page.v3seed.sql-performance-reading-checklist"
+          }
+        ]
+      },
+      {
+        "id": "node.v3seed.de.pandas",
+        "title": "Pandas",
+        "children": [
+          {
+            "id": "node.v3seed.pandas-selection-filtering-and-assign",
+            "title": "Pandas selection, filtering and assign",
+            "pageId": "page.v3seed.pandas-selection-filtering-and-assign"
+          },
+          {
+            "id": "node.v3seed.groupby-and-aggregation",
+            "title": "GroupBy and aggregation",
+            "pageId": "page.v3seed.groupby-and-aggregation"
+          },
+          {
+            "id": "node.v3seed.missing-data-and-nullable-dtypes",
+            "title": "Missing data and nullable dtypes",
+            "pageId": "page.v3seed.missing-data-and-nullable-dtypes"
+          },
+          {
+            "id": "node.v3seed.pandas-performance-boundaries",
+            "title": "Pandas performance boundaries",
+            "pageId": "page.v3seed.pandas-performance-boundaries"
+          }
+        ]
+      },
+      {
+        "id": "node.v3seed.de.spark",
+        "title": "PySpark and Spark",
+        "children": [
+          {
+            "id": "node.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+            "title": "Spark execution model: DAG, jobs, stages and tasks",
+            "pageId": "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks"
+          },
+          {
+            "id": "node.v3seed.narrow-versus-wide-transformations",
+            "title": "Narrow versus wide transformations",
+            "pageId": "page.v3seed.narrow-versus-wide-transformations"
+          },
+          {
+            "id": "node.v3seed.partitions-and-repartitioning",
+            "title": "Partitions and repartitioning",
+            "pageId": "page.v3seed.partitions-and-repartitioning"
+          },
+          {
+            "id": "node.v3seed.join-strategies-and-broadcast-joins",
+            "title": "Join strategies and broadcast joins",
+            "pageId": "page.v3seed.join-strategies-and-broadcast-joins"
+          },
+          {
+            "id": "node.v3seed.skew-and-hot-keys",
+            "title": "Skew and hot keys",
+            "pageId": "page.v3seed.skew-and-hot-keys"
+          },
+          {
+            "id": "node.v3seed.cache-and-persistence",
+            "title": "Cache and persistence",
+            "pageId": "page.v3seed.cache-and-persistence"
+          },
+          {
+            "id": "node.v3seed.adaptive-query-execution",
+            "title": "Adaptive Query Execution",
+            "pageId": "page.v3seed.adaptive-query-execution"
+          },
+          {
+            "id": "node.v3seed.dataframe-versus-rdd-versus-pandas",
+            "title": "DataFrame versus RDD versus Pandas",
+            "pageId": "page.v3seed.dataframe-versus-rdd-versus-pandas"
+          },
+          {
+            "id": "node.v3seed.explain-plans-and-troubleshooting",
+            "title": "Explain plans and troubleshooting",
+            "pageId": "page.v3seed.explain-plans-and-troubleshooting"
+          },
+          {
+            "id": "node.v3seed.small-files-and-output-layout",
+            "title": "Small files and output layout",
+            "pageId": "page.v3seed.small-files-and-output-layout"
+          },
+          {
+            "id": "node.v3seed.qcm.pyspark-execution-performance",
+            "title": "Practice: PySpark execution and performance",
+            "pageId": "page.v3seed.qcm.pyspark-execution-performance"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "project.v3seed.cloud",
+    "title": "Cloud platform foundations",
+    "icon": "cloud",
+    "description": "V3 seed draft: Azure, Fabric and Databricks mental models. Owner review required.",
+    "nodes": [
+      {
+        "id": "node.v3seed.cloud.azure",
+        "title": "Azure and Fabric",
+        "children": [
+          {
+            "id": "node.v3seed.azure-data-factory-pipeline-mental-model",
+            "title": "Azure Data Factory pipeline mental model",
+            "pageId": "page.v3seed.azure-data-factory-pipeline-mental-model"
+          },
+          {
+            "id": "node.v3seed.adf-parameters-variables-and-expressions",
+            "title": "ADF parameters, variables and expressions",
+            "pageId": "page.v3seed.adf-parameters-variables-and-expressions"
+          },
+          {
+            "id": "node.v3seed.adf-reliability-retries-idempotency-and-monitoring",
+            "title": "ADF reliability: retries, idempotency and monitoring",
+            "pageId": "page.v3seed.adf-reliability-retries-idempotency-and-monitoring"
+          },
+          {
+            "id": "node.v3seed.adls-gen2-organization-and-access",
+            "title": "ADLS Gen2 organization and access",
+            "pageId": "page.v3seed.adls-gen2-organization-and-access"
+          },
+          {
+            "id": "node.v3seed.managed-identity-and-key-vault",
+            "title": "Managed identity and Key Vault",
+            "pageId": "page.v3seed.managed-identity-and-key-vault"
+          },
+          {
+            "id": "node.v3seed.fabric-onelake-and-lakehouse-mental-model",
+            "title": "Fabric OneLake and lakehouse mental model",
+            "pageId": "page.v3seed.fabric-onelake-and-lakehouse-mental-model"
+          },
+          {
+            "id": "node.v3seed.fabric-data-factory-orchestration",
+            "title": "Fabric Data Factory orchestration",
+            "pageId": "page.v3seed.fabric-data-factory-orchestration"
+          },
+          {
+            "id": "node.v3seed.cloud-cost-reading-checklist",
+            "title": "Cloud cost reading checklist",
+            "pageId": "page.v3seed.cloud-cost-reading-checklist"
+          }
+        ]
+      },
+      {
+        "id": "node.v3seed.cloud.databricks",
+        "title": "Databricks",
+        "children": [
+          {
+            "id": "node.v3seed.delta-lake-table-fundamentals",
+            "title": "Delta Lake table fundamentals",
+            "pageId": "page.v3seed.delta-lake-table-fundamentals"
+          },
+          {
+            "id": "node.v3seed.bronze-silver-and-gold-contracts",
+            "title": "Bronze, Silver and Gold contracts",
+            "pageId": "page.v3seed.bronze-silver-and-gold-contracts"
+          },
+          {
+            "id": "node.v3seed.lakeflow-jobs-and-task-dependencies",
+            "title": "Lakeflow Jobs and task dependencies",
+            "pageId": "page.v3seed.lakeflow-jobs-and-task-dependencies"
+          },
+          {
+            "id": "node.v3seed.mlflow-run-tracking-for-data-experiments",
+            "title": "MLflow run tracking for data experiments",
+            "pageId": "page.v3seed.mlflow-run-tracking-for-data-experiments"
+          },
+          {
+            "id": "node.v3seed.databricks-performance-checklist",
+            "title": "Databricks performance checklist",
+            "pageId": "page.v3seed.databricks-performance-checklist"
+          },
+          {
+            "id": "node.v3seed.unity-catalog-mental-model",
+            "title": "Unity Catalog mental model",
+            "pageId": "page.v3seed.unity-catalog-mental-model"
+          }
+        ]
+      },
+      {
+        "id": "node.v3seed.cloud.practice",
+        "title": "Practice",
+        "children": [
+          {
+            "id": "node.v3seed.qcm.cloud-data-platforms",
+            "title": "Practice: ADF, Fabric, Databricks and Unity Catalog",
+            "pageId": "page.v3seed.qcm.cloud-data-platforms"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "project.v3seed.norsk",
+    "title": "Norsk foundations",
+    "icon": "language",
+    "description": "V3 seed draft: B2 grammar, work vocabulary and headline study habits. Owner review required.",
+    "nodes": [
+      {
+        "id": "node.v3seed.norsk.path",
+        "title": "Guided path: word order",
+        "children": [
+          {
+            "id": "node.v3seed.v2-word-order-in-main-clauses",
+            "title": "V2 word order in main clauses",
+            "pageId": "page.v3seed.v2-word-order-in-main-clauses"
+          },
+          {
+            "id": "node.v3seed.subordinate-clauses-and-ikke",
+            "title": "Subordinate clauses and ikke",
+            "pageId": "page.v3seed.subordinate-clauses-and-ikke"
+          },
+          {
+            "id": "node.v3seed.qcm.norsk-word-order",
+            "title": "Practice: Norwegian word order",
+            "pageId": "page.v3seed.qcm.norsk-word-order"
+          }
+        ]
+      },
+      {
+        "id": "node.v3seed.norsk.grammar",
+        "title": "Grammar",
+        "children": [
+          {
+            "id": "node.v3seed.nouns-indefinite-and-definite-forms",
+            "title": "Nouns: indefinite and definite forms",
+            "pageId": "page.v3seed.nouns-indefinite-and-definite-forms"
+          },
+          {
+            "id": "node.v3seed.adjective-agreement",
+            "title": "Adjective agreement",
+            "pageId": "page.v3seed.adjective-agreement"
+          },
+          {
+            "id": "node.v3seed.past-tense-preterite-versus-perfect",
+            "title": "Past tense: preterite versus perfect",
+            "pageId": "page.v3seed.past-tense-preterite-versus-perfect"
+          },
+          {
+            "id": "node.v3seed.modal-verbs-in-work-conversations",
+            "title": "Modal verbs in work conversations",
+            "pageId": "page.v3seed.modal-verbs-in-work-conversations"
+          },
+          {
+            "id": "node.v3seed.qcm.norsk-grammar",
+            "title": "Practice: Norwegian nouns, adjectives, tenses and modals",
+            "pageId": "page.v3seed.qcm.norsk-grammar"
+          }
+        ]
+      },
+      {
+        "id": "node.v3seed.norsk.work",
+        "title": "Norsk at work",
+        "children": [
+          {
+            "id": "node.v3seed.b2-connectors-for-structured-answers",
+            "title": "B2 connectors for structured answers",
+            "pageId": "page.v3seed.b2-connectors-for-structured-answers"
+          },
+          {
+            "id": "node.v3seed.workplace-vocabulary-for-data-projects",
+            "title": "Workplace vocabulary for data projects",
+            "pageId": "page.v3seed.workplace-vocabulary-for-data-projects"
+          },
+          {
+            "id": "node.v3seed.explaining-a-data-pipeline-in-norwegian",
+            "title": "Explaining a data pipeline in Norwegian",
+            "pageId": "page.v3seed.explaining-a-data-pipeline-in-norwegian"
+          }
+        ]
+      },
+      {
+        "id": "node.v3seed.norsk.daily",
+        "title": "Daily headline study",
+        "children": [
+          {
+            "id": "node.v3seed.how-to-study-a-daily-news-headline",
+            "title": "How to study a daily news headline",
+            "pageId": "page.v3seed.how-to-study-a-daily-news-headline"
+          },
+          {
+            "id": "node.v3seed.nrk-daily-feed-workflow-for-atlasnote",
+            "title": "Norsk Daily feed workflow",
+            "pageId": "page.v3seed.nrk-daily-feed-workflow-for-atlasnote"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "project.v3seed.interview",
+    "title": "Interview foundations",
+    "icon": "briefcase",
+    "description": "V3 seed draft: data engineering interview checklists and project stories. Owner review required.",
+    "nodes": [
+      {
+        "id": "node.v3seed.job.technical",
+        "title": "Technical checklists",
+        "children": [
+          {
+            "id": "node.v3seed.sql-interview-checklist",
+            "title": "SQL interview checklist",
+            "pageId": "page.v3seed.sql-interview-checklist"
+          },
+          {
+            "id": "node.v3seed.pyspark-interview-checklist",
+            "title": "PySpark interview checklist",
+            "pageId": "page.v3seed.pyspark-interview-checklist"
+          },
+          {
+            "id": "node.v3seed.data-quality-interview-framework",
+            "title": "Data quality interview framework",
+            "pageId": "page.v3seed.data-quality-interview-framework"
+          },
+          {
+            "id": "node.v3seed.system-design-batch-analytics-pipeline",
+            "title": "System design: batch analytics pipeline",
+            "pageId": "page.v3seed.system-design-batch-analytics-pipeline"
+          },
+          {
+            "id": "node.v3seed.troubleshooting-a-slow-pipeline",
+            "title": "Troubleshooting a slow pipeline",
+            "pageId": "page.v3seed.troubleshooting-a-slow-pipeline"
+          }
+        ]
+      },
+      {
+        "id": "node.v3seed.job.stories",
+        "title": "Project stories and questions",
+        "children": [
+          {
+            "id": "node.v3seed.data-engineer-interview-project-walkthrough",
+            "title": "Data engineer interview: project walkthrough",
+            "pageId": "page.v3seed.data-engineer-interview-project-walkthrough"
+          },
+          {
+            "id": "node.v3seed.star-answers-without-losing-technical-depth",
+            "title": "STAR answers without losing technical depth",
+            "pageId": "page.v3seed.star-answers-without-losing-technical-depth"
+          },
+          {
+            "id": "node.v3seed.questions-to-ask-a-data-engineering-team",
+            "title": "Questions to ask a data engineering team",
+            "pageId": "page.v3seed.questions-to-ask-a-data-engineering-team"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "project.v3seed.study-workflow",
+    "title": "Study workflow",
+    "icon": "person",
+    "description": "V3 seed draft: weekly review and reading-queue habits. Owner review required.",
+    "nodes": [
+      {
+        "id": "node.v3seed.study.routines",
+        "title": "Routines",
+        "children": [
+          {
+            "id": "node.v3seed.weekly-learning-review",
+            "title": "Weekly learning review",
+            "pageId": "page.v3seed.weekly-learning-review"
+          },
+          {
+            "id": "node.v3seed.reading-queue-triage",
+            "title": "Reading queue triage",
+            "pageId": "page.v3seed.reading-queue-triage"
+          }
+        ]
+      }
+    ]
+  }
+]

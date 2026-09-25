@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.4",
-  "createdAt": 1789766222060,
+  "createdAt": 1790288394781,
   "source": "Synthetic test agent",
   "summary": "Update canonical cheatsheet:page.cheatsheet.azure-data-factory",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "operation.3",
       "kind": "resource.update",
       "resourceKey": "cheatsheet:page.cheatsheet.azure-data-factory",
-      "baseRevisionId": "revision.8838c92aa631418187403cfe260522c3",
+      "baseRevisionId": "revision.6bafbf4bf87d4864b5179afdddae47cb",
       "payload": {
         "resourceType": "cheatsheet",
         "snapshot": {

@@ -1,0 +1,56 @@
+{
+  "id": "page.v3seed.join-strategies-and-broadcast-joins",
+  "title": "Join strategies and broadcast joins",
+  "summary": "Choose join strategy based on size, statistics and key distribution.",
+  "blocks": [
+    {
+      "id": "block.v3seed.join-strategies-and-broadcast-joins.overview",
+      "type": "markdown",
+      "text": "Choose join strategy based on size, statistics and key distribution."
+    },
+    {
+      "id": "block.v3seed.join-strategies-and-broadcast-joins.points",
+      "type": "list",
+      "items": [
+        "Broadcasting a genuinely small side can avoid shuffling the large side.",
+        "Sort-merge join is common for large equi-joins.",
+        "A broadcast hint is a request, not a substitute for checking size and plan.",
+        "Verify the physical plan and runtime metrics."
+      ]
+    },
+    {
+      "id": "block.v3seed.join-strategies-and-broadcast-joins.code",
+      "type": "code",
+      "language": "python",
+      "code": "from pyspark.sql import functions as F\njoined = facts.join(F.broadcast(dim), \"product_id\", \"left\")\njoined.explain(\"formatted\")",
+      "title": "Example"
+    }
+  ],
+  "related": [
+    "page.v3seed.skew-and-hot-keys",
+    "page.v3seed.adaptive-query-execution",
+    "page.v3seed.explain-plans-and-troubleshooting",
+    "page.v3seed.inner-left-and-anti-joins",
+    "page.v3seed.qcm.pyspark-execution-performance"
+  ],
+  "terms": [
+    "term.v3seed.broadcast-join",
+    "term.v3seed.shuffle",
+    "term.v3seed.physical-plan"
+  ],
+  "sources": [
+    {
+      "title": "Spark SQL - performance tuning",
+      "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

@@ -2,43 +2,28 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.19",
-  "createdAt": 1789766230775,
+  "createdAt": 1790288401221,
   "source": "Synthetic test agent",
-  "summary": "Reviewed personal writes, not content history",
+  "summary": "Create a subject concept and link it to an exact target (V3)",
   "operations": [
     {
       "id": "operation.9",
-      "kind": "bookmark.add",
-      "baseFingerprint": "d39cf74823307f68",
+      "kind": "concept.create",
+      "baseFingerprint": "3773f07e84409950",
       "payload": {
-        "target": {
+        "id": "concept.example.vocabulary",
+        "subject": "norsk",
+        "label": "Example word",
+        "aliases": [
+          "example"
+        ],
+        "parentId": "concept.norsk",
+        "assignTo": {
           "kind": "article",
           "articleId": "page.v22.article",
           "pageId": "page.v22.article"
         },
-        "title": "Example bookmark"
-      }
-    },
-    {
-      "id": "operation.10",
-      "kind": "readLater.add",
-      "baseFingerprint": "d39cf74823307f68",
-      "payload": {
-        "target": {
-          "kind": "article",
-          "articleId": "page.v22.article",
-          "pageId": "page.v22.article"
-        },
-        "title": "Example Read Later"
-      }
-    },
-    {
-      "id": "operation.11",
-      "kind": "capture.create",
-      "baseFingerprint": "d39cf74823307f68",
-      "payload": {
-        "kind": "note",
-        "text": "Example reviewed capture"
+        "note": "Reviewed vocabulary concept"
       }
     }
   ]

@@ -18,7 +18,7 @@ export function validateSavedStates(value,sessions){
  const ids=new Set(),counts={};
  function session(s){
   // Sessions cannot smuggle in an entire recursive saved-state store.
-  keys(s,['revisionCompareMode','panes','activePane','ratio','screen','leftOpen','rightOpen','focus','theme','libraryMode','showFlags','expanded','fontSize','categoryFilter','compactTop','collapsedPane','collapsedGroups','pdfTreeExpanded','surface','dashboardSubject','dashboardFolder','dashboardItemId','libraryFolder','typeExpanded']);
+  keys(s,['experience','revisionCompareMode','panes','activePane','ratio','screen','leftOpen','rightOpen','focus','theme','libraryMode','showFlags','expanded','fontSize','categoryFilter','compactTop','collapsedPane','collapsedGroups','pdfTreeExpanded','surface','dashboardSubject','dashboardFolder','dashboardItemId','libraryFolder','typeExpanded']);
   sessions.push(s);
  }
  function entry(e){
