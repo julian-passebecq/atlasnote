@@ -35,7 +35,15 @@ export function validateBookmarkReading(b){
  if(b.category!==undefined&&b.category!==null&&!cats.includes(b.category))fail('bookmark category');if(b.note!==undefined)text(b.note,1000);
  if(b.target!==undefined){validateReadingTarget(b.target);if(b.target.kind==='url')fail('URL bookmark');if((b.target.kind==='collection'?b.target.collectionId:b.target.kind==='article'?b.target.pageId??b.target.articleId:b.target.kind==='qcm'?b.target.pageId??b.target.setId:b.target.kind==='dashboard-item'?b.target.itemId:b.target.pageId)!==b.pageId)fail('bookmark identity');}
 }
+/** Optional provenance of an item imported through a reviewed external handoff.
+ * Non-secret identifiers only; the external source item is never mutated. */
+export const EXTERNAL_ORIGIN_APPS=Object.freeze(['powerops']);
+export function validateExternalOrigin(o){
+ keys(o,['app','objectId','revision','projectRef','importedAt','fingerprint']);if(o.fingerprint!==undefined&&(typeof o.fingerprint!=='string'||!/^[0-9a-f]{16}$/.test(o.fingerprint)))fail('origin fingerprint');if(!EXTERNAL_ORIGIN_APPS.includes(o.app))fail('origin app');
+ const label=(v,max)=>{text(v,max);if(!v.trim()||/[\u0000-\u001f\u007f]/.test(v))fail('origin identifier');};
+ label(o.objectId,200);if(o.revision!==undefined)label(o.revision,120);if(o.projectRef!==undefined)label(o.projectRef,200);integer(o.importedAt,0,8640000000000000);
+}
 export function validateReadingLists(entries){
  if(!Array.isArray(entries)||entries.length>READING_LIMITS.items)fail('500-item limit');if(new TextEncoder().encode(JSON.stringify(entries)).length>READING_LIMITS.bytes)fail('2 MiB limit');
- const ids=new Set();for(const e of entries){keys(e,['id','title','note','category','createdAt','target','read']);id(e.id);if(ids.has(e.id))fail('duplicate entry');ids.add(e.id);text(e.title,120);if(!e.title.trim())fail('empty title');text(e.note,1000);if(e.category!==null&&!cats.includes(e.category))fail('category');integer(e.createdAt,0,8640000000000000);if(typeof e.read!=='boolean')fail('read flag');validateReadingTarget(e.target);}
+ const ids=new Set();for(const e of entries){keys(e,['id','title','note','category','createdAt','target','read','origin']);if(e.origin!==undefined)validateExternalOrigin(e.origin);id(e.id);if(ids.has(e.id))fail('duplicate entry');ids.add(e.id);text(e.title,120);if(!e.title.trim())fail('empty title');text(e.note,1000);if(e.category!==null&&!cats.includes(e.category))fail('category');integer(e.createdAt,0,8640000000000000);if(typeof e.read!=='boolean')fail('read flag');validateReadingTarget(e.target);}
 }

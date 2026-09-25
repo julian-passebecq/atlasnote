@@ -1,0 +1,36 @@
+{
+  "schema": "powerops.atlasnote-handoff/1",
+  "sourceApp": "powerops",
+  "generatedAt": "2026-09-25T08:00:00Z",
+  "exportId": "sample-2026-09-25",
+  "items": [
+    {
+      "sourceObjectId": "po:capture:0001",
+      "sourceRevision": "1",
+      "kind": "task",
+      "title": "Rotate Cloudflare Access service token",
+      "dueDate": "2026-09-30",
+      "important": true,
+      "category": "cloud",
+      "projectRef": "atlasnote"
+    },
+    {
+      "sourceObjectId": "po:capture:0002",
+      "kind": "note",
+      "title": "Idea",
+      "text": "Show Next up above the Dashboard tables."
+    },
+    {
+      "sourceObjectId": "po:capture:0003",
+      "kind": "link",
+      "title": "Cloudflare: find account and zone IDs",
+      "url": "https://developers.cloudflare.com/fundamentals/account/find-account-and-zone-ids/"
+    },
+    {
+      "sourceObjectId": "po:capture:0004",
+      "kind": "read-later",
+      "title": "Access service tokens",
+      "url": "https://developers.cloudflare.com/cloudflare-one/identity/service-tokens/"
+    }
+  ]
+}
