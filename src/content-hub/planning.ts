@@ -149,9 +149,17 @@ export const HANDOFF_SCHEMA='powerops.atlasnote-handoff/1';
 export const RECEIPT_SCHEMA='atlasnote.import-receipt/1';
 export const HANDOFF_LIMITS=Object.freeze({bytes:1024*1024,items:200});
 type HandoffKind='note'|'task'|'link'|'read-later';
-const KIND_ALIAS:Record<string,HandoffKind>={note:'note',task:'task',todo:'task','to-do':'task',link:'link',bookmark:'link','read-later':'read-later',readlater:'read-later',read_later:'read-later'};
-const ENVELOPE_KEYS=['schema','generatedAt','sourceApp','exportId','items','projectRef','visibility','authority','freshness','observedAt'];
-const ITEM_KEYS=['sourceObjectId','sourceRevision','kind','title','text','url','dueDate','status','important','category','projectRef','capturedAt','observedAt','sourceApp','openUri','tags','visibility','authority','freshness'];
+// Power Ops capture kinds (Inbox, Todo, QuickNote, Bookmark, ReadLater, Transcript) map onto the four AtlasNote kinds.
+const KIND_ALIAS:Record<string,HandoffKind>={note:'note',inbox:'note',quicknote:'note','quick-note':'note',transcript:'note',task:'task',todo:'task','to-do':'task',link:'link',bookmark:'link','read-later':'read-later',readlater:'read-later',read_later:'read-later'};
+// Power Ops (JUtility AtlasNoteHandoff) writes `format` + `version` and a few declaration fields; `schema` is AtlasNote's documented spelling.
+const ENVELOPE_KEYS=['schema','format','version','generatedAt','sourceApp','exportId','items','projectRef','visibility','authority','freshness','observedAt','containsCredentialValues','containsMediaBinaries','importContract'];
+const ITEM_KEYS=['sourceObjectId','sourceRevision','kind','title','text','url','dueDate','dueUtc','status','isCompleted','isArchived','important','priority','category','subject','projectRef','projectName','labels','capturedAt','createdUtc','updatedUtc','observedAt','sourceApp','openUri','tags','visibility','authority','freshness'];
+const HIGH_PRIORITY=/^(?:high|urgent|critical|important|p[01]|!+)$/i;
+function isHandoffEnvelope(env:Record<string,any>):boolean{
+ return env.schema===HANDOFF_SCHEMA||env.format===HANDOFF_SCHEMA||env.format==='powerops.atlasnote-handoff'&&(env.version===1||env.version==='1');
+}
+/** A declaration such as `containsCredentialValues: false` names a secret without carrying one. */
+const carriesValue=(v:unknown)=>v!==undefined&&v!==null&&v!==''&&v!==false;
 const SECRET_TOKENS=new Set(['password','passwd','passphrase','pwd','secret','secrets','token','tokens','apikey','credential','credentials','cookie','cookies','otp','totp','mfa','recovery','bearer','authorization','dotenv','privatekey','pem','seed','mnemonic']);
 const SECRET_JOINED=/(api_?key|private_?key|access_?key|session_?key|connection_?string|client_?secret|env_?(values|file|vars?))/;
 /** Field names that would carry a credential. Descriptor keys (credentialRef, tokenId, ...) are not values. */
@@ -162,7 +170,7 @@ export function isSecretFieldName(key:string):boolean{
 }
 function secretFields(value:unknown,path='',out:string[]=[],depth=0):string[]{
  if(depth>8||!value||typeof value!=='object')return out;
- for(const [k,v] of Object.entries(value as Record<string,unknown>)){const at=path?path+'.'+k:k;if(isSecretFieldName(k)&&v!==undefined&&v!==null&&v!==''&&v!==false)out.push(at);else secretFields(v,at,out,depth+1);}
+ for(const [k,v] of Object.entries(value as Record<string,unknown>)){const at=path?path+'.'+k:k;if(isSecretFieldName(k)&&carriesValue(v))out.push(at);else secretFields(v,at,out,depth+1);}
  return out;
 }
 const cleanLabel=(v:unknown,max:number)=>typeof v==='string'&&v.trim()&&v.length<=max&&!/[\u0000-\u001f\u007f]/.test(v)?v.trim():undefined;
@@ -174,9 +182,9 @@ function parseEnvelope(source:string):{env:Record<string,any>;warnings:string[]}
  if(new TextEncoder().encode(source).length>HANDOFF_LIMITS.bytes)throw Error('The handoff exceeds the 1 MiB limit.');
  let env:any;try{env=JSON.parse(source);}catch{throw Error('The handoff is not valid JSON.');}
  if(!env||typeof env!=='object'||Array.isArray(env))throw Error('The handoff must be a JSON object.');
- if(env.schema!==HANDOFF_SCHEMA)throw Error('Unsupported handoff: expected schema "'+HANDOFF_SCHEMA+'".');
+ if(!isHandoffEnvelope(env))throw Error('Unsupported handoff: expected schema "'+HANDOFF_SCHEMA+'".');
  if(env.sourceApp!==undefined&&env.sourceApp!=='powerops')throw Error('This importer only accepts handoffs whose sourceApp is "powerops".');
- const top=Object.keys(env).filter(k=>k!=='items'&&isSecretFieldName(k)&&env[k]!==null&&env[k]!=='');if(top.length)throw Error('Refused: the handoff carries secret-looking fields ('+top.join(', ')+'). Nothing was imported.');
+ const top=Object.keys(env).filter(k=>k!=='items'&&isSecretFieldName(k)&&carriesValue(env[k]));if(top.length)throw Error('Refused: the handoff carries secret-looking fields ('+top.join(', ')+'). Nothing was imported.');
  if(!Array.isArray(env.items))throw Error('The handoff needs an items array.');if(env.items.length>HANDOFF_LIMITS.items)throw Error('Import at most '+HANDOFF_LIMITS.items+' items at once.');
  const warnings=Object.keys(env).filter(k=>!ENVELOPE_KEYS.includes(k)).map(k=>'Unknown envelope field "'+k.slice(0,60)+'" ignored.');
  if(env.visibility==='shareable')warnings.push('Envelope marked shareable; imported items stay private in AtlasNote.');
@@ -190,12 +198,13 @@ function findOrigin(p:Personal,objectId:string):{list:'dashboard'|'read-later';i
 function planItem(p:Personal,raw:any,index:number,seen:Set<string>,now:number):HandoffRow{
  const warnings:string[]=[],row=(action:HandoffAction,extra:Partial<HandoffRow>={}):HandoffRow=>({index,title:'Item '+(index+1),action,warnings,...extra});
  if(!raw||typeof raw!=='object'||Array.isArray(raw))return row('refuse',{reason:'Item is not an object.'});
+ raw=Object.fromEntries(Object.entries(raw).filter(([,v])=>v!==null)); // Power Ops writes null for empty optional fields.
  const objectId=cleanLabel(raw.sourceObjectId,200);if(!objectId)return row('refuse',{reason:'Missing or invalid sourceObjectId.'});
  const base={sourceObjectId:objectId,title:String(cleanLabel(raw.title,200)??objectId).slice(0,200)};
  if(seen.has(objectId))return row('refuse',{...base,reason:'Duplicate sourceObjectId in this handoff.'});seen.add(objectId);
  const secrets=secretFields(raw);if(secrets.length)return row('refuse',{...base,reason:'Refused: secret-looking field(s) '+secrets.slice(0,5).join(', ')+'. AtlasNote does not store credentials.'});
  for(const k of Object.keys(raw))if(!ITEM_KEYS.includes(k))warnings.push('Unknown field "'+k.slice(0,60)+'" ignored.');
- for(const k of Object.keys(raw))if(isSecretFieldName(k))warnings.push('Empty secret-looking field "'+k.slice(0,60)+'" ignored.');
+ for(const k of Object.keys(raw))if(isSecretFieldName(k)&&raw[k]!==false)warnings.push('Empty secret-looking field "'+k.slice(0,60)+'" ignored.');
  if(raw.sourceApp!==undefined&&raw.sourceApp!=='powerops')return row('refuse',{...base,reason:'Item sourceApp is not powerops.'});
  const kind=typeof raw.kind==='string'?KIND_ALIAS[raw.kind.toLowerCase()]:undefined;if(!kind)return row('refuse',{...base,reason:'Unsupported kind (use note, task, link or read-later).'});
  const title=typeof raw.title==='string'?raw.title.trim():'',body=typeof raw.text==='string'?raw.text.trim():'';
@@ -211,27 +220,35 @@ function planItem(p:Personal,raw:any,index:number,seen:Set<string>,now:number):H
  if((kind==='link'||kind==='read-later')&&!url)return row('refuse',{...base,kind,reason:'A '+kind+' item needs an http(s) url.'});
  if(kind!=='link'&&kind!=='read-later'&&url)warnings.push('url kept as text only for '+kind+' items.');
  let dueAt:number|undefined;
- if(raw.dueDate!==undefined&&raw.dueDate!==null&&raw.dueDate!==''){if(kind!=='task')warnings.push('dueDate ignored: only tasks are scheduled.');else{try{dueAt=dueAtFromDate(String(raw.dueDate));}catch{return row('refuse',{...base,kind,reason:'dueDate must be a valid YYYY-MM-DD date.'});}}}
+ if(raw.dueDate!==undefined&&raw.dueDate!==''){if(kind!=='task')warnings.push('dueDate ignored: only tasks are scheduled.');else{try{dueAt=dueAtFromDate(String(raw.dueDate));}catch{return row('refuse',{...base,kind,reason:'dueDate must be a valid YYYY-MM-DD date.'});}}}
+ else if(raw.dueUtc!==undefined&&raw.dueUtc!==''){
+  // Power Ops stores a picked calendar day as local midnight in UTC: the viewer's local day is the due date.
+  const at=typeof raw.dueUtc==='string'?Date.parse(raw.dueUtc):NaN;if(!Number.isFinite(at))return row('refuse',{...base,kind,reason:'dueUtc must be an ISO date-time.'});
+  if(kind!=='task')warnings.push('dueUtc ignored: only tasks are scheduled.');else dueAt=dueAtFromDate(localDateKey(new Date(at)));
+ }
  if(raw.important!==undefined&&typeof raw.important!=='boolean')warnings.push('important ignored: not a boolean.');
+ const important=raw.important===true||typeof raw.priority==='string'&&HIGH_PRIORITY.test(raw.priority.trim());
  const status=typeof raw.status==='string'?raw.status.toLowerCase():undefined;if(status!==undefined&&!['open','todo','done','completed','inbox'].includes(status))warnings.push('status "'+String(raw.status).slice(0,30)+'" treated as open.');
- const done=kind==='task'&&(status==='done'||status==='completed');
- const subject=typeof raw.category==='string'&&(['it','cloud','job','kpi','norsk'] as string[]).includes(raw.category.toLowerCase())?raw.category.toLowerCase() as SubjectKey:undefined;
- if(raw.category!==undefined&&!subject)warnings.push('category "'+String(raw.category).slice(0,40)+'" is not an AtlasNote subject; left unclassified.');
+ const done=kind==='task'&&(status==='done'||status==='completed'||raw.isCompleted===true);
+ const category=raw.category??raw.subject;
+ const subject=typeof category==='string'&&(['it','cloud','job','kpi','norsk'] as string[]).includes(category.toLowerCase())?category.toLowerCase() as SubjectKey:undefined;
+ if(category!==undefined&&category!==''&&!subject)warnings.push('category "'+String(category).slice(0,40)+'" is not an AtlasNote subject; left unclassified.');
  const revision=cleanLabel(raw.sourceRevision,120),projectRef=cleanLabel(raw.projectRef,200);
  if(raw.sourceRevision!==undefined&&!revision)warnings.push('sourceRevision ignored: invalid.');
- const captured=typeof raw.capturedAt==='string'?Date.parse(raw.capturedAt):NaN,createdAt=Number.isFinite(captured)&&captured>0&&captured<=now?captured:now;
+ const capturedAt=raw.capturedAt??raw.createdUtc,captured=typeof capturedAt==='string'?Date.parse(capturedAt):NaN,createdAt=Number.isFinite(captured)&&captured>0&&captured<=now?captured:now;
  const joined=title&&body?title+'\n\n'+body:title||body;
  const list=kind==='read-later'?'read-later':'dashboard';
  let record:DashboardItem|ReadingItem;
  if(list==='dashboard'){
   const text=(kind==='link'?joined||url!:joined+(url?'\n'+url:'')).trim();if(!text)return row('refuse',{...base,kind,reason:'Item has no title or text.'});
-  record={id:'powerops-'+fingerprint(objectId),kind:kind as 'note'|'task'|'link',text,status:kind==='task'?(done?'done':'open'):'inbox',createdAt,...(kind==='link'?{url}:{}),...(dueAt!==undefined?{dueAt}:{}),...(raw.important===true?{important:true}:{}),...(subject?{taxonomy:{subject}}:{})};
+  record={id:'powerops-'+fingerprint(objectId),kind:kind as 'note'|'task'|'link',text,status:kind==='task'?(done?'done':'open'):'inbox',createdAt,...(kind==='link'?{url}:{}),...(dueAt!==undefined?{dueAt}:{}),...(important?{important:true}:{}),...(subject?{taxonomy:{subject}}:{})};
  }else{
   const t=(title||url!).slice(0,120);if((title||url!).length>120)warnings.push('Title shortened to 120 characters for Read later.');if(body.length>1000)warnings.push('Text shortened to 1,000 characters for the Read later note.');
   record={id:'powerops-later-'+fingerprint(objectId),title:t,note:body.slice(0,1000),category:subject?SUBJECT_COMPAT[subject]:'personal',createdAt,target:{kind:'url',url:url!},read:false};
  }
  const extra={...base,kind,list,revision,projectRef} as Partial<HandoffRow>;
  const existing=findOrigin(p,objectId);
+ if(raw.isArchived===true)return row('skip',{...extra,...(existing?{localId:existing.item.id}:{}),reason:'Archived in Power Ops; '+(existing?'the AtlasNote copy is left untouched.':'not imported.')});
  if(!existing){
   const clash=list==='dashboard'?p.dashboardItems?.some(i=>i.id===record.id):p.readLater?.some(i=>i.id===record.id);if(clash)return row('refuse',{...extra,reason:'A local item already uses the reserved import ID.'});
   return row('create',{...extra,localId:record.id,record});
@@ -276,23 +293,63 @@ export function applyHandoff(p:Personal,source:string,expectedFingerprint:string
 }
 
 // ---------------------------------------------------------------- planning overview export
-export const OVERVIEW_SCHEMA='atlasnote.planning-overview/1';
-export const OVERVIEW_MAX_TASKS=50;
-export type OverviewOptions={generatedAt:string;today:string;includeTitles?:boolean;maxTasks?:number};
-/** Bounded, metadata-only projection for future Mongoku / Power Ops consumption.
- * Deterministic for a given state and options; excludes bodies, notes, annotations, history and credentials. */
-export function planningOverview(p:Personal,o:OverviewOptions){
+/* `atlasnote.planning-overview/1` is a galaxy projection envelope. Mongoku consumes it under
+ * Mongoku-datapass docs/GALAXY_PROJECTION_CONTRACT_2026-09-25.md and refuses the whole payload on
+ * a secret-like key or value, an unknown shape or more than 64 KiB. The export applies the same
+ * rules (and a wider wording check on titles) and fails closed before anything is shown. */
+export const OVERVIEW_FORMAT='atlasnote.planning-overview/1';
+export const OVERVIEW_SCHEMA=OVERVIEW_FORMAT;
+export const OVERVIEW_OBJECT_ID='atlasnote.planning-overview';
+export const PROJECTION_LIMITS=Object.freeze({bytes:64*1024,items:25,counts:30,text:500});
+export const OVERVIEW_MAX_TASKS=PROJECTION_LIMITS.items;
+export type OverviewOptions={generatedAt:string;today:string;includeTitles?:boolean;maxTasks?:number;openUri?:string};
+export type OverviewItem={id:string;title:string;kind:'task';status:'overdue'|'due-today'|'due-soon'|'open'|'unscheduled';dueAt?:string};
+export type PlanningOverview={format:typeof OVERVIEW_FORMAT;projectRef:'atlasnote';sourceApp:'atlasnote';sourceObjectId:string;sourceRevision:string;generatedAt:string;openUri?:string;authority:'atlasnote';visibility:'private';freshness:'snapshot';lifecycle:'current';counts:Record<string,number>;items:OverviewItem[]};
+const PROJECTION_SECRET_KEY=/passw(?:or)?d|passphrase|pwd|secret|token|api_?key|private_?key|recovery_?(?:code|key)|connection_?string|dotenv|env_?contents?/i;
+const PROJECTION_SAFE_KEY=/(?:_ref|Ref|_id|Id|_name|Name|_label|Label|_present|Present|_missing|Missing|_expected|Expected|_exists|Exists|_at|At|_count|Count|_status|Status)$/;
+const PROJECTION_SECRET_VALUES=[/mongodb(?:\+srv)?:\/\//i,/\b(?:postgres(?:ql)?|mysql|redis|amqp):\/\//i,/\bgh[pousr]_[A-Za-z0-9]{20,}\b/,/\bgithub_pat_[A-Za-z0-9_]{20,}\b/,/\bsk-[A-Za-z0-9_-]{16,}\b/,/\bAKIA[0-9A-Z]{16}\b/,/\bxox[abprs]-[A-Za-z0-9-]{10,}\b/,/\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/,/\b(?:password|passwd|pwd|secret|token|api[_-]?key|client[_-]?secret)\s*[:=]\s*[^\s,;"'`]+/i];
+// Wider than the consumer on purpose: "api key: rotate" or "Password = later" are withheld too.
+const SECRET_WORDING=/\b(?:pass\s*(?:word|wd|phrase)s?|pwd|secrets?|tokens?|api[\s_-]*keys?|client[\s_-]*secrets?|private[\s_-]*keys?|access[\s_-]*keys?|connection[\s_-]*strings?|recovery[\s_-]*(?:codes?|keys?)|credentials?)\s*[:=]/i;
+const dotenvLines=(v:string)=>(v.match(/^\s*(?:export\s+)?[A-Z][A-Z0-9_]*\s*=/gm)??[]).length;
+/** True when a projection consumer (Mongoku) would accept this text. Never reports the text. */
+export function isProjectionSafeText(value:string):boolean{
+ return !PROJECTION_SECRET_VALUES.some(re=>re.test(value))&&dotenvLines(value)<2&&!SECRET_WORDING.test(value)&&!detectSecrets(value).length;
+}
+/** Paths (never values) of secret-like keys or values, following the projection contract. */
+export function projectionSecretFindings(value:unknown,path='',out:string[]=[]):string[]{
+ if(typeof value==='string'){if(!isProjectionSafeText(value))out.push((path||'(root)')+': secret-like value');}
+ else if(Array.isArray(value))value.forEach((v,i)=>projectionSecretFindings(v,path+'['+i+']',out));
+ else if(value&&typeof value==='object')for(const [k,v] of Object.entries(value)){const at=path?path+'.'+k:k;if(PROJECTION_SECRET_KEY.test(k)&&!PROJECTION_SAFE_KEY.test(k))out.push(at+': secret-like field name');projectionSecretFindings(v,at,out);}
+ return out;
+}
+/** The app location without query, fragment or user info; omitted unless http(s). */
+export function projectionOpenUri(href:string|undefined):string|undefined{
+ if(!href)return undefined;try{const u=new URL(href);return (u.protocol==='https:'||u.protocol==='http:')&&!u.username&&!u.password?u.origin+u.pathname:undefined;}catch{return undefined;}
+}
+const ITEM_STATUS:Record<PlanningBucket,OverviewItem['status']>={overdue:'overdue',today:'due-today',soon:'due-soon',later:'open',unscheduled:'unscheduled'};
+/** Bounded, metadata-only projection. Deterministic for a given state and options; excludes bodies,
+ * quick-note text, annotations, reading history and credentials. Throws rather than emit a payload
+ * the consumer would refuse. */
+export function planningOverview(p:Personal,o:OverviewOptions):PlanningOverview{
+ if(!Number.isFinite(Date.parse(o.generatedAt)))throw Error('Planning overview needs an ISO generatedAt time.');
  const view=planningView(p,o.today),max=Math.max(0,Math.min(o.maxTasks??OVERVIEW_MAX_TASKS,OVERVIEW_MAX_TASKS)),includeTitles=o.includeTitles!==false;
  const count=(b:PlanningBucket)=>view.tasks.filter(t=>t.bucket===b).length;
- const fullTasks=view.tasks.slice(0,max).map(t=>({id:t.item.id,status:'open',bucket:t.bucket,title:splitCaptureText(t.item.text).title.slice(0,160),...(t.dueDate?{dueDate:t.dueDate}:{}),...(t.item.important?{important:true}:{}),...(t.item.taxonomy?{subject:t.item.taxonomy.subject}:{}),openTarget:{kind:'dashboard-item',itemId:t.item.id},...(t.item.origin?{origin:{app:t.item.origin.app,objectId:t.item.origin.objectId}}:{})}));
- const openTasks=includeTitles?fullTasks:fullTasks.map(({title,...rest})=>rest);
- const items=(p.dashboardItems??[]).filter(i=>i.status!=='archived');
- const body={schema:OVERVIEW_SCHEMA,sourceApp:'atlasnote',authority:'atlasnote',freshness:'snapshot',visibility:'private',today:o.today,dueSoonDays:DUE_SOON_DAYS,
-  counts:{tasks:{open:view.tasks.length,done:view.done.length,overdue:count('overdue'),dueToday:count('today'),dueSoon:count('soon'),later:count('later'),unscheduled:count('unscheduled'),important:view.tasks.filter(t=>t.item.important).length},
-   quickNotes:view.notes.length,links:view.links.length,imported:items.filter(i=>i.origin).length+(p.readLater??[]).filter(r=>r.origin).length,
-   readingQueue:{unread:view.reading.length,read:(p.readLater??[]).filter(r=>r.read).length},bookmarks:p.bookmarks.length,workspaces:1+Object.keys(p.workspaceSlots??{}).length},
-  openTasks,openTasksTruncated:view.tasks.length>openTasks.length,titlesIncluded:includeTitles,
-  excluded:['document and notebook bodies','quick-note text','annotations and remarks','reading history','credentials and environment values']};
- // The snapshot identity covers the data (including titles), not the clock or the title option.
- return {...body,generatedAt:o.generatedAt,sourceRevision:fingerprint({...body,openTasks:fullTasks,titlesIncluded:true})};
+ const listed=view.tasks.slice(0,max).map(t=>{
+  const fallback='Open task'+(t.dueDate?' due '+t.dueDate:''),own=splitCaptureText(t.item.text).title.replace(/\s+/g,' ').trim().slice(0,160);
+  const withheld=!!own&&!isProjectionSafeText(own),base={id:t.item.id.slice(0,PROJECTION_LIMITS.text),kind:'task' as const,status:ITEM_STATUS[t.bucket],...(t.dueDate?{dueAt:t.dueDate}:{})};
+  return {full:{...base,title:own&&!withheld?own:fallback+(withheld?' (title withheld)':'')},bare:{...base,title:fallback},withheld};
+ });
+ const items:OverviewItem[]=listed.map(x=>includeTitles?x.full:x.bare),all=(p.dashboardItems??[]).filter(i=>i.status!=='archived'),withheld=listed.filter(x=>x.withheld).length;
+ const counts:Record<string,number>={open_tasks:view.tasks.length,overdue_tasks:count('overdue'),due_today_tasks:count('today'),due_soon_tasks:count('soon'),later_tasks:count('later'),unscheduled_tasks:count('unscheduled'),
+  important_open_tasks:view.tasks.filter(t=>t.item.important).length,done_tasks:view.done.length,notes:view.notes.length,links:view.links.length,
+  reading_queue:view.reading.length,reading_done:(p.readLater??[]).filter(r=>r.read).length,bookmarks:p.bookmarks.length,workspaces:1+Object.keys(p.workspaceSlots??{}).length,
+  imported_items:all.filter(i=>i.origin).length+(p.readLater??[]).filter(r=>r.origin).length,listed_tasks:items.length,withheld_titles:includeTitles?withheld:0};
+ const openUri=projectionOpenUri(o.openUri);
+ // The snapshot identity covers the data (including titles), not the clock, the location or the title option.
+ const sourceRevision=fingerprint({format:OVERVIEW_FORMAT,today:o.today,counts:{...counts,withheld_titles:withheld},items:listed.map(x=>x.full)});
+ const out:PlanningOverview={format:OVERVIEW_FORMAT,projectRef:'atlasnote',sourceApp:'atlasnote',sourceObjectId:OVERVIEW_OBJECT_ID,sourceRevision,generatedAt:o.generatedAt,...(openUri?{openUri}:{}),
+  authority:'atlasnote',visibility:'private',freshness:'snapshot',lifecycle:'current',counts,items};
+ const findings=projectionSecretFindings(out);if(findings.length)throw Error('Planning overview withheld: secret-like content at '+findings.slice(0,5).join(', ')+'.');
+ const bytes=new TextEncoder().encode(canonicalJSON(out)).length;if(bytes>PROJECTION_LIMITS.bytes)throw Error('Planning overview is '+bytes+' bytes; the limit is '+PROJECTION_LIMITS.bytes+'.');
+ return out;
 }

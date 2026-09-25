@@ -6,7 +6,7 @@ import type {DashboardItem,TaxonomyRef} from './model.js';
 import {captureRows,downloadJSON} from './content.js';
 import {splitCaptureText} from './dashboard.js';
 import {TaxonomyPicker} from './TaxonomyPicker.js';
-import {planningView,localDateKey,addDays,rescheduleTask,planHandoff,applyHandoff,planningOverview,canonicalJSON,serviceReferenceNote,SERVICE_TEMPLATES,HANDOFF_SCHEMA,OVERVIEW_SCHEMA,DUE_SOON_DAYS} from './planning.js';
+import {planningView,localDateKey,addDays,rescheduleTask,planHandoff,applyHandoff,planningOverview,canonicalJSON,serviceReferenceNote,SERVICE_TEMPLATES,HANDOFF_SCHEMA,OVERVIEW_SCHEMA,OVERVIEW_MAX_TASKS,DUE_SOON_DAYS} from './planning.js';
 import type {PlanningTask,HandoffPlan,HandoffReceipt} from './planning.js';
 import {detectSecrets,secretMessage} from './secrets.js';
 
@@ -65,14 +65,17 @@ export function HandoffImportDialog({workspace,onClose}:{workspace:Workspace;onC
 
 export function OverviewExportDialog({workspace,onClose}:{workspace:Workspace;onClose:()=>void}){
  const [titles,setTitles]=useState(true),[copied,setCopied]=useState(''),[generatedAt]=useState(()=>new Date().toISOString().replace(/\.\d{3}Z$/,'Z'));
- const value=useMemo(()=>planningOverview(workspace.personal,{generatedAt,today:localDateKey(),includeTitles:titles}),[workspace.personal,titles,generatedAt]),text=canonicalJSON(value);
+ const result=useMemo(()=>{try{return {value:planningOverview(workspace.personal,{generatedAt,today:localDateKey(),includeTitles:titles,openUri:location.href})};}catch(e){return {error:(e as Error).message};}},[workspace.personal,titles,generatedAt]);
+ const value=result.value,text=value?canonicalJSON(value):'',withheld=value?.counts.withheld_titles??0;
  return <Modal wide title="Export planning overview" onClose={onClose}>
-  <p className="secondary">A small, timestamped <code>{OVERVIEW_SCHEMA}</code> snapshot: counts and up to 50 open tasks with stable IDs. It never includes documents, notebook or note bodies, annotations, reading history or credentials. Nothing is sent anywhere; copy or download it yourself.</p>
+  <p className="secondary">A small, timestamped <code>{OVERVIEW_SCHEMA}</code> snapshot for Mongoku: counts and up to {OVERVIEW_MAX_TASKS} open tasks with stable IDs. It never includes documents, notebook or note bodies, annotations, reading history or credentials. Nothing is sent anywhere; copy or download it yourself.</p>
   <label className="inline-check"><input type="checkbox" checked={titles} onChange={e=>setTitles(e.target.checked)}/>Include open task titles</label>
+  {withheld>0&&<p className="secondary" role="note">{withheld} task title(s) look secret-like (for example “api key: …”) and are withheld. Reword them to include them.</p>}
+  {result.error?<p role="alert" className="error-message">{result.error}</p>:<>
   <textarea aria-label="Planning overview JSON" readOnly rows={14} spellCheck={false} value={text}/>
-  <p className="secondary">{new TextEncoder().encode(text).length.toLocaleString()} bytes · snapshot {value.sourceRevision} · generated {value.generatedAt}</p>
+  <p className="secondary">{new TextEncoder().encode(text).length.toLocaleString()} bytes · snapshot {value!.sourceRevision} · generated {value!.generatedAt}</p></>}
   {copied&&<p role="status">{copied}</p>}
-  <div className="dialog-actions"><button onClick={onClose}>Close</button><button onClick={()=>downloadJSON(JSON.parse(text),'atlasnote-planning-overview.json')}>Download JSON</button><button className="primary" onClick={()=>void copyText(text).then(()=>setCopied('Planning overview copied.')).catch(()=>setCopied('Copy failed; use Download JSON.'))}>Copy JSON</button></div>
+  <div className="dialog-actions"><button onClick={onClose}>Close</button><button disabled={!value} onClick={()=>downloadJSON(JSON.parse(text),'atlasnote-planning-overview.json')}>Download JSON</button><button className="primary" disabled={!value} onClick={()=>void copyText(text).then(()=>setCopied('Planning overview copied.')).catch(()=>setCopied('Copy failed; use Download JSON.'))}>Copy JSON</button></div>
  </Modal>;
 }
 

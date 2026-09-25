@@ -5,6 +5,7 @@ import {migratePersonal} from '../dist-offline/app/core/workspace-slots.js';
 import * as content from '../dist-offline/app/content-hub/content.js';
 import {dashboardCards} from '../dist-offline/app/content-hub/dashboard.js';
 import * as planning from '../dist-offline/app/content-hub/planning.js';
+import * as contract from './mongoku-projection-contract.mjs';
 
 // Synthetic values only. None of these strings is a real credential.
 const FAKE={github:'ghp_'+'A1b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q7r8',jwt:'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0LW9ubHkifQ.c2lnbmF0dXJlLXRlc3Q',mongo:'mongodb+srv://atlasuser:NotARealPass42@cluster0.example.mongodb.net/db',
@@ -103,21 +104,71 @@ test('Power Ops handoff refuses secrets, bad envelopes and stale previews',()=>{
  validatePersonal(p);
 });
 
-test('planning overview is bounded, deterministic, timestamped and metadata-only',()=>{
+test('planning overview is a bounded, deterministic, timestamped galaxy projection that Mongoku accepts',()=>{
  const p=personal();p.dashboardItems=[task('t.a','Private task title\nprivate details','2026-09-24'),task('t.b','Second',DAY),task('t.c','Third'),{id:'n.secretish',kind:'note',text:'My private journal entry',status:'inbox',createdAt:9}];
  for(let i=0;i<60;i++)p.dashboardItems.push(task('bulk.'+String(i).padStart(2,'0'),'Bulk '+i,'2026-12-0'+(1+i%9)));
  p.readLater=[{id:'l.1',title:'Queue',note:'secret thoughts',category:'personal',createdAt:1,target:{kind:'url',url:'https://example.com/q'},read:false}];
  const opts={generatedAt:'2026-09-25T09:00:00Z',today:DAY};
  const a=planning.canonicalJSON(planning.planningOverview(p,opts)),b=planning.canonicalJSON(planning.planningOverview(structuredClone(p),opts));
  assert.equal(a,b,'same state, same bytes');const o=JSON.parse(a);
- assert.equal(o.schema,'atlasnote.planning-overview/1');assert.equal(o.generatedAt,opts.generatedAt);assert.equal(o.freshness,'snapshot');assert.equal(o.authority,'atlasnote');
- assert.equal(o.openTasks.length,50);assert.equal(o.openTasksTruncated,true);assert.equal(o.counts.tasks.open,63);assert.equal(o.counts.tasks.overdue,1);assert.equal(o.counts.tasks.dueToday,1);assert.equal(o.counts.tasks.unscheduled,1);assert.equal(o.counts.quickNotes,1);assert.equal(o.counts.readingQueue.unread,1);
- assert.deepEqual(o.openTasks[0],{bucket:'overdue',dueDate:'2026-09-24',id:'t.a',openTarget:{itemId:'t.a',kind:'dashboard-item'},status:'open',title:'Private task title'});
+ const parsed=contract.parseProjection(o);assert.equal(parsed.ok,true,JSON.stringify(parsed.issues));
+ assert.deepEqual(Object.keys(o).sort(),['authority','counts','format','freshness','generatedAt','items','lifecycle','projectRef','sourceApp','sourceObjectId','sourceRevision','visibility'],'only contract fields');
+ assert.equal(o.format,'atlasnote.planning-overview/1');assert.equal(o.projectRef,'atlasnote');assert.equal(o.sourceApp,'atlasnote');assert.equal(o.sourceObjectId,'atlasnote.planning-overview');
+ assert.equal(o.generatedAt,opts.generatedAt);assert.equal(o.authority,'atlasnote');assert.equal(o.visibility,'private');assert.equal(o.freshness,'snapshot');assert.equal(o.lifecycle,'current');
+ assert.equal(o.items.length,25);assert.ok(Object.keys(o.counts).length<=30);assert.ok(Object.values(o.counts).every(n=>Number.isInteger(n)&&n>=0));
+ assert.equal(o.counts.open_tasks,63);assert.equal(o.counts.overdue_tasks,1);assert.equal(o.counts.due_today_tasks,1);assert.equal(o.counts.unscheduled_tasks,1);assert.equal(o.counts.notes,1);assert.equal(o.counts.reading_queue,1);assert.equal(o.counts.listed_tasks,25);assert.equal(o.counts.workspaces,1);
+ assert.deepEqual(o.items[0],{dueAt:'2026-09-24',id:'t.a',kind:'task',status:'overdue',title:'Private task title'});assert.equal(o.items[1].status,'due-today');
+ for(const item of o.items)for(const v of Object.values(item))assert.ok(v.length<=500);
  for(const hidden of ['private details','My private journal entry','secret thoughts','https://example.com/q'])assert.ok(!a.includes(hidden),'excluded: '+hidden);
  assert.ok(new TextEncoder().encode(a).length<16*1024,'small');
  const later=planning.planningOverview(p,{...opts,generatedAt:'2026-09-25T10:00:00Z'});assert.equal(later.sourceRevision,o.sourceRevision,'revision tracks state, not the clock');
  p.dashboardItems[1].status='done';assert.notEqual(planning.planningOverview(p,opts).sourceRevision,o.sourceRevision);
- const noTitles=planning.canonicalJSON(planning.planningOverview(p,{...opts,includeTitles:false}));assert.ok(!noTitles.includes('"title"'));assert.ok(!noTitles.includes('Private task title'));
+ const bare=planning.planningOverview(p,{...opts,includeTitles:false}),bareText=planning.canonicalJSON(bare);assert.equal(contract.parseProjection(bare).ok,true);
+ assert.ok(!bareText.includes('Private task title'));assert.equal(bare.items[0].title,'Open task due 2026-09-24');assert.equal(bare.sourceRevision,planning.planningOverview(p,opts).sourceRevision,'title option does not change the snapshot identity');
+ assert.throws(()=>planning.planningOverview(p,{...opts,generatedAt:'soon'}),/generatedAt/);
+});
+
+test('planning overview withholds secret-like titles and fails closed on anything else',()=>{
+ const p=personal();p.dashboardItems=[task('t.1','api key: rotate',DAY),task('t.2','Password = later',DAY),task('t.3','token: rotate'),task('t.4','ship '+FAKE.github),task('t.5','Rotate Cloudflare Access service token','2026-09-26'),task('t.6','DB_HOST=x\nDB_USER=y')];
+ const opts={generatedAt:'2026-09-25T09:00:00Z',today:DAY},o=planning.planningOverview(p,opts),text=planning.canonicalJSON(o);
+ assert.equal(contract.parseProjection(JSON.parse(text)).ok,true,'Mongoku accepts the export');
+ assert.deepEqual(o.items.map(i=>i.title),['Open task due '+DAY+' (title withheld)','Open task due '+DAY+' (title withheld)','Rotate Cloudflare Access service token','Open task (title withheld)','Open task (title withheld)','DB_HOST=x']);
+ assert.equal(o.counts.withheld_titles,4);for(const hidden of ['api key','Password','token:',FAKE.github.slice(0,12)])assert.ok(!text.includes(hidden),'withheld: '+hidden);
+ // The oracle itself refuses such titles, which is why they are withheld.
+ for(const title of ['token: rotate','api key: rotate'])assert.equal(contract.parseProjection({...JSON.parse(text),items:[{id:'x',title}]}).reason,'secret_like',title);
+ assert.equal(contract.parseProjection({...JSON.parse(text),password:'x'}).reason,'secret_like');assert.equal(contract.parseProjection({...JSON.parse(text),credentialRef:'vault:x',api_key_present:true}).ok,true,'descriptor names pass');
+ // Anything the title rule cannot repair (here an item ID) stops the export instead of producing a payload Mongoku would refuse.
+ p.dashboardItems.push(task('token=abcdef123456','x'));assert.throws(()=>planning.planningOverview(p,opts),/withheld: secret-like content at items\[\d+\]\.id/);
+});
+
+test('planning overview openUri keeps only a credential-free http(s) app location',()=>{
+ const p=personal(),opts={generatedAt:'2026-09-25T09:00:00Z',today:DAY};
+ const o=planning.planningOverview(p,{...opts,openUri:'https://user:pw@atlas.example.com/app/?workspace=2#dashboard'});assert.equal(o.openUri,undefined);
+ const ok=planning.planningOverview(p,{...opts,openUri:'https://atlas.example.com/app/index.html?x=1#dashboard'});assert.equal(ok.openUri,'https://atlas.example.com/app/index.html');assert.equal(contract.parseProjection(ok).ok,true);
+ for(const href of ['file:///D:/atlas/index.html','javascript:alert(1)','not a url'])assert.equal(planning.planningOverview(p,{...opts,openUri:href}).openUri,undefined,href);
+ assert.equal(ok.sourceRevision,planning.planningOverview(p,opts).sourceRevision,'location does not change the snapshot identity');
+ assert.deepEqual(ok.items,[]);assert.equal(ok.counts.open_tasks,0);
+});
+
+test('real Power Ops (JUtility) handoff shape imports after preview and is not duplicated on re-import',async()=>{
+ const fs=await import('node:fs/promises'),source=await fs.readFile('docs/galaxy/examples/powerops-jutility-handoff.sample.json','utf8'),before=source,p=personal();
+ const preview=planning.planHandoff(p,source,NOW);
+ assert.deepEqual(preview.counts,{create:5,update:0,unchanged:0,conflict:0,skip:1,refuse:0});assert.deepEqual(preview.warnings,[]);assert.ok(preview.rows.every(r=>!r.warnings.length),JSON.stringify(preview.rows.map(r=>r.warnings)));
+ assert.equal(preview.rows[5].reason,'Archived in Power Ops; not imported.');assert.equal(p.dashboardItems,undefined,'preview is pure');
+ const {receipt}=importNow(p,source);assert.deepEqual(receipt.items.map(i=>i.status),['created','created','created','created','created','skipped']);validatePersonal(p);
+ const env=JSON.parse(source),t=p.dashboardItems.find(i=>i.origin.objectId===env.items[0].sourceObjectId);
+ assert.equal(t.kind,'task');assert.equal(t.status,'open');assert.equal(t.important,true,'priority High marks it important');assert.deepEqual(t.taxonomy,{subject:'cloud'});
+ assert.equal(planning.dueDateOf(t),planning.localDateKey(new Date(env.items[0].dueUtc)),'dueUtc is read as the local calendar day Power Ops picked');
+ assert.equal(t.origin.app,'powerops');assert.equal(t.origin.revision,env.items[0].sourceRevision);assert.equal(t.origin.projectRef,env.items[0].projectRef);assert.equal(t.createdAt,Date.parse(env.items[0].createdUtc));
+ assert.equal(p.dashboardItems.find(i=>i.origin.objectId===env.items[4].sourceObjectId).kind,'note','inbox captures arrive as notes');
+ assert.equal(p.readLater.length,1);assert.equal(p.readLater[0].origin.objectId,env.items[3].sourceObjectId);assert.equal(p.dashboardItems.length,4);
+ const again=planning.planHandoff(p,source,NOW+1000);assert.deepEqual(again.counts,{create:0,update:0,unchanged:5,conflict:0,skip:1,refuse:0});
+ const snapshot=JSON.stringify(p);importNow(p,source,new Set(),NOW+1000);assert.equal(JSON.stringify(p),snapshot,'re-import writes nothing and duplicates nothing');
+ const done=structuredClone(env);done.items[0].isCompleted=true;done.items[0].sourceRevision='2026-09-25T09:00:00.0000000+00:00';
+ const r=importNow(p,JSON.stringify(done),new Set(),NOW+2000);assert.equal(r.plan.rows[0].action,'update');assert.equal(p.dashboardItems.find(i=>i.id===t.id).status,'done');assert.equal(p.dashboardItems.length,4);
+ assert.equal(source,before,'the Power Ops payload is never mutated');
+ const declared=structuredClone(env);declared.containsCredentialValues=true;assert.throws(()=>planning.planHandoff(p,JSON.stringify(declared)),/secret-looking fields \(containsCredentialValues\)/);
+ const v2=structuredClone(env);v2.version=2;assert.throws(()=>planning.planHandoff(p,JSON.stringify(v2)),/Unsupported handoff/);
 });
 
 test('documented sample handoff previews cleanly',async()=>{

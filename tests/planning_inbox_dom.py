@@ -64,11 +64,20 @@ with sync_playwright() as pw:
  def overview():
   reset();dashboard();import_handoff(HANDOFF);click('Import 6 item(s)',p.locator('dialog[open]'));click('Close',p.locator('dialog[open]'))
   click('Export planning overview');dialog=p.locator('dialog[open]');raw=dialog.get_by_label('Planning overview JSON',exact=True).input_value();o=json.loads(raw)
-  assert o['schema']=='atlasnote.planning-overview/1' and o['freshness']=='snapshot' and o['counts']['tasks']['open']==4 and len(o['openTasks'])==4
+  assert o['format']=='atlasnote.planning-overview/1' and o['sourceApp']=='atlasnote' and o['projectRef']=='atlasnote' and o['freshness']=='snapshot' and o['counts']['open_tasks']==4 and len(o['items'])==4
+  assert all(set(i)<={'id','title','kind','status','dueAt'} for i in o['items']) and len(o['counts'])<=30 and len(raw.encode())<64*1024
   for hidden in ['Planning tabs','service-tokens','Synthetic-Only']:assert hidden not in raw,hidden
-  dialog.get_by_label('Include open task titles').uncheck();raw2=dialog.get_by_label('Planning overview JSON',exact=True).input_value();assert '"title"' not in raw2 and json.loads(raw2)['sourceRevision']==o['sourceRevision']
+  dialog.get_by_label('Include open task titles').uncheck();raw2=dialog.get_by_label('Planning overview JSON',exact=True).input_value();assert 'Someday cleanup' not in raw2 and json.loads(raw2)['sourceRevision']==o['sourceRevision']
   click('Close',dialog);return {'bytes':len(raw)}
  check('Planning overview export is metadata-only and bounded',overview)
+ def jutility():
+  reset();dashboard();dialog=import_handoff((ROOT/'docs/galaxy/examples/powerops-jutility-handoff.sample.json').read_text(encoding='utf-8'))
+  expect(dialog.locator('.handoff-preview')).to_contain_text('5 new');expect(dialog.locator('tr.handoff-skip')).to_contain_text('Archived in Power Ops')
+  click('Import 5 item(s)',dialog);click('Close',dialog);s=state()['personal'];assert len(s['dashboardItems'])==4 and len(s['readLater'])==1
+  t=next(i for i in s['dashboardItems'] if i['kind']=='task');assert t['important'] and t['dueAt'] and t['origin']['objectId'].startswith('0b6f7c1e')
+  dialog=import_handoff((ROOT/'docs/galaxy/examples/powerops-jutility-handoff.sample.json').read_text(encoding='utf-8'));expect(button('Nothing to import',dialog)).to_be_disabled();click('Cancel',dialog)
+  assert len(state()['personal']['dashboardItems'])==4
+ check('Power Ops (JUtility) handoff file previews, imports and re-imports without duplicates',jutility)
  def reschedule():
   reset();dashboard();import_handoff(HANDOFF);click('Import 6 item(s)',p.locator('dialog[open]'));click('Close',p.locator('dialog[open]'))
   panel=p.locator('.planning-panel');expect(panel.locator('.planning-list > li')).to_have_count(3)
