@@ -59,7 +59,27 @@ Envelope (JSON, at most 1 MiB and 200 items):
 }
 ```
 
-Accepted aliases: `todo`/`to-do` → task, `bookmark` → link, `readlater`/`read_later` → read-later.
+Accepted aliases: `todo`/`to-do` → task, `bookmark` → link, `readlater`/`readLater`/`read_later` →
+read-later, `inbox`/`quicknote`/`transcript` → note.
+
+**Power Ops as shipped** (JUtility `AtlasNoteHandoff.Create`, PowerToy_UI-v2) writes
+`"format": "powerops.atlasnote-handoff", "version": 1` instead of `schema`, plus the declarations
+`containsCredentialValues: false`, `containsMediaBinaries: false` and `importContract`. Both spellings
+are accepted (`format` may also carry the `/1` suffix). A secret-named declaration set to `false` is
+not a value; `containsCredentialValues: true` refuses the whole file. Its item fields map as follows
+(`null` means absent):
+
+| Power Ops field | AtlasNote |
+|---|---|
+| `dueUtc` (local midnight of the picked day, in UTC) | due date = the viewer's local calendar day of that instant (tasks only) |
+| `isCompleted: true` | task done |
+| `isArchived: true` | **Skipped** — never imported, and an existing AtlasNote copy is left untouched |
+| `priority` `high`/`urgent`/`critical`/`important`/`p0`/`p1` | Important |
+| `subject` | same as `category` (AtlasNote subject when it matches) |
+| `createdUtc` | same as `capturedAt` |
+| `projectName`, `labels`, `updatedUtc` | accepted, not stored |
+
+Sample: `docs/galaxy/examples/powerops-jutility-handoff.sample.json`.
 Known envelope fields (`projectRef`, `visibility`, `authority`, `freshness`, `observedAt`) and item
 fields (`observedAt`, `openUri`, `tags`, `visibility`, `authority`, `freshness`, `sourceApp`) are
 accepted and not stored. Unknown fields are ignored **with a visible warning**.
@@ -110,18 +130,56 @@ numbers (never the value). AtlasNote remains a knowledge app, not a password man
 
 ## 4. Planning overview — `atlasnote.planning-overview/1`
 
-User-triggered, copied or downloaded by the user; nothing is sent anywhere. Keys are sorted, so the
-same state and timestamp give the same bytes. `sourceRevision` is a deterministic fingerprint of the
-projection (it changes with the data, not with the clock).
+User-triggered, copied or downloaded by the user; nothing is sent anywhere. It is a **galaxy
+projection envelope** that Mongoku consumes under its contract
+(Mongoku-datapass `docs/GALAXY_PROJECTION_CONTRACT_2026-09-25.md`). Mongoku refuses the whole
+payload on any secret-like key or value, a wrong shape or more than 64 KiB, and drops unknown fields,
+so the export carries exactly the contract fields. The operator stores a reviewed export in
+DATAPASSCONTROL `entities.atlasnote.mongoku_projection.envelope`; AtlasNote only exports.
 
-Includes: `generatedAt`, `today`, `freshness:"snapshot"`, `authority:"atlasnote"`,
-`visibility:"private"`, counts (tasks by bucket, done, important, quick notes, links, imported,
-reading queue unread/read, bookmarks, workspaces) and up to 50 open tasks with stable ID, bucket,
-due date, optional subject, optional Power Ops origin and an `openTarget`
-(`{"kind":"dashboard-item","itemId":...}`). Task titles are optional (checkbox).
+```json
+{
+  "format": "atlasnote.planning-overview/1",
+  "projectRef": "atlasnote",
+  "sourceApp": "atlasnote",
+  "sourceObjectId": "atlasnote.planning-overview",
+  "sourceRevision": "<16-hex fingerprint of the projection>",
+  "generatedAt": "2026-09-25T09:00:00Z",
+  "openUri": "https://<app origin and path, only when served over http(s)>",
+  "authority": "atlasnote",
+  "visibility": "private",
+  "freshness": "snapshot",
+  "lifecycle": "current",
+  "counts": {"open_tasks": 4, "overdue_tasks": 1, "due_today_tasks": 1, "due_soon_tasks": 1, "later_tasks": 0,
+             "unscheduled_tasks": 1, "important_open_tasks": 1, "done_tasks": 0, "notes": 1, "links": 0,
+             "reading_queue": 1, "reading_done": 0, "bookmarks": 0, "workspaces": 1, "imported_items": 6,
+             "listed_tasks": 4, "withheld_titles": 0},
+  "items": [{"id": "powerops-…", "title": "Send recap", "kind": "task", "status": "overdue", "dueAt": "2026-09-23"}]
+}
+```
+
+- `items`: at most 25 open tasks in planning order. `status` is `overdue`, `due-today`, `due-soon`,
+  `open` (later) or `unscheduled`. `dueAt` is the calendar date and is present only for dated tasks.
+- Titles are the first line of the task, at most 160 characters. With **Include open task titles**
+  unchecked, every title is the neutral `Open task [due YYYY-MM-DD]`.
+- A title that looks secret-like (Mongoku's own patterns, AtlasNote's secret guard, or wording such as
+  `api key: …`, `password = …`, `token: …`) is **withheld**: it becomes `Open task … (title withheld)`,
+  counted in `withheld_titles`, and the dialog asks you to reword it. Anything else that would fail
+  the contract (for example an unexpected ID) stops the export with the offending path, never the value.
+- `openUri` is the app location without query, fragment or user info, and only for `http`/`https`.
+- Deterministic: keys are sorted, so the same state, day and timestamp give the same bytes.
+  `sourceRevision` changes with the data, not with the clock, the title option or the location.
 
 Never includes: document, notebook or article bodies, quick-note text, annotations/remarks, reading
 history, credentials or environment values.
+
+Tests: `tests/planning-inbox.test.mjs` validates every export against
+`tests/mongoku-projection-contract.mjs`, a copy of Mongoku's `parseProjection` rules (size, secret-like
+names and values, `.env`-looking text, envelope schema) taken at Mongoku commit `8e83981`. Update the
+copy when the Mongoku contract changes.
+
+Note for Mongoku: its value pattern `api[_-]?key\s*[:=]` does not match `api key: rotate` (space), although
+the contract says such a title is refused. AtlasNote withholds it anyway.
 
 ## Non-goals kept
 
