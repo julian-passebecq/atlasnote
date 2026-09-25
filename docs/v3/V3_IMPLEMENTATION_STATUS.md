@@ -176,12 +176,29 @@ The following happened on 2026-09-25 (UTC).
    - Not exposed: personal data, backups or IndexedDB content, which live only in the browser.
    - The URLs were unpublished and random.
 4. **Mitigation:** the QA placeholder was redeployed with `preview_urls: false` (version `d8753f37`). Both preview URLs now return 404 / Cloudflare error 1042.
-5. **Next:** the owner enables Cloudflare Access for the QA Worker's Preview URLs, including a Service Auth token. Previews are re-enabled only after an unauthenticated request is verified to be redirected to Access. Then `test:v23:release` runs with the owner's environment-only secrets.
+5. The owner enabled Cloudflare Access for the QA Worker's Preview URLs, with an Allow policy (owner e-mail) and a Service Auth policy (service token `atlasnote-v23-qa`). The token values stayed with the owner.
+6. **Protection verified before any app upload.** Preview URLs were re-enabled only on the placeholder (version `0145b0ae`). An unauthenticated request to its version preview URL returned **302 to the Access login**.
+7. The preview-only AtlasNote version `26d86775-ab8c-43e0-b7f8-2770f3448535` (build `c5acecc`, clean tree) was then uploaded with `wrangler versions upload --preview-alias atlasnote-v23` and was never deployed. Unauthenticated checks:
+   - `https://26d86775-atlasnote-v23-qa.datapass.workers.dev`: 302 to Access.
+   - Alias `https://atlasnote-v23-atlasnote-v23-qa.datapass.workers.dev`: 302 to Access.
+   - The QA Worker's own URL still serves only the placeholder text.
+   - Production `atlasnote` still returns 302 to Access.
+8. An earlier upload of the same commit (`dd916a5e`) was superseded by `26d86775` after a local line-ending change altered the source fingerprint. Neither version was deployed.
+9. **Owner run on Windows, same clean commit `c5acecc`, environment-only secrets:**
+   - `test:v23:access:preview`: **FAIL (5 PASS, 3 BLOCKED, 5 FAIL).**
+     - PASS: ready-preview, anonymous-root, anonymous-static, anonymous-deep-link and fail-closed-protection. Unauthenticated access is refused everywhere, and the provider API confirms the version and that it was never deployed.
+     - FAIL: exact-build, authorized-root, authorized-deep-link, security-headers and cache-isolation. Requests carrying the service token were still redirected to the Access login (302), so the app, the build identity and the headers could not be read.
+     - BLOCKED: auth-state-idb, automation-secret-scope and browser-sanity. The suite refuses browser qualification after the HTTP failures.
+   - `test:v23:release`: **10 PASS, 1 BLOCKED, 1 FAIL.**
+     - BLOCKED: `test:v23:runtime`, because the native quota check needs Linux or WSL. It passes on the Ubuntu CI.
+     - FAIL: `test:v23:access:preview`, as above.
+   - `test:inherited:after-v23`: refused by design, because the V23 release was not fully green.
+10. **Owner decision: stop REL-02 here.** The service token is not accepted by the Access application (cause not isolated: token value or policy attachment). The test and its policy were not relaxed. REL-02 stays BLOCKED, as on `main`. No product feature depends on it.
 
 ## Remaining work and blockers
 
 - **BLOCKED: real-device PDF wheel trace.** This needs the owner's affected mouse or trackpad and the trace export. The Spread backward jump is hardened against stale restores but not proven fixed.
-- **BLOCKED: protected preview and Access qualification.** It needs the owner's credentials and explicit authorization. No deployment was done.
+- **BLOCKED (owner decision): authorized preview qualification.** Anonymous protection of the preview is proven live. The service-token path was rejected by Access, so authorized checks and the inherited workflow did not run. No production deployment was done. To resume: fix the Service Auth policy or token, then rerun the three commands on a clean commit with a matching preview version.
 - **BLOCKED: Norsk Daily with real sources.** The publisher's permission is unverified.
 - **Phase D remaining:**
   - Loading asset bytes on demand (see above).
