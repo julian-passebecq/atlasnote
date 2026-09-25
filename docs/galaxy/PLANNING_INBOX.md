@@ -178,8 +178,9 @@ Tests: `tests/planning-inbox.test.mjs` validates every export against
 names and values, `.env`-looking text, envelope schema) taken at Mongoku commit `8e83981`. Update the
 copy when the Mongoku contract changes.
 
-Note for Mongoku: its value pattern `api[_-]?key\s*[:=]` does not match `api key: rotate` (space), although
-the contract says such a title is refused. AtlasNote withholds it anyway.
+Note for Mongoku: at `8e83981` its value pattern `api[_-]?key\s*[:=]` does not match `api key: rotate` (space),
+although the contract says such a title is refused; fix proposed in julian-passebecq/Mongoku-datapass#14.
+AtlasNote withholds such titles either way. Refresh the copy here once that fix is merged.
 
 ## Non-goals kept
 
