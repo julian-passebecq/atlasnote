@@ -76,4 +76,4 @@ The detailed engineering record is in [V3_IMPLEMENTATION_STATUS.md](V3_IMPLEMENT
 - **Notebook folders render in batches of 80 rows.** This is batching, not full virtualization.
 - **Asset bytes still load into memory**, after the first render.
 - **MEM-02 has no end-to-end browser proof.** The public-PDF cache is proven by a unit test, because the reviewed public PDF bytes are not in this repository.
-- **Native storage-quota gate BLOCKED.** It needs Linux or WSL (`ATLAS_V23_NATIVE_QUOTA=1`).
+- **Native storage-quota gate:** BLOCKED on Windows, but it passes on Linux in GitHub CI. There, the full V2.3 release gives 12 PASS, 0 FAIL and 1 BLOCKED: the access preview, which needs your Cloudflare credentials (checklist step 4).

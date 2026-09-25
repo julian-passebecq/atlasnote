@@ -161,7 +161,7 @@ Browser runs used Playwright wheel injection. **This is not physical mouse or tr
 | NORSK-02 | BLOCKED for real sources | Publisher permission not verified; reviewed import works with the synthetic fixture |
 | SEC-01 | PASS | `check:access`, `_headers` unchanged |
 | REL-01 | PASS | Build identity and fingerprint checks |
-| REL-02 | BLOCKED | Portable core passes; the full release needs the Cloudflare preview and the Linux native-quota proof |
+| REL-02 | BLOCKED (preview only) | GitHub CI `ci.yml` run 36076913230 on `aa38280` (Ubuntu): `test:v23:release` **12 PASS, 1 BLOCKED, 0 FAIL**. The runtime gate passes there, which includes the Linux native quota check. Portable core passes 12/12. The only BLOCKED gate is `test:v23:access:preview` (13 cases), which needs the Cloudflare preview credentials; `main` and the V3 base `886c242` have the same status. |
 | REG-01 | PASS | Inherited DOM and runtime suites and `completion_v22_runtime` |
 | UI-01 | PASS (390px Experience panel) | `v3_gates` |
 
