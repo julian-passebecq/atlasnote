@@ -10,7 +10,7 @@ export type ReadingTarget = ({historyRevisionId?:string} & (
  | {kind:'collection';collectionId:string}
  | {kind:'pdf-page';pageId:string;documentId:string;revision?:string;pdfPage:number;anchor?:Anchor}
  | {kind:'pdf-category';pageId:string;documentId:string;revision?:string;pdfPage:number;pdfCategoryId:string}));
-export type ReadingItem={id:string;title:string;note:string;category:CategoryId|null;createdAt:number;target:ReadingTarget;read:boolean};
+export type ReadingItem={id:string;title:string;note:string;category:CategoryId|null;createdAt:number;target:ReadingTarget;read:boolean;origin?:import('../content-hub/model.js').ExternalOrigin};
 export type ReadingDestination='here'|'tab'|'pane'|1|2|3|4|5;
 
 /** All content uses the same routing family; ReadingTarget remains a compatible public name. */

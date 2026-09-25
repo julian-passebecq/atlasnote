@@ -5,6 +5,7 @@ import {uid} from '../core/workspace.js';
 import {validateArticleSource,validateQcm,validateHubPage,validateHubPersonal,validateHubOverlays,validateTaxonomy,HUB_LIMITS} from './validation.mjs';
 import {normaliseReadingUrl,validateReadingTarget} from '../storage/reading-validation.mjs';
 import {targetForPage} from '../core/reading-lists.js';
+import {assertNoSecrets} from './secrets.js';
 export function libraryModeForPage(c:Catalogue,id:string):LibraryMode {
  const p=c.pages.find(p=>p.id===id);return c.documents.some(d=>d.pageId===id)?'pdfs':p?.kind==='cheatsheet'?'cheatsheets':p?.kind==='article'?'articles':p?.kind==='qcm'?'qcm':'notes';
 }
@@ -50,10 +51,10 @@ export function captureRows(p:Personal,kind:'link'|'task'|'note',rows:CaptureRow
   let dueAt:number|undefined;if(kind==='task'&&row.due){if(!/^\d{4}-\d{2}-\d{2}$/.test(row.due))throw Error('Choose a valid task date.');dueAt=Date.parse(row.due+'T12:00:00Z');if(!Number.isFinite(dueAt)||new Date(dueAt).toISOString().slice(0,10)!==row.due)throw Error('Choose a valid task date.');}
   return {id:uid('capture'),kind,text:row.text.trim()||url!,status:kind==='task'?'open':'inbox',createdAt:now,...(url?{url}:{}),...(dueAt!==undefined?{dueAt}:{}),...(row.important?{important:true}:{}),...(taxonomy?{taxonomy:structuredClone(taxonomy)}:{}),...(context?{contextTarget:structuredClone(context)}:{})};
  });
- if(!items.length)throw Error('Enter at least one item.');const next={...p,dashboardItems:[...items,...(p.dashboardItems??[])]};validateHubPersonal(next);p.dashboardItems=next.dashboardItems;return items;
+ if(!items.length)throw Error('Enter at least one item.');assertNoSecrets(...items.map(i=>i.text));const next={...p,dashboardItems:[...items,...(p.dashboardItems??[])]};validateHubPersonal(next);p.dashboardItems=next.dashboardItems;return items;
 }
 export function updateCapture(p:Personal,id:string,patch:Partial<Pick<DashboardItem,'text'|'status'|'taxonomy'|'important'|'dueAt'>>,now=Date.now()){
- const next=structuredClone(p);const item=next.dashboardItems?.find(x=>x.id===id);if(!item)throw Error('Capture is unavailable.');Object.assign(item,patch,{updatedAt:now});validateHubPersonal(next);p.dashboardItems=next.dashboardItems;
+ const next=structuredClone(p);const item=next.dashboardItems?.find(x=>x.id===id);if(!item)throw Error('Capture is unavailable.');if(patch.text!==undefined&&patch.text!==item.text)assertNoSecrets(patch.text);Object.assign(item,patch,{updatedAt:now});validateHubPersonal(next);p.dashboardItems=next.dashboardItems;
 }
 export function addNotebookReference(o:Overlays,target:ReadingTarget,title:string,taxonomy:TaxonomyRef,now=Date.now()):NotebookReference {
  validateReadingTarget(target);validateTaxonomy(taxonomy);
