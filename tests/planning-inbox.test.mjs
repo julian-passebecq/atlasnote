@@ -135,7 +135,7 @@ test('planning overview withholds secret-like titles and fails closed on anythin
  assert.deepEqual(o.items.map(i=>i.title),['Open task due '+DAY+' (title withheld)','Open task due '+DAY+' (title withheld)','Rotate Cloudflare Access service token','Open task (title withheld)','Open task (title withheld)','DB_HOST=x']);
  assert.equal(o.counts.withheld_titles,4);for(const hidden of ['api key','Password','token:',FAKE.github.slice(0,12)])assert.ok(!text.includes(hidden),'withheld: '+hidden);
  // The oracle itself refuses such titles, which is why they are withheld.
- const raw={...JSON.parse(text),items:[{id:'x',title:'token: rotate'}]};assert.equal(contract.parseProjection(raw).reason,'secret_like');
+ for(const title of ['token: rotate','api key: rotate'])assert.equal(contract.parseProjection({...JSON.parse(text),items:[{id:'x',title}]}).reason,'secret_like',title);
  assert.equal(contract.parseProjection({...JSON.parse(text),password:'x'}).reason,'secret_like');assert.equal(contract.parseProjection({...JSON.parse(text),credentialRef:'vault:x',api_key_present:true}).ok,true,'descriptor names pass');
  // Anything the title rule cannot repair (here an item ID) stops the export instead of producing a payload Mongoku would refuse.
  p.dashboardItems.push(task('token=abcdef123456','x'));assert.throws(()=>planning.planningOverview(p,opts),/withheld: secret-like content at items\[\d+\]\.id/);

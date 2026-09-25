@@ -1,6 +1,6 @@
 // Copy of the Mongoku galaxy projection consumption rules, used as an independent test oracle.
 // Source: julian-passebecq/Mongoku-datapass src/lib/datapass/projection.ts (parseProjection,
-// projectionEnvelopeSchema) and src/lib/datapass/aiContext.ts (scrubSecrets) at 8e83981;
+// projectionEnvelopeSchema) and src/lib/datapass/aiContext.ts (scrubSecrets) at 7c9363b (spaced key names, Mongoku-datapass#14);
 // contract docs/GALAXY_PROJECTION_CONTRACT_2026-09-25.md. The zod schema is transcribed by hand.
 // Keep this file a faithful copy: AtlasNote's own guard lives in src/content-hub/planning.ts.
 
@@ -15,7 +15,7 @@ const SECRET_PATTERNS = [
  /\bAKIA[0-9A-Z]{16}\b/g,
  /\bxox[abprs]-[A-Za-z0-9-]{10,}\b/g,
  /\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b/g,
- /\b(password|passwd|pwd|secret|token|api[_-]?key|client[_-]?secret)\s*[:=]\s*[^\s,;"'`]+/gi,
+ /\b(password|passwd|pwd|secret|token|api[ _-]?key|client[ _-]?secret)\s*[:=]\s*[^\s,;"'`]+/gi,
 ];
 export function scrubSecrets(value) {
  return SECRET_PATTERNS.reduce((current, pattern) => current.replace(pattern, (match, key) => typeof key === 'string' && /[:=]/.test(match) ? key + '=[redacted]' : '[redacted]'), value);

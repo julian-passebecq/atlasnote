@@ -175,12 +175,11 @@ history, credentials or environment values.
 
 Tests: `tests/planning-inbox.test.mjs` validates every export against
 `tests/mongoku-projection-contract.mjs`, a copy of Mongoku's `parseProjection` rules (size, secret-like
-names and values, `.env`-looking text, envelope schema) taken at Mongoku commit `8e83981`. Update the
+names and values, `.env`-looking text, envelope schema) taken at Mongoku commit `7c9363b`. Update the
 copy when the Mongoku contract changes.
 
-Note for Mongoku: at `8e83981` its value pattern `api[_-]?key\s*[:=]` does not match `api key: rotate` (space),
-although the contract says such a title is refused; fix proposed in julian-passebecq/Mongoku-datapass#14.
-AtlasNote withholds such titles either way. Refresh the copy here once that fix is merged.
+Mongoku before `7c9363b` (julian-passebecq/Mongoku-datapass#14) did not catch spaced names such as
+`api key: rotate`; AtlasNote withholds such titles either way.
 
 ## Non-goals kept
 
