@@ -104,7 +104,7 @@ export const SERVICE_TEMPLATES:ServiceTemplate[]=[
  {id:'vercel',label:'Vercel',identifiers:[
   {name:'Team ID',what:'team_... identifier.',where:'Team Settings > General.',usedBy:'.vercel/project.json orgId, VERCEL_ORG_ID.'},
   {name:'Project ID',what:'prj_... identifier.',where:'Project Settings > General.',usedBy:'.vercel/project.json projectId, VERCEL_PROJECT_ID.'}],
-  secrets:[{name:'Access token',where:'Account Settings > Tokens.'}],env:['VERCEL_ORG_ID','VERCEL_PROJECT_ID','VERCEL_TOKEN - secret, name only'],links:['https://vercel.com/dashboard'],
+  secrets:[{name:'Access token',where:'Account Settings > Tokens.'}],env:['VERCEL_ORG_ID','VERCEL_PROJECT_ID','Vercel access token variable used by CI - secret, name only'],links:['https://vercel.com/dashboard'],
   pitfalls:['orgId is a team ID for team projects and a user ID for personal ones.']},
  {id:'netlify',label:'Netlify',identifiers:[
   {name:'Site ID (API ID)',what:'UUID of the site.',where:'Site configuration > General > Site details.',usedBy:'NETLIFY_SITE_ID.'},
