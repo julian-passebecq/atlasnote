@@ -72,3 +72,4 @@ a.planning-title{color:var(--accent)}
 .handoff-preview td small{display:block;color:var(--muted)}.handoff-refuse td{background:color-mix(in srgb,#c2410c 8%,transparent)}.handoff-conflict td{background:color-mix(in srgb,var(--accent) 8%,transparent)}
 .handoff-warning{color:#b45309!important}
 @media(max-width:540px){.planning-counts{margin-left:0;flex-basis:100%}.planning-title{flex-basis:100%;white-space:normal}}
+.capture-schedule{display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin:8px 0}.capture-schedule label{display:flex;flex-direction:column;gap:4px;font-size:12px}

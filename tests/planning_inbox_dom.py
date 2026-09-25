@@ -69,6 +69,18 @@ with sync_playwright() as pw:
   dialog.get_by_label('Include open task titles').uncheck();raw2=dialog.get_by_label('Planning overview JSON',exact=True).input_value();assert '"title"' not in raw2 and json.loads(raw2)['sourceRevision']==o['sourceRevision']
   click('Close',dialog);return {'bytes':len(raw)}
  check('Planning overview export is metadata-only and bounded',overview)
+ def reschedule():
+  reset();dashboard();import_handoff(HANDOFF);click('Import 6 item(s)',p.locator('dialog[open]'));click('Close',p.locator('dialog[open]'))
+  panel=p.locator('.planning-panel');expect(panel.locator('.planning-list > li')).to_have_count(3)
+  click('Open tasks 4',panel);click('Planning task: Someday cleanup',panel);dialog=p.locator('dialog[open]')
+  dialog.get_by_label('Capture due date',exact=True).fill(day(1));dialog.get_by_label('Capture important',exact=True).check();expect(dialog).to_contain_text('Imported from Power Ops');click('Save captured item',dialog);expect(p.locator('dialog[open]')).to_have_count(0)
+  item=next(i for i in state()['personal']['dashboardItems'] if i['text']=='Someday cleanup');assert item['important'] and item['dueAt']
+  click('Next up 4',panel);expect(panel.locator('.planning-list > li')).to_have_count(4)
+  click('Planning task: Someday cleanup',panel);dialog=p.locator('dialog[open]');click('Clear date',dialog);dialog.locator('textarea').fill('Someday cleanup\npassword: Synthetic-Only-123');click('Save captured item',dialog)
+  expect(dialog.get_by_role('alert')).to_contain_text('does not store secret values');dialog.locator('textarea').fill('Someday cleanup');click('Save captured item',dialog);expect(p.locator('dialog[open]')).to_have_count(0)
+  item=next(i for i in state()['personal']['dashboardItems'] if i['text']=='Someday cleanup');assert 'dueAt' not in item and 'Synthetic-Only' not in json.dumps(state()['personal'])
+  expect(panel.locator('.planning-list > li')).to_have_count(3);shot('reschedule')
+ check('Capture editor reschedules, clears dates and surfaces the secret guard',reschedule)
  def narrow():
   reset();dashboard();import_handoff(HANDOFF);click('Import 6 item(s)',p.locator('dialog[open]'));click('Close',p.locator('dialog[open]'))
   p.set_viewport_size({'width':390,'height':844});p.wait_for_timeout(200);over=p.evaluate('()=>{const d=document.querySelector(".dashboard-page");return d.scrollWidth-d.clientWidth}');assert over<=1,over;shot('planning-390')
