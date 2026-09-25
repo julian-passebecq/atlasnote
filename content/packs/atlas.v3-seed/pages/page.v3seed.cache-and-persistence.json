@@ -1,0 +1,55 @@
+{
+  "id": "page.v3seed.cache-and-persistence",
+  "title": "Cache and persistence",
+  "summary": "Cache only reused results whose recomputation cost justifies memory and storage pressure.",
+  "blocks": [
+    {
+      "id": "block.v3seed.cache-and-persistence.overview",
+      "type": "markdown",
+      "text": "Cache only reused results whose recomputation cost justifies memory and storage pressure."
+    },
+    {
+      "id": "block.v3seed.cache-and-persistence.points",
+      "type": "list",
+      "items": [
+        "Caching is lazy; it materializes only when an action executes.",
+        "Persisting a huge one-use DataFrame usually hurts more than it helps.",
+        "Unpersist data when it is no longer useful.",
+        "Check storage usage and recomputation before assuming cache is beneficial."
+      ]
+    },
+    {
+      "id": "block.v3seed.cache-and-persistence.code",
+      "type": "code",
+      "language": "python",
+      "code": "# Run in an existing SparkSession named spark; bounded toy data.\nbase = spark.createDataFrame(\n    [(\"NO\", True), (\"NO\", False), (\"CH\", True)],\n    [\"country\", \"is_active\"],\n).filter(\"country IS NOT NULL\").persist()\ntry:\n    base.count()  # materialize intentionally for this demonstration\n    by_country = base.groupBy(\"country\").count()\n    active_rows = base.filter(\"is_active\")\n    by_country.show()   # action while the cached base is retained\n    active_rows.show()  # another action before release\nfinally:\n    base.unpersist()\n# Do not cache every DataFrame in production; measure actual reuse and cost.",
+      "title": "Example",
+      "explanation": "Both lazy results are consumed by actions while the cached base is retained; unpersist runs in finally. Not executed during preparation: run it once on your target Spark runtime before relying on it."
+    }
+  ],
+  "related": [
+    "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+    "page.v3seed.dataframe-versus-rdd-versus-pandas",
+    "page.v3seed.explain-plans-and-troubleshooting",
+    "page.v3seed.qcm.pyspark-execution-performance"
+  ],
+  "terms": [
+    "term.v3seed.lazy-evaluation",
+    "term.v3seed.transformation-vs-action"
+  ],
+  "sources": [
+    {
+      "title": "Apache Spark - RDD persistence (programming guide)",
+      "url": "https://spark.apache.org/docs/latest/rdd-programming-guide.html#rdd-persistence",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

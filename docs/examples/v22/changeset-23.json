@@ -2,15 +2,15 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.23",
-  "createdAt": 1789766233167,
+  "createdAt": 1790288402991,
   "source": "Synthetic test agent",
-  "summary": "PDF logical revision using already reviewed source",
+  "summary": "PDF metadata edit with unchanged reviewed bytes",
   "operations": [
     {
       "id": "operation.18",
-      "kind": "pdf.revision.propose",
+      "kind": "pdf.metadata.update",
       "resourceKey": "pdf:doc.atlas.pdf",
-      "baseRevisionId": "revision.aa912472b1c648f6842431555a3ab6df",
+      "baseRevisionId": "revision.b20917e3a2634fdd95cbb47b42334ffb",
       "payload": {
         "resourceType": "pdf",
         "snapshot": {
@@ -65,7 +65,7 @@
             "categories": [
               {
                 "id": "reading",
-                "title": "Reading a PDF Reviewed",
+                "title": "Reading a PDF",
                 "pageRanges": [
                   [
                     1,
@@ -263,7 +263,7 @@
             "sha256": "0eea0f025b7a63a0c83ee83bafdef900d3bf4ab99ff39db1122eea16ad17c1af",
             "bytes": 50938,
             "pageCount": 5,
-            "metadataRevision": "metadata.0a4c41b111358afe",
+            "metadataRevision": "metadata.d5dccd2dde17c05e",
             "rights": {
               "status": "author-created",
               "attribution": "Original synthetic Knowledge Atlas PDF fixture supplied in the MegaPack."

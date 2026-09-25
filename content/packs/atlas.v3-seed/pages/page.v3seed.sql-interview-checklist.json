@@ -1,0 +1,43 @@
+{
+  "id": "page.v3seed.sql-interview-checklist",
+  "title": "SQL interview checklist",
+  "summary": "Before typing, clarify grain, keys, null behavior, tie-breaking and expected output.",
+  "blocks": [
+    {
+      "id": "block.v3seed.sql-interview-checklist.overview",
+      "type": "markdown",
+      "text": "Before typing, clarify grain, keys, null behavior, tie-breaking and expected output."
+    },
+    {
+      "id": "block.v3seed.sql-interview-checklist.points",
+      "type": "list",
+      "items": [
+        "Restate the target row grain.",
+        "List join keys and expected cardinality.",
+        "Call out NULL semantics.",
+        "For top-N/dedup questions, define deterministic ordering.",
+        "Check edge cases with a tiny example before optimizing."
+      ]
+    }
+  ],
+  "related": [
+    "page.v3seed.sql-grain-before-joins",
+    "page.v3seed.null-semantics",
+    "page.v3seed.qualify-and-deduplication",
+    "page.v3seed.window-functions",
+    "page.v3seed.qcm.grain-joins-windows"
+  ],
+  "terms": [
+    "term.v3seed.grain",
+    "term.v3seed.join-cardinality",
+    "term.v3seed.three-valued-logic"
+  ],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:job",
+    "topic:interview",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

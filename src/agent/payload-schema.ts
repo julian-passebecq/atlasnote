@@ -62,6 +62,7 @@ export function operationPayloadSchema(kind: AgentOperation['kind'], definition:
   id, title: text(kind === 'bookmark.add' || kind === 'readLater.add' ? 120 : 500), text: text(100000), note: text(2000),
   url: {...text(2048), pattern: '^https?://'}, status: {enum: ['inbox', 'open', 'done', 'archived']},
   kind: {enum: kind === 'capture.create' ? ['link', 'task', 'note'] : ['link', 'context', 'related']},
+  subject: {enum: ['it', 'cloud', 'job', 'kpi', 'norsk']}, aliases: {type: 'array', maxItems: 30, items: text(200)}, parentId: id, assignTo: readingTargetSchema,
   destination: {enum: [...READING_DESTINATIONS]}, enabled: {type: 'boolean'}, mode: {enum: ['changes', 'side-by-side', 'a', 'b']}, pane: {enum: ['A', 'B']},
   batch: {...canonical('Existing atlas-reference-suggestions schema 1; preserve semanticRevision and exact target/source fingerprints. This operation stages a second explicit semantic review.', 'references/validation.mjs:validateSuggestionBatch'), required: ['schemaVersion', 'kind', 'semanticRevision', 'suggestions'], properties: {schemaVersion: {const: 1}, kind: {const: 'atlas-reference-suggestions'}, semanticRevision: {type: 'integer', minimum: 0}, suggestions: {type: 'array', minItems: 1, maxItems: 100, items: {type: 'object'}}}}
  };

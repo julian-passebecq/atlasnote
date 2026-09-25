@@ -9,6 +9,13 @@ const listeners=new Set<()=>void>();let epoch=0;
 function changed(){epoch++;listeners.forEach(fn=>fn());}
 export const subscribeArchives=(fn:()=>void)=>{listeners.add(fn);return()=>{listeners.delete(fn);};};
 export const archiveAttachmentEpoch=()=>epoch;
+/** Diagnostic only: retained archive subscribers (V3 resolver lifecycle gate). */
+export const archiveListenerCount=()=>listeners.size;
+/** V3 staged boot: until the full history store is hydrated, a revision that is
+ * not in the shell read is 'still loading', never reported as missing. */
+let historyComplete=true;
+export function setHistoryComplete(value:boolean){historyComplete=value;}
+export const isHistoryComplete=()=>historyComplete;
 export async function attachArchive(input:File|Uint8Array,history:HistoryData){const archive=await verifyHistoryArchive(input);assertArchiveAttachment(history,archive);attached.set(archive.descriptor.archiveId,archive as VerifiedArchive);changed();return structuredClone(archive.descriptor);}
 export function detachArchive(archiveId:string){if(attached.delete(archiveId))changed();}
 export function clearArchiveAttachments(){attached.clear();changed();}
@@ -21,6 +28,7 @@ export function historicalRevision(history:HistoryData|undefined,id:string):Reso
 }
 export function requireHistoricalRevision(history:HistoryData|undefined,id:string):ResourceRevision{
  const r=historicalRevision(history,id);if(r)return r;
+ if(!historyComplete)throw Error('Version history is still loading. Try again in a moment.');
  const owner=archiveForRevision(history,id);if(owner)throw Error('This version requires archive '+owner.archiveId+' (root '+owner.rootHash+'). Attach the exact archive. Current content was not substituted.');
  throw Error('This historical revision is missing. Import its full backup; current content was not substituted.');
 }

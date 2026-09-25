@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "kind": "atlasnote-v3-experience-presets-draft",
+  "presets": [
+    {"id":"all","title":"All content","enabledSubjects":["informatics","cloud","norsk","job","personal"],"enabledContentTypes":["notes","pdfs","cheatsheets","articles","qcm"],"projectIds":[],"defaultLibraryMode":"notes","pdfCompanion":"auto"},
+    {"id":"data-engineering","title":"Data Engineering","enabledSubjects":["informatics","cloud"],"enabledContentTypes":["notes","pdfs","cheatsheets","qcm"],"projectIds":["project.samples.python","project.samples.sql","project.samples.pandas","project.samples.pyspark","project.samples.databricks"],"defaultLibraryMode":"notes","pdfCompanion":"auto"},
+    {"id":"cloud-platform","title":"Cloud / Fabric","enabledSubjects":["cloud"],"enabledContentTypes":["notes","pdfs","cheatsheets","articles"],"projectIds":["project.samples.azure","project.samples.databricks"],"defaultLibraryMode":"notes","pdfCompanion":"auto"},
+    {"id":"norsk-daily","title":"Norsk Daily","enabledSubjects":["norsk"],"enabledContentTypes":["notes","pdfs","articles","qcm"],"projectIds":["project.samples.norsk"],"defaultLibraryMode":"articles","pdfCompanion":"auto","feedIds":["norsk.daily"]},
+    {"id":"interview","title":"Interview","enabledSubjects":["job","informatics","cloud"],"enabledContentTypes":["notes","cheatsheets","qcm"],"projectIds":["project.samples.job","project.interview-preparation","project.samples.sql","project.samples.pyspark"],"defaultLibraryMode":"qcm","pdfCompanion":"closed"}
+  ]
+}

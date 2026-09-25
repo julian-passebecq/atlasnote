@@ -1,3 +1,4 @@
+import {catalogueLookup} from '../core/catalogue-index.js';
 import {historicalWorkspace,historicalCatalogue,resourceKeyForTarget,REFERENCES_PROJECT} from '../history/adapters.js';
 import {resolveStudy} from '../companion/tree.js';
 /** Pure resolver for the existing ResourceTarget family. No DOM IDs or ad-hoc URL scheme. */
@@ -23,7 +24,7 @@ function plainCanonicalTarget(c:Catalogue,t:ResourceTarget):ResourceTarget {
  if((v.kind==='page'||v.kind==='article')&&v.anchor?.blockId===(v.kind==='page'?v.pageId:v.pageId??v.articleId))delete v.anchor; // Reader's page-title anchor denotes the whole resource.
  if(v.kind==='pdf-category')return {kind:'pdf-page',pageId:v.pageId,documentId:v.documentId,pdfPage:v.pdfPage,...(v.revision?{revision:v.revision}:{})};
  if(v.kind==='page'){
-  const p=c.pages.find(p=>p.id===v.pageId),doc=c.documents.find(d=>d.pageId===v.pageId);
+  const lookup=catalogueLookup(c),p=lookup.pageById.get(v.pageId),doc=lookup.docByPage.get(v.pageId);
   if(doc&&v.anchor?.pdfPage)return {kind:'pdf-page',pageId:v.pageId,documentId:doc.id,pdfPage:v.anchor.pdfPage,...(v.anchor.pdfRevision?{revision:v.anchor.pdfRevision}:{})};
   if(p?.article)return {kind:'article',articleId:p.article.id,pageId:p.id,...(v.anchor?{anchor:v.anchor}:{})};
   if(p?.qcm)return {kind:'qcm',setId:p.qcm.id,pageId:p.id,...(v.anchor?.questionId?{questionId:v.anchor.questionId}:{})};

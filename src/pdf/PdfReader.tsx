@@ -1,5 +1,10 @@
 import React,{useEffect,useState,useRef} from '../vendor/react.mjs';
 import {isTrustedPdfatlasDocument,fetchTrustedPdf} from './external-policy.js';
+import {createVerifiedCache} from './verified-cache.js';
+import type {DocumentEntry as TrustedDoc} from '../core/model.js';
+const pending=new Map<string,TrustedDoc>();
+/** Module-lifetime cache: bytes are verified against the reviewed SHA-256 by fetchTrustedPdf before caching. */
+export const trustedPdfCache=(()=>{const cache=createVerifiedCache((sha,signal)=>fetchTrustedPdf(pending.get(sha)!,signal));return {acquire(sha:string,doc:TrustedDoc){pending.set(sha,doc);return cache.acquire(sha);},stats:cache.stats,clear:cache.clear};})();
 import type {DocumentEntry,Location} from '../core/model.js';
 import {Icon,IconButton} from '../components/Icon.js';
 import {DocumentInfo} from './DocumentInfo.js';
@@ -25,10 +30,10 @@ export function PdfReader({paneId,slotId,document:doc,location,onLocation,resolv
  useEffect(()=>{
   const controller=new AbortController();let objectUrl:string|undefined;let active=true;
   setUrl(doc.assetKey?resolve(doc.assetKey):undefined);setConsent(false);setExternalError('');setInfo(false);
-  if(trusted)fetchTrustedPdf(doc,controller.signal).then(bytes=>{
-   if(!active)return;objectUrl=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));setUrl(objectUrl);setConsent(true);
-  }).catch(e=>{if(active&&e.name!=='AbortError')setExternalError(e.message||'The public PDF host is unavailable.');});
-  return()=>{active=false;controller.abort();if(objectUrl)URL.revokeObjectURL(objectUrl);};
+  // V3 (MEM-02): one verified download per reviewed SHA-256, shared by A/B and workspace switches.
+  const lease=trusted?trustedPdfCache.acquire(doc.sha256??'',doc):undefined;
+  lease?.url.then(shared=>{if(!active)return;setUrl(shared);setConsent(true);}).catch(e=>{if(active&&e.name!=='AbortError')setExternalError(e.message||'The public PDF host is unavailable.');});
+  return()=>{active=false;controller.abort();lease?.release();if(objectUrl)URL.revokeObjectURL(objectUrl);};
  },[doc.id,doc.sha256,doc.source.url,doc.assetKey,retry]);
  const source=trusted?url:external?(consent?doc.source.url:undefined):url;
  const allow=()=>setConsent(true);

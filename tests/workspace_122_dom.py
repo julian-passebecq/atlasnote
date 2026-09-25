@@ -34,8 +34,8 @@ with sync_playwright() as pw:
   assert p.get_by_role('button',name='Workspace 1',exact=True).get_attribute('aria-pressed')=='true';shot('independent-numbers-all-categories')
  check('Five workspace numbers are independent from optional category filters; duplicates allowed',slots)
  def domain_groups():
-  reset();before=s()['panes'];overlays=snap()['overlays'];p.get_by_role('button',name='Norsk filter',exact=True).click();assert p.locator('.tree-project').count()==1
-  button=p.get_by_role('button',name='Collapse group Norsk',exact=True);button.click();assert p.locator('.tree-project').count()==0;p.get_by_role('button',name='Expand group Norsk',exact=True).click();assert p.locator('.tree-project').count()==1
+  reset();before=s()['panes'];overlays=snap()['overlays'];p.get_by_role('button',name='Norsk filter',exact=True).click();assert sorted(p.locator('.tree-project').evaluate_all('es=>es.map(e=>e.dataset.projectId)'))==['project.samples.norsk','project.v3seed.norsk'] # V3 seed pack adds exactly one Norsk project
+  button=p.get_by_role('button',name='Collapse group Norsk',exact=True);button.click();assert p.locator('.tree-project').count()==0;p.get_by_role('button',name='Expand group Norsk',exact=True).click();assert sorted(p.locator('.tree-project').evaluate_all('es=>es.map(e=>e.dataset.projectId)'))==['project.samples.norsk','project.v3seed.norsk']
   assert s()['panes']==before and snap()['overlays']==overlays;p.get_by_role('button',name='Norsk filter',exact=True).click();expected=p.evaluate('''async()=>{const {projectLibrary}=await import(new URL('app/content-hub/taxonomy.js',document.baseURI));return projectLibrary(testCore.compose(testBuilt,testStore.state),testStore.state.overlays,'notes').map(p=>p.id);}''');assert set(p.locator('.tree-project').evaluate_all('(es)=>es.map(e=>e.dataset.projectId)'))==set(expected);assert p.locator('[data-node-id="node.cheatsheet.sql-analytics"]').count()==0  # Four native sheets share one added project; keep the exact all-domain projection.
  check('Category/group filtering never changes canonical content or open tabs',domain_groups)
  def book():

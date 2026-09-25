@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.14",
-  "createdAt": 1789766227597,
+  "createdAt": 1790288399054,
   "source": "Synthetic test agent",
   "summary": "Update typed authored link",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "example.operation.14.resource.link.update",
       "kind": "resource.link.update",
       "resourceKey": "notebook-page:page.atlas.welcome",
-      "baseRevisionId": "revision.f0a985b8f6fa47efb56c15cd5a4c2b58",
+      "baseRevisionId": "revision.942405df904843a995ea636429d15deb",
       "payload": {
         "index": 0,
         "target": {

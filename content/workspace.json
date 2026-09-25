@@ -19,7 +19,8 @@
         "project.samples.python",
         "project.samples.pandas",
         "project.samples.pyspark",
-        "project.pdfatlas"
+        "project.pdfatlas",
+        "project.v3seed.data-engineering"
       ]
     },
     {
@@ -34,14 +35,16 @@
       "title": "Cloud platforms",
       "projectIds": [
         "project.samples.azure",
-        "project.samples.databricks"
+        "project.samples.databricks",
+        "project.v3seed.cloud"
       ]
     },
     {
       "id": "group.samples.norsk",
       "title": "Norsk",
       "projectIds": [
-        "project.samples.norsk"
+        "project.samples.norsk",
+        "project.v3seed.norsk"
       ]
     },
     {
@@ -49,14 +52,16 @@
       "title": "Job",
       "projectIds": [
         "project.samples.job",
-        "project.interview-preparation"
+        "project.interview-preparation",
+        "project.v3seed.interview"
       ]
     },
     {
       "id": "group.samples.personal",
       "title": "Personal",
       "projectIds": [
-        "project.samples.personal"
+        "project.samples.personal",
+        "project.v3seed.study-workflow"
       ]
     },
     {

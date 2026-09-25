@@ -1,0 +1,55 @@
+{
+  "id": "page.v3seed.skew-and-hot-keys",
+  "title": "Skew and hot keys",
+  "summary": "Detect skew when a small number of keys create disproportionately large partitions or slow tasks.",
+  "blocks": [
+    {
+      "id": "block.v3seed.skew-and-hot-keys.overview",
+      "type": "markdown",
+      "text": "Detect skew when a small number of keys create disproportionately large partitions or slow tasks."
+    },
+    {
+      "id": "block.v3seed.skew-and-hot-keys.points",
+      "type": "list",
+      "items": [
+        "Compare task durations and shuffle read sizes across a stage.",
+        "Null/unknown keys can become accidental hot keys.",
+        "AQE skew handling can split skewed partitions in supported workloads.",
+        "Manual salting is a targeted technique with correctness and complexity costs."
+      ]
+    },
+    {
+      "id": "block.v3seed.skew-and-hot-keys.question",
+      "type": "question",
+      "question": "What is the first evidence of skew you should look for?",
+      "answer": "A stage where a small number of tasks process much more data or run much longer than their peers, confirmed by key-frequency and partition-size inspection."
+    }
+  ],
+  "related": [
+    "page.v3seed.adaptive-query-execution",
+    "page.v3seed.join-strategies-and-broadcast-joins",
+    "page.v3seed.partitions-and-repartitioning",
+    "page.v3seed.troubleshooting-a-slow-pipeline",
+    "page.v3seed.qcm.pyspark-execution-performance"
+  ],
+  "terms": [
+    "term.v3seed.data-skew",
+    "term.v3seed.spark-partition",
+    "term.v3seed.adaptive-query-execution"
+  ],
+  "sources": [
+    {
+      "title": "Spark SQL - performance tuning",
+      "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

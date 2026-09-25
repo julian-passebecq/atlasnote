@@ -1,0 +1,43 @@
+{
+  "id": "page.v3seed.mlflow-run-tracking-for-data-experiments",
+  "title": "MLflow run tracking for data experiments",
+  "summary": "Track parameters, metrics and artifacts so experiments can be reproduced and compared.",
+  "blocks": [
+    {
+      "id": "block.v3seed.mlflow-run-tracking-for-data-experiments.overview",
+      "type": "markdown",
+      "text": "Track parameters, metrics and artifacts so experiments can be reproduced and compared."
+    },
+    {
+      "id": "block.v3seed.mlflow-run-tracking-for-data-experiments.points",
+      "type": "list",
+      "items": [
+        "Log configuration alongside metrics so a result is explainable later.",
+        "Use stable dataset/version identifiers in run metadata.",
+        "Do not treat tracking as model validation by itself.",
+        "Separate exploratory runs from production promotion rules."
+      ]
+    }
+  ],
+  "related": [
+    "page.v3seed.lakeflow-jobs-and-task-dependencies",
+    "page.v3seed.delta-lake-table-fundamentals",
+    "page.v3seed.unity-catalog-mental-model"
+  ],
+  "terms": [],
+  "sources": [
+    {
+      "title": "MLflow project",
+      "url": "https://mlflow.org/",
+      "publisher": "MLflow project (Linux Foundation)",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:databricks",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

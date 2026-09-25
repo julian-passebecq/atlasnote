@@ -19,6 +19,7 @@ export type OperationPayloads={
  'reference.add':{source:ResourceTarget;target:ResourceTarget;sourceRevision:string;targetRevision:string;kind:'link'|'context'|'related';label?:string;note?:string};
  'reference.remove':{id:string};
  'concept.assignment.propose':{batch:unknown};
+ 'concept.create':{id:string;subject:import('../content-hub/model.js').SubjectKey;label:string;aliases?:string[];parentId?:string;assignTo?:ResourceTarget;note?:string};
  'bookmark.add':{target:ResourceTarget;title:string};
  'bookmark.remove':{id:string};
  'readLater.add':{target:ResourceTarget;title:string};

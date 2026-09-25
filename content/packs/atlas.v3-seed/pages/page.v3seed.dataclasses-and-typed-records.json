@@ -1,0 +1,53 @@
+{
+  "id": "page.v3seed.dataclasses-and-typed-records",
+  "title": "Dataclasses and typed records",
+  "summary": "Use dataclasses or typed models when a pipeline value has a stable schema and deserves named fields.",
+  "blocks": [
+    {
+      "id": "block.v3seed.dataclasses-and-typed-records.overview",
+      "type": "markdown",
+      "text": "Use dataclasses or typed models when a pipeline value has a stable schema and deserves named fields."
+    },
+    {
+      "id": "block.v3seed.dataclasses-and-typed-records.points",
+      "type": "list",
+      "items": [
+        "Dataclasses reduce boilerplate for record-like domain objects.",
+        "Frozen dataclasses can help make values immutable.",
+        "For external data, validate before constructing trusted domain objects.",
+        "Do not use a class when a small local dictionary is sufficient."
+      ]
+    },
+    {
+      "id": "block.v3seed.dataclasses-and-typed-records.code",
+      "type": "code",
+      "language": "python",
+      "code": "from dataclasses import dataclass\n\n@dataclass(frozen=True)\nclass JobRun:\n    job_id: str\n    rows: int\n    succeeded: bool",
+      "title": "Example"
+    }
+  ],
+  "related": [
+    "page.v3seed.python-data-structures-for-data-engineering",
+    "page.v3seed.exceptions-and-defensive-parsing",
+    "page.v3seed.json-csv-and-file-boundaries",
+    "page.v3seed.qcm.python-data-engineering"
+  ],
+  "terms": [
+    "term.v3seed.hashable"
+  ],
+  "sources": [
+    {
+      "title": "Python library - dataclasses",
+      "url": "https://docs.python.org/3/library/dataclasses.html",
+      "publisher": "Python Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:python",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

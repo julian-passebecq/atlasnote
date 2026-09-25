@@ -1,0 +1,43 @@
+{
+  "id": "page.v3seed.data-quality-interview-framework",
+  "title": "Data quality interview framework",
+  "summary": "Frame quality as executable contracts at boundaries and transformations.",
+  "blocks": [
+    {
+      "id": "block.v3seed.data-quality-interview-framework.overview",
+      "type": "markdown",
+      "text": "Frame quality as executable contracts at boundaries and transformations."
+    },
+    {
+      "id": "block.v3seed.data-quality-interview-framework.points",
+      "type": "list",
+      "items": [
+        "Completeness: required data arrives.",
+        "Validity: values match domain/schema rules.",
+        "Uniqueness: keys obey expected cardinality.",
+        "Consistency: cross-field/source relationships hold.",
+        "Freshness: data arrives within SLA.",
+        "Observability: failures are attributable and alertable."
+      ]
+    }
+  ],
+  "related": [
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.exceptions-and-defensive-parsing",
+    "page.v3seed.merge-validation-and-cardinality",
+    "page.v3seed.system-design-batch-analytics-pipeline"
+  ],
+  "terms": [
+    "term.v3seed.data-contract",
+    "term.v3seed.join-cardinality",
+    "term.v3seed.quarantine"
+  ],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:job",
+    "topic:interview",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

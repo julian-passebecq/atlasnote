@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "atlas-agent-changeset",
   "id": "example.7",
-  "createdAt": 1789766223294,
+  "createdAt": 1790288396123,
   "source": "Synthetic test agent",
   "summary": "Retain draft metadata without changing current source",
   "operations": [
@@ -10,7 +10,7 @@
       "id": "operation.5",
       "kind": "resource.draft",
       "resourceKey": "notebook-page:page.atlas.welcome",
-      "baseRevisionId": "revision.d03b0ba2a0c34ac899ab180408a4b0eb",
+      "baseRevisionId": "revision.ea95060eeca3465491954a011e88edf2",
       "payload": {
         "resourceType": "notebook-page",
         "snapshot": {

@@ -1,0 +1,347 @@
+{
+  "id": "page.v3seed.qcm.cloud-data-platforms",
+  "title": "Practice: ADF, Fabric, Databricks and Unity Catalog",
+  "summary": "8 questions on ADF objects and variables, idempotent reruns, managed identity, OneLake, Delta, medallion layers and Unity Catalog. Practice and review, without a timer.",
+  "blocks": [],
+  "related": [
+    "page.v3seed.azure-data-factory-pipeline-mental-model",
+    "page.v3seed.adf-parameters-variables-and-expressions",
+    "page.v3seed.adf-reliability-retries-idempotency-and-monitoring",
+    "page.v3seed.managed-identity-and-key-vault",
+    "page.v3seed.fabric-onelake-and-lakehouse-mental-model",
+    "page.v3seed.delta-lake-table-fundamentals",
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.unity-catalog-mental-model"
+  ],
+  "terms": [
+    "term.v3seed.idempotency",
+    "term.v3seed.managed-identity",
+    "term.v3seed.onelake",
+    "term.v3seed.delta-transaction-log",
+    "term.v3seed.medallion-architecture",
+    "term.v3seed.unity-catalog"
+  ],
+  "sources": [],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:azure-fabric",
+    "topic:databricks",
+    "lang:en"
+  ],
+  "provenance": "Prepared by Claude Code on 2026-09-24 from the AtlasNote V3 seed; original questions, no private data or third-party text. Owner review required before publication.",
+  "kind": "qcm",
+  "qcm": {
+    "schemaVersion": 1,
+    "id": "page.v3seed.qcm.cloud-data-platforms",
+    "title": "Practice: ADF, Fabric, Databricks and Unity Catalog",
+    "taxonomy": {
+      "subject": "cloud",
+      "folderId": "node.v3seed.cloud.practice"
+    },
+    "questions": [
+      {
+        "id": "question.v3seed.cloud.q1",
+        "prompt": "In Azure Data Factory, which object holds the connection information (endpoint, authentication, integration runtime) that datasets and activities use?",
+        "options": [
+          {
+            "id": "option.v3seed.cloud.q1.a",
+            "text": "Linked service"
+          },
+          {
+            "id": "option.v3seed.cloud.q1.b",
+            "text": "Dataset",
+            "explanation": "A dataset describes data structure/location and points to a linked service."
+          },
+          {
+            "id": "option.v3seed.cloud.q1.c",
+            "text": "Trigger",
+            "explanation": "A trigger decides when a pipeline starts."
+          },
+          {
+            "id": "option.v3seed.cloud.q1.d",
+            "text": "Pipeline parameter",
+            "explanation": "Parameters pass run inputs; they can feed a linked service but do not define it."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.cloud.q1.a"
+        ],
+        "explanation": "Linked services describe connections, datasets describe data, activities do work, pipelines compose activities and triggers start them.",
+        "links": [
+          {
+            "label": "Review: Azure Data Factory pipeline mental model",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.azure-data-factory-pipeline-mental-model"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.cloud.q2",
+        "prompt": "Inside an ADF ForEach that runs its iterations in parallel, every iteration uses Set Variable on the same pipeline variable. What is the risk?",
+        "options": [
+          {
+            "id": "option.v3seed.cloud.q2.a",
+            "text": "Iterations overwrite each other's value, because the variable belongs to the pipeline run rather than to one iteration."
+          },
+          {
+            "id": "option.v3seed.cloud.q2.b",
+            "text": "None; each iteration gets an isolated copy of the variable.",
+            "explanation": "Pipeline variables are shared by all iterations of the run."
+          },
+          {
+            "id": "option.v3seed.cloud.q2.c",
+            "text": "The pipeline is rejected when it is published.",
+            "explanation": "It deploys; the problem appears at runtime as nondeterministic values."
+          },
+          {
+            "id": "option.v3seed.cloud.q2.d",
+            "text": "The pipeline parameters are modified.",
+            "explanation": "Parameters are fixed for the run; variables are the mutable state."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.cloud.q2.a"
+        ],
+        "explanation": "Keep per-item state inside the iteration (for example activity outputs or item() values), or run the loop sequentially when a shared variable is unavoidable.",
+        "links": [
+          {
+            "label": "Review: ADF parameters, variables and expressions",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.adf-parameters-variables-and-expressions"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.cloud.q3",
+        "prompt": "A daily load may be retried after a transient failure. Which designs make a rerun safe? Select all that apply.",
+        "options": [
+          {
+            "id": "option.v3seed.cloud.q3.a",
+            "text": "Write to a run-scoped staging location, validate it, then promote it atomically."
+          },
+          {
+            "id": "option.v3seed.cloud.q3.b",
+            "text": "Overwrite the date partition being loaded, or MERGE on a business key."
+          },
+          {
+            "id": "option.v3seed.cloud.q3.c",
+            "text": "Append the whole source file to the target table again.",
+            "explanation": "Appending again duplicates the rows that were already written."
+          },
+          {
+            "id": "option.v3seed.cloud.q3.d",
+            "text": "Retry indefinitely when a data-quality rule fails.",
+            "explanation": "Deterministic failures do not fix themselves; alert instead."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.cloud.q3.a",
+          "option.v3seed.cloud.q3.b"
+        ],
+        "explanation": "Idempotent writes let the same input produce the same target state no matter how often the run is repeated.",
+        "links": [
+          {
+            "label": "Review: ADF reliability",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.adf-reliability-retries-idempotency-and-monitoring"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.cloud.q4",
+        "prompt": "A pipeline in Azure Data Factory must read files from ADLS Gen2. Which authentication approach is preferred?",
+        "options": [
+          {
+            "id": "option.v3seed.cloud.q4.a",
+            "text": "The factory's managed identity with a role assignment or ACL scoped to the required container or folder."
+          },
+          {
+            "id": "option.v3seed.cloud.q4.b",
+            "text": "The storage account key pasted into the linked service.",
+            "explanation": "A long-lived, all-powerful shared secret in configuration."
+          },
+          {
+            "id": "option.v3seed.cloud.q4.c",
+            "text": "The account key stored in Key Vault.",
+            "explanation": "Better than inline, but it is still a shared key; use it only when identity-based access is impossible."
+          },
+          {
+            "id": "option.v3seed.cloud.q4.d",
+            "text": "A SAS token without expiry passed as a pipeline parameter.",
+            "explanation": "Non-expiring tokens in parameters leak easily into logs and run history."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.cloud.q4.a"
+        ],
+        "explanation": "Managed identities remove stored secrets; grant them least privilege. Key Vault is for secrets that cannot be avoided.",
+        "links": [
+          {
+            "label": "Review: managed identity and Key Vault",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.managed-identity-and-key-vault"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.cloud.q5",
+        "prompt": "What does a OneLake shortcut do in Microsoft Fabric?",
+        "options": [
+          {
+            "id": "option.v3seed.cloud.q5.a",
+            "text": "It references data in another location so Fabric items can use it without copying it."
+          },
+          {
+            "id": "option.v3seed.cloud.q5.b",
+            "text": "It copies the target data into OneLake every night.",
+            "explanation": "Shortcuts are references, not scheduled copies."
+          },
+          {
+            "id": "option.v3seed.cloud.q5.c",
+            "text": "It creates a backup of a lakehouse."
+          },
+          {
+            "id": "option.v3seed.cloud.q5.d",
+            "text": "It removes the need to manage permissions on the underlying source.",
+            "explanation": "Access to the target still has to be designed and granted."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.cloud.q5.a"
+        ],
+        "explanation": "Shortcuts unify access across storage locations; security of the workspace, the item and the underlying data must be designed together.",
+        "links": [
+          {
+            "label": "Review: Fabric OneLake and lakehouse mental model",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.fabric-onelake-and-lakehouse-mental-model"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.cloud.q6",
+        "prompt": "Which statements about Delta tables are true? Select all that apply.",
+        "options": [
+          {
+            "id": "option.v3seed.cloud.q6.a",
+            "text": "The transaction log records each committed version; readers see a consistent snapshot of one version."
+          },
+          {
+            "id": "option.v3seed.cloud.q6.b",
+            "text": "VACUUM deletes data files that are no longer referenced and older than the retention threshold, which can make older versions unavailable for time travel."
+          },
+          {
+            "id": "option.v3seed.cloud.q6.c",
+            "text": "Delta stores table data as CSV files.",
+            "explanation": "Data files are Parquet; the log adds transactional metadata."
+          },
+          {
+            "id": "option.v3seed.cloud.q6.d",
+            "text": "Appending a DataFrame whose column has an incompatible type silently changes the table schema.",
+            "explanation": "Schema enforcement rejects the write; schema changes have to be requested explicitly."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.cloud.q6.a",
+          "option.v3seed.cloud.q6.b"
+        ],
+        "explanation": "The _delta_log makes writes atomic and versioned. Retention and VACUUM settings decide how far back time travel works.",
+        "links": [
+          {
+            "label": "Review: Delta Lake table fundamentals",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.delta-lake-table-fundamentals"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.cloud.q7",
+        "prompt": "In a medallion design, where do deduplication and conformance to validated types primarily belong?",
+        "options": [
+          {
+            "id": "option.v3seed.cloud.q7.a",
+            "text": "Bronze",
+            "explanation": "Bronze keeps source fidelity and ingestion metadata so you can replay."
+          },
+          {
+            "id": "option.v3seed.cloud.q7.b",
+            "text": "Silver"
+          },
+          {
+            "id": "option.v3seed.cloud.q7.c",
+            "text": "Gold",
+            "explanation": "Gold serves business aggregates built on already-validated Silver data."
+          },
+          {
+            "id": "option.v3seed.cloud.q7.d",
+            "text": "Only in the BI tool",
+            "explanation": "Pushing cleaning downstream repeats it in every report."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.cloud.q7.b"
+        ],
+        "explanation": "Silver is the validated, conformed and deduplicated layer; Gold builds business-ready products on top of it.",
+        "links": [
+          {
+            "label": "Review: Bronze, Silver and Gold contracts",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.bronze-silver-and-gold-contracts"
+            }
+          }
+        ]
+      },
+      {
+        "id": "question.v3seed.cloud.q8",
+        "prompt": "How is a table addressed in Unity Catalog SQL, and who should normally receive privileges on it?",
+        "options": [
+          {
+            "id": "option.v3seed.cloud.q8.a",
+            "text": "catalog.schema.table, with privileges granted to groups or service principals."
+          },
+          {
+            "id": "option.v3seed.cloud.q8.b",
+            "text": "schema.table, with privileges granted to each individual user.",
+            "explanation": "The namespace has three levels, and per-user grants are hard to review."
+          },
+          {
+            "id": "option.v3seed.cloud.q8.c",
+            "text": "workspace.catalog.table, with privileges granted to groups.",
+            "explanation": "The workspace is not part of the name."
+          },
+          {
+            "id": "option.v3seed.cloud.q8.d",
+            "text": "metastore.schema.table, with privileges granted to the table owner only."
+          }
+        ],
+        "correctOptionIds": [
+          "option.v3seed.cloud.q8.a"
+        ],
+        "explanation": "Unity Catalog uses a three-level namespace under a metastore. Granting to groups and service principals keeps access reviewable.",
+        "links": [
+          {
+            "label": "Review: Unity Catalog mental model",
+            "target": {
+              "kind": "page",
+              "pageId": "page.v3seed.unity-catalog-mental-model"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

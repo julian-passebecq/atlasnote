@@ -1,0 +1,47 @@
+{
+  "id": "page.v3seed.past-tense-preterite-versus-perfect",
+  "title": "Past tense: preterite versus perfect",
+  "summary": "Use preterite for completed events in a finished past time frame and perfect for past events connected to the present.",
+  "blocks": [
+    {
+      "id": "block.v3seed.past-tense-preterite-versus-perfect.overview",
+      "type": "markdown",
+      "text": "Use preterite for completed events in a finished past time frame and perfect for past events connected to the present."
+    },
+    {
+      "id": "block.v3seed.past-tense-preterite-versus-perfect.points",
+      "type": "list",
+      "items": [
+        "Jeg jobbet i Genève i 2024.",
+        "Jeg har jobbet med Power BI i flere år.",
+        "Specific finished time expressions often favor preterite.",
+        "The exact choice depends on discourse context, not only grammar labels."
+      ]
+    }
+  ],
+  "related": [
+    "page.v3seed.modal-verbs-in-work-conversations",
+    "page.v3seed.v2-word-order-in-main-clauses",
+    "page.v3seed.explaining-a-data-pipeline-in-norwegian",
+    "page.v3seed.qcm.norsk-grammar"
+  ],
+  "terms": [
+    "term.v3seed.preterite",
+    "term.v3seed.present-perfect"
+  ],
+  "sources": [
+    {
+      "title": "Ordbøkene.no - Bokmålsordboka and Nynorskordboka",
+      "url": "https://ordbokene.no/",
+      "publisher": "Språkrådet and University of Bergen",
+      "note": "Official dictionaries with inflection tables; reference only, no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:norsk",
+    "topic:norsk",
+    "lang:nb"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

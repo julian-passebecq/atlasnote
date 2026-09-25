@@ -1,0 +1,60 @@
+{
+  "id": "page.v3seed.json-csv-and-file-boundaries",
+  "title": "JSON, CSV and file boundaries",
+  "summary": "Treat serialization as an I/O boundary: decode, validate, transform, then encode.",
+  "blocks": [
+    {
+      "id": "block.v3seed.json-csv-and-file-boundaries.overview",
+      "type": "markdown",
+      "text": "Treat serialization as an I/O boundary: decode, validate, transform, then encode."
+    },
+    {
+      "id": "block.v3seed.json-csv-and-file-boundaries.points",
+      "type": "list",
+      "items": [
+        "JSON preserves nested objects and arrays but has a small type system.",
+        "CSV is tabular text; quoting, delimiter, encoding and newline handling matter.",
+        "Open text files with an explicit encoding such as UTF-8.",
+        "Separate file transport from business transformations for easier tests."
+      ]
+    },
+    {
+      "id": "block.v3seed.json-csv-and-file-boundaries.code",
+      "type": "code",
+      "language": "python",
+      "code": "import json\nfrom pathlib import Path\n\ndata = json.loads(Path(\"input.json\").read_text(encoding=\"utf-8\"))\nif not isinstance(data, list):  # assert is skipped under python -O\n    raise ValueError(\"expected a JSON array at the top level\")",
+      "title": "Example"
+    }
+  ],
+  "related": [
+    "page.v3seed.exceptions-and-defensive-parsing",
+    "page.v3seed.dataclasses-and-typed-records",
+    "page.v3seed.missing-data-and-nullable-dtypes",
+    "page.v3seed.qcm.python-data-engineering"
+  ],
+  "terms": [
+    "term.v3seed.data-contract",
+    "term.v3seed.quarantine"
+  ],
+  "sources": [
+    {
+      "title": "Python library - json",
+      "url": "https://docs.python.org/3/library/json.html",
+      "publisher": "Python Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Python library - csv",
+      "url": "https://docs.python.org/3/library/csv.html",
+      "publisher": "Python Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:python",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

@@ -1,0 +1,55 @@
+{
+  "id": "page.v3seed.missing-data-and-nullable-dtypes",
+  "title": "Missing data and nullable dtypes",
+  "summary": "Distinguish missing values from valid zeros, empty strings and false values.",
+  "blocks": [
+    {
+      "id": "block.v3seed.missing-data-and-nullable-dtypes.overview",
+      "type": "markdown",
+      "text": "Distinguish missing values from valid zeros, empty strings and false values."
+    },
+    {
+      "id": "block.v3seed.missing-data-and-nullable-dtypes.points",
+      "type": "list",
+      "items": [
+        "Use isna/notna for missingness tests.",
+        "Prefer nullable integer/string/boolean dtypes when missing values are valid.",
+        "Fillna should encode a real business assumption, not merely silence an error.",
+        "Convert dates and numerics with explicit error handling during ingestion."
+      ]
+    },
+    {
+      "id": "block.v3seed.missing-data-and-nullable-dtypes.code",
+      "type": "code",
+      "language": "python",
+      "code": "qty = pd.to_numeric(df[\"qty\"], errors=\"coerce\")\nbad = qty.notna() & (qty % 1 != 0)   # fractional quantities: quarantine, do not crash\ndf[\"qty\"] = qty.mask(bad).astype(\"Int64\")",
+      "title": "Example",
+      "explanation": "Unparsable values become NaN and then <NA> in the nullable Int64 column. The cast fails if a coerced value has a fractional part (for example \"2.5\"), so validate or round explicitly first. Not executed during preparation."
+    }
+  ],
+  "related": [
+    "page.v3seed.null-semantics",
+    "page.v3seed.pandas-selection-filtering-and-assign",
+    "page.v3seed.json-csv-and-file-boundaries",
+    "page.v3seed.qcm.python-data-engineering"
+  ],
+  "terms": [
+    "term.v3seed.nullable-dtype",
+    "term.v3seed.three-valued-logic"
+  ],
+  "sources": [
+    {
+      "title": "pandas user guide - working with missing data",
+      "url": "https://pandas.pydata.org/docs/user_guide/missing_data.html",
+      "publisher": "pandas development team",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:pandas",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

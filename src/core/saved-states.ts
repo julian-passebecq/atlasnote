@@ -28,13 +28,19 @@ export function saveReadingState(p:Personal,scope:SaveScope,title=scopeLabel(sco
  if(next.savedStates.entries.filter(e=>saveScope(e)===scope).length>=STATE_SAVE_LIMITS.perScope)throw Error('20 saves already exist for '+scopeLabel(scope)+'. Remove an old save in Saved states first.');
  const e=snapshot(next,scope,title,now);next.savedStates.entries.unshift(e);event(next.savedStates,'save',e,now);publish(p,next);return e.id;
 }
+/** V3 checkpoint-version policy: a save made before Experiences existed has no
+ * `experience` field. Restoring it keeps the slot's CURRENT profile instead of
+ * silently resetting the workspace to All content. A save that recorded a
+ * profile restores exactly that profile (never a later preset definition). */
+function keepExperience(restored:import('./model.js').Session,current:import('./model.js').Session|undefined){if(!Object.hasOwn(restored,'experience')&&current?.experience)restored.experience=structuredClone(current.experience);}
 export function restoreReadingState(p:Personal,id:string,now=Date.now()):SaveScope{
  const saved=p.savedStates;const original=saved?.entries.find(e=>e.id===id)??Object.values(saved?.safety??{}).find(e=>e?.id===id);
  if(!original)throw Error('That saved state no longer exists.');
  const next=structuredClone(migratePersonal(p)),s=next.savedStates!,e=structuredClone(original),scope=saveScope(e);
  s.safety[scope]=snapshot(next,scope,'Before restore - '+scopeLabel(scope),now);
- if(e.scope==='all'){next.session=structuredClone(e.session);next.workspaceSlots=structuredClone(e.workspaceSlots);next.activeWorkspaceSlot=e.activeWorkspaceSlot;}
- else {if(e.slot===1)next.session=structuredClone(e.session);else {next.workspaceSlots??={};next.workspaceSlots[e.slot]=structuredClone(e.session);}next.activeWorkspaceSlot=e.slot;}
+ const before=structuredClone(next);
+ if(e.scope==='all'){next.session=structuredClone(e.session);next.workspaceSlots=structuredClone(e.workspaceSlots);next.activeWorkspaceSlot=e.activeWorkspaceSlot;keepExperience(next.session,before.session);for(const [slot,session] of Object.entries(next.workspaceSlots??{}))if(session)keepExperience(session,(before.workspaceSlots as any)?.[slot]);}
+ else {if(e.slot===1)next.session=structuredClone(e.session);else {next.workspaceSlots??={};next.workspaceSlots[e.slot]=structuredClone(e.session);}keepExperience(activeSession(next,e.slot),e.slot===1?before.session:before.workspaceSlots?.[e.slot]);next.activeWorkspaceSlot=e.slot;}
  // Browser fullscreen is not requested here. Logical Focus, if saved, remains
  // CSS-only until the user deliberately enters browser fullscreen again.
  s.restoreRevision++;event(s,'restore',e,now);publish(p,next);return scope;

@@ -19,6 +19,7 @@ export const operationRegistry:Record<AgentOperation['kind'],OperationDefinition
  'resource.link.remove':revision(['index'],'Remove one authored link',RESOURCE_TYPES.filter(t=>t!=='notebook-tree')),
  'reference.add':state('semantic-reference',['source','target','sourceRevision','targetRevision','kind','label','note'],['source','target','sourceRevision','targetRevision','kind'],'Add/update exact reference through the existing semantic service'),
  'reference.remove':state('semantic-reference',['id'],['id'],'Remove one explicit semantic reference'),
+ 'concept.create':state('semantic-reference',['id','subject','label','aliases','parentId','assignTo','note'],['id','subject','label'],'Create a subject concept in the local Concept Index (identical re-creation is a no-op) and optionally link it to one exact target'),
  'concept.assignment.propose':state('semantic-reference',['batch'],['batch'],'Stage existing exact-target concept/reference suggestions; existing semantic review remains authoritative'),
  'bookmark.add':state('personal',['target','title'],['target','title'],'Add an explicitly reviewed bookmark'),
  'bookmark.remove':state('personal',['id'],['id'],'Remove one bookmark'),

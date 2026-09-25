@@ -1,0 +1,49 @@
+{
+  "id": "page.v3seed.fabric-onelake-and-lakehouse-mental-model",
+  "title": "Fabric OneLake and lakehouse mental model",
+  "summary": "Treat OneLake as the storage layer and Fabric workloads as engines/surfaces over governed data products.",
+  "blocks": [
+    {
+      "id": "block.v3seed.fabric-onelake-and-lakehouse-mental-model.overview",
+      "type": "markdown",
+      "text": "Treat OneLake as the storage layer and Fabric workloads as engines/surfaces over governed data products."
+    },
+    {
+      "id": "block.v3seed.fabric-onelake-and-lakehouse-mental-model.points",
+      "type": "list",
+      "items": [
+        "OneLake provides a unified data lake abstraction for Fabric items.",
+        "Lakehouse combines files and managed table semantics for analytics workloads.",
+        "Shortcuts can reference data without physically copying everything.",
+        "Workspace/item security and underlying data permissions must be designed together."
+      ]
+    }
+  ],
+  "related": [
+    "page.v3seed.fabric-data-factory-orchestration",
+    "page.v3seed.delta-lake-table-fundamentals",
+    "page.v3seed.adls-gen2-organization-and-access",
+    "page.v3seed.bronze-silver-and-gold-contracts",
+    "page.v3seed.qcm.cloud-data-platforms"
+  ],
+  "terms": [
+    "term.v3seed.onelake",
+    "term.v3seed.delta-transaction-log",
+    "term.v3seed.medallion-architecture"
+  ],
+  "sources": [
+    {
+      "title": "Microsoft Fabric - OneLake overview",
+      "url": "https://learn.microsoft.com/en-us/fabric/onelake/onelake-overview",
+      "publisher": "Microsoft",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:cloud",
+    "topic:azure-fabric",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

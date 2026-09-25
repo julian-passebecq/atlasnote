@@ -1,0 +1,63 @@
+{
+  "id": "page.v3seed.explain-plans-and-troubleshooting",
+  "title": "Explain plans and troubleshooting",
+  "summary": "Use the physical plan and stage metrics to connect code to runtime behavior.",
+  "blocks": [
+    {
+      "id": "block.v3seed.explain-plans-and-troubleshooting.overview",
+      "type": "markdown",
+      "text": "Use the physical plan and stage metrics to connect code to runtime behavior."
+    },
+    {
+      "id": "block.v3seed.explain-plans-and-troubleshooting.points",
+      "type": "list",
+      "items": [
+        "Look for scans, filters, exchanges/shuffles and join operators.",
+        "Check whether expected predicate and column pruning happened.",
+        "Compare estimated/runtime sizes where available.",
+        "Tie plan observations to stage/task metrics before changing code."
+      ]
+    },
+    {
+      "id": "block.v3seed.explain-plans-and-troubleshooting.code",
+      "type": "code",
+      "language": "python",
+      "code": "df.explain(\"formatted\")\n# Then inspect Spark UI / platform metrics for the stages created by the action.",
+      "title": "Example"
+    }
+  ],
+  "related": [
+    "page.v3seed.spark-execution-model-dag-jobs-stages-and-tasks",
+    "page.v3seed.sql-performance-reading-checklist",
+    "page.v3seed.adaptive-query-execution",
+    "page.v3seed.troubleshooting-a-slow-pipeline",
+    "page.v3seed.qcm.pyspark-execution-performance"
+  ],
+  "terms": [
+    "term.v3seed.physical-plan",
+    "term.v3seed.predicate-pushdown",
+    "term.v3seed.shuffle",
+    "term.v3seed.stage-and-task"
+  ],
+  "sources": [
+    {
+      "title": "Apache Spark - web UI",
+      "url": "https://spark.apache.org/docs/latest/web-ui.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    },
+    {
+      "title": "Spark SQL - performance tuning",
+      "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html",
+      "publisher": "Apache Software Foundation",
+      "note": "Reference link for further reading; no text copied."
+    }
+  ],
+  "tags": [
+    "seed:v3",
+    "subject:it",
+    "topic:spark",
+    "lang:en"
+  ],
+  "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
+}

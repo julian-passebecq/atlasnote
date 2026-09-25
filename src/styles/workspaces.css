@@ -94,3 +94,9 @@
 
 /* Keep footer tools above common hosted-page corner badges. */
 .atlas-app .reader-rail{padding-bottom:48px}
+/* V3 PDF study tree: reader-driven current physical page and pane markers. */
+.pdf-study-page.pdf-current{background:var(--tint);box-shadow:inset 3px 0 0 var(--accent)}
+.pdf-study-page.pdf-current .tree-target span{font-weight:600}
+.pdf-study-page.pdf-visible{box-shadow:inset 2px 0 0 var(--line,#c9d3e0)}
+.pdf-pane-marker{margin-left:auto;padding:0 4px;border-radius:4px;font-size:10px;line-height:15px;background:var(--surface-2,#eef2f7);color:var(--muted,#5b6b7d)}
+.study-tree-gap{margin:0;padding:0 0 0 28px;color:var(--muted,#5b6b7d);font-size:11px;line-height:14px}

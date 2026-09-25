@@ -1,0 +1,25 @@
+{
+  "format": "atlas-content-pack",
+  "schemaVersion": 1,
+  "payloadSchema": "atlas.bundle@2",
+  "id": "atlas.v3-seed",
+  "version": "0.2.0",
+  "title": "AtlasNote V3 foundations (draft)",
+  "visibility": "public",
+  "files": {
+    "projects": "projects.json",
+    "pages": "pages",
+    "glossary": "glossary.json"
+  },
+  "requires": [
+    {
+      "id": "study.samples",
+      "version": "1.1.0"
+    }
+  ],
+  "assets": [],
+  "provenance": {
+    "kind": "author-created",
+    "note": "Original AtlasNote V3 foundation seed (64 Notebook pages, stable IDs) with a linked data-engineering and Norsk slice, enriched on 2026-09-24 into a connected library: related links on every page (a few to study.samples, hence the declared dependency), 41 glossary terms and 6 native QCM sets. Prepared by Claude Code. No private data or third-party text; source links are references only. Code examples were not executed. Owner review required before publication."
+  }
+}
