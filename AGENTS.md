@@ -21,7 +21,7 @@ Read `START_HERE.md`, `V22_ARCHITECTURE.md`, `V22_MIGRATION_AND_BACKUP.md`, `V22
 - Do not add automatic backup restore/reset/history erase/QCM attempt rewriting/publication/self-approval operations.
 - PDF Atlas remains metadata-only with an immutable 40-character production commit. Keep canonical source and enrichment separate and run `check:pdfatlas`. No public PDF binaries or inferred rights upgrades.
 - Preserve every meaningful old release assertion. A compatibility test is not a normal-origin IndexedDB or embedded PDF test. Keep failed/blocked logs and do not relax browser policies.
-- No GitHub writes, main merge, deployment or publication of private libraries/backups without a new explicit user request.
+- Commits, branch pushes, PRs and merging PRs into main are allowed when CI is green. No deployment or publication of private libraries/backups without a new explicit user request.
 
 The QA head `215b60ff792a59e736b2b059a4e3fc60f1092d54` on `newversion2.2vfmanual` records **50/50 release gates, 813 unit tests and 15/15 expanded normal-origin browser scenarios passing**. See [V22_QA_REPORT.md](V22_QA_REPORT.md) for repairs, retained failures and coverage limits. The user-approved canonical single-ID Article/QCM invariant remains; independent wrapper/document IDs are outside V2.2. Nothing was merged or deployed.
 

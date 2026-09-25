@@ -10,7 +10,9 @@ export type QcmQuestion={id:string;prompt:string;options:QcmOption[];correctOpti
 export type QcmDocument={schemaVersion:1;id:string;title:string;taxonomy?:TaxonomyRef;questions:QcmQuestion[]};
 export type QcmAttempt={id:string;setId:string;questionId:string;selectedOptionIds:string[];correct:boolean;answeredAt:number;attemptNumber:number;reflection?:string;revealed?:boolean};
 export type QcmResponse={setId:string;questionId:string;selectedOptionIds:string[];reflection:string;updatedAt:number};
-export type DashboardItem={id:string;kind:'link'|'task'|'note'|'article-draft';text:string;url?:string;dueAt?:number;important?:boolean;status?:'inbox'|'open'|'done'|'archived';taxonomy?:TaxonomyRef;contextTarget?:ReadingTarget;createdAt:number;updatedAt?:number};
+export type DashboardItem={id:string;kind:'link'|'task'|'note'|'article-draft';text:string;url?:string;dueAt?:number;important?:boolean;status?:'inbox'|'open'|'done'|'archived';taxonomy?:TaxonomyRef;contextTarget?:ReadingTarget;createdAt:number;updatedAt?:number;origin?:ExternalOrigin};
+/** Non-secret provenance of an item imported through a reviewed handoff. */
+export type ExternalOrigin={app:'powerops';objectId:string;revision?:string;projectRef?:string;importedAt:number;fingerprint?:string};
 export type NotebookReference={id:string;title:string;target:ReadingTarget;taxonomy:TaxonomyRef;createdAt:number};
 export type TaxonomyFolder={id:string;projectId:string;parentId?:string;title:string;path:string[];subject:SubjectKey};
 export const LIBRARY_TYPES:{id:LibraryMode;label:string;icon:string;add:string}[]=[

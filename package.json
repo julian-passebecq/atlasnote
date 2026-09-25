@@ -105,7 +105,8 @@
     "test:v23:native-capacity": "python tests/v23_native_quota.py",
     "test:inherited:after-v23": "node tools/run-inherited-after-v23.mjs",
     "test:v23:core:portable": "node tools/run-v23-release.mjs --portable",
-    "test:v23:access:diagnostic": "python tests/v23_access_boundary_diagnostic.py"
+    "test:v23:access:diagnostic": "python tests/v23_access_boundary_diagnostic.py",
+    "test:planning:ui": "python tests/planning_inbox_dom.py"
   },
   "dependencies": {
     "jszip": "3.10.1",
