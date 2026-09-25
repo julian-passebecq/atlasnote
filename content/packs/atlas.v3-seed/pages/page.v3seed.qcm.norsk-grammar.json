@@ -75,7 +75,7 @@
       },
       {
         "id": "question.v3seed.nog.q2",
-        "prompt": "Which definite forms of ei/en bok are accepted in Bokmål? Select all that apply.",
+        "prompt": "Which definite singular forms of ei/en bok are accepted in Bokmål? Select all that apply.",
         "options": [
           {
             "id": "option.v3seed.nog.q2.a",

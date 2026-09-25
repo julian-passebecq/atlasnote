@@ -1,6 +1,6 @@
 {
   "id": "page.v3seed.nrk-daily-feed-workflow-for-atlasnote",
-  "title": "NRK Daily feed workflow for AtlasNote",
+  "title": "Norsk Daily feed workflow",
   "summary": "The Norsk experience can import a date-keyed JSON feed generated from user-provided or permitted headline metadata.",
   "blocks": [
     {
@@ -14,7 +14,8 @@
       "items": [
         "The feed should store URL, publication time, section, short headline-derived study fields and provenance.",
         "Keep source text minimal; do not mirror full articles into the repository.",
-        "ChatGPT can return structured translation, vocabulary and grammar hints matching the feed schema.",
+        "An external assistant of your choice (or hand-written JSON) can return structured translation, vocabulary and grammar hints matching the feed schema; AtlasNote makes no provider call.",
+        "Imports arrive as a proposal that you preview, stage and explicitly accept in Agent Review; nothing is applied automatically.",
         "AtlasNote should treat each date as a lightweight study collection and allow review/mark-as-known."
       ]
     }
@@ -30,7 +31,7 @@
     "seed:v3",
     "subject:norsk",
     "topic:norsk",
-    "lang:nb"
+    "lang:en"
   ],
   "provenance": "Original AtlasNote V3 foundation seed authored for product integration; no third-party text or private data."
 }

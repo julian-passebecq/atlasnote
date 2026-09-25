@@ -30,7 +30,7 @@
       "type": "code",
       "language": "sql",
       "title": "LEFT JOIN: right-side filters belong in ON",
-      "code": "-- Keeps every customer; only orders from 2026 are matched.\nSELECT c.customer_id, o.order_id\nFROM customers c\nLEFT JOIN orders o\n  ON  o.customer_id = c.customer_id\n  AND o.order_date >= DATE '2026-01-01';\n\n-- The same predicate in WHERE removes customers without a 2026 order,\n-- because o.order_date IS NULL for them: the query now behaves like an INNER JOIN."
+      "code": "-- Keeps every customer; only orders from 2026 are matched.\nSELECT c.customer_id, o.order_id\nFROM customers c\nLEFT JOIN orders o\n  ON  o.customer_id = c.customer_id\n  AND o.order_date >= DATE '2026-01-01';\n\n-- The same predicate in WHERE removes customers without a 2026 order:\n-- customers with no orders have a NULL o.order_date, and customers with only\n-- older orders fail the date test. The query now behaves like an INNER JOIN."
     },
     {
       "id": "block.v3seed.inner-left-and-anti-joins.anti-variants",

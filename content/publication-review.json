@@ -29,8 +29,8 @@
       "sha256": "79cb4a1da1faf3c65f84df209b1b31ad71b136f2b7b9abfd3972ef461778b051"
     },
     "atlas.v3-seed": {
-      "review": "Prepared by Claude Code on 2026-09-24 from the V3 seed; original text/code, no private data or third-party text. Enrichment (pack 0.2.0): related links on all 64 Notebook pages, 31 new glossary terms (41 total), 4 new native QCM sets (6 total), official-documentation reference links only. Code was not executed. OWNER REVIEW REQUIRED before publication.",
-      "sha256": "64b3f83727fafa3b0f04236232a2b25aea60e3e52bf875df69b1ceac3e8bbebf"
+      "review": "Prepared by Claude Code on 2026-09-24 from the V3 seed; original text/code, no private data or third-party text. Enrichment (pack 0.2.0): related links on all 64 Notebook pages, 31 new glossary terms (41 total), 4 new native QCM sets (6 total), official-documentation reference links only. Code was not executed. OWNER REVIEW REQUIRED before publication. 2026-09-25: AI pre-review fixes H-1, M-1, M-2, M-4, M-5 applied (docs/v3/CONTENT_PREREVIEW.md); still OWNER REVIEW REQUIRED before publication.",
+      "sha256": "7151ba6f9019f8a9d29072c2de9a0113b6be07317e5cbb8b1a3512b70cedbc78"
     }
   }
 }

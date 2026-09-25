@@ -236,7 +236,7 @@
       },
       {
         "id": "question.v3seed.spark.q6",
-        "prompt": "In a 200-task stage, one task runs for 40 minutes while the others finish in about a minute; its shuffle read is about 30 times the median. Which first steps are reasonable? Select all that apply.",
+        "prompt": "In the 200-task stage of a sort-merge join between events and customers, one task runs for 40 minutes while the others finish in about a minute; its shuffle read is about 30 times the median. Which first steps are reasonable? Select all that apply.",
         "options": [
           {
             "id": "option.v3seed.spark.q6.a",
