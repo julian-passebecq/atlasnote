@@ -194,6 +194,7 @@ The following happened on 2026-09-25 (UTC).
      - FAIL: `test:v23:access:preview`, as above.
    - `test:inherited:after-v23`: refused by design, because the V23 release was not fully green.
 10. **Owner decision: stop REL-02 here.** The service token is not accepted by the Access application (cause not isolated: token value or policy attachment). The test and its policy were not relaxed. REL-02 stays BLOCKED, as on `main`. No product feature depends on it.
+11. **Cleanup:** at owner request, the disposable QA Worker `atlasnote-v23-qa` was deleted with `wrangler delete`. Its URL and its preview URLs now return 404. Production `atlasnote` is untouched and still redirects to Access (302).
 
 ## Remaining work and blockers
 
