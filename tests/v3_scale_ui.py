@@ -37,30 +37,41 @@ with sync_playwright() as pw:
  def search():
   p.keyboard.press('Control+k');field=p.get_by_label('Search all pages and glossary',exact=True);field.wait_for()
   words=['window','grain','spark','join','cache','norsk','delta','pandas','sql','partition']
-  samples=[]
+  # Event Timing API: input event -> next paint, measured by the browser itself (the INP
+  # metric). Events under the 16 ms reporting threshold count as 16 ms. The automation
+  # round trip (fill + polling) is reported separately; it includes Playwright overhead.
+  p.evaluate("()=>{window.__inputLatency=[];new PerformanceObserver(l=>{for(const e of l.getEntries())if(e.name==='input')window.__inputLatency.push(e.duration);}).observe({type:'event',durationThreshold:16});}")
+  samples=[];trips=[]
   for i in range(30):
    q=words[i%len(words)]+(' #'+str(i) if i%3==0 else '')
-   t=time.perf_counter();field.fill(q)
+   p.evaluate('()=>{window.__inputLatency=[];}');t=time.perf_counter();field.fill(q)
    p.wait_for_function('(q)=>{const i=document.querySelector(\'[aria-label="Search all pages and glossary"]\');return i&&i.value===q&&!!document.querySelector(".search-results");}',arg=q)
-   p.evaluate('()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))');samples.append((time.perf_counter()-t)*1000)
-  p.keyboard.press('Escape');s=summary(samples);assert s['p95']<=200,('search p95 over budget',s);return s
- check('Search over 1,500 resources: p95 <= 200 ms per query update (30 samples)',search)
+   p.evaluate('()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))');trips.append((time.perf_counter()-t)*1000)
+   p.wait_for_timeout(50);lat=p.evaluate('()=>window.__inputLatency.slice()');samples.append(max(lat) if lat else 16)
+  p.keyboard.press('Escape');s=summary(samples);s['automationRoundTrip']=summary(trips)
+  assert s['p95']<=200,('search input-to-paint p95 over budget',s);return s
+ check('Search over 1,500 resources: input-to-paint p95 <= 200 ms (Event Timing, 30 queries)',search)
+ # Click -> next paint via the Event Timing API (browser-measured, INP-style); the
+ # automation round trip is kept as a secondary, overhead-inclusive figure.
+ p.evaluate("()=>{window.__clickLatency=[];new PerformanceObserver(l=>{for(const e of l.getEntries())if(e.name==='click'||e.name==='pointerup'||e.name==='pointerdown')window.__clickLatency.push(e.duration);}).observe({type:'event',durationThreshold:16});}")
+ def timed_click(locator):
+  p.evaluate('()=>{window.__clickLatency=[];}');t=time.perf_counter();locator.click()
+  p.evaluate('()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))');trip=(time.perf_counter()-t)*1000
+  p.wait_for_timeout(50);lat=p.evaluate('()=>window.__clickLatency.slice()');return (max(lat) if lat else 16),trip
  def tree():
-  samples=[]
+  samples=[];trips=[]
   for i in range(30):
    node='node.scale.f'+str(1+i%6)+'.'+str(1+(i//6)%5)  # folders of the expanded projects
-   row=p.locator('[data-node-id="'+node+'"] .tree-expander').first
-   t=time.perf_counter();row.click();p.evaluate('()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))');samples.append((time.perf_counter()-t)*1000)
-  s=summary(samples);assert s['p95']<=150,('tree toggle p95 over budget',s);return s
- check('Folder expand/collapse with 1,500 resources: p95 <= 150 ms (30 samples)',tree)
+   lat,trip=timed_click(p.locator('[data-node-id="'+node+'"] .tree-expander').first);samples.append(lat);trips.append(trip)
+  s=summary(samples);s['automationRoundTrip']=summary(trips);assert s['p95']<=150,('tree toggle p95 over budget',s);return s
+ check('Folder expand/collapse with 1,500 resources: click-to-paint p95 <= 150 ms (Event Timing, 30 samples)',tree)
  def workspaces():
-  samples=[]
+  samples=[];trips=[]
   for i in range(30):
-   n=2 if i%2==0 else 1;t=time.perf_counter()
-   p.evaluate('(n)=>testStore.personal(p=>{testSlots.selectWorkspace(p,n);})',n) if p.evaluate('typeof testSlots!=="undefined"') else p.get_by_role('button',name='Workspace '+str(n),exact=True).first.click()
-   p.evaluate('()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))');samples.append((time.perf_counter()-t)*1000)
-  s=summary(samples);assert s['p95']<=150,('workspace switch p95 over budget',s);return s
- check('Warm workspace switch with 1,500 resources: p95 <= 150 ms (30 samples)',workspaces)
+   n=2 if i%2==0 else 1
+   lat,trip=timed_click(p.locator('.workspace-slots').get_by_role('button',name='Workspace '+str(n),exact=True));samples.append(lat);trips.append(trip)
+  s=summary(samples);s['automationRoundTrip']=summary(trips);assert s['p95']<=150,('workspace switch p95 over budget',s);return s
+ check('Warm workspace switch with 1,500 resources: click-to-paint p95 <= 150 ms (Event Timing, 30 samples)',workspaces)
  def experience():
   samples=[]
   for i in range(30):

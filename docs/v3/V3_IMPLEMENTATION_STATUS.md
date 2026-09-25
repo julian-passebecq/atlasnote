@@ -27,6 +27,7 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | `2356368` | Fix: pinned-revision deep links wait for the complete history under staged boot (found by `completion_v22_runtime`) |
 
 | `b6b1de3` | DATA-03: fail closed when the stored workspace cannot be read; DATA-02: backup completeness under Experiences |
+| `eec259a` | Quadratic catalogue lookups removed; browser scale budgets at 1,500 resources (`v3_scale_ui`, Event Timing) |
 | `ffd8bd5` | PDF-03: printed page labels shown beside, never instead of, physical page numbers |
 | `ac75cda` | PERF-07: batched Notebook folders (80 rows plus explicit Show next, open page always revealed) and map lookups per tree row |
 | `de21297` | MEM-02: shared verified PDF cache; browser gates MEM-01 (50 switches), DATA-03 (unreadable record never overwritten), UI-01 (390px) |
@@ -113,7 +114,7 @@ This is a partial V3 implementation. It is **not** a V3 release certification. T
 | Check | Result |
 | --- | --- |
 | `npx tsc --noEmit` / `-p tsconfig.online.json` | PASS |
-| `npm test` | PASS 1119/1119 (baseline 1053) |
+| `npm test` | PASS 1120/1120 (baseline 1053) |
 | `npm run test:v23` | PASS 214/214 |
 | `npm run validate`, `npm run check:pdfatlas`, `npm run build` | PASS |
 | `tests/v3_runtime.py`, `tests/v3_pdf_window.py`, `tests/v3_norsk_daily.py`, `tests/v3_tabs.py`, `tests/v3_gates.py` (new) | PASS 6/6, 5/5, 7/7, 4/4, 4/4 |
@@ -145,10 +146,10 @@ Browser runs used Playwright wheel injection. **This is not physical mouse or tr
 | PDF-05 | PASS (synthetic) | Generation guard, `v3_pdf_window`, `pdf_navigation_runtime` |
 | MEM-01 | PASS | `v3_gates` (50 switches), `v3-reader` (24 lifetimes) |
 | MEM-02 | PASS (unit) | Verified cache test. The end-to-end public-PDF path needs the real reviewed bytes, which are not in the repo. |
-| PERF-01 | NOT DONE | `content.json` still carries all reviewed bodies (548 KB) |
+| PERF-01 | NOT DONE (owner decision) | `content.json` still carries all reviewed bodies (548 KB). Deferred until content grows. |
 | PERF-02, PERF-03 | PASS | Staged boot, `v3-loading`, `v3_boot_scale` |
 | PERF-04 | PASS | Coalesced checkpoints, `v3_runtime` |
-| PERF-05 | PARTIAL | Cached index with an explicit scope; no worker (decision recorded with measurements) |
+| PERF-05 | PASS (no worker) | Cached index and explicit scope. Browser input-to-paint p95 is 120–128 ms at 1,500 resources (`v3_scale_ui`). A worker is not warranted by the measurements. |
 | PERF-06 | PASS | Memoized projection and facts index |
 | PERF-07 | PASS (batching) | PDF windowing (`v3_pdf_window`). Notebook folders render in batches of 80 rows and always reveal the open page (`v3_tree_batch`). This is batching, not full virtualization. |
 | DATA-01 | PASS | `v3_tabs`, `v3_runtime` cross-tab |

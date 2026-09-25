@@ -1,3 +1,15 @@
+# AtlasNote V3 - release candidate
+
+Start with [docs/v3/V3_RELEASE_CANDIDATE.md](docs/v3/V3_RELEASE_CANDIDATE.md): what V3 adds, a ten-minute manual check and the owner's release checklist. The engineering record, the measurements and the acceptance-case register are in [docs/v3/V3_IMPLEMENTATION_STATUS.md](docs/v3/V3_IMPLEMENTATION_STATUS.md). The architecture decision is [docs/v3/CONSOLIDATED_ARCHITECTURE_DECISION.md](docs/v3/CONSOLIDATED_ARCHITECTURE_DECISION.md).
+
+V3 extends the V2.3 candidate described below:
+- The durability and provider/access contracts are unchanged.
+- The database stays at `knowledge-atlas` v3 with the same five stores.
+- The app version string is still 2.3.0 until the owner's release decision.
+- Nothing has been merged into `main` or deployed.
+
+---
+
 # AtlasNote V2.3 - provider-neutral access / Cloudflare candidate
 
 ## Current finishing repair
