@@ -62,7 +62,7 @@ The detailed engineering record is in [V3_IMPLEMENTATION_STATUS.md](V3_IMPLEMENT
 
 ## Owner release checklist (in order)
 
-1. **Review the content** of `content/packs/atlas.v3-seed`: Norwegian text, quiz answers and reference links. Correct anything wrong through the normal pack workflow, then update its `publication-review.json` note.
+1. **Review the content** of `content/packs/atlas.v3-seed`: Norwegian text, quiz answers and reference links. Start with [CONTENT_PREREVIEW.md](CONTENT_PREREVIEW.md). An independent AI pre-review found 18 points. The 5 high-confidence fixes are already applied; M-3 (a Norwegian idiom, which needs a native check) and the Low items are left to you. Correct anything else through the normal pack workflow, then update the `publication-review.json` note.
 2. **PDF device check** (PDF-01): run step 3 above on the affected mouse or trackpad and share the trace if anything jumps.
 3. **Decide on Norsk Daily sources**: synthetic or your own permitted material only, unless the publisher's reuse terms are confirmed (NORSK-02).
 4. **Protected preview** (REL-02): with your Cloudflare access, deploy this branch to a disposable preview protected by Access. Then run `npm run test:v23:access:preview` and the full `npm run test:v23:release`, followed by `npm run test:inherited:after-v23`, on the same clean commit.
