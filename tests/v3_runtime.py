@@ -45,6 +45,22 @@ with sync_playwright() as pw:
   field.fill('4');field.press('Escape');assert field.input_value()=='3','Escape restores committed page'
   shot('compact-page-control');return {'from':start,'to':3}
  check('Compact physical-page control stays reachable with collapsed chrome; invalid input never navigates',compact_control)
+ def previous_page_hidden_chrome():
+  # Owner trace 2026-09-26: with collapsed chrome an unrendered page had min-height 0,
+  # so a wheel-previous turn landed at its top and jumped ~1000 px once the canvas painted.
+  pane=p.locator('.active-pane');scroller=pane.locator('.pdf-canvas-scroll')
+  assert pane.locator('.reader-chrome-hidden').count() or p.locator('.reader-chrome-hidden').count(),'chrome not hidden'
+  minh=pane.locator('[data-physical-page="3"]').evaluate('e=>parseFloat(getComputedStyle(e).minHeight)')
+  assert minh>300,'hidden-chrome page wrapper lost its height: '+str(minh)
+  scroller.hover();scroller.evaluate('e=>{e.scrollTop=0}');p.wait_for_timeout(700)
+  for _ in range(4):p.mouse.wheel(0,-120);p.wait_for_timeout(40)
+  pane.locator('[data-physical-page="2"][data-page-rendered="true"]').wait_for();p.wait_for_timeout(400)
+  gap=scroller.evaluate('e=>e.scrollHeight-e.clientHeight-e.scrollTop')
+  assert gap<=40,'previous page did not settle at its bottom: '+str(gap)
+  field=pane.locator('.pdf-page-compact').get_by_label('Physical PDF page number (compact)',exact=True)
+  field.fill('3');field.press('Enter');pane.locator('[data-physical-page="3"][data-page-rendered="true"]').wait_for()
+  return {'minHeight':minh,'bottomGap':gap}
+ check('Wheel to the previous page with collapsed chrome lands at its bottom without a late jump',previous_page_hidden_chrome)
 
  def tree_current_row():
   btn('PDF content').click()

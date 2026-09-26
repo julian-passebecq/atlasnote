@@ -31,7 +31,7 @@ function PhysicalPage({pdf,n,width,rotation,root,virtual,onVisible,onRendered,on
  // V3: measured wrapper height feeds the Continuous window spacers.
  useEffect(()=>{const el=ref.current;if(!el||!onHeight)return;const ro=new ResizeObserver(()=>{if(el.offsetHeight)onHeight(n,el.offsetHeight);});ro.observe(el);return()=>ro.disconnect();},[n,onHeight]);
  const dpr=Math.max(0.5,Math.min(window.devicePixelRatio||1,2,Math.sqrt(5000000/(width*width*size.ratio))));
- return <section ref={ref} className="physical-page" data-physical-page={n} style={{width,minHeight:Math.ceil(width*size.ratio)+20}} aria-label={'Physical PDF page '+n}>
+ return <section ref={ref} className="physical-page" data-physical-page={n} style={{width,minHeight:Math.ceil(width*size.ratio)+20,['--pdf-page-height' as string]:Math.ceil(width*size.ratio)+'px'}} aria-label={'Physical PDF page '+n}>
   <div className="physical-label">Page {n}</div>{near?<Page pageNumber={n} width={width} rotate={combinedRotation(size.intrinsic,rotation)} devicePixelRatio={dpr} renderAnnotationLayer renderTextLayer onRenderSuccess={()=>{ref.current?.setAttribute('data-page-rendered','true');onRendered();}} error={<p role="alert">This physical page could not be rendered. The original PDF remains available.</p>} loading={<p>Rendering page {n}...</p>}/>:<div className="pdf-placeholder" style={{height:width*size.ratio}}>Page {n}</div>}
  </section>;
 }
