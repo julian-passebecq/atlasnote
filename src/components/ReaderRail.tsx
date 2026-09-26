@@ -1,4 +1,5 @@
 import React from '../vendor/react.mjs';
+import {BuildIdentityLabel} from './BuildIdentityLabel.js';
 import {Icon,IconButton} from './Icon.js';
 import {FloatingPanel} from './FloatingPanel.js';
 import {FLAG_LABELS,THEME_LABELS} from '../core/model.js';
@@ -43,7 +44,7 @@ export function ReaderRail({onExperience,experienceActive,onHistory,onAgentRevie
   <hr/>{doc&&<button disabled={!!loc?.historyRevisionId} onClick={()=>choose(onPdfManage)}><Icon name="list"/>Manage PDF details</button>}<button disabled={!page||!!loc?.historyRevisionId} onClick={()=>choose(onEdit)}><Icon name="edit"/>Edit current page</button><button disabled={!page} onClick={()=>choose(onPrint)}><Icon name="print"/>Print or Save as PDF</button>
   <hr/><label className="inline-check"><input type="checkbox" checked={session.showFlags} onChange={onFlags}/>Show learning flags</label>
   {page&&<label className="popover-field">Learning flag<select aria-label="Learning flag" value={rating??'gray'} onChange={e=>onRating(e.target.value)}>{Object.entries(FLAG_LABELS).map(([id,label])=><option key={id} value={id}>{label}</option>)}</select></label>}
-  <hr/><button data-agent-action="agent-review" onClick={()=>choose(onAgentReview)}><Icon name="check"/>Agent Review</button><button onClick={()=>choose(onImportCheatsheet)}><Icon name="grid"/>Import cheatsheet JSON</button><button onClick={()=>choose(onSettings)}><Icon name="settings"/>Workspace settings</button><small className="secondary">AtlasNote V2.2 <span aria-hidden="true">/</span> Local-first workspace</small>
+  <hr/><button data-agent-action="agent-review" onClick={()=>choose(onAgentReview)}><Icon name="check"/>Agent Review</button><button onClick={()=>choose(onImportCheatsheet)}><Icon name="grid"/>Import cheatsheet JSON</button><button onClick={()=>choose(onSettings)}><Icon name="settings"/>Workspace settings</button><BuildIdentityLabel/>
  </div>}
  </FloatingPanel>}
  </>;

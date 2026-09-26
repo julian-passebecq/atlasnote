@@ -1,72 +1,72 @@
-# AtlasNote V3
+# AtlasNote 3.1.0-rc.1
 
-## Use it now
+This branch is the owner-requested V3.1 stabilization candidate. Start with
+[docs/v31/START_HERE.md](docs/v31/START_HERE.md) and the
+[verification report](docs/v31/VERIFICATION_20260926.md).
 
-- **Online (Cloudflare, production):** https://atlasnote.datapass.workers.dev, behind Cloudflare Access. V3 was deployed there on 2026-09-26 at the owner's request (latest: `bcd1e0f`, version `6f1e75f7`); it is **not** redeployed automatically (manual `wrangler deploy`, see [V3_IMPLEMENTATION_STATUS.md](docs/v3/V3_IMPLEMENTATION_STATUS.md#cloudflare-production-deploy-2026-09-26)).
-- **Online (Netlify, paused):** https://atlasnotej.netlify.app still serves its last deploy (`bcd1e0f`), but automatic builds are stopped since 2026-09-26 at the owner's request: Cloudflare is the focus.
-- **Offline:** `npm ci`, then `npm run dev` in this folder, then open http://127.0.0.1:4173.
-- Before heavy use, export a full backup (Settings → full backup). Each origin (Cloudflare, Netlify, localhost) keeps its own browser data.
+## Run the candidate locally
 
-## Release status
+Use a real Git checkout; the build records and checks its exact source revision.
+Node.js >=22.12 and Git are required. Keep the committed dependency lockfile.
 
-Start with [docs/v3/V3_RELEASE_CANDIDATE.md](docs/v3/V3_RELEASE_CANDIDATE.md): what V3 adds, a ten-minute manual check and the owner's release checklist. The engineering record, the measurements and the acceptance-case register are in [docs/v3/V3_IMPLEMENTATION_STATUS.md](docs/v3/V3_IMPLEMENTATION_STATUS.md). The architecture decision is [docs/v3/CONSOLIDATED_ARCHITECTURE_DECISION.md](docs/v3/CONSOLIDATED_ARCHITECTURE_DECISION.md).
+```powershell
+git clone --branch fix/atlasnote-v31-stabilization --single-branch https://github.com/julian-passebecq/atlasnote.git atlasnote-v31
+Set-Location atlasnote-v31
+npm ci
+npm run dev
+```
 
-V3 extends the V2.3 candidate described below:
-- The durability and provider/access contracts are unchanged.
-- The database stays at `knowledge-atlas` v3 with the same five stores.
-- The app version string is still 2.3.0 until the owner's release decision.
-- V3 was merged into `main` on 2026-09-25 (PR #27). Netlify builds are paused. On 2026-09-26 the owner had V3 deployed to the Cloudflare production Worker `atlasnote` without the formal gate: REL-02 is still BLOCKED until the Access service token works.
+Open http://127.0.0.1:4173. Do not open index.html as a file. The normal build
+produces the integrated React-PDF app in `dist/`; `dist-offline/` is a separate
+compatibility/test build and must not be substituted for it.
 
----
+Before testing with an existing profile, export a full backup from the current
+app. Cloudflare, Netlify and localhost have independent browser-local data.
+The source ZIP is not a backup of that data.
 
-# AtlasNote V2.3 - provider-neutral access / Cloudflare candidate
+## What changed
 
-## Current finishing repair
+- The sidebar Norsk Daily action is now a small Norwegian vector flag, retaining
+  its keyboard access, accessible name and tooltip.
+- PDF navigation resolves page geometry before painting. Late render completions
+  do not restore the scroll position. Discrete wheel intentions remain bounded,
+  and Continuous mode handles mixed page sizes without a moving global estimate.
+- Cancelled PDF cache loads, recovery after failed boot, staged-load consistency,
+  same-workspace cross-tab position conflicts and Experience persistence are repaired.
+- Version labels and downloaded navigation traces use the generated build identity.
+- A provider-free V3.1 CI workflow runs unit, TypeScript and browser regressions.
 
-The published Cloudflare candidate `f9b426938e6c531754374dfb73bf71f6a4c40172`
-passed V2.3 and hosted-provider qualification, but inherited command 52 changed
-tracked example files. This source isolates runtime-generated examples in a
-temporary directory and supplies the missing compatibility fixture build in
-V2.3 CI. See [INHERITED_FIXTURE_ISOLATION.md](docs/v23/INHERITED_FIXTURE_ISOLATION.md).
-No application source, storage contract, provider gate or source-drift rule changed.
-Those prior green results are not certification of this new candidate.
+## Version and data contracts
 
+Product version: **3.1.0-rc.1**, from package.json. Database: `knowledge-atlas`
+**version 3**, still the same five stores. This is not a new database migration.
+History, PDF Atlas provenance, accepted-review boundaries and the thirteen atomic
+compaction rollback guarantees remain in place.
 
-This full source tree is the Cloudflare migration candidate, not an approved production
-release. It starts from the verified GitHub source tree on branch
-`final/atlasnote-2.3-vercel-migration`, commit
-`2128a455199abc2a9a71bf8156508c0bbc69af95`, tree
-`832c1f199ac6b8d335f31ced3e2f723831c3e89e`. The inherited V2.3 release-contract baseline
-remains `2ece94b4e07e3179e8aee5dad4b32970c5be2242`, tree
-`1a57e4db16efaf1ee4ac25f52da0462e388c93e9`. App version remains 2.3.0 and IndexedDB
-version remains 3.
+## Hosting and release boundary
 
-Read `docs/v23/PROVIDER_NEUTRAL_ACCESS.md`, `docs/v23/CLOUDFLARE_QUALIFICATION.md`,
-`docs/v23/NATIVE_CAPACITY.md` and `docs/v23/QA_MATRIX.md`. Historical reports are not
-fresh release evidence.
+No production deployment is part of this implementation. Cloudflare remains the
+primary host; its current served build must be checked by an authenticated owner.
+The preceding deployment handoff records `bcd1e0f` / Worker version `6f1e75f7`.
+That historical observation is not a new live verification. Netlify builds remain
+paused by the owner's decision; this work does not change them.
 
-The atomic compactor is present and preserved. All 13 fault cases, archive/recovery
-semantics, five-store persistence, immutable history, Compare, PDFAtlas and the Agent
-Interface retain their existing contracts.
+Do not deploy with the repository's `wrangler.jsonc` blindly: it still names the
+former QA Worker. Follow [the Cloudflare handoff](docs/v31/CLOUDFLARE_FOLLOWUP.md).
+REL-02 remains separate and unqualified here. No token, Access policy or provider
+permission was changed. Synthetic Chromium tests do not certify a physical mouse,
+trackpad or the authenticated production origin.
 
-## Build and verify
+Owner content review for `atlas.v3-seed` remains pending. Split content loading,
+on-demand hydration of all private assets and a real-source Norsk news feed are
+not claimed by this candidate.
 
-Work in a real Git checkout. Keep Node >=22.12 and the supplied dependency lockfile.
-`npm ci && npm run build` is the integrated hosted build, producing `dist/`. Never
-publish `dist-offline`. Portable/compatibility results do not prove the integrated PDF
-renderer, native quota behavior or managed hosted access.
+## Earlier architecture and evidence
 
-Cloudflare is the active provider adapter. `wrangler.jsonc` configures only Workers
-Static Assets, SPA fallback and preview URL capability. It does **not** enable Cloudflare
-Access. Managed Access must be configured on the disposable QA Worker and independently
-proved with anonymous and service-token requests.
-
-Do not deploy AtlasNote to a production/custom domain. For a brand-new Cloudflare Worker,
-complete the harmless bootstrap described in `CLOUDFLARE_QUALIFICATION.md`, protect
-**Previews only** with Access, then upload the exact AtlasNote candidate with
-`wrangler versions upload` and qualify its immutable version preview URL. The candidate
-version must not appear in the active Worker deployment.
-
-Only a completely green `npm run test:v23:release` permits
-`npm run test:inherited:after-v23` on the exact same clean source. Missing capability,
-stale evidence and unexecuted gates remain BLOCKED.
+The previous entrypoint is retained at
+[docs/history/v30-entrypoints/START_HERE.md](docs/history/v30-entrypoints/START_HERE.md).
+Its relative links and release statuses describe the historical checkout, not this
+candidate. Read `V22_ARCHITECTURE.md`, `V22_MIGRATION_AND_BACKUP.md`,
+`V22_AI_CHANGESET_SPEC.md`, `docs/v22/PDFATLAS_CONTRACT.md` and the V3 architecture
+records before changing those contracts. Earlier PASS results are not fresh
+qualification of a new source revision.

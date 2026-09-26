@@ -8,7 +8,7 @@ export function compareBuildIdentity(build,source,hash){const reasons=[];
  if(build.sourceCommit!==source.sourceCommit)reasons.push('Build source commit differs from current candidate');
  if(build.sourceHash!==hash)reasons.push('Build source fingerprint differs from current candidate');
  if(build.sourceDirty||source.sourceDirty)reasons.push('Clean build and checkout required');
- if(build.appVersion!=='2.3.0'||build.databaseVersion!==3)reasons.push('Unexpected app/database version');
+ if(build.appVersion!==JSON.parse(fs.readFileSync(new URL('../package.json',import.meta.url),'utf8')).version||build.databaseVersion!==3)reasons.push('Unexpected app/database version');
  if(build.pdfAtlasCommit!=='fa5e83f7825cdc837078f87c5e130cb012332195')reasons.push('PDFAtlas provenance differs');
  return reasons;}
 export function checkCandidateBuild(){const source=sourceIdentity(),hash=sourceHash();let build;try{build=JSON.parse(fs.readFileSync('dist/build-identity.json','utf8'));}catch(e){return {...source,status:'BLOCKED',reasons:['Integrated build identity unavailable: '+e.code]};}const reasons=compareBuildIdentity(build,source,hash);return {...source,sourceHash:hash,buildIdentity:build,status:reasons.length?'BLOCKED':'PASS',reasons};}

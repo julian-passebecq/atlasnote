@@ -7,7 +7,7 @@ import type {Catalogue,Overlays,Session,WorkspaceNumber} from '../core/model.js'
 import {PRESETS,validateExperience,isAllContent,evaluate} from './profile.mjs';
 import {experienceCounts,presetProfile} from './facts.js';
 import type {ExperienceProfile,ResourceFacts} from './facts.js';
-type Props={slot:WorkspaceNumber;session:Session|undefined;catalogue:Catalogue;overlays:Overlays;facts:Map<string,ResourceFacts>;onApply:(slot:WorkspaceNumber,profile:ExperienceProfile|undefined)=>void;onClose:()=>void};
+type Props={slot:WorkspaceNumber;session:Session|undefined;catalogue:Catalogue;overlays:Overlays;facts:Map<string,ResourceFacts>;onApply:(slot:WorkspaceNumber,profile:ExperienceProfile|undefined)=>Promise<void>;onClose:()=>void};
 /** One right-side editor for one explicitly labelled workspace. Edits are a
  * draft until Apply; Cancel discards. The panel is pinned to the slot it was
  * opened for: switching workspaces never redirects Apply to another slot.
@@ -16,11 +16,11 @@ type Props={slot:WorkspaceNumber;session:Session|undefined;catalogue:Catalogue;o
 export function ExperiencePanel({slot,session,catalogue,overlays,facts,onApply,onClose}:Props){
  const saved=session?.experience as ExperienceProfile|undefined;
  const [draft,setDraft]=useState<ExperienceProfile>(()=>structuredClone(saved??presetProfile('all')));
- const [pdfQuery,setPdfQuery]=useState(''),[error,setError]=useState('');
+ const [pdfQuery,setPdfQuery]=useState(''),[error,setError]=useState(''),[saving,setSaving]=useState(false);
  const counts=useMemo(()=>experienceCounts(draft,facts),[draft,facts]);
  const current=useMemo(()=>experienceCounts((saved??presetProfile('all')),facts),[saved,facts]);
  const dirty=JSON.stringify(draft)!==JSON.stringify(saved??presetProfile('all'));
- const edit=(fn:(d:ExperienceProfile)=>void)=>{setError('');setDraft(d=>{const next=structuredClone(d);fn(next);return next;});};
+ const edit=(fn:(d:ExperienceProfile)=>void)=>{if(saving)return;setError('');setDraft(d=>{const next=structuredClone(d);fn(next);return next;});};
  const subjectOn=(id:string)=>draft.subjects.mode==='all'||draft.subjects.mode==='selected'&&!!draft.subjects.ids?.includes(id);
  function toggleSubject(id:string){edit(d=>{const on=new Set(d.subjects.mode==='all'?SUBJECTS.map(s=>s.id):d.subjects.mode==='selected'?d.subjects.ids:[]);if(on.has(id))on.delete(id);else on.add(id);d.subjects=on.size===SUBJECTS.length?{mode:'all'}:on.size?{mode:'selected',ids:SUBJECTS.map(s=>s.id).filter(x=>on.has(x))}:{mode:'none'};});}
  const pdfs=useMemo(()=>catalogue.documents.map(d=>({id:d.pageId,title:d.title,subject:facts.get(d.pageId)?.subject})),[catalogue,facts]);
@@ -28,9 +28,9 @@ export function ExperiencePanel({slot,session,catalogue,overlays,facts,onApply,o
  function togglePdf(id:string){edit(d=>{const on=new Set(d.pdfs.mode==='all'?pdfs.map(p=>p.id):d.pdfs.mode==='selected'?d.pdfs.ids:[]);if(on.has(id))on.delete(id);else on.add(id);d.pdfs=on.size?{mode:'selected',ids:pdfs.map(p=>p.id).filter(x=>on.has(x))}:{mode:'none'};});}
  const title=(id:string)=>facts.get(id)?.title??id;
  const presetName=PRESETS.find((p:any)=>p.id===draft.presetId)?.name??draft.name??'Custom';
- function apply(){try{validateExperience(draft);onApply(slot,isAllContent(draft)&&draft.presetId==='all'?undefined:draft);onClose();}catch(e){setError((e as Error).message);}}
+ async function apply(){if(saving)return;setSaving(true);setError('');try{validateExperience(draft);await onApply(slot,isAllContent(draft)&&draft.presetId==='all'?undefined:draft);onClose();}catch(e){setError((e as Error).message);}finally{setSaving(false);}}
  const shownPdfs=pdfs.filter(p=>!pdfQuery.trim()||p.title.toLocaleLowerCase().includes(pdfQuery.trim().toLocaleLowerCase()));
- return <FloatingPanel title={'Workspace '+slot+' — '+(saved?.name??(saved?'Custom':'All content'))} className="experience-panel" onClose={onClose}>
+ return <FloatingPanel title={'Workspace '+slot+' — '+(saved?.name??(saved?'Custom':'All content'))} className="experience-panel" onClose={()=>{if(!saving)onClose();}}>
   <p className="experience-scope">Changes apply only to <strong>Workspace {slot}</strong>. Open tabs, reading positions, quiz progress and stored resources are kept.</p>
   <label className="experience-field"><span>Experience</span><select aria-label="Experience preset" value={draft.presetId} onChange={e=>{const next=presetProfile(e.target.value);edit(d=>{Object.assign(d,{...next,include:d.include,exclude:d.exclude});});}}>{PRESETS.map((p:any)=><option key={p.id} value={p.id}>{p.name}</option>)}</select></label>
   <fieldset className="experience-group"><legend>Content types</legend>
@@ -58,12 +58,13 @@ export function ExperiencePanel({slot,session,catalogue,overlays,facts,onApply,o
     <dt>Offline / stored</dt><dd>Unchanged. Hidden resources stay on this device, in backups and in history.</dd>
    </dl>
   </details>
+  {saving&&<p role="status">Saving workspace Experience...</p>}
   {error&&<p className="experience-warning" role="alert">{error}</p>}
   <div className="experience-actions">
    <button type="button" className="text-button" onClick={()=>edit(d=>{Object.assign(d,presetProfile('all'));})}>Reset to All content</button>
    <span className="spacer"/>
-   <button type="button" onClick={onClose}>Cancel</button>
-   <button type="button" className="primary" disabled={!dirty} onClick={apply}>Apply to Workspace {slot}</button>
+   <button type="button" disabled={saving} onClick={onClose}>Cancel</button>
+   <button type="button" className="primary" disabled={!dirty||saving} aria-busy={saving} onClick={apply}>Apply to Workspace {slot}</button>
   </div>
   <p className="sr-only" aria-live="polite">{presetName}: {counts.visible} resources visible after Apply.</p>
  </FloatingPanel>;

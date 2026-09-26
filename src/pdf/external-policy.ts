@@ -28,5 +28,6 @@ export async function fetchTrustedPdf(doc:DocumentEntry,signal:AbortSignal):Prom
  if(new TextDecoder().decode(bytes.subarray(0,5))!=='%PDF-')throw Error('The external host did not return a PDF.');
  const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');
  if(hash!==doc.sha256)throw Error('Public PDF revision differs from the reviewed SHA-256. Ask the library maintainer to update its manifest.');
+ signal.throwIfAborted();
  return bytes;
 }

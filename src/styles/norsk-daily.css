@@ -41,3 +41,7 @@
 .norsk-daily-meaning{margin:0;font-size:13px}
 .norsk-daily-meaning em{display:block;color:var(--muted);margin-top:2px}
 .norsk-daily-source{align-self:flex-start;font-size:11px}
+
+/* Small flag, with a usable keyboard/pointer target. Never relies on emoji fonts. */
+.filter-status .norsk-daily-chip{display:inline-flex;align-items:center;justify-content:center;width:30px;min-width:30px;height:28px;padding:4px;flex:0 0 auto}
+.norsk-daily-chip svg{display:block;border-radius:1px}

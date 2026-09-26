@@ -14,7 +14,7 @@ import type {HistoryData,RevisionContext,AgentReviewRecord} from '../history/mod
 import {prepareWorkspaceHistory,advanceHistory,assertProjection,prepareEmergencySnapshot,changedResources} from '../history/engine.js';
 import {captureResources} from '../history/adapters.js';
 import {validateHistory} from '../history/validation.mjs';
-import {mergePersonal} from './personal-merge.mjs';
+import {mergePersonal,preserveDisplayedSession} from './personal-merge.mjs';
 const DB_NAME='knowledge-atlas';export const DB_VERSION=3;
 const STORES=['imports','overlays','personal','assets','history'];
 let connection:Promise<IDBDatabase>|null=null;
@@ -58,13 +58,14 @@ async function loadHeavy():Promise<{assets:Asset[];history:HistoryData}>{
  * opening the transaction. A compare-and-swap epoch rejects concurrent-tab writes.
  * Current projections, immutable revisions, heads, review audit and selected
  * personal changes commit together, or the browser aborts all of them. */
-async function commitProjection(ws:Workspace,previous:HistoryData,writes:string[],replace=false,expectedPersonal?:Personal){
+async function commitProjection(ws:Workspace,previous:HistoryData,writes:string[],replace=false,expectedPersonal?:Personal,expectedRaw?:RawState){
  const h=ws.history!;const oldIds=new Set(previous.revisions.map(r=>r.revisionId));
  const db=await openDatabase(),tx=db.transaction(STORES,'readwrite'),done=complete(tx);
  try{
   const [meta,persistedPersonal]=await Promise.all([request(tx.objectStore('history').get('meta')),expectedPersonal?request(tx.objectStore('personal').get('active')):Promise.resolve(undefined)]);
   if(!replace&&(meta?.epoch??0)!==previous.meta.epoch)throw Error('Another tab changed resource history. Reload before applying this edit. Nothing was overwritten.');
   if(expectedPersonal&&stable(preparePersonal(persistedPersonal??blankWorkspace().personal))!==stable(expectedPersonal))throw Error('Personal/workspace state changed in another tab; review again.');
+  if(expectedRaw&&!rawStateEqual(expectedRaw,await readRawState(tx)))throw Error('Workspace changed while validating the backup. Review the replacement again. Nothing was overwritten.');
   if(replace)for(const name of STORES)tx.objectStore(name).clear();
   if(replace||writes.includes('imports'))for(const p of ws.imports)tx.objectStore('imports').put(p,p.manifest.id);
   if(replace||writes.includes('assets'))for(const a of ws.assets)tx.objectStore('assets').put(a,a.key);
@@ -106,14 +107,15 @@ export async function writeOverlays(overlays:Overlays){return writeContent({over
 export async function writeShared(personal:Personal,overlays:Overlays){return writeContent({personal:preparePersonal(personal),overlays},['personal','overlays']);}
 export async function commitImport(imports:Pack[],assets:Asset[],overlays:Overlays){const old=await loadWorkspace();return writeContent({imports:[...new Map([...old.imports,...imports].map(p=>[p.manifest.id,p])).values()],assets:[...new Map([...old.assets,...assets].map(a=>[a.key,a])).values()],overlays},['imports','assets','overlays'],{source:'import'});}
 export async function restoreWorkspace(ws:Workspace,resolveAsset?:(key:string)=>Promise<Asset|undefined>){
- const previous=await loadWorkspace();let next={...ws,personal:preparePersonal(ws.personal)};
+ // Preserve and compare every raw record even when its old schema cannot be read.
+ const previousRaw=await captureRawDatabaseState();let next={...ws,personal:preparePersonal(ws.personal)};
  if(next.history){
   const validationAssets=[...next.assets],have=new Set(validationAssets.map(a=>a.key)),needed=new Set<string>();
   for(const revision of next.history.revisions){for(const ref of Object.values(revision.snapshot.assetRefs??{}))needed.add(ref.key);if(revision.snapshot.document?.assetKey)needed.add(revision.snapshot.document.assetKey);}
   if(resolveAsset)for(const key of needed)if(!have.has(key)){const asset=await resolveAsset(key);if(asset){validationAssets.push(asset);have.add(key);}}
   await validateHistory(next.history,validationAssets,true);await assertProjection(compose(builtSource,next),next);
  }else next=await prepareWorkspaceHistory(builtSource,next,{source:'migration',summary:'Baseline from legacy backup'});
- await commitProjection(next,previous.history!,STORES,true);return next;
+ await commitProjection(next,emptyHistory(),STORES,true,undefined,previousRaw);return next;
 }
 export async function rawRecovery(){const db=await openDatabase(),tx=db.transaction(STORES,'readonly');return Object.fromEntries(await Promise.all(STORES.map(async n=>[n,await request(tx.objectStore(n).getAll())])));}
 export class WorkspaceStore{
@@ -128,8 +130,18 @@ export class WorkspaceStore{
  configure(built:any){builtSource=built;}
  beginStagedBoot(){this.ready=false;this.hydrated=false;setHistoryComplete(false);this.readyWaiter=new Promise<void>((resolve,reject)=>{this.settleReady={resolve,reject};});this.readyWaiter.catch(()=>{});}
  setShell(ws:Workspace){this.state={...ws,personal:preparePersonal(ws.personal)};this.persistedPersonal=this.state.personal;this.emit();}
- async hydrate(){const heavy=await loadHeavy();this.state={...this.state,assets:heavy.assets,history:heavy.history,generation:this.state.generation+1};this.hydrated=true;setHistoryComplete(true);this.emit();}
- markReady(){this.ready=true;this.settleReady?.resolve();this.emit();}
+ async hydrate(){
+  const shellEpoch=this.state.history?.meta.epoch??0,heavy=await loadHeavy();
+  if(heavy.history.meta.epoch!==shellEpoch){
+   const consistent=await loadWorkspace(),latest=this.state.personal,base=this.persistedPersonal??latest;
+   const merged=mergePersonal(base,latest,consistent.personal).personal;
+   this.persistedPersonal=consistent.personal;
+   this.state={...consistent,personal:preparePersonal(preserveDisplayedSession(merged,latest)),generation:this.state.generation+1};
+  }else this.state={...this.state,assets:heavy.assets,history:heavy.history,generation:this.state.generation+1};
+  this.hydrated=true;setHistoryComplete(true);this.emit();
+ }
+ markReady(){this.ready=true;this.settleReady?.resolve();this.settleReady=undefined;this.readyWaiter=Promise.resolve();this.emit();}
+ private recovered(){this.shellFailed=false;this.hydrated=true;setHistoryComplete(true);this.markReady();this.connectTabs();}
  markFailed(e:unknown){this.settleReady?.reject(e);}
  /** DATA-03: the durable record could not be read (unknown version, corrupt or
   * blocked database). The UI shows a blank workspace, so NO ordinary write may
@@ -170,7 +182,7 @@ export class WorkspaceStore{
  /** Persist the latest personal state through the cross-tab guard. Another tab's
   * independent changes are merged into memory too (this tab's slot navigation kept). */
  private async persistPersonal(checkpoint=false){this.assertWritable();const ours=this.state.personal;const result=await writePersonalChecked(ours,this.persistedPersonal,checkpoint);this.persistedPersonal=result.persisted;this.announce('personal');
-  if(result.merged){if(result.conflicts.length)this.conflictNotice='Another tab changed the same workspace data; '+(checkpoint?'its version was kept for: ':'this tab\'s version was kept for: ')+result.conflicts.slice(0,5).join(', ');const latest=this.state.personal,merged=latest===ours?result.persisted:mergePersonal(ours,latest,result.persisted).personal;this.state={...this.state,personal:preparePersonal({...merged,activeWorkspaceSlot:latest.activeWorkspaceSlot} as Personal),generation:this.state.generation+1};this.emit();}}
+  if(result.merged){if(result.conflicts.length)this.conflictNotice='Another tab changed the same workspace data; '+(checkpoint?'its version was kept for: ':'this tab\'s version was kept for: ')+result.conflicts.slice(0,5).join(', ');const latest=this.state.personal,merged=latest===ours?result.persisted:mergePersonal(ours,latest,result.persisted).personal;this.state={...this.state,personal:preparePersonal(preserveDisplayedSession(merged,latest) as Personal),generation:this.state.generation+1};this.emit();}}
  private flushCheckpoint(){if(this.checkpointTimer!==undefined){clearTimeout(this.checkpointTimer);this.checkpointTimer=undefined;}if(!this.checkpointDirty)return;this.checkpointDirty=false;void this.enqueue(()=>this.persistPersonal(true)).catch(()=>{});}
  checkpoint(fn:(p:Personal)=>void){if(this.reviewPreparing)return this.personal(fn);
   // Structural sharing: a reading checkpoint may only move positions inside the
@@ -202,7 +214,7 @@ export class WorkspaceStore{
  overlays(fn:(o:Overlays)=>void):Promise<void>{if(!this.ready)return this.gate().then(()=>this.overlays(fn));if(this.reviewPreparing)return Promise.reject(Error('A reviewed change is being committed. Reopen this edit after it finishes.'));const o=structuredClone(this.state.overlays);fn(o);validateHubOverlays(o);return this.content({...this.state,overlays:o},['overlays'],{source:'manual'});}
  shared(fn:(p:Personal,o:Overlays)=>void):Promise<void>{if(!this.ready)return this.gate().then(()=>this.shared(fn));if(this.reviewPreparing)return Promise.reject(Error('A reviewed change is being committed. Reopen this edit after it finishes.'));const p=structuredClone(this.state.personal),o=structuredClone(this.state.overlays);fn(p,o);validateHubOverlays(o);return this.content({...this.state,personal:preparePersonal(p),overlays:o},['personal','overlays'],{source:'manual'});}
  async importPacks(imports:Pack[],assets:Asset[],overlays:Overlays){await this.gate();await this.flush();if(this.error)throw Error('Resolve the storage warning before importing.');await preflightStorage(workspaceImportBytes(imports,assets,overlays));const byPack=new Map(this.state.imports.map(p=>[p.manifest.id,p]));imports.forEach(p=>byPack.set(p.manifest.id,p));const byAsset=new Map(this.state.assets.map(a=>[a.key,a]));assets.forEach(a=>{const old=byAsset.get(a.key);if(old&&(old.sha256!==a.sha256||old.mediaType!==a.mediaType))throw Error('A historical asset key cannot be overwritten; import a new asset/pack version.');byAsset.set(a.key,a);});await this.content({...this.state,imports:[...byPack.values()],assets:[...byAsset.values()],overlays},['imports','assets','overlays'],{source:'import'});}
- async restore(ws:Workspace,resolveAsset?:(key:string)=>Promise<Asset|undefined>){await this.gate(true);await this.flush();this.saving++;this.reviewPreparing=true;this.state={...this.state};this.emit();try{await preflightStorage(workspaceImportBytes(ws.imports,ws.assets,ws.overlays)+new TextEncoder().encode(JSON.stringify(ws.history??{})).length);const restored=await restoreWorkspace(ws,resolveAsset);clearArchiveAttachments();this.shellFailed=false;this.persistedPersonal=restored.personal;this.announce('content');this.state={...restored,generation:this.state.generation+1};this.error='';this.emit();}finally{this.reviewPreparing=false;this.saving--;this.state={...this.state};this.emit();}}
+ async restore(ws:Workspace,resolveAsset?:(key:string)=>Promise<Asset|undefined>){await this.gate(true);await this.flush();this.saving++;this.reviewPreparing=true;this.state={...this.state};this.emit();try{await preflightStorage(workspaceImportBytes(ws.imports,ws.assets,ws.overlays)+new TextEncoder().encode(JSON.stringify(ws.history??{})).length);const restored=await restoreWorkspace(ws,resolveAsset);clearArchiveAttachments();this.shellFailed=false;this.persistedPersonal=restored.personal;this.announce('content');this.state={...restored,generation:this.state.generation+1};this.error='';this.recovered();this.emit();}finally{this.reviewPreparing=false;this.saving--;this.state={...this.state};this.emit();}}
  async addAsset(asset:Asset){await this.gate();await this.flush();return this.enqueue(async()=>{await preflightStorage(asset.bytes.length);if(await sha256(asset.bytes)!==asset.sha256)throw Error('Attachment SHA-256 mismatch');const existing=this.state.assets.find(a=>a.key===asset.key);if(existing&&existing.sha256!==asset.sha256)throw Error('A content-addressed asset cannot be overwritten');const db=await openDatabase(),tx=db.transaction('assets','readwrite'),done=complete(tx);tx.objectStore('assets').put(asset,asset.key);await done;this.announce('content');this.state={...this.state,assets:[...this.state.assets.filter(a=>a.key!==asset.key),asset]};this.emit();});}
  /** Reviewed actions run against the live state inside the existing write queue.
   * Nothing is exposed on window. The agent facade is the only public orchestrator. */
@@ -218,7 +230,7 @@ export class WorkspaceStore{
   },false);}
  async flush(){this.flushCheckpoint();let pending;do{pending=this.queue;await pending;}while(pending!==this.queue);}
  async backupSnapshot(){await this.gate();await this.flush();return this.error&&this.state.history?prepareEmergencySnapshot(builtSource,this.state):structuredClone(this.state);}
- async retry(){this.assertWritable();await this.gate(true);await this.flush();return this.enqueue(async()=>{const previous=await loadWorkspace();if((previous.history?.meta.epoch??0)!==(this.state.history?.meta.epoch??0))throw Error('Another tab advanced history. Export your unsaved recovery copy, then reload.');const next=await prepareWorkspaceHistory(builtSource,this.state,{source:'manual',summary:'Retry unsaved changes'});await commitProjection(next,previous.history!,['imports','assets','overlays','personal']);this.persistedPersonal=next.personal;this.announce('content');this.state={...next};this.error='';this.emit();});}
+ async retry(){this.assertWritable();await this.gate(true);await this.flush();if(!this.ready){try{await this.hydrate();await this.initializeHistory(builtSource);this.error='';this.recovered();return;}catch(e){this.markFailed(e);this.fail(e);throw e;}}return this.enqueue(async()=>{const previous=await loadWorkspace();if((previous.history?.meta.epoch??0)!==(this.state.history?.meta.epoch??0))throw Error('Another tab advanced history. Export your unsaved recovery copy, then reload.');const next=await prepareWorkspaceHistory(builtSource,this.state,{source:'manual',summary:'Retry unsaved changes'});await commitProjection(next,previous.history!,['imports','assets','overlays','personal']);this.persistedPersonal=next.personal;this.announce('content');this.state={...next};this.error='';this.emit();});}
  get unsafeClose(){return this.saving>0||!!this.error;}
  /** Destructive execution remains fail-closed until the browser fault matrix passes.
   * The implementation is present behind a compile-time release boundary so QA can
