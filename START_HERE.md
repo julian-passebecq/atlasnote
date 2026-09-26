@@ -1,4 +1,12 @@
-# AtlasNote V3 - release candidate
+# AtlasNote V3
+
+## Use it now
+
+- **Online:** https://atlasnotej.netlify.app. Netlify deploys every push to `main` automatically; the page asks for the access code first.
+- **Offline:** `npm ci`, then `npm run dev` in this folder, then open http://127.0.0.1:4173.
+- Before heavy use, export a full backup (Settings → full backup). Each origin (Netlify, localhost) keeps its own browser data.
+
+## Release status
 
 Start with [docs/v3/V3_RELEASE_CANDIDATE.md](docs/v3/V3_RELEASE_CANDIDATE.md): what V3 adds, a ten-minute manual check and the owner's release checklist. The engineering record, the measurements and the acceptance-case register are in [docs/v3/V3_IMPLEMENTATION_STATUS.md](docs/v3/V3_IMPLEMENTATION_STATUS.md). The architecture decision is [docs/v3/CONSOLIDATED_ARCHITECTURE_DECISION.md](docs/v3/CONSOLIDATED_ARCHITECTURE_DECISION.md).
 
@@ -6,7 +14,7 @@ V3 extends the V2.3 candidate described below:
 - The durability and provider/access contracts are unchanged.
 - The database stays at `knowledge-atlas` v3 with the same five stores.
 - The app version string is still 2.3.0 until the owner's release decision.
-- Nothing has been merged into `main` or deployed.
+- V3 was merged into `main` on 2026-09-25 (PR #27). Netlify deploys `main`. The Cloudflare V2.3 release gate (REL-02) is still BLOCKED until the owner adds the Access credentials.
 
 ---
 

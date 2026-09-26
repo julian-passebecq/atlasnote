@@ -1,7 +1,6 @@
 # AtlasNote V3: release candidate
 
-**Status: source-ready release candidate. It is not an approved production release.**
-Branch `feat/atlasnote-v3-experiences-performance`. Nothing has been merged into `main` or deployed.
+**Status (2026-09-26): merged into `main` (PR #27, 2026-09-25) and served by the Netlify site https://atlasnotej.netlify.app, which deploys `main` automatically behind the access-code page.** The formal V2.3 Cloudflare release (checklist step 4, REL-02) is still BLOCKED, and the owner content review (step 1) and PDF device check (step 2) are still open.
 
 The detailed engineering record is in [V3_IMPLEMENTATION_STATUS.md](V3_IMPLEMENTATION_STATUS.md): the commits, the owner/persistence table, measurements and the acceptance-case register. This page is the owner-facing summary and release checklist.
 
@@ -67,7 +66,7 @@ The detailed engineering record is in [V3_IMPLEMENTATION_STATUS.md](V3_IMPLEMENT
 3. **Decide on Norsk Daily sources**: synthetic or your own permitted material only, unless the publisher's reuse terms are confirmed (NORSK-02).
 4. **Protected preview** (REL-02): with your Cloudflare access, deploy this branch to a disposable preview protected by Access. Then run `npm run test:v23:access:preview` and the full `npm run test:v23:release`, followed by `npm run test:inherited:after-v23`, on the same clean commit. *Status 2026-09-25:* anonymous protection proven live; the service token was rejected by Access, so REL-02 stays BLOCKED by owner decision (see the preview qualification log). No feature depends on it.
 5. **Back up your real profile** (Settings → full backup) before first using V3 on it. V3 needs no database migration: the database stays at version 3 with the same five stores.
-6. Only after steps 1–5: decide to merge into `main` and deploy. That decision, and any production change, is yours.
+6. ~~Decide to merge into `main` and deploy.~~ Done 2026-09-25: merged (PR #27), and Netlify deploys `main`. Any Cloudflare production change is still your decision.
 
 ## Known limits and decisions
 
