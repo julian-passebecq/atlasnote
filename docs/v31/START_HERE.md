@@ -1,14 +1,26 @@
-# AtlasNote V3.1 stabilization
+# AtlasNote V3.1 continuation
 
-Owner requested on 2026-09-26. Base: 8a676cb09189552625296282c052ab021a737a6b.
+Product: `3.1.0-rc.1`. Branch: `fix/atlasnote-v31-stabilization`.
+Base application: `8a676cb09189552625296282c052ab021a737a6b`.
+Implemented application commit: `5631933357b23de984d9b24c94cac0f04faca34f`.
 
-Scope: PDF navigation and geometry, cancelled PDF cache work, safe recovery,
-workspace concurrency, consistent Experience filtering, a compact Norwegian
-flag for the Norsk Daily sidebar action, and provider-independent regression tests.
+Read [IMPLEMENTATION.md](IMPLEMENTATION.md),
+[VERIFICATION_20260926.md](VERIFICATION_20260926.md), then
+[CLOUDFLARE_FOLLOWUP.md](CLOUDFLARE_FOLLOWUP.md).
 
-This branch is work in progress, not a qualified release. No production deployment,
-Netlify activation, Cloudflare policy change or credential revocation is authorized
-by this implementation. Keep IndexedDB version 3, all five stores, immutable
-history and the thirteen compaction rollback guarantees.
+The implementation is present, including the small Norwegian flag. The candidate
+has passed the independent checks recorded in the verification report. Current
+branch/PR check results remain authoritative for subsequent documentation commits.
+It is not an authorized production deployment or a claim that every audit item
+has been implemented. A physical-device reading pass remains necessary.
 
-The release report will record tests actually executed and remaining limitations.
+Continue by testing the affected document on the owner's device, keeping the
+build identity and the v2 navigation trace together. If a jump remains, compare
+requested versus applied displacement and identify whether it is a new user
+intent, geometry adjustment or peer state adoption. Do not infer a visible jump
+from the requested delta alone.
+
+Do not change the five stores, database version, history or compaction guarantees.
+Do not erase browser storage to make a test pass. Do not weaken the provider gate.
+The temporary candidate installer is absent from the final source. GitHub pushes
+and a source ZIP are not Cloudflare deployments.
