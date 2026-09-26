@@ -57,6 +57,8 @@ jobs:
           name: atlasnote-v23-portable-core-not-release
           path: docs/evidence/v23/portable
   full-v23:
+    # Live Cloudflare Access proof needs a dispatched preview; push/PR runs stop at portable-core.
+    if: inputs.preview_url != '' && inputs.version_id != ''
     needs: portable-core
     runs-on: ubuntu-latest
     timeout-minutes: 45

@@ -22,6 +22,8 @@ jobs:
       version_id: ${{ inputs.version_id || '' }}
     secrets: inherit
   production-release:
+    # Same dispatch-only condition as full-v23, so a skipped live gate never unlocks release.
+    if: inputs.preview_url != '' && inputs.version_id != ''
     needs: v23-prerequisite
     env:
       ATLAS_V23_PROVIDER: cloudflare
