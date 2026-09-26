@@ -56,7 +56,9 @@
 .pdf-physical-pages{gap:12px}.physical-label{height:20px;padding:3px 9px;font-size:10px}
 .reader-chrome-hidden .pdf-controls,.reader-chrome-hidden .pdf-fallback-strip{display:none}
 .reader-chrome-hidden .physical-label{display:none}
-.reader-chrome-hidden .physical-page{min-height:0!important}
+/* Hidden chrome drops only the label height: an unrendered page keeps its real
+   height, so a previous-page turn lands at its bottom before the canvas paints. */
+.reader-chrome-hidden .physical-page{min-height:var(--pdf-page-height,0)!important}
 .focus-mode .integrated-pdf .pdf-controls{display:flex!important}
 .focus-mode .pdf-companion{display:none!important}
 @media(max-width:650px){.pdf-controls{padding:3px 5px;gap:2px}.pdf-controls select{max-width:97px}.pdf-controls .icon-button{width:25px}.pdf-canvas-scroll{padding:8px 16px 12px}}
