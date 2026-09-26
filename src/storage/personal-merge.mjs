@@ -48,3 +48,15 @@ export function mergePersonal(base,ours,theirs,{preferTheirs=false}={}){
  if(out.activeWorkspaceSlot!==undefined&&out.activeWorkspaceSlot!==1&&!out.workspaceSlots?.[out.activeWorkspaceSlot])out.activeWorkspaceSlot=1;
  return {personal:out,conflicts,merged:true};
 }
+
+/** The winning durable session is not a navigation command for an active tab.
+ * Copy only its displayed slot back; remote notes, attempts and other slots stay merged. */
+export function preserveDisplayedSession(merged,displayed){
+ const slot=displayed.activeWorkspaceSlot??1;
+ const shown=slot===1?displayed.session:displayed.workspaceSlots?.[slot];
+ if(!shown)return merged;
+ const out={...merged,activeWorkspaceSlot:slot};
+ if(slot===1)out.session=structuredClone(shown);
+ else out.workspaceSlots={...(out.workspaceSlots??{}),[slot]:structuredClone(shown)};
+ return out;
+}

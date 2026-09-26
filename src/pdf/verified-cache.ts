@@ -22,7 +22,13 @@ export function createVerifiedCache(fetcher:(key:string,signal:AbortSignal)=>Pro
   let e=entries.get(key);
   if(!e){
    const controller=new AbortController(),entry:Entry={controller,refs:0,size:0,lastUsed:Date.now(),promise:Promise.resolve('')};
-   entry.promise=fetcher(key,controller.signal).then(bytes=>{const blob=new Blob([bytes as BlobPart],{type:mediaType});entry.size=blob.size;entry.url=urls.create(blob);evict();return entry.url;});
+   entry.promise=fetcher(key,controller.signal).then(bytes=>{
+    if(controller.signal.aborted||entries.get(key)!==entry)throw new DOMException('PDF download was abandoned','AbortError');
+    const blob=new Blob([bytes as BlobPart],{type:mediaType}),url=urls.create(blob);
+    // Also handle an injected URL allocator releasing the last lease reentrantly.
+    if(controller.signal.aborted||entries.get(key)!==entry){urls.revoke(url);throw new DOMException('PDF download was abandoned','AbortError');}
+    entry.size=blob.size;entry.url=url;evict();return url;
+   });
    entry.promise.catch(()=>{if(entries.get(key)===entry)entries.delete(key);});
    entries.set(key,entry);e=entry;
   }

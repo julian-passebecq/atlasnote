@@ -1,5 +1,6 @@
 /** Unit-only backend for the public orchestrator. This is not IndexedDB/browser
  * evidence. Production atomicity is separately exercised by v22_runtime.py. */
+import {getBuildIdentity} from './durability/provenance.js';
 import {configureAgentInterface} from './agent/service.js';
 import React,{ReactDOM} from './vendor/react.mjs';
 import {loadShell,store} from './storage/database.js';
@@ -11,6 +12,7 @@ const mark=(name:string)=>{try{performance.mark('atlas:boot:'+name);}catch{}};
  * for that complete state, so nothing partial reaches the durable writers. */
 async function main(){
  mark('start');
+ void getBuildIdentity().then(identity=>{document.title='AtlasNote '+identity.appVersion;}).catch(()=>{});
  const r=await fetch(new URL('content.json',document.baseURI));if(!r.ok)throw Error('The reviewed content catalogue could not be loaded.');const built=await r.json();mark('catalogue');
  store.configure(built);store.beginStagedBoot();
  let shellOk=true;try{store.setShell(await loadShell());}catch(e){shellOk=false;store.fail(e);store.markShellFailed(e);}mark('shell');

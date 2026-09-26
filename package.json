@@ -1,6 +1,6 @@
 {
   "name": "knowledge-atlas",
-  "version": "2.3.0",
+  "version": "3.1.0-rc.1",
   "private": true,
   "type": "module",
   "engines": {
@@ -106,7 +106,10 @@
     "test:inherited:after-v23": "node tools/run-inherited-after-v23.mjs",
     "test:v23:core:portable": "node tools/run-v23-release.mjs --portable",
     "test:v23:access:diagnostic": "python tests/v23_access_boundary_diagnostic.py",
-    "test:planning:ui": "python tests/planning_inbox_dom.py"
+    "test:planning:ui": "python tests/planning_inbox_dom.py",
+    "test:v31": "node --test tests/v31-stabilization.test.mjs",
+    "test:v31:storage": "python tests/v31_storage_runtime.py",
+    "test:v31:pdf": "python tests/v31_pdf_runtime.py"
   },
   "dependencies": {
     "jszip": "3.10.1",
