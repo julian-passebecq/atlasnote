@@ -1,0 +1,55 @@
+name: V3.1 provider-free regressions
+on:
+  push:
+    branches: [fix/atlasnote-v31-stabilization]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  v3-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Package tracked candidate source
+        run: git archive --format=zip --output=/tmp/atlasnote-candidate-source.zip HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlasnote-v31-source
+          path: /tmp/atlasnote-candidate-source.zip
+          retention-days: 7
+          if-no-files-found: error
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run typecheck:online
+      - run: npm test
+      - run: python -m pip install -r requirements-test.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: npm run build
+      - run: python tests/v3_runtime.py
+      - run: python tests/v3_pdf_window.py
+      - run: python tests/v3_norsk_daily.py
+      - run: python tests/v3_tabs.py
+      - run: python tests/v3_gates.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlasnote-v31-regression-evidence
+          path: docs/evidence/v3
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlasnote-v31-integrated-dist
+          path: dist
+          retention-days: 7
+          if-no-files-found: error
