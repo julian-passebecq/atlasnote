@@ -205,6 +205,8 @@ At the owner's explicit request, V3 was deployed to the production Worker `atlas
 - New version: `3a819c6b-0228-4f7d-b656-daf92931f4bf`. Unauthenticated `/`, `/content.json` and a deep link all return 302 to the Cloudflare Access login.
 - Rollback: `npx wrangler rollback 7f3f5303-e4a7-4226-9259-91859626bfea --name atlasnote` restores V2.3 (`215d3c9`, deployed 2026-09-24).
 - Cloudflare is not wired to `main`: later changes need a manual deploy with the same override.
+- Redeploy the same day: `bcd1e0f` (PR #31, PDF previous-page jump fix with hidden chrome), version `6f1e75f7-e41f-4a00-ae3b-d244448dcc27`, anonymous requests still 302 to Access. Rollback to the first V3 deploy: `npx wrangler rollback 3a819c6b-0228-4f7d-b656-daf92931f4bf --name atlasnote`.
+- Netlify automatic builds (`atlasnotej`) were stopped at the owner's request (`stop_builds: true`); the site keeps serving its last deploy. Re-enable in Netlify → Project configuration → Build & deploy → Continuous deployment.
 
 ## Merge with main (2026-09-25)
 

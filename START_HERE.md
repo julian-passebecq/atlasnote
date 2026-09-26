@@ -2,10 +2,10 @@
 
 ## Use it now
 
-- **Online (Cloudflare, production):** https://atlasnote.datapass.workers.dev, behind Cloudflare Access. V3 (`c61f018`) was deployed there on 2026-09-26 at the owner's request; it is **not** redeployed automatically (manual `wrangler deploy`, see [V3_IMPLEMENTATION_STATUS.md](docs/v3/V3_IMPLEMENTATION_STATUS.md#cloudflare-production-deploy-2026-09-26)).
-- **Online (Netlify, secondary):** https://atlasnotej.netlify.app. Netlify deploys every push to `main` automatically; the page asks for the access code first.
+- **Online (Cloudflare, production):** https://atlasnote.datapass.workers.dev, behind Cloudflare Access. V3 was deployed there on 2026-09-26 at the owner's request (latest: `bcd1e0f`, version `6f1e75f7`); it is **not** redeployed automatically (manual `wrangler deploy`, see [V3_IMPLEMENTATION_STATUS.md](docs/v3/V3_IMPLEMENTATION_STATUS.md#cloudflare-production-deploy-2026-09-26)).
+- **Online (Netlify, paused):** https://atlasnotej.netlify.app still serves its last deploy (`bcd1e0f`), but automatic builds are stopped since 2026-09-26 at the owner's request: Cloudflare is the focus.
 - **Offline:** `npm ci`, then `npm run dev` in this folder, then open http://127.0.0.1:4173.
-- Before heavy use, export a full backup (Settings → full backup). Each origin (Netlify, localhost) keeps its own browser data.
+- Before heavy use, export a full backup (Settings → full backup). Each origin (Cloudflare, Netlify, localhost) keeps its own browser data.
 
 ## Release status
 
@@ -15,7 +15,7 @@ V3 extends the V2.3 candidate described below:
 - The durability and provider/access contracts are unchanged.
 - The database stays at `knowledge-atlas` v3 with the same five stores.
 - The app version string is still 2.3.0 until the owner's release decision.
-- V3 was merged into `main` on 2026-09-25 (PR #27). Netlify deploys `main`. On 2026-09-26 the owner had V3 deployed to the Cloudflare production Worker `atlasnote` without the formal gate: REL-02 is still BLOCKED until the Access service token works.
+- V3 was merged into `main` on 2026-09-25 (PR #27). Netlify builds are paused. On 2026-09-26 the owner had V3 deployed to the Cloudflare production Worker `atlasnote` without the formal gate: REL-02 is still BLOCKED until the Access service token works.
 
 ---
 
