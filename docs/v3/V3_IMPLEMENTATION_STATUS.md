@@ -196,6 +196,16 @@ The following happened on 2026-09-25 (UTC).
 10. **Owner decision: stop REL-02 here.** The service token is not accepted by the Access application (cause not isolated: token value or policy attachment). The test and its policy were not relaxed. REL-02 stays BLOCKED, as on `main`. No product feature depends on it.
 11. **Cleanup:** at owner request, the disposable QA Worker `atlasnote-v23-qa` was deleted with `wrangler delete`. Its URL and its preview URLs now return 404. Production `atlasnote` is untouched and still redirects to Access (302).
 
+## Cloudflare production deploy (2026-09-26)
+
+At the owner's explicit request, V3 was deployed to the production Worker `atlasnote` without the formal REL-02 gate (still BLOCKED, see above).
+
+- Source: clean `main` at `c61f018`, `npm ci`, `npm run build`, `check:v23:build` PASS (integrated build).
+- Command: `npx wrangler deploy --config <override> --tag c61f018`, where the override is `wrangler.jsonc` with `name: "atlasnote"` and `preview_urls: false` (the repository file still names the QA Worker).
+- New version: `3a819c6b-0228-4f7d-b656-daf92931f4bf`. Unauthenticated `/`, `/content.json` and a deep link all return 302 to the Cloudflare Access login.
+- Rollback: `npx wrangler rollback 7f3f5303-e4a7-4226-9259-91859626bfea --name atlasnote` restores V2.3 (`215d3c9`, deployed 2026-09-24).
+- Cloudflare is not wired to `main`: later changes need a manual deploy with the same override.
+
 ## Merge with main (2026-09-25)
 
 `main` at `d4a8880` (galaxy planning/inbox pass, PR #24, and the AGENTS.md merge policy, PR #25) was merged into this branch without conflicts.
@@ -209,7 +219,7 @@ The following happened on 2026-09-25 (UTC).
 ## Remaining work and blockers
 
 - **BLOCKED: real-device PDF wheel trace.** This needs the owner's affected mouse or trackpad and the trace export. The Spread backward jump is hardened against stale restores but not proven fixed.
-- **BLOCKED (owner decision): authorized preview qualification.** Anonymous protection of the preview is proven live. The service-token path was rejected by Access, so authorized checks and the inherited workflow did not run. No production deployment was done. To resume: fix the Service Auth policy or token, then rerun the three commands on a clean commit with a matching preview version.
+- **BLOCKED (owner decision): authorized preview qualification.** Anonymous protection of the preview is proven live. The service-token path was rejected by Access, so authorized checks and the inherited workflow did not run. The owner later chose a production deploy without this gate (2026-09-26, see above). To resume: fix the Service Auth policy or token, then rerun the three commands on a clean commit with a matching preview version.
 - **BLOCKED: Norsk Daily with real sources.** The publisher's permission is unverified.
 - **Phase D remaining:**
   - Loading asset bytes on demand (see above).
