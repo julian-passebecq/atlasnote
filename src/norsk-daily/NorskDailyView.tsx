@@ -21,8 +21,8 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
  const [revealed,setRevealed]=useState<Record<string,boolean>>({});
  const [query,setQuery]=useState('');
  const [section,setSection]=useState('all');
- const [selectedId,setSelectedId]=useState<string|undefined>();
- const searchRef=useRef<HTMLInputElement>(null);
+ const [selectedId,setSelectedId]=useState<string|undefined>(undefined);
+ const searchRef=useRef<HTMLInputElement|null>(null);
 
  const index=Math.max(0,batches.findIndex(b=>b.date===date)),batch=batches[index];
  const counts=batch?dailyCounts(batch.items):{new:0,learning:0,known:0};
