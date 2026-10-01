@@ -17,6 +17,7 @@ test('V32 Norsk newspaper and Focus remain local projections with no network cli
  assert.doesNotMatch(source,/\bfetch\s*\(|XMLHttpRequest|WebSocket|EventSource|navigator\.sendBeacon/);
  assert.match(source,/dailySearch/);
  assert.match(source,/norsk-daily-focus-grid/);
+ assert.match(source,/Add feed/);
  assert.match(source,/NORSK_TAG\.section/);
  const review=read('src/agent/AgentReviewUI.tsx');
  assert.match(review,/Paste Norsk Daily feed JSON/);assert.match(review,/Convert pasted feed to proposal/);assert.match(review,/Copy Norsk Daily prompt/);

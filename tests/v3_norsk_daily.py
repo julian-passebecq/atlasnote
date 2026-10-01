@@ -45,6 +45,7 @@ with sync_playwright() as pw:
   if not p.locator('.norsk-daily-queue').count():btn('Norsk Daily').click()
   items=p.locator('.norsk-daily-item');expect(items.first).to_be_visible();n=items.count();assert n>=2
   expect(p.locator('.norsk-daily-synthetic')).to_be_visible()
+  expect(btn('Add feed')).to_be_visible()
   expect(p.locator('.norsk-daily-en')).to_have_count(0);p.get_by_label('Show English',exact=True).check();expect(p.locator('.norsk-daily-en')).to_have_count(n)
   first=items.first;pid=first.get_attribute('data-page-id')
   first.get_by_role('button',name='Known',exact=True).click()
@@ -65,7 +66,7 @@ with sync_playwright() as pw:
   expect(p.locator('.norsk-daily-focus-vocab')).to_contain_text('sykkelvei')
   btn('← Newspaper').click();search.fill('lesesal')
   expect(p.locator('.norsk-daily-item')).to_have_count(1);expect(p.locator('.norsk-daily-item')).to_contain_text('Biblioteket')
-  search.fill('');shot('newspaper-focus');return {}
+  search.press('Escape');expect(search).to_have_value('');expect(search).not_to_be_focused();shot('newspaper-focus');return {}
  check('Newspaper search reaches bilingual text and Focus keeps NO/EN aligned in one scroll surface',newspaper_focus)
  def persists():
   p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
