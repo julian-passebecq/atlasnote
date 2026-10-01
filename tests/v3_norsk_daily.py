@@ -26,7 +26,9 @@ with sync_playwright() as pw:
  check('Norsk Daily opens from the sidebar and explains the reviewed import path when empty',empty_state)
  def import_accept():
   btn('Open review to import a feed').click()
-  p.get_by_label('Import Norsk Daily feed JSON',exact=True).set_input_files(str(FIXTURE))
+  p.get_by_text('Paste Norsk Daily feed JSON',exact=True).click()
+  p.get_by_label('Paste Norsk Daily feed JSON',exact=True).fill(FIXTURE.read_text(encoding='utf-8'))
+  btn('Convert pasted feed to proposal').click()
   expect(p.get_by_text('Norsk Daily feed converted to a proposal',exact=False)).to_be_visible()
   before=p.evaluate('async()=>('+AGENT+').getStorageDiagnostics().revisions')
   btn('Preview ChangeSet').click();btn('Stage for review').click()

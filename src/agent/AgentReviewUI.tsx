@@ -23,6 +23,7 @@ export function AgentReviewDialog({workspace, resourceKey, onClose, initialChang
  const [activeId, setActiveId] = useState<string | undefined>(undefined), inFlight = useRef(false);
  const [contextKeys, setContextKeys] = useState<string[]>(resourceKey ? [resourceKey] : []);
  const [query, setQuery] = useState(''), [queryOffset, setQueryOffset] = useState(0);
+ const [norskFeedText,setNorskFeedText]=useState('');
  const reviews = api.getReviews(reviewOffset, 25), active = workspace.history?.reviews.find(review => review.id === activeId);
  const contextResources = api.listResources({query, includeStructures: true, offset: queryOffset, limit: 20});
  const decided = active?.status === 'accepted' || active?.status === 'rejected';
@@ -46,6 +47,15 @@ export function AgentReviewDialog({workspace, resourceKey, onClose, initialChang
   setPlan(result.plan); setPreview(result);
   if (!selection) setSelected(result.operations.map(operation => operation.id));
   return result;
+ }
+ function convertNorskDaily(raw:string) {
+  const bytes=new TextEncoder().encode(raw).length;
+  if(bytes>NORSK_DAILY_LIMITS.bytes)throw Error('Norsk Daily feed exceeds '+NORSK_DAILY_LIMITS.bytes/1024+' KiB');
+  const now=Date.now(),result=planNorskDailyImport(raw,lookupFromAgent(api),{createdAt:now,now,changeSetSuffix:now.toString(36)});
+  if(result.blocked)throw Error('Norsk Daily import blocked: '+result.messages.join(' '));
+  if(!result.changeSet){setStatus('Norsk Daily: '+result.messages[0]+' Nothing to review.');return;}
+  setText(JSON.stringify(result.changeSet,null,2));inspect(result.changeSet);setNorskFeedText('');
+  setStatus('Norsk Daily feed converted to a proposal: '+result.messages[0]+' Review the preview, then stage and explicitly accept or reject.');
  }
  function loadReview(id: string) {
   if (inFlight.current) return;
@@ -99,18 +109,14 @@ export function AgentReviewDialog({workspace, resourceKey, onClose, initialChang
     {/* Norsk Daily: a validated feed becomes an ordinary ChangeSet proposal in this
       same dialog. It is only previewed here; staging and accept/reject stay human clicks. */}
     <label className="history-file">Import Norsk Daily feed<input type="file" accept=".json,application/json" aria-label="Import Norsk Daily feed JSON" data-agent-action="norsk-daily-import" disabled={busy} onChange={e => {
-     const file = e.target.files?.[0]; e.target.value = '';
-     if (!file) return;
-     resetDraft('');
-     void run(async () => {
-      if (file.size > NORSK_DAILY_LIMITS.bytes) throw Error('Norsk Daily feed exceeds ' + NORSK_DAILY_LIMITS.bytes / 1024 + ' KiB');
-      const now = Date.now(), result = planNorskDailyImport(await file.text(), lookupFromAgent(api), {createdAt: now, now, changeSetSuffix: now.toString(36)});
-      if (result.blocked) throw Error('Norsk Daily import blocked: ' + result.messages.join(' '));
-      if (!result.changeSet) { setStatus('Norsk Daily: ' + result.messages[0] + ' Nothing to review.'); return; }
-      setText(JSON.stringify(result.changeSet, null, 2)); inspect(result.changeSet);
-      setStatus('Norsk Daily feed converted to a proposal: ' + result.messages[0] + ' Review the preview, then stage and explicitly accept or reject.');
-     });
+     const file=e.target.files?.[0];e.target.value='';if(!file)return;resetDraft('');
+     void run(async()=>{if(file.size>NORSK_DAILY_LIMITS.bytes)throw Error('Norsk Daily feed exceeds '+NORSK_DAILY_LIMITS.bytes/1024+' KiB');convertNorskDaily(await file.text());});
     }} /></label>
+    <details className="agent-norsk-paste"><summary>Paste Norsk Daily feed JSON</summary>
+     <p className="secondary">Paste inert atlas.norsk-daily@2 JSON from your external chat. Atlas validates it locally and converts it only to a review proposal.</p>
+     <textarea aria-label="Paste Norsk Daily feed JSON" className="json-editor" rows={7} maxLength={NORSK_DAILY_LIMITS.bytes} spellCheck={false} disabled={busy} value={norskFeedText} onChange={e=>setNorskFeedText(e.target.value)} placeholder='{"schema":"atlas.norsk-daily","schemaVersion":2,...}'/>
+     <div className="button-row"><span className="secondary">{norskFeedText.length.toLocaleString()} characters / {NORSK_DAILY_LIMITS.bytes/1024} KiB byte limit</span><button disabled={busy||!norskFeedText.trim()} data-agent-action="norsk-daily-paste" onClick={()=>{resetDraft('');void run(()=>convertNorskDaily(norskFeedText));}}>Convert pasted feed to proposal</button></div>
+    </details>
     <button disabled={busy} data-agent-action="norsk-daily-prompt-export" onClick={() => void run(() => downloadJSON({schemaVersion: 1, kind: 'atlas-norsk-daily-transformation', prompt: buildTransformationPrompt(), schema: norskDailyJsonSchema()}, 'atlasnote-norsk-daily-prompt.json'))}>Export Norsk Daily prompt</button>
     <button disabled={busy || !text || decided || active?.status === 'stale'} data-agent-action="changeset-preview" onClick={() => void run(() => inspect(text))}>Preview ChangeSet</button>
     <button disabled={busy || !preview || !!activeId} data-agent-action="changeset-stage" onClick={() => void run(async () => {

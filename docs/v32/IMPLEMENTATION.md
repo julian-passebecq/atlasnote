@@ -59,6 +59,14 @@ Search covers:
 All query terms must match the same story/word. `/` focuses the search input when the
 user is not typing into another control. Escape clears and releases the search field.
 
+### Paste-to-review workflow
+
+Agent Review now accepts Norsk Daily JSON either from a file or from a bounded paste box.
+Paste is validated by the same `atlas.norsk-daily@2` parser and converted into the same
+ChangeSet proposal. It never skips Preview, Stage or explicit Accept/Reject, and it makes
+no provider/network request. This supports the intended external-chat → Atlas workflow
+without requiring the user to create a temporary JSON file.
+
 ## Source/rights boundary
 
 This pass does not mirror publisher article bodies.
