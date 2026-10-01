@@ -89,6 +89,10 @@ No changes to:
 - V3.1 PDF navigation/cache changes;
 - Cloudflare/Netlify data-origin separation.
 
+### Browser storage protection
+
+Settings now reports whether the current origin has persistent browser storage and exposes a user-initiated request when supported. Atlas never calls `navigator.storage.persist()` automatically. A grant only reduces browser eviction risk for this origin; it is explicitly presented as neither synchronization nor a backup. Verified recovery bundles remain the durable recovery mechanism.
+
 ## Commits before this document
 
 - `7272d941` — local full-text Norsk study projection.
