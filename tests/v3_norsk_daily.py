@@ -48,7 +48,9 @@ with sync_playwright() as pw:
   expect(btn('Known (1)')).to_be_visible();shot('queue');return {'items':n,'known':pid}
  check('Daily queue shows labelled synthetic items, English reveal and New/Learning/Known progress',queue)
  def newspaper_focus():
-  search=p.get_by_label('Search Norsk Daily',exact=True);search.fill('cycle path')
+  p.keyboard.press('/');search=p.get_by_label('Search Norsk Daily',exact=True);expect(search).to_be_focused()
+  topic=p.get_by_role('button',name='Synthetic local (1)',exact=True);expect(topic).to_be_visible();topic.click();expect(p.locator('.norsk-daily-item')).to_have_count(1);p.get_by_role('button',name='All topics',exact=True).click()
+  search.fill('cycle path')
   expect(p.locator('.norsk-daily-item')).to_have_count(1)
   item=p.locator('.norsk-daily-item').first
   expect(item).to_contain_text('sykkelvei')

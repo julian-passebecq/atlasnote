@@ -8,7 +8,7 @@ import {NORSK_TAG} from './projection.js';
  * revisions, batch reorder, deduplication and daily refresh. */
 export type DailyStatus='new'|'learning'|'known';
 export type DailyWord={lemma:string;form?:string;partOfSpeech?:string;english?:string;french?:string;example?:string;pageId:string;headline:string};
-export type DailyItem={page:Page;status:DailyStatus;language?:string;level?:string;english?:string;paraphrase?:string;french?:string;grammar:{label:string;pageId:string}[];synthetic:boolean};
+export type DailyItem={page:Page;status:DailyStatus;language?:string;level?:string;section?:string;english?:string;paraphrase?:string;french?:string;grammar:{label:string;pageId:string}[];synthetic:boolean};
 export type DailyBatch={date:string;items:DailyItem[];qcm?:Page;synthetic:boolean};
 
 const tagValue=(page:Page,prefix:string)=>page.tags.find(t=>t.startsWith(prefix))?.slice(prefix.length);
@@ -38,6 +38,7 @@ export function dailyBatches(c:Catalogue,ratings:Personal['ratings']):DailyBatch
    status:dailyStatus(ratings[page.id]),
    language:tagValue(page,'lang:'),
    level:tagValue(page,'level:'),
+   section:tagValue(page,NORSK_TAG.section),
    english:headline?.en,
    paraphrase:calloutText(page,'Simpler Norwegian paraphrase'),
    french:calloutText(page,'French translation'),
@@ -78,13 +79,14 @@ export function dailySearch(items:DailyItem[],query:string):DailyItem[]{
  const terms=searchTerms(query);if(!terms.length)return items;
  return items.filter(item=>{
   const words=dailyItemVocabulary(item),haystack=[
-   item.page.title,item.english,item.paraphrase,item.french,
+   item.page.title,item.section,item.english,item.paraphrase,item.french,
    ...item.grammar.map(g=>g.label),
    ...words.flatMap(w=>[w.lemma,w.form,w.partOfSpeech,w.english,w.french,w.example])
   ].filter((x):x is string=>!!x).join(' ').toLocaleLowerCase('nb');
   return terms.every(term=>haystack.includes(term));
  });
 }
+export function dailySections(batch:DailyBatch|undefined):string[]{return [...new Set((batch?.items??[]).map(i=>i.section).filter((x):x is string=>!!x))].sort((a,b)=>a.localeCompare(b,'nb'));}
 export function dailyVocabularySearch(words:DailyWord[],query:string):DailyWord[]{
  const terms=searchTerms(query);if(!terms.length)return words;
  return words.filter(w=>{

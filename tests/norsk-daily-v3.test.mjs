@@ -13,7 +13,7 @@ import {norskDailyJsonSchema,buildTransformationPrompt} from '../dist-offline/ap
 import {answerQuestion,qcmProgress} from '../dist-offline/app/content-hub/content.js';
 import {resourceAdapters} from '../dist-offline/app/history/adapters.js';
 import {compose} from '../dist-offline/app/core/workspace.js';
-import {dailyBatches,dailyItemVocabulary,dailySearch,dailyVocabulary,dailyVocabularySearch} from '../dist-offline/app/norsk-daily/daily.js';
+import {dailyBatches,dailyItemVocabulary,dailySearch,dailySections,dailyVocabulary,dailyVocabularySearch} from '../dist-offline/app/norsk-daily/daily.js';
 
 const FIXTURE_PATH='examples/norsk-daily/synthetic-2026-09-24.json';
 const fixtureText=await fs.readFile(FIXTURE_PATH,'utf8'),fixture=JSON.parse(fixtureText);
@@ -260,7 +260,7 @@ test('V3 Norsk prompt and JSON Schema are generated from the installed contract'
 test('V32 Norsk newspaper search indexes accepted bilingual study text and vocabulary',()=>{
  const projected=projectNorskDailyFeed(fixture),catalogue={...built,pages:[...built.pages,...projected.articles.map(x=>x.page),...(projected.qcm?[projected.qcm.page]:[])]};
  const batch=dailyBatches(catalogue,{}).find(b=>b.date===fixture.studyDate);assert(batch);
- assert.equal(batch.items.length,3);assert.equal(batch.items[0].paraphrase!==undefined,true);
+ assert.equal(batch.items.length,3);assert.equal(batch.items[0].paraphrase!==undefined,true);assert.deepEqual(dailySections(batch),['Synthetic local']);assert.equal(batch.items.find(i=>i.page.id===articlePageId('synthetic-fixture-0001')).section,'Synthetic local');
  const cycle=dailySearch(batch.items,'cycle path');assert.equal(cycle.length,1);assert.match(cycle[0].page.title,/sykkelvei/);
  const norwegian=dailySearch(batch.items,'prøver sykler');assert.equal(norwegian.length,1);assert.match(norwegian[0].page.title,/sykkelvei/);
  const vocab=dailySearch(batch.items,'lesesal reading room');assert.equal(vocab.length,1);assert.match(vocab[0].page.title,/Biblioteket/);
@@ -278,5 +278,5 @@ test('V32 Norsk daily read model keeps generated labels separate from source hea
  assert.equal(first.page.title,item(fixture).headline.text);
  assert.equal(first.english,item(fixture).study.translations.en.text);
  assert.equal(first.paraphrase,item(fixture).study.paraphrase.text);
- assert.equal(first.french,item(fixture).study.translations.fr.text);
+ assert.equal(first.french,item(fixture).study.translations.fr.text);assert(first.page.tags.includes('norsk-daily-section:Synthetic local'));
 });

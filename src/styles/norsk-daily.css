@@ -84,3 +84,9 @@
 .norsk-daily-focus-actions>.norsk-daily-status{margin-right:auto}
 @media(max-width:900px){.norsk-daily-paper{grid-template-columns:1fr}.norsk-daily-paper .norsk-daily-lead{grid-column:auto}.norsk-daily-focus-grid{grid-template-columns:1fr}.norsk-daily-focus-no{border-right:0;border-bottom:1px solid var(--line)}}
 @media(max-width:650px){.norsk-daily-toolbar{align-items:stretch}.norsk-daily-search{min-width:100%}.norsk-daily-focus-grid{padding:6px}.norsk-daily-focus-grid>section{padding:12px}.norsk-daily-focus-header{grid-template-columns:1fr auto}.norsk-daily-focus-header>span{display:none}}
+
+.norsk-daily-sections{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0}
+.norsk-daily-sections button{font-size:11px;padding:4px 9px;border-radius:14px}
+.norsk-daily-sections button[aria-pressed="true"]{background:var(--tint);color:var(--accent);border-color:var(--accent)}
+.norsk-daily-section{font-size:10px;padding:1px 5px;border-radius:4px;background:var(--subtle,#eef2f7);color:var(--muted);white-space:nowrap}
+.norsk-daily-results{font-size:10px;color:var(--muted);white-space:nowrap}
