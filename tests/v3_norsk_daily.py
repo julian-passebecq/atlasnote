@@ -47,6 +47,20 @@ with sync_playwright() as pw:
   expect(p.locator('.norsk-daily-item[data-page-id="'+pid+'"]')).to_have_class(__import__('re').compile('status-known'))
   expect(btn('Known (1)')).to_be_visible();shot('queue');return {'items':n,'known':pid}
  check('Daily queue shows labelled synthetic items, English reveal and New/Learning/Known progress',queue)
+ def newspaper_focus():
+  search=p.get_by_label('Search Norsk Daily',exact=True);search.fill('cycle path')
+  expect(p.locator('.norsk-daily-item')).to_have_count(1)
+  item=p.locator('.norsk-daily-item').first
+  expect(item).to_contain_text('sykkelvei')
+  btn('Study side by side',item).click()
+  expect(p.locator('.norsk-daily-focus-grid')).to_be_visible()
+  expect(p.locator('.norsk-daily-focus-no')).to_contain_text('Kommunen tester en ny sykkelvei')
+  expect(p.locator('.norsk-daily-focus-en')).to_contain_text('The municipality is testing a new cycle path')
+  expect(p.locator('.norsk-daily-focus-vocab')).to_contain_text('sykkelvei')
+  btn('← Newspaper').click();search.fill('lesesal')
+  expect(p.locator('.norsk-daily-item')).to_have_count(1);expect(p.locator('.norsk-daily-item')).to_contain_text('Biblioteket')
+  search.fill('');shot('newspaper-focus');return {}
+ check('Newspaper search reaches bilingual text and Focus keeps NO/EN aligned in one scroll surface',newspaper_focus)
  def persists():
   p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
   p.reload(wait_until='networkidle');p.wait_for_selector('.atlas-app')
