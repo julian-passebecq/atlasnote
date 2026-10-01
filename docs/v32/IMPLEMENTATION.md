@@ -65,7 +65,7 @@ Agent Review now accepts Norsk Daily JSON either from a file or from a bounded p
 Paste is validated by the same `atlas.norsk-daily@2` parser and converted into the same
 ChangeSet proposal. It never skips Preview, Stage or explicit Accept/Reject, and it makes
 no provider/network request. This supports the intended external-chat → Atlas workflow
-without requiring the user to create a temporary JSON file.
+without requiring the user to create a temporary JSON file. A separate **Copy Norsk Daily prompt** action copies the installed prompt+schema package to the clipboard; Atlas still performs no provider call. The original file export remains available as a fallback/audit artifact.
 
 ## Source/rights boundary
 

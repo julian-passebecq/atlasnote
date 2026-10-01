@@ -27,8 +27,10 @@ with sync_playwright() as pw:
  def import_accept():
   btn('Open review to import a feed').click()
   p.get_by_text('Paste Norsk Daily feed JSON',exact=True).click()
-  p.get_by_label('Paste Norsk Daily feed JSON',exact=True).fill(FIXTURE.read_text(encoding='utf-8'))
-  btn('Convert pasted feed to proposal').click()
+  paste=p.get_by_label('Paste Norsk Daily feed JSON',exact=True)
+  paste.fill('{"schema":"invalid"}');btn('Convert pasted feed to proposal').click()
+  expect(p.locator('.history-error')).to_be_visible();expect(btn('Stage for review')).to_be_disabled()
+  paste.fill(FIXTURE.read_text(encoding='utf-8'));btn('Convert pasted feed to proposal').click()
   expect(p.get_by_text('Norsk Daily feed converted to a proposal',exact=False)).to_be_visible()
   before=p.evaluate('async()=>('+AGENT+').getStorageDiagnostics().revisions')
   btn('Preview ChangeSet').click();btn('Stage for review').click()
