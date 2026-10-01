@@ -1,3 +1,14 @@
+# Web continuation — read this first
+
+The owner has returned AtlasNote to a **Web-first** direction and abandoned Electron/DocPass
+as the future of Atlas. For the current large improvement pass, start with:
+
+**[docs/web-next/HANDOFF_20261002.md](docs/web-next/HANDOFF_20261002.md)**
+
+Work on `feat/atlasnote-web-continuation`. No production deployment is authorized.
+
+---
+
 # AtlasNote 3.1.0-rc.1
 
 This branch is the owner-requested V3.1 stabilization candidate. Start with

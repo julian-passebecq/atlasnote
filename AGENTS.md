@@ -1,3 +1,18 @@
+# Current Web continuation scope — 2026-10-02
+
+The owner explicitly changed direction back to the Web application.
+
+Read `docs/web-next/HANDOFF_20261002.md` first.
+
+For the owner-requested continuation, source commits/pushes are authorized **only** on
+`feat/atlasnote-web-continuation`, and a Draft PR may be created/updated.
+Do not merge to `main`, deploy to Cloudflare, change Access/routes/credentials,
+reactivate Netlify, or publish private data without a fresh explicit owner instruction.
+
+The older “GitHub is read-only” line below belongs to the earlier V2.3 migration scope
+and is superseded for this branch by the explicit 2026-10-02 owner request. All data,
+history, PDF provenance, recovery and security guarantees below still apply.
+
 # Current V2.3 migration scope
 
 `START_HERE.md` and the explicit user request supersede historical release boundaries.
