@@ -13,3 +13,6 @@
 .archive-record{border-top:1px solid var(--border,#d5dce5);padding:.4rem 0}
 [data-capacity-level=critical],[data-capacity-level=high]{font-weight:700}
 @media(max-width:600px){.durability-section button{white-space:normal;max-width:100%}.durability-section .button-row{flex-wrap:wrap}.durability-section pre{max-height:18rem}}
+
+.storage-persistence{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--subtle,#f5f7fa)}
+.storage-persistence strong{font-size:12px}.storage-persistence small{width:100%;color:var(--muted);line-height:1.45}.storage-persistence button{font-size:11px}
