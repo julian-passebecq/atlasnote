@@ -1,6 +1,8 @@
 name: Integrated production and compatibility release gates
 on:
   push:
+    branches-ignore:
+      - feat/atlasnote-v32-web-study
   pull_request:
   workflow_dispatch:
     inputs:
