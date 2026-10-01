@@ -41,16 +41,18 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
  </div>;
  const grammarButtons=(item:DailyItem)=>item.grammar.map(g=><button key={g.pageId} className="text-button norsk-daily-grammar" onClick={()=>onOpen(g.pageId)}><Icon name="link" size={13}/>{g.label}</button>);
  const openFocus=(item:DailyItem)=>{setSelectedId(item.page.id);setEnglish(true);setView('focus');};
+ const chooseDate=(next:string)=>{setDate(next);setSection('all');setFilter('all');setQuery('');setSelectedId(undefined);setView('newspaper');};
  const moveFocus=(step:number)=>{if(!shown.length)return;const next=shown[Math.max(0,Math.min(shown.length-1,(focusIndex<0?0:focusIndex)+step))];if(next)setSelectedId(next.page.id);};
 
  return <section className="norsk-daily" aria-label="Norsk Daily">
   <header className="norsk-daily-header">
    <div><p className="eyebrow">Norsk</p><h1>Norsk Daily</h1></div>
    {batches.length>0&&<div className="norsk-daily-dates" role="group" aria-label="Study date">
-    <IconButton name="left" label="Older study day" disabled={index>=batches.length-1} onClick={()=>{setDate(batches[index+1].date);setSection('all');setSelectedId(undefined);setView('newspaper');}}/>
-    <select aria-label="Study date (Europe/Oslo)" value={batch?.date} onChange={e=>{setDate(e.target.value);setSection('all');setSelectedId(undefined);setView('newspaper');}}>{batches.map(b=>{const c=dailyCounts(b.items);return <option key={b.date} value={b.date}>{b.date} ({b.items.length} items, {c.known} known)</option>;})}</select>
-    <IconButton name="right" label="Newer study day" disabled={index<=0} onClick={()=>{setDate(batches[index-1].date);setSection('all');setSelectedId(undefined);setView('newspaper');}}/>
+    <IconButton name="left" label="Older study day" disabled={index>=batches.length-1} onClick={()=>chooseDate(batches[index+1].date)}/>
+    <select aria-label="Study date (Europe/Oslo)" value={batch?.date} onChange={e=>chooseDate(e.target.value)}>{batches.map(b=>{const c=dailyCounts(b.items);return <option key={b.date} value={b.date}>{b.date} ({b.items.length} items, {c.known} known)</option>;})}</select>
+    <IconButton name="right" label="Newer study day" disabled={index<=0} onClick={()=>chooseDate(batches[index-1].date)}/>
    </div>}
+   <button className="text-button norsk-daily-add" onClick={onImport}><Icon name="upload" size={14}/>Add feed</button>
    <IconButton name="close" label="Close Norsk Daily" onClick={onClose}/>
   </header>
 
@@ -65,7 +67,7 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
     <button role="tab" aria-selected={view==='vocabulary'} onClick={()=>setView('vocabulary')}>Vocabulary ({words.length})</button>
    </div>
 
-   {sections.length>0&&<div className="norsk-daily-sections" role="group" aria-label="Filter Norsk Daily by topic"><button aria-pressed={section==='all'} onClick={()=>setSection('all')}>All topics</button>{sections.map(s=><button key={s} aria-pressed={section===s} onClick={()=>setSection(s)}>{s} ({batch.items.filter(i=>i.section===s).length})</button>)}</div>}
+   {view!=='vocabulary'&&sections.length>0&&<div className="norsk-daily-sections" role="group" aria-label="Filter Norsk Daily by topic"><button aria-pressed={section==='all'} onClick={()=>setSection('all')}>All topics</button>{sections.map(s=><button key={s} aria-pressed={section===s} onClick={()=>setSection(s)}>{s} ({batch.items.filter(i=>i.section===s).length})</button>)}</div>}
 
    <div className="norsk-daily-toolbar">
     <label className="norsk-daily-search"><span className="sr-only">Search Norsk Daily</span><input ref={searchRef} aria-label="Search Norsk Daily" type="search" value={query} onChange={e=>setQuery(e.target.value)} onKeyDown={e=>{if(e.key==='Escape'){setQuery('');e.currentTarget.blur();}}} placeholder={view==='vocabulary'?'Find a word or meaning...':'Find headline, translation or vocabulary...'} title="Press / to search"/>{query&&<button type="button" className="text-button" aria-label="Clear Norsk Daily search" onClick={()=>setQuery('')}>Clear</button>}</label>
