@@ -1,0 +1,31 @@
+name: AtlasNote V3.2 source delivery
+on:
+  push:
+    branches: [feat/atlasnote-web-continuation]
+    paths: ['.delivery/assemble-v32.py']
+permissions:
+  contents: write
+concurrency:
+  group: atlasnote-v32-delivery
+  cancel-in-progress: false
+jobs:
+  source-only:
+    if: github.repository == 'julian-passebecq/atlasnote' && github.ref == 'refs/heads/feat/atlasnote-web-continuation'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - name: Validate and apply only the approved Web source hashes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python .delivery/assemble-v32.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlasnote-v32-delivery-${{ github.sha }}
+          path: /tmp/atlasnote-v32-delivery
+          if-no-files-found: error
+          retention-days: 7
