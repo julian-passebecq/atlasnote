@@ -18,14 +18,14 @@ BASE = '1ebdfb045b756b5435516915879b93b836a68b6e'
 OUT = Path('/tmp/atlasnote-v32-delivery')
 OUT.mkdir(parents=True, exist_ok=True)
 PAYLOADS = [
-    ('0', '8d239df37cc2925b86e57f711d58509b868c31a5', '8d239df37cc2925b86e57f711d58509b868c31a5'),
-    ('1', 'a85e5f275bc349ad34bc3e32544a077976b351a9', '3d16942829e37a23bcaad8b559506d02c9203ad5'),
-    ('2', 'f6d021412f2000ca0de2c5a138c7661411f72fe3', 'f6d021412f2000ca0de2c5a138c7661411f72fe3'),
-    ('3', '1d4ec9a15751c9f2c1ff15874c44afe056466d4c', '4cfa94133eb8fef1432f0f9f1b2e4e28eacb4a18'),
+    ('0', '292a10585b234ece4d1fd01047e37d23c4f7eb48', '292a10585b234ece4d1fd01047e37d23c4f7eb48', True),
+    ('1', '8657b7f8ea31e8b1f2e219fa0e4dfb93c5ca742b', '8657b7f8ea31e8b1f2e219fa0e4dfb93c5ca742b', False),
+    ('2', 'e4c0155d78a090dbbae26129038d2f3409b25524', 'e4c0155d78a090dbbae26129038d2f3409b25524', True),
+    ('3', '1d4ec9a15751c9f2c1ff15874c44afe056466d4c', '12c5e41a530ab6c5a9298905d2a5715a9bcfc38ca', True),
 ]
-# Exact text-transport corrections, if required, are bounded character splices.
-# A corrected payload must match its independently recorded Git blob hash.
-FIXES = {}
+# Corrections are bounded splices in the transport, never unverified source edits.
+# The resulting compressed bytes must match the independently recorded hash.
+FIXES = {'3': [[136,142,''],[2033,2034,'1'],[6764,6764,'c'],[8557,8557,'3'],[9109,9110,''],[11188,11188,'=']]}
 ROOTS = {'src', 'tests', 'tools', 'docs', '.github'}
 WORKFLOWS = {'.github/workflows/' + n for n in ('ci.yml', 'content-navigation.yml', 'v31-regressions.yml', 'web-v32.yml')}
 SELF = '.delivery/assemble-v32.py'
@@ -70,7 +70,7 @@ def main():
     assert not git('status', '--porcelain', '--untracked-files=all'), 'Dirty initial checkout'
     subprocess.run(['git', 'merge-base', '--is-ancestor', BASE, parent], check=True)
     records, errors = [], []
-    for number, transport, expected in PAYLOADS:
+    for number, transport, expected, compressed in PAYLOADS:
         try:
             raw = fetch_blob(transport)
             encoded = base64.b64encode(raw).decode('ascii')
@@ -78,17 +78,17 @@ def main():
                 encoded = encoded[:start] + value + encoded[end:]
             raw = base64.b64decode(encoded, validate=True)
             assert blob_hash(raw) == expected, 'Payload hash mismatch: ' + number
-            plain = gzip.decompress(raw)
+            plain = gzip.decompress(raw) if compressed else raw
             assert len(plain) < 200_000
             payload = json.loads(plain)
             assert payload['format'] == 'atlasnote-source-transfer-v1' and payload['base'] == BASE
             records.extend(payload['files'])
         except Exception as exc:
-            errors.append(str(exc))
+            errors.append('Payload ' + number + ': ' + str(exc))
     desired = {}
     for record in records:
+        path = record.get('path', '')
         try:
-            path = record['path']
             assert allowed(path) and path not in desired, 'Unexpected/duplicate source path'
             current = Path(path)
             if current.exists() and blob_hash(current.read_bytes()) == record['sha']:
@@ -112,11 +112,11 @@ def main():
             if path.startswith('.github/') and path != FINAL_WORKFLOW:
                 assert Path(path).read_bytes() == value, 'Owner workflow preparation required: ' + path
         except Exception as exc:
-            errors.append(str(exc))
+            errors.append(path + ': ' + str(exc))
     assert len(desired) == 34 and not errors, json.dumps({'files': len(desired), 'errors': errors})
     manifest = {path: blob_hash(value) for path, value in desired.items()}
     (OUT / 'desired-files.json').write_text(json.dumps(manifest, indent=2))
-    # Never use the Actions token to author or change workflow permissions.
+    # Standard Actions tokens do not author or change workflows in this transfer.
     changed = []
     for path, value in desired.items():
         if path.startswith('.github/'):
