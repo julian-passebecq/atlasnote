@@ -264,7 +264,7 @@ def safe_close(browser,context,page,base,out,passed):
       tx.oncomplete=()=>db.close();tx.onabort=()=>db.close();
       const keep=()=>{const r=st.get('active');r.onsuccess=()=>{if(window.__qaHoldPersonal)keep();};};keep();
     }""")
-    field=page.get_by_role('combobox',name='Theme',exact=True)
+    field=page.get_by_role('combobox',name='Interface theme',exact=True)
     old_theme=field.input_value()
     themes=field.locator('option').evaluate_all('(es)=>es.map(e=>e.value)')
     new_theme=next(t for t in themes if t!=old_theme)
@@ -316,10 +316,10 @@ def safe_close(browser,context,page,base,out,passed):
     page.wait_for_function('async()=>{const s=('+AGENT+').getStorageDiagnostics();return !s.storageError&&!s.saving;}')
     flush(page)
     assert page.locator('[data-save-safety]').inner_text().startswith('Saved /')
-    assert page.get_by_role('combobox',name='Theme',exact=True).input_value()==old_theme
+    assert page.get_by_role('combobox',name='Interface theme',exact=True).input_value()==old_theme
     page.reload(wait_until='networkidle');page.wait_for_selector('.atlas-app');flush(page)
     open_settings(page)
-    assert page.get_by_role('combobox',name='Theme',exact=True).input_value()==old_theme
+    assert page.get_by_role('combobox',name='Interface theme',exact=True).input_value()==old_theme
     passed('Aborted IndexedDB transaction: exact rollback, visible failure, native unload warning, unsaved emergency copy and real retry survive reload')
 
 

@@ -129,7 +129,7 @@ with sync_playwright() as pw:
  def narrow():
   reset();theme('Dark Slate');page.set_viewport_size({'width':390,'height':844});page.wait_for_timeout(250);open_context(page,'Remarks');box=page.locator('.context-drawer').bounding_box();assert box['x']>=0 and box['x']+box['width']<=390
   assert page.evaluate('document.documentElement.scrollWidth-innerWidth')<=1;shot('mobile-slate-context');page.keyboard.press('Escape');open_more(page);assert page.locator('.popover-more').bounding_box()['y']>=0;shot('mobile-slate-more')
-  more_action(page,'Workspace settings');shot('slate-settings');assert page.get_by_role('combobox',name='Theme',exact=True).input_value()=='slate';page.keyboard.press('Escape')
+  more_action(page,'Workspace settings');shot('slate-settings');assert page.get_by_role('combobox',name='Interface theme',exact=True).input_value()=='slate';page.keyboard.press('Escape')
  check('Dark narrow drawer, More and settings stay on-screen without overflow',narrow)
  check('No uncaught JavaScript errors in compact pass',lambda:None if not errors else (_ for _ in ()).throw(AssertionError(errors)))
  report={'scope':'Actual DOM and in-memory state on about:blank. Not real-origin IndexedDB/reload or integrated PDF certification. External test uses synthetic mocked transport.','checks':results,'passed':sum(r['status']=='PASS' for r in results),'failed':sum(r['status']=='FAIL' for r in results),'errors':errors}
