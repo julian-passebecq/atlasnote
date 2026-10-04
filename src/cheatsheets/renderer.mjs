@@ -1,3 +1,4 @@
+import {SHEET_PALETTES} from '../core/appearance.mjs';
 import {validateCheatsheet} from './validation.mjs';
 import {ASSET_REGISTRY} from './assets.mjs';
 import {plainText,layoutRich,fitRich} from './text-layout.mjs';
@@ -13,12 +14,13 @@ export function edgeEndpoint(from,to,shape='roundedRect'){
 }
 /** @param {import('./model.js').CheatsheetDocument} doc
  * @param {number} pageNumber
- * @param {{scope?:string,activeBlock?:string}} [options] */
+ * @param {{scope?:string,activeBlock?:string,sheetTheme?:'black'|'slate'|'paper'|'warm'|'source'}} [options] */
 export function renderCheatsheetPage(doc,pageNumber,options={}){
- const {scope='sheet',activeBlock}=options;
+ const {scope='sheet',activeBlock,sheetTheme='source'}=options;
+ if(sheetTheme!=='source'&&!Object.hasOwn(SHEET_PALETTES,sheetTheme))throw Error('Unknown sheet display theme');
  validateCheatsheet(doc);if(!Number.isInteger(pageNumber)||pageNumber<1||pageNumber>doc.pages.length)throw Error('Physical cheatsheet page is unavailable.');
  if(!/^[A-Za-z][A-Za-z0-9._-]{0,180}$/.test(scope))throw Error('Unsafe SVG instance scope');
- const page=doc.pages[pageNumber-1],prefix='cs-'+scope.length+'-'+scope+'-'+doc.id.length+'-'+doc.id+'-p'+pageNumber,t={...CALM_TOKENS,...doc.theme?.tokens},diagnostics=[];
+ const page=doc.pages[pageNumber-1],prefix='cs-'+scope.length+'-'+scope+'-'+doc.id.length+'-'+doc.id+'-p'+pageNumber,t={example:'#171d24',caption:'#566674',border:'#d4dfe8',box:'#f0f5f3',boxBorder:'#cfddd5',warningBorder:'#d5aeb5',tableHead:'#e6efe9',stripe:'#f5f8f6',tableLine:'#bdcec4',margin:'#cad6df',...CALM_TOKENS,...doc.theme?.tokens,...SHEET_PALETTES[sheetTheme]},diagnostics=[];
  const safe=escapeXML,marker=prefix+'-marker-arrow',clipId=id=>prefix+'-clip-'+id;
  const rect=(f,fill,stroke=t.line,r=8)=>`<rect x="${n(f.x)}" y="${n(f.y)}" width="${n(f.width)}" height="${n(f.height)}" rx="${r}" fill="${fill}" stroke="${stroke}"/>`;
  function text(value,f,style={},attrs=''){
@@ -27,7 +29,7 @@ export function renderCheatsheetPage(doc,pageNumber,options={}){
   const settings={...defaults[role],...style};const result=fitRich(value,f.width,f.height,settings,mono);
   if(result.overflow&&settings.overflow==='error')throw Error('Cheatsheet overflow in '+(style.blockId??role));
   if(result.overflow)diagnostics.push({blockId:style.blockId??'',reason:'Text exceeds fixed frame',fontSize:result.fontSize});
-  const fill=role==='warning'?t.warning:['title','section','key'].includes(role)?t.primary:role==='example'?'#171d24':role==='caption'?'#566674':t.ink;
+  const fill=role==='warning'?t.warning:['title','section','key'].includes(role)?t.primary:role==='example'?t.example:role==='caption'?t.caption:t.ink;
   let out=`<text xml:space="preserve" font-family="${mono?'Liberation Mono, Courier New, monospace':'Arial, Helvetica, sans-serif'}" font-size="${n(result.fontSize)}" fill="${fill}"${['title','section','key'].includes(role)?' font-weight="700"':''}${role==='example'?' font-style="italic"':''}${result.overflow?' data-overflow="true"':''} ${attrs}>`;
   for(const [i,line] of result.lines.entries()){
    const x=f.x+(settings.align==='center'?(f.width-line.width)/2:settings.align==='right'?f.width-line.width:0),y=f.y+result.fontSize*.91+i*result.fontSize*result.lineHeight;
@@ -50,18 +52,18 @@ export function renderCheatsheetPage(doc,pageNumber,options={}){
     if(y-gap>f.y+f.height+.1&&s.overflow==='error')throw Error('Cheatsheet list overflow in '+b.id);if(y-gap>f.y+f.height+.1)diagnostics.push({blockId:b.id,reason:'List exceeds fixed frame'});break;
    }
    case 'code':{
-    body=rect(f,t.code,'#d4dfe8');const title=b.title?34:0;if(b.title)body+=text(b.title,{x:f.x+16,y:f.y+12,width:f.width-32,height:30},{role:'example',...s});
+    body=rect(f,t.code,t.border);const title=b.title?34:0;if(b.title)body+=text(b.title,{x:f.x+16,y:f.y+12,width:f.width-32,height:30},{role:'example',...s});
     body+=text(b.code,{x:f.x+16,y:f.y+14+title,width:f.width-32,height:f.height-28-title},{fontSize:17,lineHeight:1.42,minFontSize:12,overflow:'shrink',...s,mono:true},'data-code-language="'+safe(b.language)+'"');break;
    }
    case 'box':{
-    const warning=b.variant==='warning',top=b.title?42:14;body=rect(f,warning?t.warningFill:'#f0f5f3',warning?'#d5aeb5':'#cfddd5');if(b.title)body+=text(b.title,{x:f.x+16,y:f.y+13,width:f.width-32,height:30},{role:warning?'warning':'example',...s});if(b.text!==undefined)body+=text(b.text,{x:f.x+16,y:f.y+top,width:f.width-32,height:f.height-top-14},{fontSize:19,lineHeight:1.33,minFontSize:16,overflow:'shrink',...s});if(b.children)body+=b.children.map(block).join('');break;
+    const warning=b.variant==='warning',top=b.title?42:14;body=rect(f,warning?t.warningFill:t.box,warning?(sheetTheme==='source'||sheetTheme==='paper'?t.warningBorder:t.warning):t.boxBorder);if(b.title)body+=text(b.title,{x:f.x+16,y:f.y+13,width:f.width-32,height:30},{role:warning?'warning':'example',...s});if(b.text!==undefined)body+=text(b.text,{x:f.x+16,y:f.y+top,width:f.width-32,height:f.height-top-14},{fontSize:19,lineHeight:1.33,minFontSize:16,overflow:'shrink',...s});if(b.children)body+=b.children.map(block).join('');break;
    }
    case 'table':{
     const widths=(b.widths??b.columns.map(()=>1/b.columns.length)).map(v=>v*f.width),rows=[b.columns,...b.rows],pad=8;let size=s.fontSize??18,heights;
     do{heights=rows.map(row=>Math.max(...row.map((v,i)=>layoutRich(v,widths[i]-pad*2,size,s.lineHeight??1.25).height))+pad*2);if(heights.reduce((a,x)=>a+x,0)<=f.height||s.overflow==='clip'||s.overflow==='error'||size<=(s.minFontSize??14))break;size-=.5;}while(true);
     // Let the author's allocated table height distribute breathing room evenly.
     const extra=Math.max(0,(f.height-heights.reduce((a,x)=>a+x,0))/heights.length);let y=f.y;
-    for(const [ri,row] of rows.entries()){const height=heights[ri]+extra;let x=f.x;for(const [ci,value] of row.entries()){body+=rect({x,y,width:widths[ci],height},ri===0?'#e6efe9':ri%2===0?'#f5f8f6':t.paper,'#bdcec4',0);body+=text(value,{x:x+pad,y:y+pad+extra/2,width:widths[ci]-2*pad,height:height-2*pad},{...s,fontSize:size,lineHeight:s.lineHeight??1.25,role:ri===0?'key':'body'});x+=widths[ci];}y+=height;}
+    for(const [ri,row] of rows.entries()){const height=heights[ri]+extra;let x=f.x;for(const [ci,value] of row.entries()){body+=rect({x,y,width:widths[ci],height},ri===0?t.tableHead:ri%2===0?t.stripe:t.paper,t.tableLine,0);body+=text(value,{x:x+pad,y:y+pad+extra/2,width:widths[ci]-2*pad,height:height-2*pad},{...s,fontSize:size,lineHeight:s.lineHeight??1.25,role:ri===0?'key':'body'});x+=widths[ci];}y+=height;}
     if(y>f.y+f.height+.1&&s.overflow==='error')throw Error('Cheatsheet table overflow in '+b.id);if(y>f.y+f.height+.1)diagnostics.push({blockId:b.id,reason:'Table exceeds fixed frame'});break;
    }
    case 'divider':body=`<line x1="${n(f.x)}" y1="${n(f.y+f.height/2)}" x2="${n(f.x+f.width)}" y2="${n(f.y+f.height/2)}" stroke="${t.line}"/>`;break;
@@ -88,6 +90,6 @@ export function renderCheatsheetPage(doc,pageNumber,options={}){
  }
  let clips='';function define(bs){for(const b of bs){clips+=`<clipPath id="${clipId(b.id)}">${rect(page.frames[b.id],'white','none',0)}</clipPath>`;if(b.children)define(b.children);}}define(page.blocks);
  const paperLines=Array.from({length:38},(_,i)=>`M0 ${184+i*35}H1200`).join(' ');
- const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="${prefix}-meta-title ${prefix}-meta-desc" data-cheatsheet-page="${pageNumber}"><title id="${prefix}-meta-title">${safe(page.title)}</title><desc id="${prefix}-meta-desc">${safe(doc.title)}. Physical page ${pageNumber} of ${doc.pages.length}. Selectable text; fixed page geometry.</desc><defs><marker id="${marker}" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L7 3.5L0 7Z" fill="${t.secondary}"/></marker>${clips}</defs><rect width="1200" height="1600" fill="${t.paper}"/><path d="${paperLines}" fill="none" stroke="${t.line}" stroke-width="1"/><path d="M65 0V1600" fill="none" stroke="#cad6df"/>${page.blocks.map(block).join('')}${text(String(pageNumber)+' / '+doc.pages.length,{x:1040,y:1545,width:90,height:28},{role:'caption',align:'right'})}</svg>`;
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="${prefix}-meta-title ${prefix}-meta-desc" data-cheatsheet-page="${pageNumber}"><title id="${prefix}-meta-title">${safe(page.title)}</title><desc id="${prefix}-meta-desc">${safe(doc.title)}. Physical page ${pageNumber} of ${doc.pages.length}. Selectable text; fixed page geometry.</desc><defs><marker id="${marker}" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L7 3.5L0 7Z" fill="${t.secondary}"/></marker>${clips}</defs><rect width="1200" height="1600" fill="${t.paper}"/><path d="${paperLines}" fill="none" stroke="${t.line}" stroke-width="1"/><path d="M65 0V1600" fill="none" stroke="${t.margin}"/>${page.blocks.map(block).join('')}${text(String(pageNumber)+' / '+doc.pages.length,{x:1040,y:1545,width:90,height:28},{role:'caption',align:'right'})}</svg>`;
  return {svg,diagnostics};
 }

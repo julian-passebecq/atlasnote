@@ -162,7 +162,7 @@ with sync_playwright() as pw:
     def themes():
         reset(mixed=True);colors=[]
         for theme,label in [('fluent','Fluent Blue'),('neutral','Neutral/Sage'),('academic','Academic Paper'),('lavender','Soft Lavender'),('slate','Dark Slate')]:
-            more_action(page,'Workspace settings');page.get_by_role('combobox',name='Theme',exact=True).select_option(theme);page.get_by_role('button',name='Close dialog').click();page.wait_for_timeout(300)
+            more_action(page,'Workspace settings');page.get_by_role('combobox',name='Interface theme',exact=True).select_option(theme);page.get_by_role('button',name='Close dialog').click();page.wait_for_timeout(300)
             assert state()['theme']==theme
             color=page.locator('.collection-view').evaluate('(e)=>{const s=getComputedStyle(e);return [s.backgroundColor,s.color,s.getPropertyValue("--nav"),s.getPropertyValue("--reader-canvas"),s.getPropertyValue("--code-bg"),s.getPropertyValue("--table-head")]}');colors.append(color)
             page.screenshot(path=str(OUT/('theme-'+theme+'.png')))

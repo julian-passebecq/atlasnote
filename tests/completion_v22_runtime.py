@@ -401,7 +401,7 @@ def responsive_matrix():
         count=0
         for theme in ['fluent','neutral','academic','lavender','slate']:
             p.set_viewport_size({'width':1440,'height':900});open_settings(p)
-            p.get_by_role('dialog',name='Workspace settings').get_by_label('Theme',exact=True).select_option(theme);close_panels(p)
+            p.get_by_role('dialog',name='Workspace settings').get_by_label('Interface theme',exact=True).select_option(theme);close_panels(p)
             for width,height in MATRIX:
                 p.set_viewport_size({'width':width,'height':height})
                 for key in keys:

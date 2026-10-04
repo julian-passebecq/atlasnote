@@ -120,7 +120,7 @@ try:
    measurements.append({'width':w,'height':h,'companion':'sidebar tree','globalTopbarRows':0,'canvasFraction':c['height']/pane['height'],'pane':pane,'canvas':c});shot(page,'integrated-'+str(w))
   page.set_viewport_size({'width':1440,'height':900});page.wait_for_timeout(200)
   for label in ['Fluent Blue','Neutral/Sage','Academic Paper','Soft Lavender','Dark Slate']:
-   page.get_by_role('button',name='Theme',exact=True).click();page.get_by_role('button',name=label,exact=True).click();shot(page,'theme-'+label.lower().replace('/','-').replace(' ','-'))
+   page.get_by_role('button',name='Theme',exact=True).click();page.get_by_label('Interface theme',exact=True).select_option(label=label);page.get_by_role('button',name='Close theme',exact=True).click();shot(page,'theme-'+label.lower().replace('/','-').replace(' ','-'))
   assert page.locator('.pdf-companion').count()==0;shot(page,'sidebar-study-surface');record(measurements)
   phase='all_slot_reload';before=snapshot(page);page.reload(wait_until='networkidle');wait_pdf(page);after=snapshot(page);equal_personal(after,before,'five-slots-reload');assert len(after['personal']['workspaceSlots'])==4;record()
   phase='backup_download';open_settings(page);before=snapshot(page)

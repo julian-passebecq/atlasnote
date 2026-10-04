@@ -49,6 +49,7 @@ jobs:
       - run: python tests/v3_tabs.py
       - run: python tests/v3_gates.py
       - run: python tests/v3_pdf_labels.py
+      - run: npm run test:appearance:runtime
       - run: npm run test:v31:storage
       - run: npm run test:v31:pdf
       - run: npm run test:pdf:navigation
@@ -60,6 +61,7 @@ jobs:
           path: |
             docs/evidence/v3
             docs/evidence/v31
+            docs/evidence/appearance
             docs/evidence/v23/build-identity
             docs/evidence/pdf-navigation-runtime
             docs/evidence/pdf-lifecycle-runtime
