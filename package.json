@@ -109,7 +109,8 @@
     "test:planning:ui": "python tests/planning_inbox_dom.py",
     "test:v31": "node --test tests/v31-stabilization.test.mjs",
     "test:v31:storage": "python tests/v31_storage_runtime.py",
-    "test:v31:pdf": "python tests/v31_pdf_runtime.py"
+    "test:v31:pdf": "python tests/v31_pdf_runtime.py",
+    "test:appearance:runtime": "python tests/appearance_runtime.py"
   },
   "dependencies": {
     "jszip": "3.10.1",

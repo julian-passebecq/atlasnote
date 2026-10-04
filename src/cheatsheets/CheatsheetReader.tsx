@@ -9,13 +9,13 @@ import {renderCheatsheetPage} from './renderer.mjs';
 import {sheetGroup,sheetPosition,sheetPagePatch,downloadCheatsheet} from './content.mjs';
 
 const MODES=[['single','Single page'],['spread','Two pages'],['grid','Four pages']] as const;
-type Props={page:Page;view:View;location:Location;paneId:string;slotId:number;onLocation:(patch:Partial<Location>)=>void;onActions:(target:ReadingTarget,title:string,event:any)=>void};
+type Props={sheetTheme?:'black'|'slate'|'paper'|'warm'|'source';page:Page;view:View;location:Location;paneId:string;slotId:number;onLocation:(patch:Partial<Location>)=>void;onActions:(target:ReadingTarget,title:string,event:any)=>void};
 /** A content renderer inside the existing pane, not a parallel reader shell. */
 export function CheatsheetReader(props:Props){
  try{validateCheatsheet(props.page.cheatsheet);}catch(e){return <div className="sheet-error" role="alert">Invalid cheatsheet source: {(e as Error).message}. The saved source has not been changed.</div>;}
  return <ValidatedCheatsheetReader {...props}/>;
 }
-function ValidatedCheatsheetReader({page,view,location,paneId,slotId,onLocation,onActions}:Props){
+function ValidatedCheatsheetReader({sheetTheme='source',page,view,location,paneId,slotId,onLocation,onActions}:Props){
  const doc=page.cheatsheet as CheatsheetDocument;
  const group=sheetGroup(doc,location),position=sheetPosition(doc,location),mode=location.sheetMode??'single';
  const zoom=location.sheetZoom??1,fit=location.sheetFit??'page';
@@ -28,9 +28,9 @@ function ValidatedCheatsheetReader({page,view,location,paneId,slotId,onLocation,
  const scale=Math.max(.05,(fit==='page'?Math.min(widthScale,heightScale):widthScale)*zoom);
  const scope='pane-'+slotId+'-'+paneId+'-'+view.id;
  const rendered=useMemo(()=>{
-  try{return {pages:group.pages.map(number=>({number,...renderCheatsheetPage(doc,number,{scope,activeBlock:location.anchor?.blockId})})),error:''};}
+  try{return {pages:group.pages.map(number=>({number,...renderCheatsheetPage(doc,number,{scope,activeBlock:location.anchor?.blockId,sheetTheme})})),error:''};}
   catch(e){return {pages:[],error:(e as Error).message};}
- },[doc,group.start,group.available,mode,location.anchor?.blockId,scope]);
+ },[doc,group.start,group.available,mode,location.anchor?.blockId,scope,sheetTheme]);
  useEffect(()=>{setDraft(String(group.page));setMessage('');},[group.page]);
  useEffect(()=>{
   const el=viewport.current;if(!el)return;

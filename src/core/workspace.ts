@@ -5,7 +5,7 @@ import {selectPacks} from './packs.mjs';
 import {pageLinks,walkBlocks,stable} from './validation.mjs';
 export const uid=(prefix='id')=>prefix+'.'+crypto.randomUUID().replaceAll('-','');
 export function blankOverlays():Overlays{return {schemaVersion:2,pages:{},projects:[],projectPrefs:{},operations:[],archived:[],groups:null,documents:[]};}
-export function blankPersonal():Personal{return {schemaVersion:2,notes:{},ratings:{},bookmarks:[],session:{panes:[{id:'left',views:[],active:''}],activePane:'left',ratio:50,screen:'home',surface:'dashboard',leftOpen:true,rightOpen:false,focus:false,theme:'fluent',libraryMode:'notes',showFlags:true,expanded:[],fontSize:16}};}
+export function blankPersonal():Personal{return {schemaVersion:2,notes:{},ratings:{},bookmarks:[],session:{panes:[{id:'left',views:[],active:''}],activePane:'left',ratio:50,screen:'home',surface:'dashboard',leftOpen:true,rightOpen:false,focus:false,theme:'black',sheetTheme:'black',libraryMode:'notes',showFlags:true,expanded:[],fontSize:16}};}
 export function blankWorkspace():Workspace{return {imports:[],overlays:blankOverlays(),personal:blankPersonal(),assets:[],generation:0};}
 export function current(view:View|undefined){return view?.history[view.cursor];}
 export function newLocation(pageId:string,pdf=false):Location{return {pageId,presentation:'continuous',pdfMode:pdf?'spread':'single',pdfPage:1,zoom:1,rotation:0,cover:false};}

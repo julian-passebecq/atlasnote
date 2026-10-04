@@ -1,6 +1,7 @@
 import {validateKnowledge,validateExplorer} from '../references/validation.mjs';
 import {validateHubPersonal,validateTaxonomy} from '../content-hub/validation.mjs';
 import {validateReadingLists,validateBookmarkReading} from './reading-validation.mjs';
+import {SHEET_THEME_LABELS} from '../core/appearance.mjs';
 import {validateSavedStates} from './saved-states-validation.mjs';
 import {inspectObject,ID} from '../core/validation.mjs';
 import {validateExperience} from '../experience/profile.mjs';
@@ -50,7 +51,7 @@ export function validatePersonal(p){
    }
    if(pane.views.length&&!pane.views.some(v=>v.id===pane.active))fail('active view missing');if(!pane.views.length&&pane.active!=='')fail('empty active view');
   }
-  if(!paneIds.has(s.activePane))fail('active pane missing');num(s.ratio,'split ratio',28,72);num(s.fontSize,'font size',14,22);if(!['home','reader','bookmarks'].includes(s.screen))fail('screen');if(!['fluent','neutral','academic','lavender','slate'].includes(s.theme))fail('theme');if(s.libraryMode!==undefined&&!['notes','pdfs','cheatsheets','articles','qcm'].includes(s.libraryMode))fail('library mode');
+  if(!paneIds.has(s.activePane))fail('active pane missing');num(s.ratio,'split ratio',28,72);num(s.fontSize,'font size',14,22);if(!['home','reader','bookmarks'].includes(s.screen))fail('screen');if(!['fluent','neutral','academic','lavender','slate','black'].includes(s.theme))fail('theme');if(s.sheetTheme!==undefined&&!Object.hasOwn(SHEET_THEME_LABELS,s.sheetTheme))fail('sheet theme');if(s.libraryMode!==undefined&&!['notes','pdfs','cheatsheets','articles','qcm'].includes(s.libraryMode))fail('library mode');
   if(s.surface!==undefined&&!['dashboard','library','norsk-daily'].includes(s.surface))fail('app surface');if(s.dashboardSubject!==undefined)validateTaxonomy({subject:s.dashboardSubject});for(const key of ['dashboardFolder','dashboardItemId','libraryFolder'])if(s[key]!==undefined)id(s[key],key);
   if(s.typeExpanded!==undefined){obj(s.typeExpanded,'type expansion');for(const [key,ids]of Object.entries(s.typeExpanded)){if(!['notes','pdfs','cheatsheets','articles','qcm'].includes(key))fail('expansion type');arr(ids,'expanded folders',5000);ids.forEach(x=>id(x,'folder ID'));}}
   for(const key of ['leftOpen','rightOpen','focus','showFlags'])bool(s[key],key);arr(s.expanded,'expanded IDs');s.expanded.forEach(x=>id(x,'expanded ID'));
