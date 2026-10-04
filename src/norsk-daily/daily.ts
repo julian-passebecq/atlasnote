@@ -1,19 +1,27 @@
 import type {Catalogue,Page,Personal} from '../core/model.js';
 import {NORSK_TAG} from './projection.js';
+
 /** V3 Norsk Daily view model. Reads only imported, human-accepted canonical
  * Article/QCM pages (tag `norsk-daily`); it owns no content and no second
  * progress store. Progress is the existing per-page learning flag, keyed by the
  * stable article ID (`norsk-daily.item.<itemId>`), so it survives item
  * revisions, batch reorder, deduplication and daily refresh. */
 export type DailyStatus='new'|'learning'|'known';
-export type DailyItem={page:Page;status:DailyStatus;language?:string;level?:string;english?:string;grammar:{label:string;pageId:string}[];synthetic:boolean};
+export type DailyWord={lemma:string;form?:string;partOfSpeech?:string;english?:string;french?:string;example?:string;pageId:string;headline:string};
+export type DailyItem={page:Page;status:DailyStatus;language?:string;level?:string;section?:string;english?:string;paraphrase?:string;french?:string;grammar:{label:string;pageId:string}[];synthetic:boolean};
 export type DailyBatch={date:string;items:DailyItem[];qcm?:Page;synthetic:boolean};
+
 const tagValue=(page:Page,prefix:string)=>page.tags.find(t=>t.startsWith(prefix))?.slice(prefix.length);
+const flattenBlocks=(page:Page)=>{const out:any[]=[];const walk=(blocks:any[])=>{for(const block of blocks??[]){out.push(block);if(Array.isArray(block.children))walk(block.children);}};walk(page.blocks as any[]);return out;};
+const calloutText=(page:Page,prefix:string)=>flattenBlocks(page).find(b=>b.type==='callout'&&String(b.title??'').startsWith(prefix))?.text as string|undefined;
+const vocabularyTable=(page:Page)=>flattenBlocks(page).find(b=>b.type==='table'&&String(b.id??'').endsWith('.vocabulary.table')) as any|undefined;
+
 /** Existing flags: gray "Not rated", red "Revisit", orange "Learning", green "Understood". */
 export function dailyStatus(rating:Personal['ratings'][string]|undefined):DailyStatus{return rating==='green'?'known':rating==='orange'||rating==='red'?'learning':'new';}
 export const STATUS_RATING:Record<DailyStatus,'gray'|'orange'|'green'>={new:'gray',learning:'orange',known:'green'};
 const ORDER:Record<DailyStatus,number>={new:0,learning:1,known:2};
 function osloDate(ms:number){return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Oslo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(ms));}
+
 export function dailyBatches(c:Catalogue,ratings:Personal['ratings']):DailyBatch[]{
  const byDate=new Map<string,DailyBatch>();
  const batch=(date:string)=>{let b=byDate.get(date);if(!b){b={date,items:[],synthetic:false};byDate.set(date,b);}return b;};
@@ -25,27 +33,68 @@ export function dailyBatches(c:Catalogue,ratings:Personal['ratings']):DailyBatch
   if(page.kind==='qcm'){b.qcm=page;continue;}
   if(page.kind!=='article')continue;
   const headline=page.blocks.find((x:any)=>x.type==='bilingual') as any;
-  b.items.push({page,status:dailyStatus(ratings[page.id]),language:tagValue(page,'lang:'),level:tagValue(page,'level:'),english:headline?.en,grammar:(page.resourceLinks??[]).flatMap((l:any)=>l.target?.kind==='page'?[{label:l.label,pageId:l.target.pageId}]:[]),synthetic});
+  b.items.push({
+   page,
+   status:dailyStatus(ratings[page.id]),
+   language:tagValue(page,'lang:'),
+   level:tagValue(page,'level:'),
+   section:tagValue(page,NORSK_TAG.section),
+   english:headline?.en,
+   paraphrase:calloutText(page,'Simpler Norwegian paraphrase'),
+   french:calloutText(page,'French translation'),
+   grammar:(page.resourceLinks??[]).flatMap((l:any)=>l.target?.kind==='page'?[{label:l.label,pageId:l.target.pageId}]:[]),
+   synthetic
+  });
  }
  for(const b of byDate.values())b.items.sort((x,y)=>ORDER[x.status]-ORDER[y.status]||x.page.title.localeCompare(y.page.title,'nb'));
  return [...byDate.values()].sort((a,b)=>b.date.localeCompare(a.date));
 }
-export type DailyWord={lemma:string;form?:string;partOfSpeech?:string;english?:string;french?:string;example?:string;pageId:string;headline:string};
+
+/** Vocabulary belonging to one story. The canonical source remains the accepted
+ * Article block tree; this is only a read model for study/search UI. */
+export function dailyItemVocabulary(item:DailyItem):DailyWord[]{
+ const table=vocabularyTable(item.page);if(!table)return [];
+ const col=(name:string)=>table.columns.indexOf(name);
+ return (table.rows as string[][]).flatMap(row=>{
+  const cell=(name:string)=>{const i=col(name);return i>=0&&row[i]?row[i]:undefined;},lemma=cell('Lemma');if(!lemma)return [];
+  return [{lemma,form:cell('Form'),partOfSpeech:cell('Part of speech'),english:cell('English'),french:cell('French'),example:cell('Example (generated)'),pageId:item.page.id,headline:item.page.title}];
+ });
+}
+
 /** The day's vocabulary, read from each accepted article's generated vocabulary
  * table (no second store). Deduplicated by lemma + part of speech, first story wins. */
 export function dailyVocabulary(batch:DailyBatch|undefined):DailyWord[]{
  const out:DailyWord[]=[],seen=new Set<string>();
- for(const item of batch?.items??[]){
-  const table=(page=>{let found:any;const walk=(bs:any[])=>bs.forEach(b=>{if(!found&&b.type==='table'&&String(b.id).endsWith('.vocabulary.table'))found=b;if(b.children)walk(b.children);});walk(page.blocks);return found;})(item.page);
-  if(!table)continue;const col=(name:string)=>table.columns.indexOf(name);
-  for(const row of table.rows as string[][]){
-   const cell=(name:string)=>{const i=col(name);return i>=0&&row[i]?row[i]:undefined;},lemma=cell('Lemma');if(!lemma)continue;
-   const key=lemma.toLocaleLowerCase('nb')+'|'+(cell('Part of speech')??'');if(seen.has(key))continue;seen.add(key);
-   out.push({lemma,form:cell('Form'),partOfSpeech:cell('Part of speech'),english:cell('English'),french:cell('French'),example:cell('Example (generated)'),pageId:item.page.id,headline:item.page.title});
-  }
+ for(const item of batch?.items??[])for(const word of dailyItemVocabulary(item)){
+  const key=word.lemma.toLocaleLowerCase('nb')+'|'+(word.partOfSpeech??'');if(seen.has(key))continue;seen.add(key);out.push(word);
  }
  return out;
 }
+
+const searchTerms=(query:string)=>query.trim().toLocaleLowerCase('nb').split(/\s+/).filter(Boolean);
+/** Search is deliberately local and deterministic. It indexes accepted study
+ * text already present in the browser: source headline, generated translations,
+ * paraphrase, grammar labels and vocabulary. It never fetches remote content. */
+export function dailySearch(items:DailyItem[],query:string):DailyItem[]{
+ const terms=searchTerms(query);if(!terms.length)return items;
+ return items.filter(item=>{
+  const words=dailyItemVocabulary(item),haystack=[
+   item.page.title,item.section,item.english,item.paraphrase,item.french,
+   ...item.grammar.map(g=>g.label),
+   ...words.flatMap(w=>[w.lemma,w.form,w.partOfSpeech,w.english,w.french,w.example])
+  ].filter((x):x is string=>!!x).join(' ').toLocaleLowerCase('nb');
+  return terms.every(term=>haystack.includes(term));
+ });
+}
+export function dailySections(batch:DailyBatch|undefined):string[]{return [...new Set((batch?.items??[]).map(i=>i.section).filter((x):x is string=>!!x))].sort((a,b)=>a.localeCompare(b,'nb'));}
+export function dailyVocabularySearch(words:DailyWord[],query:string):DailyWord[]{
+ const terms=searchTerms(query);if(!terms.length)return words;
+ return words.filter(w=>{
+  const haystack=[w.lemma,w.form,w.partOfSpeech,w.english,w.french,w.example,w.headline].filter((x):x is string=>!!x).join(' ').toLocaleLowerCase('nb');
+  return terms.every(term=>haystack.includes(term));
+ });
+}
+
 const ASCII:Record<string,string>={æ:'ae',ø:'o',å:'a'};
 /** Stable, ID-safe concept identity for a Norwegian word: lemma + part of speech. */
 export function vocabularyConceptId(w:Pick<DailyWord,'lemma'|'partOfSpeech'>):string{

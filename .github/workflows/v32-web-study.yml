@@ -1,0 +1,72 @@
+name: V3.2 Web study qualification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  v32-web-study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Record exact candidate
+        run: |
+          git status --porcelain --untracked-files=all
+          git rev-parse HEAD
+          git rev-parse 'HEAD^{tree}'
+          git archive --format=zip --output=/tmp/atlasnote-v32-source.zip HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlasnote-v32-source
+          path: /tmp/atlasnote-v32-source.zip
+          retention-days: 7
+          if-no-files-found: error
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run typecheck:online
+      - run: npm test
+      - run: npm run check:access
+      - run: npm run check:v23:secrets
+      - run: python -m pip install -r requirements-test.txt
+      - run: python -m playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run check:v23:build
+      - run: python tests/v3_runtime.py
+      - run: python tests/v3_pdf_window.py
+      - run: python tests/v3_norsk_daily.py
+      - run: python tests/v3_tabs.py
+      - run: python tests/v3_gates.py
+      - run: python tests/v3_pdf_labels.py
+      - run: npm run test:v31:storage
+      - run: npm run test:v31:pdf
+      - run: npm run test:pdf:navigation
+      - run: npm run test:pdf:lifecycle
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlasnote-v32-evidence
+          path: |
+            docs/evidence/v3
+            docs/evidence/v31
+            docs/evidence/v23/build-identity
+            docs/evidence/pdf-navigation-runtime
+            docs/evidence/pdf-lifecycle-runtime
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlasnote-v32-integrated-dist
+          path: dist
+          retention-days: 7
+          if-no-files-found: error

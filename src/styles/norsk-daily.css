@@ -1,5 +1,5 @@
 /* V3 Norsk Daily study queue (existing tokens, no new visual framework). */
-.norsk-daily{max-width:880px;margin:0 auto;padding:22px 24px 40px;overflow:auto;height:100%;box-sizing:border-box}
+.norsk-daily{max-width:1180px;margin:0 auto;padding:22px 24px 40px;overflow:auto;height:100%;box-sizing:border-box}
 .norsk-daily-header{display:flex;align-items:flex-end;gap:14px;margin-bottom:14px}
 .norsk-daily-header>div:first-child{flex:1}
 .norsk-daily-header h1{margin:0;font-size:24px}
@@ -41,3 +41,54 @@
 .norsk-daily-meaning{margin:0;font-size:13px}
 .norsk-daily-meaning em{display:block;color:var(--muted);margin-top:2px}
 .norsk-daily-source{align-self:flex-start;font-size:11px}
+
+/* Small flag, with a usable keyboard/pointer target. Never relies on emoji fonts. */
+.filter-status .norsk-daily-chip{display:inline-flex;align-items:center;justify-content:center;width:30px;min-width:30px;height:28px;padding:4px;flex:0 0 auto}
+.norsk-daily-chip svg{display:block;border-radius:1px}
+
+
+/* V3.2 web-study projection: newspaper discovery + one-scroll bilingual focus. */
+.norsk-daily-search{display:flex;align-items:center;gap:6px;min-width:min(360px,100%);flex:1 1 300px}
+.norsk-daily-search input{width:100%;min-width:180px}
+.norsk-daily-paper{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.norsk-daily-paper .norsk-daily-item{min-width:0;margin:0}
+.norsk-daily-paper .norsk-daily-lead{grid-column:1/-1;padding:16px 18px}
+.norsk-daily-paper .norsk-daily-lead .norsk-daily-title{font-size:20px;line-height:1.25}
+.norsk-daily-paraphrase{margin:8px 0 0;font-size:13px;line-height:1.55;color:var(--text)}
+.norsk-daily-paraphrase>span{display:block;margin-bottom:2px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+.norsk-daily-study{font-weight:600;color:var(--accent)}
+.norsk-daily-focus{border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden}
+.norsk-daily-focus.status-learning{border-top:3px solid #e08a00}
+.norsk-daily-focus.status-known{border-top:3px solid #2e9e5b}
+.norsk-daily-focus-header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted)}
+.norsk-daily-focus-header>div{justify-self:end;display:flex;gap:4px}
+.norsk-daily-focus-meta{display:flex;align-items:center;gap:7px;padding:10px 16px 0;color:var(--muted);font-size:11px}
+.norsk-daily-focus-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:12px 16px 18px}
+.norsk-daily-focus-grid>section{min-width:0;padding:14px 18px}
+.norsk-daily-focus-no{border-right:1px solid var(--line)}
+.norsk-daily-focus-grid .eyebrow{margin:0 0 8px;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.05em}
+.norsk-daily-focus-grid h2{margin:0;font-size:22px;line-height:1.35;font-weight:600;overflow-wrap:anywhere}
+.norsk-daily-focus-en h2{font-weight:500;color:var(--muted)}
+.norsk-daily-focus-en.is-hidden{display:flex;flex-direction:column}
+.norsk-daily-focus-hidden{display:flex;min-height:120px;align-items:center;justify-content:center;flex-direction:column;gap:8px;border:1px dashed var(--line);border-radius:8px;color:var(--muted)}
+.norsk-daily-focus-paraphrase{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.norsk-daily-focus-paraphrase>span{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.norsk-daily-focus-paraphrase p{margin:5px 0 0;font-size:15px;line-height:1.65}
+.norsk-daily-focus-en details{margin-top:18px;color:var(--muted);font-size:12px}
+.norsk-daily-focus-vocab{padding:14px 18px;border-top:1px solid var(--line)}
+.norsk-daily-focus-vocab h3{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.norsk-daily-focus-vocab>div{display:flex;flex-wrap:wrap;gap:6px}
+.norsk-daily-focus-vocab span{display:flex;align-items:baseline;gap:5px;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--subtle,#f5f7fa)}
+.norsk-daily-focus-vocab small{color:var(--muted)}
+.norsk-daily-focus-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+.norsk-daily-focus-actions>.norsk-daily-status{margin-right:auto}
+@media(max-width:900px){.norsk-daily-paper{grid-template-columns:1fr}.norsk-daily-paper .norsk-daily-lead{grid-column:auto}.norsk-daily-focus-grid{grid-template-columns:1fr}.norsk-daily-focus-no{border-right:0;border-bottom:1px solid var(--line)}}
+@media(max-width:650px){.norsk-daily-toolbar{align-items:stretch}.norsk-daily-search{min-width:100%}.norsk-daily-focus-grid{padding:6px}.norsk-daily-focus-grid>section{padding:12px}.norsk-daily-focus-header{grid-template-columns:1fr auto}.norsk-daily-focus-header>span{display:none}}
+
+.norsk-daily-sections{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0}
+.norsk-daily-sections button{font-size:11px;padding:4px 9px;border-radius:14px}
+.norsk-daily-sections button[aria-pressed="true"]{background:var(--tint);color:var(--accent);border-color:var(--accent)}
+.norsk-daily-section{font-size:10px;padding:1px 5px;border-radius:4px;background:var(--subtle,#eef2f7);color:var(--muted);white-space:nowrap}
+.norsk-daily-results{font-size:10px;color:var(--muted);white-space:nowrap}
+
+.norsk-daily-add{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}

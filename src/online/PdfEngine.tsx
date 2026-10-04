@@ -17,22 +17,25 @@ import {createWheelPager,consumeWheelRestore,wheelBoundaries} from '../pdf/wheel
 import {parsePageInput,pageRangeLabel,printedLabelFor} from '../pdf/page-input.mjs';
 import {navigationTrace} from '../pdf/navigation-trace.mjs';
 import {publishPosition,clearPosition,publishVerifiedCount} from '../pdf/reader-state';
-import {continuousWindow,estimateHeight,spacerHeight,pageAtOffset,windowRadius} from '../pdf/continuous-window.mjs';
+import {continuousWindow,spacerHeight,pageAtOffset,windowRadius} from '../pdf/continuous-window.mjs';
+import {createNavigationController,geometryCompensation,physicalPageHeight} from '../pdf/navigation-controller.mjs';
+import {getBuildIdentity} from '../durability/provenance.js';
 import './pdf.css';
 pdfjs.GlobalWorkerOptions.workerSrc=new URL('pdf-assets/pdf.worker.min.mjs',document.baseURI).href;
 const options={isEvalSupported:false,standardFontDataUrl:new URL('pdf-assets/standard_fonts/',document.baseURI).href,cMapUrl:new URL('pdf-assets/cmaps/',document.baseURI).href,cMapPacked:true,wasmUrl:new URL('pdf-assets/wasm/',document.baseURI).href};
 type PDF=Awaited<ReturnType<typeof pdfjs.getDocument>['promise']>;
 type Props={paneId?:string;slotId?:WorkspaceNumber;document:DocumentEntry;location:Location;onLocation:(l:Location,meta?:{checkpoint?:boolean})=>void;url?:string;requestExternal:()=>void;onFallback?:(reason?:string)=>void};
-function PhysicalPage({pdf,n,width,rotation,root,virtual,onVisible,onRendered,onHeight}:{pdf:PDF;n:number;width:number;rotation:number;root:HTMLDivElement|null;virtual:boolean;onVisible:(n:number)=>void;onRendered:()=>void;onHeight?:(n:number,h:number)=>void}){
- const ref=useRef<HTMLDivElement>(null),[near,setNear]=useState(!virtual),[size,setSize]=useState({ratio:1.414,intrinsic:0});
- useEffect(()=>{if(!virtual){setNear(true);return;}const observer=new IntersectionObserver(entries=>{setNear(entries[0].isIntersecting);},{root,rootMargin:'900px 0px'});if(ref.current)observer.observe(ref.current);return()=>observer.disconnect();},[virtual,root]);
- useEffect(()=>{let alive=true;if(near)pdf.getPage(n).then(p=>{if(!alive)return;const v=p.getViewport({scale:1,rotation:combinedRotation(p.rotate,rotation)});setSize({ratio:v.height/v.width,intrinsic:p.rotate});}).catch(()=>{});return()=>{alive=false;};},[near,pdf,n,rotation]);
+type PageMetric={ratio:number;intrinsic:number};
+/** Geometry is resolved before mounting Page. Canvas painting cannot resize its
+ * wrapper, so the first frame of a previous page is already at its destination. */
+function PhysicalPage({n,width,rotation,root,virtual,metric,labels,geometryKey,failed,onVisible,onFailure}:{n:number;width:number;rotation:number;root:HTMLDivElement|null;virtual:boolean;metric?:PageMetric;labels:boolean;geometryKey:string;failed:boolean;onVisible:(n:number)=>void;onFailure:(n:number)=>void}){
+ const ref=useRef<HTMLDivElement>(null),[near,setNear]=useState(!virtual);
+ useEffect(()=>{if(!virtual){setNear(true);return;}const observer=new IntersectionObserver(entries=>setNear(entries[0].isIntersecting),{root,rootMargin:'900px 0px'});if(ref.current)observer.observe(ref.current);return()=>observer.disconnect();},[virtual,root]);
  useEffect(()=>{if(!virtual)return;const observer=new IntersectionObserver(entries=>{if(entries[0].isIntersecting)onVisible(n);},{root,rootMargin:'-10% 0px -75% 0px',threshold:0});if(ref.current)observer.observe(ref.current);return()=>observer.disconnect();},[root,virtual,n,onVisible]);
- // V3: measured wrapper height feeds the Continuous window spacers.
- useEffect(()=>{const el=ref.current;if(!el||!onHeight)return;const ro=new ResizeObserver(()=>{if(el.offsetHeight)onHeight(n,el.offsetHeight);});ro.observe(el);return()=>ro.disconnect();},[n,onHeight]);
- const dpr=Math.max(0.5,Math.min(window.devicePixelRatio||1,2,Math.sqrt(5000000/(width*width*size.ratio))));
- return <section ref={ref} className="physical-page" data-physical-page={n} style={{width,minHeight:Math.ceil(width*size.ratio)+20,['--pdf-page-height' as string]:Math.ceil(width*size.ratio)+'px'}} aria-label={'Physical PDF page '+n}>
-  <div className="physical-label">Page {n}</div>{near?<Page pageNumber={n} width={width} rotate={combinedRotation(size.intrinsic,rotation)} devicePixelRatio={dpr} renderAnnotationLayer renderTextLayer onRenderSuccess={()=>{ref.current?.setAttribute('data-page-rendered','true');onRendered();}} error={<p role="alert">This physical page could not be rendered. The original PDF remains available.</p>} loading={<p>Rendering page {n}...</p>}/>:<div className="pdf-placeholder" style={{height:width*size.ratio}}>Page {n}</div>}
+ const ratio=metric?.ratio??1.414,h=physicalPageHeight(width,ratio,labels);
+ const dpr=Math.max(0.5,Math.min(window.devicePixelRatio||1,2,Math.sqrt(5000000/(width*width*ratio))));
+ return <section ref={ref} className="physical-page" data-physical-page={n} data-geometry-key={geometryKey} data-geometry-ready={!!metric} style={{width,height:h,minHeight:h,['--pdf-page-height' as string]:Math.ceil(width*ratio)+'px'}} aria-label={'Physical PDF page '+n}>
+  <div className="physical-label">Page {n}</div>{failed?<p role="alert">This physical page could not be loaded. Use the page controls to continue, or retry the PDF.</p>:near&&metric?<Page key={geometryKey} pageNumber={n} width={width} rotate={combinedRotation(metric.intrinsic,rotation)} devicePixelRatio={dpr} renderAnnotationLayer renderTextLayer onRenderSuccess={()=>{const el=ref.current;if(el?.dataset.geometryKey===geometryKey)el.setAttribute('data-page-rendered','true');}} onLoadError={()=>onFailure(n)} onRenderError={()=>onFailure(n)} error={<p role="alert">This physical page could not be rendered. The original PDF remains available.</p>} loading={<p>Rendering page {n}...</p>}/>:<div className="pdf-placeholder" style={{height:Math.ceil(width*ratio)}}>Page {n}</div>}
  </section>;
 }
 export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,url,requestExternal,onFallback}:Props){
@@ -66,6 +69,7 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  useLayoutEffect(()=>{setPageInput(String(loc.pdfPage));setPageMessage('');},[loc.pdfPage]);
  // Resize restoration uses a physical page plus a fractional intra-page anchor.
  // Persisting only a page number loses the user's place in a tall, zoomed page.
+ const controller=useRef(createNavigationController()),restoreTimeout=useRef<ReturnType<typeof setTimeout>>();
  const pendingRestore=useRef(true),lastCapture=useRef(''),restoring=useRef(false),wheelPager=useRef(createWheelPager()),wheelTurnPending=useRef(false);
  // V3 navigation owner: every restore request carries a generation and reason.
  // `settledTop` is the viewport position we last committed (capture) or wrote
@@ -75,30 +79,53 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  const generation=useRef(0),restoreReason=useRef('open'),settledTop=useRef<number|null>(null);
  // V3 Continuous window: measured wrapper heights (reset when geometry changes) and the real row gap.
  const heights=useRef(new Map<number,number>()),gapRef=useRef(16),layoutRef=useRef(''),estimateRef=useRef(900),countRef=useRef(0);
- const recordHeight=useRef((n:number,h:number)=>{if(h>0)heights.current.set(n,h);}).current;
+ const geometryKeyRef=useRef('');
+ const metricJobs=useMemo(()=>new Map<number,Promise<{width:number;height:number;intrinsic:number}>>(),[pdf]);
+ const [metrics,setMetrics]=useState<{pdf:PDF|null;values:Map<number,{width:number;height:number;intrinsic:number}>;failed:Set<number>}>({pdf:null,values:new Map(),failed:new Set()});
+ const metricValues=metrics.pdf===pdf?metrics.values:new Map<number,{width:number;height:number;intrinsic:number}>();
+ const geometryAnchor=useRef<{n:number;top:number;scroll:number;key:string}|null>(null);
+ useEffect(()=>{void getBuildIdentity().then(identity=>navigationTrace.setBuildIdentity(identity)).catch(()=>{});},[]);
+ function userTakesControl(reason='user'){
+  if(pendingRestore.current)trace('restore-cancel',{reason});
+  controller.current.cancel(reason);pendingRestore.current=false;wheelTurnPending.current=false;
+  clearTimeout(restoreTimeout.current);scrolling.current=true;
+ }
+ function pageFailed(n:number){
+  if(controller.current.current()?.targetPage===n)userTakesControl('page-error');
+  trace('page-error',{n});
+ }
+ useEffect(()=>()=>{controller.current.cancel('unmount');clearTimeout(restoreTimeout.current);},[doc.id,doc.sha256,url]);
  const trace=(type:string,fields:Record<string,unknown>={})=>navigationTrace.record(type,{pane:paneId,slot:slotId,doc:doc.id,gen:generation.current,mode:locationRef.current.pdfMode,page:locationRef.current.pdfPage,...fields});
  const positionKey=(l:Location)=>JSON.stringify([l.pdfPage,l.anchor?.pdfOffset??0,l.anchor?.pdfRevision]);
- function restorePosition(force=false,trigger='frame'){
-  if(!pendingRestore.current&&!force)return;
-  if(scrolling.current){trace('restore-skip',{reason:'user-scrolling',result:trigger});return;}
-  const el=host.current,l=locationRef.current;if(!el||!pdf)return;
-  if(!pendingRestore.current&&settledTop.current!==null&&Math.abs(el.scrollTop-settledTop.current)>1){trace('restore-skip',{reason:'viewport-moved',result:trigger,delta:el.scrollTop-settledTop.current});return;}
-  const target=l.pdfMode==='grid'?el.querySelector<HTMLElement>('.pdf-physical-pages'):el.querySelector<HTMLElement>('[data-physical-page="'+clampPage(l.pdfPage,pdf.numPages)+'"]');if(!target)return;
+ function restorePosition(trigger='frame',token=controller.current.current()){
+  const el=host.current,l=locationRef.current;if(!el||!pdf||!token||scrolling.current)return;
+  if(!controller.current.canApply(token,{documentKey:doc.id+':'+doc.sha256,targetPage:clampPage(l.pdfPage,pdf.numPages),geometryKey:geometryKeyRef.current})){trace('restore-skip',{reason:'obsolete-intent',result:trigger});return;}
+  const target=l.pdfMode==='grid'?el.querySelector<HTMLElement>('.pdf-physical-pages'):el.querySelector<HTMLElement>('[data-physical-page="'+token.targetPage+'"]');if(!target)return;
+  const group=l.pdfMode==='spread'||l.pdfMode==='grid';
+  if(group?!!el.querySelector('[data-geometry-ready="false"]'):target.dataset.geometryReady!=='true')return;
   restoring.current=true;
-  const offset=l.anchor?.pdfOffset??0;
-  const delta=target.getBoundingClientRect().top-el.getBoundingClientRect().top+offset*target.getBoundingClientRect().height;
-  el.scrollTop+=delta;settledTop.current=el.scrollTop;
-  if(Math.abs(delta)>1)trace('restore',{reason:pendingRestore.current?restoreReason.current:'re-anchor',result:trigger,delta,offset});
-  if(target.dataset.pageRendered==='true'||l.pdfMode==='grid'&&target.querySelector('canvas'))pendingRestore.current=false;
+  const before=el.scrollTop,offset=token.offset;
+  const requested=offset===1&&l.pdfMode!=='continuous'?el.scrollHeight-el.clientHeight-before:target.getBoundingClientRect().top-el.getBoundingClientRect().top+offset*target.getBoundingClientRect().height;
+  el.scrollTop+=requested;settledTop.current=el.scrollTop;
+  trace('restore',{reason:token.reason,result:trigger,delta:requested,applied:el.scrollTop-before,before,after:el.scrollTop,scrollHeight:el.scrollHeight,clientHeight:el.clientHeight,offset});
+  controller.current.finish(token);pendingRestore.current=false;wheelTurnPending.current=false;clearTimeout(restoreTimeout.current);
   cancelAnimationFrame(restoreFrame.current);restoreFrame.current=requestAnimationFrame(()=>{restoring.current=false;});
  }
- function queueRestore(reason='layout'){scrolling.current=false;pendingRestore.current=true;generation.current++;restoreReason.current=reason;trace('queue-restore',{reason});cancelAnimationFrame(restoreFrame.current);restoreFrame.current=requestAnimationFrame(()=>restorePosition());}
+ function queueRestore(reason='layout',destination=locationRef.current){
+  scrolling.current=false;pendingRestore.current=true;restoreReason.current=reason;
+  const token=controller.current.begin({documentKey:doc.id+':'+doc.sha256,targetPage:Math.max(1,destination.pdfPage),geometryKey:geometryKeyRef.current,offset:destination.anchor?.pdfOffset??0,reason});
+  generation.current=token.id;trace('queue-restore',{reason});
+  clearTimeout(restoreTimeout.current);restoreTimeout.current=setTimeout(()=>{if(controller.current.current()===token)userTakesControl('geometry-timeout');},1200);
+  cancelAnimationFrame(restoreFrame.current);restoreFrame.current=requestAnimationFrame(()=>restorePosition('frame',token));
+ }
  useEffect(()=>{const el=host.current;if(!el)return;const ro=new ResizeObserver(()=>{setWidth(el.clientWidth);setHeight(el.clientHeight);});ro.observe(el);return()=>ro.disconnect();},[url,pdf]);
  const setPage=(n:number,bottom=false,reason='command')=>{
   if(!pdf||!Number.isFinite(n))return;
-  const next=clampPage(Math.round(n),pdf.numPages);scrolling.current=false;pendingRestore.current=true;lastCapture.current='';
-  generation.current++;restoreReason.current=reason;trace('navigate',{reason,to:next,from:locationRef.current.pdfPage});
-  onLocationRef.current({...locationRef.current,pdfPage:next,anchor:{...pdfAnchor(next,doc.sha256),...(bottom?{pdfOffset:1}:{})}});
+  const next=clampPage(Math.round(n),pdf.numPages);lastCapture.current='';
+  const destination={...locationRef.current,pdfPage:next,anchor:{...pdfAnchor(next,doc.sha256),...(bottom?{pdfOffset:1}:{})}};
+  if(!reason.startsWith('wheel-'))wheelPager.current.reset();
+  queueRestore(reason,destination);trace('navigate',{reason,to:next,from:locationRef.current.pdfPage});
+  onLocationRef.current(destination);
  };
  // React-PDF's annotation viewer retains its first onItemClick callback. That
  // mount precedes PDF load, so delegate to the current physical-page handler.
@@ -130,8 +157,7 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
   settledTop.current=el.scrollTop;
  }
  const seen=useMemo(()=>captureScroll,[doc.id,doc.sha256]);
- useEffect(()=>{queueRestore('layout');return()=>cancelAnimationFrame(restoreFrame.current);},[loc.pdfMode,loc.zoom,loc.rotation,loc.cover,width,height,pdf]);
- useEffect(()=>{if(positionKey(loc)!==lastCapture.current)queueRestore('location');},[loc.pdfPage,loc.anchor?.pdfOffset]);
+ useLayoutEffect(()=>{if(positionKey(loc)!==lastCapture.current){const token=controller.current.current();if(!token||token.targetPage!==loc.pdfPage||token.offset!==(loc.anchor?.pdfOffset??0))queueRestore('location');restorePosition('location');}},[loc.pdfPage,loc.anchor?.pdfOffset]);
  useEffect(()=>{const capture=()=>captureScroll();document.addEventListener('atlas:before-reader-change',capture);return()=>{document.removeEventListener('atlas:before-reader-change',capture);cancelAnimationFrame(scrollFrame.current);clearTimeout(settleTimer.current);};},[doc.id,doc.sha256]);
  useEffect(()=>{
   const el=host.current;if(!el)return;
@@ -142,16 +168,16 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
    // Scroll the full current surface first. Only a subsequent edge gesture
    // can turn the physical group, even for a large trackpad delta.
    const bounds=wheelBoundaries(el.scrollTop,el.clientHeight,el.scrollHeight);
-   const l=locationRef.current,turn=wheelPager.current({deltaY:e.deltaY,deltaX:e.deltaX,deltaMode:e.deltaMode,now:performance.now(),mode:l.pdfMode,top:bounds.top,bottom:bounds.bottom,blocked});
+   const l=locationRef.current,token=controller.current.current();
+   const residual=token&&(token.reason==='wheel-next'&&e.deltaY>0||token.reason==='wheel-previous'&&e.deltaY<0);
+   if(consumeWheelRestore({mode:l.pdfMode,pendingTurn:wheelTurnPending.current,pendingRestore:pendingRestore.current})&&residual&&controller.current.age()<350){
+    trace('wheel-wait',{dy:e.deltaY,pending:true});e.preventDefault();return;
+   }
+   if(pendingRestore.current)userTakesControl('wheel');
+   const turn=wheelPager.current({deltaY:e.deltaY,deltaX:e.deltaX,deltaMode:e.deltaMode,now:performance.now(),mode:l.pdfMode,top:bounds.top,bottom:bounds.bottom,blocked});
    trace('wheel',{dy:e.deltaY,dx:e.deltaX,dm:e.deltaMode,top:bounds.top,bottom:bounds.bottom,turn,latched:wheelPager.current.isLatched(),pending:pendingRestore.current});
    if(turn&&pdf){const paired=l.pdfMode==='grid'?4:l.pdfMode==='spread'&&el.clientWidth>=650;const next=stepPhysicalPage(l.pdfPage,pdf.numPages,turn,paired,l.cover);if(next!==l.pdfPage){e.preventDefault();wheelTurnPending.current=true;setPage(next,turn<0,turn>0?'wheel-next':'wheel-previous');return;}}
-   // Keep the initial next-page restoration atomic. Once rendered, momentum
-   // may scroll naturally inside that page; the pager latch still prevents
-   // another physical turn during the same uninterrupted gesture.
-   // Switching to Continuous ends discrete paging: its native wheel must not
-   // be swallowed by a pending page restore from the previous presentation.
-   if(consumeWheelRestore({mode:l.pdfMode,pendingTurn:wheelTurnPending.current,pendingRestore:pendingRestore.current})){e.preventDefault();return;}
-   wheelTurnPending.current=false;scrolling.current=true;pendingRestore.current=false;
+   userTakesControl('wheel');
   };
   el.addEventListener('wheel',wheel,{passive:false});return()=>el.removeEventListener('wheel',wheel);
  },[pdf,url]);
@@ -178,11 +204,40 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  // PDF-03: printed page labels from the file itself (display only; must match the physical count).
  useEffect(()=>{let alive=true;setPageLabels(null);if(pdf)pdf.getPageLabels().then(l=>{if(alive)setPageLabels(Array.isArray(l)&&l.length===pdf.numPages?l:null);}).catch(()=>{});return()=>{alive=false;};},[pdf]);
  const printed=printedLabelFor(pageLabels,page);
- const layoutKey=[doc.id,doc.sha256,pageWidth,loc.rotation,labels].join('|');if(layoutRef.current!==layoutKey){layoutRef.current=layoutKey;heights.current=new Map();}
- const estimate=estimateHeight(heights.current,Math.ceil(pageWidth*1.414)+28);estimateRef.current=estimate;countRef.current=count;
+ const layoutKey=[doc.id,doc.sha256,pageWidth,loc.rotation,labels].join('|');geometryKeyRef.current=layoutKey;
+ useLayoutEffect(()=>{queueRestore('layout');restorePosition('layout');return()=>cancelAnimationFrame(restoreFrame.current);},[loc.pdfMode,loc.zoom,loc.rotation,loc.cover,width,height,pdf,layoutKey]);
+ const metricFor=(n:number):PageMetric|undefined=>{const v=metricValues.get(n);if(!v)return undefined;const ratio=(loc.rotation%180===0?v.height/v.width:v.width/v.height);return {ratio,intrinsic:v.intrinsic};};
+ if(layoutRef.current!==layoutKey){layoutRef.current=layoutKey;heights.current=new Map();}
+ for(const [n] of metricValues)heights.current.set(n,physicalPageHeight(pageWidth,metricFor(n)!.ratio,labels));
+ const estimate=physicalPageHeight(pageWidth,1.414,labels);estimateRef.current=estimate;countRef.current=count;
  const win=loc.pdfMode==='continuous'?continuousWindow(page,count,windowRadius(height,estimate)):{first:1,last:0,windowed:false};
- const rendered=win.windowed?Array.from({length:win.last-win.first+1},(_,i)=>win.first+i):pages;
+ const rendered=win.windowed?Array.from({length:win.last-win.first+1},(_,i)=>win.first+i):pages,renderedKey=rendered.join(',');
  useLayoutEffect(()=>{const c=host.current?.querySelector<HTMLElement>('.pdf-physical-pages');if(c){const g=parseFloat(getComputedStyle(c).rowGap);if(Number.isFinite(g))gapRef.current=g;}});
+ useEffect(()=>{
+  if(!pdf)return;let alive=true;
+  const wanted=rendered.filter(n=>!metricValues.has(n)&&!(metrics.pdf===pdf&&metrics.failed.has(n)));if(!wanted.length)return;
+  const jobs=wanted.map(n=>{let promise=metricJobs.get(n);if(!promise){promise=pdf.getPage(n).then(p=>{const v=p.getViewport({scale:1,rotation:p.rotate});if(!(v.width>0&&v.height>0))throw Error('Invalid PDF page geometry');return {width:v.width,height:v.height,intrinsic:p.rotate};});metricJobs.set(n,promise);}return promise;});
+  const deliver=(n:number,value?:{width:number;height:number;intrinsic:number})=>{
+   if(!alive)return;
+   const el=host.current;
+   if(el&&locationRef.current.pdfMode==='continuous'&&!pendingRestore.current){const top=el.getBoundingClientRect().top;const node=Array.from(el.querySelectorAll<HTMLElement>('[data-physical-page]')).find(n=>n.getBoundingClientRect().bottom>top);
+    if(node)geometryAnchor.current={n:Number(node.dataset.physicalPage),top:node.getBoundingClientRect().top,scroll:el.scrollTop,key:geometryKeyRef.current};}
+   setMetrics(previous=>{const values=new Map(previous.pdf===pdf?previous.values:[]),failed=new Set(previous.pdf===pdf?previous.failed:[]);
+    if(value)values.set(n,value);else failed.add(n);return {pdf,values,failed};});
+   if(!value)pageFailed(n);
+  };
+  jobs.forEach((promise,i)=>{promise.then(value=>deliver(wanted[i],value),()=>deliver(wanted[i]));});
+  return()=>{alive=false;};
+ },[pdf,renderedKey]);
+ useLayoutEffect(()=>{
+  const a=geometryAnchor.current,el=host.current;geometryAnchor.current=null;
+  if(a&&el&&a.key===geometryKeyRef.current&&!pendingRestore.current){const node=el.querySelector<HTMLElement>('[data-physical-page="'+a.n+'"]');if(node){
+   const delta=geometryCompensation(a.top,node.getBoundingClientRect().top,a.scroll,el.scrollTop),before=el.scrollTop;
+   el.scrollTop+=delta;settledTop.current=el.scrollTop;
+   if(Math.abs(delta)>0.5)trace('geometry-compensation',{n:a.n,delta,applied:el.scrollTop-before,before,after:el.scrollTop});
+  }}
+  restorePosition('geometry');
+ },[metrics,layoutKey,renderedKey]);
  // Runtime-only position for the study tree (current row, A/B markers, count).
  useEffect(()=>{if(!pdf||!paneId)return;publishPosition({slot:slotId??1,paneId,documentId:doc.id,sha256:doc.sha256,page,visible:loc.pdfMode==='continuous'?[page]:pages,numPages:count});},[pdf,paneId,slotId,doc.id,doc.sha256,page,shownKey,count]);
  useEffect(()=>()=>{if(paneId)clearPosition(slotId??1,paneId,doc.id);},[paneId,slotId,doc.id]);
@@ -190,7 +245,7 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
  // Escape first cancels a pending page draft or message; with nothing to cancel it propagates (e.g. to exit Focus mode).
  function pageInputKeys(e:React.KeyboardEvent<HTMLInputElement>){if(e.key==='Escape'&&(pageInput!==String(page)||pageMessage)){e.preventDefault();e.stopPropagation();setPageInput(String(page));setPageMessage('');}}
  function downloadTrace(){const blob=new Blob([JSON.stringify(navigationTrace.snapshot(),null,2)+'\n'],{type:'application/json'}),href=URL.createObjectURL(blob),a=window.document.createElement('a');a.href=href;a.download='atlas-pdf-navigation-trace.json';a.click();setTimeout(()=>URL.revokeObjectURL(href),1000);}
- function changeMode(mode:Location['pdfMode']){onLocation({...loc,pdfMode:mode,...(mode==='grid'?{zoom:1}:{})});}
+ function changeMode(mode:Location['pdfMode']){wheelPager.current.reset();userTakesControl('mode');onLocation({...loc,pdfMode:mode,...(mode==='grid'?{zoom:1}:{})});}
 
  async function find(){const text=query.trim().toLocaleLowerCase();const currentJob=++job.current;setHits([]);if(!pdf||!text){setFindStatus('Enter text present in the PDF.');return;}setFindStatus('Searching selectable PDF text...');const found:{page:number;excerpt:string}[]=[];let characters=0;const limit=Math.min(pdf.numPages,1000);
   try{for(let n=1;n<=limit;n++){if(currentJob!==job.current)return;const p=await pdf.getPage(n),content=await p.getTextContent();const value=content.items.map(item=>'str'in item?item.str:'').join(' ');characters+=value.length;const at=value.toLocaleLowerCase().indexOf(text);if(at>=0)found.push({page:n,excerpt:value.slice(Math.max(0,at-45),at+text.length+100)});if(n%10===0){setFindStatus('Searched '+n+' / '+limit+' pages');setHits([...found]);await new Promise(r=>setTimeout(r,0));}}if(currentJob!==job.current)return;setHits(found);setFindStatus((characters?found.length+' matching pages.':'No selectable text found. This may be an image-only PDF; OCR is not included.')+(limit<pdf.numPages?' Search bounded to the first 1,000 physical pages.':''));}catch(e){if(currentJob===job.current)setFindStatus('Text search failed: '+(e as Error).message);}
@@ -227,12 +282,12 @@ export function PdfEngine({paneId,slotId,document:doc,location:loc,onLocation,ur
    {pageMessage&&<span className="pdf-page-message" role="alert">{pageMessage}</span>}
   </form>}
   <div className="pdf-canvas-scroll" ref={host} tabIndex={0} aria-label="PDF document canvas"
-   onTouchStart={()=>{scrolling.current=true;pendingRestore.current=false;}} onPointerDown={()=>{scrolling.current=true;pendingRestore.current=false;}}
-   onKeyDown={e=>{if(['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].includes(e.key))scrolling.current=true;}}
+   onTouchStart={()=>userTakesControl('touch')} onPointerDown={()=>userTakesControl('pointer')}
+   onKeyDown={e=>{if(['PageDown','PageUp','ArrowDown','ArrowUp','Home','End',' '].includes(e.key))userTakesControl('keyboard');}}
    onScroll={()=>{cancelAnimationFrame(scrollFrame.current);scrollFrame.current=requestAnimationFrame(captureScroll);clearTimeout(settleTimer.current);settleTimer.current=setTimeout(()=>{captureScroll();scrolling.current=false;},180);}}>
-   {workerOK&&source&&!error&&!workerError?<Document key={doc.id+':'+doc.sha256+':'+retry} file={source} options={options} externalLinkTarget="_blank" externalLinkRel="noopener noreferrer" onLoadSuccess={async p=>{setPDF(p);setLoading('');publishVerifiedCount(doc.id,doc.sha256,p.numPages);trace('open',{count:p.numPages});const n=clampPage(locationRef.current.pdfPage,p.numPages);const l=locationRef.current;if(l.pdfPage!==n||l.anchor?.pdfPage!==n||l.anchor?.pdfRevision!==doc.sha256)onLocationRef.current({...l,pdfPage:n,anchor:pdfAnchor(n,doc.sha256)});queueRestore('open');}} onLoadError={e=>setError(e.message)} onSourceError={e=>setError(e.message)} onLoadProgress={({loaded,total})=>setLoading(total?'Loading '+Math.round(loaded/total*100)+'%':'Loading PDF bytes...')} onPassword={(callback,reason)=>{passwordCallback.current=callback;setPasswordReason(reason===2?'Incorrect password. Try again.':'This PDF is password protected.');}} onItemClick={onPdfItemClick} loading={<p role="status">{loading}</p>}>
+   {workerOK&&source&&!error&&!workerError?<Document key={doc.id+':'+doc.sha256+':'+retry} file={source} options={options} externalLinkTarget="_blank" externalLinkRel="noopener noreferrer" onLoadSuccess={async p=>{setPDF(p);setLoading('');publishVerifiedCount(doc.id,doc.sha256,p.numPages);trace('open',{count:p.numPages});const n=clampPage(locationRef.current.pdfPage,p.numPages);const l=locationRef.current;if(l.pdfPage!==n||l.anchor?.pdfPage!==n||l.anchor?.pdfRevision!==doc.sha256)onLocationRef.current({...l,pdfPage:n,anchor:pdfAnchor(n,doc.sha256)});queueRestore('open');}} onLoadError={e=>{userTakesControl('document-error');setError(e.message);}} onSourceError={e=>{userTakesControl('document-error');setError(e.message);}} onLoadProgress={({loaded,total})=>setLoading(total?'Loading '+Math.round(loaded/total*100)+'%':'Loading PDF bytes...')} onPassword={(callback,reason)=>{passwordCallback.current=callback;setPasswordReason(reason===2?'Incorrect password. Try again.':'This PDF is password protected.');}} onItemClick={onPdfItemClick} loading={<p role="status">{loading}</p>}>
     {pdf&&<aside className="pdf-outline" hidden={!outline}><IconButton name="close" label="Close PDF outline" onClick={()=>setOutline(false)}/><h3>Document outline</h3><Outline onItemClick={onPdfItemClick}/></aside>}
-    <div className={'pdf-physical-pages '+(grid?'pdf-grid '+(pages.length===1?'grid-single':''):paired?'pdf-spread':'')} data-grid={grid?'four-pages':undefined} onPointerDown={e=>{if(!grid||(e.target as HTMLElement).closest('a'))return;const n=Number((e.target as HTMLElement).closest<HTMLElement>('[data-physical-page]')?.dataset.physicalPage);if(n&&n!==loc.pdfPage)setPage(n);}}>{pdf&&win.windowed&&win.first>1&&<div className="pdf-window-spacer" data-window-spacer="top" aria-hidden="true" style={{height:spacerHeight(1,win.first-1,heights.current,estimate,gapRef.current)}}/>}{pdf&&rendered.map(n=><PhysicalPage key={n} pdf={pdf} n={n} width={pageWidth} rotation={loc.rotation} root={host.current} virtual={loc.pdfMode==='continuous'} onVisible={seen} onRendered={()=>restorePosition(true,'render')} onHeight={win.windowed?recordHeight:undefined}/>)}{pdf&&win.windowed&&win.last<count&&<div className="pdf-window-spacer" data-window-spacer="bottom" aria-hidden="true" style={{height:spacerHeight(win.last+1,count,heights.current,estimate,gapRef.current)}}/>}</div>
+    <div className={'pdf-physical-pages '+(grid?'pdf-grid '+(pages.length===1?'grid-single':''):paired?'pdf-spread':'')} data-grid={grid?'four-pages':undefined} onPointerDown={e=>{if(!grid||(e.target as HTMLElement).closest('a'))return;const n=Number((e.target as HTMLElement).closest<HTMLElement>('[data-physical-page]')?.dataset.physicalPage);if(n&&n!==loc.pdfPage)setPage(n);}}>{pdf&&win.windowed&&win.first>1&&<div className="pdf-window-spacer" data-window-spacer="top" aria-hidden="true" style={{height:spacerHeight(1,win.first-1,heights.current,estimate,gapRef.current)}}/>}{pdf&&rendered.map(n=><PhysicalPage key={n+':'+layoutKey} n={n} width={pageWidth} rotation={loc.rotation} root={host.current} virtual={loc.pdfMode==='continuous'} labels={labels} metric={metricFor(n)} geometryKey={layoutKey} failed={metrics.pdf===pdf&&metrics.failed.has(n)} onVisible={seen} onFailure={pageFailed}/>)}{pdf&&win.windowed&&win.last<count&&<div className="pdf-window-spacer" data-window-spacer="bottom" aria-hidden="true" style={{height:spacerHeight(win.last+1,count,heights.current,estimate,gapRef.current)}}/>}</div>
    </Document>:!error&&!workerError&&<p>{workerOK?'Loading PDF bytes...':'Checking compatible local PDF worker...'}</p>}
   </div>
  </div>;

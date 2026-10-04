@@ -18,7 +18,7 @@
 .agent-context-results>label>span{min-width:0}.agent-context-results small{display:block;overflow-wrap:anywhere;font-size:.75rem;color:var(--muted)}
 .agent-context-selection{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0}.agent-context-selection button{font-size:.72rem;overflow-wrap:anywhere}
 .agent-review [data-preview-current=false]{opacity:.7;border-inline-start:3px solid var(--muted);padding-inline-start:12px}
-.agent-review .button-row,.history-panel .button-row{flex-wrap:wrap}.agent-status{padding:10px;border:1px solid var(--border,var(--line));border-radius:5px}
+.agent-review .button-row,.history-panel .button-row{flex-wrap:wrap}.agent-status{padding:10px;border:1px solid var(--border,var(--line));border-radius:5px}.agent-norsk-paste{flex:1 1 100%;margin:8px 0;padding:10px 12px;border:1px solid var(--border,var(--line));border-radius:7px;background:var(--panel-bg,var(--surface,#f7f9fb))}.agent-norsk-paste>summary{cursor:pointer;font-weight:600}.agent-norsk-paste .json-editor{width:100%;max-height:220px;margin:8px 0;font-size:.78rem}.agent-norsk-paste .button-row{justify-content:space-between}
 @media(max-width:600px){.agent-operation>label{flex:1 1 100%}.agent-review .button-row button{flex:1 1 130px}.agent-context-selection button{max-width:100%}.history-pair-picker .button-row>span{flex:1 1 100%}}
 .history-structure-list{list-style:none;padding:0;margin:16px 0;display:grid;gap:6px}
 .history-structure-list>li{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px;border:1px solid var(--border);border-radius:8px}

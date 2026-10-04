@@ -26,7 +26,11 @@ with sync_playwright() as pw:
  check('Norsk Daily opens from the sidebar and explains the reviewed import path when empty',empty_state)
  def import_accept():
   btn('Open review to import a feed').click()
-  p.get_by_label('Import Norsk Daily feed JSON',exact=True).set_input_files(str(FIXTURE))
+  p.get_by_text('Paste Norsk Daily feed JSON',exact=True).click()
+  paste=p.get_by_label('Paste Norsk Daily feed JSON',exact=True)
+  paste.fill('{"schema":"invalid"}');btn('Convert pasted feed to proposal').click()
+  expect(p.locator('.history-error')).to_be_visible();expect(btn('Stage for review')).to_be_disabled()
+  paste.fill(FIXTURE.read_text(encoding='utf-8'));btn('Convert pasted feed to proposal').click()
   expect(p.get_by_text('Norsk Daily feed converted to a proposal',exact=False)).to_be_visible()
   before=p.evaluate('async()=>('+AGENT+').getStorageDiagnostics().revisions')
   btn('Preview ChangeSet').click();btn('Stage for review').click()
@@ -41,12 +45,29 @@ with sync_playwright() as pw:
   if not p.locator('.norsk-daily-queue').count():btn('Norsk Daily').click()
   items=p.locator('.norsk-daily-item');expect(items.first).to_be_visible();n=items.count();assert n>=2
   expect(p.locator('.norsk-daily-synthetic')).to_be_visible()
+  expect(btn('Add feed')).to_be_visible()
   expect(p.locator('.norsk-daily-en')).to_have_count(0);p.get_by_label('Show English',exact=True).check();expect(p.locator('.norsk-daily-en')).to_have_count(n)
   first=items.first;pid=first.get_attribute('data-page-id')
   first.get_by_role('button',name='Known',exact=True).click()
   expect(p.locator('.norsk-daily-item[data-page-id="'+pid+'"]')).to_have_class(__import__('re').compile('status-known'))
   expect(btn('Known (1)')).to_be_visible();shot('queue');return {'items':n,'known':pid}
  check('Daily queue shows labelled synthetic items, English reveal and New/Learning/Known progress',queue)
+ def newspaper_focus():
+  p.keyboard.press('/');search=p.get_by_label('Search Norsk Daily',exact=True);expect(search).to_be_focused()
+  topic=p.get_by_role('button',name='Synthetic local (1)',exact=True);expect(topic).to_be_visible();topic.click();expect(p.locator('.norsk-daily-item')).to_have_count(1);p.get_by_role('button',name='All topics',exact=True).click()
+  search.fill('cycle path')
+  expect(p.locator('.norsk-daily-item')).to_have_count(1)
+  item=p.locator('.norsk-daily-item').first
+  expect(item).to_contain_text('sykkelvei')
+  btn('Study side by side',item).click()
+  expect(p.locator('.norsk-daily-focus-grid')).to_be_visible()
+  expect(p.locator('.norsk-daily-focus-no')).to_contain_text('Kommunen tester en ny sykkelvei')
+  expect(p.locator('.norsk-daily-focus-en')).to_contain_text('The municipality is testing a new cycle path')
+  expect(p.locator('.norsk-daily-focus-vocab')).to_contain_text('sykkelvei')
+  btn('← Newspaper').click();search.fill('lesesal')
+  expect(p.locator('.norsk-daily-item')).to_have_count(1);expect(p.locator('.norsk-daily-item')).to_contain_text('Biblioteket')
+  search.press('Escape');expect(search).to_have_value('');expect(search).not_to_be_focused();shot('newspaper-focus');return {}
+ check('Newspaper search reaches bilingual text and Focus keeps NO/EN aligned in one scroll surface',newspaper_focus)
  def persists():
   p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
   p.reload(wait_until='networkidle');p.wait_for_selector('.atlas-app')
