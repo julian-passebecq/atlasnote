@@ -47,7 +47,7 @@ with sync_playwright() as pw:
   p.reload(wait_until='networkidle');expect(p.locator('.storage-banner')).to_be_visible()
   assert p.evaluate(DIAG)['writesBlocked'] is True
   # Ordinary interactions that normally persist personal state.
-  p.get_by_role('button',name='Theme',exact=True).click();p.locator('.theme-option').nth(1).click();p.wait_for_timeout(700)
+  p.get_by_role('button',name='Theme',exact=True).click();p.get_by_label('Interface theme',exact=True).select_option('neutral');p.get_by_role('button',name='Close theme',exact=True).click();p.wait_for_timeout(700)
   after=json.dumps(p.evaluate(RAW),sort_keys=True);ctx.close()
   assert after==before,'the unreadable stored record was overwritten'
   return {'storedRecordUnchanged':True}

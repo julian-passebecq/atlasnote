@@ -25,7 +25,7 @@ with sync_playwright() as pw:
   except Exception as e:
    results.append({'name':name,'status':'FAIL','error':str(e)});print('FAIL',name,str(e),flush=True);traceback.print_exc();shot('FAIL-'+str(len(results)))
  def theme(label):
-  page.get_by_role('button',name='Theme',exact=True).click();page.locator('.popover-theme').get_by_role('button',name=label,exact=True).click();page.wait_for_timeout(200)
+  page.get_by_role('button',name='Theme',exact=True).click();page.get_by_label('Interface theme',exact=True).select_option(label=label);page.get_by_role('button',name='Close theme',exact=True).click();page.wait_for_timeout(200)
  def geometry():
   rows=[]
   for w,h in [(1366,768),(1440,900),(1920,1080),(390,844)]:
@@ -75,7 +75,7 @@ with sync_playwright() as pw:
    shot('theme-'+state()['theme']);rows.append({'theme':state()['theme'],'tokens':vals})
    page.keyboard.press('Escape')
   assert len({tuple(r['tokens']) for r in rows})==5
-  page.get_by_role('button',name='Theme',exact=True).click();assert page.locator('.theme-option').all_text_contents()==THEMES;page.keyboard.press('Escape')
+  page.get_by_role('button',name='Theme',exact=True).click();assert page.get_by_label('Interface theme',exact=True).locator('option').all_text_contents()==['Midnight Black',*THEMES];page.keyboard.press('Escape')
   return rows
  check('Exactly five visually distinct themes cover Compare, tree, tabs and Context',theme_coverage)
  def filtered():
