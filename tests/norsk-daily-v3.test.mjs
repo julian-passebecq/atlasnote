@@ -12,7 +12,7 @@ import {planNorskDailyImport,lookupFromAgent,previewNorskDailyImport} from '../d
 import {norskDailyJsonSchema,buildTransformationPrompt} from '../dist-offline/app/norsk-daily/contract.js';
 import {answerQuestion,qcmProgress} from '../dist-offline/app/content-hub/content.js';
 import {resourceAdapters} from '../dist-offline/app/history/adapters.js';
-import {compose} from '../dist-offline/app/core/workspace.js';
+import {compose,blankWorkspace} from '../dist-offline/app/core/workspace.js';
 import {dailyBatches,dailyItemVocabulary,dailySearch,dailySections,dailyVocabulary,dailyVocabularySearch} from '../dist-offline/app/norsk-daily/daily.js';
 
 const FIXTURE_PATH='examples/norsk-daily/synthetic-2026-09-24.json';
@@ -258,7 +258,7 @@ test('V3 Norsk prompt and JSON Schema are generated from the installed contract'
 
 
 test('V32 Norsk newspaper search indexes accepted bilingual study text and vocabulary',()=>{
- const projected=projectNorskDailyFeed(fixture),catalogue={...built,pages:[...built.pages,...projected.articles.map(x=>x.page),...(projected.qcm?[projected.qcm.page]:[])]};
+ const projected=projectNorskDailyFeed(fixture),base=compose(built,blankWorkspace()),catalogue={...base,pages:[...base.pages,...projected.articles.map(x=>x.page),...(projected.qcm?[projected.qcm.page]:[])]};
  const batch=dailyBatches(catalogue,{}).find(b=>b.date===fixture.studyDate);assert(batch);
  assert.equal(batch.items.length,3);assert.equal(batch.items[0].paraphrase!==undefined,true);assert.deepEqual(dailySections(batch),['Synthetic local']);assert.equal(batch.items.find(i=>i.page.id===articlePageId('synthetic-fixture-0001')).section,'Synthetic local');
  const cycle=dailySearch(batch.items,'cycle path');assert.equal(cycle.length,1);assert.match(cycle[0].page.title,/sykkelvei/);
@@ -267,12 +267,12 @@ test('V32 Norsk newspaper search indexes accepted bilingual study text and vocab
  assert.equal(dailySearch(batch.items,'does-not-exist').length,0);
  const words=dailyVocabulary(batch);assert(words.length>=9);
  assert.equal(dailyVocabularySearch(words,'autumn').length,1);
- assert.equal(dailyVocabularySearch(words,'student noun').length,1);
+ assert.deepEqual(dailyVocabularySearch(words,'student noun').map(w=>w.lemma).sort(),['lesesal','student']);
  const storyWords=dailyItemVocabulary(cycle[0]);assert(storyWords.some(w=>w.lemma==='sykkelvei'&&w.english==='cycle path'));
 });
 
 test('V32 Norsk daily read model keeps generated labels separate from source headline',()=>{
- const projected=projectNorskDailyFeed(fixture),catalogue={...built,pages:[...built.pages,...projected.articles.map(x=>x.page)]};
+ const projected=projectNorskDailyFeed(fixture),base=compose(built,blankWorkspace()),catalogue={...base,pages:[...base.pages,...projected.articles.map(x=>x.page)]};
  const batch=dailyBatches(catalogue,{}).find(b=>b.date===fixture.studyDate);assert(batch);
  const first=batch.items.find(i=>i.page.id===articlePageId('synthetic-fixture-0001'));assert(first);
  assert.equal(first.page.title,item(fixture).headline.text);

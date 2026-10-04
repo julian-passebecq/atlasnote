@@ -7,10 +7,10 @@ const read=path=>fs.readFileSync(path,'utf8');
 test('V32 keeps the established IndexedDB v3 five-store contract',()=>{
  const source=read('src/storage/database.ts');
  assert.match(source,/const DB_NAME='knowledge-atlas';export const DB_VERSION=3;/);
- assert.match(source,/const STORES=['imports','overlays','personal','assets','history'];/);
+ assert(source.includes("const STORES=['imports','overlays','personal','assets','history'];"));
  assert.doesNotMatch(read('src/norsk-daily/NorskDailyView.tsx'),/indexedDB|localStorage|sessionStorage/);
  assert.doesNotMatch(read('src/norsk-daily/daily.ts'),/indexedDB|localStorage|sessionStorage/);
- const settings=read('src/components/SettingsDialog.tsx');assert.match(settings,/navigator\.storage\.persisted/);assert.match(settings,/Ask browser to protect local data/);assert.match(settings,/it is not synchronization or a backup/);
+ const settings=read('src/components/SettingsDialog.tsx');assert.match(settings,/navigator\.storage\?\.persisted/);assert.match(settings,/Ask browser to protect local data/);assert.match(settings,/it is not synchronization or a backup/);
 });
 
 test('V32 Norsk newspaper and Focus remain local projections with no network client',()=>{
