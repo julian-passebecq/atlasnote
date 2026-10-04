@@ -64,7 +64,10 @@ with sync_playwright() as pw:
   for zoom in ['0.75','1','1.5']:
    show_reader_controls(p);pane.get_by_label('PDF zoom',exact=True).select_option(zoom);go(4)
    pane.get_by_role('button',name='Hide reader controls',exact=True).click()
-   scroller.evaluate('e=>{e.scrollTop=0}');scroller.hover();p.wait_for_timeout(650);p.evaluate(SAMPLE);p.mouse.wheel(0,-120)
+   # Let the chrome layout restore settle before establishing the physical edge.
+   scroller.hover();p.wait_for_timeout(650);scroller.evaluate('e=>{e.scrollTop=0}')
+   assert scroller.evaluate('e=>e.scrollTop')<=2,'previous-page input must start at the physical top edge'
+   p.evaluate(SAMPLE);p.mouse.wheel(0,-120)
    pane.locator('[data-physical-page="3"][data-page-rendered="true"]').wait_for();p.wait_for_timeout(1150)
    frames=p.evaluate('v31frames');painted=[f['top'] for f in frames if f['painted']]
    assert len(painted)>2,'no painted frame samples'
