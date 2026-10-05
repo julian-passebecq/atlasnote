@@ -121,7 +121,11 @@ function scanKeys(v,path='feed',depth=0){
  if(!['string','number','boolean'].includes(typeof v)&&v!==null)fail('non-JSON value at '+path);
 }
 function generated(v,path,max){keys(v,['text','origin'],['text','origin'],path);if(v.origin!=='generated')fail(path+'.origin must be "generated": study text is never presented as source wording');checkText(v.text,path+'.text',max);}
-function claimGuard(text,path,coverage){if(coverage!=='complete-subscribed-sources'&&COMPLETE_CLAIM.test(text))fail(path+' claims complete/all-headline coverage, but coverage.kind is '+coverage+'. Only complete-subscribed-sources with completeEvidence may make that claim.');}
+function claimGuard(text,path,coverage){
+ // Recognize this explicit disclaimer without exempting positive claims elsewhere.
+ const claims=text.replace(/\bno claim of publication rights or complete coverage\b/gi,'publication rights unverified; partial coverage');
+ if(coverage!=='complete-subscribed-sources'&&COMPLETE_CLAIM.test(claims))fail(path+' claims complete/all-headline coverage, but coverage.kind is '+coverage+'. Only complete-subscribed-sources with completeEvidence may make that claim.');
+}
 
 function validateCoverage(c,feed,interval,itemCount){
  keys(c,['kind','statement','completeEvidence'],['kind','statement'],'coverage');choice(c.kind,COVERAGE_KINDS,'coverage.kind');checkText(c.statement,'coverage.statement',NORSK_DAILY_LIMITS.statementChars);
