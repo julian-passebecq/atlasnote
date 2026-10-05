@@ -11,6 +11,7 @@ base=start_server();results=[]
 with sync_playwright() as pw:
  b=launch(pw);p=b.new_page(viewport={'width':1536,'height':864},accept_downloads=True);errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
  p.goto(base,wait_until='networkidle');p.wait_for_selector('.atlas-app')
+ p.wait_for_function('async()=>('+AGENT+').getStorageDiagnostics().ready!==false')
  def btn(name,scope=None):return (scope or p).get_by_role('button',name=name,exact=True)
  def snapshot():return p.evaluate('async()=>{const m='+SNAPSHOT+';return await m.readPersistedWorkspace();}')
  before=snapshot();open_settings(p)
