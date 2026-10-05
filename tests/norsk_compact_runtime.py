@@ -36,8 +36,10 @@ with sync_playwright() as pw:
   assert geometry['visible']>=6,geometry
   assert geometry['firstTop']<180,geometry
   rail=p.locator('.reader-rail').evaluate('e=>{const r=e.getBoundingClientRect();return {width:r.width,overflow:[...e.querySelectorAll("button")].some(b=>{const x=b.getBoundingClientRect();return x.width>0&&(x.left<r.left||x.right>r.right)})}}')
-  assert rail['width']<=36 and not rail['overflow'],rail
-  assert p.locator('.norsk-daily-actions').first.evaluate('e=>e.getBoundingClientRect().width')<=110
+  assert rail['width']<=31 and not rail['overflow'],rail
+  assert p.locator('.norsk-daily-actions').first.evaluate('e=>e.getBoundingClientRect().width')<=85
+  backgrounds=p.locator('.norsk-daily-item').evaluate_all('es=>es.map(e=>getComputedStyle(e).backgroundColor)')
+  assert len(set(backgrounds))==1,backgrounds
   expect(p.locator('.norsk-daily-item').first.get_by_role('button',name='Study side by side',exact=True)).to_be_visible()
   p.screenshot(path=str(OUT/f'headlines-{width}x{height}.png'))
   results.append({'name':f'Full-width aligned multi-headline reading at {width}x{height}','status':'PASS','geometry':geometry})
