@@ -11,6 +11,10 @@ French are available in per-row disclosure panels. Focus remains available for o
 story; its large open-study-page button is removed. Clicking a newspaper title still
 opens the canonical Article. The explanatory bottom text is collapsed under About.
 
+Row progress and Focus actions use 24px icons with accessible labels and hover
+titles in a 106px action column. The reader rail is 34px wide, retaining its existing
+commands and workspace slots. This releases more width for both languages.
+
 ## Verification (local integrated build)
 
 The existing Norsk workflow passed all eight scenarios: reviewed synthetic import,

@@ -36,8 +36,8 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
  const focusIndex=selected?shown.findIndex(i=>i.page.id===selected.page.id):-1;
  useEffect(()=>{const key=(e:KeyboardEvent)=>{const target=e.target as HTMLElement|null;if(e.key==='/'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!['INPUT','TEXTAREA','SELECT'].includes(target?.tagName??'')){e.preventDefault();searchRef.current?.focus();}};document.addEventListener('keydown',key);return()=>document.removeEventListener('keydown',key);},[]);
 
- const statusButtons=(item:DailyItem)=><div className="norsk-daily-status" role="group" aria-label={'Progress for '+item.page.title}>
-  {(['new','learning','known'] as const).map(s=><button key={s} aria-pressed={item.status===s} onClick={()=>onStatus(item.page.id,STATUS_RATING[s])}>{LABEL[s]}</button>)}
+ const statusButtons=(item:DailyItem,compact=false)=><div className="norsk-daily-status" role="group" aria-label={'Progress for '+item.page.title}>
+  {(['new','learning','known'] as const).map(s=><button key={s} title={LABEL[s]} aria-label={LABEL[s]} aria-pressed={item.status===s} onClick={()=>onStatus(item.page.id,STATUS_RATING[s])}>{compact?<Icon name={s==='new'?'page':s==='learning'?'clock':'check'} size={13}/>:LABEL[s]}</button>)}
  </div>;
  const grammarButtons=(item:DailyItem)=>item.grammar.map(g=><button key={g.pageId} className="text-button norsk-daily-grammar" onClick={()=>onOpen(g.pageId)}><Icon name="link" size={13}/>{g.label}</button>);
  const openFocus=(item:DailyItem)=>{setSelectedId(item.page.id);setEnglish(true);setView('focus');};
@@ -92,8 +92,8 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
      </div>
      {english&&<p className="norsk-daily-en" lang="en"><span className="sr-only">English (generated): </span>{item.english??'No translation supplied.'}</p>}
      <div className="norsk-daily-actions">
-      {statusButtons(item)}
-      <button className="text-button norsk-daily-study" aria-label="Study side by side" onClick={()=>openFocus(item)}>Focus</button>
+      {statusButtons(item,true)}
+      <button className="text-button norsk-daily-study" aria-label="Study side by side" title="Study side by side" onClick={()=>openFocus(item)}><Icon name="openbook" size={13}/></button>
      </div>
      <details className="norsk-daily-row-details"><summary>Vocabulary ({dailyItemVocabulary(item).length}) &amp; notes</summary>
       <div className="norsk-daily-row-extra">
