@@ -17,6 +17,14 @@ aligns the first two columns; **Lines** puts the Norwegian entry in bold above
 its translation. These are personal reading preferences, independent in panes
 A/B; source data and printable tables stay complete.
 
+**2 columns / 3 columns** displays several entries across the reading pane.
+**Views & sort** provides one-click Reading, Alphabet, Categories,
+Synonyms / opposites and Grammar presets where those fields exist. You can also
+sort the current page by Norsk A–Z/Z–A or English A–Z, or group by letter,
+theme (the A2 source categories) or word class. Norwegian Æ/Ø/Å are supported.
+Missing synonyms/antonyms remain empty; these views do not generate translations.
+All sorting/grouping is limited to the current 40-row source page.
+
 For a personal file: **Workspace settings → Choose CSV → Confirm library import**.
 CSV imports stay private in this browser's IndexedDB and its canonical history.
 The original file is not retained as an attachment; all parsed cells are retained

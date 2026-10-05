@@ -33,8 +33,8 @@
       "sha256": "7151ba6f9019f8a9d29072c2de9a0113b6be07317e5cbb8b1a3512b70cedbc78"
     },
     "atlas.norsk-csv": {
-      "review": "Owner authorized public lexical translations and inflections on 2026-10-05. Textbook passages, definitions, exam examples and private full translations excluded.",
-      "sha256": "aaa2a2b8c7153d45f446b6e3abd02b6b3c8390e441c8259d266ceaa4942513f4"
+      "review": "Owner authorized public lexical translations and inflections on 2026-10-05, then requested category reading presets. Version 1.1.0 retains all 1,449 lexical rows and adds the original thematic category to the two A2 selections. Textbook passages, definitions, exam examples and private full translations excluded.",
+      "sha256": "cfdae822720690056adf1985cbe622508f82b8fc04664f879633df36bdc3cc8f"
     }
   }
 }

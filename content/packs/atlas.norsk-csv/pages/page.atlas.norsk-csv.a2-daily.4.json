@@ -14,7 +14,8 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Category"
       ],
       "rows": [
         [
@@ -23,7 +24,8 @@
           "SG: (U) en/a melk (D) melka/en · PL: (U) — (uncount)",
           "NOUN",
           "—",
-          "vann (water)"
+          "vann (water)",
+          "Food"
         ],
         [
           "meny (en)",
@@ -31,7 +33,8 @@
           "SG: (U) en meny (D) menyen · PL: (U) menyer (D) menyene",
           "NOUN",
           "kart (menu card)",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "middag (en)",
@@ -39,7 +42,8 @@
           "SG: (U) en middag (D) middagen · PL: (U) middager (D) middagene",
           "NOUN",
           "aftens (supper)",
-          "frokost (breakfast)"
+          "frokost (breakfast)",
+          "Food"
         ],
         [
           "mineralvann (et)",
@@ -47,7 +51,8 @@
           "SG: (U) et mineralvann (D) mineralvannet · PL: (U) mineralvann (D) mineralvannene",
           "NOUN",
           "brus (soda)",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "minus 10 grader",
@@ -55,7 +60,8 @@
           "—",
           "PHRASE",
           "—",
-          "pluss 10 grader"
+          "pluss 10 grader",
+          "Weather"
         ],
         [
           "ølboks (en)",
@@ -63,7 +69,8 @@
           "SG: (U) en ølboks (D) ølboksen · PL: (U) ølbokser (D) ølboksene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "oliven (en)",
@@ -71,7 +78,8 @@
           "SG: (U) en oliven (D) olivenen · PL: (U) oliven (D) olivene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "olivenolje (en)",
@@ -79,7 +87,8 @@
           "SG: (U) en olivenolje (D) olivenoljen · PL: (U) — (uncount)",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "onkel (en)",
@@ -87,7 +96,8 @@
           "SG: (U) en onkel (D) onkelen · PL: (U) onkler (D) onklene",
           "NOUN",
           "—",
-          "tante (aunt)"
+          "tante (aunt)",
+          "Family"
         ],
         [
           "oppbevare (å)",
@@ -95,7 +105,8 @@
           "V1 — TE: (PR) oppbevarer · (PT) oppbevarte · (PF) har oppbevart",
           "VERB",
           "lagre (store)",
-          "kaste (throw away)"
+          "kaste (throw away)",
+          "Home"
         ],
         [
           "oppskrift (en/a)",
@@ -103,7 +114,8 @@
           "SG: (U) en/a oppskrift (D) oppskrifta/en · PL: (U) oppskrifter (D) oppskriftene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "oppvaskmaskin (en)",
@@ -111,7 +123,8 @@
           "SG: (U) en oppvaskmaskin (D) oppvaskmaskinen · PL: (U) oppvaskmaskiner (D) oppvaskmaskinene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "ost (en)",
@@ -119,7 +132,8 @@
           "SG: (U) en ost (D) osten · PL: (U) oster (D) ostene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "over fjellet",
@@ -127,7 +141,8 @@
           "—",
           "PHRASE",
           "—",
-          "—"
+          "—",
+          "Travel"
         ],
         [
           "overnatte (å)",
@@ -135,7 +150,8 @@
           "V1 — ET: (PR) overnatter · (PT) overnattet · (PF) har overnattet",
           "VERB",
           "—",
-          "—"
+          "—",
+          "Travel"
         ],
         [
           "overskyet",
@@ -143,7 +159,8 @@
           "(M/F) overskyet · (N) overskyet · (PL) overskyede",
           "ADJECTIVE",
           "skyet (cloudy)",
-          "klar (clear)"
+          "klar (clear)",
+          "Weather"
         ],
         [
           "ovn (en)",
@@ -151,7 +168,8 @@
           "SG: (U) en ovn (D) ovnen · PL: (U) ovner (D) ovnene",
           "NOUN",
           "komfyr (stove)",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "pakke (å)",
@@ -159,7 +177,8 @@
           "V1 — ET: (PR) pakker · (PT) pakket · (PF) har pakket",
           "VERB",
           "—",
-          "—"
+          "—",
+          "Travel"
         ],
         [
           "pålegg (et)",
@@ -167,7 +186,8 @@
           "SG: (U) et pålegg (D) pålegget · PL: (U) pålegg (D) påleggene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "pappa (en)",
@@ -175,7 +195,8 @@
           "SG: (U) en pappa (D) pappaen · PL: (U) pappaer (D) pappaene",
           "NOUN",
           "far (father)",
-          "mamma (mom)"
+          "mamma (mom)",
+          "Family"
         ],
         [
           "parkere (å)",
@@ -183,7 +204,8 @@
           "V2 — TE: (PR) parkerer · (PT) parkerte · (PF) har parkert",
           "VERB",
           "—",
-          "—"
+          "—",
+          "Transport"
         ],
         [
           "parkering (en/a)",
@@ -191,7 +213,8 @@
           "SG: (U) en/a parkering (D) parkeringa/en · PL: (U) parkeringer (D) parkeringene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Transport"
         ],
         [
           "passe (barn) (å)",
@@ -199,7 +222,8 @@
           "V1 — ET: (PR) passer · (PT) passet · (PF) har passet",
           "VERB",
           "barnepasse (babysit)",
-          "forsømme (neglect)"
+          "forsømme (neglect)",
+          "Family"
         ],
         [
           "pepper (en)",
@@ -207,7 +231,8 @@
           "SG: (U) en pepper (D) pepperen · PL: — (uncount)",
           "NOUN",
           "—",
-          "salt (salt)"
+          "salt (salt)",
+          "Food"
         ],
         [
           "pizza (en)",
@@ -215,7 +240,8 @@
           "SG: (U) en pizza (D) pizzaen · PL: (U) pizzaer (D) pizzaene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "pluss 25 grader",
@@ -223,7 +249,8 @@
           "—",
           "PHRASE",
           "—",
-          "minus 10 grader"
+          "minus 10 grader",
+          "Weather"
         ],
         [
           "pølse (en)",
@@ -231,7 +258,8 @@
           "SG: (U) en pølse (D) pølsa/en · PL: (U) pølser (D) pølsene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "presskanne (en/a)",
@@ -239,7 +267,8 @@
           "SG: (U) en/a presskanne (D) presskanna/en · PL: (U) presskanner (D) presskannene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "prøverom (et)",
@@ -247,7 +276,8 @@
           "SG: (U) et prøverom (D) prøverommet · PL: (U) prøverom (D) prøverommene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Shopping"
         ],
         [
           "pusse (å)",
@@ -255,7 +285,8 @@
           "V1 — ET: (PR) pusser · (PT) pusset · (PF) har pusset",
           "VERB",
           "—",
-          "skitne til (soil)"
+          "skitne til (soil)",
+          "Home"
         ],
         [
           "pute (en/a)",
@@ -263,7 +294,8 @@
           "SG: (U) ei/en pute (D) puta/en · PL: (U) puter (D) putene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "re (seng) (å)",
@@ -271,7 +303,8 @@
           "IRR: (PR) rer · (PT) redde · (PF) har redd",
           "VERB",
           "re opp (make up)",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "regn (et)",
@@ -279,7 +312,8 @@
           "SG: (U) et regn (D) regnet · PL: — (uncount)",
           "NOUN",
           "nedbør (precipitation)",
-          "sol (sun)"
+          "sol (sun)",
+          "Weather"
         ],
         [
           "regne (å)",
@@ -287,7 +321,8 @@
           "V1 — ET: (PR) regner · (PT) regnet · (PF) har regnet",
           "VERB",
           "—",
-          "—"
+          "—",
+          "Weather"
         ],
         [
           "regnvær (et)",
@@ -295,7 +330,8 @@
           "SG: (U) et regnvær (D) regnværet · PL: — (uncount)",
           "NOUN",
           "—",
-          "opphold (dry spell)"
+          "opphold (dry spell)",
+          "Weather"
         ],
         [
           "reise (å)",
@@ -303,7 +339,8 @@
           "V2 — TE: (PR) reiser · (PT) reiste · (PF) har reist",
           "VERB",
           "dra (go)",
-          "bli (stay)"
+          "bli (stay)",
+          "Travel"
         ],
         [
           "rekkehus (et)",
@@ -311,7 +348,8 @@
           "SG: (U) et rekkehus (D) rekkehuset · PL: (U) rekkehus (D) rekkehusene",
           "NOUN",
           "—",
-          "enebolig (detached house)"
+          "enebolig (detached house)",
+          "Housing"
         ],
         [
           "renhold (et)",
@@ -319,7 +357,8 @@
           "SG: (U) et renhold (D) renholdet · PL: — (uncount)",
           "NOUN",
           "vask (cleaning)",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "restaurant (en)",
@@ -327,7 +366,8 @@
           "SG: (U) en restaurant (D) restauranten · PL: (U) restauranter (D) restaurantene",
           "NOUN",
           "spisested (eatery)",
-          "—"
+          "—",
+          "Places"
         ],
         [
           "rødbete (en/a)",
@@ -335,7 +375,8 @@
           "SG: (U) en/a rødbete (D) rødbeta/en · PL: (U) rødbeter (D) rødbetene",
           "NOUN",
           "bete (beet)",
-          "—"
+          "—",
+          "Food"
         ]
       ]
     }

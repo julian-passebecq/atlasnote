@@ -3,7 +3,7 @@
   "schemaVersion": 1,
   "payloadSchema": "atlas.bundle@2",
   "id": "atlas.norsk-csv",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "Norsk vocabulary and grammar",
   "visibility": "public",
   "files": {

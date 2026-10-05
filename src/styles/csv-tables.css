@@ -16,3 +16,22 @@
 .csv-layout-lines td:nth-child(n+3){font-size:.8em;color:var(--muted)}
 .csv-layout-lines tbody tr:nth-child(even),.csv-layout-pairs tbody tr:nth-child(even){background:transparent}
 @media print{.table-column-tools{display:none}}
+.table-column-tools .table-organization{flex-basis:100%;display:flex;flex-direction:column;gap:3px;padding:4px 0;border-top:1px solid var(--line)}
+.table-organization>div{display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.table-organization>div>span{min-width:80px;color:var(--muted)}
+.table-organization small{color:var(--muted)}
+.csv-group-row th{font-size:.9em;font-weight:700;text-align:left;border-top:1px solid var(--line);padding:8px;background:var(--sheet,var(--bg))}
+.csv-layout-cards2 thead,.csv-layout-cards3 thead{display:none}
+.csv-layout-cards2 tbody,.csv-layout-cards3 tbody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+.csv-layout-cards3 tbody{grid-template-columns:repeat(3,minmax(0,1fr))}
+.csv-layout-cards2 tbody tr,.csv-layout-cards3 tbody tr{display:block;border-bottom:1px solid var(--line);padding:5px 0;min-width:0;break-inside:avoid}
+.csv-layout-cards2 td,.csv-layout-cards3 td{display:block;border:0;padding:2px 8px;overflow-wrap:anywhere}
+.csv-layout-cards2 td[data-column="0"],.csv-layout-cards3 td[data-column="0"]{font-weight:700}
+.csv-layout-cards2 td:nth-child(n+3),.csv-layout-cards3 td:nth-child(n+3){font-size:.8em;color:var(--muted)}
+.csv-layout-cards2 td:nth-child(n+3)::before,.csv-layout-cards3 td:nth-child(n+3)::before{content:attr(data-label) ': ';font-weight:600}
+.csv-layout-cards2 .csv-group-row,.csv-layout-cards3 .csv-group-row{grid-column:1/-1;border-bottom:0;padding:0}
+.csv-layout-cards2 .csv-group-row th,.csv-layout-cards3 .csv-group-row th{display:block;border:0;padding:10px 8px 4px}
+.csv-layout-lines .csv-group-row,.csv-layout-pairs .csv-group-row{display:block}
+.csv-layout-lines .csv-group-row th,.csv-layout-pairs .csv-group-row th{display:block;border:0;padding:8px}
+@container (max-width:700px){.csv-layout-cards3 tbody{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container (max-width:460px){.csv-layout-cards2 tbody,.csv-layout-cards3 tbody{grid-template-columns:minmax(0,1fr)}}

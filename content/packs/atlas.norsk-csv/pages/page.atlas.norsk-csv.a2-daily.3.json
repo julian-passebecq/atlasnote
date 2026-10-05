@@ -14,7 +14,8 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Category"
       ],
       "rows": [
         [
@@ -23,7 +24,8 @@
           "SG: (U) et hus (D) huset · PL: (U) hus (D) husene",
           "NOUN",
           "bolig (dwelling)",
-          "leilighet (apartment)"
+          "leilighet (apartment)",
+          "Housing"
         ],
         [
           "husarbeid (et)",
@@ -31,7 +33,8 @@
           "SG: (U) et husarbeid (D) husarbeidet · PL: (U) — (uncount)",
           "NOUN",
           "—",
-          "fritid (free time)"
+          "fritid (free time)",
+          "Home"
         ],
         [
           "husleie (en/a)",
@@ -39,7 +42,8 @@
           "SG: (U) en/a husleie (D) husleia/en · PL: (U) husleier (D) husleiene",
           "NOUN",
           "leie (rent)",
-          "eie (own)"
+          "eie (own)",
+          "Housing"
         ],
         [
           "hytte (en/a)",
@@ -47,7 +51,8 @@
           "SG: (U) en/a hytte (D) hytta/en · PL: (U) hytter (D) hyttene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Housing"
         ],
         [
           "i Norge",
@@ -55,7 +60,8 @@
           "—",
           "PHRASE",
           "—",
-          "—"
+          "—",
+          "Places"
         ],
         [
           "kafé (en)",
@@ -63,7 +69,8 @@
           "SG: (U) en kafé (D) kafeen · PL: (U) kaféer (D) kaféene",
           "NOUN",
           "kaffebar (coffee bar)",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "kaffe (en)",
@@ -71,7 +78,8 @@
           "SG: (U) en kaffe (D) kaffen · PL: (U) kaffer (D) kaffene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "kake (en)",
@@ -79,7 +87,8 @@
           "SG: (U) en kake (D) kaken · PL: (U) kaker (D) kakene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "kald",
@@ -87,7 +96,8 @@
           "(M/F) kald · (N) kaldt · (PL) kalde; comp: kaldere · sup: kaldest",
           "ADJECTIVE",
           "kjølig (cool)",
-          "varm (warm)"
+          "varm (warm)",
+          "Weather"
         ],
         [
           "Kan jeg prøve den?",
@@ -95,7 +105,8 @@
           "—",
           "PHRASE",
           "—",
-          "—"
+          "—",
+          "Shopping"
         ],
         [
           "kasse (en)",
@@ -103,7 +114,8 @@
           "SG: (U) en kasse (D) kassen · PL: (U) kasser (D) kassene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Shopping"
         ],
         [
           "ketchup (en)",
@@ -111,7 +123,8 @@
           "SG: (U) en ketchup (D) ketchupen · PL: (U) ketchuper (D) ketchupene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "kilopris (en)",
@@ -119,7 +132,8 @@
           "SG: (U) en kilopris (D) kiloprisen · PL: (U) kilopriser (D) kiloprisene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Shopping"
         ],
         [
           "kirke (en)",
@@ -127,7 +141,8 @@
           "SG: (U) en kirke (D) kirken · PL: (U) kirker (D) kirkene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Places"
         ],
         [
           "kjæreste (en)",
@@ -135,7 +150,8 @@
           "SG: (U) en kjæreste (D) kjæresten · PL: (U) kjærester (D) kjærestene",
           "NOUN",
           "partner (partner)",
-          "—"
+          "—",
+          "Family"
         ],
         [
           "kjøkken (et)",
@@ -143,7 +159,8 @@
           "SG: (U) et kjøkken (D) kjøkkenet · PL: (U) kjøkken (D) kjøkkenene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "kjøleskap (et)",
@@ -151,7 +168,8 @@
           "SG: (U) et kjøleskap (D) kjøleskapet · PL: (U) kjøleskap (D) kjøleskapene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "kjøpe (å)",
@@ -159,7 +177,8 @@
           "V2 – TE : (PR) kjøper · (PT) kjøpte · (PF) har kjøpt",
           "VERB",
           "handle (shop)",
-          "selge (sell)"
+          "selge (sell)",
+          "Shopping"
         ],
         [
           "kjøpesenter (et)",
@@ -167,7 +186,8 @@
           "SG: (U) et kjøpesenter (D) kjøpesenteret · PL: (U) kjøpesentre (D) kjøpesentrene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Shopping"
         ],
         [
           "kjøre (å)",
@@ -175,7 +195,8 @@
           "V2 – TE : (PR) kjører · (PT) kjørte · (PF) har kjørt",
           "VERB",
           "—",
-          "gå (walk)"
+          "gå (walk)",
+          "Transport"
         ],
         [
           "kjøtt (et)",
@@ -183,7 +204,8 @@
           "SG: (U) et kjøtt (D) kjøttet · PL: (U) kjøtt (D) kjøttene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "klesbutikk (en)",
@@ -191,7 +213,8 @@
           "SG: (U) en klesbutikk (D) klesbutikken · PL: (U) klesbutikker (D) klesbutikkene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Shopping"
         ],
         [
           "knekkebrød (et)",
@@ -199,7 +222,8 @@
           "SG: (U) et knekkebrød (D) knekkebrødet · PL: (U) knekkebrød (D) knekkebrødene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "koffert (en)",
@@ -207,7 +231,8 @@
           "SG: (U) en koffert (D) kofferten · PL: (U) kofferter (D) koffertene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Travel"
         ],
         [
           "kommode (en)",
@@ -215,7 +240,8 @@
           "SG: (U) en kommode (D) kommoden · PL: (U) kommoder (D) kommodene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "kone (en)",
@@ -223,7 +249,8 @@
           "SG: (U) en kone (D) kona/en · PL: (U) koner (D) konene",
           "NOUN",
           "—",
-          "mann (husband)"
+          "mann (husband)",
+          "Family"
         ],
         [
           "kopp (en)",
@@ -231,7 +258,8 @@
           "SG: (U) en kopp (D) koppen · PL: (U) kopper (D) koppene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "kuldegrad (en)",
@@ -239,7 +267,8 @@
           "SG: (U) en kuldegrad (D) kuldegraden · PL: (U) kuldegrader (D) kuldegradene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Weather"
         ],
         [
           "kusine (en)",
@@ -247,7 +276,8 @@
           "SG: (U) en kusine (D) kusina/en · PL: (U) kusiner (D) kusinene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Family"
         ],
         [
           "laks (en)",
@@ -255,7 +285,8 @@
           "SG: (U) en laks (D) laksen · PL: (U) lakser (D) laksene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "lampe (en)",
@@ -263,7 +294,8 @@
           "SG: (U) en lampe (D) lampen/a · PL: (U) lamper (D) lampene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "lastebil (en)",
@@ -271,7 +303,8 @@
           "SG: (U) en lastebil (D) lastebilen · PL: (U) lastebiler (D) lastebilene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Transport"
         ],
         [
           "leie (å)",
@@ -279,7 +312,8 @@
           "V2 – DE : (PR) leier · (PT) leide · (PF) har leid",
           "VERB",
           "leie bolig (rent housing)",
-          "eie (own)"
+          "eie (own)",
+          "Housing"
         ],
         [
           "leilighet (ei/en)",
@@ -287,7 +321,8 @@
           "SG: (U) ei/en leilighet (D) leiligheta/en · PL: (U) leiligheter (D) leilighetene",
           "NOUN",
           "—",
-          "enebolig (detached house)"
+          "enebolig (detached house)",
+          "Housing"
         ],
         [
           "leverpostei (en)",
@@ -295,7 +330,8 @@
           "SG: (U) en leverpostei (D) leverposteien · PL: (U) leverposteier (D) leverposteiene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "male (å)",
@@ -303,7 +339,8 @@
           "V2 — TE: (PR) maler · (PT) malte · (PF) har malt",
           "VERB",
           "—",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "måltid (et)",
@@ -311,7 +348,8 @@
           "SG: (U) et måltid (D) måltidet · PL: (U) måltider (D) måltidene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "mamma (en)",
@@ -319,7 +357,8 @@
           "SG: (U) en mamma (D) mammaen · PL: (U) mammaer (D) mammaene",
           "NOUN",
           "mor (mother)",
-          "pappa (dad)"
+          "pappa (dad)",
+          "Family"
         ],
         [
           "mat (en)",
@@ -327,7 +366,8 @@
           "SG: (U) en mat (D) maten · PL: (U) — (uncount)",
           "NOUN",
           "føde (food)",
-          "drikke (drink)"
+          "drikke (drink)",
+          "Food"
         ],
         [
           "matpakke (en/a)",
@@ -335,7 +375,8 @@
           "SG: (U) en/a matpakke (D) matpakka/en · PL: (U) matpakker (D) matpakkene",
           "NOUN",
           "niste (packed meal)",
-          "—"
+          "—",
+          "Food"
         ]
       ]
     }

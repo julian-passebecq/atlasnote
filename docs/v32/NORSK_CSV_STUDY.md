@@ -27,6 +27,18 @@ use bounded keys in the existing pane-local disclosure map, never alter source
 or authored history, and survive reload. Print projection retains all columns.
 Book measurement, semantic row splitting and delegated actions remain in use.
 
+`2 columns` and `3 columns` show several bilingual entries across the available
+width, adapting to narrower panes. `Views & sort` exposes ready-made Reading,
+Alphabet, Categories, Synonyms / opposites and Grammar views when the source
+has relevant columns. Presets select existing fields; no missing relations are
+invented. Sorting supports original, Norwegian A–Z/Z–A and English A–Z. Grouping
+uses first letters, an existing Category/Theme column or an existing word class.
+These operations apply to the current bounded page, not the entire source CSV.
+Norwegian collation retains Æ, Ø and Å. Stable source row indices survive the
+detached projection. Printing still uses all original rows/columns in source order.
+Pack 1.1.0 adds the original category labels to the two A2 source sheets, retaining
+all 1,449 lexical entries; unchanged source fields have not been rewritten.
+
 Ten owner-authorized lexical CSV selections add 1,449 entries in 41 Notebook
 pages. Folders cover A2 vocabulary, B1 vocabulary, B2 thematic vocabulary,
 grammar and writing/essay connectors. These are interactive Notebook fiches,
@@ -37,7 +49,7 @@ The original workbooks are kept outside the repository.
 
 ## Local validation
 
-Final local pass: 1,171/1,171 unit tests, both TypeScript configurations,
+Final local pass with reading presets: 1,173/1,173 unit tests, both TypeScript configurations,
 integrated build, PDF Atlas provenance and generated-source check pass.
 CSV integrated runtime: 5/5; existing Norsk Daily runtime: 8/8;
 compact responsive runtime: 5/5. These use disposable local profiles.
@@ -60,3 +72,9 @@ were not relaxed. Earlier failed unit isolation output also captured edits made
 while source-drift checks ran; the final full run must use stable source.
 Private logs/screenshots remain under `D:/PROJ/atlasnote-private/norsk-csv`.
 Local checks do not substitute for exact deployed-SHA and owner Access checks.
+
+Reading preset runtime adds 5/5 integrated scenarios: column geometry, category
+and letter headings, sorting, source/history immutability, reload, Book controls
+and narrow-pane overflow. The ten public first pages were checked across 46
+available preset combinations in Book: 40 unique rows each, zero fallback and
+zero sheet overflow. These remain disposable local browser checks.
