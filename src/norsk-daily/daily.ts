@@ -76,15 +76,22 @@ const searchTerms=(query:string)=>query.trim().toLocaleLowerCase('nb').split(/\s
  * text already present in the browser: source headline, generated translations,
  * paraphrase, grammar labels and vocabulary. It never fetches remote content. */
 export function dailySearch(items:DailyItem[],query:string):DailyItem[]{
- const terms=searchTerms(query);if(!terms.length)return items;
- return items.filter(item=>{
+ if(!query.trim())return items;
+ return prepareDailySearch(items)(query);
+}
+
+/** Rebuild only when the accepted batch changes, rather than walking all block
+ * trees and normalizing translations on every search keystroke. In-memory only. */
+export function prepareDailySearch(items:DailyItem[]):(query:string)=>DailyItem[]{
+ const indexed=items.map(item=>{
   const words=dailyItemVocabulary(item),haystack=[
    item.page.title,item.section,item.english,item.paraphrase,item.french,
    ...item.grammar.map(g=>g.label),
    ...words.flatMap(w=>[w.lemma,w.form,w.partOfSpeech,w.english,w.french,w.example])
   ].filter((x):x is string=>!!x).join(' ').toLocaleLowerCase('nb');
-  return terms.every(term=>haystack.includes(term));
+  return {item,haystack};
  });
+ return query=>{const terms=searchTerms(query);return terms.length?indexed.filter(({haystack})=>terms.every(term=>haystack.includes(term))).map(({item})=>item):items;};
 }
 export function dailySections(batch:DailyBatch|undefined):string[]{return [...new Set((batch?.items??[]).map(i=>i.section).filter((x):x is string=>!!x))].sort((a,b)=>a.localeCompare(b,'nb'));}
 export function dailyVocabularySearch(words:DailyWord[],query:string):DailyWord[]{

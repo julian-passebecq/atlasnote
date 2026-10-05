@@ -13,7 +13,7 @@ import {norskDailyJsonSchema,buildTransformationPrompt} from '../dist-offline/ap
 import {answerQuestion,qcmProgress} from '../dist-offline/app/content-hub/content.js';
 import {resourceAdapters} from '../dist-offline/app/history/adapters.js';
 import {compose,blankWorkspace} from '../dist-offline/app/core/workspace.js';
-import {dailyBatches,dailyItemVocabulary,dailySearch,dailySections,dailyVocabulary,dailyVocabularySearch} from '../dist-offline/app/norsk-daily/daily.js';
+import {dailyBatches,dailyItemVocabulary,dailySearch,prepareDailySearch,dailySections,dailyVocabulary,dailyVocabularySearch} from '../dist-offline/app/norsk-daily/daily.js';
 
 const FIXTURE_PATH='examples/norsk-daily/synthetic-2026-09-24.json';
 const fixtureText=await fs.readFile(FIXTURE_PATH,'utf8'),fixture=JSON.parse(fixtureText);
@@ -279,4 +279,23 @@ test('V32 Norsk daily read model keeps generated labels separate from source hea
  assert.equal(first.english,item(fixture).study.translations.en.text);
  assert.equal(first.paraphrase,item(fixture).study.paraphrase.text);
  assert.equal(first.french,item(fixture).study.translations.fr.text);assert(first.page.tags.includes('norsk-daily-section:Synthetic local'));
+});
+
+test('Prepared Norsk search walks vocabulary once and refreshes with a corrected batch',()=>{
+ const projected=projectNorskDailyFeed(fixture),base=compose(built,blankWorkspace());
+ const batch=dailyBatches({...base,pages:projected.articles.map(x=>x.page)},{}).find(b=>b.date===fixture.studyDate);
+ let reads=0;
+ for(const item of batch.items){const blocks=item.page.blocks;Object.defineProperty(item.page,'blocks',{get:()=>{reads++;return blocks;}});}
+ const search=prepareDailySearch(batch.items),initialReads=reads;
+ assert(initialReads>0);
+ assert.equal(search('cycle path').length,1);
+ assert.equal(search('prøver sykler').length,1);
+ assert.equal(search('lesesal reading room').length,1);
+ assert.equal(search('DOES-NOT-EXIST').length,0);
+ assert.strictEqual(search('   '),batch.items);
+ assert.equal(reads,initialReads,'Search keystrokes must not re-traverse article blocks');
+ const corrected=batch.items.map(item=>({...item,english:'Updated translation marker'}));
+ const nextSearch=prepareDailySearch(corrected);
+ assert.equal(search('Updated translation marker').length,0);
+ assert.equal(nextSearch('Updated translation marker').length,3);
 });

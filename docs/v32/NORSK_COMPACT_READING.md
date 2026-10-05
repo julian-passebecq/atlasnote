@@ -11,9 +11,22 @@ French are available in per-row disclosure panels. Focus remains available for o
 story; its large open-study-page button is removed. Clicking a newspaper title still
 opens the canonical Article. The explanatory bottom text is collapsed under About.
 
-Row progress and Focus actions use 24px icons with accessible labels and hover
-titles in a 106px action column. The reader rail is 34px wide, retaining its existing
+Row progress and Focus actions use 20px controls with accessible labels and hover
+titles in an 84px action column. The reader rail is 30px wide, retaining its existing
 commands and workspace slots. This releases more width for both languages.
+Rows have one uniform sheet background and horizontal separators, with no alternating
+blue fill. The Midnight sheet is black; the independent sheet theme remains available.
+
+Norsk search prepares normalized headline, translation, grammar and vocabulary text
+once per accepted batch. English toggles and search keystrokes reuse that read model;
+changing the catalogue or progress builds a new batch. Per-story vocabulary is also
+memoized for rendering. Nothing is persisted and no storage contract changes.
+
+A local synthetic measurement of 200 stories and 40 queries returned identical
+results: 35.14ms rebuilding text for each query versus 1.03ms using the prepared index,
+excluding index preparation and browser rendering. These numbers measure this search
+operation only, not overall application performance. A unit test verifies no repeated
+block traversal and correct refresh after a translation changes.
 
 ## Verification (local integrated build)
 
@@ -32,7 +45,7 @@ Git. Full-width layouts have no horizontal overflow:
 
 | Viewport | Completely visible title/translation pairs |
 | --- | --- |
-| 1536 × 864 | 9 |
+| 1536 × 864 | 10 |
 | 1920 × 1080 | 10 |
 | 1280 × 800 | 8 |
 

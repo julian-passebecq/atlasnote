@@ -1,7 +1,7 @@
 import React,{useEffect,useMemo,useRef,useState} from '../vendor/react.mjs';
 import {Icon,IconButton} from '../components/Icon.js';
 import type {Catalogue,Personal} from '../core/model.js';
-import {dailyBatches,dailyCounts,dailyItemVocabulary,dailySearch,dailySections,dailyVocabulary,dailyVocabularySearch,STATUS_RATING} from './daily.js';
+import {dailyBatches,dailyCounts,dailyItemVocabulary,prepareDailySearch,dailySections,dailyVocabulary,dailyVocabularySearch,STATUS_RATING} from './daily.js';
 import type {DailyItem,DailyStatus} from './daily.js';
 
 type Props={catalogue:Catalogue;personal:Personal;onOpen:(pageId:string,newTab?:boolean)=>void;onStatus:(pageId:string,rating:'gray'|'orange'|'green')=>void;onImport:()=>void;onAddVocabulary?:(words:import('./daily.js').DailyWord[],date:string)=>void;onClose:()=>void};
@@ -27,7 +27,9 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
  const index=Math.max(0,batches.findIndex(b=>b.date===date)),batch=batches[index];
  const counts=batch?dailyCounts(batch.items):{new:0,learning:0,known:0};
  const sections=useMemo(()=>dailySections(batch),[batch]);
- const searched=useMemo(()=>dailySearch(batch?.items??[],query),[batch,query]);
+ const searchBatch=useMemo(()=>prepareDailySearch(batch?.items??[]),[batch]);
+ const searched=useMemo(()=>searchBatch(query),[searchBatch,query]);
+ const itemWords=useMemo(()=>new Map((batch?.items??[]).map(item=>[item.page.id,dailyItemVocabulary(item)])),[batch]);
  const sectioned=section==='all'?searched:searched.filter(i=>i.section===section);
  const shown=sectioned.filter(i=>filter==='all'||i.status===filter);
  const words=useMemo(()=>dailyVocabulary(batch),[batch]);
@@ -83,7 +85,7 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
      {open?<p className="norsk-daily-meaning">{w.english}{w.french&&<span> / {w.french}</span>}{w.example&&<em lang="no"> {w.example}</em>}</p>:<button className="text-button" aria-label={'Reveal meaning of '+w.lemma} onClick={()=>setRevealed({...revealed,[key]:true})}>Reveal</button>}
      <button className="text-button norsk-daily-source" title={'From: '+w.headline} onClick={()=>onOpen(w.pageId)}>Story</button></li>;})}</ul>
     {!shownWords.length&&<p className="experience-note">{query?'No vocabulary matches this search.':'No vocabulary in this day\'s stories.'}</p>}
-   </div>:view==='focus'?selected?<FocusStory item={selected} english={english} words={dailyItemVocabulary(selected)} position={focusIndex} total={shown.length} onBack={()=>setView('newspaper')} onPrevious={()=>moveFocus(-1)} onNext={()=>moveFocus(1)} onReveal={()=>setEnglish(true)} onOpen={onOpen} status={statusButtons(selected)} grammar={grammarButtons(selected)}/>:<p className="experience-note">No story matches the current search and progress filter.</p>:<>
+   </div>:view==='focus'?selected?<FocusStory item={selected} english={english} words={itemWords.get(selected.page.id)??[]} position={focusIndex} total={shown.length} onBack={()=>setView('newspaper')} onPrevious={()=>moveFocus(-1)} onNext={()=>moveFocus(1)} onReveal={()=>setEnglish(true)} onOpen={onOpen} status={statusButtons(selected)} grammar={grammarButtons(selected)}/>:<p className="experience-note">No story matches the current search and progress filter.</p>:<>
     <div className="norsk-daily-column-labels" aria-hidden="true"><span>NO · source</span>{english&&<span>EN · translation</span>}<span>Study</span></div>
     <ol className={'norsk-daily-queue norsk-daily-paper'+(english?'':' no-translation')}>{shown.map(item=><li key={item.page.id} className={'norsk-daily-item status-'+item.status} data-page-id={item.page.id}>
      <div className="norsk-daily-headline" lang={item.language??'nb'}>
@@ -95,11 +97,11 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
       {statusButtons(item,true)}
       <button className="text-button norsk-daily-study" aria-label="Study side by side" title="Study side by side" onClick={()=>openFocus(item)}><Icon name="openbook" size={13}/></button>
      </div>
-     <details className="norsk-daily-row-details"><summary>Vocabulary ({dailyItemVocabulary(item).length}) &amp; notes</summary>
+     <details className="norsk-daily-row-details"><summary>Vocabulary ({itemWords.get(item.page.id)?.length??0}) &amp; notes</summary>
       <div className="norsk-daily-row-extra">
        {item.paraphrase&&<p className="norsk-daily-paraphrase" lang={item.language??'nb'}><span>Generated simpler Norwegian</span>{item.paraphrase}</p>}
        {english&&item.french&&<p lang="fr">FR · {item.french}</p>}
-       <div className="norsk-daily-row-words">{dailyItemVocabulary(item).map(w=><span key={w.lemma+'|'+w.partOfSpeech}><strong>{w.lemma}</strong> · {w.english}</span>)}</div>
+       <div className="norsk-daily-row-words">{(itemWords.get(item.page.id)??[]).map(w=><span key={w.lemma+'|'+w.partOfSpeech}><strong>{w.lemma}</strong> · {w.english}</span>)}</div>
        {grammarButtons(item)}
       </div>
      </details>
