@@ -14,7 +14,8 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Category"
       ],
       "rows": [
         [
@@ -23,7 +24,8 @@
           "SG: (U) en administrasjon (D) administrasjonen · PL: (U) administrasjoner (D) administrasjonene",
           "NOUN",
           "forvaltning (administration)",
-          "—"
+          "—",
+          "Admin"
         ],
         [
           "adresse (en)",
@@ -31,7 +33,8 @@
           "SG: (U) en adresse (D) adressen · PL: (U) adresser (D) adressene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Admin"
         ],
         [
           "ansatt (en)",
@@ -39,7 +42,8 @@
           "SG: (U) en ansatt (D) den ansatte · PL: (U) ansatte (D) de ansatte",
           "NOUN",
           "medarbeider (staff)",
-          "arbeidsgiver (employer)"
+          "arbeidsgiver (employer)",
+          "Work"
         ],
         [
           "ansette (å)",
@@ -47,7 +51,8 @@
           "V2 — TE: (PR) ansetter · (PT) ansatte · (PF) har ansatt",
           "VERB",
           "tilsette (hire, Nyn.)",
-          "si opp (dismiss)"
+          "si opp (dismiss)",
+          "Work"
         ],
         [
           "ansvar (et)",
@@ -55,7 +60,8 @@
           "SG: (U) et ansvar (D) ansvaret · PL: (U) ansvar (D) ansvarene",
           "NOUN",
           "plikt (duty)",
-          "uansvar (irresponsibility)"
+          "uansvar (irresponsibility)",
+          "Admin"
         ],
         [
           "arbeid (et)",
@@ -63,7 +69,8 @@
           "SG: (U) et arbeid (D) arbeidet · PL: (U) arbeid (D) arbeidene",
           "NOUN",
           "jobb (job)",
-          "fri (time off)"
+          "fri (time off)",
+          "Work"
         ],
         [
           "arbeide (å)",
@@ -71,7 +78,8 @@
           "V1 — ET: (PR) arbeider · (PT) arbeidet · (PF) har arbeidet",
           "VERB",
           "å jobbe (to work)",
-          "å hvile (to rest)"
+          "å hvile (to rest)",
+          "Work"
         ],
         [
           "Arbeidet er tungt",
@@ -79,7 +87,8 @@
           "—",
           "PHRASE",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "arbeidsledig",
@@ -87,7 +96,8 @@
           "(M/F) arbeidsledig · (N) arbeidsledigt · (PL) arbeidsledige",
           "ADJECTIVE",
           "—",
-          "i jobb (employed)"
+          "i jobb (employed)",
+          "Work"
         ],
         [
           "arbeidsliv (et)",
@@ -95,7 +105,8 @@
           "SG: (U) et arbeidsliv (D) arbeidslivet · PL: (U) arbeidsliv (D) arbeidslivene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "arbeidsoppgave (en)",
@@ -103,7 +114,8 @@
           "SG: (U) en arbeidsoppgave (D) arbeidsoppgaven · PL: (U) arbeidsoppgaver (D) arbeidsoppgavene",
           "NOUN",
           "oppdrag (assignment)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "arbeidsplass (en)",
@@ -111,7 +123,8 @@
           "SG: (U) en arbeidsplass (D) arbeidsplassen · PL: (U) arbeidsplasser (D) arbeidsplassene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "arbeidstid (en/a)",
@@ -119,7 +132,8 @@
           "SG: (U) en/a arbeidstid (D) arbeidstiden/a · PL: (U) arbeidstider (D) arbeidstidene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "arrangere (å)",
@@ -127,7 +141,8 @@
           "V2 — TE: (PR) arrangerer · (PT) arrangerte · (PF) har arrangert",
           "VERB",
           "organisere (organize)",
-          "avlyse (cancel)"
+          "avlyse (cancel)",
+          "Work"
         ],
         [
           "assistent (en)",
@@ -135,7 +150,8 @@
           "SG: (U) en assistent (D) assistenten · PL: (U) assistenter (D) assistentene",
           "NOUN",
           "hjelper (helper)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "attest (en)",
@@ -143,7 +159,8 @@
           "SG: (U) en attest (D) attesten · PL: (U) attester (D) attestene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "autorisasjon (en)",
@@ -151,7 +168,8 @@
           "SG: (U) en autorisasjon (D) autorisasjonen · PL: (U) autorisasjoner (D) autorisasjonene",
           "NOUN",
           "tillatelse (permit)",
-          "—"
+          "—",
+          "Admin"
         ],
         [
           "avdeling (en/a)",
@@ -159,7 +177,8 @@
           "SG: (U) en/a avdeling (D) avdelinga/en · PL: (U) avdelinger (D) avdelingene",
           "NOUN",
           "seksjon (section)",
-          "—"
+          "—",
+          "Admin"
         ],
         [
           "avspasere (å)",
@@ -167,7 +186,8 @@
           "V2 — TE: (PR) avspaserer · (PT) avspaserte · (PF) har avspasert",
           "VERB",
           "ta fri (take time off)",
-          "jobbe (work)"
+          "jobbe (work)",
+          "Work"
         ],
         [
           "avtale (en)",
@@ -175,7 +195,8 @@
           "SG: (U) en avtale (D) avtalen · PL: (U) avtaler (D) avtalene",
           "NOUN",
           "overenskomst (agreement)",
-          "uenighet (disagreement)"
+          "uenighet (disagreement)",
+          "Admin"
         ],
         [
           "bedrift (en)",
@@ -183,7 +204,8 @@
           "SG: (U) en bedrift (D) bedriften · PL: (U) bedrifter (D) bedriftene",
           "NOUN",
           "selskap (company)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "bekreftelse (en)",
@@ -191,7 +213,8 @@
           "SG: (U) en bekreftelse (D) bekreftelsen · PL: (U) bekreftelser (D) bekreftelsene",
           "NOUN",
           "kvittering (receipt)",
-          "avslag (rejection)"
+          "avslag (rejection)",
+          "Admin"
         ],
         [
           "bonde (en)",
@@ -199,7 +222,8 @@
           "SG: (U) en bonde (D) bonden · PL: (U) bønder (D) bøndene",
           "NOUN",
           "gårdbruker (farmer)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "butikkmedarbeider (en)",
@@ -207,7 +231,8 @@
           "SG: (U) en butikkmedarbeider (D) butikkmedarbeideren · PL: (U) butikkmedarbeidere (D) butikkmedarbeiderne",
           "NOUN",
           "ekspeditør (shop clerk)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "bygge (å)",
@@ -215,7 +240,8 @@
           "V1 — DE: (PR) bygger · (PT) bygde · (PF) har bygd",
           "VERB",
           "konstruiere (construct)",
-          "rive (demolish)"
+          "rive (demolish)",
+          "Work"
         ],
         [
           "CO (en)",
@@ -223,7 +249,8 @@
           "SG: (U) en CO (D) COen · PL: (U) COer (D) COene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Business"
         ],
         [
           "CV (en)",
@@ -231,7 +258,8 @@
           "SG: (U) en CV (D) CVen · PL: (U) CVer (D) CVene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "datamaskin (en)",
@@ -239,7 +267,8 @@
           "SG: (U) en datamaskin (D) datamaskinen · PL: (U) datamaskiner (D) datamaskinene",
           "NOUN",
           "PC (computer)",
-          "—"
+          "—",
+          "Technology"
         ],
         [
           "deltid (en/a)",
@@ -247,7 +276,8 @@
           "SG: (U) en/a deltid (D) deltida/en · PL: (U) deltider (D) deltidene",
           "NOUN",
           "—",
-          "heltid (full — time)"
+          "heltid (full — time)",
+          "Work"
         ],
         [
           "den første jobben min",
@@ -255,7 +285,8 @@
           "—",
           "PHRASE",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "designe (å)",
@@ -263,7 +294,8 @@
           "V1 — ET: (PR) designer · (PT) designet · (PF) har designet",
           "VERB",
           "utforme (to shape)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "drive (med) (å)",
@@ -271,7 +303,8 @@
           "IRR: (PR) driver · (PT) drev · (PF) har drevet",
           "PHRASAL_VERB",
           "holde på (keep at)",
-          "slutte (quit)"
+          "slutte (quit)",
+          "Work"
         ],
         [
           "ekspert (en)",
@@ -279,7 +312,8 @@
           "SG: (U) en ekspert (D) eksperten · PL: (U) eksperter (D) ekspertene",
           "NOUN",
           "spesialist (specialist)",
-          "nybegynner (beginner)"
+          "nybegynner (beginner)",
+          "Work"
         ],
         [
           "elektriker (en)",
@@ -287,7 +321,8 @@
           "SG: (U) en elektriker (D) elektrikeren · PL: (U) elektrikere (D) elektrikerne",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "elektronisk",
@@ -295,7 +330,8 @@
           "(M/F) elektronisk · (N) elektronisk · (PL) elektroniske",
           "ADJECTIVE",
           "digital (digital)",
-          "analog (analog)"
+          "analog (analog)",
+          "Technology"
         ],
         [
           "erfaring (en/a)",
@@ -303,7 +339,8 @@
           "SG: (U) en/a erfaring (D) erfaringa/en · PL: (U) erfaringer (D) erfaringene",
           "NOUN",
           "praksis (practice)",
-          "uvitenhet (ignorance)"
+          "uvitenhet (ignorance)",
+          "Work"
         ],
         [
           "firma (et)",
@@ -311,7 +348,8 @@
           "SG: (U) et firma (D) firmaet · PL: (U) firmaer (D) firmaene",
           "NOUN",
           "selskap (company)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "fisker (en)",
@@ -319,7 +357,8 @@
           "SG: (U) en fisker (D) fiskeren · PL: (U) fiskere (D) fiskerne",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "føre (regnskap) (å)",
@@ -327,7 +366,8 @@
           "V2 — TE: (PR) fører · (PT) førte · (PF) har ført",
           "VERB",
           "bokføre (book)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "forsker (en)",
@@ -335,7 +375,8 @@
           "SG: (U) en forsker (D) forskeren · PL: (U) forskere (D) forskerne",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ]
       ]
     }

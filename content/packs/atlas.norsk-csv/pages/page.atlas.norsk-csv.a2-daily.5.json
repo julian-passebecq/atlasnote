@@ -14,7 +14,8 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Category"
       ],
       "rows": [
         [
@@ -23,7 +24,8 @@
           "SG: (U) et rom (D) rommet · PL: (U) rom (D) rommene",
           "NOUN",
           "værelse (room)",
-          "korridor (corridor)"
+          "korridor (corridor)",
+          "Places"
         ],
         [
           "rydde (å)",
@@ -31,7 +33,8 @@
           "V1 — ET: (PR) rydder · (PT) ryddet · (PF) har ryddet",
           "VERB",
           "ordne (arrange)",
-          "rote (mess up)"
+          "rote (mess up)",
+          "Home"
         ],
         [
           "saft (a/en)",
@@ -39,7 +42,8 @@
           "SG: (U) ei/en saft (D) safta/en · PL: (U) safter (D) saftene",
           "NOUN",
           "juice (juice)",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "salat (en)",
@@ -47,7 +51,8 @@
           "SG: (U) en salat (D) salaten · PL: (U) salater (D) salatene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "salg (et)",
@@ -55,7 +60,8 @@
           "SG: (U) et salg (D) salget · PL: (U) salg (D) salgene",
           "NOUN",
           "utsalg (sale)",
-          "full pris (full price)"
+          "full pris (full price)",
+          "Shopping"
         ],
         [
           "salt (et)",
@@ -63,7 +69,8 @@
           "SG: (U) et salt (D) saltet · PL: — (uncount)",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "samboer (en)",
@@ -71,7 +78,8 @@
           "SG: (U) en samboer (D) samboeren · PL: (U) samboere (D) samboerne",
           "NOUN",
           "partner (partner)",
-          "single (single)"
+          "single (single)",
+          "Family"
         ],
         [
           "seng (a/en)",
@@ -79,7 +87,8 @@
           "SG: (U) ei/en seng (D) senga/en · PL: (U) senger (D) sengene",
           "NOUN",
           "—",
-          "stol (chair)"
+          "stol (chair)",
+          "Home"
         ],
         [
           "sengetøy (et)",
@@ -87,7 +96,8 @@
           "SG: (U) et sengetøy (D) sengetøyet · PL: — (collective)",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Home"
         ],
         [
           "sennep (en)",
@@ -95,7 +105,8 @@
           "SG: (U) en sennep (D) sennepen · PL: — (uncount)",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "sentrum (et)",
@@ -103,7 +114,8 @@
           "SG: (U) et sentrum (D) sentrumet · PL: (U) sentra/sentrum (D) sentrene/sentrumene",
           "NOUN",
           "bykjerne (city core)",
-          "utkant (outskirts)"
+          "utkant (outskirts)",
+          "Places"
         ],
         [
           "servere (å)",
@@ -111,7 +123,8 @@
           "V2 — TE: (PR) serverer · (PT) serverte · (PF) har servert",
           "VERB",
           "by (offer)",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "serviett (en)",
@@ -119,7 +132,8 @@
           "SG: (U) en serviett (D) servietten · PL: (U) servietter (D) serviettene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "sitron (en)",
@@ -127,7 +141,8 @@
           "SG: (U) en sitron (D) sitronen · PL: (U) sitroner (D) sitronene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "sjåfør (en)",
@@ -135,7 +150,8 @@
           "SG: (U) en sjåfør (D) sjåføren · PL: (U) sjåfører (D) sjåførene",
           "NOUN",
           "fører (driver)",
-          "passasjer (passenger)"
+          "passasjer (passenger)",
+          "Transport"
         ],
         [
           "skap (et)",
@@ -143,7 +159,8 @@
           "SG: (U) et skap (D) skapet · PL: (U) skap (D) skapene",
           "NOUN",
           "skapning (cabinet)",
-          "åpen hylle (open shelf)"
+          "åpen hylle (open shelf)",
+          "Home"
         ],
         [
           "skip (et)",
@@ -151,7 +168,8 @@
           "SG: (U) et skip (D) skipet · PL: (U) skip (D) skipene",
           "NOUN",
           "båt (boat)",
-          "—"
+          "—",
+          "Transport"
         ],
         [
           "skive (en)",
@@ -159,7 +177,8 @@
           "SG: (U) en skive (D) skiven · PL: (U) skiver (D) skivene",
           "NOUN",
           "skjive (slice)",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "skinne (å)",
@@ -167,7 +186,8 @@
           "V2 — TE: (PR) skinner · (PT) skinte · (PF) har skint",
           "VERB",
           "lyse (shine)",
-          "slukke (go out)"
+          "slukke (go out)",
+          "Weather"
         ],
         [
           "slå seg ned (å)",
@@ -175,7 +195,8 @@
           "IRR: (PR) slår seg ned · (PT) slo seg ned · (PF) har slått seg ned",
           "PHRASAL_VERB",
           "bosette seg (settle)",
-          "reise (leave)"
+          "reise (leave)",
+          "Housing"
         ],
         [
           "smak av honning",
@@ -183,7 +204,8 @@
           "—",
           "PHRASE",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "smør (et)",
@@ -191,7 +213,8 @@
           "SG: (U) et smør (D) smøret · PL: — (uncount)",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "snø (å)",
@@ -199,7 +222,8 @@
           "V2 — DDE: (PR) snør · (PT) snødde · (PF) har snødd",
           "VERB",
           "—",
-          "—"
+          "—",
+          "Weather"
         ],
         [
           "snø (en)",
@@ -207,7 +231,8 @@
           "SG: (U) en snø (D) snøen · PL: — (uncount)",
           "NOUN",
           "—",
-          "regn (rain)"
+          "regn (rain)",
+          "Weather"
         ],
         [
           "ta buss",
@@ -215,7 +240,8 @@
           "IRR: (PR) tar buss · (PT) tok buss · (PF) har tatt buss",
           "PHRASE",
           "—",
-          "kjøre (drive)"
+          "kjøre (drive)",
+          "Transport"
         ],
         [
           "tåke (a/en)",
@@ -223,7 +249,8 @@
           "SG: (U) ei/en tåke (D) tåka/en · PL: (U) tåker (D) tåkene",
           "NOUN",
           "dis (mist)",
-          "klarvær (clear weather)"
+          "klarvær (clear weather)",
+          "Weather"
         ],
         [
           "tallerken (en)",
@@ -231,7 +258,8 @@
           "SG: (U) en tallerken (D) tallerkenen · PL: (U) tallerkener (D) tallerkenene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Food"
         ],
         [
           "tante (a/en)",
@@ -239,7 +267,8 @@
           "SG: (U) ei/en tante (D) tanta/en · PL: (U) tanter (D) tantene",
           "NOUN",
           "—",
-          "onkel (uncle)"
+          "onkel (uncle)",
+          "Family"
         ],
         [
           "te (en)",
@@ -247,7 +276,8 @@
           "SG: (U) en te (D) teen · PL: — (uncount)",
           "NOUN",
           "—",
-          "kaffe (coffee)"
+          "kaffe (coffee)",
+          "Food"
         ],
         [
           "terrasse (en)",
@@ -255,7 +285,8 @@
           "SG: (U) ei/en terrasse (D) terrassa/en · PL: (U) terrasser (D) terrassene",
           "NOUN",
           "uteplass (outdoor area)",
-          "—"
+          "—",
+          "Housing"
         ],
         [
           "til byen",
@@ -263,7 +294,8 @@
           "—",
           "PHRASE",
           "—",
-          "—"
+          "—",
+          "Travel"
         ],
         [
           "tilbud (et)",
@@ -271,7 +303,8 @@
           "SG: (U) et tilbud (D) tilbudet · PL: (U) tilbud (D) tilbudene",
           "NOUN",
           "rabatt (discount)",
-          "full pris (full price)"
+          "full pris (full price)",
+          "Shopping"
         ],
         [
           "tilhenger (en)",
@@ -279,7 +312,8 @@
           "SG: (U) en tilhenger (D) tilhengeren · PL: (U) tilhengere (D) tilhengerne",
           "NOUN",
           "henger (trailer)",
-          "trekkvogn (tractor unit)"
+          "trekkvogn (tractor unit)",
+          "Transport"
         ],
         [
           "tog (et)",
@@ -287,7 +321,8 @@
           "SG: (U) et tog (D) toget · PL: (U) tog (D) togene",
           "NOUN",
           "—",
-          "buss (bus)"
+          "buss (bus)",
+          "Transport"
         ],
         [
           "tordne (å)",
@@ -295,7 +330,8 @@
           "V1 — ET: (PR) tordner · (PT) tordnet · (PF) har tordnet",
           "VERB",
           "—",
-          "—"
+          "—",
+          "Weather"
         ],
         [
           "torg (et)",
@@ -303,7 +339,8 @@
           "SG: (U) et torg (D) torget · PL: (U) torg (D) torgene",
           "NOUN",
           "marked (market)",
-          "—"
+          "—",
+          "Places"
         ],
         [
           "trafikk (en)",
@@ -311,7 +348,8 @@
           "SG: (U) en trafikk (D) trafikken · PL: — (uncount)",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Transport"
         ],
         [
           "traktor (en)",
@@ -319,7 +357,8 @@
           "SG: (U) en traktor (D) traktoren · PL: (U) traktorer (D) traktorene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Transport"
         ],
         [
           "turist (en)",
@@ -327,7 +366,8 @@
           "SG: (U) en turist (D) turisten · PL: (U) turister (D) turistene",
           "NOUN",
           "besøkende (visitor)",
-          "lokal (local)"
+          "lokal (local)",
+          "Travel"
         ],
         [
           "ute",
@@ -335,7 +375,8 @@
           "—",
           "ADVERB",
           "utendørs (outdoors)",
-          "inne (inside)"
+          "inne (inside)",
+          "Places"
         ]
       ]
     }

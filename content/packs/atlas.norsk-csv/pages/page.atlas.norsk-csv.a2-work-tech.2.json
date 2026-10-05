@@ -14,7 +14,8 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Category"
       ],
       "rows": [
         [
@@ -23,7 +24,8 @@
           "SG: (U) en frisør (D) frisøren · PL: (U) frisører (D) frisørene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "fungere (å)",
@@ -31,7 +33,8 @@
           "V2 — TE: (PR) fungerer · (PT) fungerte · (PF) har fungert",
           "VERB",
           "virke (function)",
-          "svikte (fail)"
+          "svikte (fail)",
+          "Technology"
         ],
         [
           "gründer (en)",
@@ -39,7 +42,8 @@
           "SG: (U) en gründer (D) gründeren · PL: (U) gründere (D) gründerne",
           "NOUN",
           "entreprenør (entrepreneur)",
-          "—"
+          "—",
+          "Business"
         ],
         [
           "ha fri",
@@ -47,7 +51,8 @@
           "—",
           "PHRASE",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "ha mye å gjøre",
@@ -55,7 +60,8 @@
           "—",
           "PHRASE",
           "være travel (be busy)",
-          "ha lite å gjøre (have little to do)"
+          "ha lite å gjøre (have little to do)",
+          "Work"
         ],
         [
           "heltid (en/a)",
@@ -63,7 +69,8 @@
           "SG: (U) en/a heltid (D) heltida/en · PL: (U) heltider (D) heltidene",
           "NOUN",
           "—",
-          "deltid (part — time)"
+          "deltid (part — time)",
+          "Work"
         ],
         [
           "hjelpemann (en)",
@@ -71,7 +78,8 @@
           "SG: (U) en hjelpemann (D) hjelpemannen · PL: (U) hjelpemenn (D) hjelpemennene",
           "NOUN",
           "assistent (assistant)",
-          "sjef (boss)"
+          "sjef (boss)",
+          "Work"
         ],
         [
           "husøkonom (en)",
@@ -79,7 +87,8 @@
           "SG: (U) en husøkonom (D) husøkonomen · PL: (U) husøkonomer (D) husøkonomene",
           "NOUN",
           "renholder (cleaner)",
-          "gjest (guest)"
+          "gjest (guest)",
+          "Work"
         ],
         [
           "ingeniør (en)",
@@ -87,7 +96,8 @@
           "SG: (U) en ingeniør (D) ingeniøren · PL: (U) ingeniører (D) ingeniørene",
           "NOUN",
           "tekniker (technician)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "innkalling (en/a)",
@@ -95,7 +105,8 @@
           "SG: (U) en/a innkalling (D) innkallinga/en · PL: (U) innkallinger (D) innkallingene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Admin"
         ],
         [
           "jobb (en)",
@@ -103,7 +114,8 @@
           "SG: (U) en jobb (D) jobben · PL: (U) jobber (D) jobbene",
           "NOUN",
           "arbeid (work)",
-          "ferie (holiday)"
+          "ferie (holiday)",
+          "Work"
         ],
         [
           "jobbe (å)",
@@ -111,7 +123,8 @@
           "V1 — ET: (PR) jobber · (PT) jobbet · (PF) har jobbet",
           "VERB",
           "arbeide (work)",
-          "hvile (rest)"
+          "hvile (rest)",
+          "Work"
         ],
         [
           "jobbe turnus",
@@ -119,7 +132,8 @@
           "V1 — ET: (PR) jobber · (PT) jobbet · (PF) har jobbet",
           "PHRASE",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "kokk (en)",
@@ -127,7 +141,8 @@
           "SG: (U) en kokk (D) kokken · PL: (U) kokker (D) kokkene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "kollega (en)",
@@ -135,7 +150,8 @@
           "SG: (U) en kollega (D) kollegaen · PL: (U) kollegaer (D) kollegaene",
           "NOUN",
           "arbeidskamerat (workmate)",
-          "sjef (boss)"
+          "sjef (boss)",
+          "Work"
         ],
         [
           "kompetanse (en)",
@@ -143,7 +159,8 @@
           "SG: (U) en kompetanse (D) kompetansen · PL: (U) kompetanser (D) kompetansene",
           "NOUN",
           "ferdigheter (skills)",
-          "mangel på kompetanse (lack of skills)"
+          "mangel på kompetanse (lack of skills)",
+          "Work"
         ],
         [
           "kontor (et)",
@@ -151,7 +168,8 @@
           "SG: (U) et kontor (D) kontoret · PL: (U) kontorer (D) kontorene",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "krav (et)",
@@ -159,7 +177,8 @@
           "SG: (U) et krav (D) kravet · PL: (U) krav (D) kravene",
           "NOUN",
           "forventning (expectation)",
-          "frihet (freedom)"
+          "frihet (freedom)",
+          "Work"
         ],
         [
           "kreve (å)",
@@ -167,7 +186,8 @@
           "V2 – DE : (PR) krever · (PT) krevde · (PF) har krevd",
           "VERB",
           "forlange (demand)",
-          "gi (give)"
+          "gi (give)",
+          "Work"
         ],
         [
           "kunde (en)",
@@ -175,7 +195,8 @@
           "SG: (U) en kunde (D) kunden · PL: (U) kunder (D) kundene",
           "NOUN",
           "klient (client)",
-          "selger (seller)"
+          "selger (seller)",
+          "Business"
         ],
         [
           "kvalifisert",
@@ -183,7 +204,8 @@
           "(M/F) kvalifisert · (N) kvalifisert · (PL) kvalifiserte",
           "ADJECTIVE",
           "dyktig (competent)",
-          "ukvalifisert (unqualified)"
+          "ukvalifisert (unqualified)",
+          "Work"
         ],
         [
           "lager (et)",
@@ -191,7 +213,8 @@
           "SG: (U) et lager (D) lageret · PL: (U) lager (D) lagrene",
           "NOUN",
           "magasin (storage; warehouse)",
-          "butikk (shop)"
+          "butikk (shop)",
+          "Work"
         ],
         [
           "ledelse (en)",
@@ -199,7 +222,8 @@
           "SG: (U) en ledelse (D) ledelsen · PL: (U) ledelser (D) ledelsene",
           "NOUN",
           "administrasjon (administration)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "leder (en)",
@@ -207,7 +231,8 @@
           "SG: (U) en leder (D) lederen · PL: (U) ledere (D) lederne",
           "NOUN",
           "sjef (boss)",
-          "ansatt (employee)"
+          "ansatt (employee)",
+          "Work"
         ],
         [
           "levere (å)",
@@ -215,7 +240,8 @@
           "V2 – TE : (PR) leverer · (PT) leverte · (PF) har levert",
           "VERB",
           "gi (give)",
-          "holde igjen (hold back)"
+          "holde igjen (hold back)",
+          "Work"
         ],
         [
           "maskin (en)",
@@ -223,7 +249,8 @@
           "SG: (U) en maskin (D) maskinen · PL: (U) maskiner (D) maskinene",
           "NOUN",
           "apparat (device)",
-          "—"
+          "—",
+          "Technology"
         ],
         [
           "mekaniker (en)",
@@ -231,7 +258,8 @@
           "SG: (U) en mekaniker (D) mekanikeren · PL: (U) mekanikere (D) mekanikerne",
           "NOUN",
           "bilmekaniker (car mechanic)",
-          "—"
+          "—",
+          "Work"
         ],
         [
           "mekke (å)",
@@ -239,7 +267,8 @@
           "V1 — ET: (PR) mekker · (PT) mekket · (PF) har mekket",
           "VERB",
           "reparere (repair)",
-          "ødelegge (break)"
+          "ødelegge (break)",
+          "Technology"
         ],
         [
           "motor (en)",
@@ -247,7 +276,8 @@
           "SG: (U) en motor (D) motoren · PL: (U) motorer (D) motorene",
           "NOUN",
           "maskin (machine)",
-          "—"
+          "—",
+          "Technology"
         ],
         [
           "nett (et)",
@@ -255,7 +285,8 @@
           "SG: (U) et nett (D) nettet · PL: (U) nett (D) nettene",
           "NOUN",
           "internett (internet)",
-          "—"
+          "—",
+          "Technology"
         ],
         [
           "offentlig",
@@ -263,7 +294,8 @@
           "(M/F) offentlig · (N) offentlig · (PL) offentlige",
           "ADJECTIVE",
           "statlig (state)",
-          "privat (private)"
+          "privat (private)",
+          "Admin"
         ],
         [
           "offisiell",
@@ -271,7 +303,8 @@
           "(M/F) offisiell · (N) offisielt · (PL) offisielle",
           "ADJECTIVE",
           "formell (formal)",
-          "uoffisiell (unofficial)"
+          "uoffisiell (unofficial)",
+          "Admin"
         ],
         [
           "overtid (en/a)",
@@ -279,7 +312,8 @@
           "SG: (U) en/a overtid (D) overtida/en · PL: (U) — (uncount)",
           "NOUN",
           "ekstratid (extra time)",
-          "fri (time off)"
+          "fri (time off)",
+          "Work"
         ],
         [
           "på nettet",
@@ -287,7 +321,8 @@
           "—",
           "PHRASE",
           "—",
-          "offline"
+          "offline",
+          "Technology"
         ],
         [
           "papirarbeid (et)",
@@ -295,7 +330,8 @@
           "SG: (U) et papirarbeid (D) papirarbeidet · PL: — (uncount)",
           "NOUN",
           "—",
-          "—"
+          "—",
+          "Admin"
         ],
         [
           "PC (en)",
@@ -303,7 +339,8 @@
           "SG: (U) en PC (D) PCen · PL: (U) PCer (D) PCene",
           "NOUN",
           "datamaskin (computer)",
-          "—"
+          "—",
+          "Technology"
         ],
         [
           "personlig økonomi",
@@ -311,7 +348,8 @@
           "—",
           "PHRASE",
           "privat økonomi (private finances)",
-          "offentlig økonomi (public finances)"
+          "offentlig økonomi (public finances)",
+          "Finance"
         ],
         [
           "plan (en)",
@@ -319,7 +357,8 @@
           "SG: (U) en plan (D) planen · PL: (U) planer (D) planene",
           "NOUN",
           "opplegg (scheme)",
-          "impuls (impulse)"
+          "impuls (impulse)",
+          "Work"
         ],
         [
           "program (et)",
@@ -327,7 +366,8 @@
           "SG: (U) et program (D) programmet · PL: (U) programmer (D) programmene",
           "NOUN",
           "app (app)",
-          "—"
+          "—",
+          "Technology"
         ],
         [
           "rådgiver (en)",
@@ -335,7 +375,8 @@
           "SG: (U) en rådgiver (D) rådgiveren · PL: (U) rådgivere (D) rådgiverne",
           "NOUN",
           "konsulent (consultant)",
-          "kunde (client)"
+          "kunde (client)",
+          "Work"
         ]
       ]
     }
