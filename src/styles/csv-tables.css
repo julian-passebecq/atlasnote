@@ -35,3 +35,32 @@
 .csv-layout-lines .csv-group-row th,.csv-layout-pairs .csv-group-row th{display:block;border:0;padding:8px}
 @container (max-width:700px){.csv-layout-cards3 tbody{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @container (max-width:460px){.csv-layout-cards2 tbody,.csv-layout-cards3 tbody{grid-template-columns:minmax(0,1fr)}}
+/* Local table palettes: personal reading choices, never authored source. */
+.csv-interactive[data-csv-palette]{--sheet:#141517;--text:#eceef2;--muted:#adb4bf;--line:#383c44;--accent:#b6c3d5;--csv-card:#1b1d21;color:var(--text);background:var(--sheet);padding:8px;border-radius:6px}
+.csv-interactive[data-csv-palette="ocean"]{--sheet:#111f2b;--text:#e4f2fa;--muted:#adc8d8;--line:#345162;--accent:#83c9ee;--csv-card:#172b39}
+.csv-interactive[data-csv-palette="forest"]{--sheet:#14221b;--text:#e8f3e9;--muted:#b4cbb9;--line:#3a5744;--accent:#9bd5ae;--csv-card:#1c3024}
+.csv-interactive[data-csv-palette="paper"]{--sheet:#f4eddf;--text:#332d26;--muted:#64594b;--line:#c9bdab;--accent:#735127;--csv-card:#fff9ee}
+.csv-interactive[data-csv-palette] table{color:var(--text)}
+.csv-interactive[data-csv-palette] th{color:var(--accent)}
+.csv-interactive[data-csv-palette] button{color:var(--text)}
+.csv-interactive[data-csv-palette] button[aria-pressed="true"]{background:var(--csv-card);color:var(--accent);box-shadow:inset 0 -2px var(--accent)}
+.csv-color-choice{display:inline-flex;align-items:center;gap:5px}
+.csv-swatch{width:10px;height:10px;border-radius:50%;border:1px solid currentColor;background:#141517}
+.csv-swatch-ocean{background:#83c9ee}.csv-swatch-forest{background:#9bd5ae}.csv-swatch-paper{background:#f4eddf}
+.csv-layout-dictionary table{width:100%;table-layout:fixed}
+.csv-layout-dictionary td,.csv-layout-dictionary th{border:0;border-bottom:1px solid var(--line);padding:8px 10px;overflow-wrap:anywhere;vertical-align:top}
+.csv-layout-dictionary td[data-column="0"]{font-weight:700;color:var(--accent);border-left:3px solid var(--accent)}
+.csv-layout-dictionary td:nth-child(n+3){font-size:.8em;color:var(--muted)}
+.csv-layout-tiles thead{display:none}
+.csv-layout-tiles tbody{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.csv-layout-tiles tbody tr{display:block;min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--csv-card);break-inside:avoid}
+.csv-layout-tiles td{display:block;border:0;padding:2px 0;overflow-wrap:anywhere}
+.csv-layout-tiles td[data-column="0"]{font-weight:700;color:var(--accent);font-size:1.06em}
+.csv-layout-tiles td:nth-child(n+3){font-size:.8em;color:var(--muted)}
+.csv-layout-tiles td:nth-child(n+3)::before{content:attr(data-label) ': ';font-weight:600}
+.csv-layout-tiles tbody .csv-group-row{grid-column:1/-1;border:0;border-radius:0;background:transparent;padding:0}
+.csv-layout-tiles .csv-group-row th{display:block;padding:8px 0 2px}
+@container (max-width:460px){.csv-layout-tiles tbody{grid-template-columns:minmax(0,1fr)}}
+@media print{.csv-interactive[data-csv-palette]{background:white;color:black;padding:0}}
+/* Equal card backgrounds in every column; no zebra pattern. */
+.csv-interactive.csv-layout-tiles tbody tr[data-source-row]{background:var(--csv-card)}

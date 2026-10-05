@@ -46,14 +46,19 @@ with sync_playwright() as pw:
  assert cells[1]['rect']['y']>=cells[0]['rect']['bottom'] and cells[0]['weight']=='700',cells
  p.screenshot(path=str(OUT/'lines.png'))
  results.append({'name':'Column recall, bold Norwegian/English alignment and stacked Lines preserve source','status':'PASS'})
+ btn('Colors',pane).click();btn('Ocean',pane.get_by_role('group',name='Table color palette',exact=True)).click();btn('Colors',pane).click()
  p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
  p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-lines')
+ expect(p.locator('.active-pane .csv-interactive')).to_have_attribute('data-csv-palette','ocean')
  assert p.locator('.active-pane tbody tr').count()==40
  btn('Compare in two panes').click();expect(p.locator('.document-pane')).to_have_count(2)
  panes=p.locator('.document-pane');right=panes.nth(1);left=panes.nth(0)
  p.evaluate('async(id)=>{const a='+AGENT+';await a.navigateAgentTarget(a.getResource("notebook-page:"+id).target,"here");}',page_id)
  btn('Table',right).first.click();expect(right.locator('.csv-layout-table')).to_be_visible();expect(left.locator('.csv-layout-lines')).to_be_visible()
- results.append({'name':'Reading layout persists through reload; pane B preferences remain independent of A','status':'PASS'})
+ btn('Colors',right).first.click();btn('Forest',right.get_by_role('group',name='Table color palette',exact=True)).first.click()
+ expect(right.locator('.csv-interactive')).to_have_attribute('data-csv-palette','forest');expect(left.locator('.csv-interactive')).to_have_attribute('data-csv-palette','ocean')
+ btn('Colors',right).first.click()
+ results.append({'name':'Reading layout and palette persist through reload; pane B preferences remain independent of A','status':'PASS'})
  # Book pagination clones the delegated controls; columns/layout must still work.
  if not right.locator('.book-grid').count():btn('Quick Book mode',right).click()
  expect(right.locator('.book-grid .book-sheet').first).to_be_visible()

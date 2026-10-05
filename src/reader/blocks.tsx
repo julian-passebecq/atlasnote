@@ -1,6 +1,6 @@
 import React,{useEffect,useRef,useState} from '../vendor/react.mjs';
 import type {Block,Page,View} from '../core/model.js';
-import {visibleTableColumns,tableOptionsKey,tableChoiceKey,tableLayout,tableChoice,tableFields,organizeTableRows,TABLE_LAYOUTS} from './table-columns.js';
+import {visibleTableColumns,tableOptionsKey,tableChoiceKey,tableLayout,tableChoice,tableFields,organizeTableRows,TABLE_LAYOUTS,TABLE_PALETTES} from './table-columns.js';
 import {Inline,parseMarkdown} from './markdown.js';import {Icon} from '../components/Icon.js';import {safeUrl} from '../core/validation.mjs';
 let mermaidPromise:Promise<any>|null=null;let mermaidQueue=Promise.resolve();
 export function Mermaid({code,onReady}:any){const [svg,setSvg]=useState(''),[error,setError]=useState('');const id=useRef('mermaid-'+crypto.randomUUID().replaceAll('-',''));useEffect(()=>{let alive=true;if(!mermaidPromise)mermaidPromise=import('../vendor/mermaid-loader.mjs').then(m=>{m.default.initialize({startOnLoad:false,securityLevel:'strict',suppressErrorRendering:true,theme:'neutral',flowchart:{htmlLabels:false},fontFamily:'Arial, sans-serif',maxTextSize:50000});return m.default;});mermaidQueue=mermaidQueue.catch(()=>{}).then(async()=>{try{if(code.length>50000)throw Error('Diagram exceeds the size limit');if(/%%\{\s*(init|config)\s*:/i.test(code))throw Error('Embedded renderer configuration is not allowed');const m=await mermaidPromise;const r=await m.render(id.current,code);if(alive){setSvg(r.svg);setTimeout(()=>onReady?.(),30);}}catch(e){if(alive)setError((e as Error).message);}});return()=>{alive=false;};},[code]);return error?<div className="render-error"><strong>Diagram could not be rendered</strong><p>{error}</p><pre>{code}</pre></div>:svg?<div className="mermaid-figure" data-mermaid-ready="true" dangerouslySetInnerHTML={{__html:svg}}/>:<div className="diagram-loading">Rendering diagram...</div>;}
@@ -8,13 +8,16 @@ export function Code({code,language,title,id}:any){const lang=String(language||'
 function Table({columns,rows,page,view,id,print=false}:any){
  const interactive=page?.tags.includes('csv-table')&&id&&!print,visible=interactive?visibleTableColumns(page.id,columns,view.revealed):columns.map((_:string,i:number)=>i),open=interactive&&view.revealed[tableOptionsKey(page.id,id)],layout=interactive?tableLayout(page.id,view.revealed):'table';
  const fields=tableFields(columns),sort=interactive?tableChoice(page.id,view.revealed,'sort'):'source',group=interactive?tableChoice(page.id,view.revealed,'group'):'none',organizeOpen=interactive&&view.revealed[tableChoiceKey(page.id,'menu','organize')],groups=organizeTableRows(columns,rows,sort,group);
- const layouts={table:'Table',pairs:'NO / EN',lines:'Lines',cards2:'2 columns',cards3:'3 columns'};
+ const layouts={table:'Table',pairs:'NO / EN',lines:'Lines',cards2:'2 columns',cards3:'3 columns',dictionary:'Dictionary',tiles:'Tiles'};
+ const palette=interactive?tableChoice(page.id,view.revealed,'palette'):'black',palettes={black:'Black',ocean:'Ocean',forest:'Forest',paper:'Warm paper'},paletteOpen=interactive&&view.revealed[tableChoiceKey(page.id,'menu','palette')];
  const presets=[['compact','Reading'],['alphabet','Alphabet'],...(fields.category>=0||fields.type>=0?[['themes','Categories']]:[]),...(fields.relations.length?[['relations','Synonyms / opposites']]:[]),...(fields.grammar.length?[['grammar','Grammar']]:[])];
- return <div className={'table-wrap csv-layout-'+layout+(interactive?' csv-interactive':'')}>
+ return <div data-csv-palette={interactive?palette:undefined} className={'table-wrap csv-layout-'+layout+(interactive?' csv-interactive':'')}>
   {interactive&&<div className="table-column-tools">
    <button className="text-button" data-action="table-options" data-block={id} aria-expanded={!!open}>Columns</button>
    <div role="group" aria-label="Table reading layout">{TABLE_LAYOUTS.map(mode=><button key={mode} className="text-button" data-action="table-layout" data-block={id} data-snippet={mode} aria-pressed={layout===mode}>{layouts[mode]}</button>)}</div>
    <button className="text-button" data-action="table-organize" data-block={id} aria-expanded={!!organizeOpen}>Views & sort</button>
+   <button className="text-button" data-action="table-colors" data-block={id} aria-expanded={!!paletteOpen}>Colors</button>
+   {paletteOpen&&<div role="group" aria-label="Table color palette">{TABLE_PALETTES.map(mode=><button key={mode} className="text-button csv-color-choice" data-action="table-palette" data-block={id} data-snippet={mode} aria-pressed={palette===mode}><span aria-hidden="true" className={'csv-swatch csv-swatch-'+mode}/>{palettes[mode]}</button>)}</div>}
    {open&&<div role="group" aria-label="Visible table columns">{columns.map((c:string,i:number)=><button key={i} className="text-button" data-action="table-column" data-block={id} data-snippet={String(i)} aria-pressed={visible.includes(i)} disabled={visible.length===1&&visible.includes(i)}>{c}</button>)}</div>}
    {organizeOpen&&<div className="table-organization">
     <div role="group" aria-label="Ready-made table views"><span>Views</span>{presets.map(([mode,label])=><button key={mode} className="text-button" data-action="table-preset" data-block={id} data-snippet={mode}>{label}</button>)}</div>

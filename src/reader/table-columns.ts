@@ -4,7 +4,8 @@
 function preferenceKey(prefix:string,parts:unknown[]){let hash=14695981039346656037n;for(const c of JSON.stringify(parts)){hash^=BigInt(c.codePointAt(0)!);hash=BigInt.asUintN(64,hash*1099511628211n);}return prefix+'.'+hash.toString(16).padStart(16,'0');}
 export const tableColumnKey=(pageId:string,column:string,index:number)=>preferenceKey('table-hidden',[pageId,column,index]);
 export const tableOptionsKey=(pageId:string,blockId:string)=>preferenceKey('table-options',[pageId,blockId]);
-export const TABLE_LAYOUTS=['table','pairs','lines','cards2','cards3'] as const;
+export const TABLE_LAYOUTS=['table','pairs','lines','cards2','cards3','dictionary','tiles'] as const;
+export const TABLE_PALETTES=['black','ocean','forest','paper'] as const;
 export const TABLE_SORTS=['source','norsk','english','reverse'] as const;
 export const TABLE_GROUPS=['none','letter','category','type'] as const;
 export const TABLE_PRESETS=['compact','alphabet','themes','relations','grammar'] as const;
@@ -12,8 +13,8 @@ export type TableLayout=typeof TABLE_LAYOUTS[number];
 export const tableLayoutKey=(pageId:string,layout:TableLayout)=>preferenceKey('table-layout',[pageId,layout]);
 export const tableChoiceKey=(pageId:string,kind:string,value:string)=>preferenceKey('table-choice',[pageId,kind,value]);
 export function tableLayout(pageId:string,revealed:Record<string,boolean>):TableLayout{return TABLE_LAYOUTS.find(mode=>mode!=='table'&&revealed[tableLayoutKey(pageId,mode)])??'table';}
-export function tableChoice(pageId:string,revealed:Record<string,boolean>,kind:'sort'|'group'){const choices=kind==='sort'?TABLE_SORTS:TABLE_GROUPS;return choices.find(value=>revealed[tableChoiceKey(pageId,kind,value)])??choices[0];}
-export function setTableChoice(pageId:string,state:Record<string,boolean>,kind:'sort'|'group',value:string){for(const mode of kind==='sort'?TABLE_SORTS:TABLE_GROUPS)state[tableChoiceKey(pageId,kind,mode)]=mode===value;}
+export function tableChoice(pageId:string,revealed:Record<string,boolean>,kind:'sort'|'group'|'palette'){const choices=kind==='sort'?TABLE_SORTS:kind==='palette'?TABLE_PALETTES:TABLE_GROUPS;return choices.find(value=>revealed[tableChoiceKey(pageId,kind,value)])??choices[0];}
+export function setTableChoice(pageId:string,state:Record<string,boolean>,kind:'sort'|'group'|'palette',value:string){for(const mode of kind==='sort'?TABLE_SORTS:kind==='palette'?TABLE_PALETTES:TABLE_GROUPS)state[tableChoiceKey(pageId,kind,mode)]=mode===value;}
 export function setTableLayout(pageId:string,state:Record<string,boolean>,value:string){for(const mode of TABLE_LAYOUTS)state[tableLayoutKey(pageId,mode)]=mode===value;}
 const heading=(s:string)=>s.trim().toLowerCase();
 export function tableFields(columns:string[]){const find=(pattern:RegExp)=>columns.findIndex(c=>pattern.test(heading(c)));return {category:find(/^(category|categories|categor[iy]e|catégorie|kategori|tema|theme|thème|topic)$/),type:find(/^(type|word class|part of speech|ordklasse)$/),english:find(/^(english|en|anglais)$/),relations:columns.map((c,i)=>/^(synonyms?|antonyms?|opposites?|synonymes?|antonymes?|opposés?)$/.test(heading(c))?i:-1).filter(i=>i>=0),grammar:columns.map((c,i)=>/^(forms?|gender|infinitiv|presens|preteritum|ubestemt|bestemt|bøyning|inflection)/.test(heading(c))?i:-1).filter(i=>i>=0)};}

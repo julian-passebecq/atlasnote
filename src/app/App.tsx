@@ -1,5 +1,5 @@
 import {subscribeArchives,archiveAttachmentEpoch,requireHistoricalRevision} from '../durability/registry.js';
-import {tableColumnKey,tableOptionsKey,tableChoiceKey,visibleTableColumns,setTableLayout,setTableChoice,applyTablePreset,TABLE_LAYOUTS,TABLE_SORTS,TABLE_GROUPS,TABLE_PRESETS} from '../reader/table-columns.js';
+import {tableColumnKey,tableOptionsKey,tableChoiceKey,visibleTableColumns,setTableLayout,setTableChoice,applyTablePreset,TABLE_LAYOUTS,TABLE_PALETTES,TABLE_SORTS,TABLE_GROUPS,TABLE_PRESETS} from '../reader/table-columns.js';
 import {HistoryPanel,ChangeList,RevisionCompareBar,revisionComparison} from '../history/HistoryUI.js';
 import {AgentReviewDialog} from '../agent/AgentReviewUI.js';
 import {StructureHistoryView} from '../history/StructureHistoryView.js';
@@ -322,17 +322,18 @@ function toggleChrome(paneId:string){document.dispatchEvent(new CustomEvent('atl
     else
         addReadingBookmark(p,currentResourceTarget(historicalCatalogue(catalogueRef.current,store.state,loc.historyRevisionId).catalogue,loc)!,page.title,inferReadingCategory(catalogueRef.current,store.state,currentResourceTarget(historicalCatalogue(catalogueRef.current,store.state,loc.historyRevisionId).catalogue,loc)!)); }); notify('Bookmarks updated.'); }
     async function blockAction(action: string, id: string, snippet: string | undefined, paneId: string, view: View, page: Page,event?:any) {
-     if(['table-options','table-column','table-layout','table-organize','table-sort','table-group','table-preset'].includes(action)){
+     if(['table-options','table-column','table-layout','table-organize','table-colors','table-palette','table-sort','table-group','table-preset'].includes(action)){
       let block:any;walkBlocks(page.blocks,(b:any)=>{if(b.id===id)block=b;});
       if(block?.type!=='table'||!page.tags.includes('csv-table'))return;
-      const allowed:Record<string,readonly string[]>={'table-layout':TABLE_LAYOUTS,'table-sort':TABLE_SORTS,'table-group':TABLE_GROUPS,'table-preset':TABLE_PRESETS};
+      const allowed:Record<string,readonly string[]>={'table-layout':TABLE_LAYOUTS,'table-palette':TABLE_PALETTES,'table-sort':TABLE_SORTS,'table-group':TABLE_GROUPS,'table-preset':TABLE_PRESETS};
       if(allowed[action]&&!allowed[action].includes(snippet??''))return;
       const index=Number(snippet);if(action==='table-column'&&(!/^\d+$/.test(snippet??'')||!Number.isInteger(index)||index>=block.columns.length))return;
       updateView(paneId,view.id,v=>{
        if(action==='table-layout'){setTableLayout(page.id,v.revealed,snippet!);return;}
+       if(action==='table-palette'){setTableChoice(page.id,v.revealed,'palette',snippet!);return;}
        if(action==='table-sort'||action==='table-group'){setTableChoice(page.id,v.revealed,action==='table-sort'?'sort':'group',snippet!);return;}
        if(action==='table-preset'){applyTablePreset(page.id,block.columns,v.revealed,snippet!);v.revealed[tableChoiceKey(page.id,'menu','organize')]=false;return;}
-       if(action==='table-options'||action==='table-organize'){const key=action==='table-options'?tableOptionsKey(page.id,id):tableChoiceKey(page.id,'menu','organize');v.revealed[key]=!v.revealed[key];return;}
+       if(action==='table-options'||action==='table-organize'||action==='table-colors'){const key=action==='table-options'?tableOptionsKey(page.id,id):tableChoiceKey(page.id,'menu',action==='table-colors'?'palette':'organize');v.revealed[key]=!v.revealed[key];return;}
        const visible=visibleTableColumns(page.id,block.columns,v.revealed);if(visible.length===1&&visible.includes(index))return;v.revealed[tableColumnKey(page.id,block.columns[index],index)]=visible.includes(index);
       });return;
      }

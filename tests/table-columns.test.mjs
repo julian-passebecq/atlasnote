@@ -41,3 +41,13 @@ test('Grouping and Norwegian/English sorting retain every authored row without m
  assert.equal(organizeTableRows(['Norsk'],[['9'],['']], 'source','letter')[0].title,'#');
  const state={};setTableChoice('a',state,'sort','english');setTableChoice('a',state,'sort','source');assert.equal(tableChoice('a',state,'sort'),'source');
 });
+
+test('Table palettes and distinct layouts are bounded independent personal preferences',()=>{
+ const state={};assert.equal(tableChoice('a',state,'palette'),'black');
+ setTableChoice('a',state,'palette','forest');setTableLayout('a',state,'tiles');
+ assert.equal(tableChoice('a',state,'palette'),'forest');assert.equal(tableChoice('b',state,'palette'),'black');assert.equal(tableLayout('a',state),'tiles');
+ setTableChoice('a',state,'palette','paper');setTableLayout('a',state,'dictionary');
+ assert.equal(tableChoice('a',state,'palette'),'paper');assert.equal(tableLayout('a',state),'dictionary');
+ applyTablePreset('a',['Norsk','English'],state,'compact');assert.equal(tableChoice('a',state,'palette'),'paper');
+ const personal=blankPersonal();personal.session.panes[0].views.push({id:'view.test',history:[],cursor:0,collapsed:{},revealed:state,english:true});personal.session.panes[0].active='view.test';validatePersonal(personal);
+});
