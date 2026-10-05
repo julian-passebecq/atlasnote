@@ -11,14 +11,17 @@ base=start_server();results=[]
 with sync_playwright() as pw:
  b=launch(pw);p=b.new_page(viewport={'width':1536,'height':864},accept_downloads=True);errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
  p.goto(base,wait_until='networkidle');p.wait_for_selector('.atlas-app')
- p.wait_for_function('async()=>('+AGENT+').getStorageDiagnostics().ready!==false')
+ p.wait_for_function('async()=>{const d=('+AGENT+').getStorageDiagnostics();return d.ready===true&&d.initialized===true&&d.saving===0;}',timeout=60000)
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
  def btn(name,scope=None):return (scope or p).get_by_role('button',name=name,exact=True)
  def snapshot():return p.evaluate('async()=>{const m='+SNAPSHOT+';return await m.readPersistedWorkspace();}')
  before=snapshot();open_settings(p)
  csv='Norsk,English,Forms,Example\n'+''.join('"Jeg leser ord '+str(i)+'","I read word '+str(i)+'",leser,"Synthetic example '+str(i)+'"\n' for i in range(65))
  p.get_by_label('Import CSV table',exact=True).set_input_files({'name':'synthetic-words.csv','mimeType':'text/csv','buffer':csv.encode('utf-8')})
  expect(btn('Confirm library import')).to_be_enabled()
- assert snapshot()['history']==before['history'],'CSV preview must not write authored history'
+ preview_history=snapshot()['history']
+ if preview_history!=before['history']:(OUT/'preview-history-failure.json').write_text(json.dumps({'before':before['history'],'preview':preview_history,'diagnostics':p.evaluate('async()=>('+AGENT+').getStorageDiagnostics()')},indent=2),encoding='utf-8')
+ assert preview_history==before['history'],'CSV preview must not write authored history'
  btn('Confirm library import').click();expect(p.get_by_role('status').filter(has_text='Library imported.')).to_be_visible()
  btn('Close dialog').click()
  after=snapshot();pack=next(x for x in after['imports'] if x['manifest']['id'].startswith('csv.local.'))

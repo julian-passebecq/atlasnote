@@ -9,7 +9,8 @@ OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/csv-presets'));OUT.
 base=start_server();results=[]
 with sync_playwright() as pw:
  b=launch(pw);p=b.new_page(viewport={'width':1536,'height':864});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
- p.goto(base,wait_until='networkidle');p.wait_for_selector('.atlas-app');p.wait_for_function('async()=>('+AGENT+').getStorageDiagnostics().ready!==false')
+ p.goto(base,wait_until='networkidle');p.wait_for_selector('.atlas-app');p.wait_for_function('async()=>{const d=('+AGENT+').getStorageDiagnostics();return d.ready===true&&d.initialized===true&&d.saving===0;}',timeout=60000)
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
  def btn(name,scope=None):return (scope or p).get_by_role('button',name=name,exact=True)
  def snapshot():return p.evaluate('async()=>{const m='+SNAPSHOT+';return await m.readPersistedWorkspace();}')
  text=io.StringIO();writer=csv.writer(text);writer.writerow(['Norsk','English','Forms','Type','Synonyms','Antonyms','Category'])
