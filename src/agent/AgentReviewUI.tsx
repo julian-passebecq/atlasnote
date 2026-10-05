@@ -9,6 +9,7 @@ import type {Workspace} from '../core/model.js';
 import {planNorskDailyImport,lookupFromAgent} from '../norsk-daily/import.js';
 import {buildTransformationPrompt,norskDailyJsonSchema} from '../norsk-daily/contract.js';
 import {NORSK_DAILY_LIMITS} from '../norsk-daily/validation.mjs';
+import {prepareNorskDailyJSON} from '../norsk-daily/repair.mjs';
 
 type Preview = ReturnType<AgentInterface['preview']>;
 const sameSelection = (a: string[], b: string[]) => a.length === b.length && a.every(id => b.includes(id));
@@ -24,6 +25,7 @@ export function AgentReviewDialog({workspace, resourceKey, onClose, initialChang
  const [contextKeys, setContextKeys] = useState<string[]>(resourceKey ? [resourceKey] : []);
  const [query, setQuery] = useState(''), [queryOffset, setQueryOffset] = useState(0);
  const [norskFeedText,setNorskFeedText]=useState('');
+ const [norskRepair,setNorskRepair]=useState<{text:string;corrections:string[]}|undefined>(undefined);
  const reviews = api.getReviews(reviewOffset, 25), active = workspace.history?.reviews.find(review => review.id === activeId);
  const contextResources = api.listResources({query, includeStructures: true, offset: queryOffset, limit: 20});
  const decided = active?.status === 'accepted' || active?.status === 'rejected';
@@ -37,7 +39,7 @@ export function AgentReviewDialog({workspace, resourceKey, onClose, initialChang
   finally { inFlight.current = false; setBusy(false); }
  }
  function resetDraft(value: string) {
-  setText(value); setPlan(undefined); setPreview(undefined); setSelected([]); setActiveId(undefined); setError(''); setStatus('');
+  setText(value); setPlan(undefined); setPreview(undefined); setSelected([]); setActiveId(undefined); setError(''); setStatus('');setNorskRepair(undefined);
  }
  function inspect(value: unknown, selection?: string[]) {
   // Clear previous results BEFORE validation. An invalid new import must never
@@ -48,10 +50,13 @@ export function AgentReviewDialog({workspace, resourceKey, onClose, initialChang
   if (!selection) setSelected(result.operations.map(operation => operation.id));
   return result;
  }
- function convertNorskDaily(raw:string) {
+ function convertNorskDaily(raw:string,confirmed=false) {
   const bytes=new TextEncoder().encode(raw).length;
   if(bytes>NORSK_DAILY_LIMITS.bytes)throw Error('Norsk Daily feed exceeds '+NORSK_DAILY_LIMITS.bytes/1024+' KiB');
-  const now=Date.now(),result=planNorskDailyImport(raw,lookupFromAgent(api),{createdAt:now,now,changeSetSuffix:now.toString(36)});
+  const now=Date.now(),prepared=prepareNorskDailyJSON(raw,{now});
+  if(prepared.corrections.length&&!confirmed){setNorskRepair(prepared);setStatus('Format corrections found. Review them before converting to a proposal. Nothing has been imported.');return;}
+  setNorskRepair(undefined);
+  const result=planNorskDailyImport(prepared.text,lookupFromAgent(api),{createdAt:now,now,changeSetSuffix:now.toString(36)});
   if(result.blocked)throw Error('Norsk Daily import blocked: '+result.messages.join(' '));
   if(!result.changeSet){setStatus('Norsk Daily: '+result.messages[0]+' Nothing to review.');return;}
   setText(JSON.stringify(result.changeSet,null,2));inspect(result.changeSet);setNorskFeedText('');
@@ -61,7 +66,7 @@ export function AgentReviewDialog({workspace, resourceKey, onClose, initialChang
   if (inFlight.current) return;
   const row = workspace.history?.reviews.find(review => review.id === id);
   if (!row) return;
-  setError(''); setStatus(''); setPreview(undefined); setActiveId(id);
+  setError(''); setStatus(''); setPreview(undefined); setNorskRepair(undefined); setActiveId(id);
   const savedPlan = row.plan as AgentChangeSet;
   setPlan(savedPlan); setText(JSON.stringify(savedPlan, null, 2));
   setSelected(row.selectedOperationIds ?? savedPlan.operations.map(operation => operation.id));
@@ -114,9 +119,15 @@ export function AgentReviewDialog({workspace, resourceKey, onClose, initialChang
     }} /></label>
     <details className="agent-norsk-paste"><summary>Paste Norsk Daily feed JSON</summary>
      <p className="secondary">Paste inert atlas.norsk-daily@2 JSON from your external chat. Atlas validates it locally and converts it only to a review proposal.</p>
-     <textarea aria-label="Paste Norsk Daily feed JSON" className="json-editor" rows={7} maxLength={NORSK_DAILY_LIMITS.bytes} spellCheck={false} disabled={busy} value={norskFeedText} onChange={e=>setNorskFeedText(e.target.value)} placeholder='{"schema":"atlas.norsk-daily","schemaVersion":2,...}'/>
+     <textarea aria-label="Paste Norsk Daily feed JSON" className="json-editor" rows={7} maxLength={NORSK_DAILY_LIMITS.bytes} spellCheck={false} disabled={busy} value={norskFeedText} onChange={e=>{setNorskFeedText(e.target.value);resetDraft('');}} placeholder='{"schema":"atlas.norsk-daily","schemaVersion":2,...}'/>
      <div className="button-row"><span className="secondary">{norskFeedText.length.toLocaleString()} characters / {NORSK_DAILY_LIMITS.bytes/1024} KiB byte limit</span><button disabled={busy||!norskFeedText.trim()} data-agent-action="norsk-daily-paste" onClick={()=>{resetDraft('');void run(()=>convertNorskDaily(norskFeedText));}}>Convert pasted feed to proposal</button></div>
     </details>
+    {norskRepair&&<section aria-label="Norsk Daily format corrections">
+     <h3>Suggested format corrections</h3><ul>{norskRepair.corrections.map((correction,i)=><li key={i}>{correction}</li>)}</ul>
+     <p>Titles and translations are retained. Required fields, dates, identities and publication rights are never invented. The ordinary validator still applies.</p>
+     <details><summary>Corrected JSON</summary><pre>{norskRepair.text}</pre></details>
+     <div className="button-row"><button disabled={busy} onClick={()=>void run(()=>convertNorskDaily(norskRepair.text,true))}>Use corrections and preview</button><button disabled={busy} onClick={()=>resetDraft('')}>Discard corrections</button></div>
+    </section>}
     <button disabled={busy} data-agent-action="norsk-daily-prompt-copy" onClick={()=>void run(async()=>{const value={schemaVersion:1,kind:'atlas-norsk-daily-transformation',prompt:buildTransformationPrompt(),schema:norskDailyJsonSchema()};await navigator.clipboard.writeText(JSON.stringify(value,null,2));setStatus('Norsk Daily prompt copied. Paste it into your external chat; Atlas sends nothing itself.');})}>Copy Norsk Daily prompt</button>
     <button disabled={busy} data-agent-action="norsk-daily-prompt-export" onClick={() => void run(() => downloadJSON({schemaVersion: 1, kind: 'atlas-norsk-daily-transformation', prompt: buildTransformationPrompt(), schema: norskDailyJsonSchema()}, 'atlasnote-norsk-daily-prompt.json'))}>Export Norsk Daily prompt</button>
     <button disabled={busy || !text || decided || active?.status === 'stale'} data-agent-action="changeset-preview" onClick={() => void run(() => inspect(text))}>Preview ChangeSet</button>

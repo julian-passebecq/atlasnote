@@ -39,14 +39,15 @@ with sync_playwright() as pw:
   assert p.evaluate('async()=>('+AGENT+').getStorageDiagnostics().revisions')==before,'staging must not create content revisions'
   btn('Accept selected operations').click()
   p.wait_for_function('async(r)=>{const d=('+AGENT+').getStorageDiagnostics();return d.revisions>r&&!d.saving;}',arg=before)
-  btn('Close dialog').last.click();return {'revisionsBefore':before,'revisionsAfter':p.evaluate('async()=>('+AGENT+').getStorageDiagnostics().revisions')}
+  expect(p.get_by_role('status').filter(has_text='Selected operations accepted')).to_be_visible()
+  btn('Close dialog').last.click();expect(p.get_by_role('dialog',name='Agent Review')).not_to_be_visible();return {'revisionsBefore':before,'revisionsAfter':p.evaluate('async()=>('+AGENT+').getStorageDiagnostics().revisions')}
  check('Synthetic feed becomes content only after preview, stage and explicit accept',import_accept)
  def queue():
   if not p.locator('.norsk-daily-queue').count():btn('Norsk Daily').click()
   items=p.locator('.norsk-daily-item');expect(items.first).to_be_visible();n=items.count();assert n>=2
   expect(p.locator('.norsk-daily-synthetic')).to_be_visible()
   expect(btn('Add feed')).to_be_visible()
-  expect(p.locator('.norsk-daily-en')).to_have_count(0);p.get_by_label('Show English',exact=True).check();expect(p.locator('.norsk-daily-en')).to_have_count(n)
+  expect(p.locator('.norsk-daily-en')).to_have_count(n);p.get_by_label('Show English',exact=True).uncheck();expect(p.locator('.norsk-daily-en')).to_have_count(0);p.get_by_label('Show English',exact=True).check();expect(p.locator('.norsk-daily-en')).to_have_count(n)
   first=items.first;pid=first.get_attribute('data-page-id')
   first.get_by_role('button',name='Known',exact=True).click()
   expect(p.locator('.norsk-daily-item[data-page-id="'+pid+'"]')).to_have_class(__import__('re').compile('status-known'))
@@ -93,7 +94,7 @@ with sync_playwright() as pw:
   btn('Preview ChangeSet').click();btn('Stage for review').click();p.wait_for_function('async()=>!('+AGENT+').getStorageDiagnostics().saving')
   assert count()==before,'staging must not add concepts'
   btn('Accept selected operations').click();p.wait_for_function('async(b)=>{const m='+SNAPSHOT+';const w=await m.readPersistedWorkspace();return (w.personal.knowledge?.concepts??[]).filter(c=>c.id.startsWith("concept.norsk.vocab.")).length>b;}',arg=before)
-  after=count();btn('Close dialog').last.click()
+  after=count();expect(p.get_by_role('status').filter(has_text='Selected operations accepted')).to_be_visible();btn('Close dialog').last.click()
   assert after==before+n,'one concept per distinct word (%d -> %d, %d words)'%(before,after,n)
   return {'conceptsBefore':before,'conceptsAfter':after}
  check('Vocabulary enters the Concept Index only through preview, stage and explicit accept',concepts)

@@ -1,5 +1,9 @@
 /* 1.2.4: paired rail actions and compact nonmodal managers. */
 .atlas-app .reader-rail{gap:3px;padding:6px 4px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+/* Keep all reader tools, with a narrower icon-only rail. */
+.atlas-app .reader-rail{width:34px;flex-basis:34px;padding-left:2px;padding-right:2px}
+.atlas-app .reader-rail .icon-button{width:27px;min-width:27px;padding:4px}
+.atlas-app .reader-rail .workspace-dock,.atlas-app .reader-rail .workspace-slots{max-width:27px}
 .reader-rail .rail-separator{flex-shrink:0;height:1px;min-height:1px;margin:6px 0;width:20px;background:var(--line)}
 .reader-rail .rail-spacer{min-height:8px}
 .state-save-tools{gap:3px}.state-save-tools .rail-separator{margin:6px 0}
