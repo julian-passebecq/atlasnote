@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-connectors.1",
+  "title": "B2 — Essay connectors · 1",
+  "related": [],
+  "terms": [],
+  "summary": "1–40 / 194. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-connectors.1",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "og",
+          "and",
+          "",
+          "conj",
+          "samt (and/as well as) · i tillegg (in addition)",
+          "men (but)"
+        ],
+        [
+          "også",
+          "also, too",
+          "",
+          "adv/conn",
+          "i tillegg (in addition) · dessuten (besides)",
+          "heller ikke (neither/not either)"
+        ],
+        [
+          "i tillegg",
+          "in addition, besides",
+          "",
+          "conn",
+          "dessuten (furthermore) · også (also) · attpåtil (on top of that)",
+          ""
+        ],
+        [
+          "i tillegg til",
+          "in addition to, besides",
+          "",
+          "prep/conn",
+          "foruten (apart from/besides) · ved siden av (beside/in addition to)",
+          ""
+        ],
+        [
+          "dessuten",
+          "besides, moreover, furthermore",
+          "",
+          "conn",
+          "i tillegg (in addition) · for øvrig (moreover) · attpåtil (on top of that)",
+          ""
+        ],
+        [
+          "for øvrig",
+          "moreover, incidentally, furthermore",
+          "",
+          "conn",
+          "dessuten (furthermore) · ellers (otherwise)",
+          ""
+        ],
+        [
+          "attpåtil",
+          "on top of that, moreover",
+          "",
+          "conn",
+          "dessuten (besides) · til og med (even)",
+          ""
+        ],
+        [
+          "på toppen av det",
+          "on top of that",
+          "",
+          "conn",
+          "attpåtil (on top of that) · dessuten (moreover)",
+          ""
+        ],
+        [
+          "samt",
+          "as well as, and",
+          "",
+          "conj",
+          "og (and) · så vel som (as well as)",
+          ""
+        ],
+        [
+          "så vel som",
+          "as well as",
+          "",
+          "conj",
+          "både og (both and) · samt (as well as)",
+          ""
+        ],
+        [
+          "både ... og",
+          "both ... and",
+          "",
+          "conj",
+          "så vel som (as well as) · samt (as well as)",
+          "verken ... eller (neither nor)"
+        ],
+        [
+          "ikke bare ... men også",
+          "not only ... but also",
+          "",
+          "conn",
+          "både ... og (both ... and) · dessuten (moreover)",
+          "verken ... eller (neither ... nor)"
+        ],
+        [
+          "ikke minst",
+          "not least, especially",
+          "",
+          "conn",
+          "særlig (especially) · spesielt (especially)",
+          ""
+        ],
+        [
+          "til og med",
+          "even, including",
+          "",
+          "conn",
+          "attpåtil (on top of that) · også (also)",
+          ""
+        ],
+        [
+          "foruten",
+          "besides, apart from",
+          "",
+          "prep/conn",
+          "i tillegg til (in addition to) · bortsett fra (apart from)",
+          ""
+        ],
+        [
+          "et annet poeng",
+          "another point",
+          "",
+          "uttr",
+          "i tillegg (in addition) · dessuten (moreover)",
+          ""
+        ],
+        [
+          "å tilføye",
+          "to add",
+          "",
+          "uttr",
+          "legge til (add) · i tillegg (in addition)",
+          ""
+        ],
+        [
+          "først",
+          "first, initially",
+          "",
+          "adv",
+          "innledningsvis (initially) · i begynnelsen (in the beginning)",
+          "til slutt (finally)"
+        ],
+        [
+          "først og fremst",
+          "first and foremost, above all",
+          "",
+          "uttr",
+          "framfor alt (above all) · særlig (especially)",
+          ""
+        ],
+        [
+          "i begynnelsen",
+          "in the beginning, initially",
+          "",
+          "conn",
+          "først (first) · innledningsvis (initially)",
+          "etter hvert (eventually)"
+        ],
+        [
+          "for det første",
+          "firstly, first of all",
+          "",
+          "conn",
+          "først (first) · innledningsvis (initially)",
+          ""
+        ],
+        [
+          "for det andre",
+          "secondly",
+          "",
+          "conn",
+          "dessuten (moreover) · i tillegg (in addition)",
+          ""
+        ],
+        [
+          "for det tredje",
+          "thirdly",
+          "",
+          "conn",
+          "dessuten (moreover) · i tillegg (in addition)",
+          ""
+        ],
+        [
+          "deretter",
+          "after that, then, next",
+          "",
+          "conn",
+          "etterpå (afterwards) · senere (later) · så (then)",
+          "først (first)"
+        ],
+        [
+          "derpå",
+          "then, after that",
+          "",
+          "conn",
+          "deretter (then) · etterpå (afterwards)",
+          "først (first)"
+        ],
+        [
+          "så",
+          "so; then",
+          "",
+          "conn",
+          "derfor (therefore) · deretter (then)",
+          ""
+        ],
+        [
+          "etterpå",
+          "afterwards",
+          "",
+          "conn",
+          "deretter (after that) · senere (later)",
+          "først (first)"
+        ],
+        [
+          "senere",
+          "later",
+          "",
+          "conn",
+          "etterpå (afterwards) · deretter (then)",
+          "tidligere (earlier)"
+        ],
+        [
+          "etter hvert",
+          "gradually, eventually, little by little, in time",
+          "",
+          "conn",
+          "gradvis (gradually) · litt etter litt (little by little)",
+          "plutselig (suddenly)"
+        ],
+        [
+          "litt etter litt",
+          "little by little, bit by bit",
+          "",
+          "conn",
+          "gradvis (gradually) · etter hvert (gradually)",
+          "plutselig (suddenly)"
+        ],
+        [
+          "gradvis",
+          "gradually",
+          "",
+          "conn",
+          "litt etter litt (little by little) · etter hvert (gradually)",
+          "plutselig (suddenly)"
+        ],
+        [
+          "i mellomtiden",
+          "in the meantime",
+          "",
+          "conn",
+          "mens dette skjer (while this happens)",
+          ""
+        ],
+        [
+          "avslutningsvis",
+          "in conclusion, finally",
+          "",
+          "conn",
+          "til slutt (finally) · oppsummert (to summarize)",
+          "innledningsvis (initially)"
+        ],
+        [
+          "da",
+          "when, then",
+          "",
+          "sub/adv",
+          "når (when) · på det tidspunktet (at that time)",
+          ""
+        ],
+        [
+          "når",
+          "when, whenever",
+          "",
+          "sub/adv",
+          "da (when in the past) · hver gang (whenever)",
+          ""
+        ],
+        [
+          "før",
+          "before",
+          "",
+          "sub",
+          "innen (before/by the time) · før det (before that)",
+          "etter (after)"
+        ],
+        [
+          "etter at",
+          "after",
+          "",
+          "sub",
+          "etterpå (afterwards) · deretter (then)",
+          "før (before)"
+        ],
+        [
+          "innen",
+          "before; by the time",
+          "",
+          "sub",
+          "før (before) · innen den tid (by then)",
+          ""
+        ],
+        [
+          "inntil",
+          "until, up to",
+          "",
+          "sub",
+          "fram til (until) · til (until)",
+          ""
+        ],
+        [
+          "idet",
+          "just as, as",
+          "",
+          "sub",
+          "i det øyeblikket (at that moment) · da (when)",
+          ""
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Connectors"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

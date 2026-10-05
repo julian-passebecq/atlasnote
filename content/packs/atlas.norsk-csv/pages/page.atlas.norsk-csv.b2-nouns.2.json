@@ -1,0 +1,397 @@
+{
+  "id": "page.atlas.norsk-csv.b2-nouns.2",
+  "title": "B2 — Noun forms · 2",
+  "related": [],
+  "terms": [],
+  "summary": "41–80 / 130. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-nouns.2",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Gender",
+        "Ubestemt entall",
+        "Bestemt entall",
+        "Ubestemt flertall",
+        "Bestemt flertall"
+      ],
+      "rows": [
+        [
+          "et spørsmål",
+          "question / issue",
+          "et",
+          "et spørsmål",
+          "spørsmålet",
+          "spørsmål",
+          "spørsmålene"
+        ],
+        [
+          "et syn",
+          "view / sight",
+          "et",
+          "et syn",
+          "synet",
+          "syn",
+          "synene"
+        ],
+        [
+          "et tilbud",
+          "offer / service",
+          "et",
+          "et tilbud",
+          "tilbudet",
+          "tilbud",
+          "tilbudene"
+        ],
+        [
+          "et tiltak",
+          "measure / initiative",
+          "et",
+          "et tiltak",
+          "tiltaket",
+          "tiltak",
+          "tiltakene"
+        ],
+        [
+          "et uttak",
+          "removal / extraction",
+          "et",
+          "et uttak",
+          "uttaket",
+          "uttak",
+          "uttakene"
+        ],
+        [
+          "et uvær",
+          "storm / bad weather",
+          "et",
+          "et uvær",
+          "uværet",
+          "uvær",
+          "uværene"
+        ],
+        [
+          "et valg",
+          "election / choice",
+          "et",
+          "et valg",
+          "valget",
+          "valg",
+          "valgene/valga"
+        ],
+        [
+          "et vennskap",
+          "friendship",
+          "et",
+          "et vennskap",
+          "vennskapet",
+          "vennskap",
+          "vennskapene"
+        ],
+        [
+          "et våpen",
+          "weapon",
+          "et",
+          "et våpen",
+          "våpenet",
+          "våpen",
+          "våpnene/våpena"
+        ],
+        [
+          "en frihet",
+          "freedom",
+          "en",
+          "en frihet",
+          "friheten",
+          "friheter",
+          "frihetene"
+        ],
+        [
+          "en myndighet",
+          "authority",
+          "en",
+          "en myndighet",
+          "myndigheten",
+          "myndigheter",
+          "myndighetene"
+        ],
+        [
+          "en rettighet",
+          "right",
+          "en",
+          "en rettighet",
+          "rettigheten",
+          "rettigheter",
+          "rettighetene"
+        ],
+        [
+          "en valgmulighet",
+          "choice / option",
+          "en",
+          "en valgmulighet",
+          "valgmuligheten",
+          "valgmuligheter",
+          "valgmulighetene"
+        ],
+        [
+          "en alderdom",
+          "old age",
+          "en",
+          "en alderdom",
+          "alderdommen",
+          "aldre/alderdommer",
+          "aldrene/alderdommene"
+        ],
+        [
+          "en dom",
+          "sentence / judgment",
+          "en",
+          "en dom",
+          "dommen",
+          "dommer",
+          "dommene"
+        ],
+        [
+          "en sykdom",
+          "illness",
+          "en",
+          "en sykdom",
+          "sykdommen",
+          "sykdommer",
+          "sykdommene"
+        ],
+        [
+          "en bevegelse",
+          "movement",
+          "en",
+          "en bevegelse",
+          "bevegelsen",
+          "bevegelser",
+          "bevegelsene"
+        ],
+        [
+          "en etterspørsel",
+          "demand",
+          "en",
+          "en etterspørsel",
+          "etterspørselen",
+          "etterspørsler",
+          "etterspørslene"
+        ],
+        [
+          "en forpliktelse",
+          "obligation",
+          "en",
+          "en forpliktelse",
+          "forpliktelsen",
+          "forpliktelser",
+          "forpliktelsene"
+        ],
+        [
+          "en hendelse",
+          "event / incident",
+          "en",
+          "en hendelse",
+          "hendelsen",
+          "hendelser",
+          "hendelsene"
+        ],
+        [
+          "en opplevelse",
+          "experience",
+          "en",
+          "en opplevelse",
+          "opplevelsen",
+          "opplevelser",
+          "opplevelsene"
+        ],
+        [
+          "en undersøkelse",
+          "survey / investigation",
+          "en",
+          "en undersøkelse",
+          "undersøkelsen",
+          "undersøkelser",
+          "undersøkelsene"
+        ],
+        [
+          "en avdeling",
+          "department / section",
+          "en",
+          "en avdeling",
+          "avdelingen",
+          "avdelinger",
+          "avdelingene"
+        ],
+        [
+          "en avling",
+          "crop / harvest",
+          "en",
+          "en avling",
+          "avlingen",
+          "avlinger",
+          "avlingene"
+        ],
+        [
+          "en beregning",
+          "calculation / estimate",
+          "en",
+          "en beregning",
+          "beregningen",
+          "beregninger",
+          "beregningene"
+        ],
+        [
+          "en betydning",
+          "importance / meaning",
+          "en",
+          "en betydning",
+          "betydningen",
+          "betydninger",
+          "betydningene"
+        ],
+        [
+          "en donasjon",
+          "donation",
+          "en",
+          "en donasjon",
+          "donasjonen",
+          "donasjoner",
+          "donasjonene"
+        ],
+        [
+          "ei/en ordning",
+          "arrangement / scheme",
+          "ei/en",
+          "ei/en ordning",
+          "ordninga/ordningen",
+          "ordninger",
+          "ordningene"
+        ],
+        [
+          "en erfaring",
+          "experience",
+          "en",
+          "en erfaring",
+          "erfaringen",
+          "erfaringer",
+          "erfaringene"
+        ],
+        [
+          "en generasjon",
+          "generation",
+          "en",
+          "en generasjon",
+          "generasjonen",
+          "generasjoner",
+          "generasjonene"
+        ],
+        [
+          "en holdning",
+          "attitude / position",
+          "en",
+          "en holdning",
+          "holdningen",
+          "holdninger",
+          "holdningene"
+        ],
+        [
+          "en ting",
+          "thing",
+          "en",
+          "en ting",
+          "tingen",
+          "ting",
+          "tingene"
+        ],
+        [
+          "en transplantasjon",
+          "transplant",
+          "en",
+          "en transplantasjon",
+          "transplantasjonen",
+          "transplantasjoner",
+          "transplantasjonene"
+        ],
+        [
+          "en avdød",
+          "deceased person",
+          "en",
+          "en avdød",
+          "den avdøde",
+          "avdøde",
+          "de avdøde"
+        ],
+        [
+          "en bekjent",
+          "acquaintance",
+          "en",
+          "en bekjent",
+          "bekjenten",
+          "bekjente",
+          "bekjentene"
+        ],
+        [
+          "en deltaker",
+          "participant",
+          "en",
+          "en deltaker",
+          "deltakeren",
+          "deltakere",
+          "deltakerne"
+        ],
+        [
+          "en dommer",
+          "judge",
+          "en",
+          "en dommer",
+          "dommeren",
+          "dommere",
+          "dommerne"
+        ],
+        [
+          "en donor",
+          "donor",
+          "en",
+          "en donor",
+          "donoren",
+          "donorer",
+          "donorene"
+        ],
+        [
+          "et mønster",
+          "pattern",
+          "et",
+          "et mønster",
+          "mønsteret",
+          "mønstre/mønster",
+          "mønstrene"
+        ],
+        [
+          "en organmottaker",
+          "organ recipient",
+          "en",
+          "en organmottaker",
+          "organmottakeren",
+          "organmottakere",
+          "organmottakerne"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "NORA0130_B2_exam_grammar_irregulars_study_friendly_v6_final_clean.xlsx",
+      "note": "Worksheet: 03 Noun forms grouped"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

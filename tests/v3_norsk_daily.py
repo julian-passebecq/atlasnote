@@ -49,6 +49,8 @@ with sync_playwright() as pw:
   expect(btn('Add feed')).to_be_visible()
   expect(p.locator('.norsk-daily-en')).to_have_count(n);p.get_by_label('Show English',exact=True).uncheck();expect(p.locator('.norsk-daily-en')).to_have_count(0);p.get_by_label('Show English',exact=True).check();expect(p.locator('.norsk-daily-en')).to_have_count(n)
   first=items.first;pid=first.get_attribute('data-page-id')
+  expect(p.locator('.norsk-daily-status')).to_have_count(0)
+  btn('Study').click()
   first.get_by_role('button',name='Known',exact=True).click()
   expect(p.locator('.norsk-daily-item[data-page-id="'+pid+'"]')).to_have_class(__import__('re').compile('status-known'))
   expect(btn('Known (1)')).to_be_visible();shot('queue');return {'items':n,'known':pid}

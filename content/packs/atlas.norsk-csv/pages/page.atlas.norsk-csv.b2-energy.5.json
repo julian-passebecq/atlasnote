@@ -1,0 +1,148 @@
+{
+  "id": "page.atlas.norsk-csv.b2-energy.5",
+  "title": "B2 — Transport and energy · 5",
+  "related": [],
+  "terms": [],
+  "summary": "161–174 / 174. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-energy.5",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "1,5-gradersmål",
+          "1.5-degree target",
+          "sg: (u) et 1,5-gradersmål; (d) 1,5-gradersmålet; pl: (u) 1,5-gradersmål; (d) 1,5-gradersmålene",
+          "nou",
+          "klimamål (climate target)",
+          "ukontrollert oppvarming (uncontrolled warming)"
+        ],
+        [
+          "alvorlighetsgrad",
+          "degree of severity",
+          "sg: (u) en alvorlighetsgrad; (d) alvorlighetsgraden; pl: (u) alvorlighetsgrader; (d) alvorlighetsgradene",
+          "nou",
+          "grad av alvor (degree of seriousness)",
+          "ufarlighet (harmlessness)"
+        ],
+        [
+          "forekomst",
+          "occurrence, incidence",
+          "sg: (u) en forekomst; (d) forekomsten; pl: (u) forekomster; (d) forekomstene",
+          "nou",
+          "utbredelse (prevalence) · tilfelle (case)",
+          "fravær (absence)"
+        ],
+        [
+          "forutsi",
+          "predict",
+          "IRR : (INF) infinitiv: å forutsi; (PR) presens: forutsier; (PT) preteritum: forutsa; (PP) presens perfektum: har forutsett",
+          "vrb",
+          "spå (predict) · varsle (forecast)",
+          "oppsummere i etterkant (summarize afterwards)"
+        ],
+        [
+          "global oppvarming",
+          "global warming",
+          "sg: (u) en global oppvarming; (d) den globale oppvarmingen; vanligvis uten flertall",
+          "nou",
+          "temperaturøkning (temperature increase)",
+          "global nedkjøling (global cooling)"
+        ],
+        [
+          "hyppighet",
+          "frequency",
+          "sg: (u) en hyppighet; (d) hyppigheten; vanligvis uten flertall",
+          "nou",
+          "frekvens (frequency)",
+          "sjeldenhet (rarity)"
+        ],
+        [
+          "klimaendring",
+          "climate change",
+          "sg: (u) en klimaendring; (d) klimaendringen; pl: (u) klimaendringer; (d) klimaendringene",
+          "nou",
+          "klimaforandring (climate change)",
+          "stabilt klima (stable climate)"
+        ],
+        [
+          "klimafremtid",
+          "climate future",
+          "sg: (u) en klimafremtid; (d) klimafremtiden; vanligvis uten flertall",
+          "nou",
+          "fremtidig klima (future climate)",
+          "klimafortid (climate past)"
+        ],
+        [
+          "klimascenario",
+          "climate scenario",
+          "sg: (u) et klimascenario; (d) klimascenarioet; pl: (u) klimascenarioer; (d) klimascenarioene",
+          "nou",
+          "framtidsbilde (future picture) · utviklingsbane (development path)",
+          "fasit (final answer)"
+        ],
+        [
+          "kritiske råvarer",
+          "critical raw materials",
+          "",
+          "uttr",
+          "strategiske råvarer (strategic raw materials)",
+          "lett erstattelige råvarer (easily replaceable raw materials)"
+        ],
+        [
+          "menneskeskapt",
+          "human-made, anthropogenic",
+          "(M/F) menneskeskapt; (N) menneskeskapt; (PL) menneskeskapte",
+          "adj",
+          "antropogen (anthropogenic)",
+          "naturlig (natural)"
+        ],
+        [
+          "ppm",
+          "ppm, parts per million",
+          "",
+          "fork",
+          "deler per million (parts per million)",
+          "prosent (percent)"
+        ],
+        [
+          "prøvetaking",
+          "sampling",
+          "sg: (u) en prøvetaking; (d) prøvetakingen; pl: (u) prøvetakinger; (d) prøvetakingene",
+          "nou",
+          "testing (testing)",
+          "synsing (guesswork)"
+        ],
+        [
+          "råvare",
+          "raw material",
+          "sg: (u) en råvare; (d) råvaren; pl: (u) råvarer; (d) råvarene",
+          "nou",
+          "materiale (material)",
+          "ferdigprodukt (finished product)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Transport Energy"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

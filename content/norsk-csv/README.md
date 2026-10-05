@@ -1,0 +1,52 @@
+# Norsk CSV study sheets
+
+Ten owner-authorized lexical selections from the supplied study workbooks:
+1,449 entries, A2 daily life/work/technology, B1 work/economy, B2
+transport/energy, nature/climate, politics/society, essay connectors,
+verb forms and noun forms. The source index records exact workbook and worksheet
+names. These are source study notes, not independently verified dictionary entries.
+Textbook passages, definitions and exam examples are excluded from this public selection.
+The original ZIPs and complete translations are not published.
+
+## In AtlasNote
+
+Choose **Norsk → Notebook → Norsk vocabulary and grammar**. The tree is arranged
+by level, theme and grammar/writing. Tables start with three visible columns.
+**Columns** shows/hides translations, inflections and other fields. **NO / EN**
+aligns the first two columns; **Lines** puts the Norwegian entry in bold above
+its translation. These are personal reading preferences, independent in panes
+A/B; source data and printable tables stay complete.
+
+For a personal file: **Workspace settings → Choose CSV → Confirm library import**.
+CSV imports stay private in this browser's IndexedDB and its canonical history.
+The original file is not retained as an attachment; all parsed cells are retained
+in native Notebook table blocks and included in workspace backups. Nothing is
+uploaded to GitHub. Use a UTF-8 CSV with column headings, comma/semicolon/tab
+delimiter, correctly quoted multiline cells and consistent column counts.
+For bilingual study put Norsk first and English second. Limits: 2 MB, 5,000 rows,
+32 columns. Pages contain at most 40 source rows; the existing Book renderer
+further paginates them into screen-sized sheets.
+
+## Updating repository sources
+
+Edit the ten CSVs, advance the version in `index.json`, then run:
+
+```powershell
+node tools/generate-norsk-csv.mjs
+node tools/generate-norsk-csv.mjs --check
+```
+
+Review the output and its semantic SHA before updating `content/publication-review.json`.
+This generator never grants publication approval or changes the review hash.
+
+For a different organized selection, provide an index with `id`, `version`,
+`title` and `sheets` (`id`, `title`, `folder`, `file`), then:
+
+```powershell
+node tools/csv-to-atlas.mjs path/to/index.json private-workspace
+npm run pack:local -- private-workspace norsk.private.zip
+```
+
+The reusable converter defaults to private. Git stores reviewed public sources;
+the app bundles their converted tables. Local imports remain device-local.
+There is no Git polling or cloud synchronization.

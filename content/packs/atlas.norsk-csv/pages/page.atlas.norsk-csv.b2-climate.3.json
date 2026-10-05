@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-climate.3",
+  "title": "B2 — Nature and climate · 3",
+  "related": [],
+  "terms": [],
+  "summary": "81–120 / 192. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-climate.3",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "folkelig",
+          "popular, of the people, down-to-earth",
+          "(M/F) folkelig · (N) folkelig · (PL) folkelige",
+          "adj",
+          "populær (popular) · jordnær (down-to-earth)",
+          "elitistisk (elitist) · utilgjengelig (inaccessible)"
+        ],
+        [
+          "forklare",
+          "explain",
+          "G2 -te : (INF) infinitiv: å forklare; (PR) presens: forklarer; (PT) preteritum: forklarte; (PP) presens perfektum: har forklart",
+          "vrb",
+          "beskrive (describe) · gjøre klart (clarify)",
+          "forvirre (confuse)"
+        ],
+        [
+          "forsvare",
+          "defend, protect, justify",
+          "G2 -te : (INF) infinitiv: å forsvare; (PR) presens: forsvarer; (PT) preteritum: forsvarte; (PP) presens perfektum: har forsvart; (PSS) forsvares; (IM) forsvar",
+          "vrb",
+          "beskytte (protect) · verne (protect)",
+          "angripe (attack) · overgi (surrender)"
+        ],
+        [
+          "forutsigbar",
+          "predictable",
+          "(M/F) forutsigbar · (N) forutsigbart · (PL) forutsigbare",
+          "adj",
+          "beregnelig (predictable) · ventet (expected)",
+          "uforutsigbar (unpredictable)"
+        ],
+        [
+          "fullstendig",
+          "complete",
+          "",
+          "adj",
+          "komplett (complete) · hel (whole)",
+          "ufullstendig (incomplete)"
+        ],
+        [
+          "gi uttrykk for",
+          "express, give expression to",
+          "IRR : (INF) infinitiv: å gi uttrykk for; (PR) presens: gir uttrykk for; (PT) preteritum: ga/gav uttrykk for; (PP) presens perfektum: har gitt uttrykk for",
+          "vrb",
+          "uttrykke (express) · formulere (formulate)",
+          "holde tilbake (hold back) · tie om (stay silent about)"
+        ],
+        [
+          "ha det på tunga",
+          "have it on the tip of one’s tongue",
+          "IRR : (INF) infinitiv: å ha det på tunga; (PR) presens: har det på tunga · (PT) preteritum: hadde det på tunga · (PP) presens perfektum: har hatt det på tunga",
+          "vrb",
+          "nesten huske (almost remember) · lete etter ordet (search for the word)",
+          "huske klart (remember clearly) · glemme helt (forget completely)"
+        ],
+        [
+          "ha sammenheng med",
+          "be connected with",
+          "",
+          "uttr",
+          "henge sammen med (be connected with) · være knyttet til (be linked to)",
+          "være uavhengig av (be independent of)"
+        ],
+        [
+          "hele",
+          "whole, entire",
+          "",
+          "det",
+          "samlet (total) · fullstendig (complete)",
+          "delvis (partly)"
+        ],
+        [
+          "inneholde",
+          "contain",
+          "G1 -et : (INF) infinitiv: å inneholde· (PR) presens: inneholder· (PT) preteritum: inneholdet· (PP) presens perfektum: har inneholdet· (PSS) inneholdes· (IM) innehold",
+          "vrb",
+          "omfatte (include) · romme (contain)",
+          "mangle (lack) · utelate (omit)"
+        ],
+        [
+          "insekt",
+          "insect",
+          "sg: (u) et insekt; (d) insektet; pl: (u) insekter; (d) insektene",
+          "nou",
+          "småkryp (bug) · ledd-dyr (arthropod)",
+          "pattedyr (mammal)"
+        ],
+        [
+          "kilde",
+          "source",
+          "sg: (u) en kilde; (d) kilden; pl: (u) kilder; (d) kildene",
+          "nou",
+          "opphav (origin/source) · referanse (reference)",
+          "kopi (copy) · gjengivelse (reproduction)"
+        ],
+        [
+          "kjenne",
+          "know; feel",
+          "G2 -te : (INF) infinitiv: å kjenne; (PR) presens: kjenner; (PT) preteritum: kjente; (PP) presens perfektum: har kjent",
+          "vrb",
+          "vite om (know about) · føle (feel)",
+          "ikke vite (not know)"
+        ],
+        [
+          "komme i kontakt med",
+          "to get in touch with",
+          "IRR : (INF) infinitiv: å komme i kontakt med; (PR) presens: kommer i kontakt med; (PT) preteritum: kom i kontakt med; (PP) presens perfektum: har kommet i kontakt med",
+          "vrb",
+          "få kontakt med (get in touch with) · ta kontakt med (contact)",
+          "slutte (stop) · avslutte (finish)"
+        ],
+        [
+          "komme til orde",
+          "get to speak, have one’s voice heard",
+          "IRR : (INF) infinitiv: å komme til orde· (PR) presens: kommer til orde· (PT) preteritum: kom til orde· (PP) presens perfektum: har kommet til orde· (PSS) —· (IM) kom til orde",
+          "vrb",
+          "få si noe (get to say something) · bli hørt (be heard)",
+          "bli tiet i hjel (be silenced) · bli oversett (be ignored)"
+        ],
+        [
+          "kortreist",
+          "locally produced",
+          "m/f: kortreist; n: kortreist; pl: kortreiste",
+          "adj",
+          "lokal (local) · nært produsert (locally produced)",
+          "langreist (transported far)"
+        ],
+        [
+          "land",
+          "country, land",
+          "",
+          "nou",
+          "stat (state) · nasjon (nation)",
+          "hav (sea)"
+        ],
+        [
+          "landskap",
+          "landscape",
+          "sg: (u) et landskap; (d) landskapet; pl: (u) landskap; (d) landskapene",
+          "nou",
+          "terreng (terrain) · område (area)",
+          "innemiljø (indoor environment)"
+        ],
+        [
+          "lang",
+          "long",
+          "",
+          "adj",
+          "langvarig (long-lasting)",
+          "kort (short)"
+        ],
+        [
+          "legge kortene på bordet",
+          "to lay your cards on the table / be open",
+          "IRR : (INF) infinitiv: å legge kortene på bordet; (PR) presens: legger kortene på bordet; (PT) preteritum: la kortene på bordet; (PP) presens perfektum: har lagt kortene på bordet",
+          "vrb",
+          "være åpen (be open) · si sannheten (tell the truth)",
+          "holde kortene skjult (keep the cards hidden)"
+        ],
+        [
+          "medføre",
+          "entail, lead to, bring about",
+          "G2 -te : (INF) infinitiv: å medføre· (PR) presens: medfører· (PT) preteritum: medførte· (PP) presens perfektum: har medført· (PSS) medføres",
+          "vrb",
+          "føre til (lead to) · innebære (entail)",
+          "hindre (prevent) · utelukke (exclude)"
+        ],
+        [
+          "målløs",
+          "speechless / aimless",
+          "(M/F) målløs · (N) målløst · (PL) målløse",
+          "adj",
+          "ordløs (speechless) · stum (mute/speechless)",
+          "talefør (articulate, able to speak) · snakkesalig (talkative)"
+        ],
+        [
+          "natur",
+          "nature",
+          "sg: (u) en natur; (d) naturen; vanligvis uten flertall",
+          "nou",
+          "miljø (environment) · landskap (landscape)",
+          "kulturlandskap (cultivated landscape)"
+        ],
+        [
+          "naturalistisk",
+          "naturalistic",
+          "(M/F) naturalistisk · (N) naturalistisk · (PL) naturalistiske",
+          "adj",
+          "realistisk (realistic) · virkelighetsnær (close to reality)",
+          "romantisk (romantic) · idealiserende (idealizing)"
+        ],
+        [
+          "naturinngrep",
+          "intervention in nature",
+          "sg: (u) et naturinngrep; (d) naturinngrepet; pl: (u) naturinngrep; (d) naturinngrepene",
+          "nou",
+          "utbygging (development) · inngrep (intervention)",
+          "vern (protection)"
+        ],
+        [
+          "naturmangfold",
+          "biodiversity, natural diversity",
+          "sg: (u) et naturmangfold; (d) naturmangfoldet; vanligvis uten flertall",
+          "nou",
+          "biologisk mangfold (biodiversity)",
+          "artsfattigdom (lack of species diversity)"
+        ],
+        [
+          "nettadferd",
+          "online behaviour, web behaviour",
+          "SG: (U) en nettadferd · (D) nettadferden · PL: —",
+          "nou",
+          "brukeratferd (user behaviour) · nettvaner (online habits)",
+          "offline-adferd (offline behaviour) · personvern (privacy)"
+        ],
+        [
+          "oppbevare",
+          "store, keep",
+          "G2 -te : V1 — TE: (PR) presens: oppbevarer; (PT) preteritum: oppbevarte; (PP) presens perfektum: har oppbevart",
+          "vrb",
+          "lagre (store) · beholde (keep, retain)",
+          "kaste (throw away) · la være å gjøre det (not do it)"
+        ],
+        [
+          "opphavsmann",
+          "originator, creator, author",
+          "SG: (U) en opphavsmann · (D) opphavsmannen · PL: (U) opphavsmenn · (D) opphavsmennene",
+          "nou",
+          "skaper (creator) · forfatter (author)",
+          "kopist (copyist) · mottaker (recipient)"
+        ],
+        [
+          "orke",
+          "manage, have the energy to, bother to",
+          "G1 -et : (INF) infinitiv: å orke· (PR) presens: orker· (PT) preteritum: orket· (PP) presens perfektum: har orket· (PSS) orkes· (IM) ork",
+          "vrb",
+          "makte (manage) · klare (manage)",
+          "gi opp (give up) · unngå (avoid)"
+        ],
+        [
+          "potet",
+          "potato",
+          "sg: (u) en potet; (d) poteten; pl: (u) poteter; (d) potetene",
+          "nou",
+          "matpotet (food potato)",
+          "kjøtt (meat)"
+        ],
+        [
+          "prelle av",
+          "bounce off, have no effect",
+          "G1 -et : (INF) infinitiv: å prelle av· (PR) presens: preller av· (PT) preteritum: prellet av· (PP) presens perfektum: har prellet av· (PSS) prelles av· (IM) prell av",
+          "vrb",
+          "ignoreres (bounce off) · ikke gjøre inntrykk (bounce off)",
+          "gå inn på (affect)"
+        ],
+        [
+          "påvirkning",
+          "influence, impact",
+          "SG: (U) en påvirkning · (D) påvirkningen · PL: (U) påvirkninger · (D) påvirkningene",
+          "nou",
+          "innvirkning (influence) · effekt (effect)",
+          "manglende påvirkning (lack of influence)"
+        ],
+        [
+          "reindrift",
+          "reindeer herding",
+          "sg: (u) en reindrift; (d) reindriften; vanligvis uten flertall",
+          "nou",
+          "samisk næring (Sámi livelihood)",
+          "industridrift (industrial operation)"
+        ],
+        [
+          "restaurering",
+          "restoration",
+          "sg: (u) en restaurering; (d) restaureringen; pl: (u) restaureringer; (d) restaureringene",
+          "nou",
+          "gjenoppretting (restoration)",
+          "ødeleggelse (destruction)"
+        ],
+        [
+          "saken er at",
+          "the thing is that, the matter is that",
+          "",
+          "uttr",
+          "poenget er at (the point is that) · problemet er at (the problem is that)",
+          "det er ikke poenget at (that is not the point)"
+        ],
+        [
+          "samsvare",
+          "correspond, be consistent",
+          "G2 -te : (INF) infinitiv: å samsvare· (PR) presens: samsvarer· (PT) preteritum: samsvarte· (PP) presens perfektum: har samsvart· (PSS) samsvares· (IM) samsvar",
+          "vrb",
+          "stemme overens (match) · passe (fit)",
+          "avvike (deviate) · stride (conflict)"
+        ],
+        [
+          "sesong",
+          "season",
+          "sg: (u) en sesong; (d) sesongen; pl: (u) sesonger; (d) sesongene",
+          "nou",
+          "årstid (season)",
+          "helår (whole year)"
+        ],
+        [
+          "sette i gang",
+          "start, launch, set in motion",
+          "IRR : (INF) infinitiv: å sette i gang· (PR) presens: setter i gang· (PT) preteritum: satte i gang· (PP) presens perfektum: har satt i gang· (PSS) —· (IM) sett i gang",
+          "vrb",
+          "starte (start) · igangsette (initiate)",
+          "stanse (stop) · avbryte (interrupt)"
+        ],
+        [
+          "sette saken på spissen",
+          "put the matter sharply, sharpen the issue",
+          "IRR : (INF) infinitiv: å sette saken på spissen· (PR) presens: setter saken på spissen· (PT) preteritum: satte saken på spissen· (PP) presens perfektum: har satt saken på spissen· (PSS) —· (IM) sett saken på spissen",
+          "vrb",
+          "spissformulere (sharpen wording) · overdrive (exaggerate)",
+          "nyansere (nuance)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Nature Env Climate"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

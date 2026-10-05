@@ -1,0 +1,18 @@
+.table-column-tools{display:flex;align-items:center;flex-wrap:wrap;gap:3px 8px;margin-bottom:4px;font-size:11px}
+.continuous-content:has(.csv-interactive){max-width:none;width:100%;padding:20px 24px 40px}
+.csv-interactive th{background:var(--sheet,var(--bg))}
+.csv-interactive tbody tr:nth-child(even){background:transparent}
+.table-column-tools>div{display:flex;flex-wrap:wrap;gap:3px}
+.table-column-tools button{font-size:11px;padding:3px 6px;min-height:24px;white-space:normal}
+.csv-layout-pairs table,.csv-layout-lines table{width:100%}
+.csv-layout-pairs thead,.csv-layout-lines thead{display:none}
+.csv-layout-pairs tbody,.csv-layout-lines tbody{display:block}
+.csv-layout-pairs tbody tr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border-bottom:1px solid var(--line)}
+.csv-layout-pairs td{display:block;border:0;min-width:0;overflow-wrap:anywhere}
+.csv-layout-pairs td[data-column="0"],.csv-layout-lines td[data-column="0"]{font-weight:700}
+.csv-layout-pairs td:nth-child(n+3){grid-column:1/-1;font-size:.8em;color:var(--muted)}
+.csv-layout-lines tbody tr{display:block;border-bottom:1px solid var(--line);padding:4px 0 8px}
+.csv-layout-lines td{display:block;border:0;padding:3px 8px;overflow-wrap:anywhere}
+.csv-layout-lines td:nth-child(n+3){font-size:.8em;color:var(--muted)}
+.csv-layout-lines tbody tr:nth-child(even),.csv-layout-pairs tbody tr:nth-child(even){background:transparent}
+@media print{.table-column-tools{display:none}}

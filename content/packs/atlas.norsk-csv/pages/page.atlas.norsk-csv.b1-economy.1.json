@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b1-economy.1",
+  "title": "B1 — Economy and welfare · 1",
+  "related": [],
+  "terms": [],
+  "summary": "1–40 / 45. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b1-economy.1",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "aksje",
+          "share / stock",
+          "ei/en aksje / aksja/aksjen / aksjer / aksjene",
+          "phrase",
+          "verdipapir (security)  ·  andel (share / stake)",
+          "gjeldspost (debt item)  ·  kontanter (cash)"
+        ],
+        [
+          "budsjett",
+          "a budget",
+          "et budsjett; budsjettet; budsjetter; budsjettene",
+          "noun",
+          "økonomiplan (budget)  ·  rammeplan (budget framework)",
+          "overforbruk (overspending)  ·  ukontrollert forbruk (uncontrolled spending)"
+        ],
+        [
+          "egenkapital",
+          "equity",
+          "en egenkapital; egenkapitalen; egenkapitaler; egenkapitalene",
+          "noun",
+          "kapital (capital)  ·  innskutt kapital (invested capital)",
+          "gjeld (debt)  ·  underskudd (deficit)"
+        ],
+        [
+          "få økonomien til å gå rundt",
+          "make ends meet",
+          "(INF) få økonomien til å gå rundt · (PR) får økonomien til å gå rundt · (PT) fikk økonomien til å gå rundt · (PP) fått økonomien til å gå rundt",
+          "verb_expr",
+          "penger (related meaning)  ·  bruke uttrykket (use the expression)",
+          "kontrastbegrep (contrasting term)  ·  alternativ situasjon (alternative situation)"
+        ],
+        [
+          "feriepenger",
+          "holiday pay",
+          "feriepenger; feriepengene",
+          "other",
+          "feriekompensasjon (vacation compensation)  ·  lønn under ferie (pay during vacation)",
+          "lønnstrekk (pay deduction)  ·  ulønnet permisjon (unpaid leave)"
+        ],
+        [
+          "fond",
+          "fund",
+          "et fond; fondet; fonder; fonderne",
+          "noun",
+          "investeringsfond (investment fund)  ·  pengefond (money fund)",
+          "gjeld (debt)  ·  forbrukskonto (spending account)"
+        ],
+        [
+          "forsikring",
+          "insurance",
+          "en forsikring; forsikringen; forsikringer; forsikringene",
+          "noun",
+          "assuranse (insurance), dekning (coverage)",
+          "egen risiko (own risk), uforsikret tilstand (uninsured state)"
+        ],
+        [
+          "inflasjon",
+          "inflation",
+          "en inflasjon / inflasjonen",
+          "noun",
+          "prisvekst (price growth)  ·  pengeverdifall (currency depreciation)",
+          "deflasjon (deflation)  ·  prisfall (price decline)"
+        ],
+        [
+          "investering",
+          "investment",
+          "ei/en investering / investeringa/investeringen / investeringer / investeringene",
+          "phrase",
+          "kapitalplassering (capital investment)  ·  satsing (investment / initiative)",
+          "uttak (withdrawal)  ·  desinvestering (divestment)"
+        ],
+        [
+          "kredittkort",
+          "a credit card",
+          "et kredittkort; kredittkortet; kredittkort; kredittkortene",
+          "noun",
+          "betalingskort (payment card)  ·  kort med kreditt (card with credit)",
+          "debetkort (debit card)  ·  kontanter (cash)"
+        ],
+        [
+          "lån / en gjeld",
+          "a loan / a debt",
+          "et lån; lånet; lån; lånene / en gjeld; gjelda/gjelden; gjeld; gjeldene",
+          "noun",
+          "kreditt (credit)  ·  utlån (loaning)",
+          "tilbakebetaling (repayment)  ·  sparing (saving)"
+        ],
+        [
+          "rente",
+          "interest",
+          "en rente; renta/renten; renter; rentene",
+          "noun",
+          "lånerente (loan interest)  ·  rentesats (interest rate)",
+          "rentefrihet (interest-free status)  ·  nullrente (zero interest)"
+        ],
+        [
+          "avdragstid / et avdrag",
+          "a repayment period / an instalment",
+          "en avdragstid; avdragstida/avdragstiden; avdragstider; avdragstidene / et avdrag; avdraget; avdrag; avdragene",
+          "noun",
+          "nedbetalingstid (repayment period)  ·  tilbakebetalingstid (payback period)",
+          "engangsbetaling (one-time payment)  ·  kontant betaling (cash payment)"
+        ],
+        [
+          "bostøtte",
+          "housing benefit",
+          "ei/en bostøtte; bostøtten; bostøtter; bostøttene",
+          "noun",
+          "boligstøtte (housing support)  ·  husleiestøtte (rent support)",
+          "kontrastbegrep (contrasting term)  ·  alternativ situasjon (alternative situation)"
+        ],
+        [
+          "budrunde",
+          "a bidding round",
+          "en budrunde; budrunden; budrunder; budrundene",
+          "noun",
+          "budgivning (bidding)  ·  auksjonsrunde (auction round)",
+          "fastpris (fixed price)  ·  salg uten bud (sale without bidding)"
+        ],
+        [
+          "drabantby",
+          "a satellite suburb",
+          "en drabantby, drabantbyen, drabantbyer, drabantbyene",
+          "noun",
+          "forstad (suburb)  ·  satellittby (satellite town)",
+          "sentrum (city centre)  ·  landsby (village)"
+        ],
+        [
+          "fellesgjeld / en felleskostnad",
+          "shared debt / shared costs",
+          "en fellesgjeld; fellesgjelda/fellesgjelden; fellesgjeld; fellesgjeldene / en felleskostnad; felleskostnaden; felleskostnader; felleskostnadene",
+          "noun",
+          "sameiegjeld (shared co-ownership debt)  ·  borettslagsgjeld (housing-coop debt)",
+          "gjeldfrihet (debt-free status)  ·  egenkapital (equity)"
+        ],
+        [
+          "gå på visning / å legge inn et bud",
+          "to go to a viewing / to place a bid",
+          "(INF) gå på visning / å legge inn et bud · (PR) går på visning / å legge inn et bud · (PT) gikk på visning / å legge inn et bud · (PP) gått på visning / å legge inn et bud",
+          "verb",
+          "se på bolig (view a home)  ·  by på bolig (bid on a home)",
+          "droppe visning (skip a viewing)  ·  trekke budet (withdraw the bid)"
+        ],
+        [
+          "kollektiv",
+          "a shared flat",
+          "et kollektiv; kollektivet; kollektiv; kollektivene",
+          "noun",
+          "bofellesskap (shared housing)  ·  kollektivbolig (collective housing)",
+          "egen bolig (own home)  ·  privat husholdning (private household)"
+        ],
+        [
+          "lån",
+          "loan",
+          "et lån; lånet; lån; lånene",
+          "noun",
+          "kreditt (credit)  ·  lånebeløp (loan amount)",
+          "egenkapital (equity)  ·  sparepenger (savings)"
+        ],
+        [
+          "gjeld",
+          "debt",
+          "en/ei gjeld; gjelden/gjelda; vanligvis entall",
+          "noun",
+          "skyld (debt owed)  ·  låneforpliktelse (loan obligation)",
+          "formue (wealth)  ·  overskudd (surplus)"
+        ],
+        [
+          "leie / å eie",
+          "to rent / to own",
+          "G3 -de/-d : (INF) leie · (PR) leier · (PT) leide · (PP) leid",
+          "verb",
+          "hyre (hire)  ·  leie inn (rent, hire in)",
+          "eie (own)  ·  selge (sell)"
+        ],
+        [
+          "avgift",
+          "fee, charge, levy",
+          "en avgift; avgiften; avgifter; avgiftene",
+          "noun",
+          "gebyr (fee)  ·  offentlig betaling (public charge)",
+          "tilskudd (subsidy)  ·  skattefritak (tax exemption)"
+        ],
+        [
+          "eiendomsskatt",
+          "property tax",
+          "en eiendomsskatt; eiendomsskatten; eiendomsskatter; eiendomsskattene",
+          "noun",
+          "skatt (tax)  ·  fast (fixed)",
+          "skattefritak (tax exemption)  ·  leieutgift (rental expense)"
+        ],
+        [
+          "formuesskatt",
+          "wealth tax",
+          "en formuesskatt; formuesskatten; formuesskatter; formuesskattene",
+          "noun",
+          "skatt på formue (tax on wealth)  ·  kapitalbeskatning (capital taxation)",
+          "skattefritak (tax exemption)  ·  inntektsskatt (income tax)"
+        ],
+        [
+          "skatt",
+          "tax",
+          "en skatt; skatten; skatter; skattene",
+          "noun",
+          "avgift (tax/fee)  ·  offentlig inntekt (public revenue)",
+          "skattefritak (tax exemption)  ·  privat inntekt (private income)"
+        ],
+        [
+          "skatteregel",
+          "a tax rule",
+          "en skatteregel; skatteregelen; skatteregler; skattereglene",
+          "noun",
+          "skattebestemmelse (tax provision)  ·  skatteforskrift (tax regulation)",
+          "skattefritak (tax exemption)  ·  skattelette (tax relief)"
+        ],
+        [
+          "statsbudsjett",
+          "state budget",
+          "et statsbudsjett / statsbudsjettet / statsbudsjetter / statsbudsjettene",
+          "noun",
+          "nasjonalbudsjett (national budget)  ·  offentlig budsjett (public budget)",
+          "fravær av statsbudsjett (absence of statsbudsjett)  ·  mangel på statsbudsjett (lack of statsbudsjett)"
+        ],
+        [
+          "subsidier",
+          "subsidies",
+          "en subsidier; subsidieren; subsidiere; subsidierne",
+          "noun",
+          "statlig (state)  ·  pengestøtte (financial support)",
+          "full pris (full price)  ·  kutt i støtte (cut in support)"
+        ],
+        [
+          "barnetrygd",
+          "child benefit",
+          "ei/en barnetrygd; barnetrygden; barnetrygder; barnetrygdene",
+          "noun",
+          "offentlig (public)  ·  støtte (support)",
+          "privat forsørgelse (private support)  ·  ingen barnestøtte (no child benefit)"
+        ],
+        [
+          "borgerlønn",
+          "basic income, citizen’s income",
+          "ei/en borgerlønn; borgerlønnen; borgerlønner; borgerlønnene",
+          "noun",
+          "grunninntekt (basic income)  ·  garantert inntekt (guaranteed income)",
+          "kontrastbegrep (contrasting term)  ·  alternativ situasjon (alternative situation)"
+        ],
+        [
+          "eldreomsorg",
+          "elderly care",
+          "en eldreomsorg; eldreomsorgen; eldreomsorger; eldreomsorgene",
+          "noun",
+          "eldrepleie (elderly care), omsorg for eldre (care for older people)",
+          "omsorgssvikt (neglect), vanskjøtsel (neglect / mistreatment)"
+        ],
+        [
+          "få dekket grunnleggende behov",
+          "to have basic needs covered",
+          "(INF) få dekket grunnleggende behov · (PR) får dekket grunnleggende behov · (PT) fikk dekket grunnleggende behov · (PP) fått dekket grunnleggende behov",
+          "verb_expr",
+          "tilfredsstilt (related meaning)  ·  bruke uttrykket (use the expression)",
+          "la være (refrain)  ·  unngå (avoid)"
+        ],
+        [
+          "folketrygd",
+          "the National Insurance Scheme",
+          "ei/en folketrygd; folketrygden; folketrygder; folketrygdene",
+          "phrase",
+          "nasjonal trygd (national insurance), sosialforsikring (social insurance)",
+          "privatforsikring (private insurance), egenfinansiering (self-financing)"
+        ],
+        [
+          "gratis kjernetid",
+          "free core hours",
+          "",
+          "phrase",
+          "gratis barnehagetid (free kindergarten hours)  ·  subsidiert kjernetid (subsidized core hours)",
+          "kontrastbegrep (contrasting term)  ·  alternativ situasjon (alternative situation)"
+        ],
+        [
+          "grunnleggende velferdsgoder",
+          "basic welfare benefits",
+          "",
+          "verb_expr",
+          "fundamental (related meaning)  ·  bruke uttrykket (use the expression)",
+          "luksusgoder (luxury goods)  ·  private tjenester (private services)"
+        ],
+        [
+          "institusjon",
+          "an institution",
+          "en institusjon; institusjonen; institusjoner; institusjonene",
+          "noun",
+          "organisasjon (organization), anstalt (institution)",
+          "hjem (home), privatbolig (private home)"
+        ],
+        [
+          "levestandard",
+          "standard of living",
+          "en levestandard; levestandarden; levestandarder; levestandardene",
+          "noun",
+          "levekår (living conditions)  ·  materiell standard (material standard)",
+          "fattigdom (poverty)  ·  dårlige levekår (poor living conditions)"
+        ],
+        [
+          "pensjon",
+          "pension, retirement pay",
+          "en pensjon; pensjonen; pensjoner; pensjonene",
+          "noun",
+          "alderspensjon (old-age pension)  ·  trygdeytelse (benefit payment)",
+          "arbeidsinntekt (earned income)  ·  lønn (salary)"
+        ],
+        [
+          "pensjonist",
+          "a pensioner",
+          "en pensjonist; pensjonisten; pensjonister; pensjonistene",
+          "noun",
+          "pensjonær (pensioner), alderspensjonist (old-age pensioner)",
+          "arbeidstaker (worker), yrkesaktiv (economically active person)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "16_FINAL_ORD_OG_BEGREP_B1_B2_v3_RICH_FORMATTING.xlsx",
+      "note": "Worksheet: 05 Økonomi"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B1"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

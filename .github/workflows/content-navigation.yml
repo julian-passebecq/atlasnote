@@ -25,6 +25,10 @@ jobs:
       - run: python -m playwright install --with-deps chromium
       - run: node --test tests/study-samples.test.mjs
       - run: npm run build
+      - run: node tools/generate-norsk-csv.mjs --check
+      - run: node --test tests/csv.test.mjs
+      - run: python tests/csv_tables_runtime.py
+      - run: python tests/norsk_compact_runtime.py
       - run: npm run test:study-samples:runtime
       - run: npm run test:pdf:navigation
       - uses: actions/upload-artifact@v4
@@ -34,3 +38,5 @@ jobs:
           path: |
             docs/evidence/study-samples-runtime
             docs/evidence/pdf-navigation-runtime
+            docs/evidence/csv-tables
+            docs/evidence/norsk-compact

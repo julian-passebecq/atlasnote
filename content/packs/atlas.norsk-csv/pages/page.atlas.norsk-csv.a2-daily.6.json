@@ -1,0 +1,188 @@
+{
+  "id": "page.atlas.norsk-csv.a2-daily.6",
+  "title": "A2 — Daily life · 6",
+  "related": [],
+  "terms": [],
+  "summary": "201–219 / 219. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.a2-daily.6",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "vær (et)",
+          "weather",
+          "SG: (U) et vær (D) været · PL: — (mass)",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "være på salg",
+          "to be on sale",
+          "—",
+          "PHRASE",
+          "—",
+          "—"
+        ],
+        [
+          "være på vei",
+          "to be on the way",
+          "IRR: (PR) er på vei · (PT) var på vei · (PF) har vært på vei",
+          "PHRASE",
+          "—",
+          "—"
+        ],
+        [
+          "varebil (en)",
+          "van (cargo)",
+          "SG: (U) en varebil (D) varebilen · PL: (U) varebiler (D) varebilene",
+          "NOUN",
+          "—",
+          "personbil (passenger car)"
+        ],
+        [
+          "varme (en)",
+          "heat; warmth",
+          "SG: (U) en varme (D) varmen · PL: — (uncount)",
+          "NOUN",
+          "hete (heat)",
+          "kulde (cold)"
+        ],
+        [
+          "varmegrad (en)",
+          "degree (above 0°C)",
+          "SG: (U) en varmegrad (D) varmegraden · PL: (U) varmegrader (D) varmegradene",
+          "NOUN",
+          "temperatur (temperature)",
+          "kuldegrad (below zero)"
+        ],
+        [
+          "vask (en)",
+          "sink; washbasin",
+          "SG: (U) en vask (D) vasken · PL: (U) vasker (D) vaskene",
+          "NOUN",
+          "servant (washbasin)",
+          "—"
+        ],
+        [
+          "vaske (å)",
+          "to wash; clean",
+          "V1 — ET: (PR) vasker · (PT) vasket · (PF) har vasket",
+          "VERB",
+          "rengjøre (clean)",
+          "skitne til (soil)"
+        ],
+        [
+          "vedlikehold (et)",
+          "maintenance; upkeep",
+          "SG: (U) et vedlikehold (D) vedlikeholdet · PL: — (collective)",
+          "NOUN",
+          "service (servicing)",
+          "forfall (deterioration)"
+        ],
+        [
+          "vei (en)",
+          "road; way",
+          "SG: (U) en vei (D) veien · PL: (U) veier (D) veiene",
+          "NOUN",
+          "veg (road)",
+          "—"
+        ],
+        [
+          "venteværelse (et)",
+          "waiting room",
+          "SG: (U) et venteværelse (D) venteværelset · PL: (U) venteværelser (D) venteværelsene",
+          "NOUN",
+          "venterom (waiting room)",
+          "—"
+        ],
+        [
+          "verden (en)",
+          "world",
+          "SG: (U) en verden (D) verdenen · PL: (U) verdener (D) verdenene",
+          "NOUN",
+          "kloden (the globe)",
+          "—"
+        ],
+        [
+          "vin (en)",
+          "wine",
+          "SG: (U) en vin (D) vinen · PL: (U) viner (D) vinene",
+          "NOUN",
+          "—",
+          "øl (beer)"
+        ],
+        [
+          "vind (en)",
+          "wind",
+          "SG: (U) en vind (D) vinden · PL: (U) vinder (D) vindene",
+          "NOUN",
+          "—",
+          "stille (calm)"
+        ],
+        [
+          "vindu (et)",
+          "window",
+          "SG: (U) et vindu (D) vinduet · PL: (U) vinduer (D) vinduene",
+          "NOUN",
+          "—",
+          "vegg (wall)"
+        ],
+        [
+          "kvittering (en)",
+          "receipt",
+          "SG: (U) en kvittering (D) kvitteringen · PL: (U) kvitteringer (D) kvitteringene",
+          "NOUN",
+          "kvitteringslapp (receipt slip)",
+          "—"
+        ],
+        [
+          "kvm",
+          "sq m (square metre)",
+          "—",
+          "ABBREVIATION",
+          "—",
+          "—"
+        ],
+        [
+          "kylling (en)",
+          "chicken (meat)",
+          "SG: (U) en kylling (D) kyllingen · PL: (U) kyllinger (D) kyllingene",
+          "NOUN",
+          "—",
+          "storfe (beef)"
+        ],
+        [
+          "kø (en)",
+          "queue; line",
+          "SG: (U) en kø (D) køen · PL: (U) køer (D) køene",
+          "NOUN",
+          "trafikkork (traffic jam)",
+          "—"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "a2fullvoc27v1_clean_patched.xlsx",
+      "note": "Worksheet: a2fullvoc27v1_clean_patched"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:A2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

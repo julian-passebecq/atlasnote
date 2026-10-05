@@ -16,6 +16,7 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
  const batches=useMemo(()=>dailyBatches(catalogue,personal.ratings),[catalogue,personal.ratings]);
  const [date,setDate]=useState<string|undefined>(batches[0]?.date);
  const [english,setEnglish]=useState(true);
+ const [study,setStudy]=useState(false);
  const [filter,setFilter]=useState<DailyStatus|'all'>('all');
  const [view,setView]=useState<'newspaper'|'focus'|'vocabulary'>('newspaper');
  const [revealed,setRevealed]=useState<Record<string,boolean>>({});
@@ -46,7 +47,7 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
  const chooseDate=(next:string)=>{setDate(next);setSection('all');setFilter('all');setQuery('');setSelectedId(undefined);setView('newspaper');};
  const moveFocus=(step:number)=>{if(!shown.length)return;const next=shown[Math.max(0,Math.min(shown.length-1,(focusIndex<0?0:focusIndex)+step))];if(next)setSelectedId(next.page.id);};
 
- return <section className="norsk-daily" aria-label="Norsk Daily">
+ return <section className={'norsk-daily'+(study?' study-active':'')} aria-label="Norsk Daily">
   <header className="norsk-daily-header">
    <h1>Norsk Daily</h1>
    {batch&&<div className="norsk-daily-views" role="tablist" aria-label="Norsk Daily view">
@@ -69,6 +70,7 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
    {batch.synthetic&&<p className="norsk-daily-synthetic" role="note"><strong>Synthetic fixture.</strong> Invented study text for testing, not real news.</p>}
 
    <div className="norsk-daily-toolbar">
+    <button className="text-button norsk-daily-study-toggle" aria-pressed={study} title="Show or hide learning progress controls" onClick={()=>setStudy(!study)}>Study</button>
     <label className="norsk-daily-search"><span className="sr-only">Search Norsk Daily</span><input ref={searchRef} aria-label="Search Norsk Daily" type="search" value={query} onChange={e=>setQuery(e.target.value)} onKeyDown={e=>{if(e.key==='Escape'){setQuery('');e.currentTarget.blur();}}} placeholder={view==='vocabulary'?'Find a word or meaning...':'Find headline, translation or vocabulary...'} title="Press / to search"/>{query&&<button type="button" className="text-button" aria-label="Clear Norsk Daily search" onClick={()=>setQuery('')}>Clear</button>}</label>
     {view!=='vocabulary'&&<div className="norsk-daily-filters" role="group" aria-label="Filter by progress">
      {(['all','new','learning','known'] as const).map(f=><button key={f} aria-pressed={filter===f} onClick={()=>setFilter(f)}>{f==='all'?'All ('+batch.items.length+')':LABEL[f]+' ('+counts[f]+')'}</button>)}
@@ -85,8 +87,8 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
      {open?<p className="norsk-daily-meaning">{w.english}{w.french&&<span> / {w.french}</span>}{w.example&&<em lang="no"> {w.example}</em>}</p>:<button className="text-button" aria-label={'Reveal meaning of '+w.lemma} onClick={()=>setRevealed({...revealed,[key]:true})}>Reveal</button>}
      <button className="text-button norsk-daily-source" title={'From: '+w.headline} onClick={()=>onOpen(w.pageId)}>Story</button></li>;})}</ul>
     {!shownWords.length&&<p className="experience-note">{query?'No vocabulary matches this search.':'No vocabulary in this day\'s stories.'}</p>}
-   </div>:view==='focus'?selected?<FocusStory item={selected} english={english} words={itemWords.get(selected.page.id)??[]} position={focusIndex} total={shown.length} onBack={()=>setView('newspaper')} onPrevious={()=>moveFocus(-1)} onNext={()=>moveFocus(1)} onReveal={()=>setEnglish(true)} onOpen={onOpen} status={statusButtons(selected)} grammar={grammarButtons(selected)}/>:<p className="experience-note">No story matches the current search and progress filter.</p>:<>
-    <div className="norsk-daily-column-labels" aria-hidden="true"><span>NO · source</span>{english&&<span>EN · translation</span>}<span>Study</span></div>
+   </div>:view==='focus'?selected?<FocusStory item={selected} english={english} words={itemWords.get(selected.page.id)??[]} position={focusIndex} total={shown.length} onBack={()=>setView('newspaper')} onPrevious={()=>moveFocus(-1)} onNext={()=>moveFocus(1)} onReveal={()=>setEnglish(true)} onOpen={onOpen} status={study?statusButtons(selected):null} grammar={grammarButtons(selected)}/>:<p className="experience-note">No story matches the current search and progress filter.</p>:<>
+    <div className="norsk-daily-column-labels" aria-hidden="true"><span>NO · source</span>{english&&<span>EN · translation</span>}<span>{study?'Study':''}</span></div>
     <ol className={'norsk-daily-queue norsk-daily-paper'+(english?'':' no-translation')}>{shown.map(item=><li key={item.page.id} className={'norsk-daily-item status-'+item.status} data-page-id={item.page.id}>
      <div className="norsk-daily-headline" lang={item.language??'nb'}>
       <div className="norsk-daily-row-meta"><span className="norsk-daily-lang" title={item.language==='nn'?'Nynorsk':'Bokmål'}>{item.language??'nb'}</span>{item.level&&<span className="norsk-daily-level">{item.level}</span>}{item.section&&<span className="norsk-daily-section">{item.section}</span>}</div>
@@ -94,7 +96,7 @@ export function NorskDailyView({catalogue,personal,onOpen,onStatus,onImport,onAd
      </div>
      {english&&<p className="norsk-daily-en" lang="en"><span className="sr-only">English (generated): </span>{item.english??'No translation supplied.'}</p>}
      <div className="norsk-daily-actions">
-      {statusButtons(item,true)}
+      {study&&statusButtons(item,true)}
       <button className="text-button norsk-daily-study" aria-label="Study side by side" title="Study side by side" onClick={()=>openFocus(item)}><Icon name="openbook" size={13}/></button>
      </div>
      <details className="norsk-daily-row-details"><summary>Vocabulary ({itemWords.get(item.page.id)?.length??0}) &amp; notes</summary>

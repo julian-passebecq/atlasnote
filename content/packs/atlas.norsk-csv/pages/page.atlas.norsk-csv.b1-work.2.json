@@ -1,0 +1,60 @@
+{
+  "id": "page.atlas.norsk-csv.b1-work.2",
+  "title": "B1 — Work and careers · 2",
+  "related": [],
+  "terms": [],
+  "summary": "41–43 / 43. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b1-work.2",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "Fellesforbundet",
+          "the United Federation of Trade Unions",
+          "Fellesforbundet; Fellesforbundett; Fellesforbundete",
+          "adjective",
+          "fagforbund (trade union federation)  ·  arbeidstakerorganisasjon (employee organization)",
+          "arbeidsgiverforening (employers’ association)  ·  uorganiserte arbeidere (unorganized workers)"
+        ],
+        [
+          "tariffavtale",
+          "collective agreement",
+          "en tariffavtale; tariffavtalen; tariffavtaler; tariffavtalene",
+          "noun",
+          "kollektiv avtale (collective agreement)  ·  overenskomst (agreement)",
+          "individuell kontrakt (individual contract)  ·  uenighet (disagreement)"
+        ],
+        [
+          "tillitsvalgt",
+          "union representative",
+          "en tillitsvalgt; den tillitsvalgte; tillitsvalgte; de tillitsvalgte",
+          "noun",
+          "representant (representative)  ·  ombud (delegate)",
+          "medlem (member)  ·  arbeidsgiver (employer)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "16_FINAL_ORD_OG_BEGREP_B1_B2_v3_RICH_FORMATTING.xlsx",
+      "note": "Worksheet: 04 Arbeid"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B1"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

@@ -1,0 +1,397 @@
+{
+  "id": "page.atlas.norsk-csv.b2-nouns.3",
+  "title": "B2 — Noun forms · 3",
+  "related": [],
+  "terms": [],
+  "summary": "81–120 / 130. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-nouns.3",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Gender",
+        "Ubestemt entall",
+        "Bestemt entall",
+        "Ubestemt flertall",
+        "Bestemt flertall"
+      ],
+      "rows": [
+        [
+          "en pårørende",
+          "relative / next of kin",
+          "en",
+          "en pårørende",
+          "den pårørende",
+          "pårørende",
+          "de pårørende"
+        ],
+        [
+          "en sosionom",
+          "social worker",
+          "en",
+          "en sosionom",
+          "sosionomen",
+          "sosionomer",
+          "sosionomene"
+        ],
+        [
+          "et demokrati",
+          "democracy",
+          "et",
+          "et demokrati",
+          "demokratiet",
+          "demokratier",
+          "demokratiene"
+        ],
+        [
+          "et insekt",
+          "insect",
+          "et",
+          "et insekt",
+          "insektet",
+          "insekter",
+          "insektene"
+        ],
+        [
+          "et lokalmiljø",
+          "local community",
+          "et",
+          "et lokalmiljø",
+          "lokalmiljøet",
+          "lokalmiljø/lokalmiljøer",
+          "lokalmiljøene"
+        ],
+        [
+          "et menneske",
+          "human / person",
+          "et",
+          "et menneske",
+          "mennesket",
+          "mennesker",
+          "menneskene"
+        ],
+        [
+          "et organ",
+          "organ",
+          "et",
+          "et organ",
+          "organet",
+          "organer",
+          "organene"
+        ],
+        [
+          "et perspektiv",
+          "perspective",
+          "et",
+          "et perspektiv",
+          "perspektivet",
+          "perspektiver",
+          "perspektivene"
+        ],
+        [
+          "et sted",
+          "place",
+          "et",
+          "et sted",
+          "stedet",
+          "steder/sted",
+          "stedene"
+        ],
+        [
+          "et velferdssystem",
+          "welfare system",
+          "et",
+          "et velferdssystem",
+          "velferdssystemet",
+          "velferdssystemer",
+          "velferdssystemene"
+        ],
+        [
+          "en adgang",
+          "access",
+          "en",
+          "en adgang",
+          "adgangen",
+          "adganger",
+          "adgangene"
+        ],
+        [
+          "en art",
+          "species",
+          "en",
+          "en art",
+          "arten",
+          "arter",
+          "artene"
+        ],
+        [
+          "en bakgrunn",
+          "background",
+          "en",
+          "en bakgrunn",
+          "bakgrunnen",
+          "bakgrunner",
+          "bakgrunnene"
+        ],
+        [
+          "en byrde",
+          "burden",
+          "en",
+          "en byrde",
+          "byrden",
+          "byrder",
+          "byrdene"
+        ],
+        [
+          "en død",
+          "death",
+          "en",
+          "en død",
+          "døden",
+          "dødsfall",
+          "dødsfallene"
+        ],
+        [
+          "ei/en grense",
+          "border / limit",
+          "ei/en",
+          "ei/en grense",
+          "grensa/grensen",
+          "grenser",
+          "grensene"
+        ],
+        [
+          "ei/en gresshoppe",
+          "grasshopper / locust",
+          "ei/en",
+          "ei/en gresshoppe",
+          "gresshoppa/gresshoppen",
+          "gresshopper",
+          "gresshoppene"
+        ],
+        [
+          "ei/en jente",
+          "girl",
+          "ei/en",
+          "ei/en jente",
+          "jenta/jenten",
+          "jenter",
+          "jentene"
+        ],
+        [
+          "ei/en kilde",
+          "source",
+          "ei/en",
+          "ei/en kilde",
+          "kilda/kilden",
+          "kilder",
+          "kildene"
+        ],
+        [
+          "ei/en kraftkilde",
+          "energy source",
+          "ei/en",
+          "ei/en kraftkilde",
+          "kraftkilda/kraftkilden",
+          "kraftkilder",
+          "kraftkildene"
+        ],
+        [
+          "ei/en vare",
+          "goods / product",
+          "ei/en",
+          "ei/en vare",
+          "vara/varen",
+          "varer",
+          "varene"
+        ],
+        [
+          "en forskjell",
+          "difference",
+          "en",
+          "en forskjell",
+          "forskjellen",
+          "forskjeller",
+          "forskjellene"
+        ],
+        [
+          "en fruktbarhetsrate",
+          "fertility rate",
+          "en",
+          "en fruktbarhetsrate",
+          "fruktbarhetsraten",
+          "fruktbarhetsrater",
+          "fruktbarhetsratene"
+        ],
+        [
+          "en gave",
+          "gift",
+          "en",
+          "en gave",
+          "gaven",
+          "gaver",
+          "gavene"
+        ],
+        [
+          "en gjenstand",
+          "object",
+          "en",
+          "en gjenstand",
+          "gjenstanden",
+          "gjenstander",
+          "gjenstandene"
+        ],
+        [
+          "en hjelp",
+          "help",
+          "en",
+          "en hjelp",
+          "hjelpen",
+          "hjelp",
+          "hjelpene"
+        ],
+        [
+          "en hjertestans",
+          "cardiac arrest",
+          "en",
+          "en hjertestans",
+          "hjertestansen",
+          "hjertestanser",
+          "hjertestansene"
+        ],
+        [
+          "en identitet",
+          "identity",
+          "en",
+          "en identitet",
+          "identiteten",
+          "identiteter",
+          "identitetene"
+        ],
+        [
+          "en kamp",
+          "fight / struggle",
+          "en",
+          "en kamp",
+          "kampen",
+          "kamper",
+          "kampene"
+        ],
+        [
+          "en kampanje",
+          "campaign",
+          "en",
+          "en kampanje",
+          "kampanjen",
+          "kampanjer",
+          "kampanjene"
+        ],
+        [
+          "en kjerne",
+          "core / nucleus",
+          "en",
+          "en kjerne",
+          "kjernen",
+          "kjerner",
+          "kjernene"
+        ],
+        [
+          "en klasse",
+          "class",
+          "en",
+          "en klasse",
+          "klassen",
+          "klasser",
+          "klassene"
+        ],
+        [
+          "en krig",
+          "war",
+          "en",
+          "en krig",
+          "krigen",
+          "kriger",
+          "krigene"
+        ],
+        [
+          "en lekse",
+          "homework item",
+          "en",
+          "en lekse",
+          "leksa/leksen",
+          "lekser",
+          "leksene"
+        ],
+        [
+          "en livsstil",
+          "lifestyle",
+          "en",
+          "en livsstil",
+          "livsstilen",
+          "livsstiler",
+          "livsstilene"
+        ],
+        [
+          "en lov",
+          "law",
+          "en",
+          "en lov",
+          "loven",
+          "lover",
+          "lovene"
+        ],
+        [
+          "en møteplass",
+          "meeting place",
+          "en",
+          "en møteplass",
+          "møteplassen",
+          "møteplasser",
+          "møteplassene"
+        ],
+        [
+          "en oppgave",
+          "task",
+          "en",
+          "en oppgave",
+          "oppgaven",
+          "oppgaver",
+          "oppgavene"
+        ],
+        [
+          "en politikk",
+          "policy / politics",
+          "en",
+          "en politikk",
+          "politikken",
+          "politikker",
+          "politikkene"
+        ],
+        [
+          "en rektor",
+          "principal",
+          "en",
+          "en rektor",
+          "rektoren",
+          "rektorer",
+          "rektorene"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "NORA0130_B2_exam_grammar_irregulars_study_friendly_v6_final_clean.xlsx",
+      "note": "Worksheet: 03 Noun forms grouped"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

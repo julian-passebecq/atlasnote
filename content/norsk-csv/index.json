@@ -1,0 +1,157 @@
+{
+  "id": "atlas.norsk-csv",
+  "version": "1.0.0",
+  "title": "Norsk vocabulary and grammar",
+  "sheets": [
+    {
+      "id": "a2-daily",
+      "title": "A2 — Daily life",
+      "folder": "A2/Vocabulary",
+      "level": "A2",
+      "file": "a2-daily.csv",
+      "rows": 219,
+      "source": {
+        "archive": "Vocabulary_Bokmal_MEGA.zip",
+        "workbook": "a2fullvoc27v1_clean_patched.xlsx",
+        "sheet": "a2fullvoc27v1_clean_patched",
+        "headerRow": 1
+      },
+      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+    },
+    {
+      "id": "a2-work-tech",
+      "title": "A2 — Work and technology",
+      "folder": "A2/Vocabulary",
+      "level": "A2",
+      "file": "a2-work-tech.csv",
+      "rows": 105,
+      "source": {
+        "archive": "Vocabulary_Bokmal_MEGA.zip",
+        "workbook": "a2fullvoc27v1_clean_patched.xlsx",
+        "sheet": "a2fullvoc27v1_clean_patched",
+        "headerRow": 1
+      },
+      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+    },
+    {
+      "id": "b1-work",
+      "title": "B1 — Work and careers",
+      "folder": "B1/Vocabulary",
+      "level": "B1",
+      "file": "b1-work.csv",
+      "rows": 43,
+      "source": {
+        "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
+        "workbook": "16_FINAL_ORD_OG_BEGREP_B1_B2_v3_RICH_FORMATTING.xlsx",
+        "sheet": "04 Arbeid",
+        "headerRow": 3
+      },
+      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+    },
+    {
+      "id": "b1-economy",
+      "title": "B1 — Economy and welfare",
+      "folder": "B1/Vocabulary",
+      "level": "B1",
+      "file": "b1-economy.csv",
+      "rows": 45,
+      "source": {
+        "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
+        "workbook": "16_FINAL_ORD_OG_BEGREP_B1_B2_v3_RICH_FORMATTING.xlsx",
+        "sheet": "05 Økonomi",
+        "headerRow": 3
+      },
+      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+    },
+    {
+      "id": "b2-energy",
+      "title": "B2 — Transport and energy",
+      "folder": "B2/Thematic vocabulary",
+      "level": "B2",
+      "file": "b2-energy.csv",
+      "rows": 174,
+      "source": {
+        "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
+        "workbook": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+        "sheet": "Transport Energy",
+        "headerRow": 1
+      },
+      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+    },
+    {
+      "id": "b2-climate",
+      "title": "B2 — Nature and climate",
+      "folder": "B2/Thematic vocabulary",
+      "level": "B2",
+      "file": "b2-climate.csv",
+      "rows": 192,
+      "source": {
+        "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
+        "workbook": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+        "sheet": "Nature Env Climate",
+        "headerRow": 1
+      },
+      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+    },
+    {
+      "id": "b2-society",
+      "title": "B2 — Politics and society",
+      "folder": "B2/Thematic vocabulary",
+      "level": "B2",
+      "file": "b2-society.csv",
+      "rows": 160,
+      "source": {
+        "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
+        "workbook": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+        "sheet": "Politics Intl",
+        "headerRow": 1
+      },
+      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+    },
+    {
+      "id": "b2-connectors",
+      "title": "B2 — Essay connectors",
+      "folder": "B2/Writing and essays",
+      "level": "B2",
+      "file": "b2-connectors.csv",
+      "rows": 194,
+      "source": {
+        "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
+        "workbook": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+        "sheet": "Connectors",
+        "headerRow": 1
+      },
+      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+    },
+    {
+      "id": "b2-verbs",
+      "title": "B2 — Verb forms",
+      "folder": "B2/Grammar",
+      "level": "B2",
+      "file": "b2-verbs.csv",
+      "rows": 187,
+      "source": {
+        "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
+        "workbook": "NORA0130_B2_exam_grammar_irregulars_study_friendly_v6_final_clean.xlsx",
+        "sheet": "02 Verb forms grouped",
+        "headerRow": 3
+      },
+      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+    },
+    {
+      "id": "b2-nouns",
+      "title": "B2 — Noun forms",
+      "folder": "B2/Grammar",
+      "level": "B2",
+      "file": "b2-nouns.csv",
+      "rows": 130,
+      "source": {
+        "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
+        "workbook": "NORA0130_B2_exam_grammar_irregulars_study_friendly_v6_final_clean.xlsx",
+        "sheet": "03 Noun forms grouped",
+        "headerRow": 3
+      },
+      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+    }
+  ]
+}

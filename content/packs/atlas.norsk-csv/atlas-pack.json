@@ -1,0 +1,20 @@
+{
+  "format": "atlas-content-pack",
+  "schemaVersion": 1,
+  "payloadSchema": "atlas.bundle@2",
+  "id": "atlas.norsk-csv",
+  "version": "1.0.0",
+  "title": "Norsk vocabulary and grammar",
+  "visibility": "public",
+  "files": {
+    "projects": "projects.json",
+    "pages": "pages",
+    "glossary": "glossary.json"
+  },
+  "requires": [],
+  "assets": [],
+  "provenance": {
+    "kind": "user-authored",
+    "note": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  }
+}

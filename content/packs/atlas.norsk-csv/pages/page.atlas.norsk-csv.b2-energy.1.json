@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-energy.1",
+  "title": "B2 — Transport and energy · 1",
+  "related": [],
+  "terms": [],
+  "summary": "1–40 / 174. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-energy.1",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "bevegelse",
+          "movement, motion",
+          "sg: (u) en bevegelse; (d) bevegelsen; pl: (u) bevegelser; (d) bevegelsene",
+          "nou",
+          "rørelse (movement) · aktivitet (activity)",
+          "stillstand (stillness) · ro (calm/stillness)"
+        ],
+        [
+          "buss",
+          "bus",
+          "sg: (u) en buss; (d) bussen; pl: (u) busser; (d) bussene",
+          "nou",
+          "rutebuss (scheduled bus)",
+          "bil (car)"
+        ],
+        [
+          "bussholdeplass",
+          "bus stop",
+          "sg: (u) en bussholdeplass; (d) bussholdeplassen; pl: (u) bussholdeplasser; (d) bussholdeplassene",
+          "nou",
+          "holdeplass (stop)",
+          "endestasjon (terminus)"
+        ],
+        [
+          "bussterminal",
+          "bus terminal",
+          "sg: (u) en bussterminal; (d) bussterminalen; pl: (u) bussterminaler; (d) bussterminalene",
+          "nou",
+          "terminal (terminal)",
+          "holdeplass (stop)"
+        ],
+        [
+          "kollektivfelt",
+          "bus lane, public transport lane",
+          "sg: (u) et kollektivfelt; (d) kollektivfeltet; pl: (u) kollektivfelt; (d) kollektivfeltene",
+          "nou",
+          "bussfelt (bus lane)",
+          "vanlig kjørefelt (ordinary lane)"
+        ],
+        [
+          "leskur",
+          "bus shelter, shelter",
+          "sg: (u) et leskur; (d) leskuret; pl: (u) leskur; (d) leskurene",
+          "nou",
+          "holdeplasskur (stop shelter)",
+          "åpen holdeplass (open stop)"
+        ],
+        [
+          "linje",
+          "line, route",
+          "sg: (u) en linje; (d) linjen; pl: (u) linjer; (d) linjene",
+          "nou",
+          "rute (route)",
+          "omvei (detour)"
+        ],
+        [
+          "på vegne av",
+          "On behalf of someone else or as a representative",
+          "",
+          "uttr",
+          "som representant for (as representative of)",
+          "på egne vegne (on one’s own behalf)"
+        ],
+        [
+          "rutebuss",
+          "scheduled bus",
+          "sg: (u) en rutebuss; (d) rutebussen; pl: (u) rutebusser; (d) rutebussene",
+          "nou",
+          "buss (bus)",
+          "turistbuss (tour bus)"
+        ],
+        [
+          "trikk",
+          "tram",
+          "sg: (u) en trikk; (d) trikken; pl: (u) trikker; (d) trikkene",
+          "nou",
+          "sporvogn (tram)",
+          "buss (bus)"
+        ],
+        [
+          "berging",
+          "rescue, salvage",
+          "sg: (u) en berging; (d) bergingen; pl: (u) berginger; (d) bergingene",
+          "nou",
+          "redning (rescue) · salvage (salvage)",
+          "tap (loss)"
+        ],
+        [
+          "boarding",
+          "boarding",
+          "sg: (u) en boarding; (d) boardingen; pl: (u) boardinger; (d) boardingene",
+          "nou",
+          "ombordstigning (boarding)",
+          "ilandstigning (disembarkation)"
+        ],
+        [
+          "flytanker",
+          "aircraft fuel tanker/refueller",
+          "sg: (u) en flytanker; (d) flytankeren; pl: (u) flytankere; (d) flytankerne",
+          "nou",
+          "drivstoffbil (fuel truck) · tankbil (tanker truck)",
+          "passasjerfly (passenger plane)"
+        ],
+        [
+          "fritidsbåt",
+          "leisure boat",
+          "sg: (u) en fritidsbåt; (d) fritidsbåten; pl: (u) fritidsbåter; (d) fritidsbåtene",
+          "nou",
+          "småbåt (small boat)",
+          "yrkesbåt (commercial boat)"
+        ],
+        [
+          "evakuere",
+          "evacuate",
+          "G2 -te : (INF) infinitiv: å evakuere; (PR) presens: evakuerer; (PT) preteritum: evakuerte; (PP) presens perfektum: har evakuert",
+          "vrb",
+          "redde ut (rescue out)",
+          "la bli igjen (leave behind)"
+        ],
+        [
+          "aldersgrense",
+          "age limit",
+          "sg: (u) en aldersgrense; (d) aldersgrensen; pl: (u) aldersgrenser; (d) aldersgrensene",
+          "nou",
+          "minstealder (minimum age) · alderskrav (age requirement)",
+          "fri adgang (free access)"
+        ],
+        [
+          "avsporing",
+          "derailment",
+          "sg: (u) en avsporing; (d) avsporingen; pl: (u) avsporinger; (d) avsporingene",
+          "nou",
+          "togulykke (train accident)",
+          "normal kjøring (normal running)"
+        ],
+        [
+          "bompengefinansiering",
+          "toll financing",
+          "sg: (u) en bompengefinansiering; (d) bompengefinansieringen; pl: (u) bompengefinansieringer; (d) bompengefinansieringene",
+          "nou",
+          "tollfinansiering (toll financing) · brukerbetaling (user payment)",
+          "skattefinansiering (tax financing) · gratisbruk (free use)"
+        ],
+        [
+          "bybane",
+          "light rail",
+          "sg: (u) en bybane; (d) bybanen; pl: (u) bybaner; (d) bybanene",
+          "nou",
+          "lettbane (light rail)",
+          "buss (bus)"
+        ],
+        [
+          "dobbeltspor",
+          "double track",
+          "sg: (u) et dobbeltspor; (d) dobbeltsporet; pl: (u) dobbeltspor; (d) dobbeltsporene",
+          "nou",
+          "to spor (two tracks)",
+          "enkeltspor (single track)"
+        ],
+        [
+          "elbilandel",
+          "electric-car share",
+          "sg: (u) en elbilandel; (d) elbilandelen; pl: (u) elbilandeler; (d) elbilandelene",
+          "nou",
+          "nivå (level) · omfang (extent)",
+          "lav grad (low level) · liten andel (small share)"
+        ],
+        [
+          "enkeltspor",
+          "single track",
+          "sg: (u) et enkeltspor; (d) enkeltsporet; pl: (u) enkeltspor; (d) enkeltsporene",
+          "nou",
+          "ett spor (one track)",
+          "dobbeltspor (double track)"
+        ],
+        [
+          "erstatningsbuss",
+          "replacement bus",
+          "sg: (u) en erstatningsbuss; (d) erstatningsbussen; pl: (u) erstatningsbusser; (d) erstatningsbussene",
+          "nou",
+          "reservebuss (replacement bus) · alternativ transport (alternative transport)",
+          "ordinær togavgang (regular train departure)"
+        ],
+        [
+          "erstatningsdrosje",
+          "replacement taxi",
+          "sg: (u) en erstatningsdrosje; (d) erstatningsdrosjen; pl: (u) erstatningsdrosjer; (d) erstatningsdrosjene",
+          "nou",
+          "reservetaxi (replacement taxi) · alternativ transport (alternative transport)",
+          "ordinær transport (regular transport)"
+        ],
+        [
+          "fartøy",
+          "vessel, craft",
+          "sg: (u) et fartøy; (d) fartøyet; pl: (u) fartøy; (d) fartøyene",
+          "nou",
+          "skip (ship) · båt (boat)",
+          "landkjøretøy (land vehicle)"
+        ],
+        [
+          "farvann",
+          "waters",
+          "sg: (u) et farvann; (d) farvannet; pl: (u) farvann; (d) farvannene",
+          "nou",
+          "sjøområde (sea area)",
+          "landområde (land area)"
+        ],
+        [
+          "ferje",
+          "ferry",
+          "sg: (u) en ferje; (d) ferja/ferjen; pl: (u) ferjer; (d) ferjene",
+          "nou",
+          "ferge (ferry)",
+          "bro (bridge)"
+        ],
+        [
+          "fly",
+          "airplane, aircraft",
+          "sg: (u) et fly; (d) flyet; pl: (u) fly; (d) flyene",
+          "nou",
+          "luftfartøy (aircraft)",
+          "skip (ship)"
+        ],
+        [
+          "flyforbud",
+          "flight ban",
+          "sg: (u) et flyforbud; (d) flyforbudet; pl: (u) flyforbud; (d) flyforbudene",
+          "nou",
+          "flystans (flight halt)",
+          "flytillatelse (flight permission)"
+        ],
+        [
+          "flygeleder",
+          "air traffic controller",
+          "sg: (u) en flygeleder; (d) flygelederen; pl: (u) flygeledere; (d) flygelederne",
+          "nou",
+          "trafikkleder (traffic controller)",
+          "pilot (pilot)"
+        ],
+        [
+          "flyplass",
+          "airport",
+          "sg: (u) en flyplass; (d) flyplassen; pl: (u) flyplasser; (d) flyplassene",
+          "nou",
+          "lufthavn (airport)",
+          "togstasjon (train station)"
+        ],
+        [
+          "flyrute",
+          "flight route",
+          "sg: (u) en flyrute; (d) flyruta/flyruten; pl: (u) flyruter; (d) flyrutene",
+          "nou",
+          "rute (route)",
+          "togstrekning (rail section)"
+        ],
+        [
+          "flyselskap",
+          "airline",
+          "sg: (u) et flyselskap; (d) flyselskapet; pl: (u) flyselskap; (d) flyselskapene",
+          "nou",
+          "luftfartsselskap (airline)",
+          "jernbaneselskap (rail company)"
+        ],
+        [
+          "forlis",
+          "shipwreck, sinking",
+          "sg: (u) et forlis; (d) forliset; pl: (u) forlis; (d) forlisene",
+          "nou",
+          "skipsulykke (ship accident)",
+          "redning (rescue)"
+        ],
+        [
+          "forsyningsskip",
+          "supply ship",
+          "sg: (u) et forsyningsskip; (d) forsyningsskipet; pl: (u) forsyningsskip; (d) forsyningsskipene",
+          "nou",
+          "støttefartøy (support vessel)",
+          "passasjerferje (passenger ferry)"
+        ],
+        [
+          "frakt",
+          "freight, shipping",
+          "sg: (u) en frakt; (d) frakten; pl: (u) frakter; (d) fraktene",
+          "nou",
+          "forsendelse (shipment) · transport (transport)",
+          "henting (pickup)"
+        ],
+        [
+          "frakteskip",
+          "freight ship, cargo ship",
+          "sg: (u) et frakteskip; (d) frakteskipet; pl: (u) frakteskip; (d) frakteskipene",
+          "nou",
+          "lasteskip (cargo ship)",
+          "cruiseskip (cruise ship)"
+        ],
+        [
+          "grunnstøting",
+          "grounding",
+          "sg: (u) en grunnstøting; (d) grunnstøtingen; pl: (u) grunnstøtinger; (d) grunnstøtingene",
+          "nou",
+          "gå på grunn (run aground)",
+          "fri seilas (free sailing)"
+        ],
+        [
+          "hangarskip",
+          "aircraft carrier",
+          "sg: (u) et hangarskip; (d) hangarskipet; pl: (u) hangarskip; (d) hangarskipene",
+          "nou",
+          "flybærer (aircraft carrier)",
+          "småbåt (small boat)"
+        ],
+        [
+          "havari",
+          "breakdown, wreck, accident",
+          "sg: (u) et havari; (d) havariet; pl: (u) havarier; (d) havariene",
+          "nou",
+          "sammenbrudd (breakdown) · ulykke (accident)",
+          "normal drift (normal operation)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Transport Energy"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

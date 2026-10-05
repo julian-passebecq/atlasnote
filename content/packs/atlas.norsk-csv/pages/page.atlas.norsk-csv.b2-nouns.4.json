@@ -1,0 +1,127 @@
+{
+  "id": "page.atlas.norsk-csv.b2-nouns.4",
+  "title": "B2 — Noun forms · 4",
+  "related": [],
+  "terms": [],
+  "summary": "121–130 / 130. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-nouns.4",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Gender",
+        "Ubestemt entall",
+        "Bestemt entall",
+        "Ubestemt flertall",
+        "Bestemt flertall"
+      ],
+      "rows": [
+        [
+          "en samfunnsplikt",
+          "social duty",
+          "en",
+          "en samfunnsplikt",
+          "samfunnsplikten",
+          "samfunnsplikter",
+          "samfunnspliktene"
+        ],
+        [
+          "en sammenheng",
+          "connection",
+          "en",
+          "en sammenheng",
+          "sammenhengen",
+          "sammenhenger",
+          "sammenhengene"
+        ],
+        [
+          "en sau",
+          "sheep",
+          "en",
+          "en sau",
+          "sauen",
+          "sauer",
+          "sauene"
+        ],
+        [
+          "en signaleffekt",
+          "signal effect",
+          "en",
+          "en signaleffekt",
+          "signaleffekten",
+          "signaleffekter",
+          "signaleffektene"
+        ],
+        [
+          "en sjanse",
+          "chance",
+          "en",
+          "en sjanse",
+          "sjansen",
+          "sjanser",
+          "sjansene"
+        ],
+        [
+          "en tragedie",
+          "tragedy",
+          "en",
+          "en tragedie",
+          "tragedien",
+          "tragedier",
+          "tragediene"
+        ],
+        [
+          "en vane",
+          "habit",
+          "en",
+          "en vane",
+          "vanen",
+          "vaner",
+          "vanene"
+        ],
+        [
+          "en venteliste",
+          "waiting list",
+          "en",
+          "en venteliste",
+          "ventelista/ventelisten",
+          "ventelister",
+          "ventelistene"
+        ],
+        [
+          "en ære",
+          "honor",
+          "en",
+          "en ære",
+          "æren",
+          "ærer",
+          "ærene"
+        ],
+        [
+          "en øy",
+          "island",
+          "en",
+          "en øy",
+          "øya/øyen",
+          "øyer",
+          "øyene"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "NORA0130_B2_exam_grammar_irregulars_study_friendly_v6_final_clean.xlsx",
+      "note": "Worksheet: 03 Noun forms grouped"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

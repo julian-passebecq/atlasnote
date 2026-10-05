@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-society.4",
+  "title": "B2 — Politics and society · 4",
+  "related": [],
+  "terms": [],
+  "summary": "121–160 / 160. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-society.4",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "prins",
+          "prince",
+          "sg: (u) en prins; (d) prinsen; pl: (u) prinser; (d) prinsene",
+          "nou",
+          "kongelig (royal)",
+          "privatperson (private person)"
+        ],
+        [
+          "prinsesse",
+          "princess",
+          "sg: (u) en prinsesse; (d) prinsessen; pl: (u) prinsesser; (d) prinsessene",
+          "nou",
+          "kongelig (royal)",
+          "privatperson (private person)"
+        ],
+        [
+          "på vegne av",
+          "on behalf of",
+          "",
+          "uttr",
+          "for (for) · som representant for (as representative of)",
+          "på egne vegne (on one’s own behalf)"
+        ],
+        [
+          "representere",
+          "represent",
+          "G2 -te : (INF) infinitiv: å representere; (PR) presens: representerer; (PT) preteritum: representerte; (PP) presens perfektum: har representert",
+          "vrb",
+          "opptre på vegne av (act on behalf of)",
+          "tale bare for seg selv (speak only for oneself)"
+        ],
+        [
+          "Slottet",
+          "the Royal Palace",
+          "egennavn: Slottet",
+          "nou",
+          "Det kongelige hoff (Royal Court)",
+          "regjeringskontor (government office)"
+        ],
+        [
+          "ta turen",
+          "make the trip",
+          "",
+          "uttr",
+          "dra (go) · reise (travel)",
+          "bli hjemme (stay home)"
+        ],
+        [
+          "tribune",
+          "stand, grandstand",
+          "sg: (u) en tribune; (d) tribunen; pl: (u) tribuner; (d) tribunene",
+          "nou",
+          "publikumsplass (audience area)",
+          "bane (field/pitch)"
+        ],
+        [
+          "trone",
+          "throne",
+          "sg: (u) en trone; (d) tronen; pl: (u) troner; (d) tronene",
+          "nou",
+          "monarki (monarchy)",
+          "republikk (republic)"
+        ],
+        [
+          "tronfølger",
+          "heir to the throne",
+          "sg: (u) en tronfølger; (d) tronfølgeren; pl: (u) tronfølgere; (d) tronfølgerne",
+          "nou",
+          "arving (heir)",
+          "sittende monark (reigning monarch)"
+        ],
+        [
+          "statsråd",
+          "government minister",
+          "sg: (u) en statsråd; (d) statsråden; pl: (u) statsråder; (d) statsråderene",
+          "nou",
+          "minister (minister)",
+          "enkeltperson (individual) · privat aktør (private actor)"
+        ],
+        [
+          "departement",
+          "ministry",
+          "sg: (u) et departement; (d) departementet; pl: (u) departement; (d) departementene",
+          "nou",
+          "ministerium (ministry)",
+          "direktorat (directorate) · kommune (municipality)"
+        ],
+        [
+          "direktorat",
+          "directorate, government agency",
+          "sg: (u) et direktorat; (d) direktoratet; pl: (u) direktorater; (d) direktoraterene",
+          "nou",
+          "etat (agency)",
+          "departement (ministry)"
+        ],
+        [
+          "statsbudsjett",
+          "state budget",
+          "sg: (u) et statsbudsjett; (d) statsbudsjettet; pl: (u) statsbudsjetter; (d) statsbudsjetterene",
+          "nou",
+          "statsbudsjett (state budget) · økonomiplan (financial plan)",
+          "budsjettsprekk (budget overrun) · underskudd (deficit)"
+        ],
+        [
+          "budsjettenighet",
+          "budget agreement",
+          "sg: (u) en budsjettenighet; (d) budsjettenigheten; pl: (u) budsjettenigheter; (d) budsjettenigheterene",
+          "nou",
+          "budsjettforlik (budget settlement) · budsjettavtale (budget agreement)",
+          "budsjettstrid (budget conflict)"
+        ],
+        [
+          "høringsrunde",
+          "consultation round",
+          "sg: (u) en høringsrunde; (d) høringsrunden; pl: (u) høringsrundeer; (d) høringsrundeerene",
+          "nou",
+          "prosess (process) · omgang (round)",
+          "lukket behandling (closed processing)"
+        ],
+        [
+          "høringsfrist",
+          "consultation deadline",
+          "sg: (u) en høringsfrist; (d) høringsfristen; pl: (u) høringsfrister; (d) høringsfristerene",
+          "nou",
+          "tidsfrist (deadline) · frist (deadline)",
+          "fristoversittelse (missed deadline)"
+        ],
+        [
+          "innstilling",
+          "recommendation, committee report",
+          "sg: (u) en innstilling; (d) innstillingen; pl: (u) innstillinger; (d) innstillingerene",
+          "nou",
+          "anbefaling (recommendation)",
+          "avslag (rejection)"
+        ],
+        [
+          "proposisjon",
+          "government bill",
+          "sg: (u) en proposisjon; (d) proposisjonen; pl: (u) proposisjoner; (d) proposisjonerene",
+          "nou",
+          "lovforslag (bill)",
+          "tilbaketrekking (withdrawal)"
+        ],
+        [
+          "komitébehandling",
+          "committee hearing/process",
+          "sg: (u) en komitébehandling; (d) komitébehandlingen; pl: (u) komitébehandlinger; (d) komitébehandlingerene",
+          "nou",
+          "terapi (therapy) · tiltak (measure)",
+          "manglende behandling (lack of treatment) · avslag (rejection)"
+        ],
+        [
+          "lovforslag",
+          "bill, proposed law",
+          "sg: (u) et lovforslag; (d) lovforslaget; pl: (u) lovforslager; (d) lovforslagerene",
+          "nou",
+          "utkast (draft) · initiativ (proposal/initiative)",
+          "avslag (rejection) · tilbaketrekking (withdrawal)"
+        ],
+        [
+          "lovendring",
+          "legal amendment",
+          "sg: (u) en lovendring; (d) lovendringen; pl: (u) lovendringer; (d) lovendringerene",
+          "nou",
+          "justering (adjustment) · reform (reform)",
+          "status quo (status quo) · uendret tilstand (unchanged state)"
+        ],
+        [
+          "rundskriv",
+          "circular",
+          "sg: (u) et rundskriv; (d) rundskrivet; pl: (u) rundskriver; (d) rundskriverene",
+          "nou",
+          "veiledning (guidance)",
+          "muntlig beskjed (oral message)"
+        ],
+        [
+          "tillitserklæring",
+          "vote/expression of confidence",
+          "sg: (u) en tillitserklæring; (d) tillitserklæringen; pl: (u) tillitserklæringer; (d) tillitserklæringerene",
+          "nou",
+          "støtteerklæring (statement of support) · tillitsvotum (vote of confidence)",
+          "mistillit (no confidence)"
+        ],
+        [
+          "toppmøte",
+          "summit",
+          "sg: (u) et toppmøte; (d) toppmøtet; pl: (u) toppmøteer; (d) toppmøteerene",
+          "nou",
+          "summit (summit) · ledermøte (leaders’ meeting)",
+          "lokalmøte (local meeting) · lavnivåmøte (low-level meeting)"
+        ],
+        [
+          "utsending",
+          "envoy, representative",
+          "sg: (u) en utsending; (d) utsendingen; pl: (u) utsendinger; (d) utsendingerene",
+          "nou",
+          "representant (representative)",
+          "mottaker (recipient)"
+        ],
+        [
+          "våpenhvileavtale",
+          "ceasefire agreement",
+          "sg: (u) en våpenhvileavtale; (d) våpenhvileavtalen; pl: (u) våpenhvileavtaleer; (d) våpenhvileavtaleerene",
+          "nou",
+          "overenskomst (agreement) · pakt (pact)",
+          "brudd (breach) · uenighet (disagreement)"
+        ],
+        [
+          "grensekontroll",
+          "border control",
+          "sg: (u) en grensekontroll; (d) grensekontrollen; pl: (u) grensekontroller; (d) grensekontrollerene",
+          "nou",
+          "tilsyn (supervision) · sjekk (check)",
+          "manglende kontroll (lack of control) · fri flyt (free flow)"
+        ],
+        [
+          "sanksjonspakke",
+          "sanctions package",
+          "sg: (u) en sanksjonspakke; (d) sanksjonspakken; pl: (u) sanksjonspakkeer; (d) sanksjonspakkeerene",
+          "nou",
+          "sanksjonstiltak (sanctions package) · restriktive tiltak (restrictive measures)",
+          "lettelse (relief/easing) · sanksjonslettelse (sanctions relief)"
+        ],
+        [
+          "bistandsmiddel",
+          "aid funds",
+          "sg: (u) et bistandsmiddel; (d) bistandsmiddelet; pl: (u) bistandsmiddeler; (d) bistandsmiddelerene",
+          "nou",
+          "bistandspenger (aid funds) · støttemidler (support funds)",
+          "krigsmiddel (war means)"
+        ],
+        [
+          "sikkerhetsgaranti",
+          "security guarantee",
+          "sg: (u) en sikkerhetsgaranti; (d) sikkerhetsgarantien; pl: (u) sikkerhetsgarantier; (d) sikkerhetsgarantierene",
+          "nou",
+          "trygghetsgaranti (security guarantee) · forsikring (assurance)",
+          "usikkerhet (uncertainty) · risiko (risk)"
+        ],
+        [
+          "allianse",
+          "alliance",
+          "sg: (u) en allianse; (d) alliansen; pl: (u) allianseer; (d) allianseerene",
+          "nou",
+          "samarbeid (cooperation)",
+          "fiendskap (hostility) · brudd (break)"
+        ],
+        [
+          "motpart",
+          "counterpart, opposing side",
+          "sg: (u) en motpart; (d) motparten; pl: (u) motparter; (d) motparterene",
+          "nou",
+          "motstander (opponent) · den andre parten (the other party)",
+          "medpart (co-party) · alliert (ally)"
+        ],
+        [
+          "observatør",
+          "observer",
+          "sg: (u) en observatør; (d) observatøren; pl: (u) observatører; (d) observatørerene",
+          "nou",
+          "iakttaker (observer)",
+          "deltaker (participant)"
+        ],
+        [
+          "avtaletekst",
+          "agreement text",
+          "sg: (u) en avtaletekst; (d) avtaleteksten; pl: (u) avtaletekster; (d) avtaleteksterene",
+          "nou",
+          "overenskomst (agreement) · pakt (pact)",
+          "brudd (breach) · uenighet (disagreement)"
+        ],
+        [
+          "stortingsgruppe",
+          "parliamentary group",
+          "sg: (u) en stortingsgruppe; (d) stortingsgruppen; pl: (u) stortingsgruppeer; (d) stortingsgruppeerene",
+          "nou",
+          "partigruppe (parliamentary party group) · representantgruppe (group of MPs)",
+          "enkeltrepresentant (individual representative)"
+        ],
+        [
+          "partileder",
+          "party leader",
+          "sg: (u) en partileder; (d) partilederen; pl: (u) partiledere; (d) partilederene",
+          "nou",
+          "leder (leader) · partisjef (party leader)",
+          "underordnet (subordinate) · medarbeider (employee)"
+        ],
+        [
+          "partiprogram",
+          "party platform",
+          "sg: (u) et partiprogram; (d) partiprogramet; pl: (u) partiprogramer; (d) partiprogramerene",
+          "nou",
+          "sending (broadcast) · program (program)",
+          "programstans (program halt) · avlysning (cancellation)"
+        ],
+        [
+          "regjeringsplattform",
+          "government platform",
+          "sg: (u) en regjeringsplattform; (d) regjeringsplattformen; pl: (u) regjeringsplattformer; (d) regjeringsplattformerene",
+          "nou",
+          "politisk plattform (political platform) · styringsgrunnlag (governing basis)",
+          "opposisjonspolitikk (opposition policy)"
+        ],
+        [
+          "stortingsmelding",
+          "white paper to parliament",
+          "sg: (u) en stortingsmelding; (d) stortingsmeldingen; pl: (u) stortingsmeldinger; (d) stortingsmeldingerene",
+          "nou",
+          "rapport (report) · dokument (document)",
+          "privat brev (private letter)"
+        ],
+        [
+          "interpellasjon",
+          "interpellation",
+          "sg: (u) en interpellasjon; (d) interpellasjonen; pl: (u) interpellasjoner; (d) interpellasjonerene",
+          "nou",
+          "spørsmål (question) · politisk forespørsel (political inquiry)",
+          "taushet (silence) · manglende spørsmål (lack of question)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Politics Intl"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

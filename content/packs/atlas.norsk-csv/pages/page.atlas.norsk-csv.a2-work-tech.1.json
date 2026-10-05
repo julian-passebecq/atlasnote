@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.a2-work-tech.1",
+  "title": "A2 — Work and technology · 1",
+  "related": [],
+  "terms": [],
+  "summary": "1–40 / 105. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.a2-work-tech.1",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "administrasjon (en)",
+          "administration",
+          "SG: (U) en administrasjon (D) administrasjonen · PL: (U) administrasjoner (D) administrasjonene",
+          "NOUN",
+          "forvaltning (administration)",
+          "—"
+        ],
+        [
+          "adresse (en)",
+          "address",
+          "SG: (U) en adresse (D) adressen · PL: (U) adresser (D) adressene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "ansatt (en)",
+          "employee",
+          "SG: (U) en ansatt (D) den ansatte · PL: (U) ansatte (D) de ansatte",
+          "NOUN",
+          "medarbeider (staff)",
+          "arbeidsgiver (employer)"
+        ],
+        [
+          "ansette (å)",
+          "to hire; employ",
+          "V2 — TE: (PR) ansetter · (PT) ansatte · (PF) har ansatt",
+          "VERB",
+          "tilsette (hire, Nyn.)",
+          "si opp (dismiss)"
+        ],
+        [
+          "ansvar (et)",
+          "responsibility",
+          "SG: (U) et ansvar (D) ansvaret · PL: (U) ansvar (D) ansvarene",
+          "NOUN",
+          "plikt (duty)",
+          "uansvar (irresponsibility)"
+        ],
+        [
+          "arbeid (et)",
+          "work; job (unc.)",
+          "SG: (U) et arbeid (D) arbeidet · PL: (U) arbeid (D) arbeidene",
+          "NOUN",
+          "jobb (job)",
+          "fri (time off)"
+        ],
+        [
+          "arbeide (å)",
+          "to work",
+          "V1 — ET: (PR) arbeider · (PT) arbeidet · (PF) har arbeidet",
+          "VERB",
+          "å jobbe (to work)",
+          "å hvile (to rest)"
+        ],
+        [
+          "Arbeidet er tungt",
+          "The work is hard.",
+          "—",
+          "PHRASE",
+          "—",
+          "—"
+        ],
+        [
+          "arbeidsledig",
+          "unemployed",
+          "(M/F) arbeidsledig · (N) arbeidsledigt · (PL) arbeidsledige",
+          "ADJECTIVE",
+          "—",
+          "i jobb (employed)"
+        ],
+        [
+          "arbeidsliv (et)",
+          "working life; labour market",
+          "SG: (U) et arbeidsliv (D) arbeidslivet · PL: (U) arbeidsliv (D) arbeidslivene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "arbeidsoppgave (en)",
+          "work task; assignment",
+          "SG: (U) en arbeidsoppgave (D) arbeidsoppgaven · PL: (U) arbeidsoppgaver (D) arbeidsoppgavene",
+          "NOUN",
+          "oppdrag (assignment)",
+          "—"
+        ],
+        [
+          "arbeidsplass (en)",
+          "workplace",
+          "SG: (U) en arbeidsplass (D) arbeidsplassen · PL: (U) arbeidsplasser (D) arbeidsplassene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "arbeidstid (en/a)",
+          "working hours",
+          "SG: (U) en/a arbeidstid (D) arbeidstiden/a · PL: (U) arbeidstider (D) arbeidstidene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "arrangere (å)",
+          "to arrange; organize",
+          "V2 — TE: (PR) arrangerer · (PT) arrangerte · (PF) har arrangert",
+          "VERB",
+          "organisere (organize)",
+          "avlyse (cancel)"
+        ],
+        [
+          "assistent (en)",
+          "assistant",
+          "SG: (U) en assistent (D) assistenten · PL: (U) assistenter (D) assistentene",
+          "NOUN",
+          "hjelper (helper)",
+          "—"
+        ],
+        [
+          "attest (en)",
+          "reference; testimonial",
+          "SG: (U) en attest (D) attesten · PL: (U) attester (D) attestene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "autorisasjon (en)",
+          "authorization; license",
+          "SG: (U) en autorisasjon (D) autorisasjonen · PL: (U) autorisasjoner (D) autorisasjonene",
+          "NOUN",
+          "tillatelse (permit)",
+          "—"
+        ],
+        [
+          "avdeling (en/a)",
+          "department; section",
+          "SG: (U) en/a avdeling (D) avdelinga/en · PL: (U) avdelinger (D) avdelingene",
+          "NOUN",
+          "seksjon (section)",
+          "—"
+        ],
+        [
+          "avspasere (å)",
+          "to take time off (compensatory)",
+          "V2 — TE: (PR) avspaserer · (PT) avspaserte · (PF) har avspasert",
+          "VERB",
+          "ta fri (take time off)",
+          "jobbe (work)"
+        ],
+        [
+          "avtale (en)",
+          "agreement; appointment",
+          "SG: (U) en avtale (D) avtalen · PL: (U) avtaler (D) avtalene",
+          "NOUN",
+          "overenskomst (agreement)",
+          "uenighet (disagreement)"
+        ],
+        [
+          "bedrift (en)",
+          "company; firm",
+          "SG: (U) en bedrift (D) bedriften · PL: (U) bedrifter (D) bedriftene",
+          "NOUN",
+          "selskap (company)",
+          "—"
+        ],
+        [
+          "bekreftelse (en)",
+          "confirmation",
+          "SG: (U) en bekreftelse (D) bekreftelsen · PL: (U) bekreftelser (D) bekreftelsene",
+          "NOUN",
+          "kvittering (receipt)",
+          "avslag (rejection)"
+        ],
+        [
+          "bonde (en)",
+          "farmer",
+          "SG: (U) en bonde (D) bonden · PL: (U) bønder (D) bøndene",
+          "NOUN",
+          "gårdbruker (farmer)",
+          "—"
+        ],
+        [
+          "butikkmedarbeider (en)",
+          "shop assistant; sales clerk",
+          "SG: (U) en butikkmedarbeider (D) butikkmedarbeideren · PL: (U) butikkmedarbeidere (D) butikkmedarbeiderne",
+          "NOUN",
+          "ekspeditør (shop clerk)",
+          "—"
+        ],
+        [
+          "bygge (å)",
+          "to build",
+          "V1 — DE: (PR) bygger · (PT) bygde · (PF) har bygd",
+          "VERB",
+          "konstruiere (construct)",
+          "rive (demolish)"
+        ],
+        [
+          "CO (en)",
+          "Co.; company (abbreviation)",
+          "SG: (U) en CO (D) COen · PL: (U) COer (D) COene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "CV (en)",
+          "résumé; CV",
+          "SG: (U) en CV (D) CVen · PL: (U) CVer (D) CVene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "datamaskin (en)",
+          "computer",
+          "SG: (U) en datamaskin (D) datamaskinen · PL: (U) datamaskiner (D) datamaskinene",
+          "NOUN",
+          "PC (computer)",
+          "—"
+        ],
+        [
+          "deltid (en/a)",
+          "part — time",
+          "SG: (U) en/a deltid (D) deltida/en · PL: (U) deltider (D) deltidene",
+          "NOUN",
+          "—",
+          "heltid (full — time)"
+        ],
+        [
+          "den første jobben min",
+          "my first job",
+          "—",
+          "PHRASE",
+          "—",
+          "—"
+        ],
+        [
+          "designe (å)",
+          "to design",
+          "V1 — ET: (PR) designer · (PT) designet · (PF) har designet",
+          "VERB",
+          "utforme (to shape)",
+          "—"
+        ],
+        [
+          "drive (med) (å)",
+          "to run; to be engaged (in)",
+          "IRR: (PR) driver · (PT) drev · (PF) har drevet",
+          "PHRASAL_VERB",
+          "holde på (keep at)",
+          "slutte (quit)"
+        ],
+        [
+          "ekspert (en)",
+          "expert; specialist",
+          "SG: (U) en ekspert (D) eksperten · PL: (U) eksperter (D) ekspertene",
+          "NOUN",
+          "spesialist (specialist)",
+          "nybegynner (beginner)"
+        ],
+        [
+          "elektriker (en)",
+          "electrician",
+          "SG: (U) en elektriker (D) elektrikeren · PL: (U) elektrikere (D) elektrikerne",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "elektronisk",
+          "electronic; digital",
+          "(M/F) elektronisk · (N) elektronisk · (PL) elektroniske",
+          "ADJECTIVE",
+          "digital (digital)",
+          "analog (analog)"
+        ],
+        [
+          "erfaring (en/a)",
+          "experience",
+          "SG: (U) en/a erfaring (D) erfaringa/en · PL: (U) erfaringer (D) erfaringene",
+          "NOUN",
+          "praksis (practice)",
+          "uvitenhet (ignorance)"
+        ],
+        [
+          "firma (et)",
+          "company; firm",
+          "SG: (U) et firma (D) firmaet · PL: (U) firmaer (D) firmaene",
+          "NOUN",
+          "selskap (company)",
+          "—"
+        ],
+        [
+          "fisker (en)",
+          "fisherman",
+          "SG: (U) en fisker (D) fiskeren · PL: (U) fiskere (D) fiskerne",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "føre (regnskap) (å)",
+          "to keep (accounts)",
+          "V2 — TE: (PR) fører · (PT) førte · (PF) har ført",
+          "VERB",
+          "bokføre (book)",
+          "—"
+        ],
+        [
+          "forsker (en)",
+          "researcher",
+          "SG: (U) en forsker (D) forskeren · PL: (U) forskere (D) forskerne",
+          "NOUN",
+          "—",
+          "—"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "a2fullvoc27v1_clean_patched.xlsx",
+      "note": "Worksheet: a2fullvoc27v1_clean_patched"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:A2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}
