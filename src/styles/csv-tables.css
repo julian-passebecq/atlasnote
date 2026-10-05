@@ -64,3 +64,10 @@
 @media print{.csv-interactive[data-csv-palette]{background:white;color:black;padding:0}}
 /* Equal card backgrounds in every column; no zebra pattern. */
 .csv-interactive.csv-layout-tiles tbody tr[data-source-row]{background:var(--csv-card)}
+.reader-display-controls{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:6px 12px;border-bottom:1px solid var(--line);font-size:11px;flex-shrink:0;max-height:160px;overflow:auto;background:var(--surface)}
+.reader-display-controls label{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;cursor:pointer}
+.reader-display-controls input{margin:0;width:13px;height:13px}
+.reader-display-controls button,.pane-display-toggle{font-size:11px;padding:3px 6px;min-height:24px}
+.reader-display-controls small{flex-basis:100%;color:var(--muted)}
+.cheatsheet-reader.reader-hide-text [data-block-kind="text"],.cheatsheet-reader.reader-hide-list [data-block-kind="list"],.cheatsheet-reader.reader-hide-table [data-block-kind="table"],.cheatsheet-reader.reader-hide-code [data-block-kind="code"],.cheatsheet-reader.reader-hide-callout [data-block-kind="box"],.cheatsheet-reader.reader-hide-visual :is([data-block-kind="image"],[data-block-kind="icon"],[data-block-kind="drawing"],[data-block-kind="diagram"]){visibility:hidden}
+@media print{.reader-display-controls,.pane-display-toggle{display:none}}

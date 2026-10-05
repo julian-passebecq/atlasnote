@@ -28,7 +28,7 @@ export function applyTablePreset(pageId:string,columns:string[],state:Record<str
 const norskOrder=new Intl.Collator('nb',{sensitivity:'base',numeric:true});
 /** Detached reading projection; authored row order and text never change. */
 export function organizeTableRows(columns:string[],rows:string[][],sort:string,group:string){
- const fields=tableFields(columns),items=rows.map((row,index)=>({row,index})),column=sort==='english'?Math.max(0,fields.english):0;
+ const fields=tableFields(columns),items=rows.map((row,index)=>({row,index})),column=sort==='english'?(fields.english>=0?fields.english:Math.min(1,columns.length-1)):0;
  if(sort!=='source')items.sort((a,b)=>(sort==='reverse'?-1:1)*norskOrder.compare(a.row[column]??'',b.row[column]??'')||a.index-b.index);
  const groups=new Map<string,typeof items>();
  for(const item of items){const value=group==='letter'?(item.row[0]?.trim().match(/^\p{L}/u)?.[0].toLocaleUpperCase('nb')??'#'):group==='category'&&fields.category>=0?item.row[fields.category].trim()||'Other':group==='type'&&fields.type>=0?item.row[fields.type].trim()||'Other':'';if(!groups.has(value))groups.set(value,[]);groups.get(value)!.push(item);}
