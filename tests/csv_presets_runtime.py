@@ -9,7 +9,8 @@ OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/csv-presets'));OUT.
 base=start_server();results=[]
 with sync_playwright() as pw:
  b=launch(pw);p=b.new_page(viewport={'width':1536,'height':864});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
- p.goto(base,wait_until='networkidle');p.wait_for_selector('.atlas-app');p.wait_for_function('async()=>('+AGENT+').getStorageDiagnostics().ready!==false')
+ p.goto(base,wait_until='networkidle');p.wait_for_selector('.atlas-app');p.wait_for_function('async()=>{const d=('+AGENT+').getStorageDiagnostics();return d.ready===true&&d.initialized===true&&d.saving===0;}',timeout=60000)
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
  def btn(name,scope=None):return (scope or p).get_by_role('button',name=name,exact=True)
  def snapshot():return p.evaluate('async()=>{const m='+SNAPSHOT+';return await m.readPersistedWorkspace();}')
  text=io.StringIO();writer=csv.writer(text);writer.writerow(['Norsk','English','Forms','Type','Synonyms','Antonyms','Category'])
@@ -38,8 +39,31 @@ with sync_playwright() as pw:
  assert snapshot()['history']==history,'Reading projections must not write authored history'
  assert next(x for pack in snapshot()['imports'] for x in pack['pages'] if x['id']==page_id)==page
  results.append({'name':'Synonyms/opposites and grammar presets keep empty cells; reload preserves preferences and complete source/history','status':'PASS'})
+ # Local palettes and distinct layouts preserve all cells and survive reload.
+ pane=p.locator('.active-pane');btn('Colors',pane).click()
+ palette_group=pane.get_by_role('group',name='Table color palette',exact=True)
+ colors=[]
+ for label,value in [('Black','black'),('Ocean','ocean'),('Forest','forest'),('Warm paper','paper')]:
+  btn(label,palette_group).click();wrap=pane.locator('.csv-interactive');expect(wrap).to_have_attribute('data-csv-palette',value)
+  colors.append(wrap.evaluate('e=>getComputedStyle(e).backgroundColor'))
+ assert len(set(colors))==4,colors
+ btn('Forest',palette_group).click();btn('Colors',pane).click()
+ for layout in ['Dictionary','Tiles']:
+  btn(layout,pane).click();expect(rows).to_have_count(36)
+  assert pane.locator('.csv-interactive').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
+  p.screenshot(path=str(OUT/(layout.lower()+'.png')))
+ assert len(set(rows.evaluate_all('es=>es.map(e=>getComputedStyle(e).backgroundColor)')))==1,'Tiles must have uniform backgrounds'
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-tiles[data-csv-palette="forest"]')
+ assert snapshot()['history']==history
+ assert next(x for pack in snapshot()['imports'] for x in pack['pages'] if x['id']==page_id)==page
+ results.append({'name':'Four distinct palettes and Dictionary/Tiles preserve source/history and persist through reload','status':'PASS'})
  # Delegated cloned controls and semantic table-row pagination remain operational.
  pane=p.locator('.active-pane');btn('Quick Book mode',pane).click();book=pane.locator('.book-grid');expect(book.locator('.book-sheet').first).to_be_visible();expect(book.locator('tr[data-source-row]')).to_have_count(36);assert not book.locator('.book-fallback').count()
+ for layout in ['Dictionary','Tiles']:
+  btn(layout,book).first.click();expect(book.locator('tr[data-source-row]')).to_have_count(36)
+  assert book.locator('tr[data-source-row]').evaluate_all('es=>new Set(es.map(e=>e.dataset.sourceRow)).size')==36
+  assert not book.locator('.book-fallback').count()
+  assert book.locator('.sheet-body').evaluate_all('es=>es.every(e=>e.scrollHeight<=e.clientHeight+2)')
  btn('3 columns',book).first.click();expect(book.locator('.csv-layout-cards3').first).to_be_visible();expect(book.locator('tr[data-source-row]')).to_have_count(36)
  assert book.locator('tr[data-source-row]').evaluate_all('es=>new Set(es.map(e=>e.dataset.sourceRow)).size')==36
  assert book.locator('.sheet-body').evaluate_all('es=>es.every(e=>e.scrollHeight<=e.clientHeight+2)')

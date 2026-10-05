@@ -1,3 +1,4 @@
+import {DISPLAY_LABELS,displayVisible} from '../reader/display.js';
 import React,{useEffect,useMemo,useRef,useState} from '../vendor/react.mjs';
 import type {Page,View,Location,Anchor} from '../core/model.js';
 import type {CheatsheetDocument} from './model.js';
@@ -59,7 +60,7 @@ function ValidatedCheatsheetReader({sheetTheme='source',page,view,location,paneI
   const target:ReadingTarget={...(location.historyRevisionId?{historyRevisionId:location.historyRevisionId}:{}),kind:'cheatsheet-page',pageId:page.id,documentId:doc.id,sheetPage:n,anchor:{...anchor,sheetPage:n,sheetId:doc.pages[n-1].id}};
   onActions(target,(doc.title+' - p.'+n).slice(0,120),e);
  }
- return <div className="cheatsheet-reader" data-native-cheatsheet={doc.id} data-sheet-mode={mode}>
+ return <div className={'cheatsheet-reader '+Object.keys(DISPLAY_LABELS).filter(feature=>!displayVisible(page.id,view,feature)).map(feature=>'reader-hide-'+feature).join(' ')} data-native-cheatsheet={doc.id} data-sheet-mode={mode}>
   <div className="reader-toolbar sheet-toolbar" aria-label="Cheatsheet reader controls">
    <div className="sheet-modes" role="group" aria-label="Cheatsheet layout">{MODES.map(([value,label])=><button key={value} aria-pressed={mode===value} onClick={()=>onLocation({sheetMode:value,scroll:0})}>{label}</button>)}</div>
    <form className="sheet-navigation" onSubmit={e=>{e.preventDefault();go(Number(draft));}}>

@@ -58,3 +58,4 @@ npm run pack:local -- private-workspace norsk.private.zip
 The reusable converter defaults to private. Git stores reviewed public sources;
 the app bundles their converted tables. Local imports remain device-local.
 There is no Git polling or cloud synchronization.
+CSV tables offer **Colors** independently of their reading layout: Black (default), Ocean, Forest and Warm paper. Choices belong to the current page/view and survive reload; A and B can use different palettes. **Dictionary** aligns the selected source columns in compact rows; **Tiles** presents bordered cards that adapt to narrow panes. Existing two/three-column, bilingual and stacked layouts remain available. Print uses the complete source table.

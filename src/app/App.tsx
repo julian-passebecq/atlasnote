@@ -1,5 +1,8 @@
+import {parseMarkdown} from '../reader/markdown.js';
+import {DisplayControls} from '../components/DisplayControls.js';
+import {displayKey} from '../reader/display.js';
 import {subscribeArchives,archiveAttachmentEpoch,requireHistoricalRevision} from '../durability/registry.js';
-import {tableColumnKey,tableOptionsKey,tableChoiceKey,visibleTableColumns,setTableLayout,setTableChoice,applyTablePreset,TABLE_LAYOUTS,TABLE_SORTS,TABLE_GROUPS,TABLE_PRESETS} from '../reader/table-columns.js';
+import {tableColumnKey,tableOptionsKey,tableChoiceKey,visibleTableColumns,setTableLayout,setTableChoice,applyTablePreset,TABLE_LAYOUTS,TABLE_PALETTES,TABLE_SORTS,TABLE_GROUPS,TABLE_PRESETS} from '../reader/table-columns.js';
 import {HistoryPanel,ChangeList,RevisionCompareBar,revisionComparison} from '../history/HistoryUI.js';
 import {AgentReviewDialog} from '../agent/AgentReviewUI.js';
 import {StructureHistoryView} from '../history/StructureHistoryView.js';
@@ -322,17 +325,19 @@ function toggleChrome(paneId:string){document.dispatchEvent(new CustomEvent('atl
     else
         addReadingBookmark(p,currentResourceTarget(historicalCatalogue(catalogueRef.current,store.state,loc.historyRevisionId).catalogue,loc)!,page.title,inferReadingCategory(catalogueRef.current,store.state,currentResourceTarget(historicalCatalogue(catalogueRef.current,store.state,loc.historyRevisionId).catalogue,loc)!)); }); notify('Bookmarks updated.'); }
     async function blockAction(action: string, id: string, snippet: string | undefined, paneId: string, view: View, page: Page,event?:any) {
-     if(['table-options','table-column','table-layout','table-organize','table-sort','table-group','table-preset'].includes(action)){
+     if(['table-options','table-column','table-layout','table-organize','table-colors','table-palette','table-sort','table-group','table-preset'].includes(action)){
       let block:any;walkBlocks(page.blocks,(b:any)=>{if(b.id===id)block=b;});
-      if(block?.type!=='table'||!page.tags.includes('csv-table'))return;
-      const allowed:Record<string,readonly string[]>={'table-layout':TABLE_LAYOUTS,'table-sort':TABLE_SORTS,'table-group':TABLE_GROUPS,'table-preset':TABLE_PRESETS};
+      if(!block){const match=id.match(/^(.+)\.table\.(\d+)$/);if(match)walkBlocks(page.blocks,(b:any)=>{if(b.id===match[1]&&b.type==='markdown'){const part=parseMarkdown(b.text)[Number(match[2])];if(part?.kind==='table')block={type:'table',columns:part.columns,rows:part.rows};}});}
+      if(block?.type!=='table')return;
+      const allowed:Record<string,readonly string[]>={'table-layout':TABLE_LAYOUTS,'table-palette':TABLE_PALETTES,'table-sort':TABLE_SORTS,'table-group':TABLE_GROUPS,'table-preset':TABLE_PRESETS};
       if(allowed[action]&&!allowed[action].includes(snippet??''))return;
       const index=Number(snippet);if(action==='table-column'&&(!/^\d+$/.test(snippet??'')||!Number.isInteger(index)||index>=block.columns.length))return;
       updateView(paneId,view.id,v=>{
        if(action==='table-layout'){setTableLayout(page.id,v.revealed,snippet!);return;}
+       if(action==='table-palette'){setTableChoice(page.id,v.revealed,'palette',snippet!);return;}
        if(action==='table-sort'||action==='table-group'){setTableChoice(page.id,v.revealed,action==='table-sort'?'sort':'group',snippet!);return;}
        if(action==='table-preset'){applyTablePreset(page.id,block.columns,v.revealed,snippet!);v.revealed[tableChoiceKey(page.id,'menu','organize')]=false;return;}
-       if(action==='table-options'||action==='table-organize'){const key=action==='table-options'?tableOptionsKey(page.id,id):tableChoiceKey(page.id,'menu','organize');v.revealed[key]=!v.revealed[key];return;}
+       if(action==='table-options'||action==='table-organize'||action==='table-colors'){const key=action==='table-options'?tableOptionsKey(page.id,id):tableChoiceKey(page.id,'menu',action==='table-colors'?'palette':'organize');v.revealed[key]=!v.revealed[key];return;}
        const visible=visibleTableColumns(page.id,block.columns,v.revealed);if(visible.length===1&&visible.includes(index))return;v.revealed[tableColumnKey(page.id,block.columns[index],index)]=visible.includes(index);
       });return;
      }
@@ -425,6 +430,7 @@ function toggleChrome(paneId:string){document.dispatchEvent(new CustomEvent('atl
  {page&&outsideExperience(page.id)&&<button className="text-button outside-scope-action" title="Keep showing this resource in this workspace's Experience" onClick={()=>addToExperience(page.id)}>Add to Experience</button>}
  {page&&!page.qcm&&(!page.article||page.blocks.length>0)&&<div className="pane-header-actions" role="group" aria-label={'Pane '+letter+' reading shortcuts'}>
  <IconButton name={sheet||doc?'spread':'openbook'} label={sheet?'Quick cheatsheet Spread':doc?'Quick PDF Spread':'Quick Book mode'} disabled={!loc||!page||!!page.qcm} active={sheet?loc?.sheetMode==='spread':doc?loc?.pdfMode==='spread':loc?.presentation==='book'} onClick={()=>{if(view)updateView(pane.id,view.id,v=>{if(sheet){const l=current(v)!;l.sheetMode=l.sheetMode==='spread'?'single':'spread';l.scroll=0;}else toggleQuickLayout(v,!!doc);});}}/>
+ {!doc&&view&&<button className="text-button pane-display-toggle" aria-expanded={!!view.revealed[displayKey(page.id,'menu')]} onClick={()=>updateView(pane.id,view.id,v=>{const key=displayKey(page.id,'menu');v.revealed[key]=!v.revealed[key];})}>Display</button>}
  {sheet&&<IconButton name="grid" label="Quick four-page cheatsheet grid" active={loc?.sheetMode==='grid'} onClick={()=>{if(view)updateView(pane.id,view.id,v=>{const l=current(v)!;l.sheetMode=l.sheetMode==='grid'?'single':'grid';l.scroll=0;});}}/>}
  {doc&&<IconButton name="grid" label="Quick four-page PDF grid" disabled={pdfRenderers[(view?.id??'')+doc.id]!=='integrated'} active={loc?.pdfMode==='grid'} onClick={()=>{if(view)updateView(pane.id,view.id,togglePdfGrid);}}/>}
  {<>
@@ -434,6 +440,7 @@ function toggleChrome(paneId:string){document.dispatchEvent(new CustomEvent('atl
  <IconButton className="pane-chrome-toggle" name="chrome" label={(pane.readerChromeCollapsed??true)?'Show reader controls':'Hide reader controls'} title={((pane.readerChromeCollapsed??true)?'Show':'Hide')+' reader controls in pane '+letter} active={!(pane.readerChromeCollapsed??true)} onClick={()=>toggleChrome(pane.id)}/>
  {session.panes.length===2&&<IconButton name="close" label={'Close pane '+(index+1)} onClick={()=>closePane(pane.id)}/>}
  </div>
+ {page&&view&&!doc&&!page.qcm&&view.revealed[displayKey(page.id,'menu')]&&<DisplayControls page={page} view={view} onView={fn=>updateView(pane.id,view.id,fn)}/>}
  {loc?.historyRevisionId&&<div className="historical-banner" role="status"><strong>{projection.revision?'Version '+projection.revision.number+' / Read-only snapshot':'Historical version unavailable'}</strong><code>{loc.historyRevisionId}</code>{projection.revision&&<button data-agent-action="version-history" onClick={()=>showHistory(projection.revision!.resourceKey)}>Version History</button>}<button data-agent-action="revision-open-current" onClick={()=>{const target=currentResourceTarget(catalogue,loc);if(target){const {historyRevisionId,...floating}=target;openTarget(floating);}}}>Open current</button></div>}
  {projection.warning?<div className="missing-page" role="alert"><h2>Historical content unavailable</h2><p>{projection.warning}</p><button onClick={settings}>Restore full backup</button></div>:view?.referenceExplorer?<ReferenceExplorer {...referenceProps} state={view.referenceExplorer} target={view.referenceExplorer.target} onState={value=>updateView(pane.id,view.id,v=>{v.referenceExplorer=value;})} onClose={()=>closeTab(pane.id,view.id)}/>:view&&loc?.collectionId&&projection.revision?<StructureHistoryView key={projection.revision.revisionId} snapshot={projection.revision.snapshot} revisionId={projection.revision.revisionId} catalogue={catalogue} workspace={ws} onOpen={openTarget}/>:view&&loc?.collectionId===REFERENCES_PROJECT?<StructureHistoryView snapshot={{project:{id:REFERENCES_PROJECT,title:'Manual reference placements',icon:'link',description:'User-owned reference placements',nodes:[]},references:ws.overlays.references??[]}} catalogue={catalogue} workspace={ws} onOpen={openTarget}/>:view&&loc?.collectionId?<CollectionView onEditReference={item=>setModal({kind:'reference-edit',reference:item})} onResource={openTarget} onReferenceActions={showReadingActions} key={view.id+loc.collectionId} id={loc.collectionId} catalogue={catalogue} workspace={ws} onOpen={(id:string,anchor?:Anchor,newTab=false)=>openPage(id,anchor,newTab,pane.id)} onOther={session.panes.length===2?(id:string)=>{const other=session.panes.find(p=>p.id!==pane.id);if(other)openPage(id,undefined,false,other.id);}:undefined} onManage={(item:any)=>setModal({kind:'manage',item})} onBookmark={bookmarkDocument} onCreate={setModalCreate} onImport={(projectId:string,folderId?:string)=>setModal({kind:'settings',projectId,folderId})}/>:
  view&&loc?<><div className="pane-breadcrumb" title={crumb?.path.join(' / ')??loc.pageId}><span>{crumb?.path.slice(0,-1).join(' / ')??'Unfiled reference'}</span>{session.panes.length===2&&<span className={'pane-active-tag '+(active?'selected':'')}>{(active?'Active pane ':'Pane ')+letter}</span>}</div>
