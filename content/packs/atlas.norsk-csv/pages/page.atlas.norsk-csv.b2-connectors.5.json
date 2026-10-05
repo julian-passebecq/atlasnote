@@ -1,0 +1,308 @@
+{
+  "id": "page.atlas.norsk-csv.b2-connectors.5",
+  "title": "B2 — Essay connectors · 5",
+  "related": [],
+  "terms": [],
+  "summary": "161–194 / 194. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-connectors.5",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "forskjellig fra",
+          "different from",
+          "",
+          "adj/conn",
+          "annerledes enn (different from) · ulik (different)",
+          "lik (similar)"
+        ],
+        [
+          "ulik",
+          "different, unlike",
+          "",
+          "adj/conn",
+          "forskjellig (different) · annerledes (different)",
+          "lik (similar)"
+        ],
+        [
+          "lik",
+          "similar, alike",
+          "",
+          "adj/conn",
+          "samme (same) · tilsvarende (corresponding)",
+          "ulik (different)"
+        ],
+        [
+          "samme som",
+          "the same as",
+          "",
+          "det/conn",
+          "lik (similar) · tilsvarende (corresponding)",
+          "annerledes enn (different from)"
+        ],
+        [
+          "eller",
+          "or",
+          "",
+          "conj",
+          "alternativt (alternatively) · eventuelt (possibly/alternatively)",
+          ""
+        ],
+        [
+          "alternativt",
+          "alternatively",
+          "",
+          "conn",
+          "eller (or) · eventuelt (possibly/alternatively)",
+          ""
+        ],
+        [
+          "eventuelt",
+          "possibly, alternatively",
+          "",
+          "conn",
+          "muligens (possibly) · alternativt (alternatively)",
+          ""
+        ],
+        [
+          "enten ... eller",
+          "either ... or",
+          "",
+          "conj",
+          "alternativt (alternatively) · eller (or)",
+          "verken ... eller (neither ... nor)"
+        ],
+        [
+          "om ... eller",
+          "whether ... or",
+          "",
+          "sub/conn",
+          "hvorvidt ... eller (whether ... or) · enten ... eller (either ... or)",
+          ""
+        ],
+        [
+          "hvorvidt",
+          "whether",
+          "",
+          "sub",
+          "om (whether) · hvorvidt eller ikke (whether or not)",
+          ""
+        ],
+        [
+          "hvorvidt ... eller",
+          "whether ... or",
+          "",
+          "sub/conn",
+          "om ... eller (whether ... or)",
+          ""
+        ],
+        [
+          "uansett om",
+          "regardless of whether, whether or not",
+          "",
+          "sub/conn",
+          "enten ... eller (whether ... or) · samme hva (no matter what)",
+          ""
+        ],
+        [
+          "verken ... eller",
+          "neither ... nor",
+          "",
+          "conj",
+          "hverken ... eller (neither ... nor) · heller ikke (not either)",
+          "både ... og (both ... and)"
+        ],
+        [
+          "hverken ... eller",
+          "neither ... nor",
+          "",
+          "conj",
+          "verken ... eller (neither ... nor)",
+          "både ... og (both ... and)"
+        ],
+        [
+          "verken",
+          "neither",
+          "",
+          "conj",
+          "verken eller (neither nor) · heller ikke (neither/not either)",
+          ""
+        ],
+        [
+          "heller ikke",
+          "not either, neither",
+          "",
+          "adv/conn",
+          "verken eller (neither nor) · ei heller (nor)",
+          "også (also)"
+        ],
+        [
+          "ei heller",
+          "nor, neither",
+          "",
+          "conn",
+          "heller ikke (neither/not either) · verken (neither)",
+          ""
+        ],
+        [
+          "etter min mening",
+          "in my opinion",
+          "",
+          "uttr",
+          "jeg mener at (I think that) · slik jeg ser det (as I see it)",
+          ""
+        ],
+        [
+          "jeg mener at",
+          "I think/mean that",
+          "",
+          "uttr",
+          "etter min mening (in my opinion) · jeg synes at (I think that)",
+          ""
+        ],
+        [
+          "slik jeg ser det",
+          "as I see it",
+          "",
+          "uttr",
+          "etter min mening (in my opinion) · etter min vurdering (in my assessment)",
+          ""
+        ],
+        [
+          "ifølge",
+          "according to",
+          "",
+          "prep/conn",
+          "i følge (variant spelling, but ifølge is recommended) · ifølge forskerne (according to researchers)",
+          ""
+        ],
+        [
+          "ifølge forskerne",
+          "according to researchers",
+          "",
+          "uttr",
+          "ifølge (according to) · forskning viser at (research shows that)",
+          ""
+        ],
+        [
+          "på sin side",
+          "for his/her/its part, in turn",
+          "",
+          "conn",
+          "for sin del (for one’s part) · på den andre siden (on the other hand)",
+          ""
+        ],
+        [
+          "slik sett",
+          "in that sense, viewed that way",
+          "",
+          "conn",
+          "på den måten (in that way) · fra det perspektivet (from that perspective)",
+          ""
+        ],
+        [
+          "for min del",
+          "as for me, for my part",
+          "",
+          "uttr",
+          "etter min mening (in my opinion) · personlig (personally)",
+          ""
+        ],
+        [
+          "for å oppsummere",
+          "to summarize",
+          "",
+          "uttr",
+          "oppsummert (summarized) · kort sagt (in short)",
+          ""
+        ],
+        [
+          "oppsummert",
+          "summarized, in summary",
+          "",
+          "conn",
+          "for å oppsummere (to summarize) · kort sagt (in short)",
+          ""
+        ],
+        [
+          "alt i alt",
+          "all in all, overall",
+          "",
+          "conn",
+          "samlet sett (overall) · til syvende og sist (ultimately)",
+          ""
+        ],
+        [
+          "samlet sett",
+          "overall, taken together",
+          "",
+          "conn",
+          "alt i alt (all in all) · totalt sett (overall)",
+          ""
+        ],
+        [
+          "konklusjonen er at",
+          "the conclusion is that",
+          "",
+          "uttr",
+          "derfor kan vi si at (therefore we can say that) · alt i alt (overall)",
+          ""
+        ],
+        [
+          "til syvende og sist",
+          "ultimately, in the end",
+          "",
+          "uttr",
+          "alt i alt (all in all) · til slutt (finally)",
+          ""
+        ],
+        [
+          "i beste fall",
+          "at best",
+          "",
+          "uttr",
+          "hvis alt går bra (if all goes well)",
+          "i verste fall (at worst)"
+        ],
+        [
+          "i verste fall",
+          "at worst, in the worst case",
+          "",
+          "uttr",
+          "hvis alt går galt (if everything goes wrong)",
+          "i beste fall (at best)"
+        ],
+        [
+          "i den tro at",
+          "believing that",
+          "",
+          "uttr",
+          "fordi man trodde at (because one believed that)",
+          ""
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Connectors"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.a2-work-tech.2",
+  "title": "A2 — Work and technology · 2",
+  "related": [],
+  "terms": [],
+  "summary": "41–80 / 105. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.a2-work-tech.2",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "frisør (en)",
+          "hairdresser",
+          "SG: (U) en frisør (D) frisøren · PL: (U) frisører (D) frisørene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "fungere (å)",
+          "to function; to work",
+          "V2 — TE: (PR) fungerer · (PT) fungerte · (PF) har fungert",
+          "VERB",
+          "virke (function)",
+          "svikte (fail)"
+        ],
+        [
+          "gründer (en)",
+          "entrepreneur; startup founder",
+          "SG: (U) en gründer (D) gründeren · PL: (U) gründere (D) gründerne",
+          "NOUN",
+          "entreprenør (entrepreneur)",
+          "—"
+        ],
+        [
+          "ha fri",
+          "to have time off",
+          "—",
+          "PHRASE",
+          "—",
+          "—"
+        ],
+        [
+          "ha mye å gjøre",
+          "to be very busy",
+          "—",
+          "PHRASE",
+          "være travel (be busy)",
+          "ha lite å gjøre (have little to do)"
+        ],
+        [
+          "heltid (en/a)",
+          "full — time (employment)",
+          "SG: (U) en/a heltid (D) heltida/en · PL: (U) heltider (D) heltidene",
+          "NOUN",
+          "—",
+          "deltid (part — time)"
+        ],
+        [
+          "hjelpemann (en)",
+          "helper; assistant (manual)",
+          "SG: (U) en hjelpemann (D) hjelpemannen · PL: (U) hjelpemenn (D) hjelpemennene",
+          "NOUN",
+          "assistent (assistant)",
+          "sjef (boss)"
+        ],
+        [
+          "husøkonom (en)",
+          "housekeeper; housekeeping manager",
+          "SG: (U) en husøkonom (D) husøkonomen · PL: (U) husøkonomer (D) husøkonomene",
+          "NOUN",
+          "renholder (cleaner)",
+          "gjest (guest)"
+        ],
+        [
+          "ingeniør (en)",
+          "engineer",
+          "SG: (U) en ingeniør (D) ingeniøren · PL: (U) ingeniører (D) ingeniørene",
+          "NOUN",
+          "tekniker (technician)",
+          "—"
+        ],
+        [
+          "innkalling (en/a)",
+          "summons; notice to attend",
+          "SG: (U) en/a innkalling (D) innkallinga/en · PL: (U) innkallinger (D) innkallingene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "jobb (en)",
+          "job; work (position)",
+          "SG: (U) en jobb (D) jobben · PL: (U) jobber (D) jobbene",
+          "NOUN",
+          "arbeid (work)",
+          "ferie (holiday)"
+        ],
+        [
+          "jobbe (å)",
+          "to work (at a job)",
+          "V1 — ET: (PR) jobber · (PT) jobbet · (PF) har jobbet",
+          "VERB",
+          "arbeide (work)",
+          "hvile (rest)"
+        ],
+        [
+          "jobbe turnus",
+          "to work shifts",
+          "V1 — ET: (PR) jobber · (PT) jobbet · (PF) har jobbet",
+          "PHRASE",
+          "—",
+          "—"
+        ],
+        [
+          "kokk (en)",
+          "cook; chef",
+          "SG: (U) en kokk (D) kokken · PL: (U) kokker (D) kokkene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kollega (en)",
+          "colleague; co-worker",
+          "SG: (U) en kollega (D) kollegaen · PL: (U) kollegaer (D) kollegaene",
+          "NOUN",
+          "arbeidskamerat (workmate)",
+          "sjef (boss)"
+        ],
+        [
+          "kompetanse (en)",
+          "competence; skills",
+          "SG: (U) en kompetanse (D) kompetansen · PL: (U) kompetanser (D) kompetansene",
+          "NOUN",
+          "ferdigheter (skills)",
+          "mangel på kompetanse (lack of skills)"
+        ],
+        [
+          "kontor (et)",
+          "office",
+          "SG: (U) et kontor (D) kontoret · PL: (U) kontorer (D) kontorene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "krav (et)",
+          "demand; requirement",
+          "SG: (U) et krav (D) kravet · PL: (U) krav (D) kravene",
+          "NOUN",
+          "forventning (expectation)",
+          "frihet (freedom)"
+        ],
+        [
+          "kreve (å)",
+          "to demand; to require",
+          "V2 – DE : (PR) krever · (PT) krevde · (PF) har krevd",
+          "VERB",
+          "forlange (demand)",
+          "gi (give)"
+        ],
+        [
+          "kunde (en)",
+          "customer; client",
+          "SG: (U) en kunde (D) kunden · PL: (U) kunder (D) kundene",
+          "NOUN",
+          "klient (client)",
+          "selger (seller)"
+        ],
+        [
+          "kvalifisert",
+          "qualified;kvalifisert",
+          "(M/F) kvalifisert · (N) kvalifisert · (PL) kvalifiserte",
+          "ADJECTIVE",
+          "dyktig (competent)",
+          "ukvalifisert (unqualified)"
+        ],
+        [
+          "lager (et)",
+          "warehouse; stockroom",
+          "SG: (U) et lager (D) lageret · PL: (U) lager (D) lagrene",
+          "NOUN",
+          "magasin (storage; warehouse)",
+          "butikk (shop)"
+        ],
+        [
+          "ledelse (en)",
+          "management; leadership",
+          "SG: (U) en ledelse (D) ledelsen · PL: (U) ledelser (D) ledelsene",
+          "NOUN",
+          "administrasjon (administration)",
+          "—"
+        ],
+        [
+          "leder (en)",
+          "leader; manager",
+          "SG: (U) en leder (D) lederen · PL: (U) ledere (D) lederne",
+          "NOUN",
+          "sjef (boss)",
+          "ansatt (employee)"
+        ],
+        [
+          "levere (å)",
+          "to deliver; to hand in",
+          "V2 – TE : (PR) leverer · (PT) leverte · (PF) har levert",
+          "VERB",
+          "gi (give)",
+          "holde igjen (hold back)"
+        ],
+        [
+          "maskin (en)",
+          "machine",
+          "SG: (U) en maskin (D) maskinen · PL: (U) maskiner (D) maskinene",
+          "NOUN",
+          "apparat (device)",
+          "—"
+        ],
+        [
+          "mekaniker (en)",
+          "mechanic",
+          "SG: (U) en mekaniker (D) mekanikeren · PL: (U) mekanikere (D) mekanikerne",
+          "NOUN",
+          "bilmekaniker (car mechanic)",
+          "—"
+        ],
+        [
+          "mekke (å)",
+          "to tinker; fix",
+          "V1 — ET: (PR) mekker · (PT) mekket · (PF) har mekket",
+          "VERB",
+          "reparere (repair)",
+          "ødelegge (break)"
+        ],
+        [
+          "motor (en)",
+          "engine; motor",
+          "SG: (U) en motor (D) motoren · PL: (U) motorer (D) motorene",
+          "NOUN",
+          "maskin (machine)",
+          "—"
+        ],
+        [
+          "nett (et)",
+          "internet; net",
+          "SG: (U) et nett (D) nettet · PL: (U) nett (D) nettene",
+          "NOUN",
+          "internett (internet)",
+          "—"
+        ],
+        [
+          "offentlig",
+          "public (state — run)",
+          "(M/F) offentlig · (N) offentlig · (PL) offentlige",
+          "ADJECTIVE",
+          "statlig (state)",
+          "privat (private)"
+        ],
+        [
+          "offisiell",
+          "official",
+          "(M/F) offisiell · (N) offisielt · (PL) offisielle",
+          "ADJECTIVE",
+          "formell (formal)",
+          "uoffisiell (unofficial)"
+        ],
+        [
+          "overtid (en/a)",
+          "overtime (work)",
+          "SG: (U) en/a overtid (D) overtida/en · PL: (U) — (uncount)",
+          "NOUN",
+          "ekstratid (extra time)",
+          "fri (time off)"
+        ],
+        [
+          "på nettet",
+          "online; on the internet",
+          "—",
+          "PHRASE",
+          "—",
+          "offline"
+        ],
+        [
+          "papirarbeid (et)",
+          "paperwork",
+          "SG: (U) et papirarbeid (D) papirarbeidet · PL: — (uncount)",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "PC (en)",
+          "PC; computer",
+          "SG: (U) en PC (D) PCen · PL: (U) PCer (D) PCene",
+          "NOUN",
+          "datamaskin (computer)",
+          "—"
+        ],
+        [
+          "personlig økonomi",
+          "personal finance",
+          "—",
+          "PHRASE",
+          "privat økonomi (private finances)",
+          "offentlig økonomi (public finances)"
+        ],
+        [
+          "plan (en)",
+          "plan",
+          "SG: (U) en plan (D) planen · PL: (U) planer (D) planene",
+          "NOUN",
+          "opplegg (scheme)",
+          "impuls (impulse)"
+        ],
+        [
+          "program (et)",
+          "program (TV/app)",
+          "SG: (U) et program (D) programmet · PL: (U) programmer (D) programmene",
+          "NOUN",
+          "app (app)",
+          "—"
+        ],
+        [
+          "rådgiver (en)",
+          "advisor; consultant",
+          "SG: (U) en rådgiver (D) rådgiveren · PL: (U) rådgivere (D) rådgiverne",
+          "NOUN",
+          "konsulent (consultant)",
+          "kunde (client)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "a2fullvoc27v1_clean_patched.xlsx",
+      "note": "Worksheet: a2fullvoc27v1_clean_patched"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:A2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

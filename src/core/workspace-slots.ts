@@ -49,6 +49,7 @@ export const BUILTIN_CATEGORIES:Record<string,CategoryId>={
  'project.atlas.guide':'personal','example.project':'personal','project.pdfatlas':'informatics',
  ...Object.fromEntries(['python','sql','pandas','pyspark'].map(n=>['project.samples.'+n,'informatics' as const])),
  'project.samples.azure':'cloud','project.samples.databricks':'cloud','project.samples.norsk':'norsk',
+ 'project.atlas.norsk-csv':'norsk',
  'project.samples.job':'job','project.samples.personal':'personal',
  // atlas.v3-seed pack (project IDs are pack-owned; map informatics->it and personal->kpi at the SubjectKey boundary).
  'project.v3seed.data-engineering':'informatics','project.v3seed.cloud':'cloud','project.v3seed.norsk':'norsk',

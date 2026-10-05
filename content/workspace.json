@@ -44,7 +44,8 @@
       "title": "Norsk",
       "projectIds": [
         "project.samples.norsk",
-        "project.v3seed.norsk"
+        "project.v3seed.norsk",
+        "project.atlas.norsk-csv"
       ]
     },
     {

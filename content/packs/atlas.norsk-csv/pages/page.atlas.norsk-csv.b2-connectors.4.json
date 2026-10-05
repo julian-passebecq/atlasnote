@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-connectors.4",
+  "title": "B2 — Essay connectors · 4",
+  "related": [],
+  "terms": [],
+  "summary": "121–160 / 194. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-connectors.4",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "ellers",
+          "otherwise, else",
+          "",
+          "adv/conn",
+          "hvis ikke (if not) · i motsatt fall (otherwise)",
+          ""
+        ],
+        [
+          "i alle fall",
+          "in any case, at least",
+          "",
+          "adv/conn",
+          "i hvert fall (at any rate) · uansett (anyway) · i det minste (at least)",
+          ""
+        ],
+        [
+          "i hvert fall",
+          "at any rate, at least, in any case",
+          "",
+          "adv/conn",
+          "i alle fall (in any case) · uansett (anyway) · i det minste (at least)",
+          ""
+        ],
+        [
+          "i det minste",
+          "at least",
+          "",
+          "adv/conn",
+          "minst (at least) · i alle fall (at least)",
+          ""
+        ],
+        [
+          "uansett",
+          "anyway, regardless, in any case",
+          "",
+          "adv/conn",
+          "i alle fall (in any case) · samme hva (no matter what)",
+          ""
+        ],
+        [
+          "riktignok",
+          "admittedly, true enough",
+          "",
+          "conn",
+          "det er sant at (it is true that) · likevel (however)",
+          ""
+        ],
+        [
+          "for så vidt",
+          "to some extent, in a way",
+          "",
+          "uttr",
+          "til en viss grad (to some extent) · på en måte (in a way)",
+          ""
+        ],
+        [
+          "vel å merke",
+          "mind you, notably",
+          "",
+          "uttr",
+          "merk at (note that) · riktignok (admittedly)",
+          ""
+        ],
+        [
+          "til en viss grad",
+          "to a certain extent",
+          "",
+          "uttr",
+          "delvis (partly) · for så vidt (to some extent)",
+          "helt (completely)"
+        ],
+        [
+          "på en måte",
+          "in a way, kind of",
+          "",
+          "uttr",
+          "for så vidt (in a way) · til en viss grad (to some extent)",
+          ""
+        ],
+        [
+          "til dels",
+          "partly, to some extent",
+          "",
+          "adv/conn",
+          "delvis (partly) · til en viss grad (to some extent)",
+          "helt (completely)"
+        ],
+        [
+          "i praksis",
+          "in practice",
+          "",
+          "uttr",
+          "i realiteten (in reality) · faktisk (actually)",
+          "i teorien (in theory)"
+        ],
+        [
+          "i teorien",
+          "in theory",
+          "",
+          "uttr",
+          "prinsipielt (in principle)",
+          "i praksis (in practice)"
+        ],
+        [
+          "i realiteten",
+          "in reality, in fact",
+          "",
+          "uttr",
+          "faktisk (actually) · i praksis (in practice)",
+          "i teorien (in theory)"
+        ],
+        [
+          "unntatt",
+          "except, except for",
+          "",
+          "prep/conn",
+          "bortsett fra (apart from) · med unntak av (with the exception of)",
+          "inkludert (included)"
+        ],
+        [
+          "bortsett fra",
+          "apart from, except for",
+          "",
+          "prep/conn",
+          "unntatt (except) · med unntak av (with the exception of)",
+          "inkludert (included)"
+        ],
+        [
+          "med unntak av",
+          "with the exception of",
+          "",
+          "prep/conn",
+          "bortsett fra (apart from) · unntatt (except)",
+          ""
+        ],
+        [
+          "for eksempel",
+          "for example",
+          "",
+          "conn",
+          "eksempelvis (for example) · blant annet (among other things)",
+          ""
+        ],
+        [
+          "eksempelvis",
+          "for example, for instance",
+          "",
+          "conn",
+          "for eksempel (for example) · blant annet (among other things)",
+          ""
+        ],
+        [
+          "blant annet",
+          "among other things, including",
+          "",
+          "conn",
+          "for eksempel (for example) · ikke minst (not least)",
+          ""
+        ],
+        [
+          "med andre ord",
+          "in other words",
+          "",
+          "conn",
+          "det vil si (that is) · altså (so/that is)",
+          ""
+        ],
+        [
+          "det vil si",
+          "that is, i.e.",
+          "",
+          "conn",
+          "med andre ord (in other words) · nærmere bestemt (more precisely)",
+          ""
+        ],
+        [
+          "nærmere bestemt",
+          "more precisely, specifically",
+          "",
+          "conn",
+          "det vil si (that is) · konkret (specifically)",
+          ""
+        ],
+        [
+          "kort sagt",
+          "in short, briefly",
+          "",
+          "conn",
+          "oppsummert (summarized) · med andre ord (in other words)",
+          ""
+        ],
+        [
+          "eksempelet viser at",
+          "the example shows that",
+          "",
+          "uttr",
+          "dette viser at (this shows that) · dette tyder på at (this suggests that)",
+          ""
+        ],
+        [
+          "når det gjelder",
+          "regarding, concerning, as for",
+          "",
+          "prep/conn",
+          "angående (regarding) · med hensyn til (with regard to)",
+          ""
+        ],
+        [
+          "angående",
+          "regarding, concerning",
+          "",
+          "prep/conn",
+          "når det gjelder (regarding) · med hensyn til (with regard to)",
+          ""
+        ],
+        [
+          "med hensyn til",
+          "with regard to, regarding",
+          "",
+          "prep/conn",
+          "når det gjelder (regarding) · angående (concerning)",
+          ""
+        ],
+        [
+          "i denne sammenhengen",
+          "in this context",
+          "",
+          "uttr",
+          "her (here) · når det gjelder dette (regarding this)",
+          ""
+        ],
+        [
+          "som",
+          "as; like",
+          "",
+          "sub",
+          "slik som (such as/like) · på samme måte som (in the same way as)",
+          ""
+        ],
+        [
+          "slik som",
+          "such as, like",
+          "",
+          "sub",
+          "som (as/like) · på samme måte som (in the same way as)",
+          ""
+        ],
+        [
+          "som om",
+          "as if",
+          "",
+          "sub",
+          "som (as) · slik som (like)",
+          ""
+        ],
+        [
+          "på samme måte som",
+          "in the same way as",
+          "",
+          "prep/conn",
+          "slik som (like) · på linje med (on a par with)",
+          "i motsetning til (in contrast to)"
+        ],
+        [
+          "sammenliknet med",
+          "compared with/to",
+          "",
+          "prep/conn",
+          "i forhold til (in relation to) · sett i forhold til (seen in relation to)",
+          ""
+        ],
+        [
+          "i forhold til",
+          "in relation to, compared with",
+          "",
+          "prep/conn",
+          "sammenliknet med (compared with) · sett i forhold til (seen in relation to)",
+          ""
+        ],
+        [
+          "sett i forhold til",
+          "seen in relation to, compared to",
+          "",
+          "prep/conn",
+          "i forhold til (in relation to) · sammenliknet med (compared with)",
+          ""
+        ],
+        [
+          "på linje med",
+          "on a par with, in line with",
+          "",
+          "prep/conn",
+          "på samme måte som (in the same way as) · tilsvarende (corresponding)",
+          ""
+        ],
+        [
+          "tilsvarende",
+          "correspondingly, equivalent",
+          "",
+          "conn",
+          "likeledes (likewise) · på samme måte (in the same way)",
+          ""
+        ],
+        [
+          "likeledes",
+          "likewise, similarly",
+          "",
+          "conn",
+          "tilsvarende (similarly) · på samme måte (in the same way)",
+          ""
+        ],
+        [
+          "annerledes enn",
+          "different from",
+          "",
+          "adj/conn",
+          "forskjellig fra (different from) · til forskjell fra (unlike)",
+          "lik (similar)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Connectors"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

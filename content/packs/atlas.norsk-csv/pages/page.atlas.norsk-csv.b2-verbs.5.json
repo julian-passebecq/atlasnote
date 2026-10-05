@@ -1,0 +1,252 @@
+{
+  "id": "page.atlas.norsk-csv.b2-verbs.5",
+  "title": "B2 — Verb forms · 5",
+  "related": [],
+  "terms": [],
+  "summary": "161–187 / 187. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-verbs.5",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Infinitiv",
+        "Presens",
+        "Preteritum",
+        "Presens perfektum"
+      ],
+      "rows": [
+        [
+          "å skape",
+          "create",
+          "å skape",
+          "skaper",
+          "skapte",
+          "har skapt"
+        ],
+        [
+          "å skille",
+          "separate / distinguish",
+          "å skille",
+          "skiller",
+          "skilte",
+          "har skilt"
+        ],
+        [
+          "å skrive",
+          "write",
+          "å skrive",
+          "skriver",
+          "skrev",
+          "har skrevet"
+        ],
+        [
+          "å slå",
+          "hit / strike / occur to",
+          "å slå",
+          "slår",
+          "slo",
+          "har slått"
+        ],
+        [
+          "å spille",
+          "play",
+          "å spille",
+          "spiller",
+          "spilte",
+          "har spilt"
+        ],
+        [
+          "å sprenge",
+          "blow up / burst",
+          "å sprenge",
+          "sprenger",
+          "sprengte",
+          "har sprengt"
+        ],
+        [
+          "å sprenge rammene",
+          "break the limits",
+          "å sprenge",
+          "sprenger",
+          "sprengte",
+          "har sprengt"
+        ],
+        [
+          "å starte opp",
+          "start up",
+          "å starte opp",
+          "starter opp",
+          "startet opp",
+          "har startet opp"
+        ],
+        [
+          "å stemme",
+          "vote",
+          "å stemme",
+          "stemmer",
+          "stemte",
+          "har stemt"
+        ],
+        [
+          "å stille opp",
+          "show up / volunteer",
+          "å stille opp",
+          "stiller opp",
+          "stilte opp",
+          "har stilt opp"
+        ],
+        [
+          "å søke",
+          "apply / search",
+          "å søke",
+          "søker",
+          "søkte",
+          "har søkt"
+        ],
+        [
+          "å tjene",
+          "earn",
+          "å tjene",
+          "tjener",
+          "tjente",
+          "har tjent"
+        ],
+        [
+          "å trives",
+          "thrive / enjoy oneself",
+          "å trives",
+          "trives",
+          "trivdes",
+          "har trivdes"
+        ],
+        [
+          "å utsette",
+          "postpone / expose",
+          "å utsette",
+          "utsetter",
+          "utsatte",
+          "har utsatt"
+        ],
+        [
+          "å utvinne",
+          "extract",
+          "å utvinne",
+          "utvinner",
+          "utvant",
+          "har utvunnet"
+        ],
+        [
+          "å velge",
+          "choose",
+          "å velge",
+          "velger",
+          "valgte",
+          "har valgt"
+        ],
+        [
+          "å velge bort",
+          "choose not to / opt out",
+          "å velge bort",
+          "velger bort",
+          "valgte bort",
+          "har valgt bort"
+        ],
+        [
+          "å vokse opp",
+          "grow up",
+          "å vokse opp",
+          "vokser opp",
+          "vokste opp",
+          "har vokst opp"
+        ],
+        [
+          "å vurdere",
+          "assess / consider",
+          "å vurdere",
+          "vurderer",
+          "vurderte",
+          "har vurdert"
+        ],
+        [
+          "å øke",
+          "increase",
+          "å øke",
+          "øker",
+          "økte",
+          "har økt"
+        ],
+        [
+          "å frigjøre",
+          "liberate",
+          "å frigjøre",
+          "frigjør",
+          "frigjorde",
+          "har frigjort"
+        ],
+        [
+          "å gjøre",
+          "do / make",
+          "å gjøre",
+          "gjør",
+          "gjorde",
+          "har gjort"
+        ],
+        [
+          "å greie",
+          "manage",
+          "å greie",
+          "greier",
+          "greide",
+          "har greid"
+        ],
+        [
+          "å leve",
+          "live",
+          "å leve",
+          "lever",
+          "levde",
+          "har levd"
+        ],
+        [
+          "å oppleve",
+          "experience",
+          "å oppleve",
+          "opplever",
+          "opplevde",
+          "har opplevd"
+        ],
+        [
+          "å oppnå",
+          "achieve",
+          "å oppnå",
+          "oppnår",
+          "oppnådde",
+          "har oppnådd"
+        ],
+        [
+          "å overleve",
+          "survive",
+          "å overleve",
+          "overlever",
+          "overlevde",
+          "har overlevd"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "NORA0130_B2_exam_grammar_irregulars_study_friendly_v6_final_clean.xlsx",
+      "note": "Worksheet: 02 Verb forms grouped"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

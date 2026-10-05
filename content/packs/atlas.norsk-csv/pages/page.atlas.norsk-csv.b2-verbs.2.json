@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-verbs.2",
+  "title": "B2 — Verb forms · 2",
+  "related": [],
+  "terms": [],
+  "summary": "41–80 / 187. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-verbs.2",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Infinitiv",
+        "Presens",
+        "Preteritum",
+        "Presens perfektum"
+      ],
+      "rows": [
+        [
+          "å huske på",
+          "remember",
+          "å huske på",
+          "husker på",
+          "husket på",
+          "har husket på"
+        ],
+        [
+          "å innebære",
+          "involve / mean",
+          "å innebære",
+          "innebærer",
+          "innebar",
+          "har innebåret"
+        ],
+        [
+          "å inngå",
+          "enter into / be included",
+          "å inngå",
+          "inngår",
+          "inngikk",
+          "har inngått"
+        ],
+        [
+          "å invadere",
+          "invade",
+          "å invadere",
+          "invaderer",
+          "invaderte",
+          "har invadert"
+        ],
+        [
+          "å ivareta",
+          "safeguard / look after",
+          "å ivareta",
+          "ivaretar",
+          "ivaretok",
+          "har ivaretatt"
+        ],
+        [
+          "å kjenne til",
+          "know of / be aware of",
+          "å kjenne til",
+          "kjenner til",
+          "kjente til",
+          "har kjent til"
+        ],
+        [
+          "å komme til å",
+          "be going to / will",
+          "å komme til å",
+          "kommer til å",
+          "kom til å",
+          "har kommet til å"
+        ],
+        [
+          "å konsentrere seg",
+          "concentrate",
+          "å konsentrere seg",
+          "konsentrerer seg",
+          "konsentrerte seg",
+          "har konsentrert seg"
+        ],
+        [
+          "å legge vekt på",
+          "emphasize",
+          "å legge vekt på",
+          "legger vekt på",
+          "la vekt på",
+          "har lagt vekt på"
+        ],
+        [
+          "å lønne seg",
+          "pay off / be worthwhile",
+          "å lønne seg",
+          "lønner seg",
+          "lønnet/lønte seg",
+          "har lønnet/lønt seg"
+        ],
+        [
+          "å medføre",
+          "entail / lead to",
+          "å medføre",
+          "medfører",
+          "medførte",
+          "har medført"
+        ],
+        [
+          "å motivere",
+          "motivate",
+          "å motivere",
+          "motiverer",
+          "motiverte",
+          "har motivert"
+        ],
+        [
+          "å motta",
+          "receive",
+          "å motta",
+          "mottar",
+          "mottok",
+          "har mottatt"
+        ],
+        [
+          "å omfatte",
+          "include / comprise",
+          "å omfatte",
+          "omfatter",
+          "omfattet",
+          "har omfattet"
+        ],
+        [
+          "å omtale",
+          "mention / describe",
+          "å omtale",
+          "omtaler",
+          "omtalte",
+          "har omtalt"
+        ],
+        [
+          "å oppføre seg",
+          "behave",
+          "å oppføre seg",
+          "oppfører seg",
+          "oppførte seg",
+          "har oppført seg"
+        ],
+        [
+          "å påby",
+          "order / require",
+          "å påby",
+          "påbyr",
+          "påbød",
+          "har påbudt"
+        ],
+        [
+          "å påta seg",
+          "take on",
+          "å påta seg",
+          "påtar seg",
+          "påtok seg",
+          "har påtatt seg"
+        ],
+        [
+          "å påvirke",
+          "influence / affect",
+          "å påvirke",
+          "påvirker",
+          "påvirket",
+          "har påvirket"
+        ],
+        [
+          "å realisere seg",
+          "realize oneself",
+          "å realisere seg",
+          "realiserer seg",
+          "realiserte seg",
+          "har realisert seg"
+        ],
+        [
+          "å sette pris på",
+          "appreciate",
+          "å sette pris på",
+          "setter pris på",
+          "satte pris på",
+          "har satt pris på"
+        ],
+        [
+          "å sette seg selv til side",
+          "put oneself aside",
+          "å sette seg selv til side",
+          "setter seg selv til side",
+          "satte seg selv til side",
+          "har satt seg selv til side"
+        ],
+        [
+          "å slåss mot",
+          "fight against",
+          "å slåss mot",
+          "slåss mot",
+          "sloss mot",
+          "har slåss mot"
+        ],
+        [
+          "å stille seg positivt til",
+          "be positive toward",
+          "å stille seg positivt til",
+          "stiller seg positivt til",
+          "stilte seg positivt til",
+          "har stilt seg positivt til"
+        ],
+        [
+          "å strekke til",
+          "be enough / suffice",
+          "å strekke til",
+          "strekker til",
+          "strakk til",
+          "har strukket til"
+        ],
+        [
+          "å ta imot",
+          "receive / accept",
+          "å ta imot",
+          "tar imot",
+          "tok imot",
+          "har tatt imot"
+        ],
+        [
+          "å ta initiativ til",
+          "take initiative to",
+          "å ta initiativ til",
+          "tar initiativ til",
+          "tok initiativ til",
+          "har tatt initiativ til"
+        ],
+        [
+          "å ta stilling til",
+          "take a position on",
+          "å ta stilling til",
+          "tar stilling til",
+          "tok stilling til",
+          "har tatt stilling til"
+        ],
+        [
+          "å ta vare på",
+          "take care of",
+          "å ta vare på",
+          "tar vare på",
+          "tok vare på",
+          "har tatt vare på"
+        ],
+        [
+          "å tillate",
+          "allow",
+          "å tillate",
+          "tillater",
+          "tillot",
+          "har tillatt"
+        ],
+        [
+          "å tilpasse seg",
+          "adapt",
+          "å tilpasse seg",
+          "tilpasser seg",
+          "tilpasset seg",
+          "har tilpasset seg"
+        ],
+        [
+          "å vie oppmerksomhet til",
+          "devote attention to",
+          "å vie",
+          "vier",
+          "viet",
+          "har viet"
+        ],
+        [
+          "å oppstå",
+          "arise / occur",
+          "å oppstå",
+          "oppstår",
+          "oppsto/oppstod",
+          "har oppstått"
+        ],
+        [
+          "å overta",
+          "take over",
+          "å overta",
+          "overtar",
+          "overtok",
+          "har overtatt"
+        ],
+        [
+          "å utgi",
+          "publish",
+          "å utgi",
+          "utgir",
+          "utga/utgav",
+          "har utgitt"
+        ],
+        [
+          "å anta",
+          "assume",
+          "å anta",
+          "antar",
+          "antok",
+          "har antatt"
+        ],
+        [
+          "å bestå",
+          "pass / consist of",
+          "å bestå",
+          "består",
+          "besto/bestod",
+          "har bestått"
+        ],
+        [
+          "å bli",
+          "become / be",
+          "å bli",
+          "blir",
+          "ble",
+          "har blitt"
+        ],
+        [
+          "å bryte",
+          "break / violate",
+          "å bryte",
+          "bryter",
+          "brøt",
+          "har brutt"
+        ],
+        [
+          "å bryte ut",
+          "break out",
+          "å bryte ut",
+          "bryter ut",
+          "brøt ut",
+          "har brutt ut"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "NORA0130_B2_exam_grammar_irregulars_study_friendly_v6_final_clean.xlsx",
+      "note": "Worksheet: 02 Verb forms grouped"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

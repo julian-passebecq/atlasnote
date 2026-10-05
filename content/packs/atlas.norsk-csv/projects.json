@@ -1,0 +1,323 @@
+[
+  {
+    "id": "project.atlas.norsk-csv",
+    "title": "Norsk vocabulary and grammar",
+    "icon": "language",
+    "description": "Thematic vocabulary, grammar and writing tables. Choose which columns to study.",
+    "nodes": [
+      {
+        "id": "node.atlas.norsk-csv.a2",
+        "title": "A2",
+        "children": [
+          {
+            "id": "node.atlas.norsk-csv.a2.vocabulary",
+            "title": "Vocabulary",
+            "children": [
+              {
+                "id": "node.atlas.norsk-csv.a2-daily",
+                "title": "A2 — Daily life",
+                "children": [
+                  {
+                    "id": "node.atlas.norsk-csv.a2-daily.1",
+                    "title": "A2 — Daily life · 1",
+                    "pageId": "page.atlas.norsk-csv.a2-daily.1"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.a2-daily.2",
+                    "title": "A2 — Daily life · 2",
+                    "pageId": "page.atlas.norsk-csv.a2-daily.2"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.a2-daily.3",
+                    "title": "A2 — Daily life · 3",
+                    "pageId": "page.atlas.norsk-csv.a2-daily.3"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.a2-daily.4",
+                    "title": "A2 — Daily life · 4",
+                    "pageId": "page.atlas.norsk-csv.a2-daily.4"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.a2-daily.5",
+                    "title": "A2 — Daily life · 5",
+                    "pageId": "page.atlas.norsk-csv.a2-daily.5"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.a2-daily.6",
+                    "title": "A2 — Daily life · 6",
+                    "pageId": "page.atlas.norsk-csv.a2-daily.6"
+                  }
+                ]
+              },
+              {
+                "id": "node.atlas.norsk-csv.a2-work-tech",
+                "title": "A2 — Work and technology",
+                "children": [
+                  {
+                    "id": "node.atlas.norsk-csv.a2-work-tech.1",
+                    "title": "A2 — Work and technology · 1",
+                    "pageId": "page.atlas.norsk-csv.a2-work-tech.1"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.a2-work-tech.2",
+                    "title": "A2 — Work and technology · 2",
+                    "pageId": "page.atlas.norsk-csv.a2-work-tech.2"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.a2-work-tech.3",
+                    "title": "A2 — Work and technology · 3",
+                    "pageId": "page.atlas.norsk-csv.a2-work-tech.3"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "node.atlas.norsk-csv.b1",
+        "title": "B1",
+        "children": [
+          {
+            "id": "node.atlas.norsk-csv.b1.vocabulary",
+            "title": "Vocabulary",
+            "children": [
+              {
+                "id": "node.atlas.norsk-csv.b1-work",
+                "title": "B1 — Work and careers",
+                "children": [
+                  {
+                    "id": "node.atlas.norsk-csv.b1-work.1",
+                    "title": "B1 — Work and careers · 1",
+                    "pageId": "page.atlas.norsk-csv.b1-work.1"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b1-work.2",
+                    "title": "B1 — Work and careers · 2",
+                    "pageId": "page.atlas.norsk-csv.b1-work.2"
+                  }
+                ]
+              },
+              {
+                "id": "node.atlas.norsk-csv.b1-economy",
+                "title": "B1 — Economy and welfare",
+                "children": [
+                  {
+                    "id": "node.atlas.norsk-csv.b1-economy.1",
+                    "title": "B1 — Economy and welfare · 1",
+                    "pageId": "page.atlas.norsk-csv.b1-economy.1"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b1-economy.2",
+                    "title": "B1 — Economy and welfare · 2",
+                    "pageId": "page.atlas.norsk-csv.b1-economy.2"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "node.atlas.norsk-csv.b2",
+        "title": "B2",
+        "children": [
+          {
+            "id": "node.atlas.norsk-csv.b2.thematic-vocabulary",
+            "title": "Thematic vocabulary",
+            "children": [
+              {
+                "id": "node.atlas.norsk-csv.b2-energy",
+                "title": "B2 — Transport and energy",
+                "children": [
+                  {
+                    "id": "node.atlas.norsk-csv.b2-energy.1",
+                    "title": "B2 — Transport and energy · 1",
+                    "pageId": "page.atlas.norsk-csv.b2-energy.1"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-energy.2",
+                    "title": "B2 — Transport and energy · 2",
+                    "pageId": "page.atlas.norsk-csv.b2-energy.2"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-energy.3",
+                    "title": "B2 — Transport and energy · 3",
+                    "pageId": "page.atlas.norsk-csv.b2-energy.3"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-energy.4",
+                    "title": "B2 — Transport and energy · 4",
+                    "pageId": "page.atlas.norsk-csv.b2-energy.4"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-energy.5",
+                    "title": "B2 — Transport and energy · 5",
+                    "pageId": "page.atlas.norsk-csv.b2-energy.5"
+                  }
+                ]
+              },
+              {
+                "id": "node.atlas.norsk-csv.b2-climate",
+                "title": "B2 — Nature and climate",
+                "children": [
+                  {
+                    "id": "node.atlas.norsk-csv.b2-climate.1",
+                    "title": "B2 — Nature and climate · 1",
+                    "pageId": "page.atlas.norsk-csv.b2-climate.1"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-climate.2",
+                    "title": "B2 — Nature and climate · 2",
+                    "pageId": "page.atlas.norsk-csv.b2-climate.2"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-climate.3",
+                    "title": "B2 — Nature and climate · 3",
+                    "pageId": "page.atlas.norsk-csv.b2-climate.3"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-climate.4",
+                    "title": "B2 — Nature and climate · 4",
+                    "pageId": "page.atlas.norsk-csv.b2-climate.4"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-climate.5",
+                    "title": "B2 — Nature and climate · 5",
+                    "pageId": "page.atlas.norsk-csv.b2-climate.5"
+                  }
+                ]
+              },
+              {
+                "id": "node.atlas.norsk-csv.b2-society",
+                "title": "B2 — Politics and society",
+                "children": [
+                  {
+                    "id": "node.atlas.norsk-csv.b2-society.1",
+                    "title": "B2 — Politics and society · 1",
+                    "pageId": "page.atlas.norsk-csv.b2-society.1"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-society.2",
+                    "title": "B2 — Politics and society · 2",
+                    "pageId": "page.atlas.norsk-csv.b2-society.2"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-society.3",
+                    "title": "B2 — Politics and society · 3",
+                    "pageId": "page.atlas.norsk-csv.b2-society.3"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-society.4",
+                    "title": "B2 — Politics and society · 4",
+                    "pageId": "page.atlas.norsk-csv.b2-society.4"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "node.atlas.norsk-csv.b2.writing-and-essays",
+            "title": "Writing and essays",
+            "children": [
+              {
+                "id": "node.atlas.norsk-csv.b2-connectors",
+                "title": "B2 — Essay connectors",
+                "children": [
+                  {
+                    "id": "node.atlas.norsk-csv.b2-connectors.1",
+                    "title": "B2 — Essay connectors · 1",
+                    "pageId": "page.atlas.norsk-csv.b2-connectors.1"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-connectors.2",
+                    "title": "B2 — Essay connectors · 2",
+                    "pageId": "page.atlas.norsk-csv.b2-connectors.2"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-connectors.3",
+                    "title": "B2 — Essay connectors · 3",
+                    "pageId": "page.atlas.norsk-csv.b2-connectors.3"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-connectors.4",
+                    "title": "B2 — Essay connectors · 4",
+                    "pageId": "page.atlas.norsk-csv.b2-connectors.4"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-connectors.5",
+                    "title": "B2 — Essay connectors · 5",
+                    "pageId": "page.atlas.norsk-csv.b2-connectors.5"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "node.atlas.norsk-csv.b2.grammar",
+            "title": "Grammar",
+            "children": [
+              {
+                "id": "node.atlas.norsk-csv.b2-verbs",
+                "title": "B2 — Verb forms",
+                "children": [
+                  {
+                    "id": "node.atlas.norsk-csv.b2-verbs.1",
+                    "title": "B2 — Verb forms · 1",
+                    "pageId": "page.atlas.norsk-csv.b2-verbs.1"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-verbs.2",
+                    "title": "B2 — Verb forms · 2",
+                    "pageId": "page.atlas.norsk-csv.b2-verbs.2"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-verbs.3",
+                    "title": "B2 — Verb forms · 3",
+                    "pageId": "page.atlas.norsk-csv.b2-verbs.3"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-verbs.4",
+                    "title": "B2 — Verb forms · 4",
+                    "pageId": "page.atlas.norsk-csv.b2-verbs.4"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-verbs.5",
+                    "title": "B2 — Verb forms · 5",
+                    "pageId": "page.atlas.norsk-csv.b2-verbs.5"
+                  }
+                ]
+              },
+              {
+                "id": "node.atlas.norsk-csv.b2-nouns",
+                "title": "B2 — Noun forms",
+                "children": [
+                  {
+                    "id": "node.atlas.norsk-csv.b2-nouns.1",
+                    "title": "B2 — Noun forms · 1",
+                    "pageId": "page.atlas.norsk-csv.b2-nouns.1"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-nouns.2",
+                    "title": "B2 — Noun forms · 2",
+                    "pageId": "page.atlas.norsk-csv.b2-nouns.2"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-nouns.3",
+                    "title": "B2 — Noun forms · 3",
+                    "pageId": "page.atlas.norsk-csv.b2-nouns.3"
+                  },
+                  {
+                    "id": "node.atlas.norsk-csv.b2-nouns.4",
+                    "title": "B2 — Noun forms · 4",
+                    "pageId": "page.atlas.norsk-csv.b2-nouns.4"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

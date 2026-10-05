@@ -1,0 +1,292 @@
+{
+  "id": "page.atlas.norsk-csv.b2-climate.5",
+  "title": "B2 — Nature and climate · 5",
+  "related": [],
+  "terms": [],
+  "summary": "161–192 / 192. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-climate.5",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "forsøpling",
+          "littering, pollution by waste",
+          "sg: (u) en forsøpling; (d) forsøplingen; pl: (u) forsøplinger; (d) forsøplingene",
+          "nou",
+          "søppelforurensning (waste pollution)",
+          "opprydding (clean-up)"
+        ],
+        [
+          "forurensning",
+          "pollution",
+          "sg: (u) en forurensning; (d) forurensningen; pl: (u) forurensninger; (d) forurensningene",
+          "nou",
+          "miljøskade (environmental damage)",
+          "renhet (cleanliness)"
+        ],
+        [
+          "funn",
+          "finding, discovery",
+          "sg: (u) et funn; (d) funnet; pl: (u) funn; (d) funnene",
+          "nou",
+          "resultat (finding) · oppdagelse (discovery)",
+          "antakelse (assumption)"
+        ],
+        [
+          "gjenvinning",
+          "recycling",
+          "sg: (u) en gjenvinning; (d) gjenvinningen; pl: (u) gjenvinninger; (d) gjenvinningene",
+          "nou",
+          "resirkulering (recycling)",
+          "deponering (landfilling)"
+        ],
+        [
+          "grenseverdi",
+          "limit value",
+          "sg: (u) en grenseverdi; (d) grenseverdien; pl: (u) grenseverdier; (d) grenseverdiene",
+          "nou",
+          "tiltaksverdi (action value)",
+          "ubegrenset nivå (unlimited level) · ingen grense (no limit)"
+        ],
+        [
+          "havrydding",
+          "ocean clean-up",
+          "sg: (u) en havrydding; (d) havryddingen; pl: (u) havryddinger; (d) havryddingene",
+          "nou",
+          "strandrydding (beach clean-up) · opprydding (clean-up)",
+          "forsøpling (littering)"
+        ],
+        [
+          "kloakk",
+          "sewage",
+          "sg: (u) en kloakk; (d) kloakken; vanligvis uten flertall",
+          "nou",
+          "avløpsvann (wastewater)",
+          "rent vann (clean water)"
+        ],
+        [
+          "marin forsøpling",
+          "marine litter",
+          "",
+          "uttr",
+          "plast i havet (plastic in the sea)",
+          "rent hav (clean sea)"
+        ],
+        [
+          "miljøgift",
+          "environmental toxin",
+          "sg: (u) en miljøgift; (d) miljøgiften; pl: (u) miljøgifter; (d) miljøgiftene",
+          "nou",
+          "giftstoff (toxic substance)",
+          "ufarlig stoff (harmless substance)"
+        ],
+        [
+          "miljøkriminalitet",
+          "environmental crime",
+          "sg: (u) en miljøkriminalitet; (d) miljøkriminaliteten; vanligvis uten flertall",
+          "nou",
+          "miljølovbrudd (environmental offence)",
+          "miljøvern (environmental protection)"
+        ],
+        [
+          "motsetning",
+          "contrast, contradiction, opposition",
+          "sg: (u) en motsetning; (d) motsetningen; pl: (u) motsetninger; (d) motsetningene",
+          "nou",
+          "derimot (however) · likevel (nevertheless)",
+          "likhet (similarity)"
+        ],
+        [
+          "nyanse",
+          "nuance, shade",
+          "sg: (u) en nyanse; (d) nyansen; pl: (u) nyanser; (d) nyansene",
+          "nou",
+          "forskjell (difference) · detalj (detail)",
+          "forenkling (simplification)"
+        ],
+        [
+          "personopplysning",
+          "personal data, personal information",
+          "SG: (U) en personopplysning · (D) personopplysningen · PL: (U) personopplysninger · (D) personopplysningene",
+          "nou",
+          "persondata (personal data) · privat informasjon (private information)",
+          "anonymitet (anonymity) · fellesinformasjon (public information)"
+        ],
+        [
+          "rotteplage",
+          "rat problem",
+          "sg: (u) en rotteplage; (d) rotteplagen; pl: (u) rotteplager; (d) rotteplagene",
+          "nou",
+          "skadedyrproblem (pest problem) · rotteproblem (rat problem)",
+          "skadedyrfrihet (absence of pests)"
+        ],
+        [
+          "skille",
+          "distinguish, separate",
+          "G2 -te : (INF) infinitiv: å skille· (PR) presens: skiller· (PT) preteritum: skilte· (PP) presens perfektum: har skilt· (PSS) skilles· (IM) skill",
+          "vrb",
+          "atskille (separate) · skjelne (distinguish)",
+          "blande (mix) · forene (unite)"
+        ],
+        [
+          "søppel",
+          "trash, garbage",
+          "sg: (u) et søppel; (d) søppelet; vanligvis uten flertall",
+          "nou",
+          "avfall (waste) · skrot (scrap)",
+          "ressurs (resource)"
+        ],
+        [
+          "tilsvarende",
+          "corresponding, equivalent",
+          "(M/F) tilsvarende; (N) tilsvarende; (PL) tilsvarende",
+          "adj",
+          "lik (similar) · liknende (similar, comparable)",
+          "forskjellig (different) · ulik (different, unlike)"
+        ],
+        [
+          "ulik",
+          "different, unlike, diverse",
+          "(m/f) ulik; (n) ulikt; (pl) ulike",
+          "adj",
+          "forskjellig (different) · annerledes (different)",
+          "lik (same) · identisk (identical)"
+        ],
+        [
+          "utredning",
+          "inquiry, report, investigation",
+          "SG: (U) en utredning · (D) utredningen · PL: (U) utredninger · (D) utredningene",
+          "nou",
+          "rapport (report) · undersøkelse (inquiry)",
+          "kort notat (brief note)"
+        ],
+        [
+          "vedlikeholdsbehov",
+          "maintenance need",
+          "sg: (u) et vedlikeholdsbehov; (d) vedlikeholdsbehovet; pl: (u) vedlikeholdsbehov; (d) vedlikeholdsbehovene",
+          "nou",
+          "reparasjonsbehov (repair need) · oppgraderingsbehov (upgrade need)",
+          "vedlikeholdt stand (maintained condition) · god stand (good condition)"
+        ],
+        [
+          "vise til",
+          "refer to, point to, cite",
+          "G2 -te : (INF) infinitiv: å vise til; (PR) presens: viser til; (PT) preteritum: viste til; (PP) presens perfektum: har vist til",
+          "vrb",
+          "Referere til en kilde (referere to one source) · et eksempel (example)",
+          "se bort fra (ignore)"
+        ],
+        [
+          "faktabasert",
+          "fact-based",
+          "(M/F) faktabasert; (N) faktabasert; (PL) faktabaserte",
+          "adj",
+          "dokumentert (documented)",
+          "udokumentert (undocumented)"
+        ],
+        [
+          "feilinformasjon",
+          "misinformation",
+          "sg: (u) en feilinformasjon; (d) feilinformasjonen; pl: (u) feilinformasjoner; (d) feilinformasjonene",
+          "nou",
+          "uriktig informasjon (incorrect information)",
+          "korrekt informasjon (correct information)"
+        ],
+        [
+          "klimaengasjement",
+          "climate engagement",
+          "sg: (u) et klimaengasjement; (d) klimaengasjementet; vanligvis uten flertall",
+          "nou",
+          "miljøengasjement (environmental engagement)",
+          "likegyldighet (indifference)"
+        ],
+        [
+          "klimajournalistikk",
+          "climate journalism",
+          "sg: (u) en klimajournalistikk; (d) klimajournalistikken; vanligvis uten flertall",
+          "nou",
+          "miljøjournalistikk (environmental journalism)",
+          "klimadesinformasjon (climate disinformation)"
+        ],
+        [
+          "miljøbevegelse",
+          "environmental movement",
+          "sg: (u) en miljøbevegelse; (d) miljøbevegelsen; pl: (u) miljøbevegelser; (d) miljøbevegelsene",
+          "nou",
+          "klimabevegelse (climate movement)",
+          "miljømotstand (opposition to environmental action)"
+        ],
+        [
+          "miljøorganisasjon",
+          "environmental organization",
+          "sg: (u) en miljøorganisasjon; (d) miljøorganisasjonen; pl: (u) miljøorganisasjoner; (d) miljøorganisasjonene",
+          "nou",
+          "naturvernorganisasjon (nature-conservation organization)",
+          "forurensende bedrift (polluting company)"
+        ],
+        [
+          "nedbemanning",
+          "downsizing, staff cuts",
+          "sg: (u) en nedbemanning; (d) nedbemanningen; pl: (u) nedbemanninger; (d) nedbemanningene",
+          "nou",
+          "kutt i årsverk (cuts in full-time positions)",
+          "oppbemanning (staff increase)"
+        ],
+        [
+          "permittering",
+          "temporary layoff",
+          "sg: (u) en permittering; (d) permitteringen; pl: (u) permitteringer; (d) permitteringene",
+          "nou",
+          "midlertidig oppsigelse (temporary layoff)",
+          "fast ansettelse (permanent employment)"
+        ],
+        [
+          "støtteordning",
+          "support scheme, subsidy scheme",
+          "sg: (u) en støtteordning; (d) støtteordningen; pl: (u) støtteordninger; (d) støtteordningene",
+          "nou",
+          "tilskuddsordning (grant scheme)",
+          "kuttordning (cutback scheme)"
+        ],
+        [
+          "utbygging",
+          "development, construction expansion",
+          "sg: (u) en utbygging; (d) utbyggingen; pl: (u) utbygginger; (d) utbyggingene",
+          "nou",
+          "anleggsarbeid (construction work)",
+          "bevaring (preservation)"
+        ],
+        [
+          "videre drift",
+          "continued operation",
+          "",
+          "uttr",
+          "fortsatt drift (continued operation)",
+          "nedleggelse (closure)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Nature Env Climate"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

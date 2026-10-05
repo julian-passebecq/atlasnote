@@ -13,15 +13,16 @@ function personalWorkspace(){const ws=blankWorkspace();const page=makeMarkdownPa
 
 test('public catalogue retains the 1.2.1 core, ten original study samples and eleven playground pages',()=>{
  // atlas.v3-seed (V3 foundation draft) is counted separately below so the 1.2.1/V2 baselines stay exact.
- const original=seed.packs.filter(p=>!['study.samples','atlas.interview-samples','atlas.cheatsheet-samples','atlas.v3-seed'].includes(p.manifest.id));
+ const original=seed.packs.filter(p=>!['study.samples','atlas.interview-samples','atlas.cheatsheet-samples','atlas.v3-seed','atlas.norsk-csv'].includes(p.manifest.id));
  assert.equal(original.reduce((n,p)=>n+p.pages.length,0),10);
  assert.equal(original.filter(p=>p.manifest.id!=='pdfatlas.public').reduce((n,p)=>n+p.pages.length,0),8);
  assert.equal(original.reduce((n,p)=>n+p.projects.length,0),3);
  const v3=seed.packs.find(p=>p.manifest.id==='atlas.v3-seed');assert.equal(v3.pages.length,70);assert.equal(v3.glossary.length,41);assert.equal(v3.projects.length,5);
- const pages=seed.packs.filter(p=>p!==v3).flatMap(p=>p.pages);
+ const norsk=seed.packs.find(p=>p.manifest.id==='atlas.norsk-csv');assert.equal(norsk.pages.length,41);assert.equal(norsk.projects.length,1);assert.equal(norsk.pages.reduce((n,p)=>n+p.blocks[0].rows.length,0),1449);
+ const pages=seed.packs.filter(p=>p!==v3&&p!==norsk).flatMap(p=>p.pages);
  assert.equal(pages.filter(p=>!p.id.startsWith('page.mock.')).length,39);
  assert.equal(pages.filter(p=>p.id.startsWith('page.mock.')).length,11);
- assert.equal(seed.packs.find(p=>p.manifest.id==='atlas.cheatsheet-samples').pages.length,4);assert.equal(seed.validation.pages,50+v3.pages.length);assert.equal(seed.validation.terms,1+v3.glossary.length);assert.equal(seed.validation.projects,14+v3.projects.length);assert.deepEqual(seed.validation.missing,[]);
+ assert.equal(seed.packs.find(p=>p.manifest.id==='atlas.cheatsheet-samples').pages.length,4);assert.equal(seed.validation.pages,50+v3.pages.length+norsk.pages.length);assert.equal(seed.validation.terms,1+v3.glossary.length);assert.equal(seed.validation.projects,14+v3.projects.length+norsk.projects.length);assert.deepEqual(seed.validation.missing,[]);
 });
 test('strict schemas refuse unknown page fields',()=>{const p=clone(seed.packs[0].pages[0]);p.quiz='not supported';assert.throws(()=>validateSchema(bundle(p),schemas.v2),/unsupported/);});
 test('strict @2 schema requires stable IDs on all blocks',()=>{const p=clone(seed.packs.flatMap(p=>p.pages).find(p=>p.id==='page.atlas.layouts'));delete p.blocks[0].id;assert.throws(()=>validateSchema(bundle(p),schemas.v2));});

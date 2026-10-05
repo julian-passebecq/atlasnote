@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.a2-daily.3",
+  "title": "A2 — Daily life · 3",
+  "related": [],
+  "terms": [],
+  "summary": "81–120 / 219. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.a2-daily.3",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "hus (et)",
+          "house",
+          "SG: (U) et hus (D) huset · PL: (U) hus (D) husene",
+          "NOUN",
+          "bolig (dwelling)",
+          "leilighet (apartment)"
+        ],
+        [
+          "husarbeid (et)",
+          "housework",
+          "SG: (U) et husarbeid (D) husarbeidet · PL: (U) — (uncount)",
+          "NOUN",
+          "—",
+          "fritid (free time)"
+        ],
+        [
+          "husleie (en/a)",
+          "rent (for housing)",
+          "SG: (U) en/a husleie (D) husleia/en · PL: (U) husleier (D) husleiene",
+          "NOUN",
+          "leie (rent)",
+          "eie (own)"
+        ],
+        [
+          "hytte (en/a)",
+          "cabin; cottage",
+          "SG: (U) en/a hytte (D) hytta/en · PL: (U) hytter (D) hyttene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "i Norge",
+          "in Norway",
+          "—",
+          "PHRASE",
+          "—",
+          "—"
+        ],
+        [
+          "kafé (en)",
+          "café; coffee shop",
+          "SG: (U) en kafé (D) kafeen · PL: (U) kaféer (D) kaféene",
+          "NOUN",
+          "kaffebar (coffee bar)",
+          "—"
+        ],
+        [
+          "kaffe (en)",
+          "coffee",
+          "SG: (U) en kaffe (D) kaffen · PL: (U) kaffer (D) kaffene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kake (en)",
+          "cake",
+          "SG: (U) en kake (D) kaken · PL: (U) kaker (D) kakene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kald",
+          "cold;kald",
+          "(M/F) kald · (N) kaldt · (PL) kalde; comp: kaldere · sup: kaldest",
+          "ADJECTIVE",
+          "kjølig (cool)",
+          "varm (warm)"
+        ],
+        [
+          "Kan jeg prøve den?",
+          "Can I try it on?",
+          "—",
+          "PHRASE",
+          "—",
+          "—"
+        ],
+        [
+          "kasse (en)",
+          "cash desk; box",
+          "SG: (U) en kasse (D) kassen · PL: (U) kasser (D) kassene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "ketchup (en)",
+          "ketchup",
+          "SG: (U) en ketchup (D) ketchupen · PL: (U) ketchuper (D) ketchupene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kilopris (en)",
+          "price per kilo",
+          "SG: (U) en kilopris (D) kiloprisen · PL: (U) kilopriser (D) kiloprisene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kirke (en)",
+          "church",
+          "SG: (U) en kirke (D) kirken · PL: (U) kirker (D) kirkene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kjæreste (en)",
+          "boyfriend; girlfriend",
+          "SG: (U) en kjæreste (D) kjæresten · PL: (U) kjærester (D) kjærestene",
+          "NOUN",
+          "partner (partner)",
+          "—"
+        ],
+        [
+          "kjøkken (et)",
+          "kitchen",
+          "SG: (U) et kjøkken (D) kjøkkenet · PL: (U) kjøkken (D) kjøkkenene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kjøleskap (et)",
+          "fridge; refrigerator",
+          "SG: (U) et kjøleskap (D) kjøleskapet · PL: (U) kjøleskap (D) kjøleskapene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kjøpe (å)",
+          "to buy; purchase",
+          "V2 – TE : (PR) kjøper · (PT) kjøpte · (PF) har kjøpt",
+          "VERB",
+          "handle (shop)",
+          "selge (sell)"
+        ],
+        [
+          "kjøpesenter (et)",
+          "shopping centre; mall",
+          "SG: (U) et kjøpesenter (D) kjøpesenteret · PL: (U) kjøpesentre (D) kjøpesentrene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kjøre (å)",
+          "to drive;køre",
+          "V2 – TE : (PR) kjører · (PT) kjørte · (PF) har kjørt",
+          "VERB",
+          "—",
+          "gå (walk)"
+        ],
+        [
+          "kjøtt (et)",
+          "meat",
+          "SG: (U) et kjøtt (D) kjøttet · PL: (U) kjøtt (D) kjøttene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "klesbutikk (en)",
+          "clothes shop;klesbutikk",
+          "SG: (U) en klesbutikk (D) klesbutikken · PL: (U) klesbutikker (D) klesbutikkene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "knekkebrød (et)",
+          "crispbread",
+          "SG: (U) et knekkebrød (D) knekkebrødet · PL: (U) knekkebrød (D) knekkebrødene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "koffert (en)",
+          "suitcase; luggage case",
+          "SG: (U) en koffert (D) kofferten · PL: (U) kofferter (D) koffertene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kommode (en)",
+          "chest of drawers; dresser",
+          "SG: (U) en kommode (D) kommoden · PL: (U) kommoder (D) kommodene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kone (en)",
+          "wife",
+          "SG: (U) en kone (D) kona/en · PL: (U) koner (D) konene",
+          "NOUN",
+          "—",
+          "mann (husband)"
+        ],
+        [
+          "kopp (en)",
+          "cup; mug",
+          "SG: (U) en kopp (D) koppen · PL: (U) kopper (D) koppene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kuldegrad (en)",
+          "degree below zero",
+          "SG: (U) en kuldegrad (D) kuldegraden · PL: (U) kuldegrader (D) kuldegradene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "kusine (en)",
+          "female cousin",
+          "SG: (U) en kusine (D) kusina/en · PL: (U) kusiner (D) kusinene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "laks (en)",
+          "salmon",
+          "SG: (U) en laks (D) laksen · PL: (U) lakser (D) laksene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "lampe (en)",
+          "lamp; light",
+          "SG: (U) en lampe (D) lampen/a · PL: (U) lamper (D) lampene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "lastebil (en)",
+          "truck; lorry",
+          "SG: (U) en lastebil (D) lastebilen · PL: (U) lastebiler (D) lastebilene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "leie (å)",
+          "to rent; to hire",
+          "V2 – DE : (PR) leier · (PT) leide · (PF) har leid",
+          "VERB",
+          "leie bolig (rent housing)",
+          "eie (own)"
+        ],
+        [
+          "leilighet (ei/en)",
+          "apartment; flat",
+          "SG: (U) ei/en leilighet (D) leiligheta/en · PL: (U) leiligheter (D) leilighetene",
+          "NOUN",
+          "—",
+          "enebolig (detached house)"
+        ],
+        [
+          "leverpostei (en)",
+          "liver pâté",
+          "SG: (U) en leverpostei (D) leverposteien · PL: (U) leverposteier (D) leverposteiene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "male (å)",
+          "to paint",
+          "V2 — TE: (PR) maler · (PT) malte · (PF) har malt",
+          "VERB",
+          "—",
+          "—"
+        ],
+        [
+          "måltid (et)",
+          "meal",
+          "SG: (U) et måltid (D) måltidet · PL: (U) måltider (D) måltidene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "mamma (en)",
+          "mom; mum",
+          "SG: (U) en mamma (D) mammaen · PL: (U) mammaer (D) mammaene",
+          "NOUN",
+          "mor (mother)",
+          "pappa (dad)"
+        ],
+        [
+          "mat (en)",
+          "food",
+          "SG: (U) en mat (D) maten · PL: (U) — (uncount)",
+          "NOUN",
+          "føde (food)",
+          "drikke (drink)"
+        ],
+        [
+          "matpakke (en/a)",
+          "packed lunch",
+          "SG: (U) en/a matpakke (D) matpakka/en · PL: (U) matpakker (D) matpakkene",
+          "NOUN",
+          "niste (packed meal)",
+          "—"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "a2fullvoc27v1_clean_patched.xlsx",
+      "note": "Worksheet: a2fullvoc27v1_clean_patched"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:A2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

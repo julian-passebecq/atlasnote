@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.a2-daily.2",
+  "title": "A2 — Daily life · 2",
+  "related": [],
+  "terms": [],
+  "summary": "41–80 / 219. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.a2-daily.2",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "disk (en)",
+          "counter (shop)",
+          "SG: (U) en disk (D) disken · PL: (U) disker (D) diskene",
+          "NOUN",
+          "skranke (counter)",
+          "—"
+        ],
+        [
+          "dør (en/a)",
+          "door",
+          "SG: (U) en/a dør (D) døra/en · PL: (U) dører (D) dørene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "dra (å)",
+          "to go; to leave; to pull",
+          "IRR: (PR) drar · (PT) dro · (PF) har dratt / dradd",
+          "VERB",
+          "reise (travel)",
+          "bli (stay)"
+        ],
+        [
+          "drikke (å)",
+          "to drink",
+          "IRR: (PR) drikker · (PT) drakk · (PF) har drukket",
+          "VERB",
+          "—",
+          "spytte (spit)"
+        ],
+        [
+          "duk (en)",
+          "tablecloth",
+          "SG: (U) en duk (D) duken · PL: (U) duker (D) dukene",
+          "NOUN",
+          "bordduk (tablecloth)",
+          "—"
+        ],
+        [
+          "dusj (en)",
+          "shower",
+          "SG: (U) en dusj (D) dusjen · PL: (U) dusjer (D) dusjene",
+          "NOUN",
+          "—",
+          "badekar (bathtub)"
+        ],
+        [
+          "dyne (ei/en)",
+          "duvet; quilt",
+          "SG: (U) ei/en dyne (D) dyna/en · PL: (U) dyner (D) dynene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "egg (et)",
+          "egg",
+          "SG: (U) et egg (D) egget · PL: (U) egg (D) eggene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "eldresenter (et)",
+          "senior center",
+          "SG: (U) et eldresenter (D) eldresenteret · PL: (U) eldresentre (D) eldresentrene",
+          "NOUN",
+          "aktivitetssenter (activity center)",
+          "—"
+        ],
+        [
+          "enebolig (en)",
+          "detached house",
+          "SG: (U) en enebolig (D) eneboligen · PL: (U) eneboliger (D) eneboligene",
+          "NOUN",
+          "hus (house)",
+          "leilighet (apartment)"
+        ],
+        [
+          "eple (et)",
+          "apple",
+          "SG: (U) et eple (D) eplet · PL: (U) epler (D) eplene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "etasje (en)",
+          "floor; storey",
+          "SG: (U) en etasje (D) etasjen · PL: (U) etasjer (D) etasjene",
+          "NOUN",
+          "plan (storey)",
+          "kjeller (basement)"
+        ],
+        [
+          "familie (en)",
+          "family",
+          "SG: (U) en familie (D) familien · PL: (U) familier (D) familiene",
+          "NOUN",
+          "slekt (kin)",
+          "—"
+        ],
+        [
+          "far (en)",
+          "father",
+          "SG: (U) en far (D) faren · PL: (U) fedre (D) fedrene",
+          "NOUN",
+          "pappa (dad)",
+          "mor (mother)"
+        ],
+        [
+          "ferge (en)",
+          "ferry",
+          "SG: (U) en ferge (D) fergen · PL: (U) ferger (D) fergene",
+          "NOUN",
+          "båt (boat)",
+          "—"
+        ],
+        [
+          "fersk",
+          "fresh",
+          "(M/F) fersk · (N) ferskt · (PL) ferske",
+          "ADJECTIVE",
+          "ny (new)",
+          "gammel (old/stale)"
+        ],
+        [
+          "ferskvaredisk (en)",
+          "fresh — food counter",
+          "SG: (U) en ferskvaredisk (D) ferskvaredisken · PL: (U) ferskvaredisker (D) ferskvarediskene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "fetter (en)",
+          "(male) cousin",
+          "SG: (U) en fetter (D) fetteren · PL: (U) fettere (D) fetterne",
+          "NOUN",
+          "—",
+          "kusine (female cousin)"
+        ],
+        [
+          "fisk (en)",
+          "fish",
+          "SG: (U) en fisk (D) fisken · PL: (U) fisker (D) fiskene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "fly (et)",
+          "plane; aircraft",
+          "SG: (U) et fly (D) flyet · PL: (U) fly (D) flyene",
+          "NOUN",
+          "flymaskin (airplane)",
+          "—"
+        ],
+        [
+          "flytte (å)",
+          "to move (house)",
+          "V1 — ET: (PR) flytter · (PT) flyttet · (PF) har flyttet",
+          "VERB",
+          "—",
+          "—"
+        ],
+        [
+          "forelder (en)",
+          "parent",
+          "SG: (U) en forelder (D) forelderen · PL: (U) foreldre (D) foreldrene",
+          "NOUN",
+          "—",
+          "barn (child)"
+        ],
+        [
+          "førerkort (et)",
+          "driver’s licence",
+          "SG: (U) et førerkort (D) førerkortet · PL: (U) førerkort (D) førerkortene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "forsynt",
+          "full; satisfied (with food)",
+          "(M/F) forsynt · (N) forsynt · (PL) forsynte",
+          "ADJECTIVE",
+          "mett (full)",
+          "sulten (hungry)"
+        ],
+        [
+          "fortau (et)",
+          "sidewalk; pavement",
+          "SG: (U) et fortau (D) fortauet · PL: (U) fortau (D) fortauene",
+          "NOUN",
+          "gangvei (footpath)",
+          "—"
+        ],
+        [
+          "frokost (en)",
+          "breakfast",
+          "SG: (U) en frokost (D) frokosten · PL: (U) frokoster (D) frokostene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "fruktavdeling (en/a)",
+          "fruit section (store)",
+          "SG: (U) en/a fruktavdeling (D) fruktavdelinga/en · PL: (U) fruktavdelinger (D) fruktavdelingene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "fryse (å)",
+          "to freeze; to be cold",
+          "IRR: (PR) fryser · (PT) frøs · (PF) har frosset",
+          "VERB",
+          "—",
+          "tine (thaw)"
+        ],
+        [
+          "gate (en)",
+          "street; road",
+          "SG: (U) en gate (D) gaten · PL: (U) gater (D) gatene",
+          "NOUN",
+          "vei (road)",
+          "—"
+        ],
+        [
+          "gifte (å)",
+          "to marry; get married",
+          "V1 – ET : (PR) gifter · (PT) giftet · (PF) har giftet",
+          "VERB",
+          "vie (marry)",
+          "skille (separate)"
+        ],
+        [
+          "grill (en)",
+          "grill; barbecue",
+          "SG: (U) en grill (D) grillen · PL: (U) griller (D) grillene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "grille (å)",
+          "to grill; to barbecue",
+          "V1 – ET : (PR) griller · (PT) grillet · (PF) har grillet",
+          "VERB",
+          "steke (fry; roast)",
+          "koke (boil)"
+        ],
+        [
+          "grønnsaker (PL)",
+          "vegetables",
+          "SG: (U) en grønnsak (D) grønnsaken · PL: (U) grønnsaker (D) grønnsakene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "gulv (et)",
+          "floor; floor surface",
+          "SG: (U) et gulv (D) gulvet · PL: (U) gulv (D) gulvene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "hage (en)",
+          "garden; yard",
+          "SG: (U) en hage (D) hagen · PL: (U) hager (D) hagene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "hall (en)",
+          "hall (building)",
+          "SG: (U) en hall (D) hallen · PL: (U) haller (D) hallene",
+          "NOUN",
+          "foajé (foyer)",
+          "—"
+        ],
+        [
+          "heis (en)",
+          "elevator; lift",
+          "SG: (U) en heis (D) heisen · PL: (U) heiser (D) heisene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "hjem",
+          "home (to)",
+          "—",
+          "ADVERB",
+          "—",
+          "borte (away)"
+        ],
+        [
+          "hjemme",
+          "at home",
+          "—",
+          "ADVERB",
+          "—",
+          "ute (out)"
+        ],
+        [
+          "hotell (et)",
+          "hotel",
+          "SG: (U) et hotell (D) hotellet · PL: (U) hotell (D) hotellene",
+          "NOUN",
+          "—",
+          "—"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "a2fullvoc27v1_clean_patched.xlsx",
+      "note": "Worksheet: a2fullvoc27v1_clean_patched"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:A2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

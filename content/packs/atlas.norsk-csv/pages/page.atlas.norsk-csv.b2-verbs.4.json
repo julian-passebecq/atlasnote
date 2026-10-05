@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-verbs.4",
+  "title": "B2 — Verb forms · 4",
+  "related": [],
+  "terms": [],
+  "summary": "121–160 / 187. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-verbs.4",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Infinitiv",
+        "Presens",
+        "Preteritum",
+        "Presens perfektum"
+      ],
+      "rows": [
+        [
+          "å tolke",
+          "interpret",
+          "å tolke",
+          "tolker",
+          "tolket",
+          "har tolket"
+        ],
+        [
+          "å utrydde",
+          "exterminate / make extinct",
+          "å utrydde",
+          "utrydder",
+          "utryddet",
+          "har utryddet"
+        ],
+        [
+          "å ane",
+          "have any idea / suspect",
+          "å ane",
+          "aner",
+          "ante",
+          "har ant"
+        ],
+        [
+          "å argumentere",
+          "argue",
+          "å argumentere",
+          "argumenterer",
+          "argumenterte",
+          "har argumentert"
+        ],
+        [
+          "å beholde",
+          "keep",
+          "å beholde",
+          "beholder",
+          "beholdt",
+          "har beholdt"
+        ],
+        [
+          "å betale",
+          "pay",
+          "å betale",
+          "betaler",
+          "betalte",
+          "har betalt"
+        ],
+        [
+          "å bidra",
+          "contribute",
+          "å bidra",
+          "bidrar",
+          "bidro",
+          "har bidratt"
+        ],
+        [
+          "å binde sammen",
+          "bind together",
+          "å binde sammen",
+          "binder sammen",
+          "bandt sammen",
+          "har bundet sammen"
+        ],
+        [
+          "å brenne",
+          "burn",
+          "å brenne",
+          "brenner",
+          "brant/brente",
+          "har brent"
+        ],
+        [
+          "å bruke",
+          "use",
+          "å bruke",
+          "bruker",
+          "brukte",
+          "har brukt"
+        ],
+        [
+          "å dele ut",
+          "distribute",
+          "å dele ut",
+          "deler ut",
+          "delte ut",
+          "har delt ut"
+        ],
+        [
+          "å dukke opp",
+          "appear / turn up",
+          "å dukke opp",
+          "dukker opp",
+          "dukket opp",
+          "har dukket opp"
+        ],
+        [
+          "å dømme",
+          "judge / sentence",
+          "å dømme",
+          "dømmer",
+          "dømte",
+          "har dømt"
+        ],
+        [
+          "å erklære",
+          "declare",
+          "å erklære",
+          "erklærer",
+          "erklærte",
+          "har erklært"
+        ],
+        [
+          "å etterspørre",
+          "demand / ask for",
+          "å etterspørre",
+          "etterspør",
+          "etterspurte",
+          "har etterspurt"
+        ],
+        [
+          "å fastsette",
+          "determine / set",
+          "å fastsette",
+          "fastsetter",
+          "fastsatte",
+          "har fastsatt"
+        ],
+        [
+          "å finansiere",
+          "finance",
+          "å finansiere",
+          "finansierer",
+          "finansierte",
+          "har finansiert"
+        ],
+        [
+          "å føde",
+          "give birth",
+          "å føde",
+          "føder",
+          "fødte",
+          "har født"
+        ],
+        [
+          "å godkjenne",
+          "approve",
+          "å godkjenne",
+          "godkjenner",
+          "godkjente",
+          "har godkjent"
+        ],
+        [
+          "å henge sammen",
+          "be connected",
+          "å henge sammen",
+          "henger sammen",
+          "hang sammen",
+          "har hengt sammen"
+        ],
+        [
+          "å holde",
+          "hold / keep",
+          "å holde",
+          "holder",
+          "holdt",
+          "har holdt"
+        ],
+        [
+          "å jevne ut",
+          "even out",
+          "å jevne ut",
+          "jevner ut",
+          "jevnet ut",
+          "har jevnet ut"
+        ],
+        [
+          "å kjøpe",
+          "buy",
+          "å kjøpe",
+          "kjøper",
+          "kjøpte",
+          "har kjøpt"
+        ],
+        [
+          "å lese",
+          "read",
+          "å lese",
+          "leser",
+          "leste",
+          "har lest"
+        ],
+        [
+          "å lykkes",
+          "succeed",
+          "å lykkes",
+          "lykkes",
+          "lyktes/lykkedes",
+          "har lyktes/lykkes"
+        ],
+        [
+          "å mene",
+          "mean / think",
+          "å mene",
+          "mener",
+          "mente",
+          "har ment"
+        ],
+        [
+          "å møte",
+          "meet",
+          "å møte",
+          "møter",
+          "møtte",
+          "har møtt"
+        ],
+        [
+          "å oppfylle",
+          "fulfill",
+          "å oppfylle",
+          "oppfyller",
+          "oppfylte",
+          "har oppfylt"
+        ],
+        [
+          "å opplyse",
+          "inform / enlighten",
+          "å opplyse",
+          "opplyser",
+          "opplyste",
+          "har opplyst"
+        ],
+        [
+          "å opprettholde",
+          "maintain",
+          "å opprettholde",
+          "opprettholder",
+          "opprettholdt",
+          "har opprettholdt"
+        ],
+        [
+          "å overdrive",
+          "exaggerate",
+          "å overdrive",
+          "overdriver",
+          "overdrev",
+          "har overdrevet"
+        ],
+        [
+          "å overholde",
+          "comply with / observe",
+          "å overholde",
+          "overholder",
+          "overholdt",
+          "har overholdt"
+        ],
+        [
+          "å overlate",
+          "leave to / hand over",
+          "å overlate",
+          "overlater",
+          "overlot",
+          "har overlatt"
+        ],
+        [
+          "å oversette",
+          "translate",
+          "å oversette",
+          "oversetter",
+          "oversatte",
+          "har oversatt"
+        ],
+        [
+          "å produsere",
+          "produce",
+          "å produsere",
+          "produserer",
+          "produserte",
+          "har produsert"
+        ],
+        [
+          "å redusere",
+          "reduce",
+          "å redusere",
+          "reduserer",
+          "reduserte",
+          "har redusert"
+        ],
+        [
+          "å representere",
+          "represent",
+          "å representere",
+          "representerer",
+          "representerte",
+          "har representert"
+        ],
+        [
+          "å ruste ned",
+          "disarm",
+          "å ruste ned",
+          "ruster ned",
+          "rustet ned",
+          "har rustet ned"
+        ],
+        [
+          "å sanksjonere",
+          "sanction",
+          "å sanksjonere",
+          "sanksjonerer",
+          "sanksjonerte",
+          "har sanksjonert"
+        ],
+        [
+          "å selge",
+          "sell",
+          "å selge",
+          "selger",
+          "solgte",
+          "har solgt"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "NORA0130_B2_exam_grammar_irregulars_study_friendly_v6_final_clean.xlsx",
+      "note": "Worksheet: 02 Verb forms grouped"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

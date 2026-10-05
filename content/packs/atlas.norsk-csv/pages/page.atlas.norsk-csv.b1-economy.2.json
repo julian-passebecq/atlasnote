@@ -1,0 +1,76 @@
+{
+  "id": "page.atlas.norsk-csv.b1-economy.2",
+  "title": "B1 — Economy and welfare · 2",
+  "related": [],
+  "terms": [],
+  "summary": "41–45 / 45. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b1-economy.2",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "sosialhjelp",
+          "social assistance",
+          "ei/en sosialhjelp; sosialhjelpen; sosialhjelper; sosialhjelpene",
+          "noun",
+          "økonomisk sosialstønad (financial social assistance)  ·  kommunal støtte (municipal support)",
+          "kontrastbegrep (contrasting term)  ·  alternativ situasjon (alternative situation)"
+        ],
+        [
+          "trygd",
+          "a welfare benefit / insurance scheme",
+          "ei/en trygd; trygda/trygden; trygder; trygdene",
+          "phrase",
+          "stønad (benefit), ytelse (benefit / payment)",
+          "lønnsinntekt (wage income), egenforsørgelse (self-support)"
+        ],
+        [
+          "uføretrygdet",
+          "disability-benefit recipient",
+          "uføretrygdet; uføretrygdett; uføretrygdete",
+          "adjective",
+          "trygdemottaker (benefit recipient)  ·  person på uføretrygd (person receiving disability benefits)",
+          "yrkesaktiv (employed/active in working life)  ·  arbeidstaker (employee)"
+        ],
+        [
+          "velferdsstat",
+          "a welfare state",
+          "en velferdsstat; velferdsstaten; velferdsstater; velferdsstatene",
+          "noun",
+          "sosialstat (social state), omsorgsstat (welfare state)",
+          "minimalstat (minimal state), nattvekterstat (night-watchman state)"
+        ],
+        [
+          "velferdstilbud",
+          "welfare service, welfare provision",
+          "et velferdstilbud; velferdstilbudet; velferdstilbuder; velferdstilbuderne",
+          "noun",
+          "velferdstjeneste (welfare service)  ·  støtteordning (support scheme)",
+          "markedsbasert tjeneste (market-based service)  ·  egenbetaling (user payment)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "16_FINAL_ORD_OG_BEGREP_B1_B2_v3_RICH_FORMATTING.xlsx",
+      "note": "Worksheet: 05 Økonomi"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B1"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

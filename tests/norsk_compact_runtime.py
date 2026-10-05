@@ -28,6 +28,10 @@ with sync_playwright() as pw:
   btn('Accept selected operations').click();expect(p.get_by_role('status').filter(has_text='Selected operations accepted')).to_be_visible()
  btn('Close dialog').click()
  expect(p.locator('.norsk-daily-item')).to_have_count(10);expect(p.locator('.norsk-daily-en')).to_have_count(10)
+ expect(p.locator('.norsk-daily-status')).to_have_count(0)
+ assert p.locator('.norsk-daily-actions').first.evaluate('e=>e.getBoundingClientRect().width')<=23
+ btn('Study').click();expect(p.locator('.norsk-daily-status')).to_have_count(10)
+ btn('Study').click();expect(p.locator('.norsk-daily-status')).to_have_count(0)
  for width,height in [(1536,864),(1920,1080),(1280,800)]:
   p.set_viewport_size({'width':width,'height':height})
   geometry=p.locator('.norsk-daily').evaluate('e=>{const r=e.getBoundingClientRect();const rows=[...e.querySelectorAll(".norsk-daily-item")].map(x=>x.getBoundingClientRect());return {width:r.width,available:e.parentElement.getBoundingClientRect().width,overflow:e.scrollWidth>e.clientWidth,visible:rows.filter(x=>x.bottom<=r.bottom&&x.top>=r.top).length,firstTop:rows[0].top-r.top};}')

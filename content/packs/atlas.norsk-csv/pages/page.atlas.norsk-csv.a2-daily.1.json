@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.a2-daily.1",
+  "title": "A2 — Daily life · 1",
+  "related": [],
+  "terms": [],
+  "summary": "1–40 / 219. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.a2-daily.1",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "alkohol (en)",
+          "alcohol",
+          "SG: (U) en alkohol (D) alkoholen · PL: (U) — (D) —",
+          "NOUN",
+          "sprit (liquor)",
+          "alkoholfri (alcohol — free)"
+        ],
+        [
+          "alkoholfri",
+          "alcohol — free",
+          "(M/F) alkoholfri · (N) alkoholfritt · (PL) alkoholfrie",
+          "ADJECTIVE",
+          "—",
+          "—"
+        ],
+        [
+          "bacon (et)",
+          "bacon",
+          "SG: (U) et bacon (D) baconet · PL: (U) — (D) —",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "bad (et)",
+          "bathroom; bath",
+          "SG: (U) et bad (D) badet · PL: (U) bad (D) badene",
+          "NOUN",
+          "baderom (bathroom)",
+          "—"
+        ],
+        [
+          "bagasje (en)",
+          "baggage; luggage",
+          "SG: (U) en bagasje (D) bagasjen · PL: (U) bagasjer (D) bagasjene",
+          "NOUN",
+          "kofferter (suitcases)",
+          "—"
+        ],
+        [
+          "bake (å)",
+          "to bake",
+          "V2 — TE: (PR) baker · (PT) bakte · (PF) har bakt",
+          "VERB",
+          "steke (to fry/roast)",
+          "—"
+        ],
+        [
+          "bakgård (en)",
+          "backyard; back court",
+          "SG: (U) en bakgård (D) bakgården · PL: (U) bakgårder (D) bakgårdene",
+          "NOUN",
+          "hage (garden)",
+          "—"
+        ],
+        [
+          "barn (et)",
+          "child",
+          "SG: (U) et barn (D) barnet · PL: (U) barn (D) barna",
+          "NOUN",
+          "unge (kid)",
+          "voksen (adult)"
+        ],
+        [
+          "barnebarn (et)",
+          "grandchild",
+          "SG: (U) et barnebarn (D) barnebarnet · PL: (U) barnebarn (D) barnebarna",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "barnevogn (en)",
+          "stroller; pram",
+          "SG: (U) en barnevogn (D) barnevognen · PL: (U) barnevogner (D) barnevognene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "båt (en)",
+          "boat",
+          "SG: (U) en båt (D) båten · PL: (U) båter (D) båtene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "benk (en)",
+          "bench; counter",
+          "SG: (U) en benk (D) benken · PL: (U) benker (D) benkene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "bestemor (en/a)",
+          "grandmother",
+          "SG: (U) en/a bestemor (D) bestemoren/a · PL: (U) bestemødre (D) bestemødrene",
+          "NOUN",
+          "mormor/farmor (grandma)",
+          "—"
+        ],
+        [
+          "bestikk (et)",
+          "cutlery",
+          "SG: (U) et bestikk (D) bestikket · PL: (U) bestikk (D) bestikkene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "bestille (å)",
+          "to order; to book",
+          "V2 — TE: (PR) bestiller · (PT) bestilte · (PF) har bestilt",
+          "VERB",
+          "ordinere (order)",
+          "avbestille (cancel)"
+        ],
+        [
+          "bestilling (en)",
+          "order; booking",
+          "SG: (U) en bestilling (D) bestillingen · PL: (U) bestillinger (D) bestillingene",
+          "NOUN",
+          "ordre (order)",
+          "avbestilling (cancellation)"
+        ],
+        [
+          "bibliotek (et)",
+          "library",
+          "SG: (U) et bibliotek (D) biblioteket · PL: (U) bibliotek (D) bibliotekene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "bil (en)",
+          "car",
+          "SG: (U) en bil (D) bilen · PL: (U) biler (D) bilene",
+          "NOUN",
+          "auto (car)",
+          "—"
+        ],
+        [
+          "bilnøkkel (en)",
+          "car key",
+          "SG: (U) en bilnøkkel (D) bilnøkkelen · PL: (U) bilnøkler (D) bilnøklene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "blåse (å)",
+          "to blow (wind)",
+          "V2 — TE: (PR) blåser · (PT) blåste · (PF) har blåst",
+          "VERB",
+          "—",
+          "—"
+        ],
+        [
+          "blokk (en/a)",
+          "apartment block; block",
+          "SG: (U) en/a blokk (D) blokken/a · PL: (U) blokker (D) blokkene",
+          "NOUN",
+          "leiegård (tenement)",
+          "—"
+        ],
+        [
+          "bo (å)",
+          "to live; reside",
+          "V1 — DDE: (PR) bor · (PT) bodde · (PF) har bodd",
+          "VERB",
+          "residere (reside)",
+          "flytte (move)"
+        ],
+        [
+          "bolig (en)",
+          "dwelling; housing",
+          "SG: (U) en bolig (D) boligen · PL: (U) boliger (D) boligene",
+          "NOUN",
+          "leilighet (apartment)",
+          "—"
+        ],
+        [
+          "bord (et)",
+          "table",
+          "SG: (U) et bord (D) bordet · PL: (U) bord (D) bordene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "borte",
+          "away; gone",
+          "—",
+          "ADVERB",
+          "vekke (away, dialect)",
+          "her (here)"
+        ],
+        [
+          "bro (en/a)",
+          "bridge",
+          "SG: (U) en/a bro (D) broen/a · PL: (U) broer (D) broene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "brød (et)",
+          "bread",
+          "SG: (U) et brød (D) brødet · PL: (U) brød (D) brødene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "brødskive (en/a)",
+          "slice of bread",
+          "SG: (U) en/a brødskive (D) brødskiva/en · PL: (U) brødskiver (D) brødskivene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "bror (en)",
+          "brother",
+          "SG: (U) en bror (D) broren · PL: (U) brødre (D) brødrene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "brunost (en)",
+          "brown cheese (whey)",
+          "SG: (U) en brunost (D) brunosten · PL: (U) brunoster (D) brunostene",
+          "NOUN",
+          "geitost (goat cheese)",
+          "—"
+        ],
+        [
+          "brygge (en/a)",
+          "wharf; pier",
+          "SG: (U) en/a brygge (D) brygga/en · PL: (U) brygger (D) bryggene",
+          "NOUN",
+          "kai (quay)",
+          "—"
+        ],
+        [
+          "buss (en)",
+          "bus",
+          "SG: (U) en buss (D) bussen · PL: (U) busser (D) bussene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "busstasjon (en)",
+          "bus station",
+          "SG: (U) en busstasjon (D) busstasjonen · PL: (U) busstasjoner (D) busstasjonene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "butikk (en)",
+          "shop; store",
+          "SG: (U) en butikk (D) butikken · PL: (U) butikker (D) butikkene",
+          "NOUN",
+          "forretning (store)",
+          "—"
+        ],
+        [
+          "by (en)",
+          "city; town",
+          "SG: (U) en by (D) byen · PL: (U) byer (D) byene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "dårlige veier",
+          "bad roads (condition)",
+          "—",
+          "PHRASE",
+          "glatte veier (slippery roads)",
+          "gode veier (good roads)"
+        ],
+        [
+          "datter (en/a)",
+          "daughter",
+          "SG: (U) en/a datter (D) dattera/en · PL: (U) døtre (D) døtrene",
+          "NOUN",
+          "—",
+          "sønn (son)"
+        ],
+        [
+          "dekke bordet",
+          "set the table",
+          "—",
+          "PHRASE",
+          "—",
+          "—"
+        ],
+        [
+          "der borte",
+          "over there",
+          "—",
+          "PHRASE",
+          "—",
+          "her borte (over here)"
+        ],
+        [
+          "dessert (en)",
+          "dessert",
+          "SG: (U) en dessert (D) desserten · PL: (U) desserter (D) dessertene",
+          "NOUN",
+          "—",
+          "—"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "a2fullvoc27v1_clean_patched.xlsx",
+      "note": "Worksheet: a2fullvoc27v1_clean_patched"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:A2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

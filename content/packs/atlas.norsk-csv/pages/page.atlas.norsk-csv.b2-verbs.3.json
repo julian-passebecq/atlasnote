@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-verbs.3",
+  "title": "B2 — Verb forms · 3",
+  "related": [],
+  "terms": [],
+  "summary": "81–120 / 187. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-verbs.3",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Infinitiv",
+        "Presens",
+        "Preteritum",
+        "Presens perfektum"
+      ],
+      "rows": [
+        [
+          "å delta",
+          "participate",
+          "å delta",
+          "deltar",
+          "deltok",
+          "har deltatt"
+        ],
+        [
+          "å dø",
+          "die",
+          "å dø",
+          "dør",
+          "døde",
+          "har dødd"
+        ],
+        [
+          "å erstatte",
+          "replace / compensate",
+          "å erstatte",
+          "erstatter",
+          "erstattet",
+          "har erstattet"
+        ],
+        [
+          "å finne",
+          "find",
+          "å finne",
+          "finner",
+          "fant",
+          "har funnet"
+        ],
+        [
+          "å få",
+          "get / receive",
+          "å få",
+          "får",
+          "fikk",
+          "har fått"
+        ],
+        [
+          "å gi",
+          "give",
+          "å gi",
+          "gir",
+          "ga/gav",
+          "har gitt"
+        ],
+        [
+          "å gi ut",
+          "publish / issue",
+          "å gi ut",
+          "gir ut",
+          "ga ut",
+          "har gitt ut"
+        ],
+        [
+          "å gjelde",
+          "concern / apply",
+          "å gjelde",
+          "gjelder",
+          "gjaldt",
+          "har gjeldt"
+        ],
+        [
+          "å gå",
+          "go",
+          "å gå",
+          "går",
+          "gikk",
+          "har gått"
+        ],
+        [
+          "å ha",
+          "have",
+          "å ha",
+          "har",
+          "hadde",
+          "har hatt"
+        ],
+        [
+          "å hjelpe",
+          "help",
+          "å hjelpe",
+          "hjelper",
+          "hjalp",
+          "har hjulpet"
+        ],
+        [
+          "å legge",
+          "lay / put",
+          "å legge",
+          "legger",
+          "la",
+          "har lagt"
+        ],
+        [
+          "å nedlegge",
+          "close down",
+          "å nedlegge",
+          "nedlegger",
+          "nedla",
+          "har nedlagt"
+        ],
+        [
+          "å nedlegges",
+          "be closed down",
+          "å nedlegges",
+          "nedlegges",
+          "ble nedlagt",
+          "har blitt nedlagt"
+        ],
+        [
+          "å nyte",
+          "enjoy",
+          "å nyte",
+          "nyter",
+          "nøt",
+          "har nytt"
+        ],
+        [
+          "å overgi",
+          "surrender / hand over",
+          "å overgi",
+          "overgir",
+          "overga",
+          "har overgitt"
+        ],
+        [
+          "å se",
+          "see",
+          "å se",
+          "ser",
+          "så",
+          "har sett"
+        ],
+        [
+          "å skje",
+          "happen",
+          "å skje",
+          "skjer",
+          "skjedde",
+          "har skjedd"
+        ],
+        [
+          "å slippe",
+          "let go / avoid / be allowed",
+          "å slippe",
+          "slipper",
+          "slapp",
+          "har sluppet"
+        ],
+        [
+          "å stå",
+          "stand",
+          "å stå",
+          "står",
+          "sto",
+          "har stått"
+        ],
+        [
+          "å ta",
+          "take",
+          "å ta",
+          "tar",
+          "tok",
+          "har tatt"
+        ],
+        [
+          "å transplantere",
+          "transplant",
+          "å transplantere",
+          "transplanterer",
+          "transplanterte",
+          "har transplantert"
+        ],
+        [
+          "å trekke",
+          "pull / draw",
+          "å trekke",
+          "trekker",
+          "trakk",
+          "har trukket"
+        ],
+        [
+          "å være",
+          "be",
+          "å være",
+          "er",
+          "var",
+          "har vært"
+        ],
+        [
+          "å ødelegge",
+          "destroy",
+          "å ødelegge",
+          "ødelegger",
+          "ødela",
+          "har ødelagt"
+        ],
+        [
+          "å beskytte",
+          "protect",
+          "å beskytte",
+          "beskytter",
+          "beskyttet",
+          "har beskyttet"
+        ],
+        [
+          "å dempe",
+          "reduce / dampen",
+          "å dempe",
+          "demper",
+          "dempet",
+          "har dempet"
+        ],
+        [
+          "å drøfte",
+          "discuss",
+          "å drøfte",
+          "drøfter",
+          "drøftet",
+          "har drøftet"
+        ],
+        [
+          "å fjerne",
+          "remove",
+          "å fjerne",
+          "fjerner",
+          "fjernet",
+          "har fjernet"
+        ],
+        [
+          "å fremme",
+          "promote / advance",
+          "å fremme",
+          "fremmer",
+          "fremmet",
+          "har fremmet"
+        ],
+        [
+          "å jobbe",
+          "work",
+          "å jobbe",
+          "jobber",
+          "jobbet/jobba",
+          "har jobbet/jobba"
+        ],
+        [
+          "å nekte",
+          "refuse",
+          "å nekte",
+          "nekter",
+          "nektet",
+          "har nektet"
+        ],
+        [
+          "å oppfatte",
+          "perceive",
+          "å oppfatte",
+          "oppfatter",
+          "oppfattet",
+          "har oppfattet"
+        ],
+        [
+          "å oppheve",
+          "repeal / cancel",
+          "å oppheve",
+          "opphever",
+          "opphevet",
+          "har opphevet"
+        ],
+        [
+          "å oppmuntre",
+          "encourage",
+          "å oppmuntre",
+          "oppmuntrer",
+          "oppmuntret",
+          "har oppmuntret"
+        ],
+        [
+          "å si",
+          "say",
+          "å si",
+          "sier",
+          "sa",
+          "har sagt"
+        ],
+        [
+          "å sikre",
+          "secure / ensure",
+          "å sikre",
+          "sikrer",
+          "sikret",
+          "har sikret"
+        ],
+        [
+          "å skaffe",
+          "obtain / get",
+          "å skaffe",
+          "skaffer",
+          "skaffet",
+          "har skaffet"
+        ],
+        [
+          "å styrke",
+          "strengthen",
+          "å styrke",
+          "styrker",
+          "styrket",
+          "har styrket"
+        ],
+        [
+          "å svekke",
+          "weaken",
+          "å svekke",
+          "svekker",
+          "svekket",
+          "har svekket"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "NORA0130_B2_exam_grammar_irregulars_study_friendly_v6_final_clean.xlsx",
+      "note": "Worksheet: 02 Verb forms grouped"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

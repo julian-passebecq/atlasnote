@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.a2-daily.4",
+  "title": "A2 — Daily life · 4",
+  "related": [],
+  "terms": [],
+  "summary": "121–160 / 219. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.a2-daily.4",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "melk (en/a)",
+          "milk",
+          "SG: (U) en/a melk (D) melka/en · PL: (U) — (uncount)",
+          "NOUN",
+          "—",
+          "vann (water)"
+        ],
+        [
+          "meny (en)",
+          "menu",
+          "SG: (U) en meny (D) menyen · PL: (U) menyer (D) menyene",
+          "NOUN",
+          "kart (menu card)",
+          "—"
+        ],
+        [
+          "middag (en)",
+          "dinner",
+          "SG: (U) en middag (D) middagen · PL: (U) middager (D) middagene",
+          "NOUN",
+          "aftens (supper)",
+          "frokost (breakfast)"
+        ],
+        [
+          "mineralvann (et)",
+          "mineral water",
+          "SG: (U) et mineralvann (D) mineralvannet · PL: (U) mineralvann (D) mineralvannene",
+          "NOUN",
+          "brus (soda)",
+          "—"
+        ],
+        [
+          "minus 10 grader",
+          "minus 10 degrees",
+          "—",
+          "PHRASE",
+          "—",
+          "pluss 10 grader"
+        ],
+        [
+          "ølboks (en)",
+          "beer can",
+          "SG: (U) en ølboks (D) ølboksen · PL: (U) ølbokser (D) ølboksene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "oliven (en)",
+          "olive",
+          "SG: (U) en oliven (D) olivenen · PL: (U) oliven (D) olivene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "olivenolje (en)",
+          "olive oil",
+          "SG: (U) en olivenolje (D) olivenoljen · PL: (U) — (uncount)",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "onkel (en)",
+          "uncle",
+          "SG: (U) en onkel (D) onkelen · PL: (U) onkler (D) onklene",
+          "NOUN",
+          "—",
+          "tante (aunt)"
+        ],
+        [
+          "oppbevare (å)",
+          "to store; keep",
+          "V1 — TE: (PR) oppbevarer · (PT) oppbevarte · (PF) har oppbevart",
+          "VERB",
+          "lagre (store)",
+          "kaste (throw away)"
+        ],
+        [
+          "oppskrift (en/a)",
+          "recipe",
+          "SG: (U) en/a oppskrift (D) oppskrifta/en · PL: (U) oppskrifter (D) oppskriftene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "oppvaskmaskin (en)",
+          "dishwasher",
+          "SG: (U) en oppvaskmaskin (D) oppvaskmaskinen · PL: (U) oppvaskmaskiner (D) oppvaskmaskinene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "ost (en)",
+          "cheese",
+          "SG: (U) en ost (D) osten · PL: (U) oster (D) ostene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "over fjellet",
+          "across the mountains",
+          "—",
+          "PHRASE",
+          "—",
+          "—"
+        ],
+        [
+          "overnatte (å)",
+          "to spend the night; stay overnight",
+          "V1 — ET: (PR) overnatter · (PT) overnattet · (PF) har overnattet",
+          "VERB",
+          "—",
+          "—"
+        ],
+        [
+          "overskyet",
+          "cloudy (overcast)",
+          "(M/F) overskyet · (N) overskyet · (PL) overskyede",
+          "ADJECTIVE",
+          "skyet (cloudy)",
+          "klar (clear)"
+        ],
+        [
+          "ovn (en)",
+          "oven; stove",
+          "SG: (U) en ovn (D) ovnen · PL: (U) ovner (D) ovnene",
+          "NOUN",
+          "komfyr (stove)",
+          "—"
+        ],
+        [
+          "pakke (å)",
+          "to pack",
+          "V1 — ET: (PR) pakker · (PT) pakket · (PF) har pakket",
+          "VERB",
+          "—",
+          "—"
+        ],
+        [
+          "pålegg (et)",
+          "sandwich topping; cold cuts",
+          "SG: (U) et pålegg (D) pålegget · PL: (U) pålegg (D) påleggene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "pappa (en)",
+          "dad",
+          "SG: (U) en pappa (D) pappaen · PL: (U) pappaer (D) pappaene",
+          "NOUN",
+          "far (father)",
+          "mamma (mom)"
+        ],
+        [
+          "parkere (å)",
+          "to park",
+          "V2 — TE: (PR) parkerer · (PT) parkerte · (PF) har parkert",
+          "VERB",
+          "—",
+          "—"
+        ],
+        [
+          "parkering (en/a)",
+          "parking",
+          "SG: (U) en/a parkering (D) parkeringa/en · PL: (U) parkeringer (D) parkeringene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "passe (barn) (å)",
+          "to mind; babysit",
+          "V1 — ET: (PR) passer · (PT) passet · (PF) har passet",
+          "VERB",
+          "barnepasse (babysit)",
+          "forsømme (neglect)"
+        ],
+        [
+          "pepper (en)",
+          "pepper",
+          "SG: (U) en pepper (D) pepperen · PL: — (uncount)",
+          "NOUN",
+          "—",
+          "salt (salt)"
+        ],
+        [
+          "pizza (en)",
+          "pizza",
+          "SG: (U) en pizza (D) pizzaen · PL: (U) pizzaer (D) pizzaene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "pluss 25 grader",
+          "plus 25 degrees",
+          "—",
+          "PHRASE",
+          "—",
+          "minus 10 grader"
+        ],
+        [
+          "pølse (en)",
+          "sausage",
+          "SG: (U) en pølse (D) pølsa/en · PL: (U) pølser (D) pølsene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "presskanne (en/a)",
+          "French press (coffee pot)",
+          "SG: (U) en/a presskanne (D) presskanna/en · PL: (U) presskanner (D) presskannene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "prøverom (et)",
+          "fitting room",
+          "SG: (U) et prøverom (D) prøverommet · PL: (U) prøverom (D) prøverommene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "pusse (å)",
+          "to brush; to polish",
+          "V1 — ET: (PR) pusser · (PT) pusset · (PF) har pusset",
+          "VERB",
+          "—",
+          "skitne til (soil)"
+        ],
+        [
+          "pute (en/a)",
+          "pillow; cushion",
+          "SG: (U) ei/en pute (D) puta/en · PL: (U) puter (D) putene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "re (seng) (å)",
+          "to make (a bed)",
+          "IRR: (PR) rer · (PT) redde · (PF) har redd",
+          "VERB",
+          "re opp (make up)",
+          "—"
+        ],
+        [
+          "regn (et)",
+          "rain",
+          "SG: (U) et regn (D) regnet · PL: — (uncount)",
+          "NOUN",
+          "nedbør (precipitation)",
+          "sol (sun)"
+        ],
+        [
+          "regne (å)",
+          "to rain",
+          "V1 — ET: (PR) regner · (PT) regnet · (PF) har regnet",
+          "VERB",
+          "—",
+          "—"
+        ],
+        [
+          "regnvær (et)",
+          "rainy weather",
+          "SG: (U) et regnvær (D) regnværet · PL: — (uncount)",
+          "NOUN",
+          "—",
+          "opphold (dry spell)"
+        ],
+        [
+          "reise (å)",
+          "to travel",
+          "V2 — TE: (PR) reiser · (PT) reiste · (PF) har reist",
+          "VERB",
+          "dra (go)",
+          "bli (stay)"
+        ],
+        [
+          "rekkehus (et)",
+          "row house; townhouse",
+          "SG: (U) et rekkehus (D) rekkehuset · PL: (U) rekkehus (D) rekkehusene",
+          "NOUN",
+          "—",
+          "enebolig (detached house)"
+        ],
+        [
+          "renhold (et)",
+          "cleaning; maintenance",
+          "SG: (U) et renhold (D) renholdet · PL: — (uncount)",
+          "NOUN",
+          "vask (cleaning)",
+          "—"
+        ],
+        [
+          "restaurant (en)",
+          "restaurant",
+          "SG: (U) en restaurant (D) restauranten · PL: (U) restauranter (D) restaurantene",
+          "NOUN",
+          "spisested (eatery)",
+          "—"
+        ],
+        [
+          "rødbete (en/a)",
+          "beetroot",
+          "SG: (U) en/a rødbete (D) rødbeta/en · PL: (U) rødbeter (D) rødbetene",
+          "NOUN",
+          "bete (beet)",
+          "—"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "a2fullvoc27v1_clean_patched.xlsx",
+      "note": "Worksheet: a2fullvoc27v1_clean_patched"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:A2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

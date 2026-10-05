@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-connectors.2",
+  "title": "B2 — Essay connectors · 2",
+  "related": [],
+  "terms": [],
+  "summary": "41–80 / 194. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-connectors.2",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "i det øyeblikket",
+          "at that moment, the moment that",
+          "",
+          "uttr",
+          "idet (just as) · da (when)",
+          ""
+        ],
+        [
+          "mens",
+          "while, whereas",
+          "",
+          "sub",
+          "samtidig som (while) · derimot (whereas)",
+          ""
+        ],
+        [
+          "samtidig",
+          "at the same time, simultaneously",
+          "",
+          "adv/conn",
+          "på samme tid (at the same time)",
+          ""
+        ],
+        [
+          "samtidig som",
+          "while, at the same time as",
+          "",
+          "conj",
+          "mens (while) · samtidig (at the same time)",
+          ""
+        ],
+        [
+          "på samme tid",
+          "at the same time",
+          "",
+          "conn",
+          "samtidig (simultaneously)",
+          ""
+        ],
+        [
+          "fordi",
+          "because",
+          "",
+          "sub",
+          "siden (since/because) · ettersom (as/since) · i og med at (as)",
+          ""
+        ],
+        [
+          "for",
+          "for; because",
+          "",
+          "conj",
+          "fordi (because) · siden (since/because)",
+          ""
+        ],
+        [
+          "siden",
+          "since; because",
+          "",
+          "sub",
+          "fordi (because) · ettersom (as/since)",
+          ""
+        ],
+        [
+          "ettersom",
+          "since, as, seeing that",
+          "",
+          "sub",
+          "siden (since) · fordi (because) · i og med at (as)",
+          ""
+        ],
+        [
+          "i og med at",
+          "as, since, given that",
+          "",
+          "sub",
+          "siden (since) · ettersom (as) · fordi (because)",
+          ""
+        ],
+        [
+          "på grunn av",
+          "because of, due to",
+          "",
+          "prep/conn",
+          "som følge av (as a result of) · på bakgrunn av (on the basis of)",
+          ""
+        ],
+        [
+          "på grunn av at",
+          "because, due to the fact that",
+          "",
+          "sub",
+          "fordi (because) · ettersom (since) · grunnen til at (the reason why)",
+          ""
+        ],
+        [
+          "som følge av",
+          "as a result of, due to",
+          "",
+          "uttr",
+          "på grunn av (because of) · som et resultat av (as a result of)",
+          ""
+        ],
+        [
+          "av den grunn",
+          "for that reason",
+          "",
+          "conn",
+          "derfor (therefore) · dermed (thus)",
+          ""
+        ],
+        [
+          "grunnen til at",
+          "the reason why",
+          "",
+          "uttr",
+          "årsaken til at (the cause of) · fordi (because)",
+          ""
+        ],
+        [
+          "årsaken til at",
+          "the cause/reason why",
+          "",
+          "uttr",
+          "grunnen til at (the reason why) · skyldes (is due to)",
+          ""
+        ],
+        [
+          "på bakgrunn av",
+          "on the basis of, against the background of",
+          "",
+          "prep/conn",
+          "på grunn av (because of) · med utgangspunkt i (based on)",
+          ""
+        ],
+        [
+          "takket være",
+          "thanks to, due to",
+          "",
+          "uttr",
+          "på grunn av (because of) · som følge av (as a result of)",
+          ""
+        ],
+        [
+          "komme av",
+          "be due to, result from",
+          "",
+          "vrb/conn",
+          "skyldes (be due to) · henge sammen med (be connected with)",
+          ""
+        ],
+        [
+          "skyldes",
+          "be due to, be caused by",
+          "",
+          "vrb/conn",
+          "komme av (come from) · henge sammen med (be connected with)",
+          ""
+        ],
+        [
+          "henge sammen med",
+          "be connected with, be linked to",
+          "",
+          "vrb/conn",
+          "ha sammenheng med (be connected with) · skyldes (be due to)",
+          ""
+        ],
+        [
+          "nemlig",
+          "namely, you see, because",
+          "",
+          "conn",
+          "for (for) · årsaken er at (the reason is that)",
+          ""
+        ],
+        [
+          "derfor",
+          "therefore, that is why",
+          "",
+          "conn",
+          "dermed (thus) · følgelig (consequently) · av den grunn (for that reason)",
+          ""
+        ],
+        [
+          "dermed",
+          "thereby, thus, consequently",
+          "",
+          "conn",
+          "derfor (therefore) · følgelig (consequently)",
+          ""
+        ],
+        [
+          "følgelig",
+          "consequently, therefore",
+          "",
+          "conn",
+          "derfor (therefore) · dermed (thus)",
+          ""
+        ],
+        [
+          "altså",
+          "therefore, thus, in other words",
+          "",
+          "conn",
+          "derfor (therefore) · med andre ord (in other words) · følgelig (consequently)",
+          ""
+        ],
+        [
+          "således",
+          "thus, therefore",
+          "",
+          "conn",
+          "dermed (thus) · følgelig (consequently)",
+          ""
+        ],
+        [
+          "på den måten",
+          "in that way, thereby",
+          "",
+          "conn",
+          "slik (so/in that way) · dermed (thereby)",
+          ""
+        ],
+        [
+          "som et resultat av",
+          "as a result of",
+          "",
+          "uttr",
+          "som følge av (as a result of) · på grunn av (due to)",
+          ""
+        ],
+        [
+          "resultatet er at",
+          "the result is that",
+          "",
+          "uttr",
+          "følgen er at (the consequence is that) · konsekvensen er at (the consequence is that)",
+          ""
+        ],
+        [
+          "følgen er at",
+          "the consequence is that",
+          "",
+          "uttr",
+          "resultatet er at (the result is that) · konsekvensen er at (the consequence is that)",
+          ""
+        ],
+        [
+          "konsekvensen er at",
+          "the consequence is that",
+          "",
+          "uttr",
+          "følgen er at (the consequence is that) · resultatet er at (the result is that)",
+          ""
+        ],
+        [
+          "føre til",
+          "lead to, result in",
+          "",
+          "vrb/conn",
+          "resultere i (result in) · gjøre at (make/lead to)",
+          ""
+        ],
+        [
+          "føre med seg",
+          "bring about, entail",
+          "",
+          "vrb/conn",
+          "føre til (lead to) · innebære (entail)",
+          ""
+        ],
+        [
+          "resultere i",
+          "result in",
+          "",
+          "vrb/conn",
+          "føre til (lead to) · ende med (end in)",
+          ""
+        ],
+        [
+          "gjøre at",
+          "make, cause, lead to",
+          "",
+          "vrb/conn",
+          "føre til (lead to) · resultere i (result in)",
+          ""
+        ],
+        [
+          "slik at",
+          "so that, such that",
+          "",
+          "sub",
+          "så (so) · dermed (thereby)",
+          ""
+        ],
+        [
+          "for å",
+          "in order to, to",
+          "",
+          "uttr",
+          "for at (so that) · med sikte på (with the aim of)",
+          ""
+        ],
+        [
+          "for at",
+          "so that, in order that",
+          "",
+          "sub",
+          "slik at (so that) · så (so that)",
+          ""
+        ],
+        [
+          "med sikte på",
+          "with the aim of",
+          "",
+          "prep/conn",
+          "for å (in order to) · med mål om (with the goal of)",
+          ""
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Connectors"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

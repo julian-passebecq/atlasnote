@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-society.3",
+  "title": "B2 — Politics and society · 3",
+  "related": [],
+  "terms": [],
+  "summary": "81–120 / 160. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-society.3",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "trontale",
+          "Speech presenting the government’s policy at the opening of parliament",
+          "sg: (u) en trontale; (d) trontalen; pl: (u) trontaler; (d) trontalerene",
+          "nou",
+          "åpningstale (opening speech)",
+          "avslutningstale (closing speech)"
+        ],
+        [
+          "verdens",
+          "world’s",
+          "",
+          "det",
+          "global (global) · internasjonal (international)",
+          "lokal (local)"
+        ],
+        [
+          "vold",
+          "violence, force",
+          "SG: (U) en vold · (D) volden · PL: (U) voldsformer · (D) voldsformene",
+          "nou",
+          "voldsbruk (use of violence) · maktbruk (use of force)",
+          "fred (peace) · ikkevold (non-violence)"
+        ],
+        [
+          "votering",
+          "vote, voting",
+          "sg: (u) en votering; (d) voteringen; pl: (u) voteringer; (d) voteringene",
+          "nou",
+          "avstemning (vote)",
+          "konsensus uten vote (consensus without vote)"
+        ],
+        [
+          "være fornøyd med",
+          "to be satisfied with",
+          "IRR : (INF) infinitiv: å være fornøyd med; (PR) presens: er fornøyd med; (PT) preteritum: var fornøyd med; (PP) presens perfektum: har vært fornøyd med",
+          "vrb",
+          "være tilfreds med (be satisfied with) · være glad for (be pleased with)",
+          "være misfornøyd med (be dissatisfied with)"
+        ],
+        [
+          "bistand",
+          "aid, assistance",
+          "sg: (u) en bistand; (d) bistanden; pl: (u) bistander; (d) bistandene",
+          "nou",
+          "hjelp (help) · støtte (support)",
+          "sanksjon (sanction)"
+        ],
+        [
+          "brudd på avtalen",
+          "breach of the agreement",
+          "",
+          "uttr",
+          "avtalebrudd (breach of agreement)",
+          "overholdelse av avtalen (compliance with the agreement)"
+        ],
+        [
+          "diplomati",
+          "diplomacy",
+          "sg: (u) et diplomati; (d) diplomatiet; pl: (u) diplomatier; (d) diplomatiene",
+          "nou",
+          "forhandling (negotiation) · dialog (dialogue)",
+          "militærmakt (military force)"
+        ],
+        [
+          "eskalering",
+          "escalation",
+          "sg: (u) en eskalering; (d) eskaleringen; pl: (u) eskaleringer; (d) eskaleringene",
+          "nou",
+          "opptrapping (escalation)",
+          "nedtrapping (de-escalation)"
+        ],
+        [
+          "fiasko",
+          "fiasco, failure",
+          "sg: (u) en fiasko; (d) fiaskoen; pl: (u) fiaskoer; (d) fiaskoene",
+          "nou",
+          "nederlag (defeat) · mislykkethet (failure)",
+          "suksess (success)"
+        ],
+        [
+          "forby handel med bosettinger",
+          "ban trade with settlements",
+          "",
+          "uttr",
+          "innføre handelsforbud (introduce a trade ban) · sanksjonere (sanction)",
+          "tillate handel (allow trade)"
+        ],
+        [
+          "forhandler",
+          "negotiator",
+          "(SG U) en forhandler · (SG D) forhandleren · (PL U) forhandlere · (PL D) forhandlerne",
+          "nou",
+          "diplomat (diplomat); utsending (envoy)",
+          "motpart (opposing party); kritiker (critic)"
+        ],
+        [
+          "forplikte seg til",
+          "commit oneself to",
+          "",
+          "uttr",
+          "love (promise); binde seg til (bind oneself to)",
+          "trekke seg fra (withdraw from); bryte (break)"
+        ],
+        [
+          "fredsavtale",
+          "peace agreement",
+          "sg: (u) en fredsavtale; (d) fredsavtalen; pl: (u) fredsavtaler; (d) fredsavtalene",
+          "nou",
+          "fredspakt (peace pact)",
+          "krigserklæring (declaration of war)"
+        ],
+        [
+          "fredsforhandling",
+          "peace negotiation",
+          "sg: (u) en fredsforhandling; (d) fredsforhandlingen; pl: (u) fredsforhandlinger; (d) fredsforhandlingene",
+          "nou",
+          "fredssamtale (peace talk)",
+          "krigføring (warfare)"
+        ],
+        [
+          "fredsmegling",
+          "peace mediation",
+          "sg: (u) en fredsmegling; (d) fredsmeglingen; pl: (u) fredsmeglinger; (d) fredsmeglingene",
+          "nou",
+          "mekling (mediation) · forhandling (negotiation)",
+          "konfrontasjon (confrontation)"
+        ],
+        [
+          "gjenåpne",
+          "reopen",
+          "IRR : (PR) gjenåpner · (PT) gjenåpnet · (PP) har gjenåpnet",
+          "vrb",
+          "åpne igjen (open again); sette i drift igjen (restart operation)",
+          "stenge (close); blokkerе (block)"
+        ],
+        [
+          "humanitær bistand",
+          "humanitarian aid",
+          "sg: (u) en humanitær bistand; (d) den humanitære bistanden; pl: (u) humanitære bistander; (d) de humanitære bistandene",
+          "nou",
+          "nødhjelp (emergency aid)",
+          "blokade (blockade)"
+        ],
+        [
+          "internasjonal reaksjon",
+          "international reaction",
+          "",
+          "uttr",
+          "utenlandsk reaksjon (foreign reaction)",
+          "taushet (silence)"
+        ],
+        [
+          "konflikt",
+          "conflict",
+          "sg: (u) en konflikt; (d) konflikten; pl: (u) konflikter; (d) konfliktene",
+          "nou",
+          "strid (conflict) · uenighet (disagreement)",
+          "enighet (agreement)"
+        ],
+        [
+          "militærledelse",
+          "military leadership",
+          "(SG U) en militærledelse · (SG D) militærledelsen",
+          "nou",
+          "forsvarsledelse (defence leadership); kommando (command)",
+          "sivil ledelse (civilian leadership); opposisjon (opposition)"
+        ],
+        [
+          "nedtrapping",
+          "de-escalation, scaling down",
+          "sg: (u) en nedtrapping; (d) nedtrappingen; pl: (u) nedtrappinger; (d) nedtrappingene",
+          "nou",
+          "reduksjon (reduction) · avspenning (relaxation of tension)",
+          "eskalering (escalation)"
+        ],
+        [
+          "opphøre",
+          "cease, end",
+          "IRR : (PR) opphører · (PT) opphørte · (PP) har opphørt",
+          "vrb",
+          "ta slutt (end); stanse (stop)",
+          "fortsette (continue); trappe opp (escalate)"
+        ],
+        [
+          "regimeskifte",
+          "regime change",
+          "(SG U) et regimeskifte · (SG D) regimeskiftet · (PL U) regimeskifter · (PL D) regimeskiftene",
+          "nou",
+          "maktendring (change of power); systemskifte (system change)",
+          "status quo (status quo); kontinuitet (continuity)"
+        ],
+        [
+          "resolusjon",
+          "resolution",
+          "sg: (u) en resolusjon; (d) resolusjonen; pl: (u) resolusjoner; (d) resolusjonene",
+          "nou",
+          "vedtak (decision) · erklæring (declaration)",
+          "avslag (rejection)"
+        ],
+        [
+          "sanksjon",
+          "sanction",
+          "sg: (u) en sanksjon; (d) sanksjonen; pl: (u) sanksjoner; (d) sanksjonene",
+          "nou",
+          "straffetiltak (punitive measure)",
+          "lettelse (relief) · oppheving (lifting)"
+        ],
+        [
+          "sikkerhetsråd",
+          "Security Council",
+          "sg: (u) et sikkerhetsråd; (d) sikkerhetsrådet; pl: (u) sikkerhetsråd; (d) sikkerhetsrådene",
+          "nou",
+          "FNs sikkerhetsråd (UN Security Council)",
+          "enkeltperson (individual) · privat aktør (private actor)"
+        ],
+        [
+          "skipstrafikk",
+          "ship traffic, shipping traffic",
+          "(SG U) en skipstrafikk · (SG D) skipstrafikken",
+          "nou",
+          "sjøtrafikk (sea traffic); frakttrafikk (freight traffic)",
+          "blokade (blockade); stans (halt)"
+        ],
+        [
+          "statsministerskifte",
+          "change of prime minister",
+          "sg: (u) et statsministerskifte; (d) statsministerskiftet; pl: (u) statsministerskifter; (d) statsministerskiftene",
+          "nou",
+          "regjeringsskifte (change of government) · maktskifte (transfer of power)",
+          "stabil regjering (stable government)"
+        ],
+        [
+          "uenighet",
+          "disagreement",
+          "sg: (u) en uenighet; (d) uenigheten; pl: (u) uenigheter; (d) uenighetene",
+          "nou",
+          "konflikt (conflict) · motsetning (opposition)",
+          "enighet (agreement)"
+        ],
+        [
+          "undergrave",
+          "undermine",
+          "IRR : (PR) undergraver · (PT) undergravde · (PP) har undergravd",
+          "vrb",
+          "svekke (weaken) · sabotere (sabotage)",
+          "styrke (strengthen); støtte (support)"
+        ],
+        [
+          "utenrikspolitikk",
+          "foreign policy",
+          "sg: (u) en utenrikspolitikk; (d) utenrikspolitikken; pl: (u) utenrikspolitikker; (d) utenrikspolitikkene",
+          "nou",
+          "internasjonal politikk (international politics)",
+          "innenrikspolitikk (domestic policy)"
+        ],
+        [
+          "våpenhvile",
+          "ceasefire",
+          "sg: (u) en våpenhvile; (d) våpenhvilen; pl: (u) våpenhviler; (d) våpenhvilene",
+          "nou",
+          "kampstans (halt in fighting)",
+          "offensiv (offensive)"
+        ],
+        [
+          "hoff",
+          "court, royal household",
+          "sg: (u) et hoff; (d) hoffet; pl: (u) hoff; (d) hoffene",
+          "nou",
+          "Det kongelige hoff (Royal Court)",
+          "departement (ministry)"
+        ],
+        [
+          "kongehus",
+          "royal house",
+          "sg: (u) et kongehus; (d) kongehuset; pl: (u) kongehus; (d) kongehusene",
+          "nou",
+          "kongefamilie (royal family)",
+          "republikk (republic)"
+        ],
+        [
+          "kongelig",
+          "royal",
+          "(M/F) kongelig · (N) kongelig · (PL) kongelige",
+          "adj",
+          "monarkisk (monarchical)",
+          "republikansk (republican)"
+        ],
+        [
+          "kronprins",
+          "crown prince",
+          "sg: (u) en kronprins; (d) kronprinsen; pl: (u) kronprinser; (d) kronprinsene",
+          "nou",
+          "tronfølger (heir to the throne)",
+          "konge (king)"
+        ],
+        [
+          "kronprinsesse",
+          "crown princess",
+          "sg: (u) en kronprinsesse; (d) kronprinsessen; pl: (u) kronprinsesser; (d) kronprinsessene",
+          "nou",
+          "tronfølger (heir to the throne)",
+          "dronning (queen)"
+        ],
+        [
+          "offisiell kalender",
+          "official calendar",
+          "sg: (u) en offisiell kalender; (d) den offisielle kalenderen; pl: (u) offisielle kalendere; (d) de offisielle kalenderne",
+          "nou",
+          "program (schedule)",
+          "privat kalender (private calendar)"
+        ],
+        [
+          "offisielt oppdrag",
+          "official duty",
+          "sg: (u) et offisielt oppdrag; (d) det offisielle oppdraget; pl: (u) offisielle oppdrag; (d) de offisielle oppdragene",
+          "nou",
+          "representasjonsoppdrag (representational duty)",
+          "privat besøk (private visit)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Politics Intl"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

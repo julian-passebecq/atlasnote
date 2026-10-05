@@ -110,9 +110,12 @@
 .norsk-daily-english{font-size:11px;gap:3px;white-space:nowrap}
 .norsk-daily-sections{margin:0;gap:3px;flex:0 1 auto}
 .norsk-daily-sections button{padding:3px 7px;min-height:26px}
-.norsk-daily-column-labels{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 84px;gap:12px;padding:4px 10px;font-size:10px;color:var(--muted);border-bottom:1px solid var(--line)}
+.norsk-daily-study-toggle{font-size:11px;padding:3px 6px;min-height:26px}
+.norsk-daily{--study-width:22px}
+.norsk-daily.study-active{--study-width:84px}
+.norsk-daily-column-labels{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) var(--study-width);gap:12px;padding:4px 10px;font-size:10px;color:var(--muted);border-bottom:1px solid var(--line)}
 .norsk-daily-paper{display:flex;flex-direction:column;gap:0}
-.norsk-daily-paper .norsk-daily-item{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 84px;gap:3px 12px;border:0;border-bottom:1px solid var(--line);border-left:3px solid var(--line);border-radius:0;padding:6px 9px;background:transparent}
+.norsk-daily-paper .norsk-daily-item{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) var(--study-width);gap:3px 12px;border:0;border-bottom:1px solid var(--line);border-left:3px solid var(--line);border-radius:0;padding:6px 9px;background:transparent}
 .norsk-daily-paper .norsk-daily-item:nth-child(even){background:transparent}
 .norsk-daily-paper .norsk-daily-item.status-learning{border-left-color:#e08a00}
 .norsk-daily-paper .norsk-daily-item.status-known{border-left-color:#2e9e5b}
@@ -130,8 +133,8 @@
 .norsk-daily-row-words{display:flex;flex-wrap:wrap;gap:5px 12px;margin:4px 0}
 .norsk-daily-about{margin-top:6px;font-size:10px;color:var(--muted)}
 .norsk-daily-about .norsk-daily-note{margin-top:4px}
-.norsk-daily-paper.no-translation .norsk-daily-item{grid-template-columns:minmax(0,1fr) 84px}
-.norsk-daily-column-labels:has(+.no-translation){grid-template-columns:minmax(0,1fr) 84px}
+.norsk-daily-paper.no-translation .norsk-daily-item{grid-template-columns:minmax(0,1fr) var(--study-width)}
+.norsk-daily-column-labels:has(+.no-translation){grid-template-columns:minmax(0,1fr) var(--study-width)}
 .norsk-daily-focus-grid{padding:4px 8px}
 .norsk-daily-focus-grid>section{padding:8px 10px}
 .norsk-daily-focus-grid h2{font-size:18px}

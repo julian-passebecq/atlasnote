@@ -1,0 +1,397 @@
+{
+  "id": "page.atlas.norsk-csv.b2-nouns.1",
+  "title": "B2 — Noun forms · 1",
+  "related": [],
+  "terms": [],
+  "summary": "1–40 / 130. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-nouns.1",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Gender",
+        "Ubestemt entall",
+        "Bestemt entall",
+        "Ubestemt flertall",
+        "Bestemt flertall"
+      ],
+      "rows": [
+        [
+          "et barn",
+          "child",
+          "et",
+          "et barn",
+          "barnet",
+          "barn",
+          "barna"
+        ],
+        [
+          "en bok",
+          "book",
+          "en",
+          "en bok",
+          "boka/boken",
+          "bøker",
+          "bøkene"
+        ],
+        [
+          "en bror",
+          "brother",
+          "en",
+          "en bror",
+          "broren",
+          "brødre",
+          "brødrene"
+        ],
+        [
+          "en datter",
+          "daughter",
+          "en",
+          "en datter",
+          "dattera/datteren",
+          "døtre",
+          "døtrene"
+        ],
+        [
+          "en far",
+          "father",
+          "en",
+          "en far",
+          "faren",
+          "fedre",
+          "fedrene"
+        ],
+        [
+          "en forelder",
+          "parent",
+          "en",
+          "en forelder",
+          "forelderen",
+          "foreldre",
+          "foreldrene"
+        ],
+        [
+          "en fødsel",
+          "birth",
+          "en",
+          "en fødsel",
+          "fødselen",
+          "fødsler",
+          "fødslene"
+        ],
+        [
+          "en kraft",
+          "power / force",
+          "en",
+          "en kraft",
+          "krafta/kraften",
+          "krefter",
+          "kreftene"
+        ],
+        [
+          "en kvinne",
+          "woman",
+          "en",
+          "en kvinne",
+          "kvinnen",
+          "kvinner",
+          "kvinnene"
+        ],
+        [
+          "en mann",
+          "man",
+          "en",
+          "en mann",
+          "mannen",
+          "menn",
+          "mennene"
+        ],
+        [
+          "et medlem",
+          "member",
+          "et",
+          "et medlem",
+          "medlemmet",
+          "medlemmer",
+          "medlemmene"
+        ],
+        [
+          "en regel",
+          "rule",
+          "en",
+          "en regel",
+          "regelen",
+          "regler",
+          "reglene"
+        ],
+        [
+          "et søsken",
+          "sibling",
+          "et",
+          "et søsken",
+          "søskenet",
+          "søsken",
+          "søsknene/søskena"
+        ],
+        [
+          "en søster",
+          "sister",
+          "en",
+          "en søster",
+          "søstera/søsteren",
+          "søstre",
+          "søstrene"
+        ],
+        [
+          "et anlegg",
+          "facility / plant",
+          "et",
+          "et anlegg",
+          "anlegget",
+          "anlegg",
+          "anleggene"
+        ],
+        [
+          "et behov",
+          "need",
+          "et",
+          "et behov",
+          "behovet",
+          "behov",
+          "behovene"
+        ],
+        [
+          "et bevis",
+          "proof / evidence",
+          "et",
+          "et bevis",
+          "beviset",
+          "bevis",
+          "bevisene"
+        ],
+        [
+          "et dødsfall",
+          "death / death case",
+          "et",
+          "et dødsfall",
+          "dødsfallet",
+          "dødsfall",
+          "dødsfallene"
+        ],
+        [
+          "et fellesskap",
+          "community / fellowship",
+          "et",
+          "et fellesskap",
+          "fellesskapet",
+          "fellesskap",
+          "fellesskapene"
+        ],
+        [
+          "et fellestrekk",
+          "common feature",
+          "et",
+          "et fellestrekk",
+          "fellestrekket",
+          "fellestrekk",
+          "fellestrekkene"
+        ],
+        [
+          "et forbud",
+          "ban / prohibition",
+          "et",
+          "et forbud",
+          "forbudet",
+          "forbud",
+          "forbudene"
+        ],
+        [
+          "et forhold",
+          "relationship / condition",
+          "et",
+          "et forhold",
+          "forholdet",
+          "forhold",
+          "forholdene"
+        ],
+        [
+          "et forslag",
+          "proposal",
+          "et",
+          "et forslag",
+          "forslaget",
+          "forslag",
+          "forslagene"
+        ],
+        [
+          "et framskritt",
+          "progress / advance",
+          "et",
+          "et framskritt",
+          "framskrittet",
+          "framskritt",
+          "framskrittene/framskritta"
+        ],
+        [
+          "et hjem",
+          "home",
+          "et",
+          "et hjem",
+          "hjemmet",
+          "hjem",
+          "hjemmene"
+        ],
+        [
+          "et hærverk",
+          "vandalism",
+          "et",
+          "et hærverk",
+          "hærverket",
+          "hærverk",
+          "hærverkene"
+        ],
+        [
+          "et hørselvern",
+          "hearing protection",
+          "et",
+          "et hørselvern",
+          "hørselvernet",
+          "hørselvern",
+          "hørselvernene"
+        ],
+        [
+          "et initiativ",
+          "initiative",
+          "et",
+          "et initiativ",
+          "initiativet",
+          "initiativ",
+          "initiativene"
+        ],
+        [
+          "et kjønn",
+          "gender / sex",
+          "et",
+          "et kjønn",
+          "kjønnet",
+          "kjønn",
+          "kjønnene"
+        ],
+        [
+          "et kraftverk",
+          "power plant",
+          "et",
+          "et kraftverk",
+          "kraftverket",
+          "kraftverk",
+          "kraftverkene"
+        ],
+        [
+          "et land",
+          "country",
+          "et",
+          "et land",
+          "landet",
+          "land",
+          "landene/landa"
+        ],
+        [
+          "et liv",
+          "life",
+          "et",
+          "et liv",
+          "livet",
+          "liv",
+          "livene"
+        ],
+        [
+          "et lovforslag",
+          "bill / proposed law",
+          "et",
+          "et lovforslag",
+          "lovforslaget",
+          "lovforslag",
+          "lovforslagene"
+        ],
+        [
+          "et mindretall",
+          "minority",
+          "et",
+          "et mindretall",
+          "mindretallet",
+          "mindretall",
+          "mindretallene"
+        ],
+        [
+          "et nettverk",
+          "network",
+          "et",
+          "et nettverk",
+          "nettverket",
+          "nettverk",
+          "nettverkene"
+        ],
+        [
+          "et overgrep",
+          "abuse / violation",
+          "et",
+          "et overgrep",
+          "overgrepet",
+          "overgrep",
+          "overgrepene"
+        ],
+        [
+          "et parallellsamfunn",
+          "parallel society",
+          "et",
+          "et parallellsamfunn",
+          "parallellsamfunnet",
+          "parallellsamfunn",
+          "parallellsamfunnene"
+        ],
+        [
+          "et salg",
+          "sale",
+          "et",
+          "et salg",
+          "salget",
+          "salg",
+          "salgene"
+        ],
+        [
+          "et samfunn",
+          "society",
+          "et",
+          "et samfunn",
+          "samfunnet",
+          "samfunn",
+          "samfunnene"
+        ],
+        [
+          "et skjegg",
+          "beard",
+          "et",
+          "et skjegg",
+          "skjegget",
+          "skjegg",
+          "skjeggene"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "NORA0130_B2_exam_grammar_irregulars_study_friendly_v6_final_clean.xlsx",
+      "note": "Worksheet: 03 Noun forms grouped"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

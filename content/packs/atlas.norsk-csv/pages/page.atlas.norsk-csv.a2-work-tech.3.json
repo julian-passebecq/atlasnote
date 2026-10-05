@@ -1,0 +1,236 @@
+{
+  "id": "page.atlas.norsk-csv.a2-work-tech.3",
+  "title": "A2 — Work and technology · 3",
+  "related": [],
+  "terms": [],
+  "summary": "81–105 / 105. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.a2-work-tech.3",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "registrere (å)",
+          "to register; record",
+          "V2 — TE: (PR) registrerer · (PT) registrerte · (PF) har registrert",
+          "VERB",
+          "notere (note)",
+          "slette (delete)"
+        ],
+        [
+          "renholder (en)",
+          "cleaner",
+          "SG: (U) en renholder (D) renholderen · PL: (U) renholdere (D) renholderne",
+          "NOUN",
+          "vasker (cleaner)",
+          "kunde (customer)"
+        ],
+        [
+          "resepsjon (en)",
+          "reception (front desk)",
+          "SG: (U) en resepsjon (D) resepsjonen · PL: (U) resepsjoner (D) resepsjonene",
+          "NOUN",
+          "mottak (reception)",
+          "—"
+        ],
+        [
+          "resepsjonist (en)",
+          "receptionist",
+          "SG: (U) en resepsjonist (D) resepsjonisten · PL: (U) resepsjonister (D) resepsjonistene",
+          "NOUN",
+          "—",
+          "gjest (guest)"
+        ],
+        [
+          "rørlegger (en)",
+          "plumber",
+          "SG: (U) en rørlegger (D) rørleggeren · PL: (U) rørleggere (D) rørleggerne",
+          "NOUN",
+          "—",
+          "elektriker (electrician)"
+        ],
+        [
+          "samarbeide (å)",
+          "to cooperate; collaborate",
+          "V1 — ET: (PR) samarbeider · (PT) samarbeidet · (PF) har samarbeidet",
+          "VERB",
+          "jobbe sammen (work together)",
+          "krangle (argue)"
+        ],
+        [
+          "service (en)",
+          "service (assistance)",
+          "SG: (U) en service (D) servicen · PL: — (uncount)",
+          "NOUN",
+          "tjeneste (service)",
+          "dårlig service (bad service)"
+        ],
+        [
+          "servitør (en)",
+          "waiter; server",
+          "SG: (U) en servitør (D) servitøren · PL: (U) servitører (D) servitørene",
+          "NOUN",
+          "kelner (waiter)",
+          "kunde (customer)"
+        ],
+        [
+          "sjef (en)",
+          "boss; manager",
+          "SG: (U) en sjef (D) sjefen · PL: (U) sjefer (D) sjefene",
+          "NOUN",
+          "leder (leader)",
+          "ansatt (employee)"
+        ],
+        [
+          "skanne (inn) (å)",
+          "to scan (items)",
+          "V1 — ET: (PR) skanner · (PT) skannet · (PF) har skannet",
+          "PHRASAL_VERB",
+          "—",
+          "—"
+        ],
+        [
+          "skjema (et)",
+          "form (document)",
+          "SG: (U) et skjema (D) skjemaet · PL: (U) skjema (D) skjemaene",
+          "NOUN",
+          "formular (form)",
+          "—"
+        ],
+        [
+          "skype (å)",
+          "to Skype (video — call)",
+          "V1 — ET: (PR) skyper · (PT) skypet · (PF) har skypet",
+          "VERB",
+          "videoringe (video call)",
+          "—"
+        ],
+        [
+          "slå av (å)",
+          "to turn off (device)",
+          "IRR: (PR) slår av · (PT) slo av · (PF) har slått av",
+          "PHRASAL_VERB",
+          "skru av (turn off)",
+          "skru på (turn on)"
+        ],
+        [
+          "slite (å)",
+          "to struggle; to wear out",
+          "IRR: (PR) sliter · (PT) slet · (PF) har slitt",
+          "VERB",
+          "streve (struggle)",
+          "lykkes (succeed)"
+        ],
+        [
+          "slutte (å)",
+          "to stop; to quit",
+          "V1 — ET: (PR) slutter · (PT) sluttet · (PF) har sluttet",
+          "VERB",
+          "avslutte (finish)",
+          "begynne (begin)"
+        ],
+        [
+          "smarttelefon (en)",
+          "smartphone",
+          "SG: (U) en smarttelefon (D) smarttelefonen · PL: (U) smarttelefoner (D) smarttelefonene",
+          "NOUN",
+          "mobil (mobile)",
+          "fasttelefon (landline)"
+        ],
+        [
+          "snekker (en)",
+          "carpenter",
+          "SG: (U) en snekker (D) snekkeren · PL: (U) snekkere (D) snekkerne",
+          "NOUN",
+          "tømrer (carpenter)",
+          "murer (mason)"
+        ],
+        [
+          "telefon (en)",
+          "telephone; phone",
+          "SG: (U) en telefon (D) telefonen · PL: (U) telefoner (D) telefonene",
+          "NOUN",
+          "mobil (cellphone)",
+          "fasttelefon (landline)"
+        ],
+        [
+          "tillegg (et)",
+          "addition; supplement",
+          "SG: (U) et tillegg (D) tillegget · PL: (U) tillegg (D) tilleggene",
+          "NOUN",
+          "ekstra (extra)",
+          "fradrag (deduction)"
+        ],
+        [
+          "tømrer (en)",
+          "carpenter (builder)",
+          "SG: (U) en tømrer (D) tømreren · PL: (U) tømrere (D) tømrerne",
+          "NOUN",
+          "snekker (carpenter)",
+          "—"
+        ],
+        [
+          "turnus (en)",
+          "shift work (rota)",
+          "SG: (U) en turnus (D) turnusen · PL: (U) turnuser (D) turnusene",
+          "NOUN",
+          "skift (shift)",
+          "normal dag (regular day)"
+        ],
+        [
+          "vaktmester (en)",
+          "caretaker; janitor",
+          "SG: (U) en vaktmester (D) vaktmesteren · PL: (U) vaktmestere (D) vaktmestrene",
+          "NOUN",
+          "custodian (caretaker)",
+          "—"
+        ],
+        [
+          "verksted (et)",
+          "workshop; repair shop",
+          "SG: (U) et verksted (D) verkstedet · PL: (U) verksteder (D) verkstedene",
+          "NOUN",
+          "—",
+          "—"
+        ],
+        [
+          "vikariat (et)",
+          "temporary position; temp job",
+          "SG: (U) et vikariat (D) vikariatet · PL: (U) vikariater (D) vikariatene",
+          "NOUN",
+          "midlertidig jobb (temporary job)",
+          "fast jobb (permanent job)"
+        ],
+        [
+          "yrke (et)",
+          "occupation; profession",
+          "SG: (U) et yrke (D) yrket · PL: (U) yrker (D) yrkene",
+          "NOUN",
+          "profesjon (profession)",
+          "—"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "a2fullvoc27v1_clean_patched.xlsx",
+      "note": "Worksheet: a2fullvoc27v1_clean_patched"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:A2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}

@@ -1,0 +1,356 @@
+{
+  "id": "page.atlas.norsk-csv.b2-energy.2",
+  "title": "B2 — Transport and energy · 2",
+  "related": [],
+  "terms": [],
+  "summary": "41–80 / 174. Choose Columns, NO / EN or Lines to study.",
+  "blocks": [
+    {
+      "id": "block.atlas.norsk-csv.b2-energy.2",
+      "type": "table",
+      "columns": [
+        "Norsk",
+        "English",
+        "Forms",
+        "Type",
+        "Synonyms",
+        "Antonyms"
+      ],
+      "rows": [
+        [
+          "havn",
+          "port, harbour",
+          "sg: (u) en havn; (d) havnen; pl: (u) havner; (d) havnene",
+          "nou",
+          "kaiområde (dock area)",
+          "åpent hav (open sea)"
+        ],
+        [
+          "hurtigbåt",
+          "express boat, fast ferry",
+          "sg: (u) en hurtigbåt; (d) hurtigbåten; pl: (u) hurtigbåter; (d) hurtigbåtene",
+          "nou",
+          "passasjerbåt (passenger boat)",
+          "lasteskip (cargo ship)"
+        ],
+        [
+          "innstilt",
+          "cancelled",
+          "(M/F) innstilt · (N) innstilt · (PL) innstilte",
+          "adj",
+          "avlyst (cancelled)",
+          "oppsatt (scheduled)"
+        ],
+        [
+          "jernbane",
+          "railway",
+          "sg: (u) en jernbane; (d) jernbanen; pl: (u) jernbaner; (d) jernbanene",
+          "nou",
+          "togbane (railway)",
+          "veitrafikk (road traffic)"
+        ],
+        [
+          "jernbaneinfrastruktur",
+          "railway infrastructure",
+          "sg: (u) en jernbaneinfrastruktur; (d) jernbaneinfrastrukturen; pl: (u) jernbaneinfrastrukturer; (d) jernbaneinfrastrukturene",
+          "nou",
+          "skinnegang og anlegg (tracks and facilities)",
+          "veiinfrastruktur (road infrastructure)"
+        ],
+        [
+          "jernbanereform",
+          "railway reform",
+          "sg: (u) en jernbanereform; (d) jernbanereformen; pl: (u) jernbanereformer; (d) jernbanereformene",
+          "nou",
+          "togreform (rail reform) · reform av jernbanen (railway reform)",
+          "status quo (status quo) · tilbakerulling (rollback)"
+        ],
+        [
+          "jernbanestrekning",
+          "railway section, rail line",
+          "sg: (u) en jernbanestrekning; (d) jernbanestrekningen; pl: (u) jernbanestrekninger; (d) jernbanestrekningene",
+          "nou",
+          "togstrekning (rail section)",
+          "veistrekning (road section)"
+        ],
+        [
+          "kai",
+          "quay, dock",
+          "sg: (u) en kai; (d) kaia/kaien; pl: (u) kaier; (d) kaiene",
+          "nou",
+          "brygge (pier)",
+          "åpent vann (open water)"
+        ],
+        [
+          "kjøreledning",
+          "overhead contact line",
+          "sg: (u) en kjøreledning; (d) kjøreledningen; pl: (u) kjøreledninger; (d) kjøreledningene",
+          "nou",
+          "kontaktledning (overhead line) · strømledning for tog (train power line)",
+          "dieseldrift (diesel operation)"
+        ],
+        [
+          "kollisjon",
+          "collision",
+          "sg: (u) en kollisjon; (d) kollisjonen; pl: (u) kollisjoner; (d) kollisjonene",
+          "nou",
+          "sammenstøt (collision)",
+          "unngåelse (avoidance)"
+        ],
+        [
+          "konduktør",
+          "conductor",
+          "sg: (u) en konduktør; (d) konduktøren; pl: (u) konduktører; (d) konduktørene",
+          "nou",
+          "togbetjent (train attendant)",
+          "passasjer (passenger)"
+        ],
+        [
+          "konkurranseutsetting",
+          "competitive tendering",
+          "sg: (u) en konkurranseutsetting; (d) konkurranseutsettingen; pl: (u) konkurranseutsettinger; (d) konkurranseutsettingene",
+          "nou",
+          "anbudsutsetting (tendering) · outsourcing (outsourcing)",
+          "egenregi (in-house operation) · offentlig drift (public operation)"
+        ],
+        [
+          "konteinerskip",
+          "container ship",
+          "sg: (u) et konteinerskip; (d) konteinerskipet; pl: (u) konteinerskip; (d) konteinerskipene",
+          "nou",
+          "containerskip (container ship)",
+          "passasjerferge (passenger ferry)"
+        ],
+        [
+          "krengemekanisme",
+          "tilting mechanism",
+          "sg: (u) en krengemekanisme; (d) krengemekanismen; pl: (u) krengemekanismer; (d) krengemekanismene",
+          "nou",
+          "tiltemekanisme (tilting mechanism) · krengeteknologi (tilting technology)",
+          "stiv konstruksjon (rigid construction)"
+        ],
+        [
+          "krigsskip",
+          "warship",
+          "sg: (u) et krigsskip; (d) krigsskipet; pl: (u) krigsskip; (d) krigsskipene",
+          "nou",
+          "marinefartøy (naval vessel)",
+          "handelsskip (merchant ship)"
+        ],
+        [
+          "lasteskip",
+          "cargo ship",
+          "sg: (u) et lasteskip; (d) lasteskipet; pl: (u) lasteskip; (d) lasteskipene",
+          "nou",
+          "frakteskip (freight ship)",
+          "passasjerskip (passenger ship)"
+        ],
+        [
+          "lette kjøretøy",
+          "light vehicles",
+          "",
+          "uttr",
+          "små kjøretøy (light vehicles) · personbiler og varebiler (cars and vans)",
+          "tunge kjøretøy (heavy vehicles) · lastebiler (lorries/trucks)"
+        ],
+        [
+          "leveringstid",
+          "delivery time",
+          "sg: (u) en leveringstid; (d) leveringstiden; pl: (u) leveringstider; (d) leveringstidene",
+          "nou",
+          "frist (deadline) · ventetid (waiting time)",
+          "forsinkelse (delay)"
+        ],
+        [
+          "lokomotiv",
+          "locomotive",
+          "sg: (u) et lokomotiv; (d) lokomotivet; pl: (u) lokomotiv; (d) lokomotivene",
+          "nou",
+          "togmotor (train engine)",
+          "vogn (carriage)"
+        ],
+        [
+          "los",
+          "pilot, harbour pilot",
+          "sg: (u) en los; (d) losen; pl: (u) loser; (d) losene",
+          "nou",
+          "skipslos (ship pilot)",
+          "kaptein alene (captain alone)"
+        ],
+        [
+          "luftfart",
+          "aviation",
+          "sg: (u) en luftfart; (d) luftfarten; pl: (u) luftfarter; (d) luftfartene",
+          "nou",
+          "flytrafikk (air traffic)",
+          "skipsfart (shipping)"
+        ],
+        [
+          "lufthavn",
+          "airport",
+          "sg: (u) en lufthavn; (d) lufthavnen; pl: (u) lufthavner; (d) lufthavnene",
+          "nou",
+          "flyplass (airport)",
+          "havn (port)"
+        ],
+        [
+          "luftrom",
+          "airspace",
+          "sg: (u) et luftrom; (d) luftrommet; pl: (u) luftrom; (d) luftrommene",
+          "nou",
+          "kontrollert luftrom (controlled airspace)",
+          "bakkeområde (ground area)"
+        ],
+        [
+          "materiell",
+          "rolling stock, equipment",
+          "sg: (u) et materiell; (d) materiellet; pl: (u) materiell; (d) materiellene",
+          "nou",
+          "utstyr (equipment) · rullende materiell (rolling stock)",
+          "mangel på utstyr (lack of equipment) · immateriell ressurs (intangible resource)"
+        ],
+        [
+          "mellomlanding",
+          "stopover, layover",
+          "sg: (u) en mellomlanding; (d) mellomlandingen; pl: (u) mellomlandinger; (d) mellomlandingene",
+          "nou",
+          "transitt (transit)",
+          "direktefly (direct flight)"
+        ],
+        [
+          "minejeger",
+          "minehunter",
+          "sg: (u) en minejeger; (d) minejegeren; pl: (u) minejegere; (d) minejegerne",
+          "nou",
+          "minerydder (minesweeper)",
+          "handelsfartøy (merchant vessel)"
+        ],
+        [
+          "minerydder",
+          "mine countermeasure vessel, minesweeper",
+          "sg: (u) en minerydder; (d) minerydderen; pl: (u) mineryddere; (d) minerydderne",
+          "nou",
+          "minejeger (minehunter)",
+          "lasteskip (cargo ship)"
+        ],
+        [
+          "minerydding",
+          "mine clearance",
+          "sg: (u) en minerydding; (d) mineryddingen; pl: (u) mineryddinger; (d) mineryddingene",
+          "nou",
+          "minejakt (mine hunting)",
+          "minlegging (mine laying)"
+        ],
+        [
+          "nødetat",
+          "emergency service",
+          "sg: (u) en nødetat; (d) nødetaten; pl: (u) nødetater; (d) nødetatene",
+          "nou",
+          "beredskapsetat (emergency agency)",
+          "ordinær tjeneste (ordinary service)"
+        ],
+        [
+          "nødlanding",
+          "emergency landing",
+          "sg: (u) en nødlanding; (d) nødlandingen; pl: (u) nødlandinger; (d) nødlandingene",
+          "nou",
+          "akutt landing (emergency landing)",
+          "planlagt landing (planned landing)"
+        ],
+        [
+          "perrong",
+          "platform",
+          "sg: (u) en perrong; (d) perrongen; pl: (u) perronger; (d) perrongene",
+          "nou",
+          "plattform (platform)",
+          "tog (train) · spor (track)"
+        ],
+        [
+          "punktlighet",
+          "punctuality",
+          "sg: (u) en punktlighet; (d) punktligheten; pl: (u) punktligheter; (d) punktlighetene",
+          "nou",
+          "presisjon (punctuality) · tidsnøyaktighet (time precision)",
+          "forsinkelse (delay) · upunktlighet (unpunctuality)"
+        ],
+        [
+          "påkjørt",
+          "hit by a vehicle",
+          "(M/F) påkjørt · (N) påkjørt · (PL) påkjørte",
+          "adj",
+          "truffet (hit) · nedkjørt (knocked down)",
+          "uskadd (unharmed)"
+        ],
+        [
+          "rabattavtale",
+          "discount agreement",
+          "sg: (u) en rabattavtale; (d) rabattavtalen; pl: (u) rabattavtaler; (d) rabattavtalene",
+          "nou",
+          "overenskomst (agreement) · pakt (pact)",
+          "brudd (breach) · uenighet (disagreement)"
+        ],
+        [
+          "redningshelikopter",
+          "rescue helicopter",
+          "sg: (u) et redningshelikopter; (d) redningshelikopteret; pl: (u) redningshelikoptre; (d) redningshelikoptrene",
+          "nou",
+          "luftambulanse (air ambulance)",
+          "passasjerfly (passenger plane)"
+        ],
+        [
+          "redningsmannskap",
+          "rescue crew",
+          "sg: (u) et redningsmannskap; (d) redningsmannskapet; pl: (u) redningsmannskap; (d) redningsmannskapene",
+          "nou",
+          "redningsarbeidere (rescue workers)",
+          "passasjerer (passengers)"
+        ],
+        [
+          "reisetid",
+          "The time a journey takes",
+          "sg: (u) en reisetid; (d) reisetiden; pl: (u) reisetider; (d) reisetiderene",
+          "nou",
+          "reisevarighet (travel duration)",
+          "ventetid (waiting time)"
+        ],
+        [
+          "rushtid",
+          "rush hour",
+          "sg: (u) en rushtid; (d) rushtiden; pl: (u) rushtider; (d) rushtidene",
+          "nou",
+          "trafikktopp (traffic peak)",
+          "lavtrafikk (off-peak traffic)"
+        ],
+        [
+          "rute",
+          "route, service",
+          "sg: (u) en rute; (d) ruten; pl: (u) ruter; (d) rutene",
+          "nou",
+          "linje (line) · trasé (route)",
+          "avvik (deviation/disruption)"
+        ],
+        [
+          "ruteendring",
+          "route change, timetable change",
+          "sg: (u) en ruteendring; (d) ruteendringen; pl: (u) ruteendringer; (d) ruteendringene",
+          "nou",
+          "omlegging (rerouting) · avvik (disruption)",
+          "ordinær rute (regular route)"
+        ]
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
+      "note": "Worksheet: Transport Energy"
+    }
+  ],
+  "tags": [
+    "subject:norsk",
+    "lang:nb",
+    "csv-table",
+    "level:B2"
+  ],
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+}
