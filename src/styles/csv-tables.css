@@ -1,4 +1,7 @@
 .table-column-tools{display:flex;align-items:center;flex-wrap:wrap;gap:3px 8px;margin-bottom:4px;font-size:11px}
+.continuous-content:has(.csv-interactive){max-width:none;width:100%;padding:20px 24px 40px}
+.csv-interactive th{background:var(--sheet,var(--bg))}
+.csv-interactive tbody tr:nth-child(even){background:transparent}
 .table-column-tools>div{display:flex;flex-wrap:wrap;gap:3px}
 .table-column-tools button{font-size:11px;padding:3px 6px;min-height:24px;white-space:normal}
 .csv-layout-pairs table,.csv-layout-lines table{width:100%}

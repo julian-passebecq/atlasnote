@@ -29,6 +29,8 @@ with sync_playwright() as pw:
  pane=p.locator('.active-pane');book=pane.locator('.book-grid')
  if book.count():btn('Quick Book mode',pane).click()
  expect(pane.locator('.continuous-content tbody tr')).to_have_count(40)
+ assert pane.locator('.continuous-content').evaluate('e=>e.getBoundingClientRect().width>e.parentElement.getBoundingClientRect().width-8')
+ assert len(set(pane.locator('tbody tr').evaluate_all('es=>es.map(e=>getComputedStyle(e).backgroundColor)')))==1
  source=p.evaluate('async(id)=>{const a='+AGENT+';return a.getResource("notebook-page:"+id).snapshot.page;}',page_id)
  btn('Columns',pane).click();btn('English',pane).click();expect(pane.locator('thead')).not_to_contain_text('English')
  btn('Example',pane).click();expect(pane.locator('thead')).to_contain_text('Example')
