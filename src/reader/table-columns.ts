@@ -8,7 +8,7 @@ export const TABLE_LAYOUTS=['table','pairs','lines','cards2','cards3','dictionar
 export const TABLE_PALETTES=['black','ocean','forest','paper'] as const;
 export const TABLE_SORTS=['source','norsk','english','reverse'] as const;
 export const TABLE_GROUPS=['none','letter','category','type'] as const;
-export const TABLE_PRESETS=['compact','alphabet','themes','relations','grammar'] as const;
+export const TABLE_PRESETS=['compact','alphabet','themes','relations','grammar','words'] as const;
 export type TableLayout=typeof TABLE_LAYOUTS[number];
 export const tableLayoutKey=(pageId:string,layout:TableLayout)=>preferenceKey('table-layout',[pageId,layout]);
 export const tableChoiceKey=(pageId:string,kind:string,value:string)=>preferenceKey('table-choice',[pageId,kind,value]);
@@ -19,11 +19,22 @@ export function setTableLayout(pageId:string,state:Record<string,boolean>,value:
 const heading=(s:string)=>s.trim().toLowerCase();
 export function tableFields(columns:string[]){const find=(pattern:RegExp)=>columns.findIndex(c=>pattern.test(heading(c)));return {category:find(/^(category|categories|categor[iy]e|catégorie|kategori|tema|theme|thème|topic)$/),type:find(/^(type|word class|part of speech|ordklasse)$/),english:find(/^(english|en|anglais)$/),relations:columns.map((c,i)=>/^(synonyms?|antonyms?|opposites?|synonymes?|antonymes?|opposés?)$/.test(heading(c))?i:-1).filter(i=>i>=0),grammar:columns.map((c,i)=>/^(forms?|gender|infinitiv|presens|preteritum|ubestemt|bestemt|bøyning|inflection)/.test(heading(c))?i:-1).filter(i=>i>=0)};}
 export function applyTablePreset(pageId:string,columns:string[],state:Record<string,boolean>,preset:string){
- const fields=tableFields(columns),selected=new Set([0,Math.min(1,columns.length-1),...(preset==='relations'?fields.relations:preset==='grammar'?fields.grammar:[])]);
+ const fields=tableFields(columns),selected=new Set([0,Math.min(1,columns.length-1),...(['relations','words'].includes(preset)?fields.relations:preset==='grammar'?fields.grammar:[])]);
  columns.forEach((column,i)=>{state[tableColumnKey(pageId,column,i)]=!selected.has(i);});
+ if(preset==='words')return;
  setTableLayout(pageId,state,preset==='grammar'?'table':'cards2');
  setTableChoice(pageId,state,'sort',preset==='alphabet'?'norsk':'source');
  setTableChoice(pageId,state,'group',preset==='alphabet'?'letter':preset==='themes'?(fields.category>=0?'category':fields.type>=0?'type':'none'):'none');
+}
+/** Reading-only prefix, copied from an explicit source form. Never guess gender or infinitive. */
+export function norskReadingWord(columns:string[],row:string[],fields=tableFields(columns)){
+ const word=row[0]??'';if(!word.trim()||/^(?:en|ei|et|å)\s|\((?:en|ei|et)\)\s*$/iu.test(word))return word;
+ for(const i of fields.grammar){const form=(row[i]??'').trim();
+  const article=heading(columns[i])==='gender'?form.match(/^(en|ei|et)$/iu)?.[1]:form.match(/^(?:sg:\s*\(u\)\s*)?(en|ei|et)\s/iu)?.[1];
+  if(article)return article.toLowerCase()+' '+word;
+  const infinitive=form.match(/(?:^|\s)å\s+([^;,)]+)/u)?.[1]?.trim();if(infinitive===word.trim())return 'å '+word;
+ }
+ return word;
 }
 const norskOrder=new Intl.Collator('nb',{sensitivity:'base',numeric:true});
 /** Detached reading projection; authored row order and text never change. */
@@ -36,6 +47,7 @@ export function organizeTableRows(columns:string[],rows:string[][],sort:string,g
  return group==='none'?result:result.sort((a,b)=>norskOrder.compare(a.title,b.title));
 }
 export function visibleTableColumns(pageId:string,columns:string[],revealed:Record<string,boolean>,print=false){
- const visible=columns.map((_,i)=>i).filter(i=>print||!(revealed[tableColumnKey(pageId,columns[i],i)]??i>=3));
+ const relations=tableFields(columns).relations,words=/^(norsk|norwegian|bokmål|bokmal)$/iu.test(columns[0]?.trim()??'')&&relations.length>0,defaults=new Set([0,Math.min(1,columns.length-1),...relations]);
+ const visible=columns.map((_,i)=>i).filter(i=>print||!(revealed[tableColumnKey(pageId,columns[i],i)]??(words?!defaults.has(i):i>=3)));
  return visible.length?visible:columns.length?[0]:[];
 }

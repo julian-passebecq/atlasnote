@@ -11,11 +11,18 @@ The original ZIPs and complete translations are not published.
 ## In AtlasNote
 
 Choose **Norsk → Notebook → Norsk vocabulary and grammar**. The tree is arranged
-by level, theme and grammar/writing. Tables start with three visible columns.
+by level, theme and grammar/writing. Norsk tables with source relation fields start
+with Norsk, English, Synonyms and Antonyms; other tables start with three columns.
 **Columns** shows/hides translations, inflections and other fields. **NO / EN**
 aligns the first two columns; **Lines** puts the Norwegian entry in bold above
 its translation. These are personal reading preferences, independent in panes
 A/B; source data and printable tables stay complete.
+
+**Words** keeps Norsk, English and available source synonyms/antonyms while hiding
+Forms and Type in one click, retaining the current layout, sort and grouping.
+Norsk reading labels show en/ei/et or å when an explicit source form provides it;
+missing grammar is never guessed. Source CSVs, stored table cells and exports stay
+unchanged. The app reads converted tables from its local workspace, not a live Git CSV.
 
 **2 columns / 3 columns** displays several entries across the reading pane.
 **Views & sort** provides one-click Reading, Alphabet, Categories,

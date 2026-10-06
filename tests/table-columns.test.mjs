@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {visibleTableColumns,tableColumnKey,applyTablePreset,tableChoice,tableLayout,organizeTableRows,setTableChoice,setTableLayout} from '../dist-offline/app/reader/table-columns.js';
+import {visibleTableColumns,tableColumnKey,applyTablePreset,tableChoice,tableLayout,norskReadingWord,organizeTableRows,setTableChoice,setTableLayout} from '../dist-offline/app/reader/table-columns.js';
 import {blankPersonal} from '../dist-offline/app/core/workspace.js';
 import {validatePersonal} from '../src/storage/personal-validation.mjs';
 test('CSV table recall preferences preserve original columns and printable contents',()=>{
@@ -50,4 +50,18 @@ test('Table palettes and distinct layouts are bounded independent personal prefe
  assert.equal(tableChoice('a',state,'palette'),'paper');assert.equal(tableLayout('a',state),'dictionary');
  applyTablePreset('a',['Norsk','English'],state,'compact');assert.equal(tableChoice('a',state,'palette'),'paper');
  const personal=blankPersonal();personal.session.panes[0].views.push({id:'view.test',history:[],cursor:0,collapsed:{},revealed:state,english:true});personal.session.panes[0].active='view.test';validatePersonal(personal);
+});
+test('Words hides grammar/type, keeps source relations and retains layout/sort/group',()=>{
+ const columns=['Norsk','English','Forms','Type','Synonyms','Antonyms'],state={};
+ setTableLayout('a',state,'cards3');setTableChoice('a',state,'sort','reverse');setTableChoice('a',state,'group','letter');
+ applyTablePreset('a',columns,state,'words');assert.deepEqual(visibleTableColumns('a',columns,state),[0,1,4,5]);
+ assert.equal(tableLayout('a',state),'cards3');assert.equal(tableChoice('a',state,'sort'),'reverse');assert.equal(tableChoice('a',state,'group'),'letter');
+ assert.deepEqual(visibleTableColumns('b',columns,state),[0,1,4,5]);assert.deepEqual(visibleTableColumns('a',columns,state,true),[0,1,2,3,4,5]);
+ const explicit={[tableColumnKey('b','Forms',2)]:false,[tableColumnKey('b','Antonyms',5)]:true};assert.deepEqual(visibleTableColumns('b',columns,explicit),[0,1,2,4]);
+});
+test('Norsk reading prefixes use explicit source forms without guessing or rewriting cells',()=>{
+ const columns=['Norsk','English','Forms','Type'];
+ const rows=[['bevegelse','movement','sg: (u) en bevegelse; (d) bevegelsen','nou'],['bok','book','SG: (U) ei bok (D) boka','NOUN'],['hus','house','et hus; huset','noun'],['evakuere','evacuate','(INF) infinitiv: å evakuere; (PR) presens: evakuerer','vrb'],['en bok','book','ei bok','noun'],['alkohol (en)','alcohol','en alkohol','noun'],['ukjent','unknown','','noun'],['avgjør','decides','å avgjøre','verb'],['','','en bok','noun']];
+ const original=structuredClone(rows);assert.deepEqual(rows.map(row=>norskReadingWord(columns,row)),['en bevegelse','ei bok','et hus','å evakuere','en bok','alkohol (en)','ukjent','avgjør','']);assert.deepEqual(rows,original);
+ assert.equal(norskReadingWord(['Norsk','English','Gender'],['barn','child','et']),'et barn');
 });
