@@ -72,5 +72,21 @@ with sync_playwright() as pw:
  assert pane.locator('.csv-layout-cards3').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
  assert not errors,errors
  results.append({'name':'Narrow reading pane adapts columns without horizontal overflow or runtime errors','status':'PASS'})
+ # Real source entries: grammar prefixes stay visible when grammar columns are hidden.
+ p.set_viewport_size({'width':1536,'height':864});p.goto(base+'#/page/page.atlas.norsk-csv.b2-energy.1');p.wait_for_selector('.active-pane .table-column-tools');pane=p.locator('.active-pane')
+ if pane.locator('.book-grid').count():btn('Quick Book mode',pane).click()
+ real_source=p.evaluate('async()=>('+AGENT+').getResource("notebook-page:page.atlas.norsk-csv.b2-energy.1").snapshot.page')
+ expect(pane.locator('tr[data-source-row="0"] td[data-column="0"]')).to_have_text('en bevegelse')
+ expect(pane.locator('tr[data-source-row="14"] td[data-column="0"]')).to_have_text('å evakuere')
+ expect(pane.locator('td[data-column="2"]')).to_have_count(0);expect(pane.locator('td[data-column="4"]')).to_have_count(40);expect(pane.locator('td[data-column="5"]')).to_have_count(40)
+ btn('3 columns',pane).click();btn('Words',pane).click();expect(pane.locator('.csv-layout-cards3')).to_be_visible()
+ for column in ['2','3']:expect(pane.locator('td[data-column="'+column+'"]')).to_have_count(0)
+ for column in ['4','5']:expect(pane.locator('td[data-column="'+column+'"]')).to_have_count(40)
+ expect(pane.locator('tr[data-source-row="0"] td[data-column="4"]')).to_contain_text('rørelse')
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-cards3');pane=p.locator('.active-pane')
+ expect(pane.locator('tr[data-source-row="14"] td[data-column="0"]')).to_have_text('å evakuere');expect(pane.locator('td[data-column="2"]')).to_have_count(0)
+ assert p.evaluate('async()=>('+AGENT+').getResource("notebook-page:page.atlas.norsk-csv.b2-energy.1").snapshot.page')==real_source
+ assert snapshot()['history']==history
+ p.screenshot(path=str(OUT/'words-source-prefixes.png'));results.append({'name':'Real CSV articles/infinitive and one-click Words survive reload without source/history changes','status':'PASS'})
  b.close()
 (OUT/'results.json').write_text(json.dumps({'scope':__doc__,'results':results},indent=2),encoding='utf-8');print(json.dumps(results,indent=2))

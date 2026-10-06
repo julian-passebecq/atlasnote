@@ -1,7 +1,7 @@
 import {displayVisible,displayFeature} from './display.js';
 import React,{useEffect,useRef,useState} from '../vendor/react.mjs';
 import type {Block,Page,View} from '../core/model.js';
-import {visibleTableColumns,tableOptionsKey,tableChoiceKey,tableLayout,tableChoice,tableFields,organizeTableRows,TABLE_LAYOUTS,TABLE_PALETTES} from './table-columns.js';
+import {visibleTableColumns,tableOptionsKey,tableChoiceKey,tableLayout,tableChoice,tableFields,norskReadingWord,organizeTableRows,TABLE_LAYOUTS,TABLE_PALETTES} from './table-columns.js';
 import {Inline,parseMarkdown} from './markdown.js';import {Icon} from '../components/Icon.js';import {safeUrl} from '../core/validation.mjs';
 let mermaidPromise:Promise<any>|null=null;let mermaidQueue=Promise.resolve();
 export function Mermaid({code,onReady}:any){const [svg,setSvg]=useState(''),[error,setError]=useState('');const id=useRef('mermaid-'+crypto.randomUUID().replaceAll('-',''));useEffect(()=>{let alive=true;if(!mermaidPromise)mermaidPromise=import('../vendor/mermaid-loader.mjs').then(m=>{m.default.initialize({startOnLoad:false,securityLevel:'strict',suppressErrorRendering:true,theme:'neutral',flowchart:{htmlLabels:false},fontFamily:'Arial, sans-serif',maxTextSize:50000});return m.default;});mermaidQueue=mermaidQueue.catch(()=>{}).then(async()=>{try{if(code.length>50000)throw Error('Diagram exceeds the size limit');if(/%%\{\s*(init|config)\s*:/i.test(code))throw Error('Embedded renderer configuration is not allowed');const m=await mermaidPromise;const r=await m.render(id.current,code);if(alive){setSvg(r.svg);setTimeout(()=>onReady?.(),30);}}catch(e){if(alive)setError((e as Error).message);}});return()=>{alive=false;};},[code]);return error?<div className="render-error"><strong>Diagram could not be rendered</strong><p>{error}</p><pre>{code}</pre></div>:svg?<div className="mermaid-figure" data-mermaid-ready="true" dangerouslySetInnerHTML={{__html:svg}}/>:<div className="diagram-loading">Rendering diagram...</div>;}
@@ -16,6 +16,7 @@ function Table({columns,rows,page,view,id,print=false}:any){
  return <div data-csv-palette={interactive?palette:undefined} className={'table-wrap csv-layout-'+layout+(interactive?' csv-interactive':'')}>
   {interactive&&<div className="table-column-tools">
    <button className="text-button" data-action="table-options" data-block={id} aria-expanded={!!open}>Columns</button>
+   {norsk&&(fields.grammar.length>0||fields.type>=0||fields.relations.length>0)&&<button className="text-button" data-action="table-preset" data-block={id} data-snippet="words" title="Keep Norsk, English and source synonyms/opposites; hide Forms and Type without changing layout">Words</button>}
    <div role="group" aria-label="Table reading layout">{TABLE_LAYOUTS.map(mode=><button key={mode} className="text-button" data-action="table-layout" data-block={id} data-snippet={mode} aria-pressed={layout===mode}>{layouts[mode]}</button>)}</div>
    <button className="text-button" data-action="table-organize" data-block={id} aria-expanded={!!organizeOpen}>Views & sort</button>
    <button className="text-button" data-action="table-colors" data-block={id} aria-expanded={!!paletteOpen}>Colors</button>
@@ -30,7 +31,7 @@ function Table({columns,rows,page,view,id,print=false}:any){
   </div>}
   <table><thead><tr>{visible.map((i:number)=><th key={i}><Inline text={columns[i]}/></th>)}</tr></thead><tbody>{groups.flatMap(g=>[
    ...(g.title?[<tr className="csv-group-row" key={'group-'+g.title}><th colSpan={visible.length} scope="rowgroup">{g.title}</th></tr>]:[]),
-   ...g.items.map(({row,index})=><tr key={index} data-source-row={index}>{visible.map((j:number)=><td key={j} data-column={j} data-label={columns[j]}><Inline text={row[j]??''}/></td>)}</tr>)
+   ...g.items.map(({row,index})=><tr key={index} data-source-row={index}>{visible.map((j:number)=><td key={j} data-column={j} data-label={columns[j]}><Inline text={norsk&&!print&&j===0?norskReadingWord(columns,row,fields):row[j]??''}/></td>)}</tr>)
   ])}</tbody></table>
  </div>;
 }
