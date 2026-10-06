@@ -4,6 +4,20 @@
 .csv-interactive tbody tr:nth-child(even){background:transparent}
 .table-column-tools>div{display:flex;flex-wrap:wrap;gap:3px}
 .table-column-tools button{font-size:11px;padding:3px 6px;min-height:24px;white-space:normal}
+.table-column-tools .table-search{display:flex;flex-wrap:wrap;align-items:center;gap:6px;flex-basis:100%;padding:4px 0}
+.table-search input{width:220px;max-width:100%;min-height:26px}
+.table-search select{max-width:240px;min-height:26px}
+.table-search small{color:var(--muted)}
+.csv-layout-rows{overflow-x:auto}
+.csv-layout-rows table{width:100%;table-layout:fixed}
+.continuous-content .csv-layout-rows table{min-width:700px}
+.csv-layout-rows th,.csv-layout-rows td{padding:5px 8px;border:0;border-bottom:1px solid var(--line);text-align:left}
+.csv-layout-rows td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:.85em}
+.csv-layout-rows td[data-column="0"]{font-weight:700}
+.csv-layout-rows thead th{font-size:.8em;position:sticky;top:0;background:var(--sheet);z-index:1}
+.csv-group-row button{display:inline-flex;align-items:center;gap:5px;border:0;background:none;color:inherit;padding:4px 0;font:inherit;text-align:left}
+.csv-group-depth-1 th{padding-left:24px}
+.csv-empty-row td{padding:12px;font-size:.85em;color:var(--muted)}
 .csv-layout-pairs table,.csv-layout-lines table{width:100%}
 .csv-layout-pairs thead,.csv-layout-lines thead{display:none}
 .csv-layout-pairs tbody,.csv-layout-lines tbody{display:block}

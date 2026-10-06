@@ -4,20 +4,22 @@
 function preferenceKey(prefix:string,parts:unknown[]){let hash=14695981039346656037n;for(const c of JSON.stringify(parts)){hash^=BigInt(c.codePointAt(0)!);hash=BigInt.asUintN(64,hash*1099511628211n);}return prefix+'.'+hash.toString(16).padStart(16,'0');}
 export const tableColumnKey=(pageId:string,column:string,index:number)=>preferenceKey('table-hidden',[pageId,column,index]);
 export const tableOptionsKey=(pageId:string,blockId:string)=>preferenceKey('table-options',[pageId,blockId]);
-export const TABLE_LAYOUTS=['table','pairs','lines','cards2','cards3','dictionary','tiles'] as const;
+export const TABLE_LAYOUTS=['table','rows','pairs','lines','cards2','cards3','dictionary','tiles'] as const;
 export const TABLE_PALETTES=['black','ocean','forest','paper'] as const;
 export const TABLE_SORTS=['source','norsk','english','reverse'] as const;
-export const TABLE_GROUPS=['none','letter','category','type'] as const;
+export const TABLE_GROUPS=['none','letter','category','type','category-type','category-subcategory'] as const;
 export const TABLE_PRESETS=['compact','alphabet','themes','relations','grammar','words','explanations'] as const;
 export type TableLayout=typeof TABLE_LAYOUTS[number];
 export const tableLayoutKey=(pageId:string,layout:TableLayout)=>preferenceKey('table-layout',[pageId,layout]);
 export const tableChoiceKey=(pageId:string,kind:string,value:string)=>preferenceKey('table-choice',[pageId,kind,value]);
+export const tableFoldKey=(pageId:string,blockId:string,groupKey:string)=>preferenceKey('table-fold',[pageId,blockId,groupKey]);
+export type TableFilter={query:string;column:number};
 export function tableLayout(pageId:string,revealed:Record<string,boolean>):TableLayout{return TABLE_LAYOUTS.find(mode=>mode!=='table'&&revealed[tableLayoutKey(pageId,mode)])??'table';}
 export function tableChoice(pageId:string,revealed:Record<string,boolean>,kind:'sort'|'group'|'palette'){const choices=kind==='sort'?TABLE_SORTS:kind==='palette'?TABLE_PALETTES:TABLE_GROUPS;return choices.find(value=>revealed[tableChoiceKey(pageId,kind,value)])??choices[0];}
 export function setTableChoice(pageId:string,state:Record<string,boolean>,kind:'sort'|'group'|'palette',value:string){for(const mode of kind==='sort'?TABLE_SORTS:kind==='palette'?TABLE_PALETTES:TABLE_GROUPS)state[tableChoiceKey(pageId,kind,mode)]=mode===value;}
 export function setTableLayout(pageId:string,state:Record<string,boolean>,value:string){for(const mode of TABLE_LAYOUTS)state[tableLayoutKey(pageId,mode)]=mode===value;}
 const heading=(s:string)=>s.trim().toLowerCase();
-export function tableFields(columns:string[]){const find=(pattern:RegExp)=>columns.findIndex(c=>pattern.test(heading(c)));return {category:find(/^(category|categories|categor[iy]e|catégorie|kategori|tema|theme|thème|topic)$/),type:find(/^(type|word class|part of speech|ordklasse)$/),english:find(/^(english|en|anglais)$/),relations:columns.map((c,i)=>/^(synonyms?|antonyms?|opposites?|synonymes?|antonymes?|opposés?)$/.test(heading(c))?i:-1).filter(i=>i>=0),grammar:columns.map((c,i)=>/^(forms?|gender|infinitiv|presens|preteritum|ubestemt|bestemt|bøyning|inflection)/.test(heading(c))?i:-1).filter(i=>i>=0)};}
+export function tableFields(columns:string[]){const find=(pattern:RegExp)=>columns.findIndex(c=>pattern.test(heading(c)));return {subcategory:find(/^(sub[ -]?category|sous[ -]?catégorie|underkategori)$/),category:find(/^(category|categories|categor[iy]e|catégorie|kategori|tema|theme|thème|topic)$/),type:find(/^(type|word class|part of speech|ordklasse)$/),english:find(/^(english|en|anglais)$/),relations:columns.map((c,i)=>/^(synonyms?|antonyms?|opposites?|synonymes?|antonymes?|opposés?)$/.test(heading(c))?i:-1).filter(i=>i>=0),grammar:columns.map((c,i)=>/^(forms?|gender|infinitiv|presens|preteritum|ubestemt|bestemt|bøyning|inflection)/.test(heading(c))?i:-1).filter(i=>i>=0)};}
 export function applyTablePreset(pageId:string,columns:string[],state:Record<string,boolean>,preset:string){
  const fields=tableFields(columns),selected=new Set([0,Math.min(1,columns.length-1),...(['relations','words','explanations'].includes(preset)?fields.relations:preset==='grammar'?fields.grammar:[]),...(preset==='explanations'?tableExplanationColumns(columns):[])]);
  columns.forEach((column,i)=>{state[tableColumnKey(pageId,column,i)]=!selected.has(i);});
@@ -51,6 +53,19 @@ export function organizeTableRows(columns:string[],rows:string[][],sort:string,g
  for(const item of items){const value=group==='letter'?(item.row[0]?.trim().match(/^\p{L}/u)?.[0].toLocaleUpperCase('nb')??'#'):group==='category'&&fields.category>=0?item.row[fields.category].trim()||'Other':group==='type'&&fields.type>=0?item.row[fields.type].trim()||'Other':'';if(!groups.has(value))groups.set(value,[]);groups.get(value)!.push(item);}
  const result=[...groups].map(([title,items])=>({title,items}));
  return group==='none'?result:result.sort((a,b)=>norskOrder.compare(a.title,b.title));
+}
+/** Temporary search and nested grouping retain original source row indices. */
+export function tableRowGroups(columns:string[],rows:string[][],sort:string,group:string,filter:TableFilter={query:'',column:-1}){
+ const fields=tableFields(columns),nested=group==='category-type'||group==='category-subcategory',child=group==='category-type'?fields.type:fields.subcategory;
+ const normalize=(s:string)=>s.normalize('NFKC').toLocaleLowerCase('nb'),query=normalize(filter.query.trim().slice(0,200)),column=Number.isInteger(filter.column)&&filter.column>=0&&filter.column<columns.length?filter.column:-1;
+ const selected=(row:string[])=>!query||(column<0?row:[row[column]??'']).some(s=>normalize(s).includes(query));
+ return organizeTableRows(columns,rows,sort,nested?'category':group).flatMap(g=>{
+  const items=g.items.filter(x=>selected(x.row));if(query&&!items.length)return [];
+  const key=JSON.stringify([group,g.title]),parent={...g,items,key,parent:null as string|null,depth:0,count:items.length};
+  if(!nested||fields.category<0||child<0)return [parent];
+  const children=new Map<string,typeof items>();for(const item of items){const title=item.row[child]?.trim()||'Other';if(!children.has(title))children.set(title,[]);children.get(title)!.push(item);}
+  return [{...parent,items:[]},...[...children].sort(([a],[b])=>norskOrder.compare(a,b)).map(([title,items])=>({title,items,key:JSON.stringify([group,g.title,title]),parent:key,depth:1,count:items.length}))];
+ });
 }
 export function visibleTableColumns(pageId:string,columns:string[],revealed:Record<string,boolean>,print=false){
  const relations=tableFields(columns).relations,words=/^(norsk|norwegian|bokmål|bokmal)$/iu.test(columns[0]?.trim()??'')&&relations.length>0,defaults=new Set([0,Math.min(1,columns.length-1),...relations]);

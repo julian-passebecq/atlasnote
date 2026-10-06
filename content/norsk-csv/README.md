@@ -35,6 +35,16 @@ the existing history engine appends source revisions on update. Local authored e
 retain their ownership; display preferences alone cannot add missing content.
 
 **2 columns / 3 columns** displays several entries across the reading pane.
+**CSV rows** uses one compact line per source row. Long cells are visually shortened;
+hover to read their full text, or switch to **Table / Explain** for wrapped reading.
+**Search** searches all source columns or one chosen column: enter text and press
+**Apply** or Enter. Search is temporary, local to this reader pane and this 40-row page;
+it resets on reload or reopening the note. It does not write content or history.
+**Views & sort → Group** provides collapsible source categories, word classes and
+alphabet headings. **Theme → word class** uses the existing Category and Type fields;
+**Theme → subcategory** appears only when a CSV has an explicit Subcategory field.
+Fold choices are personal pane/view preferences; **Expand all** restores visible groups.
+Print always includes all original rows/columns, independent of search and collapsed groups.
 **Views & sort** provides one-click Reading, Alphabet, Categories,
 Synonyms / opposites and Grammar presets where those fields exist. You can also
 sort the current page by Norsk A–Z/Z–A or English A–Z, or group by letter,
