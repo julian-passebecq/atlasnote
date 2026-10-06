@@ -2,7 +2,7 @@ import {parseMarkdown} from '../reader/markdown.js';
 import {DisplayControls} from '../components/DisplayControls.js';
 import {displayKey} from '../reader/display.js';
 import {subscribeArchives,archiveAttachmentEpoch,requireHistoricalRevision} from '../durability/registry.js';
-import {tableColumnKey,tableOptionsKey,tableChoiceKey,visibleTableColumns,setTableLayout,setTableChoice,applyTablePreset,TABLE_LAYOUTS,TABLE_PALETTES,TABLE_SORTS,TABLE_GROUPS,TABLE_PRESETS} from '../reader/table-columns.js';
+import {tableColumnKey,tableOptionsKey,tableChoiceKey,tableFoldKey,tableRowGroups,tableChoice,visibleTableColumns,setTableLayout,setTableChoice,applyTablePreset,TABLE_LAYOUTS,TABLE_PALETTES,TABLE_SORTS,TABLE_GROUPS,TABLE_PRESETS} from '../reader/table-columns.js';
 import {HistoryPanel,ChangeList,RevisionCompareBar,revisionComparison} from '../history/HistoryUI.js';
 import {AgentReviewDialog} from '../agent/AgentReviewUI.js';
 import {StructureHistoryView} from '../history/StructureHistoryView.js';
@@ -325,14 +325,20 @@ function toggleChrome(paneId:string){document.dispatchEvent(new CustomEvent('atl
     else
         addReadingBookmark(p,currentResourceTarget(historicalCatalogue(catalogueRef.current,store.state,loc.historyRevisionId).catalogue,loc)!,page.title,inferReadingCategory(catalogueRef.current,store.state,currentResourceTarget(historicalCatalogue(catalogueRef.current,store.state,loc.historyRevisionId).catalogue,loc)!)); }); notify('Bookmarks updated.'); }
     async function blockAction(action: string, id: string, snippet: string | undefined, paneId: string, view: View, page: Page,event?:any) {
-     if(['table-options','table-column','table-layout','table-organize','table-colors','table-palette','table-sort','table-group','table-preset'].includes(action)){
+     if(['table-options','table-column','table-layout','table-organize','table-colors','table-palette','table-sort','table-group','table-preset','table-search','table-fold','table-fold-all'].includes(action)){
       let block:any;walkBlocks(page.blocks,(b:any)=>{if(b.id===id)block=b;});
       if(!block){const match=id.match(/^(.+)\.table\.(\d+)$/);if(match)walkBlocks(page.blocks,(b:any)=>{if(b.id===match[1]&&b.type==='markdown'){const part=parseMarkdown(b.text)[Number(match[2])];if(part?.kind==='table')block={type:'table',columns:part.columns,rows:part.rows};}});}
       if(block?.type!=='table')return;
       const allowed:Record<string,readonly string[]>={'table-layout':TABLE_LAYOUTS,'table-palette':TABLE_PALETTES,'table-sort':TABLE_SORTS,'table-group':TABLE_GROUPS,'table-preset':TABLE_PRESETS};
       if(allowed[action]&&!allowed[action].includes(snippet??''))return;
+      const rowGroups=['table-fold','table-fold-all'].includes(action)?tableRowGroups(block.columns,block.rows,tableChoice(page.id,view.revealed,'sort'),tableChoice(page.id,view.revealed,'group')):[];
+      if(action==='table-fold'&&!rowGroups.some(g=>g.title&&g.key===snippet))return;
+      if(action==='table-fold-all'&&!['collapse','expand'].includes(snippet??''))return;
       const index=Number(snippet);if(action==='table-column'&&(!/^\d+$/.test(snippet??'')||!Number.isInteger(index)||index>=block.columns.length))return;
       updateView(paneId,view.id,v=>{
+       if(action==='table-fold'){const key=tableFoldKey(page.id,id,snippet!);v.revealed[key]=!v.revealed[key];return;}
+       if(action==='table-fold-all'){for(const g of rowGroups)if(g.title)v.revealed[tableFoldKey(page.id,id,g.key)]=snippet==='collapse';return;}
+       if(action==='table-search'){const key=tableChoiceKey(page.id,'menu','search');v.revealed[key]=!v.revealed[key];return;}
        if(action==='table-layout'){setTableLayout(page.id,v.revealed,snippet!);return;}
        if(action==='table-palette'){setTableChoice(page.id,v.revealed,'palette',snippet!);return;}
        if(action==='table-sort'||action==='table-group'){setTableChoice(page.id,v.revealed,action==='table-sort'?'sort':'group',snippet!);return;}

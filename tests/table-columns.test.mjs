@@ -1,8 +1,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {visibleTableColumns,tableColumnKey,applyTablePreset,tableChoice,tableLayout,norskReadingWord,tableExplanationColumns,norskRelationParts,orderNorskReadingColumns,tableReadingLabel,organizeTableRows,setTableChoice,setTableLayout} from '../dist-offline/app/reader/table-columns.js';
+import {visibleTableColumns,tableColumnKey,applyTablePreset,tableChoice,tableLayout,norskReadingWord,tableExplanationColumns,norskRelationParts,orderNorskReadingColumns,tableReadingLabel,organizeTableRows,tableRowGroups,tableFoldKey,setTableChoice,setTableLayout} from '../dist-offline/app/reader/table-columns.js';
 import {blankPersonal} from '../dist-offline/app/core/workspace.js';
 import {validatePersonal} from '../src/storage/personal-validation.mjs';
+
+test('Column search and nested source groups preserve source indices and do not invent categories',()=>{
+ const columns=['Norsk','English','Category','Subcategory','Type'],rows=[['båt','boat','Travel','Water','noun'],['bil','car','Travel','Road','noun'],['ærlig','honest','People','Character','adjective'],['tog','train','Travel','Road','noun']],before=structuredClone(rows);
+ const g=tableRowGroups(columns,rows,'norsk','category-subcategory',{query:'ROAD',column:3});
+ assert.deepEqual(g.map(x=>[x.title,x.depth,x.count]),[['Travel',0,2],['Road',1,2]]);
+ assert.equal(g[1].parent,g[0].key);assert.deepEqual(g[1].items.map(x=>x.index),[1,3]);
+ assert.equal(tableRowGroups(columns,rows,'source','none',{query:'boat',column:0}).length,0);
+ assert.deepEqual(tableRowGroups(columns,rows,'source','none',{query:'boat',column:-1})[0].items.map(x=>x.index),[0]);
+ assert.deepEqual(tableRowGroups(columns,rows,'source','none',{query:'ÆRLIG',column:0})[0].items.map(x=>x.index),[2]);
+ assert.deepEqual(rows,before);
+ assert.equal(tableRowGroups(['Norsk','English'],[['båt','boat']],'source','category-subcategory')[0].title,'');
+ assert.notEqual(tableFoldKey('a','one',g[0].key),tableFoldKey('a','two',g[0].key));
+ const personal=blankPersonal();personal.session.panes[0].views.push({id:'view.groups',history:[],cursor:0,collapsed:{},revealed:{[tableFoldKey('a','one',g[0].key)]:true},english:true});personal.session.panes[0].active='view.groups';validatePersonal(personal);
+});
 
 test('Bilingual source explanations form a compact two-column projection, independently hideable',()=>{
  const columns=['Norsk','English','Forms','Type','Synonyms','Antonyms','Norsk forklaring','English explanation'],state={};

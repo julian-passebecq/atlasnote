@@ -13,9 +13,9 @@ with sync_playwright() as pw:
  p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
  def btn(name,scope=None):return (scope or p).get_by_role('button',name=name,exact=True)
  def snapshot():return p.evaluate('async()=>{const m='+SNAPSHOT+';return await m.readPersistedWorkspace();}')
- text=io.StringIO();writer=csv.writer(text);writer.writerow(['Norsk','English','Forms','Type','Synonyms','Antonyms','Category'])
+ text=io.StringIO();writer=csv.writer(text);writer.writerow(['Norsk','English','Forms','Type','Synonyms','Antonyms','Category','Subcategory'])
  words=['åpen','øvelse','ærlig','bil','arbeid','bolig']
- for i in range(36):writer.writerow([words[i%6]+str(i),f'English {35-i:02}',f'form {i}','NOUN' if i%2 else 'ADJ',f'synonym {i}' if i%3 else '',f'opposite {i}' if i%4 else '',['Home','Work','Travel'][i%3]])
+ for i in range(36):writer.writerow([words[i%6]+str(i),f'English {35-i:02}',f'form {i}','NOUN' if i%2 else 'ADJ',f'synonym {i}' if i%3 else '',f'opposite {i}' if i%4 else '',['Home','Work','Travel'][i%3],['Core','Extra'][i%2]])
  open_settings(p);p.get_by_label('Import CSV table',exact=True).set_input_files({'name':'synthetic-presets.csv','mimeType':'text/csv','buffer':text.getvalue().encode()});expect(btn('Confirm library import')).to_be_enabled();btn('Confirm library import').click();expect(p.get_by_role('status').filter(has_text='Library imported.')).to_be_visible();btn('Close dialog').click()
  ws=snapshot();page=next(x for pack in ws['imports'] for x in pack['pages'] if 'synthetic-presets' in x['title']);page_id=page['id'];history=ws['history']
  p.goto(base+'#/page/'+page_id);p.wait_for_selector('.active-pane .table-column-tools');pane=p.locator('.active-pane')
@@ -26,9 +26,9 @@ with sync_playwright() as pw:
  rects=rows.evaluate_all('es=>es.slice(0,3).map(e=>e.getBoundingClientRect().toJSON())');assert rects[1]['x']>rects[0]['x'] and abs(rects[1]['y']-rects[0]['y'])<1,rects
  btn('3 columns',pane).click();rects=rows.evaluate_all('es=>es.slice(0,3).map(e=>e.getBoundingClientRect().toJSON())');assert rects[2]['x']>rects[1]['x']>rects[0]['x'],rects
  p.screenshot(path=str(OUT/'three-columns.png'));results.append({'name':'Reading preset and two/three columns use width without losing entries','status':'PASS'})
- preset('Categories');expect(pane.locator('.csv-group-row')).to_have_count(3);assert pane.locator('.csv-group-row').all_text_contents()==['Home','Travel','Work'];expect(rows).to_have_count(36)
+ preset('Categories');expect(pane.locator('.csv-group-row')).to_have_count(3);assert pane.locator('.csv-group-row button').evaluate_all('es=>es.map(e=>JSON.parse(e.dataset.snippet)[1])')==['Home','Travel','Work'];expect(rows).to_have_count(36)
  p.screenshot(path=str(OUT/'categories.png'))
- preset('Alphabet');assert pane.locator('.csv-group-row').all_text_contents()==['A','B','Æ','Ø','Å'];expect(rows).to_have_count(36)
+ preset('Alphabet');assert pane.locator('.csv-group-row button').evaluate_all('es=>es.map(e=>JSON.parse(e.dataset.snippet)[1])')==['A','B','Æ','Ø','Å'];expect(rows).to_have_count(36)
  btn('Views & sort',pane).click();btn('None',pane.get_by_role('group',name='Group this page',exact=True)).click();btn('English A–Z',pane).click();assert rows.first.locator('td[data-column="1"]').inner_text()=='English 00'
  btn('Norsk Z–A',pane).click();assert rows.first.locator('td[data-column="0"]').inner_text().startswith('åpen');btn('Views & sort',pane).click()
  results.append({'name':'Category sub-tables, Norwegian Æ/Ø/Å headings and English/reverse sorting retain all rows','status':'PASS'})
@@ -112,5 +112,39 @@ with sync_playwright() as pw:
  assert pane.locator('.csv-layout-cards2').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
  assert not errors,errors
  results.append({'name':'Original Norsk/English explanations, short Syn/Ant and Norsk emphasis survive reload and Book pagination without source/history writes','status':'PASS'})
+ # CSV rows, per-column search and nested folds use only reader preferences.
+ p.set_viewport_size({'width':1536,'height':864});p.goto(base+'#/page/'+page_id,wait_until='networkidle');pane=p.locator('.active-pane')
+ btn('CSV rows',pane).click();btn('Views & sort',pane).click();btn('None',pane.get_by_role('group',name='Group this page',exact=True)).click();btn('Views & sort',pane).click()
+ expect(pane.locator('tr[data-source-row]')).to_have_count(36)
+ assert pane.locator('tr[data-source-row]').evaluate_all('es=>es.every(e=>e.getBoundingClientRect().height<40)')
+ btn('Search',pane).click();pane.get_by_role('combobox',name='Search column').select_option('1');pane.get_by_role('searchbox',name='Search table text').fill('English 00');btn('Apply',pane).click()
+ expect(pane.locator('tr[data-source-row]')).to_have_count(1);expect(pane.locator('tr[data-source-row]')).to_have_attribute('data-source-row','35')
+ btn('Search',pane).click();expect(pane.get_by_text('Search active · 1 / 36',exact=True)).to_be_visible();btn('Clear',pane).click();expect(pane.locator('tr[data-source-row]')).to_have_count(36)
+ btn('Views & sort',pane).click();btn('Theme → subcategory',pane).click();expect(pane.locator('.csv-group-row')).to_have_count(9)
+ parent=pane.locator('.csv-group-depth-0 button').first;parent.click();expect(pane.locator('tr[data-source-row]')).to_have_count(24);expect(pane.locator('.csv-group-row')).to_have_count(7)
+ btn('Collapse all',pane).click();expect(pane.locator('tr[data-source-row]')).to_have_count(0);expect(pane.locator('.csv-group-row')).to_have_count(3)
+ btn('Expand all',pane).click();expect(pane.locator('tr[data-source-row]')).to_have_count(36)
+ pane.locator('.csv-group-depth-1 button').first.click();expect(pane.locator('tr[data-source-row]')).to_have_count(30);btn('Views & sort',pane).click()
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-rows');pane=p.locator('.active-pane')
+ expect(pane.locator('tr[data-source-row]')).to_have_count(30)
+ btn('Views & sort',pane).click();btn('Expand all',pane).click();btn('Views & sort',pane).click();btn('Quick Book mode',pane).click();book=pane.locator('.book-grid');expect(book.locator('tr[data-source-row]')).to_have_count(36)
+ btn('Search',book).first.click();book.get_by_role('combobox',name='Search column').first.select_option('2');book.get_by_role('searchbox',name='Search table text').first.fill('form 11');btn('Apply',book).first.click()
+ expect(book.locator('tr[data-source-row]')).to_have_count(1);expect(book.locator('tr[data-source-row]')).to_have_attribute('data-source-row','11')
+ assert not book.locator('.book-fallback').count();assert book.locator('.sheet-body').evaluate_all('es=>es.every(e=>e.scrollHeight<=e.clientHeight+2)')
+ btn('Clear',book).first.click();expect(book.locator('tr[data-source-row]')).to_have_count(36);btn('Quick Book mode',pane).click()
+ if not pane.get_by_role('searchbox',name='Search table text').count():btn('Search',pane).click()
+ pane.get_by_role('searchbox',name='Search table text').fill('not-in-source');btn('Apply',pane).click();expect(pane.get_by_text('No matching rows. Clear search to show all source rows.',exact=True)).to_be_visible()
+ p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-rows');pane=p.locator('.active-pane');expect(pane.locator('tr[data-source-row]')).to_have_count(36)
+ pane.get_by_role('combobox',name='Search column').select_option('1');pane.get_by_role('searchbox',name='Search table text').fill('English 00');btn('Apply',pane).click();expect(pane.locator('tr[data-source-row]')).to_have_count(1)
+ btn('Compare in two panes').click();panes=p.locator('.document-pane');expect(panes).to_have_count(2);left=panes.nth(0);right=panes.nth(1)
+ p.evaluate('async(id)=>{const a='+AGENT+';await a.navigateAgentTarget(a.getResource("notebook-page:"+id).target,"here");}',page_id)
+ if right.locator('.book-grid').count():btn('Quick Book mode',right).click()
+ expect(right.locator('tr[data-source-row]')).to_have_count(36);expect(left.locator('tr[data-source-row]')).to_have_count(1)
+ btn('Views & sort',right).click();btn('Theme',right.get_by_role('group',name='Group this page',exact=True)).click();right.locator('.csv-group-depth-0 button').first.click();expect(right.locator('tr[data-source-row]')).to_have_count(24);expect(left.locator('tr[data-source-row]')).to_have_count(1)
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.document-pane .table-column-tools');panes=p.locator('.document-pane');expect(panes.nth(0).locator('tr[data-source-row]')).to_have_count(36);expect(panes.nth(1).locator('tr[data-source-row]')).to_have_count(24)
+ assert snapshot()['history']==history
+ assert next(x for pack in snapshot()['imports'] for x in pack['pages'] if x['id']==page_id)==page
+ assert not errors,errors
+ p.screenshot(path=str(OUT/'csv-explorer.png'));results.append({'name':'Compact CSV rows, source-column search including Book clones, nested folds/reload and no-result recovery preserve source/history','status':'PASS'})
  b.close()
 (OUT/'results.json').write_text(json.dumps({'scope':__doc__,'results':results},indent=2),encoding='utf-8');print(json.dumps(results,indent=2))
