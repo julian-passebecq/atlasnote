@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "SG: (U) et utvalg · (D) utvalget · PL: (U) utvalg · (D) utvalgne",
           "nou",
           "seleksjon (selection) · komité (committee)",
-          "helhet (whole) · alle (all)"
+          "helhet (whole) · alle (all)",
+          "Noe som er valgt ut, eller en gruppe som arbeider med en sak.",
+          "Something selected, or a group that works on a matter."
         ],
         [
           "utvikling",
@@ -31,7 +35,9 @@
           "sg: (u) en utvikling; (d) utviklingen; pl: utviklinger; (d) utviklingene",
           "nou",
           "vekst (growth) · framgang (progress)",
-          "tilbakegang (decline) · stagnasjon (stagnation)"
+          "tilbakegang (decline) · stagnasjon (stagnation)",
+          "Endring over tid, ofte i en bestemt retning.",
+          "Change over time, often in a particular direction."
         ],
         [
           "valgmulighet",
@@ -39,7 +45,9 @@
           "sg: (u) en valgmulighet; (d) valgmuligheten; pl: (u) valgmuligheter; (d) valgmulighetene",
           "nou",
           "alternativ (alternative) · mulighet (possibility)",
-          "tvang (coercion) · mangel på valg (lack of choice)"
+          "tvang (coercion) · mangel på valg (lack of choice)",
+          "Mulighet til å velge mellom flere alternativer.",
+          "The possibility of choosing between several alternatives."
         ],
         [
           "vanlig",
@@ -47,7 +55,9 @@
           "(M/F) vanlig; (N) vanlig; (PL) vanlige",
           "adj",
           "normal (normal) · felles (common, shared)",
-          "uvanlig (unusual) · spesiell (special, particular)"
+          "uvanlig (unusual) · spesiell (special, particular)",
+          "Som skjer ofte eller er normalt.",
+          "That happens often or is normal."
         ],
         [
           "vedtak",
@@ -55,7 +65,9 @@
           "SG: (U) et vedtak · (D) vedtaket · PL: (U) vedtak · (D) vedtakne",
           "nou",
           "beslutning (decision) · avgjørelse (decision)",
-          "forslag (proposal)"
+          "forslag (proposal)",
+          "Beslutning eller avgjørelse.",
+          "Decision or resolution."
         ],
         [
           "velge",
@@ -63,7 +75,9 @@
           "G2 -te : (INF) infinitiv: å velge; (PR) presens: velger; (PT) preteritum: valgte; (PP) presens perfektum: har valgt",
           "vrb",
           "plukke ut (pick out) · avgjøre (decide)",
-          "forkaste (reject) · vrake (discard)"
+          "forkaste (reject) · vrake (discard)",
+          "Plukke ut eller avgjøre.",
+          "Pick out or decide."
         ],
         [
           "velge og vrake",
@@ -71,7 +85,9 @@
           "",
           "uttr",
           "ha mange valg (have many choices) · kunne velge fritt (choose freely)",
-          "mangle valg (lack choices)"
+          "mangle valg (lack choices)",
+          "Ha mange muligheter og kunne velge fritt.",
+          "Have many options and be able to choose freely."
         ],
         [
           "velge riktig alternativ",
@@ -79,7 +95,9 @@
           "G2 -te : (INF) infinitiv: å velge riktig alternativ· (PR) presens: velger riktig alternativ· (PT) preteritum: valgte riktig alternativ· (PP) presens perfektum: har valgt riktig alternativ· (PSS) —· (IM) velg riktig alternativ",
           "vrb",
           "krysse av (tick) · markere (mark)",
-          "velge feil (choose wrong)"
+          "velge feil (choose wrong)",
+          "Krysse av eller markere.",
+          "Tick or mark."
         ],
         [
           "vinn-vinn",
@@ -87,7 +105,9 @@
           "",
           "uttr",
           "gjensidig fordel (mutual benefit) · begge tjener på det (both benefit)",
-          "tap-tap (lose-lose)"
+          "tap-tap (lose-lose)",
+          "Situasjon der begge parter får fordel.",
+          "Situation where both parties benefit."
         ],
         [
           "likestilling",
@@ -95,7 +115,9 @@
           "sg: (u) en likestilling; (d) likestillingen",
           "nou",
           "likeverd (equal worth) · likebehandling (equal treatment)",
-          "diskriminering (discrimination)"
+          "diskriminering (discrimination)",
+          "Like rettigheter og muligheter for ulike grupper.",
+          "Equal rights and opportunities for different groups."
         ],
         [
           "plikt",
@@ -103,7 +125,9 @@
           "",
           "nou",
           "ansvar (responsibility) · forpliktelse (obligation)",
-          "rettighet (right) · frihet (freedom)"
+          "rettighet (right) · frihet (freedom)",
+          "Noe man må gjøre av ansvar eller regel.",
+          "Something one must do because of responsibility or a rule."
         ],
         [
           "regjering",
@@ -111,7 +135,9 @@
           "SG: (U) ei/en regjering (D) regjeringa/en; PL: (U) regjeringer (D) regjeringene",
           "nou",
           "stat (state) · styre (rule)",
-          "opposisjon (opposition) · demokrati (democracy)"
+          "opposisjon (opposition) · demokrati (democracy)",
+          "Stat eller styre.",
+          "State or rule."
         ],
         [
           "rett",
@@ -119,7 +145,9 @@
           "",
           "nou",
           "rettighet (right) · korrekt svar (correct answer)",
-          "feil (wrong)"
+          "feil (wrong)",
+          "Kan bety juridisk rettighet, domstol eller korrekt svar.",
+          "Can mean legal right, court, or correct answer."
         ],
         [
           "rettighet",
@@ -127,7 +155,9 @@
           "",
           "nou",
           "rett (right) · krav (claim)",
-          "plikt (duty) · forbud (ban)"
+          "plikt (duty) · forbud (ban)",
+          "Noe man har lovlig eller moralsk krav på.",
+          "Something one has a legal or moral claim to."
         ],
         [
           "samarbeidsforum",
@@ -135,7 +165,9 @@
           "sg: (u) et samarbeidsforum; (d) samarbeidsforumet; pl: (u) samarbeidsforum; (d) samarbeidsforumene",
           "nou",
           "arbeidsgruppe (working group)",
-          "solospill (solo action)"
+          "solospill (solo action)",
+          "Fast møteplass eller gruppe for samarbeid.",
+          "Regular arena or group for cooperation."
         ],
         [
           "uttalelse",
@@ -143,7 +175,9 @@
           "SG: (U) en uttalelse · (D) uttalelsen · PL: (U) uttalelser · (D) uttalelsene",
           "nou",
           "ytring (utterance) · kommentar (comment)",
-          "taushet (silence) · tilbaketrekking (retraction)"
+          "taushet (silence) · tilbaketrekking (retraction)",
+          "Ytring eller kommentar.",
+          "Expression or comment."
         ],
         [
           "bra",
@@ -151,7 +185,9 @@
           "ubøyd form: bra",
           "adj",
           "god (good) · grei (okay)",
-          "dårlig (bad)"
+          "dårlig (bad)",
+          "God eller tilfredsstillende.",
+          "Good or satisfactory."
         ],
         [
           "delegasjon",
@@ -159,7 +195,9 @@
           "sg: (u) en delegasjon; (d) delegasjonen; pl: (u) delegasjoner; (d) delegasjonerene",
           "nou",
           "utsendinger (envoys) · representanter (representatives)",
-          "enkeltperson (individual)"
+          "enkeltperson (individual)",
+          "Gruppe som representerer et land, parti eller organisasjon.",
+          "Group representing a country, party, or organization."
         ],
         [
           "dispensasjonsrett",
@@ -167,7 +205,9 @@
           "sg: (u) en dispensasjonsrett; (d) dispensasjonsretten; pl: (u) dispensasjonsretter; (d) dispensasjonsrettene",
           "nou",
           "unntaksmyndighet (exemption authority)",
-          "strengt forbud (strict ban)"
+          "strengt forbud (strict ban)",
+          "Rett til å gi unntak fra en regel eller plan.",
+          "Right to grant exemptions from a rule or plan."
         ],
         [
           "distriktsredaktør",
@@ -175,7 +215,9 @@
           "sg: (u) en distriktsredaktør; (d) distriktsredaktøren; pl: (u) distriktsredaktører; (d) distriktsredaktørene",
           "nou",
           "regional redaktør (regional editor)",
-          "sentral redaktør (central editor)"
+          "sentral redaktør (central editor)",
+          "Redaktør for en regional avdeling i et mediehus.",
+          "Editor for a regional branch of a media organization."
         ],
         [
           "etat",
@@ -183,7 +225,9 @@
           "SG: (U) en etat · (D) etaten · PL: (U) etater · (D) etatene",
           "nou",
           "offentlig organ (public agency) · forvaltningsorgan (administrative body)",
-          "privat aktør (private actor)"
+          "privat aktør (private actor)",
+          "Offentlig organ eller forvaltningsenhet.",
+          "A public agency or administrative unit."
         ],
         [
           "foreldreutvalg",
@@ -191,7 +235,9 @@
           "sg: (u) et foreldreutvalg; (d) foreldreutvalget; pl: (u) foreldreutvalg; (d) foreldreutvalgene",
           "nou",
           "foreldregruppe (parent group) · FAU (parents’ council)",
-          "elevråd (student council) · ledelse (management)"
+          "elevråd (student council) · ledelse (management)",
+          "Utvalg av foreldre som representerer foreldre i en skole eller barnehage.",
+          "A committee of parents representing parents in a school or kindergarten."
         ],
         [
           "forhandlingspart",
@@ -199,7 +245,9 @@
           "sg: (u) en forhandlingspart; (d) forhandlingsparten; pl: (u) forhandlingsparter; (d) forhandlingsparterene",
           "nou",
           "motpart (counterparty)",
-          "utenforstående (outsider)"
+          "utenforstående (outsider)",
+          "Part som deltar i forhandlinger.",
+          "Party taking part in negotiations."
         ],
         [
           "indre anliggender",
@@ -207,7 +255,9 @@
           "",
           "uttr",
           "innenrikssaker (domestic affairs)",
-          "utenrikssaker (foreign affairs)"
+          "utenrikssaker (foreign affairs)",
+          "Saker som hører til et lands eget politiske område.",
+          "Matters belonging to a country’s own domestic sphere."
         ],
         [
           "innbygger",
@@ -215,7 +265,9 @@
           "sg: (u) en innbygger; (d) innbyggeren; pl: (u) innbyggere; (d) innbyggerne",
           "nou",
           "beboer (resident) · borger (citizen)",
-          "utlending (foreigner) · turist (tourist)"
+          "utlending (foreigner) · turist (tourist)",
+          "Beboer eller borger.",
+          "Resident or citizen."
         ],
         [
           "innvandring",
@@ -223,7 +275,9 @@
           "sg: (u) en innvandring; (d) innvandringen",
           "nou",
           "immigrasjon (immigration) · tilflytting (in-migration)",
-          "utvandring (emigration)"
+          "utvandring (emigration)",
+          "Det at mennesker flytter inn i et land.",
+          "People moving into a country."
         ],
         [
           "intensjonsavtale",
@@ -231,7 +285,9 @@
           "sg: (u) en intensjonsavtale; (d) intensjonsavtalen; pl: (u) intensjonsavtaler; (d) intensjonsavtalene",
           "nou",
           "avtalememorandum (memorandum of agreement)",
-          "bindende avtale (binding agreement)"
+          "bindende avtale (binding agreement)",
+          "Foreløpig avtale som viser hva partene ønsker å bli enige om.",
+          "Preliminary agreement showing what the parties intend to agree on."
         ],
         [
           "liberalisering",
@@ -239,7 +295,9 @@
           "sg: (u) en liberalisering; (d) liberaliseringen; pl: (u) liberaliseringer; (d) liberaliseringene",
           "nou",
           "åpning (opening) · deregulering (deregulation)",
-          "innstramming (tightening) · regulering (regulation)"
+          "innstramming (tightening) · regulering (regulation)",
+          "Endring mot friere regler eller færre begrensninger.",
+          "A change toward freer rules or fewer restrictions."
         ],
         [
           "lykke",
@@ -247,7 +305,9 @@
           "sg: (u) en lykke; (d) lykken",
           "nou",
           "glede (joy) · tilfredshet (satisfaction)",
-          "ulykke (misfortune)"
+          "ulykke (misfortune)",
+          "Følelse av glede eller et godt liv.",
+          "Feeling of joy or a good life."
         ],
         [
           "mandat",
@@ -255,7 +315,9 @@
           "sg: (u) et mandat; (d) mandatet; pl: (u) mandat; (d) mandatene",
           "nou",
           "fullmakt (authorization) · oppdrag (assignment)",
-          "manglende tillatelse (lack of permission)"
+          "manglende tillatelse (lack of permission)",
+          "Formell myndighet eller oppdrag til å gjøre noe.",
+          "Formal authority or assignment to do something."
         ],
         [
           "mistillit",
@@ -263,7 +325,9 @@
           "SG: (U) en mistillit · (D) mistilliten · PL: (U) mistilliter · (D) mistillitene",
           "nou",
           "mistenksomhet (suspicion) · skepsis (skepticism)",
-          "tillit (trust)"
+          "tillit (trust)",
+          "Mangel på tillit til noen eller noe.",
+          "Lack of trust in someone or something."
         ],
         [
           "opprør",
@@ -271,7 +335,9 @@
           "SG: (U) et opprør · (D) opprøret · PL: (U) opprør · (D) opprørene",
           "nou",
           "organisert protest (rebellion) · uro (rebellion)",
-          "lydighet (obedience) · ro (calm)"
+          "lydighet (obedience) · ro (calm)",
+          "Organisert protest eller uro.",
+          "Rebellion or unrest."
         ],
         [
           "overordnet",
@@ -279,7 +345,9 @@
           "(M/F) overordnet · (N) overordnet · (PL) overordnede",
           "adj",
           "generell (general) · samlet (overall)",
-          "underordnet (subordinate)"
+          "underordnet (subordinate)",
+          "Generell eller samlet.",
+          "General or combined."
         ],
         [
           "parlamentarisk leder",
@@ -287,7 +355,9 @@
           "sg: (u) en parlamentarisk leder; (d) parlamentarisk lederen; pl: (u) parlamentarisk lederer; (d) parlamentarisk ledererene",
           "nou",
           "gruppeleder (group leader)",
-          "vanlig representant (ordinary representative)"
+          "vanlig representant (ordinary representative)",
+          "Leder for en partigruppe i parlamentet eller Stortinget.",
+          "Leader of a party group in parliament."
         ],
         [
           "prinsippvedtak",
@@ -295,7 +365,9 @@
           "sg: (u) et prinsippvedtak; (d) prinsippvedtaket; pl: (u) prinsippvedtak; (d) prinsippvedtakene",
           "nou",
           "hovedvedtak (main decision)",
-          "detaljvedtak (detail decision)"
+          "detaljvedtak (detail decision)",
+          "Formelt vedtak om en hovedretning eller et prinsipp.",
+          "Formal decision on a main direction or principle."
         ],
         [
           "protestbudsjett",
@@ -303,7 +375,9 @@
           "sg: (u) et protestbudsjett; (d) protestbudsjettet; pl: (u) protestbudsjetter; (d) protestbudsjettene",
           "nou",
           "markering (statement/protest)",
-          "ordinært budsjett (ordinary budget)"
+          "ordinært budsjett (ordinary budget)",
+          "Budsjettvedtak brukt for å markere politisk protest.",
+          "Budget decision used to mark political protest."
         ],
         [
           "påvirke",
@@ -311,7 +385,9 @@
           "G1 -et : (INF) infinitiv: å påvirke; (PR) presens: påvirker; (PT) preteritum: påvirket / påvirka; (PP) presens perfektum: har påvirket / påvirka",
           "vrb",
           "influere (influence) · virke inn på (affect)",
-          "la være i fred (leave alone) · ignorere (ignore)"
+          "la være i fred (leave alone) · ignorere (ignore)",
+          "Influere eller virke inn på.",
+          "Influence or affect."
         ],
         [
           "saksfremlegg",
@@ -319,7 +395,9 @@
           "sg: (u) et saksfremlegg; (d) saksfremlegget; pl: (u) saksfremlegg; (d) saksfremleggene",
           "nou",
           "saksdokument (case document)",
-          "muntlig orientering (oral briefing)"
+          "muntlig orientering (oral briefing)",
+          "Dokument som legger fram en sak for behandling.",
+          "Document presenting a case for consideration."
         ],
         [
           "sparke mannen i rumpa",
@@ -327,7 +405,9 @@
           "",
           "uttr",
           "gi et dytt (give a push) · presse til handling (push into action)",
-          "la være i fred (leave alone) · oppmuntre forsiktig (encourage gently)"
+          "la være i fred (leave alone) · oppmuntre forsiktig (encourage gently)",
+          "å presse eller motivere en mann til å gjøre noe.",
+          "to push or motivate a man to do something."
         ],
         [
           "tiltaksplan",
@@ -335,7 +415,9 @@
           "sg: (u) en tiltaksplan; (d) tiltaksplanen; pl: (u) tiltaksplaner; (d) tiltaksplanene",
           "nou",
           "handlingsplan (action plan)",
-          "mangel på plan (lack of plan)"
+          "mangel på plan (lack of plan)",
+          "Plan med konkrete tiltak for å løse et problem.",
+          "Plan with concrete measures to solve a problem."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

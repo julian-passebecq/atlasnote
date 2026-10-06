@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "",
           "conj",
           "samt (and/as well as) · i tillegg (in addition)",
-          "men (but)"
+          "men (but)",
+          "Binder sammen ord, setningsledd eller setninger som hører sammen.",
+          "Links words, sentence parts or clauses that belong together."
         ],
         [
           "også",
@@ -31,7 +35,9 @@
           "",
           "adv/conn",
           "i tillegg (in addition) · dessuten (besides)",
-          "heller ikke (neither/not either)"
+          "heller ikke (neither/not either)",
+          "Legger til noe ekstra.",
+          "Adds something extra."
         ],
         [
           "i tillegg",
@@ -39,7 +45,9 @@
           "",
           "conn",
           "dessuten (furthermore) · også (also) · attpåtil (on top of that)",
-          ""
+          "",
+          "Legger til et nytt poeng ved siden av det som allerede er sagt.",
+          "Adds a new point besides what has already been said."
         ],
         [
           "i tillegg til",
@@ -47,7 +55,9 @@
           "",
           "prep/conn",
           "foruten (apart from/besides) · ved siden av (beside/in addition to)",
-          ""
+          "",
+          "Legger noe ekstra til noe som allerede er nevnt.",
+          "Adds something extra to something already mentioned."
         ],
         [
           "dessuten",
@@ -55,7 +65,9 @@
           "",
           "conn",
           "i tillegg (in addition) · for øvrig (moreover) · attpåtil (on top of that)",
-          ""
+          "",
+          "Legger til et nytt argument eller poeng.",
+          "Adds another argument or point."
         ],
         [
           "for øvrig",
@@ -63,7 +75,9 @@
           "",
           "conn",
           "dessuten (furthermore) · ellers (otherwise)",
-          ""
+          "",
+          "Legger til en sidekommentar eller et ekstra poeng.",
+          "Adds a side comment or an extra point."
         ],
         [
           "attpåtil",
@@ -71,7 +85,9 @@
           "",
           "conn",
           "dessuten (besides) · til og med (even)",
-          ""
+          "",
+          "Legger til noe ekstra, ofte mer overraskende eller sterkere.",
+          "Adds something extra, often more surprising or emphatic."
         ],
         [
           "på toppen av det",
@@ -79,7 +95,9 @@
           "",
           "conn",
           "attpåtil (on top of that) · dessuten (moreover)",
-          ""
+          "",
+          "Legger til noe ekstra, ofte etter flere andre poeng.",
+          "Adds something extra, often after several other points."
         ],
         [
           "samt",
@@ -87,7 +105,9 @@
           "",
           "conj",
           "og (and) · så vel som (as well as)",
-          ""
+          "",
+          "Formelt bindeord som betyr og / i tillegg til.",
+          "Formal connector meaning and / in addition to."
         ],
         [
           "så vel som",
@@ -95,7 +115,9 @@
           "",
           "conj",
           "både og (both and) · samt (as well as)",
-          ""
+          "",
+          "Binder sammen to ting som begge gjelder.",
+          "Connects two things that both apply."
         ],
         [
           "både ... og",
@@ -103,7 +125,9 @@
           "",
           "conj",
           "så vel som (as well as) · samt (as well as)",
-          "verken ... eller (neither nor)"
+          "verken ... eller (neither nor)",
+          "Viser at to alternativer eller deler gjelder samtidig.",
+          "Shows that two alternatives or parts apply at the same time."
         ],
         [
           "ikke bare ... men også",
@@ -111,7 +135,9 @@
           "",
           "conn",
           "både ... og (both ... and) · dessuten (moreover)",
-          "verken ... eller (neither ... nor)"
+          "verken ... eller (neither ... nor)",
+          "Viser at to ting gjelder, og at det andre punktet forsterker det første.",
+          "Shows that two things apply and that the second point strengthens the first."
         ],
         [
           "ikke minst",
@@ -119,7 +145,9 @@
           "",
           "conn",
           "særlig (especially) · spesielt (especially)",
-          ""
+          "",
+          "Framhever et poeng som særlig viktig.",
+          "Highlights a point as especially important."
         ],
         [
           "til og med",
@@ -127,7 +155,9 @@
           "",
           "conn",
           "attpåtil (on top of that) · også (also)",
-          ""
+          "",
+          "Framhever at noe er inkludert eller mer enn forventet.",
+          "Emphasizes that something is included or more than expected."
         ],
         [
           "foruten",
@@ -135,7 +165,9 @@
           "",
           "prep/conn",
           "i tillegg til (in addition to) · bortsett fra (apart from)",
-          ""
+          "",
+          "Betyr i tillegg til, eller unntatt, alt etter sammenheng.",
+          "Means in addition to, or except for, depending on context."
         ],
         [
           "et annet poeng",
@@ -143,7 +175,9 @@
           "",
           "uttr",
           "i tillegg (in addition) · dessuten (moreover)",
-          ""
+          "",
+          "Innfører et nytt argument i samme retning.",
+          "Introduces another argument in the same direction."
         ],
         [
           "å tilføye",
@@ -151,7 +185,9 @@
           "",
           "uttr",
           "legge til (add) · i tillegg (in addition)",
-          ""
+          "",
+          "Å legge til et ekstra poeng.",
+          "To add an extra point."
         ],
         [
           "først",
@@ -159,7 +195,9 @@
           "",
           "adv",
           "innledningsvis (initially) · i begynnelsen (in the beginning)",
-          "til slutt (finally)"
+          "til slutt (finally)",
+          "Markerer det som kommer før alt annet.",
+          "Marks what comes before everything else."
         ],
         [
           "først og fremst",
@@ -167,7 +205,9 @@
           "",
           "uttr",
           "framfor alt (above all) · særlig (especially)",
-          ""
+          "",
+          "Først og viktigst.",
+          "First and most importantly."
         ],
         [
           "i begynnelsen",
@@ -175,7 +215,9 @@
           "",
           "conn",
           "først (first) · innledningsvis (initially)",
-          "etter hvert (eventually)"
+          "etter hvert (eventually)",
+          "I starten av en periode eller utvikling.",
+          "At the start of a period or development."
         ],
         [
           "for det første",
@@ -183,7 +225,9 @@
           "",
           "conn",
           "først (first) · innledningsvis (initially)",
-          ""
+          "",
+          "Innfører første punkt eller argument.",
+          "Introduces the first point or argument."
         ],
         [
           "for det andre",
@@ -191,7 +235,9 @@
           "",
           "conn",
           "dessuten (moreover) · i tillegg (in addition)",
-          ""
+          "",
+          "Innfører andre punkt eller argument.",
+          "Introduces the second point or argument."
         ],
         [
           "for det tredje",
@@ -199,7 +245,9 @@
           "",
           "conn",
           "dessuten (moreover) · i tillegg (in addition)",
-          ""
+          "",
+          "Innfører tredje punkt eller argument.",
+          "Introduces the third point or argument."
         ],
         [
           "deretter",
@@ -207,7 +255,9 @@
           "",
           "conn",
           "etterpå (afterwards) · senere (later) · så (then)",
-          "først (first)"
+          "først (first)",
+          "Viser at noe skjer etter noe annet.",
+          "Shows that something happens after something else."
         ],
         [
           "derpå",
@@ -215,7 +265,9 @@
           "",
           "conn",
           "deretter (then) · etterpå (afterwards)",
-          "først (first)"
+          "først (first)",
+          "Etter dette; markerer neste steg.",
+          "After this; marks the next step."
         ],
         [
           "så",
@@ -223,7 +275,9 @@
           "",
           "conn",
           "derfor (therefore) · deretter (then)",
-          ""
+          "",
+          "Kan vise følge/resultat eller neste steg i en rekkefølge.",
+          "Can show result/consequence or the next step in a sequence."
         ],
         [
           "etterpå",
@@ -231,7 +285,9 @@
           "",
           "conn",
           "deretter (after that) · senere (later)",
-          "først (first)"
+          "først (first)",
+          "Etter at noe annet har skjedd.",
+          "After something else has happened."
         ],
         [
           "senere",
@@ -239,7 +295,9 @@
           "",
           "conn",
           "etterpå (afterwards) · deretter (then)",
-          "tidligere (earlier)"
+          "tidligere (earlier)",
+          "På et seinere tidspunkt.",
+          "At a later time."
         ],
         [
           "etter hvert",
@@ -247,7 +305,9 @@
           "",
           "conn",
           "gradvis (gradually) · litt etter litt (little by little)",
-          "plutselig (suddenly)"
+          "plutselig (suddenly)",
+          "Gradvis eller senere i en utvikling.",
+          "Gradually or later in a development."
         ],
         [
           "litt etter litt",
@@ -255,7 +315,9 @@
           "",
           "conn",
           "gradvis (gradually) · etter hvert (gradually)",
-          "plutselig (suddenly)"
+          "plutselig (suddenly)",
+          "Gradvis, i små steg.",
+          "Gradually, in small steps."
         ],
         [
           "gradvis",
@@ -263,7 +325,9 @@
           "",
           "conn",
           "litt etter litt (little by little) · etter hvert (gradually)",
-          "plutselig (suddenly)"
+          "plutselig (suddenly)",
+          "Steg for steg over tid.",
+          "Step by step over time."
         ],
         [
           "i mellomtiden",
@@ -271,7 +335,9 @@
           "",
           "conn",
           "mens dette skjer (while this happens)",
-          ""
+          "",
+          "I tiden mellom to hendelser.",
+          "In the time between two events."
         ],
         [
           "avslutningsvis",
@@ -279,7 +345,9 @@
           "",
           "conn",
           "til slutt (finally) · oppsummert (to summarize)",
-          "innledningsvis (initially)"
+          "innledningsvis (initially)",
+          "I avslutningen av en tekst eller tale.",
+          "In the conclusion of a text or speech."
         ],
         [
           "da",
@@ -287,7 +355,9 @@
           "",
           "sub/adv",
           "når (when) · på det tidspunktet (at that time)",
-          ""
+          "",
+          "Viser tidspunkt i fortid eller kan bety da/then i sammenheng.",
+          "Indicates a time in the past or can mean then in context."
         ],
         [
           "når",
@@ -295,7 +365,9 @@
           "",
           "sub/adv",
           "da (when in the past) · hver gang (whenever)",
-          ""
+          "",
+          "Viser tidspunkt, vane eller vilkår i tid.",
+          "Indicates time, habit, or a time-related condition."
         ],
         [
           "før",
@@ -303,7 +375,9 @@
           "",
           "sub",
           "innen (before/by the time) · før det (before that)",
-          "etter (after)"
+          "etter (after)",
+          "Innleder leddsetning som skjer tidligere enn noe annet.",
+          "Introduces a clause that happens before something else."
         ],
         [
           "etter at",
@@ -311,7 +385,9 @@
           "",
           "sub",
           "etterpå (afterwards) · deretter (then)",
-          "før (before)"
+          "før (before)",
+          "Viser at noe skjer senere enn noe annet.",
+          "Shows that something happens after something else."
         ],
         [
           "innen",
@@ -319,7 +395,9 @@
           "",
           "sub",
           "før (before) · innen den tid (by then)",
-          ""
+          "",
+          "Innleder leddsetning med betydningen før / innen den tiden.",
+          "Introduces a clause meaning before / by the time."
         ],
         [
           "inntil",
@@ -327,7 +405,9 @@
           "",
           "sub",
           "fram til (until) · til (until)",
-          ""
+          "",
+          "Fram til et tidspunkt, en grense eller en mengde.",
+          "Up to a time, limit or amount."
         ],
         [
           "idet",
@@ -335,7 +415,9 @@
           "",
           "sub",
           "i det øyeblikket (at that moment) · da (when)",
-          ""
+          "",
+          "Akkurat når noe skjer.",
+          "Exactly when something happens."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

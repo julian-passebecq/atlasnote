@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "sg: (u) en vogn; (d) vognen; pl: (u) vogner; (d) vognene",
           "nou",
           "jernbanevogn (rail carriage)",
-          "lokomotiv (locomotive)"
+          "lokomotiv (locomotive)",
+          "Del av tog, trikk eller annen transport som passasjerer eller gods er i.",
+          "Part of a train, tram, or transport vehicle carrying passengers or goods."
         ],
         [
           "ane",
@@ -31,7 +35,9 @@
           "G2 -te : (INF) infinitiv: å ane; (PR) presens: aner; (PT) preteritum: ante; (PP) presens perfektum: har ant",
           "vrb",
           "gjette (guess) · mistenke (suspect)",
-          "vite sikkert (know for sure)"
+          "vite sikkert (know for sure)",
+          "Ha en svak mistanke eller ikke vite sikkert.",
+          "Have a slight suspicion or not know for sure."
         ],
         [
           "avsender",
@@ -39,7 +45,9 @@
           "sg: (u) en avsender; (d) avsenderen; pl: (u) avsendere; (d) avsenderne",
           "nou",
           "sender (sender) · opphavsperson (originator)",
-          "mottaker (recipient)"
+          "mottaker (recipient)",
+          "Personen eller instansen som sender en tekst eller melding.",
+          "The person or body that sends a text or message."
         ],
         [
           "CO₂-utslipp",
@@ -47,7 +55,9 @@
           "sg: (u) et CO₂-utslipp; (d) CO₂-utslippet; pl: (u) CO₂-utslipp; (d) CO₂-utslippene",
           "nou",
           "karbondioksidutslipp (carbon dioxide emission)",
-          "karbonfangst (carbon capture)"
+          "karbonfangst (carbon capture)",
+          "Utslipp av karbondioksid.",
+          "Emission of carbon dioxide."
         ],
         [
           "datasenter",
@@ -55,7 +65,9 @@
           "sg: (u) et datasenter; (d) datasenteret; pl: (u) datasentre; (d) datasentrene",
           "nou",
           "serveranlegg (server facility)",
-          "manuelt arkiv (manual archive)"
+          "manuelt arkiv (manual archive)",
+          "Anlegg med datamaskiner og servere som lagrer eller behandler data.",
+          "Facility with computers and servers that store or process data."
         ],
         [
           "direkte utslipp",
@@ -63,7 +75,9 @@
           "",
           "uttr",
           "egne utslipp (own emissions)",
-          "indirekte utslipp (indirect emissions)"
+          "indirekte utslipp (indirect emissions)",
+          "Utslipp som kommer direkte fra en aktivitet eller et anlegg.",
+          "Emissions that come directly from an activity or facility."
         ],
         [
           "driftsstans",
@@ -71,7 +85,9 @@
           "sg: (u) en driftsstans; (d) driftsstansen; pl: (u) driftsstanser; (d) driftsstansene",
           "nou",
           "midlertidig stans (temporary shutdown)",
-          "full drift (full operation)"
+          "full drift (full operation)",
+          "Stans i normal drift av et anlegg eller en virksomhet.",
+          "Stop in normal operation of a facility or business."
         ],
         [
           "elektrifisering",
@@ -79,7 +95,9 @@
           "sg: (u) en elektrifisering; (d) elektrifiseringen; pl: (u) elektrifiseringer; (d) elektrifiseringene",
           "nou",
           "overgang til strøm (shift to electricity)",
-          "fossilisering (continued fossil use)"
+          "fossilisering (continued fossil use)",
+          "Overgang fra fossil energi til elektrisk energi.",
+          "Transition from fossil energy to electric energy."
         ],
         [
           "fornybar energi",
@@ -87,7 +105,9 @@
           "",
           "uttr",
           "grønn energi (green energy)",
-          "fossil energi (fossil energy)"
+          "fossil energi (fossil energy)",
+          "Energi fra kilder som kan fornyes naturlig, som vind, sol og vann.",
+          "Energy from sources that renew naturally, such as wind, sun and water."
         ],
         [
           "fossil energi",
@@ -95,7 +115,9 @@
           "",
           "uttr",
           "fossilt brensel (fossil fuel)",
-          "fornybar energi (renewable energy)"
+          "fornybar energi (renewable energy)",
+          "Energi fra kull, olje eller gass.",
+          "Energy from coal, oil or gas."
         ],
         [
           "gassterminal",
@@ -103,7 +125,9 @@
           "sg: (u) en gassterminal; (d) gassterminalen; pl: (u) gassterminaler; (d) gassterminalene",
           "nou",
           "gassanlegg (gas facility)",
-          "vindpark (wind farm)"
+          "vindpark (wind farm)",
+          "Anlegg der gass tas imot, behandles eller sendes videre.",
+          "Facility where gas is received, processed or sent onward."
         ],
         [
           "grønn teknologi",
@@ -111,7 +135,9 @@
           "",
           "uttr",
           "miljøteknologi (environmental technology)",
-          "forurensende teknologi (polluting technology)"
+          "forurensende teknologi (polluting technology)",
+          "Teknologi som skal redusere miljø- og klimabelastning.",
+          "Technology intended to reduce environmental and climate impact."
         ],
         [
           "havvind",
@@ -119,7 +145,9 @@
           "sg: (u) en havvind; (d) havvinden; vanligvis uten flertall",
           "nou",
           "vindkraft til havs (offshore wind power)",
-          "landvind (onshore wind)"
+          "landvind (onshore wind)",
+          "Vindkraft til havs.",
+          "Wind power at sea."
         ],
         [
           "indirekte utslipp",
@@ -127,7 +155,9 @@
           "",
           "uttr",
           "verdikjedeutslipp (value-chain emissions)",
-          "direkte utslipp (direct emissions)"
+          "direkte utslipp (direct emissions)",
+          "Utslipp som skjer som følge av kjøp, forbruk eller verdikjeder.",
+          "Emissions that occur as a consequence of purchases, consumption or value chains."
         ],
         [
           "karbonfangst",
@@ -135,7 +165,9 @@
           "sg: (u) en karbonfangst; (d) karbonfangsten; vanligvis uten flertall",
           "nou",
           "CO₂-fangst (CO2 capture)",
-          "CO₂-utslipp (CO2 emission)"
+          "CO₂-utslipp (CO2 emission)",
+          "Teknologi for å fange CO₂ før den slippes ut.",
+          "Technology for capturing CO2 before it is emitted."
         ],
         [
           "karbonfangstanlegg",
@@ -143,7 +175,9 @@
           "sg: (u) et karbonfangstanlegg; (d) karbonfangstanlegget; pl: (u) karbonfangstanlegg; (d) karbonfangstanleggene",
           "nou",
           "CO₂-fangstanlegg (CO2 capture plant)",
-          "utslippskilde (emission source)"
+          "utslippskilde (emission source)",
+          "Anlegg som fanger CO₂ fra industri eller kraftproduksjon.",
+          "Facility that captures CO2 from industry or power production."
         ],
         [
           "klimaavtrykk",
@@ -151,7 +185,9 @@
           "sg: (u) et klimaavtrykk; (d) klimaavtrykket; pl: (u) klimaavtrykk; (d) klimaavtrykkene",
           "nou",
           "karbonavtrykk (carbon footprint)",
-          "klimanøytralitet (climate neutrality)"
+          "klimanøytralitet (climate neutrality)",
+          "Samlet klimaeffekt av en person, virksomhet eller aktivitet.",
+          "Total climate impact of a person, organization or activity."
         ],
         [
           "klimagassutslipp",
@@ -159,7 +195,9 @@
           "sg: (u) et klimagassutslipp; (d) klimagassutslippet; pl: (u) klimagassutslipp; (d) klimagassutslippene",
           "nou",
           "utslipp (emissions) · CO₂-utslipp (CO2 emissions)",
-          "utslippskutt (emission cuts)"
+          "utslippskutt (emission cuts)",
+          "Utslipp av gasser som bidrar til global oppvarming.",
+          "Emission of gases that contribute to global warming."
         ],
         [
           "klimamål",
@@ -167,7 +205,9 @@
           "sg: (u) et klimamål; (d) klimamålet; pl: (u) klimamål; (d) klimamålene",
           "nou",
           "utslippsmål (emission target)",
-          "målløs politikk (policy without targets)"
+          "målløs politikk (policy without targets)",
+          "Mål for utslippskutt eller klimatilpasning.",
+          "Target for emission cuts or climate adaptation."
         ],
         [
           "klimapolitikk",
@@ -175,7 +215,9 @@
           "sg: (u) en klimapolitikk; (d) klimapolitikken; vanligvis uten flertall",
           "nou",
           "miljøpolitikk (environmental policy)",
-          "klimafornektelse (climate denial)"
+          "klimafornektelse (climate denial)",
+          "Politikk som handler om utslipp, energi og klimatilpasning.",
+          "Policy concerning emissions, energy and climate adaptation."
         ],
         [
           "klimaregnskap",
@@ -183,7 +225,9 @@
           "sg: (u) et klimaregnskap; (d) klimaregnskapet; pl: (u) klimaregnskap; (d) klimaregnskapene",
           "nou",
           "utslippsregnskap (emissions account)",
-          "manglende oversikt (lack of overview)"
+          "manglende oversikt (lack of overview)",
+          "Oversikt over utslipp knyttet til en virksomhet eller aktivitet.",
+          "Overview of emissions linked to an organization or activity."
         ],
         [
           "klimatiltak",
@@ -191,7 +235,9 @@
           "sg: (u) et klimatiltak; (d) klimatiltaket; pl: (u) klimatiltak; (d) klimatiltakene",
           "nou",
           "miljøtiltak (environmental measure)",
-          "passivitet (inaction)"
+          "passivitet (inaction)",
+          "Tiltak som skal redusere utslipp eller gjøre samfunnet mer robust mot klimaendringer.",
+          "Measure intended to reduce emissions or make society more resilient to climate change."
         ],
         [
           "klimavennlig drivstoff",
@@ -199,7 +245,9 @@
           "",
           "uttr",
           "grønt drivstoff (green fuel)",
-          "fossilt drivstoff (fossil fuel)"
+          "fossilt drivstoff (fossil fuel)",
+          "Drivstoff med lavere klimabelastning enn fossilt drivstoff.",
+          "Fuel with lower climate impact than fossil fuel."
         ],
         [
           "kullkraftverk",
@@ -207,7 +255,9 @@
           "sg: (u) et kullkraftverk; (d) kullkraftverket; pl: (u) kullkraftverk; (d) kullkraftverkene",
           "nou",
           "fossilt kraftverk (fossil power plant)",
-          "vindkraftverk (wind power plant)"
+          "vindkraftverk (wind power plant)",
+          "Kraftverk som lager strøm ved å brenne kull.",
+          "Power plant that produces electricity by burning coal."
         ],
         [
           "kutte",
@@ -215,7 +265,9 @@
           "IRR : (INF) infinitiv: å kutte; (PR) presens: kutter; (PT) preteritum: kuttet/kutta; (PP) presens perfektum: har kuttet/kutta; (PSS) passiv: kuttes; (IM) imperativ: kutt",
           "vrb",
           "redusere (reduce) · skjære ned (cut down)",
-          "øke (increase)"
+          "øke (increase)",
+          "Redusere eller skjære bort.",
+          "Reduce or cut away."
         ],
         [
           "ladeinfrastruktur",
@@ -223,7 +275,9 @@
           "sg: (u) en ladeinfrastruktur; (d) ladeinfrastrukturen; pl: (u) ladeinfrastrukturer; (d) ladeinfrastrukturerene",
           "nou",
           "ladenett (charging network)",
-          "mangel på ladere (lack of chargers)"
+          "mangel på ladere (lack of chargers)",
+          "System av ladere og strømnett for elbiler eller elektriske kjøretøy.",
+          "Charging infrastructure for electric cars or vehicles."
         ],
         [
           "landanlegg",
@@ -231,7 +285,9 @@
           "sg: (u) et landanlegg; (d) landanlegget; pl: (u) landanlegg; (d) landanleggene",
           "nou",
           "industrianlegg (industrial facility)",
-          "offshoreanlegg (offshore facility)"
+          "offshoreanlegg (offshore facility)",
+          "Industrianlegg på land, ofte knyttet til olje og gass.",
+          "Industrial facility on land, often linked to oil and gas."
         ],
         [
           "lavutslippssamfunn",
@@ -239,7 +295,9 @@
           "sg: (u) et lavutslippssamfunn; (d) lavutslippssamfunnet; pl: (u) lavutslippssamfunn; (d) lavutslippssamfunnene",
           "nou",
           "nullutslippssamfunn (zero-emission society)",
-          "høyutslippssamfunn (high-emission society)"
+          "høyutslippssamfunn (high-emission society)",
+          "Samfunn med svært lave klimagassutslipp.",
+          "Society with very low greenhouse gas emissions."
         ],
         [
           "olje og gass",
@@ -247,7 +305,9 @@
           "",
           "uttr",
           "petroleum (petroleum)",
-          "fornybar energi (renewable energy)"
+          "fornybar energi (renewable energy)",
+          "Fossile energikilder som utvinnes fra bakken eller havbunnen.",
+          "Fossil energy sources extracted from the ground or seabed."
         ],
         [
           "produksjonsskip",
@@ -255,7 +315,9 @@
           "sg: (u) et produksjonsskip; (d) produksjonsskipet; pl: (u) produksjonsskip; (d) produksjonsskipene",
           "nou",
           "flytende produksjonsenhet (floating production unit)",
-          "landanlegg (onshore facility)"
+          "landanlegg (onshore facility)",
+          "Skip som brukes til produksjon og behandling av olje eller gass.",
+          "Ship used for producing and processing oil or gas."
         ],
         [
           "raffineri",
@@ -263,7 +325,9 @@
           "sg: (u) et raffineri; (d) raffineriet; pl: (u) raffinerier; (d) raffineriene",
           "nou",
           "oljeraffineri (oil refinery)",
-          "råoljekilde (crude oil source)"
+          "råoljekilde (crude oil source)",
+          "Industrianlegg som behandler olje til drivstoff og andre produkter.",
+          "Industrial plant that processes oil into fuel and other products."
         ],
         [
           "slippe ut",
@@ -271,7 +335,9 @@
           "IRR : (INF) infinitiv: å slippe; (PR) presens: slipper; (PT) preteritum: slapp; (PP) presens perfektum: har sluppet; (PSS) passiv: slippes; (IM) imperativ: slipp",
           "vrb",
           "forurense (pollute) · føre ut (release out)",
-          "fange opp (capture)"
+          "fange opp (capture)",
+          "La gass, væske eller stoff komme ut i naturen eller lufta.",
+          "Let gas, liquid or substance out into nature or the air."
         ],
         [
           "sokkel",
@@ -279,7 +345,9 @@
           "sg: (u) en sokkel; (d) sokkelen; pl: (u) sokler; (d) soklene",
           "nou",
           "kontinentalsokkel (continental shelf)",
-          "fastland (mainland)"
+          "fastland (mainland)",
+          "Havområde utenfor kysten der et land har rettigheter til ressurser.",
+          "Sea area off the coast where a country has rights to resources."
         ],
         [
           "utslipp",
@@ -287,7 +355,9 @@
           "sg: (u) et utslipp; (d) utslippet; pl: (u) utslipp; (d) utslippene",
           "nou",
           "forurensning (pollution) · utslippsmengde (emission amount)",
-          "opptak (absorption)"
+          "opptak (absorption)",
+          "Stoff som slippes ut i luft, jord eller vann.",
+          "Substance released into air, soil or water."
         ],
         [
           "utslippsfri",
@@ -295,7 +365,9 @@
           "(M/F) utslippsfri; (N) utslippsfritt; (PL) utslippsfrie",
           "adj",
           "nullutslipps- (zero-emission)",
-          "forurensende (polluting)"
+          "forurensende (polluting)",
+          "Uten direkte utslipp under bruk.",
+          "Without direct emissions during use."
         ],
         [
           "utslippsfritt kjøretøy",
@@ -303,7 +375,9 @@
           "",
           "uttr",
           "elbil (electric car)",
-          "dieselbil (diesel car)"
+          "dieselbil (diesel car)",
+          "Kjøretøy uten direkte utslipp under kjøring.",
+          "Vehicle without direct emissions while driving."
         ],
         [
           "utslippskutt",
@@ -311,7 +385,9 @@
           "sg: (u) et utslippskutt; (d) utslippskuttet; pl: (u) utslippskutt; (d) utslippskuttene",
           "nou",
           "reduksjon i utslipp (emission reduction)",
-          "utslippsøkning (increase in emissions)"
+          "utslippsøkning (increase in emissions)",
+          "Reduksjon i utslipp.",
+          "Reduction in emissions."
         ],
         [
           "vindkraft",
@@ -319,7 +395,9 @@
           "sg: (u) en vindkraft; (d) vindkraften; vanligvis uten flertall",
           "nou",
           "vindenergi (wind energy)",
-          "kullkraft (coal power)"
+          "kullkraft (coal power)",
+          "Energi produsert av vind.",
+          "Energy produced by wind."
         ],
         [
           "førindustriell tid",
@@ -327,7 +405,9 @@
           "",
           "uttr",
           "tiden før industrialiseringen (time before industrialization) · før moderne industri (before modern industry)",
-          "industrialisert tid (industrialized period) · moderne tid (modern time)"
+          "industrialisert tid (industrialized period) · moderne tid (modern time)",
+          "Tiden før den moderne industrien og store fossile utslipp.",
+          "The time before modern industry and major fossil emissions."
         ],
         [
           "grønn omstilling",
@@ -335,7 +415,9 @@
           "",
           "uttr",
           "klimaomstilling (climate transition)",
-          "fossil låsing (fossil lock-in)"
+          "fossil låsing (fossil lock-in)",
+          "Overgang til et mer bærekraftig og utslippssvakt samfunn.",
+          "Transition to a more sustainable and low-emission society."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

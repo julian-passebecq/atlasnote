@@ -1,8 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {visibleTableColumns,tableColumnKey,applyTablePreset,tableChoice,tableLayout,norskReadingWord,organizeTableRows,setTableChoice,setTableLayout} from '../dist-offline/app/reader/table-columns.js';
+import {visibleTableColumns,tableColumnKey,applyTablePreset,tableChoice,tableLayout,norskReadingWord,tableExplanationColumns,norskRelationParts,orderNorskReadingColumns,tableReadingLabel,organizeTableRows,setTableChoice,setTableLayout} from '../dist-offline/app/reader/table-columns.js';
 import {blankPersonal} from '../dist-offline/app/core/workspace.js';
 import {validatePersonal} from '../src/storage/personal-validation.mjs';
+
+test('Bilingual source explanations form a compact two-column projection, independently hideable',()=>{
+ const columns=['Norsk','English','Forms','Type','Synonyms','Antonyms','Norsk forklaring','English explanation'],state={};
+ applyTablePreset('a',columns,state,'explanations');assert.equal(tableLayout('a',state),'cards2');
+ assert.deepEqual(orderNorskReadingColumns(columns,visibleTableColumns('a',columns,state)),[0,1,6,7,4,5]);
+ state[tableColumnKey('a',columns[7],7)]=true;assert.deepEqual(orderNorskReadingColumns(columns,visibleTableColumns('a',columns,state)),[0,1,6,4,5]);
+ assert.deepEqual(tableExplanationColumns(['Norsk forklaring','English explanation','Description']),[0,1]);
+ assert.equal(tableReadingLabel('Synonyms'),'Syn');assert.equal(tableReadingLabel('Antonyms'),'Ant');
+ assert.deepEqual(norskRelationParts('rørelse (movement) · aktivitet (activity)'),[{text:'rørelse ',bold:true},{text:'(movement)',bold:false},{text:' · aktivitet ',bold:true},{text:'(activity)',bold:false}]);
+ assert.deepEqual(norskRelationParts(''),[]);assert.deepEqual(norskRelationParts('—'),[{text:'—',bold:false}]);
+ applyTablePreset('a',columns,state,'words');assert.deepEqual(visibleTableColumns('a',columns,state),[0,1,4,5]);
+ assert.deepEqual(visibleTableColumns('a',columns,state,true),[0,1,2,3,4,5,6,7]);
+});
 test('CSV table recall preferences preserve original columns and printable contents',()=>{
  const columns=['Norsk','English','Forms','Example'],state={};
  assert.deepEqual(visibleTableColumns('a',columns,state),[0,1,2]);

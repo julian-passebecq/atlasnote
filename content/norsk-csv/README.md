@@ -5,7 +5,9 @@ Ten owner-authorized lexical selections from the supplied study workbooks:
 transport/energy, nature/climate, politics/society, essay connectors,
 verb forms and noun forms. The source index records exact workbook and worksheet
 names. These are source study notes, not independently verified dictionary entries.
-Textbook passages, definitions and exam examples are excluded from this public selection.
+The six B1/B2 thematic and writing selections also retain 808 original Norsk explanations
+and their paired English translations, requested by the owner on 2026-10-06.
+Textbook passages and exam examples are excluded from this public selection.
 The original ZIPs and complete translations are not published.
 
 ## In AtlasNote
@@ -23,6 +25,14 @@ Forms and Type in one click, retaining the current layout, sort and grouping.
 Norsk reading labels show en/ei/et or å when an explicit source form provides it;
 missing grammar is never guessed. Source CSVs, stored table cells and exports stay
 unchanged. The app reads converted tables from its local workspace, not a live Git CSV.
+
+**Explain** selects a two-column reading view: word, translation, Norsk explanation,
+English explanation, then **Syn / Ant**. Norsk relation text is bold; parenthesized
+translations stay plain. **Words** returns to the shorter vocabulary view.
+**Columns** can hide either explanation independently. Source cells, headings and print
+remain complete and unchanged. The reviewed 1.2.0 source pack supplies explanations;
+the existing history engine appends source revisions on update. Local authored edits
+retain their ownership; display preferences alone cannot add missing content.
 
 **2 columns / 3 columns** displays several entries across the reading pane.
 **Views & sort** provides one-click Reading, Alphabet, Categories,

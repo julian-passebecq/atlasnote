@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "",
           "uttr",
           "idet (just as) · da (when)",
-          ""
+          "",
+          "Betyr akkurat da / da noe skjedde.",
+          "Means exactly when / the moment something happened."
         ],
         [
           "mens",
@@ -31,7 +35,9 @@
           "",
           "sub",
           "samtidig som (while) · derimot (whereas)",
-          ""
+          "",
+          "Viser samtidig handling eller kontrast.",
+          "Shows simultaneous action or contrast."
         ],
         [
           "samtidig",
@@ -39,7 +45,9 @@
           "",
           "adv/conn",
           "på samme tid (at the same time)",
-          ""
+          "",
+          "Viser at noe skjer på samme tid.",
+          "Shows that something happens at the same time."
         ],
         [
           "samtidig som",
@@ -47,7 +55,9 @@
           "",
           "conj",
           "mens (while) · samtidig (at the same time)",
-          ""
+          "",
+          "Binder sammen to ting som skjer eller gjelder samtidig; kan også vise kontrast.",
+          "Links two things that happen or apply at the same time; can also show contrast."
         ],
         [
           "på samme tid",
@@ -55,7 +65,9 @@
           "",
           "conn",
           "samtidig (simultaneously)",
-          ""
+          "",
+          "Viser samtidighet eller to parallelle forhold.",
+          "Shows simultaneity or two parallel conditions."
         ],
         [
           "fordi",
@@ -63,7 +75,9 @@
           "",
           "sub",
           "siden (since/because) · ettersom (as/since) · i og med at (as)",
-          ""
+          "",
+          "Innleder en leddsetning som forklarer årsaken.",
+          "Introduces a subordinate clause explaining the reason."
         ],
         [
           "for",
@@ -71,7 +85,9 @@
           "",
           "conj",
           "fordi (because) · siden (since/because)",
-          ""
+          "",
+          "Binder sammen to helsetninger og gir en grunn.",
+          "Connects two main clauses and gives a reason."
         ],
         [
           "siden",
@@ -79,7 +95,9 @@
           "",
           "sub",
           "fordi (because) · ettersom (as/since)",
-          ""
+          "",
+          "Innleder leddsetning om tid eller årsak.",
+          "Introduces a subordinate clause about time or reason."
         ],
         [
           "ettersom",
@@ -87,7 +105,9 @@
           "",
           "sub",
           "siden (since) · fordi (because) · i og med at (as)",
-          ""
+          "",
+          "Innleder en forklaring eller årsak.",
+          "Introduces an explanation or cause."
         ],
         [
           "i og med at",
@@ -95,7 +115,9 @@
           "",
           "sub",
           "siden (since) · ettersom (as) · fordi (because)",
-          ""
+          "",
+          "Innleder en årsak eller begrunnelse som allerede er et relevant faktum.",
+          "Introduces a reason or justification treated as a relevant fact."
         ],
         [
           "på grunn av",
@@ -103,7 +125,9 @@
           "",
           "prep/conn",
           "som følge av (as a result of) · på bakgrunn av (on the basis of)",
-          ""
+          "",
+          "Viser årsaken til noe; følges av substantiv eller substantivfrase.",
+          "Shows the cause of something; followed by a noun or noun phrase."
         ],
         [
           "på grunn av at",
@@ -111,7 +135,9 @@
           "",
           "sub",
           "fordi (because) · ettersom (since) · grunnen til at (the reason why)",
-          ""
+          "",
+          "Viser årsaken til noe; følges av en at-setning.",
+          "Shows the cause of something; followed by an at-clause."
         ],
         [
           "som følge av",
@@ -119,7 +145,9 @@
           "",
           "uttr",
           "på grunn av (because of) · som et resultat av (as a result of)",
-          ""
+          "",
+          "Viser at noe skjer som et resultat av noe annet.",
+          "Shows that something happens as a result of something else."
         ],
         [
           "av den grunn",
@@ -127,7 +155,9 @@
           "",
           "conn",
           "derfor (therefore) · dermed (thus)",
-          ""
+          "",
+          "Viser tilbake til årsaken i forrige setning.",
+          "Refers back to the reason in the previous sentence."
         ],
         [
           "grunnen til at",
@@ -135,7 +165,9 @@
           "",
           "uttr",
           "årsaken til at (the cause of) · fordi (because)",
-          ""
+          "",
+          "Innfører forklaringen på hvorfor noe skjer.",
+          "Introduces the explanation for why something happens."
         ],
         [
           "årsaken til at",
@@ -143,7 +175,9 @@
           "",
           "uttr",
           "grunnen til at (the reason why) · skyldes (is due to)",
-          ""
+          "",
+          "Innfører årsaken til en hendelse eller utvikling.",
+          "Introduces the cause of an event or development."
         ],
         [
           "på bakgrunn av",
@@ -151,7 +185,9 @@
           "",
           "prep/conn",
           "på grunn av (because of) · med utgangspunkt i (based on)",
-          ""
+          "",
+          "Formelt uttrykk for grunnlag eller årsak.",
+          "Formal expression for basis or reason."
         ],
         [
           "takket være",
@@ -159,7 +195,9 @@
           "",
           "uttr",
           "på grunn av (because of) · som følge av (as a result of)",
-          ""
+          "",
+          "Viser positiv årsak eller hjelpende faktor.",
+          "Shows a positive cause or helpful factor."
         ],
         [
           "komme av",
@@ -167,7 +205,9 @@
           "",
           "vrb/conn",
           "skyldes (be due to) · henge sammen med (be connected with)",
-          ""
+          "",
+          "Brukes når man forklarer hva noe skyldes.",
+          "Used to explain what something is due to."
         ],
         [
           "skyldes",
@@ -175,7 +215,9 @@
           "",
           "vrb/conn",
           "komme av (come from) · henge sammen med (be connected with)",
-          ""
+          "",
+          "Betyr å komme av eller ha som årsak.",
+          "Means to be due to or have as a cause."
         ],
         [
           "henge sammen med",
@@ -183,7 +225,9 @@
           "",
           "vrb/conn",
           "ha sammenheng med (be connected with) · skyldes (be due to)",
-          ""
+          "",
+          "Viser at to forhold er knyttet til hverandre.",
+          "Shows that two matters are connected."
         ],
         [
           "nemlig",
@@ -191,7 +235,9 @@
           "",
           "conn",
           "for (for) · årsaken er at (the reason is that)",
-          ""
+          "",
+          "Forklarer årsaken eller presiserer poenget i setningen foran.",
+          "Explains the reason or clarifies the point in the previous sentence."
         ],
         [
           "derfor",
@@ -199,7 +245,9 @@
           "",
           "conn",
           "dermed (thus) · følgelig (consequently) · av den grunn (for that reason)",
-          ""
+          "",
+          "Viser resultat eller konklusjon av det som er sagt.",
+          "Shows a result or conclusion from what has been said."
         ],
         [
           "dermed",
@@ -207,7 +255,9 @@
           "",
           "conn",
           "derfor (therefore) · følgelig (consequently)",
-          ""
+          "",
+          "Viser følge, resultat eller logisk konsekvens.",
+          "Shows consequence, result or logical consequence."
         ],
         [
           "følgelig",
@@ -215,7 +265,9 @@
           "",
           "conn",
           "derfor (therefore) · dermed (thus)",
-          ""
+          "",
+          "Formelt ord for derfor / dermed.",
+          "Formal word for therefore / thus."
         ],
         [
           "altså",
@@ -223,7 +275,9 @@
           "",
           "conn",
           "derfor (therefore) · med andre ord (in other words) · følgelig (consequently)",
-          ""
+          "",
+          "Markerer en konklusjon, forklaring eller presisering.",
+          "Marks a conclusion, explanation, or clarification."
         ],
         [
           "således",
@@ -231,7 +285,9 @@
           "",
           "conn",
           "dermed (thus) · følgelig (consequently)",
-          ""
+          "",
+          "Formelt ord for derfor eller på denne måten.",
+          "Formal word for therefore or in this way."
         ],
         [
           "på den måten",
@@ -239,7 +295,9 @@
           "",
           "conn",
           "slik (so/in that way) · dermed (thereby)",
-          ""
+          "",
+          "Viser hvordan noe skjer, eller hvilken følge en handling får.",
+          "Shows how something happens or what consequence an action has."
         ],
         [
           "som et resultat av",
@@ -247,7 +305,9 @@
           "",
           "uttr",
           "som følge av (as a result of) · på grunn av (due to)",
-          ""
+          "",
+          "Viser følge av noe tidligere nevnt.",
+          "Shows a consequence of something previously mentioned."
         ],
         [
           "resultatet er at",
@@ -255,7 +315,9 @@
           "",
           "uttr",
           "følgen er at (the consequence is that) · konsekvensen er at (the consequence is that)",
-          ""
+          "",
+          "Innfører resultatet av en årsak eller prosess.",
+          "Introduces the result of a cause or process."
         ],
         [
           "følgen er at",
@@ -263,7 +325,9 @@
           "",
           "uttr",
           "resultatet er at (the result is that) · konsekvensen er at (the consequence is that)",
-          ""
+          "",
+          "Innfører virkningen eller konsekvensen.",
+          "Introduces the effect or consequence."
         ],
         [
           "konsekvensen er at",
@@ -271,7 +335,9 @@
           "",
           "uttr",
           "følgen er at (the consequence is that) · resultatet er at (the result is that)",
-          ""
+          "",
+          "Innfører den praktiske eller logiske følgen.",
+          "Introduces the practical or logical consequence."
         ],
         [
           "føre til",
@@ -279,7 +345,9 @@
           "",
           "vrb/conn",
           "resultere i (result in) · gjøre at (make/lead to)",
-          ""
+          "",
+          "Bli årsak til et resultat.",
+          "Cause or lead to a result."
         ],
         [
           "føre med seg",
@@ -287,7 +355,9 @@
           "",
           "vrb/conn",
           "føre til (lead to) · innebære (entail)",
-          ""
+          "",
+          "Ha som konsekvens eller ta med seg som følge.",
+          "Bring about or carry as a consequence."
         ],
         [
           "resultere i",
@@ -295,7 +365,9 @@
           "",
           "vrb/conn",
           "føre til (lead to) · ende med (end in)",
-          ""
+          "",
+          "Få et bestemt resultat.",
+          "Have a specific result."
         ],
         [
           "gjøre at",
@@ -303,7 +375,9 @@
           "",
           "vrb/conn",
           "føre til (lead to) · resultere i (result in)",
-          ""
+          "",
+          "Være årsaken til at noe skjer.",
+          "Make something happen; be the reason something happens."
         ],
         [
           "slik at",
@@ -311,7 +385,9 @@
           "",
           "sub",
           "så (so) · dermed (thereby)",
-          ""
+          "",
+          "Innleder en følge eller hensikt.",
+          "Introduces a result or purpose."
         ],
         [
           "for å",
@@ -319,7 +395,9 @@
           "",
           "uttr",
           "for at (so that) · med sikte på (with the aim of)",
-          ""
+          "",
+          "Uttrykker mål når subjektet er det samme i begge deler.",
+          "Expresses purpose when the subject is the same in both parts."
         ],
         [
           "for at",
@@ -327,7 +405,9 @@
           "",
           "sub",
           "slik at (so that) · så (so that)",
-          ""
+          "",
+          "Innleder hensiktssetning når subjektet kan være forskjellig.",
+          "Introduces a purpose clause when the subject may be different."
         ],
         [
           "med sikte på",
@@ -335,7 +415,9 @@
           "",
           "prep/conn",
           "for å (in order to) · med mål om (with the goal of)",
-          ""
+          "",
+          "Formelt uttrykk for mål eller hensikt.",
+          "Formal expression for aim or purpose."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

@@ -1,6 +1,6 @@
 {
   "id": "atlas.norsk-csv",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "title": "Norsk vocabulary and grammar",
   "sheets": [
     {
@@ -44,9 +44,11 @@
         "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
         "workbook": "16_FINAL_ORD_OG_BEGREP_B1_B2_v3_RICH_FORMATTING.xlsx",
         "sheet": "04 Arbeid",
-        "headerRow": 3
+        "headerRow": 3,
+        "explanationColumn": 5,
+        "explanationSplit": "First newline: Norsk before, English after; missing translation stays empty."
       },
-      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+      "selection": "Original lexical rows and inflections, plus the original Norsk explanation and its paired English translation. No textbook passages or exam examples added."
     },
     {
       "id": "b1-economy",
@@ -59,9 +61,11 @@
         "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
         "workbook": "16_FINAL_ORD_OG_BEGREP_B1_B2_v3_RICH_FORMATTING.xlsx",
         "sheet": "05 Økonomi",
-        "headerRow": 3
+        "headerRow": 3,
+        "explanationColumn": 5,
+        "explanationSplit": "First newline: Norsk before, English after; missing translation stays empty."
       },
-      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+      "selection": "Original lexical rows and inflections, plus the original Norsk explanation and its paired English translation. No textbook passages or exam examples added."
     },
     {
       "id": "b2-energy",
@@ -74,9 +78,11 @@
         "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
         "workbook": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
         "sheet": "Transport Energy",
-        "headerRow": 1
+        "headerRow": 1,
+        "explanationColumn": 2,
+        "explanationSplit": "First newline: Norsk before, English after; missing translation stays empty."
       },
-      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+      "selection": "Original lexical rows and inflections, plus the original Norsk explanation and its paired English translation. No textbook passages or exam examples added."
     },
     {
       "id": "b2-climate",
@@ -89,9 +95,11 @@
         "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
         "workbook": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
         "sheet": "Nature Env Climate",
-        "headerRow": 1
+        "headerRow": 1,
+        "explanationColumn": 2,
+        "explanationSplit": "First newline: Norsk before, English after; missing translation stays empty."
       },
-      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+      "selection": "Original lexical rows and inflections, plus the original Norsk explanation and its paired English translation. No textbook passages or exam examples added."
     },
     {
       "id": "b2-society",
@@ -104,9 +112,11 @@
         "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
         "workbook": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
         "sheet": "Politics Intl",
-        "headerRow": 1
+        "headerRow": 1,
+        "explanationColumn": 2,
+        "explanationSplit": "First newline: Norsk before, English after; missing translation stays empty."
       },
-      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+      "selection": "Original lexical rows and inflections, plus the original Norsk explanation and its paired English translation. No textbook passages or exam examples added."
     },
     {
       "id": "b2-connectors",
@@ -119,9 +129,11 @@
         "archive": "B2_NORA0130_HERPA_CORE_STUDY_PACK_v41_ORDBEGREP_SKELETON_INTEGRATION.zip",
         "workbook": "17_FINAL_TOOLBOX_v121_NORSK_PURPLE.xlsx",
         "sheet": "Connectors",
-        "headerRow": 1
+        "headerRow": 1,
+        "explanationColumn": 2,
+        "explanationSplit": "First newline: Norsk before, English after; missing translation stays empty."
       },
-      "selection": "Lexical translations and inflections only; textbook passages, definitions and exam examples excluded."
+      "selection": "Original lexical rows and inflections, plus the original Norsk explanation and its paired English translation. No textbook passages or exam examples added."
     },
     {
       "id": "b2-verbs",

@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "sg: (u) et bydelsutvalg; (d) bydelsutvalget; pl: (u) bydelsutvalg; (d) bydelsutvalgene",
           "nou",
           "organ (body) · råd (council)",
-          "enkeltperson (individual) · privat aktør (private actor)"
+          "enkeltperson (individual) · privat aktør (private actor)",
+          "Politisk utvalg for en bydel.",
+          "Political committee for a city district."
         ],
         [
           "bystyre",
@@ -31,7 +35,9 @@
           "sg: (u) et bystyre; (d) bystyret; pl: (u) bystyrer; (d) bystyrene",
           "nou",
           "organ (body) · råd (council)",
-          "enkeltperson (individual) · privat aktør (private actor)"
+          "enkeltperson (individual) · privat aktør (private actor)",
+          "Folkevalgt organ som styrer en bykommune.",
+          "Elected body governing a city municipality."
         ],
         [
           "energidepartement",
@@ -39,7 +45,9 @@
           "sg: (u) et energidepartement; (d) energidepartementet; pl: (u) energidepartement; (d) energidepartementene",
           "nou",
           "departement (ministry) · fagdepartement (sector ministry)",
-          "direktorat (directorate) · kommune (municipality)"
+          "direktorat (directorate) · kommune (municipality)",
+          "Departement som arbeider med energi og ressurser.",
+          "Ministry working with energy and resources."
         ],
         [
           "fatte vedtak",
@@ -47,7 +55,9 @@
           "",
           "uttr",
           "vedta (adopt/decide) · bestemme (decide)",
-          "avvise (reject)"
+          "avvise (reject)",
+          "Ta en formell beslutning.",
+          "Make a formal decision."
         ],
         [
           "forbanna",
@@ -55,7 +65,9 @@
           "(M/F) forbanna · (N) forbanna · (PL) forbanna",
           "adj",
           "rasende (furious) · sint (angry)",
-          "rolig (calm) · blid (cheerful)"
+          "rolig (calm) · blid (cheerful)",
+          "Rasende eller sint.",
+          "Furious or angry."
         ],
         [
           "fordelt",
@@ -63,7 +75,9 @@
           "(M/F) fordelt · (N) fordelt · (PL) fordelte",
           "adj",
           "delt (divided) · spredt (distributed)",
-          "samlet (gathered) · konsentrert (concentrated)"
+          "samlet (gathered) · konsentrert (concentrated)",
+          "Delt eller spredt mellom flere personer, steder eller grupper.",
+          "Divided or spread among several people, places, or groups."
         ],
         [
           "forskrift",
@@ -71,7 +85,9 @@
           "sg: (u) en forskrift; (d) forskriften; pl: (u) forskrifter; (d) forskriftene",
           "nou",
           "regelverk (regulations) · bestemmelse (provision)",
-          "frihet fra regler (freedom from rules)"
+          "frihet fra regler (freedom from rules)",
+          "Detaljert regel som er fastsatt av myndighetene.",
+          "A detailed rule set by the authorities."
         ],
         [
           "hel",
@@ -79,7 +95,9 @@
           "",
           "adj",
           "fullstendig (complete) · komplett (complete)",
-          "delvis (partial)"
+          "delvis (partial)",
+          "Som ikke er delt eller mangler noe.",
+          "Not divided or missing anything."
         ],
         [
           "helsebyråd",
@@ -87,7 +105,9 @@
           "sg: (u) en helsebyråd; (d) helsebyråden; pl: (u) helsebyråder; (d) helsebyrådene",
           "nou",
           "organ (body) · råd (council)",
-          "enkeltperson (individual) · privat aktør (private actor)"
+          "enkeltperson (individual) · privat aktør (private actor)",
+          "Politiker med ansvar for helse i et byråd.",
+          "Politician responsible for health in a city government."
         ],
         [
           "henvise til",
@@ -95,7 +115,9 @@
           "G2 -te : (INF) infinitiv: å henvise til; (PR) presens: henviser til; (PT) preteritum: henviste til; (PP) presens perfektum: har henvist til",
           "vrb",
           "vise til (refer to) · referere til (refer to)",
-          "utelate (omit)"
+          "utelate (omit)",
+          "Vise til en kilde, regel eller tidligere sak.",
+          "Refer to a source, rule or previous case."
         ],
         [
           "henvisning til",
@@ -103,7 +125,9 @@
           "sg: (u) en henvisning; (d) henvisningen; pl: (u) henvisninger; (d) henvisningene",
           "nou",
           "referanse til (reference to) · visning til (reference to)",
-          "utelatelse (omission)"
+          "utelatelse (omission)",
+          "Det at man viser til en kilde, regel eller tidligere sak.",
+          "The act of referring to a source, rule or previous case."
         ],
         [
           "innvandringspolitikk",
@@ -111,7 +135,9 @@
           "sg: (u) en innvandringspolitikk; (d) innvandringspolitikken",
           "nou",
           "migrasjonspolitikk (migration policy) · integreringspolitikk (integration policy)",
-          "utvandringspolitikk (emigration policy) · stengte grenser (closed borders)"
+          "utvandringspolitikk (emigration policy) · stengte grenser (closed borders)",
+          "Politikk som handler om innvandring, integrering og regler for opphold.",
+          "Policy concerning immigration, integration, and residence rules."
         ],
         [
           "instans",
@@ -119,7 +145,9 @@
           "SG: (U) en instans · (D) instansen · PL: (U) instanser · (D) instansene",
           "nou",
           "organ (body) · myndighet (authority)",
-          "privatperson (private individual)"
+          "privatperson (private individual)",
+          "Myndighet, organ eller nivå som behandler en sak.",
+          "Authority (all meanings), body or nivsom behandler one case."
         ],
         [
           "lovpålagt",
@@ -127,7 +155,9 @@
           "(M/F) lovpålagt · (N) lovpålagt · (PL) lovpålagte",
           "adj",
           "påbudt ved lov (required by law) · obligatorisk (mandatory)",
-          "frivillig (voluntary) · valgfri (optional)"
+          "frivillig (voluntary) · valgfri (optional)",
+          "Noe man må gjøre fordi loven krever det.",
+          "Something one must do because the law requires it."
         ],
         [
           "makt",
@@ -135,7 +165,9 @@
           "sg: (u) en makt; (d) makten; pl: (u) makter; (d) maktene",
           "nou",
           "myndighet (authority) · innflytelse (influence)",
-          "avmakt (powerlessness) · svakhet (weakness)"
+          "avmakt (powerlessness) · svakhet (weakness)",
+          "Myndighet eller innflytelse.",
+          "Authority (all meanings) or influence."
         ],
         [
           "med utgangspunkt i",
@@ -143,7 +175,9 @@
           "",
           "uttr",
           "Basert på (based on) · med start i noe (starting from something)",
-          "uten utgangspunkt i (without starting from)"
+          "uten utgangspunkt i (without starting from)",
+          "Basert på eller med start i noe.",
+          "Based on or with start in something."
         ],
         [
           "medlem",
@@ -151,7 +185,9 @@
           "sg: (u) et medlem; (d) medlemmet; pl: (u) medlemmer; (d) medlemmene",
           "nou",
           "deltaker (participant) · medlem av gruppe (group member)",
-          "utenforstående (outsider)"
+          "utenforstående (outsider)",
+          "Person som tilhører en gruppe eller organisasjon.",
+          "Person who belongs to a group or organization."
         ],
         [
           "medvirke",
@@ -159,7 +195,9 @@
           "G1 -et : (INF) infinitiv: å medvirke· (PR) presens: medvirker· (PT) preteritum: medvirket· (PP) presens perfektum: har medvirket· (PSS) medvirkes· (IM) medvirk",
           "vrb",
           "bidra (contribute) · delta (participate)",
-          "motvirke (counteract) · hindre (prevent)"
+          "motvirke (counteract) · hindre (prevent)",
+          "Bidra til at noe skjer.",
+          "Contribute to something happening."
         ],
         [
           "mindretall",
@@ -167,7 +205,9 @@
           "sg: (u) et mindretall; (d) mindretallet; pl: (u) mindretall; (d) mindretallene",
           "nou",
           "minoritet (minority)",
-          "flertall (majority) · majoritet (majority)"
+          "flertall (majority) · majoritet (majority)",
+          "Minoritet.",
+          "Minority."
         ],
         [
           "næringsdepartement",
@@ -175,7 +215,9 @@
           "sg: (u) et næringsdepartement; (d) næringsdepartementet; pl: (u) næringsdepartement; (d) næringsdepartementene",
           "nou",
           "departement (ministry) · fagdepartement (sector ministry)",
-          "direktorat (directorate) · kommune (municipality)"
+          "direktorat (directorate) · kommune (municipality)",
+          "Departement som arbeider med næringsliv og handel.",
+          "Ministry working with business and trade."
         ],
         [
           "nøytral",
@@ -183,7 +225,9 @@
           "(M/F) nøytral · (N) nøytralt · (PL) nøytrale",
           "adj",
           "upartisk (impartial) · ikke-partisk (non-partisan)",
-          "partisk (biased) · alliert (allied)"
+          "partisk (biased) · alliert (allied)",
+          "Tar ikke parti for noen av sidene.",
+          "Does not take sides with either party."
         ],
         [
           "obligatorisk",
@@ -191,7 +235,9 @@
           "(M/F) obligatorisk · (N) obligatorisk · (PL) obligatoriske",
           "adj",
           "påbudt (mandatory) · lovpålagt (required by law)",
-          "frivillig (voluntary) · valgfri (optional)"
+          "frivillig (voluntary) · valgfri (optional)",
+          "Noe man må gjøre; ikke valgfritt.",
+          "Something one must do; not optional."
         ],
         [
           "oppslutning",
@@ -199,7 +245,9 @@
           "SG: (U) en oppslutning · (D) oppslutningen · PL: (U) oppslutninger · (D) oppslutningene",
           "nou",
           "Deltakelse (participation)",
-          "motstand (opposition)"
+          "motstand (opposition)",
+          "Deltakelse.",
+          "Participation."
         ],
         [
           "påkrevd",
@@ -207,7 +255,9 @@
           "(M/F) påkrevd · (N) påkrevdt · (PL) påkrevde",
           "adj",
           "nødvendig (necessary) · obligatorisk (mandatory)",
-          "unødvendig (unnecessary) · valgfri (optional)"
+          "unødvendig (unnecessary) · valgfri (optional)",
+          "Nødvendig eller påbudt.",
+          "Necessary or mandatory."
         ],
         [
           "pålegg",
@@ -215,7 +265,9 @@
           "SG: (U) et pålegg · (D) pålegget · PL: (U) pålegg · (D) påleggene",
           "nou",
           "ordre (order) · krav (requirement)",
-          "tillatelse (permission)"
+          "tillatelse (permission)",
+          "Krav eller ordre fra en myndighet.",
+          "Requirement or order from one authority (all meanings)."
         ],
         [
           "reise",
@@ -223,7 +275,9 @@
           "G2 -te : (INF) infinitiv: å reise; (PR) presens: reiser; (PT) preteritum: reiste; (PP) presens perfektum: har reist",
           "vrb",
           "dra (go) · fare (travel)",
-          "bli (stay)"
+          "bli (stay)",
+          "Dra fra ett sted til et annet.",
+          "Go from one place to another."
         ],
         [
           "rettferdig fordelt",
@@ -231,7 +285,9 @@
           "",
           "uttr",
           "jevnt fordelt (evenly distributed) · rimelig fordelt (fairly distributed)",
-          "urettferdig fordelt (unfairly distributed) · skjevt fordelt (unevenly distributed)"
+          "urettferdig fordelt (unfairly distributed) · skjevt fordelt (unevenly distributed)",
+          "Fordelt på en måte som oppleves rimelig og lik.",
+          "Distributed in a way that seems fair and equal."
         ],
         [
           "selvbestemmelsesrett",
@@ -239,7 +295,9 @@
           "sg: (u) en selvbestemmelsesrett; (d) selvbestemmelsesretten",
           "nou",
           "valgfrihet (freedom of choice) · autonomi (autonomy)",
-          "tvang (coercion) · overstyring (overruling)"
+          "tvang (coercion) · overstyring (overruling)",
+          "Rett til å bestemme over eget liv eller egne valg.",
+          "The right to decide over one’s own life or choices."
         ],
         [
           "selvstendig",
@@ -247,7 +305,9 @@
           "(M/F) selvstendig · (N) selvstendig · (PL) selvstendige",
           "adj",
           "uavhengig (independent) · autonom (autonomous)",
-          "avhengig (dependent) · uselvstendig (dependent)"
+          "avhengig (dependent) · uselvstendig (dependent)",
+          "Kan klare seg selv eller ta egne valg.",
+          "Can manage oneself selv or take egne choice."
         ],
         [
           "sette",
@@ -255,7 +315,9 @@
           "IRR : (INF) infinitiv: å sette; (PR) presens: setter; (PT) preteritum: satte; (PP) presens perfektum: har satt",
           "vrb",
           "plassere (place) · stille (put)",
-          "fjerne (remove)"
+          "fjerne (remove)",
+          "Plassere noe eller starte en bestemt handling/tilstand.",
+          "Place something or start a particular action/state."
         ],
         [
           "skjult",
@@ -263,7 +325,9 @@
           "(M/F) skjult · (N) skjult · (PL) skjulte",
           "adj",
           "hemmelig (secret) · usynlig (invisible)",
-          "åpen (open) · synlig (visible)"
+          "åpen (open) · synlig (visible)",
+          "Hemmelig eller usynlig.",
+          "Secret or invisible."
         ],
         [
           "spesiell",
@@ -271,7 +335,9 @@
           "(m/f) spesiell; (n) spesielt; (pl) spesielle",
           "adj",
           "særegen (distinctive) · uvanlig (unusual)",
-          "vanlig (ordinary) · generell (general)"
+          "vanlig (ordinary) · generell (general)",
+          "Særegen eller uvanlig.",
+          "Distinctive or unusual."
         ],
         [
           "stat",
@@ -279,7 +345,9 @@
           "sg: (u) en stat; (d) staten; pl: (u) stater; (d) statene",
           "nou",
           "land (country) · myndighetssystem (state system)",
-          "statsløshet (statelessness)"
+          "statsløshet (statelessness)",
+          "Politisk organisert samfunn med myndigheter.",
+          "Politically organized society with authorities."
         ],
         [
           "statlig planbestemmelse",
@@ -287,7 +355,9 @@
           "",
           "uttr",
           "nasjonal planregel (national planning rule)",
-          "lokalt vedtak (local decision)"
+          "lokalt vedtak (local decision)",
+          "Bindende statlig regel for arealbruk eller planlegging.",
+          "Binding state rule for land use or planning."
         ],
         [
           "statssekretær",
@@ -295,7 +365,9 @@
           "sg: (u) en statssekretær; (d) statssekretæren; pl: (u) statssekretærer; (d) statssekretærene",
           "nou",
           "politisk rådgiver (political adviser) · regjeringsrepresentant (government representative)",
-          "opposisjonspolitiker (opposition politician) · privatperson (private individual)"
+          "opposisjonspolitiker (opposition politician) · privatperson (private individual)",
+          "Politisk utnevnt medarbeider i et departement.",
+          "Politically appointed official in a ministry."
         ],
         [
           "student",
@@ -303,7 +375,9 @@
           "",
           "nou",
           "studerende (student) · kursdeltaker (course participant)",
-          "lærer (teacher)"
+          "lærer (teacher)",
+          "Person som studerer ved universitet, høyskole eller kurs.",
+          "Person who studies at a university, college, or course."
         ],
         [
           "styreverv",
@@ -311,7 +385,9 @@
           "sg: (u) et styreverv; (d) styrevervet; pl: (u) styreverv; (d) styrevervene",
           "nou",
           "stilling (position) · rolle (role)",
-          "vanlig medlemskap (ordinary membership)"
+          "vanlig medlemskap (ordinary membership)",
+          "Formell rolle som medlem av et styre.",
+          "Formal role as a board member."
         ],
         [
           "ta del i",
@@ -319,7 +395,9 @@
           "IRR : (INF) infinitiv: å ta del i · (PR) presens: tar del i · (PT) preteritum: tok del i · (PF) har tatt del i · (PSS) — · (IM) ta del i",
           "uttr",
           "delta i (participate in) · være med på (take part in)",
-          "stå utenfor (stay outside) · la være å delta (not participate)"
+          "stå utenfor (stay outside) · la være å delta (not participate)",
+          "Være med på eller delta i noe.",
+          "Take part in or participate in something."
         ],
         [
           "utbredelse",
@@ -327,7 +405,9 @@
           "SG: (U) en utbredelse · (D) utbredelsen · PL: (U) utbredelser · (D) utbredelsene",
           "nou",
           "spredning (spread) · omfang (extent)",
-          "begrensning (limitation)"
+          "begrensning (limitation)",
+          "Hvor vanlig eller spredt noe er.",
+          "Hvor usual or distributed something is."
         ],
         [
           "utsagn",
@@ -335,7 +415,9 @@
           "sg: (u) et utsagn; (d) utsagnet; pl: (u) utsagn; (d) utsagnene",
           "nou",
           "påstand (claim) · uttalelse (statement)",
-          "spørsmål (question) · taushet (silence)"
+          "spørsmål (question) · taushet (silence)",
+          "Påstand eller uttalelse.",
+          "Claim or statement."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

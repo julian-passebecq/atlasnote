@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "sg: (u) et 1,5-gradersmål; (d) 1,5-gradersmålet; pl: (u) 1,5-gradersmål; (d) 1,5-gradersmålene",
           "nou",
           "klimamål (climate target)",
-          "ukontrollert oppvarming (uncontrolled warming)"
+          "ukontrollert oppvarming (uncontrolled warming)",
+          "Mål om å begrense oppvarmingen til 1,5 grader.",
+          "Goal of limiting warming to 1.5 degrees."
         ],
         [
           "alvorlighetsgrad",
@@ -31,7 +35,9 @@
           "sg: (u) en alvorlighetsgrad; (d) alvorlighetsgraden; pl: (u) alvorlighetsgrader; (d) alvorlighetsgradene",
           "nou",
           "grad av alvor (degree of seriousness)",
-          "ufarlighet (harmlessness)"
+          "ufarlighet (harmlessness)",
+          "Hvor alvorlig noe er.",
+          "How serious something is."
         ],
         [
           "forekomst",
@@ -39,7 +45,9 @@
           "sg: (u) en forekomst; (d) forekomsten; pl: (u) forekomster; (d) forekomstene",
           "nou",
           "utbredelse (prevalence) · tilfelle (case)",
-          "fravær (absence)"
+          "fravær (absence)",
+          "Det at noe finnes eller skjer i et visst omfang.",
+          "The fact that something exists or occurs to a certain extent."
         ],
         [
           "forutsi",
@@ -47,7 +55,9 @@
           "IRR : (INF) infinitiv: å forutsi; (PR) presens: forutsier; (PT) preteritum: forutsa; (PP) presens perfektum: har forutsett",
           "vrb",
           "spå (predict) · varsle (forecast)",
-          "oppsummere i etterkant (summarize afterwards)"
+          "oppsummere i etterkant (summarize afterwards)",
+          "Si noe om hva som trolig vil skje.",
+          "Say something about what will probably happen."
         ],
         [
           "global oppvarming",
@@ -55,7 +65,9 @@
           "sg: (u) en global oppvarming; (d) den globale oppvarmingen; vanligvis uten flertall",
           "nou",
           "temperaturøkning (temperature increase)",
-          "global nedkjøling (global cooling)"
+          "global nedkjøling (global cooling)",
+          "Stigning i jordas gjennomsnittstemperatur.",
+          "Increase in the Earth's average temperature."
         ],
         [
           "hyppighet",
@@ -63,7 +75,9 @@
           "sg: (u) en hyppighet; (d) hyppigheten; vanligvis uten flertall",
           "nou",
           "frekvens (frequency)",
-          "sjeldenhet (rarity)"
+          "sjeldenhet (rarity)",
+          "Hvor ofte noe skjer.",
+          "How often something happens."
         ],
         [
           "klimaendring",
@@ -71,7 +85,9 @@
           "sg: (u) en klimaendring; (d) klimaendringen; pl: (u) klimaendringer; (d) klimaendringene",
           "nou",
           "klimaforandring (climate change)",
-          "stabilt klima (stable climate)"
+          "stabilt klima (stable climate)",
+          "Langvarig endring i klimaet.",
+          "Long-term change in the climate."
         ],
         [
           "klimafremtid",
@@ -79,7 +95,9 @@
           "sg: (u) en klimafremtid; (d) klimafremtiden; vanligvis uten flertall",
           "nou",
           "fremtidig klima (future climate)",
-          "klimafortid (climate past)"
+          "klimafortid (climate past)",
+          "Hvordan klimaet kan bli i årene som kommer.",
+          "How the climate may become in the years ahead."
         ],
         [
           "klimascenario",
@@ -87,7 +105,9 @@
           "sg: (u) et klimascenario; (d) klimascenarioet; pl: (u) klimascenarioer; (d) klimascenarioene",
           "nou",
           "framtidsbilde (future picture) · utviklingsbane (development path)",
-          "fasit (final answer)"
+          "fasit (final answer)",
+          "Mulig bilde av hvordan klimaet kan utvikle seg.",
+          "Possible picture of how the climate may develop."
         ],
         [
           "kritiske råvarer",
@@ -95,7 +115,9 @@
           "",
           "uttr",
           "strategiske råvarer (strategic raw materials)",
-          "lett erstattelige råvarer (easily replaceable raw materials)"
+          "lett erstattelige råvarer (easily replaceable raw materials)",
+          "Råvarer som er særlig viktige og vanskelige å erstatte.",
+          "Raw materials that are especially important and hard to replace."
         ],
         [
           "menneskeskapt",
@@ -103,7 +125,9 @@
           "(M/F) menneskeskapt; (N) menneskeskapt; (PL) menneskeskapte",
           "adj",
           "antropogen (anthropogenic)",
-          "naturlig (natural)"
+          "naturlig (natural)",
+          "Skapt eller forårsaket av mennesker.",
+          "Created or caused by humans."
         ],
         [
           "ppm",
@@ -111,7 +135,9 @@
           "",
           "fork",
           "deler per million (parts per million)",
-          "prosent (percent)"
+          "prosent (percent)",
+          "Forkortelse for deler per million.",
+          "Abbreviation for parts per million."
         ],
         [
           "prøvetaking",
@@ -119,7 +145,9 @@
           "sg: (u) en prøvetaking; (d) prøvetakingen; pl: (u) prøvetakinger; (d) prøvetakingene",
           "nou",
           "testing (testing)",
-          "synsing (guesswork)"
+          "synsing (guesswork)",
+          "Det å ta prøver for analyse.",
+          "Taking samples for analysis."
         ],
         [
           "råvare",
@@ -127,7 +155,9 @@
           "sg: (u) en råvare; (d) råvaren; pl: (u) råvarer; (d) råvarene",
           "nou",
           "materiale (material)",
-          "ferdigprodukt (finished product)"
+          "ferdigprodukt (finished product)",
+          "Materiale som kan brukes til å lage produkter.",
+          "Material that can be used to make products."
         ]
       ]
     }
@@ -144,5 +174,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

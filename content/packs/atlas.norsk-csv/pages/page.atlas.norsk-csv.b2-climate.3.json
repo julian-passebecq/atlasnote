@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "(M/F) folkelig · (N) folkelig · (PL) folkelige",
           "adj",
           "populær (popular) · jordnær (down-to-earth)",
-          "elitistisk (elitist) · utilgjengelig (inaccessible)"
+          "elitistisk (elitist) · utilgjengelig (inaccessible)",
+          "Populær eller jordnær.",
+          "Popular or down-to-earth."
         ],
         [
           "forklare",
@@ -31,7 +35,9 @@
           "G2 -te : (INF) infinitiv: å forklare; (PR) presens: forklarer; (PT) preteritum: forklarte; (PP) presens perfektum: har forklart",
           "vrb",
           "beskrive (describe) · gjøre klart (clarify)",
-          "forvirre (confuse)"
+          "forvirre (confuse)",
+          "Gjøre noe forståelig med ord eller eksempler.",
+          "Explain something with words or examples."
         ],
         [
           "forsvare",
@@ -39,7 +45,9 @@
           "G2 -te : (INF) infinitiv: å forsvare; (PR) presens: forsvarer; (PT) preteritum: forsvarte; (PP) presens perfektum: har forsvart; (PSS) forsvares; (IM) forsvar",
           "vrb",
           "beskytte (protect) · verne (protect)",
-          "angripe (attack) · overgi (surrender)"
+          "angripe (attack) · overgi (surrender)",
+          "Beskytte eller verne.",
+          "Protect or safeguard."
         ],
         [
           "forutsigbar",
@@ -47,7 +55,9 @@
           "(M/F) forutsigbar · (N) forutsigbart · (PL) forutsigbare",
           "adj",
           "beregnelig (predictable) · ventet (expected)",
-          "uforutsigbar (unpredictable)"
+          "uforutsigbar (unpredictable)",
+          "Lett å forutse eller beregne på forhånd.",
+          "Easy forutse or calculate in advance."
         ],
         [
           "fullstendig",
@@ -55,7 +65,9 @@
           "",
           "adj",
           "komplett (complete) · hel (whole)",
-          "ufullstendig (incomplete)"
+          "ufullstendig (incomplete)",
+          "Som er helt og uten mangler.",
+          "Whole and without missing parts."
         ],
         [
           "gi uttrykk for",
@@ -63,7 +75,9 @@
           "IRR : (INF) infinitiv: å gi uttrykk for; (PR) presens: gir uttrykk for; (PT) preteritum: ga/gav uttrykk for; (PP) presens perfektum: har gitt uttrykk for",
           "vrb",
           "uttrykke (express) · formulere (formulate)",
-          "holde tilbake (hold back) · tie om (stay silent about)"
+          "holde tilbake (hold back) · tie om (stay silent about)",
+          "Si, vise eller formulere en mening eller følelse.",
+          "Say, show, formulate an opinion or feeling."
         ],
         [
           "ha det på tunga",
@@ -71,7 +85,9 @@
           "IRR : (INF) infinitiv: å ha det på tunga; (PR) presens: har det på tunga · (PT) preteritum: hadde det på tunga · (PP) presens perfektum: har hatt det på tunga",
           "vrb",
           "nesten huske (almost remember) · lete etter ordet (search for the word)",
-          "huske klart (remember clearly) · glemme helt (forget completely)"
+          "huske klart (remember clearly) · glemme helt (forget completely)",
+          "Nesten huske et ord, men ikke klare å si det med en gang.",
+          "Almost remember a word, but not manage to say it immediately."
         ],
         [
           "ha sammenheng med",
@@ -79,7 +95,9 @@
           "",
           "uttr",
           "henge sammen med (be connected with) · være knyttet til (be linked to)",
-          "være uavhengig av (be independent of)"
+          "være uavhengig av (be independent of)",
+          "Være knyttet til eller forklart av noe annet.",
+          "Be linked to or explained by something else."
         ],
         [
           "hele",
@@ -87,7 +105,9 @@
           "",
           "det",
           "samlet (total) · fullstendig (complete)",
-          "delvis (partly)"
+          "delvis (partly)",
+          "Mengdeord som viser at ingenting er utelatt.",
+          "Quantifier showing that nothing is left out."
         ],
         [
           "inneholde",
@@ -95,7 +115,9 @@
           "G1 -et : (INF) infinitiv: å inneholde· (PR) presens: inneholder· (PT) preteritum: inneholdet· (PP) presens perfektum: har inneholdet· (PSS) inneholdes· (IM) innehold",
           "vrb",
           "omfatte (include) · romme (contain)",
-          "mangle (lack) · utelate (omit)"
+          "mangle (lack) · utelate (omit)",
+          "Ha noe som del eller innhold.",
+          "Have something that part or content."
         ],
         [
           "insekt",
@@ -103,7 +125,9 @@
           "sg: (u) et insekt; (d) insektet; pl: (u) insekter; (d) insektene",
           "nou",
           "småkryp (bug) · ledd-dyr (arthropod)",
-          "pattedyr (mammal)"
+          "pattedyr (mammal)",
+          "Lite dyr med seks bein, for eksempel bie eller mygg.",
+          "Small animal with six legs, for example a bee or mosquito."
         ],
         [
           "kilde",
@@ -111,7 +135,9 @@
           "sg: (u) en kilde; (d) kilden; pl: (u) kilder; (d) kildene",
           "nou",
           "opphav (origin/source) · referanse (reference)",
-          "kopi (copy) · gjengivelse (reproduction)"
+          "kopi (copy) · gjengivelse (reproduction)",
+          "Opphav, referanse.",
+          "Origin or reference."
         ],
         [
           "kjenne",
@@ -119,7 +145,9 @@
           "G2 -te : (INF) infinitiv: å kjenne; (PR) presens: kjenner; (PT) preteritum: kjente; (PP) presens perfektum: har kjent",
           "vrb",
           "vite om (know about) · føle (feel)",
-          "ikke vite (not know)"
+          "ikke vite (not know)",
+          "Ha kunnskap om eller merke noe.",
+          "Have knowledge of or sense something."
         ],
         [
           "komme i kontakt med",
@@ -127,7 +155,9 @@
           "IRR : (INF) infinitiv: å komme i kontakt med; (PR) presens: kommer i kontakt med; (PT) preteritum: kom i kontakt med; (PP) presens perfektum: har kommet i kontakt med",
           "vrb",
           "få kontakt med (get in touch with) · ta kontakt med (contact)",
-          "slutte (stop) · avslutte (finish)"
+          "slutte (stop) · avslutte (finish)",
+          "Få forbindelse med eller begynne å snakke med noen.",
+          "Get in touch with or start communicating with someone."
         ],
         [
           "komme til orde",
@@ -135,7 +165,9 @@
           "IRR : (INF) infinitiv: å komme til orde· (PR) presens: kommer til orde· (PT) preteritum: kom til orde· (PP) presens perfektum: har kommet til orde· (PSS) —· (IM) kom til orde",
           "vrb",
           "få si noe (get to say something) · bli hørt (be heard)",
-          "bli tiet i hjel (be silenced) · bli oversett (be ignored)"
+          "bli tiet i hjel (be silenced) · bli oversett (be ignored)",
+          "Få si noe eller bli hørt.",
+          "Get to say something or be heard."
         ],
         [
           "kortreist",
@@ -143,7 +175,9 @@
           "m/f: kortreist; n: kortreist; pl: kortreiste",
           "adj",
           "lokal (local) · nært produsert (locally produced)",
-          "langreist (transported far)"
+          "langreist (transported far)",
+          "Som er produsert nær stedet der det brukes eller selges.",
+          "Produced near the place where it is used or sold."
         ],
         [
           "land",
@@ -151,7 +185,9 @@
           "",
           "nou",
           "stat (state) · nasjon (nation)",
-          "hav (sea)"
+          "hav (sea)",
+          "Geografisk område med grenser, folk og styre.",
+          "Geographical area with borders, people, and government."
         ],
         [
           "landskap",
@@ -159,7 +195,9 @@
           "sg: (u) et landskap; (d) landskapet; pl: (u) landskap; (d) landskapene",
           "nou",
           "terreng (terrain) · område (area)",
-          "innemiljø (indoor environment)"
+          "innemiljø (indoor environment)",
+          "Område slik det ser ut med natur, bygninger og terreng.",
+          "An area as it appears with nature, buildings and terrain."
         ],
         [
           "lang",
@@ -167,7 +205,9 @@
           "",
           "adj",
           "langvarig (long-lasting)",
-          "kort (short)"
+          "kort (short)",
+          "Som har stor lengde eller varer lenge.",
+          "Having great length or lasting a long time."
         ],
         [
           "legge kortene på bordet",
@@ -175,7 +215,9 @@
           "IRR : (INF) infinitiv: å legge kortene på bordet; (PR) presens: legger kortene på bordet; (PT) preteritum: la kortene på bordet; (PP) presens perfektum: har lagt kortene på bordet",
           "vrb",
           "være åpen (be open) · si sannheten (tell the truth)",
-          "holde kortene skjult (keep the cards hidden)"
+          "holde kortene skjult (keep the cards hidden)",
+          "Være åpen og si sannheten om saken.",
+          "Be open and tell the truth about the matter."
         ],
         [
           "medføre",
@@ -183,7 +225,9 @@
           "G2 -te : (INF) infinitiv: å medføre· (PR) presens: medfører· (PT) preteritum: medførte· (PP) presens perfektum: har medført· (PSS) medføres",
           "vrb",
           "føre til (lead to) · innebære (entail)",
-          "hindre (prevent) · utelukke (exclude)"
+          "hindre (prevent) · utelukke (exclude)",
+          "Føre til eller ha som konsekvens.",
+          "Lead to or have as a consequence."
         ],
         [
           "målløs",
@@ -191,7 +235,9 @@
           "(M/F) målløs · (N) målløst · (PL) målløse",
           "adj",
           "ordløs (speechless) · stum (mute/speechless)",
-          "talefør (articulate, able to speak) · snakkesalig (talkative)"
+          "talefør (articulate, able to speak) · snakkesalig (talkative)",
+          "Ordløs eller stum.",
+          "Speechless or mute."
         ],
         [
           "natur",
@@ -199,7 +245,9 @@
           "sg: (u) en natur; (d) naturen; vanligvis uten flertall",
           "nou",
           "miljø (environment) · landskap (landscape)",
-          "kulturlandskap (cultivated landscape)"
+          "kulturlandskap (cultivated landscape)",
+          "Planter, dyr, landskap og miljø som ikke først og fremst er skapt av mennesker.",
+          "Plants, animals, landscapes and environments not primarily created by humans."
         ],
         [
           "naturalistisk",
@@ -207,7 +255,9 @@
           "(M/F) naturalistisk · (N) naturalistisk · (PL) naturalistiske",
           "adj",
           "realistisk (realistic) · virkelighetsnær (close to reality)",
-          "romantisk (romantic) · idealiserende (idealizing)"
+          "romantisk (romantic) · idealiserende (idealizing)",
+          "Som skildrer virkeligheten nøkternt og detaljert.",
+          "Depicting reality soberly and in detail."
         ],
         [
           "naturinngrep",
@@ -215,7 +265,9 @@
           "sg: (u) et naturinngrep; (d) naturinngrepet; pl: (u) naturinngrep; (d) naturinngrepene",
           "nou",
           "utbygging (development) · inngrep (intervention)",
-          "vern (protection)"
+          "vern (protection)",
+          "Menneskelig inngrep som endrer naturen.",
+          "Human intervention that changes nature."
         ],
         [
           "naturmangfold",
@@ -223,7 +275,9 @@
           "sg: (u) et naturmangfold; (d) naturmangfoldet; vanligvis uten flertall",
           "nou",
           "biologisk mangfold (biodiversity)",
-          "artsfattigdom (lack of species diversity)"
+          "artsfattigdom (lack of species diversity)",
+          "Variasjon av arter, naturtyper og økosystemer.",
+          "Variety of species, habitat types and ecosystems."
         ],
         [
           "nettadferd",
@@ -231,7 +285,9 @@
           "SG: (U) en nettadferd · (D) nettadferden · PL: —",
           "nou",
           "brukeratferd (user behaviour) · nettvaner (online habits)",
-          "offline-adferd (offline behaviour) · personvern (privacy)"
+          "offline-adferd (offline behaviour) · personvern (privacy)",
+          "Brukeratferd eller nettvaner.",
+          "User behaviour or online habits."
         ],
         [
           "oppbevare",
@@ -239,7 +295,9 @@
           "G2 -te : V1 — TE: (PR) presens: oppbevarer; (PT) preteritum: oppbevarte; (PP) presens perfektum: har oppbevart",
           "vrb",
           "lagre (store) · beholde (keep, retain)",
-          "kaste (throw away) · la være å gjøre det (not do it)"
+          "kaste (throw away) · la være å gjøre det (not do it)",
+          "Lagre eller beholde.",
+          "Store or keep."
         ],
         [
           "opphavsmann",
@@ -247,7 +305,9 @@
           "SG: (U) en opphavsmann · (D) opphavsmannen · PL: (U) opphavsmenn · (D) opphavsmennene",
           "nou",
           "skaper (creator) · forfatter (author)",
-          "kopist (copyist) · mottaker (recipient)"
+          "kopist (copyist) · mottaker (recipient)",
+          "Person som har skapt eller laget noe.",
+          "Person that har skapt or laget something."
         ],
         [
           "orke",
@@ -255,7 +315,9 @@
           "G1 -et : (INF) infinitiv: å orke· (PR) presens: orker· (PT) preteritum: orket· (PP) presens perfektum: har orket· (PSS) orkes· (IM) ork",
           "vrb",
           "makte (manage) · klare (manage)",
-          "gi opp (give up) · unngå (avoid)"
+          "gi opp (give up) · unngå (avoid)",
+          "Makte eller klare.",
+          "Manage or be able to."
         ],
         [
           "potet",
@@ -263,7 +325,9 @@
           "sg: (u) en potet; (d) poteten; pl: (u) poteter; (d) potetene",
           "nou",
           "matpotet (food potato)",
-          "kjøtt (meat)"
+          "kjøtt (meat)",
+          "Spiselig rotgrønnsak som ofte brukes som mat.",
+          "Edible root vegetable often used as food."
         ],
         [
           "prelle av",
@@ -271,7 +335,9 @@
           "G1 -et : (INF) infinitiv: å prelle av· (PR) presens: preller av· (PT) preteritum: prellet av· (PP) presens perfektum: har prellet av· (PSS) prelles av· (IM) prell av",
           "vrb",
           "ignoreres (bounce off) · ikke gjøre inntrykk (bounce off)",
-          "gå inn på (affect)"
+          "gå inn på (affect)",
+          "Bli ignorert eller ikke få noen virkning.",
+          "Be ignored or have no effect."
         ],
         [
           "påvirkning",
@@ -279,7 +345,9 @@
           "SG: (U) en påvirkning · (D) påvirkningen · PL: (U) påvirkninger · (D) påvirkningene",
           "nou",
           "innvirkning (influence) · effekt (effect)",
-          "manglende påvirkning (lack of influence)"
+          "manglende påvirkning (lack of influence)",
+          "Det å ha effekt på noen eller noe.",
+          "Having an effect on someone or something."
         ],
         [
           "reindrift",
@@ -287,7 +355,9 @@
           "sg: (u) en reindrift; (d) reindriften; vanligvis uten flertall",
           "nou",
           "samisk næring (Sámi livelihood)",
-          "industridrift (industrial operation)"
+          "industridrift (industrial operation)",
+          "Næring og kultur knyttet til tamrein.",
+          "Livelihood and culture linked to domesticated reindeer."
         ],
         [
           "restaurering",
@@ -295,7 +365,9 @@
           "sg: (u) en restaurering; (d) restaureringen; pl: (u) restaureringer; (d) restaureringene",
           "nou",
           "gjenoppretting (restoration)",
-          "ødeleggelse (destruction)"
+          "ødeleggelse (destruction)",
+          "Arbeid med å reparere eller gjenopprette natur, bygg eller systemer.",
+          "Work to repair or restore nature, buildings or systems."
         ],
         [
           "saken er at",
@@ -303,7 +375,9 @@
           "",
           "uttr",
           "poenget er at (the point is that) · problemet er at (the problem is that)",
-          "det er ikke poenget at (that is not the point)"
+          "det er ikke poenget at (that is not the point)",
+          "Ha betydning eller påvirkning.",
+          "Have meaning or influence."
         ],
         [
           "samsvare",
@@ -311,7 +385,9 @@
           "G2 -te : (INF) infinitiv: å samsvare· (PR) presens: samsvarer· (PT) preteritum: samsvarte· (PP) presens perfektum: har samsvart· (PSS) samsvares· (IM) samsvar",
           "vrb",
           "stemme overens (match) · passe (fit)",
-          "avvike (deviate) · stride (conflict)"
+          "avvike (deviate) · stride (conflict)",
+          "Stemme overens eller passe.",
+          "Agree or fit."
         ],
         [
           "sesong",
@@ -319,7 +395,9 @@
           "sg: (u) en sesong; (d) sesongen; pl: (u) sesonger; (d) sesongene",
           "nou",
           "årstid (season)",
-          "helår (whole year)"
+          "helår (whole year)",
+          "Del av året med typiske aktiviteter eller naturforhold.",
+          "Part of the year with typical activities or natural conditions."
         ],
         [
           "sette i gang",
@@ -327,7 +405,9 @@
           "IRR : (INF) infinitiv: å sette i gang· (PR) presens: setter i gang· (PT) preteritum: satte i gang· (PP) presens perfektum: har satt i gang· (PSS) —· (IM) sett i gang",
           "vrb",
           "starte (start) · igangsette (initiate)",
-          "stanse (stop) · avbryte (interrupt)"
+          "stanse (stop) · avbryte (interrupt)",
+          "Starte eller igangsette.",
+          "Start or initiate."
         ],
         [
           "sette saken på spissen",
@@ -335,7 +415,9 @@
           "IRR : (INF) infinitiv: å sette saken på spissen· (PR) presens: setter saken på spissen· (PT) preteritum: satte saken på spissen· (PP) presens perfektum: har satt saken på spissen· (PSS) —· (IM) sett saken på spissen",
           "vrb",
           "spissformulere (sharpen wording) · overdrive (exaggerate)",
-          "nyansere (nuance)"
+          "nyansere (nuance)",
+          "Ha betydning eller påvirkning.",
+          "Have meaning or influence."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

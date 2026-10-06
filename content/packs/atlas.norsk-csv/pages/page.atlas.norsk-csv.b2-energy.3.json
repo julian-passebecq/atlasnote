@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "sg: (u) en ruteplan; (d) ruteplanen; pl: (u) ruteplaner; (d) ruteplanene",
           "nou",
           "rutetabell (timetable) · kjøreplan (schedule)",
-          "ruteendring (route change) · innstilling (cancellation)"
+          "ruteendring (route change) · innstilling (cancellation)",
+          "Plan for avganger, tider og stopp.",
+          "Plan for departures, times, and stops."
         ],
         [
           "rykke ut",
@@ -31,7 +35,9 @@
           "G1 -et : (INF) infinitiv: å rykke ut; (PR) presens: rykker ut; (PT) preteritum: rykket ut; (PP) presens perfektum: har rykket ut",
           "vrb",
           "dra ut (go out) · respondere (respond)",
-          "bli værende (stay)"
+          "bli værende (stay)",
+          "Dra raskt ut på oppdrag, særlig for politi, brannvesen eller ambulanse.",
+          "Go quickly out on a mission, especially for police, fire service, or ambulance."
         ],
         [
           "salgsforbud",
@@ -39,7 +45,9 @@
           "sg: (u) et salgsforbud; (d) salgsforbudet; pl: (u) salgsforbud; (d) salgsforbudene",
           "nou",
           "forbud (ban) · omsetningsforbud (trade ban)",
-          "salgstillatelse (sales permit)"
+          "salgstillatelse (sales permit)",
+          "Forbud mot å selge noe.",
+          "A ban on selling something."
         ],
         [
           "samferdsel",
@@ -47,7 +55,9 @@
           "sg: (u) en samferdsel; (d) samferdselen; pl: (u) samferdsler; (d) samferdslene",
           "nou",
           "transport (transport) · infrastruktur (infrastructure)",
-          "isolasjon (isolation) · manglende forbindelse (lack of connection)"
+          "isolasjon (isolation) · manglende forbindelse (lack of connection)",
+          "Transport og infrastruktur i et samfunn.",
+          "Transport and infrastructure in a society."
         ],
         [
           "signalfeil",
@@ -55,7 +65,9 @@
           "sg: (u) en signalfeil; (d) signalfeilen; pl: (u) signalfeil; (d) signalfeilene",
           "nou",
           "teknisk feil (technical fault)",
-          "normal drift (normal operation)"
+          "normal drift (normal operation)",
+          "Teknisk feil i signalanlegget på jernbanen.",
+          "Technical fault in the railway signalling system."
         ],
         [
           "sikkerhetskontroll",
@@ -63,7 +75,9 @@
           "sg: (u) en sikkerhetskontroll; (d) sikkerhetskontrollen; pl: (u) sikkerhetskontroller; (d) sikkerhetskontrollene",
           "nou",
           "kontroll (check)",
-          "fri passasje (free passage)"
+          "fri passasje (free passage)",
+          "Kontroll før passasjerer får gå videre på flyplass.",
+          "Security check before passengers may proceed at an airport."
         ],
         [
           "sjømine",
@@ -71,7 +85,9 @@
           "sg: (u) en sjømine; (d) sjøminen; pl: (u) sjøminer; (d) sjøminene",
           "nou",
           "mine (mine)",
-          "ryddet farvann (cleared waters)"
+          "ryddet farvann (cleared waters)",
+          "Mine som ligger i sjøen og kan skade skip.",
+          "Mine placed in the sea that can damage ships."
         ],
         [
           "skinne",
@@ -79,7 +95,9 @@
           "sg: (u) en skinne; (d) skinnen; pl: (u) skinner; (d) skinnene",
           "nou",
           "jernbaneskinne (rail)",
-          "vei (road)"
+          "vei (road)",
+          "Metallspor som tog eller trikk kjører på.",
+          "Metal rail that trains or trams run on."
         ],
         [
           "skinneganger",
@@ -87,7 +105,9 @@
           "sg: (u) en skinneganger; (d) skinnegangeren; pl: (u) skinnegangerer; (d) skinnegangerene",
           "nou",
           "spor (tracks) · jernbanespor (railway tracks)",
-          "veibane (roadway)"
+          "veibane (roadway)",
+          "Jernbanespor eller skinner toget kjører på.",
+          "Railway tracks or rails the train runs on."
         ],
         [
           "skip",
@@ -95,7 +115,9 @@
           "sg: (u) et skip; (d) skipet; pl: (u) skip; (d) skipene",
           "nou",
           "fartøy (vessel)",
-          "fly (aircraft)"
+          "fly (aircraft)",
+          "Stort fartøy på sjøen.",
+          "Large vessel at sea."
         ],
         [
           "skipseskorte",
@@ -103,7 +125,9 @@
           "sg: (u) en skipseskorte; (d) skipseskorten; pl: (u) skipseskorter; (d) skipseskortene",
           "nou",
           "eskorte (escort)",
-          "ubeskyttet seilas (unprotected voyage)"
+          "ubeskyttet seilas (unprotected voyage)",
+          "Militær eller annen eskortering av skip.",
+          "Military or other escorting of ships."
         ],
         [
           "skipsfart",
@@ -111,7 +135,9 @@
           "sg: (u) en skipsfart; (d) skipsfarten; pl: (u) skipsfarter; (d) skipsfartene",
           "nou",
           "sjøfart (maritime transport)",
-          "luftfart (aviation)"
+          "luftfart (aviation)",
+          "Transport og virksomhet med skip.",
+          "Transport and activity involving ships."
         ],
         [
           "skipstrafikk",
@@ -119,7 +145,9 @@
           "sg: (u) en skipstrafikk; (d) skipstrafikken; pl: (u) skipstrafikker; (d) skipstrafikkene",
           "nou",
           "sjøtrafikk (maritime traffic)",
-          "veitrafikk (road traffic)"
+          "veitrafikk (road traffic)",
+          "Trafikk med skip i et område.",
+          "Traffic by ships in an area."
         ],
         [
           "sparkesykkel",
@@ -127,7 +155,9 @@
           "sg: (u) en sparkesykkel; (d) sparkesykkelen; pl: (u) sparkesykkeler; (d) sparkesykkelerene",
           "nou",
           "elsparkesykkel (electric scooter)",
-          "bil (car)"
+          "bil (car)",
+          "Liten tohjuling man står på, ofte elektrisk i bytrafikk.",
+          "Small scooter one stands on, often electric in city traffic."
         ],
         [
           "sperre av",
@@ -135,7 +165,9 @@
           "G1 -et : (INF) infinitiv: å sperre av; (PR) presens: sperrer av; (PT) preteritum: sperret av; (PP) presens perfektum: har sperret av",
           "vrb",
           "stenge av (close off)",
-          "åpne (open)"
+          "åpne (open)",
+          "Stenge et område for trafikk eller publikum.",
+          "Close off an area to traffic or the public."
         ],
         [
           "spor",
@@ -143,7 +175,9 @@
           "sg: (u) et spor; (d) sporet; pl: (u) spor; (d) sporene",
           "nou",
           "togspor (rail track)",
-          "vei (road)"
+          "vei (road)",
+          "Skinnegang eller nummerert plass for tog.",
+          "Track or numbered place for trains."
         ],
         [
           "strede",
@@ -151,7 +185,9 @@
           "sg: (u) et strede; (d) stredet; pl: (u) streder; (d) strederne",
           "nou",
           "sund (sound/strait)",
-          "åpent hav (open sea)"
+          "åpent hav (open sea)",
+          "Smal sjøvei mellom to landområder.",
+          "Narrow sea passage between two land areas."
         ],
         [
           "strekning",
@@ -159,7 +195,9 @@
           "sg: (u) en strekning; (d) strekningen; pl: (u) strekninger; (d) strekningerene",
           "nou",
           "delstrekning (section) · rute (route)",
-          "hele ruten (whole route)"
+          "hele ruten (whole route)",
+          "Del av vei, bane eller rute mellom to punkter.",
+          "Section of road, railway, or route between two points."
         ],
         [
           "strømbrudd",
@@ -167,7 +205,9 @@
           "sg: (u) et strømbrudd; (d) strømbruddet; pl: (u) strømbrudd; (d) strømbruddene",
           "nou",
           "strømstans (power cut)",
-          "strømtilførsel (power supply)"
+          "strømtilførsel (power supply)",
+          "Stans i strømtilførselen.",
+          "Interruption in the power supply."
         ],
         [
           "T-bane",
@@ -175,7 +215,9 @@
           "sg: (u) en T-bane; (d) T-banen; pl: (u) T-baner; (d) T-banene",
           "nou",
           "metro (metro)",
-          "buss (bus)"
+          "buss (bus)",
+          "Undergrunns- eller bybane i storby.",
+          "Metro or urban rail in a large city."
         ],
         [
           "tankskip",
@@ -183,7 +225,9 @@
           "sg: (u) et tankskip; (d) tankskipet; pl: (u) tankskip; (d) tankskipene",
           "nou",
           "oljetanker (oil tanker)",
-          "passasjerskip (passenger ship)"
+          "passasjerskip (passenger ship)",
+          "Skip som frakter olje, gass eller kjemikalier i tanker.",
+          "Ship carrying oil, gas, or chemicals in tanks."
         ],
         [
           "terminal",
@@ -191,7 +235,9 @@
           "sg: (u) en terminal; (d) terminalen; pl: (u) terminaler; (d) terminalene",
           "nou",
           "avgangshall (departure hall)",
-          "holdeplass (stop)"
+          "holdeplass (stop)",
+          "Bygning eller område for avgang og ankomst.",
+          "Building or area for departure and arrival."
         ],
         [
           "territorialfarvann",
@@ -199,7 +245,9 @@
           "sg: (u) et territorialfarvann; (d) territorialfarvannet; pl: (u) territorialfarvann; (d) territorialfarvannene",
           "nou",
           "nasjonalt farvann (national waters)",
-          "internasjonalt farvann (international waters)"
+          "internasjonalt farvann (international waters)",
+          "Sjøområde som tilhører eller kontrolleres av en stat.",
+          "Sea area belonging to or controlled by a state."
         ],
         [
           "tog",
@@ -207,7 +255,9 @@
           "sg: (u) et tog; (d) toget; pl: (u) tog; (d) togene",
           "nou",
           "jernbanetog (train)",
-          "buss (bus)"
+          "buss (bus)",
+          "Transportmiddel som går på skinner.",
+          "Vehicle that runs on rails."
         ],
         [
           "togavgang",
@@ -215,7 +265,9 @@
           "sg: (u) en togavgang; (d) togavgangen; pl: (u) togavganger; (d) togavgangene",
           "nou",
           "avreise (departure) · togreise (train departure)",
-          "togankomst (train arrival)"
+          "togankomst (train arrival)",
+          "Planlagt avgang for et tog.",
+          "Scheduled train departure."
         ],
         [
           "togmateriell",
@@ -223,7 +275,9 @@
           "sg: (u) et togmateriell; (d) togmateriellet; pl: (u) togmateriell; (d) togmateriellene",
           "nou",
           "rullende materiell (rolling stock)",
-          "veikjøretøy (road vehicle)"
+          "veikjøretøy (road vehicle)",
+          "Tog, vogner og teknisk utstyr som brukes i togdrift.",
+          "Trains, carriages, and technical equipment used in rail operations."
         ],
         [
           "togpassasjer",
@@ -231,7 +285,9 @@
           "sg: (u) en togpassasjer; (d) togpassasjeren; pl: (u) togpassasjerer; (d) togpassasjerene",
           "nou",
           "reisende (traveller)",
-          "sjåfør (driver)"
+          "sjåfør (driver)",
+          "Person som reiser med tog.",
+          "Person travelling by train."
         ],
         [
           "togsett",
@@ -239,7 +295,9 @@
           "sg: (u) et togsett; (d) togsettet; pl: (u) togsett; (d) togsettene",
           "nou",
           "togmateriell (rolling stock) · vognsett (trainset)",
-          "enkeltvogn (single carriage)"
+          "enkeltvogn (single carriage)",
+          "Sammensatt enhet av vogner og motor som brukes som tog.",
+          "Combined unit of cars and engine used as a train."
         ],
         [
           "togstasjon",
@@ -247,7 +305,9 @@
           "sg: (u) en togstasjon; (d) togstasjonen; pl: (u) togstasjoner; (d) togstasjonene",
           "nou",
           "stasjon (station)",
-          "holdeplass (stop)"
+          "holdeplass (stop)",
+          "Sted der tog stopper for passasjerer.",
+          "Place where trains stop for passengers."
         ],
         [
           "togulykke",
@@ -255,7 +315,9 @@
           "sg: (u) en togulykke; (d) togulykken; pl: (u) togulykker; (d) togulykkerene",
           "nou",
           "jernbaneulykke (rail accident)",
-          "trygg togavgang (safe train departure)"
+          "trygg togavgang (safe train departure)",
+          "Ulykke med tog.",
+          "Train accident."
         ],
         [
           "trafikkork",
@@ -263,7 +325,9 @@
           "sg: (u) en trafikkork; (d) trafikkorken; pl: (u) trafikkorker; (d) trafikkorkene",
           "nou",
           "kø (queue/jam)",
-          "fri flyt (free flow)"
+          "fri flyt (free flow)",
+          "Lang kø i trafikken.",
+          "Long traffic jam."
         ],
         [
           "trafikkuhell",
@@ -271,7 +335,9 @@
           "sg: (u) et trafikkuhell; (d) trafikkuhellet; pl: (u) trafikkuhell; (d) trafikkuhellene",
           "nou",
           "trafikkulykke (traffic accident) · uhell (incident)",
-          "normal trafikk (normal traffic)"
+          "normal trafikk (normal traffic)",
+          "Mindre trafikkulykke eller hendelse i trafikken.",
+          "A minor traffic accident or incident."
         ],
         [
           "trafikkulykke",
@@ -279,7 +345,9 @@
           "sg: (u) en trafikkulykke; (d) trafikkulykken; pl: (u) trafikkulykker; (d) trafikkulykkene",
           "nou",
           "ulykke (accident)",
-          "normal trafikk (normal traffic)"
+          "normal trafikk (normal traffic)",
+          "Ulykke i trafikken.",
+          "Accident in traffic."
         ],
         [
           "tunnel",
@@ -287,7 +355,9 @@
           "sg: (u) en tunnel; (d) tunnelen; pl: (u) tunneler; (d) tunnelene",
           "nou",
           "veitunnel (road tunnel)",
-          "bro/bru (bridge)"
+          "bro/bru (bridge)",
+          "Passasje gjennom fjell, under vann eller under bakken.",
+          "Passage through rock, under water, or underground."
         ],
         [
           "vedlikeholdsetterslep",
@@ -295,7 +365,9 @@
           "sg: (u) et vedlikeholdsetterslep; (d) vedlikeholdsetterslepet; pl: (u) vedlikeholdsetterslep; (d) vedlikeholdsetterslepene",
           "nou",
           "vedlikeholdsbehov (maintenance need) · etterslep (backlog)",
-          "oppdatert vedlikehold (up-to-date maintenance) · god stand (good condition)"
+          "oppdatert vedlikehold (up-to-date maintenance) · god stand (good condition)",
+          "Oppsamlet behov for vedlikehold som ikke er gjort.",
+          "Accumulated maintenance need that has not been done."
         ],
         [
           "vei",
@@ -303,7 +375,9 @@
           "sg: (u) en vei; (d) veien; pl: (u) veier; (d) veiene",
           "nou",
           "rute (route) · metode (method)",
-          "blindvei (dead end)"
+          "blindvei (dead end)",
+          "Rute, gate eller måte å komme fram på.",
+          "Route, road, or way to get somewhere."
         ],
         [
           "veiarbeid",
@@ -311,7 +385,9 @@
           "sg: (u) et veiarbeid; (d) veiarbeidet; pl: (u) veiarbeid; (d) veiarbeidene",
           "nou",
           "anleggsarbeid (construction work)",
-          "åpen vei (open road)"
+          "åpen vei (open road)",
+          "Arbeid med bygging, reparasjon eller vedlikehold av vei.",
+          "Work on building, repairing, or maintaining a road."
         ],
         [
           "veiledning",
@@ -319,7 +395,9 @@
           "sg: (u) en veiledning; (d) veiledningen; pl: (u) veiledninger; (d) veiledningene",
           "nou",
           "råd (advice) · instruksjon (instruction)",
-          "forvirring (confusion) · manglende hjelp (lack of help)"
+          "forvirring (confusion) · manglende hjelp (lack of help)",
+          "Råd eller hjelp til hvordan noe skal gjøres.",
+          "Advice or help on how something should be done."
         ],
         [
           "veisperring",
@@ -327,7 +405,9 @@
           "sg: (u) en veisperring; (d) veisperringen; pl: (u) veisperringer; (d) veisperringene",
           "nou",
           "sperring (closure)",
-          "åpen vei (open road)"
+          "åpen vei (open road)",
+          "Stenging av vei.",
+          "Closure of a road."
         ],
         [
           "verkstedopphold",
@@ -335,7 +415,9 @@
           "sg: (u) et verkstedopphold; (d) verkstedoppholdet; pl: (u) verkstedopphold; (d) verkstedoppholdene",
           "nou",
           "vedlikeholdsperiode (maintenance period)",
-          "drift (operation)"
+          "drift (operation)",
+          "Tid et kjøretøy eller tog står på verksted.",
+          "Time a vehicle or train spends in a workshop."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

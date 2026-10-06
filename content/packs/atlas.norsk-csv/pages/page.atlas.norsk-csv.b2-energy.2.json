@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "sg: (u) en havn; (d) havnen; pl: (u) havner; (d) havnene",
           "nou",
           "kaiområde (dock area)",
-          "åpent hav (open sea)"
+          "åpent hav (open sea)",
+          "Sted der skip legger til.",
+          "Place where ships dock."
         ],
         [
           "hurtigbåt",
@@ -31,7 +35,9 @@
           "sg: (u) en hurtigbåt; (d) hurtigbåten; pl: (u) hurtigbåter; (d) hurtigbåtene",
           "nou",
           "passasjerbåt (passenger boat)",
-          "lasteskip (cargo ship)"
+          "lasteskip (cargo ship)",
+          "Rask passasjerbåt i rutetrafikk.",
+          "Fast passenger boat in scheduled service."
         ],
         [
           "innstilt",
@@ -39,7 +45,9 @@
           "(M/F) innstilt · (N) innstilt · (PL) innstilte",
           "adj",
           "avlyst (cancelled)",
-          "oppsatt (scheduled)"
+          "oppsatt (scheduled)",
+          "Avlyst eller ikke gjennomført som planlagt.",
+          "Cancelled or not carried out as planned."
         ],
         [
           "jernbane",
@@ -47,7 +55,9 @@
           "sg: (u) en jernbane; (d) jernbanen; pl: (u) jernbaner; (d) jernbanene",
           "nou",
           "togbane (railway)",
-          "veitrafikk (road traffic)"
+          "veitrafikk (road traffic)",
+          "System med tog, skinner og stasjoner.",
+          "System of trains, tracks, and stations."
         ],
         [
           "jernbaneinfrastruktur",
@@ -55,7 +65,9 @@
           "sg: (u) en jernbaneinfrastruktur; (d) jernbaneinfrastrukturen; pl: (u) jernbaneinfrastrukturer; (d) jernbaneinfrastrukturene",
           "nou",
           "skinnegang og anlegg (tracks and facilities)",
-          "veiinfrastruktur (road infrastructure)"
+          "veiinfrastruktur (road infrastructure)",
+          "Spor, signaler, strøm og anlegg som togtrafikken trenger.",
+          "Tracks, signals, power, and facilities needed for rail traffic."
         ],
         [
           "jernbanereform",
@@ -63,7 +75,9 @@
           "sg: (u) en jernbanereform; (d) jernbanereformen; pl: (u) jernbanereformer; (d) jernbanereformene",
           "nou",
           "togreform (rail reform) · reform av jernbanen (railway reform)",
-          "status quo (status quo) · tilbakerulling (rollback)"
+          "status quo (status quo) · tilbakerulling (rollback)",
+          "Endring av organisering eller styring av jernbanen.",
+          "Change in the organization or governance of the railway."
         ],
         [
           "jernbanestrekning",
@@ -71,7 +85,9 @@
           "sg: (u) en jernbanestrekning; (d) jernbanestrekningen; pl: (u) jernbanestrekninger; (d) jernbanestrekningene",
           "nou",
           "togstrekning (rail section)",
-          "veistrekning (road section)"
+          "veistrekning (road section)",
+          "Del av jernbanen mellom steder.",
+          "Part of a railway between places."
         ],
         [
           "kai",
@@ -79,7 +95,9 @@
           "sg: (u) en kai; (d) kaia/kaien; pl: (u) kaier; (d) kaiene",
           "nou",
           "brygge (pier)",
-          "åpent vann (open water)"
+          "åpent vann (open water)",
+          "Konstruksjon langs vann der båter legger til.",
+          "Structure along water where boats dock."
         ],
         [
           "kjøreledning",
@@ -87,7 +105,9 @@
           "sg: (u) en kjøreledning; (d) kjøreledningen; pl: (u) kjøreledninger; (d) kjøreledningene",
           "nou",
           "kontaktledning (overhead line) · strømledning for tog (train power line)",
-          "dieseldrift (diesel operation)"
+          "dieseldrift (diesel operation)",
+          "Strømledning over jernbanespor.",
+          "Power line above railway tracks."
         ],
         [
           "kollisjon",
@@ -95,7 +115,9 @@
           "sg: (u) en kollisjon; (d) kollisjonen; pl: (u) kollisjoner; (d) kollisjonene",
           "nou",
           "sammenstøt (collision)",
-          "unngåelse (avoidance)"
+          "unngåelse (avoidance)",
+          "Ulykke der kjøretøy, fartøy eller personer støter sammen.",
+          "Accident where vehicles, vessels, or people collide."
         ],
         [
           "konduktør",
@@ -103,7 +125,9 @@
           "sg: (u) en konduktør; (d) konduktøren; pl: (u) konduktører; (d) konduktørene",
           "nou",
           "togbetjent (train attendant)",
-          "passasjer (passenger)"
+          "passasjer (passenger)",
+          "Ansatt på tog som hjelper passasjerer og kontrollerer billetter.",
+          "Train employee who helps passengers and checks tickets."
         ],
         [
           "konkurranseutsetting",
@@ -111,7 +135,9 @@
           "sg: (u) en konkurranseutsetting; (d) konkurranseutsettingen; pl: (u) konkurranseutsettinger; (d) konkurranseutsettingene",
           "nou",
           "anbudsutsetting (tendering) · outsourcing (outsourcing)",
-          "egenregi (in-house operation) · offentlig drift (public operation)"
+          "egenregi (in-house operation) · offentlig drift (public operation)",
+          "Å la private eller andre aktører konkurrere om å levere en tjeneste.",
+          "Letting private or other actors compete to provide a service."
         ],
         [
           "konteinerskip",
@@ -119,7 +145,9 @@
           "sg: (u) et konteinerskip; (d) konteinerskipet; pl: (u) konteinerskip; (d) konteinerskipene",
           "nou",
           "containerskip (container ship)",
-          "passasjerferge (passenger ferry)"
+          "passasjerferge (passenger ferry)",
+          "Skip som frakter konteinere.",
+          "Ship that transports containers."
         ],
         [
           "krengemekanisme",
@@ -127,7 +155,9 @@
           "sg: (u) en krengemekanisme; (d) krengemekanismen; pl: (u) krengemekanismer; (d) krengemekanismene",
           "nou",
           "tiltemekanisme (tilting mechanism) · krengeteknologi (tilting technology)",
-          "stiv konstruksjon (rigid construction)"
+          "stiv konstruksjon (rigid construction)",
+          "Teknisk system som lar tog lene seg i svinger.",
+          "Technical system allowing trains to tilt in curves."
         ],
         [
           "krigsskip",
@@ -135,7 +165,9 @@
           "sg: (u) et krigsskip; (d) krigsskipet; pl: (u) krigsskip; (d) krigsskipene",
           "nou",
           "marinefartøy (naval vessel)",
-          "handelsskip (merchant ship)"
+          "handelsskip (merchant ship)",
+          "Militært skip.",
+          "Military ship."
         ],
         [
           "lasteskip",
@@ -143,7 +175,9 @@
           "sg: (u) et lasteskip; (d) lasteskipet; pl: (u) lasteskip; (d) lasteskipene",
           "nou",
           "frakteskip (freight ship)",
-          "passasjerskip (passenger ship)"
+          "passasjerskip (passenger ship)",
+          "Skip som frakter varer.",
+          "Ship that transports goods."
         ],
         [
           "lette kjøretøy",
@@ -151,7 +185,9 @@
           "",
           "uttr",
           "små kjøretøy (light vehicles) · personbiler og varebiler (cars and vans)",
-          "tunge kjøretøy (heavy vehicles) · lastebiler (lorries/trucks)"
+          "tunge kjøretøy (heavy vehicles) · lastebiler (lorries/trucks)",
+          "Biler og andre kjøretøy under en bestemt vektgrense.",
+          "Cars and other vehicles below a certain weight limit."
         ],
         [
           "leveringstid",
@@ -159,7 +195,9 @@
           "sg: (u) en leveringstid; (d) leveringstiden; pl: (u) leveringstider; (d) leveringstidene",
           "nou",
           "frist (deadline) · ventetid (waiting time)",
-          "forsinkelse (delay)"
+          "forsinkelse (delay)",
+          "Frist eller ventetid for levering.",
+          "Deadline or waiting time for delivery."
         ],
         [
           "lokomotiv",
@@ -167,7 +205,9 @@
           "sg: (u) et lokomotiv; (d) lokomotivet; pl: (u) lokomotiv; (d) lokomotivene",
           "nou",
           "togmotor (train engine)",
-          "vogn (carriage)"
+          "vogn (carriage)",
+          "Maskin som trekker tog.",
+          "Engine that pulls trains."
         ],
         [
           "los",
@@ -175,7 +215,9 @@
           "sg: (u) en los; (d) losen; pl: (u) loser; (d) losene",
           "nou",
           "skipslos (ship pilot)",
-          "kaptein alene (captain alone)"
+          "kaptein alene (captain alone)",
+          "Person som leder skip trygt gjennom krevende farvann.",
+          "Person who guides ships safely through difficult waters."
         ],
         [
           "luftfart",
@@ -183,7 +225,9 @@
           "sg: (u) en luftfart; (d) luftfarten; pl: (u) luftfarter; (d) luftfartene",
           "nou",
           "flytrafikk (air traffic)",
-          "skipsfart (shipping)"
+          "skipsfart (shipping)",
+          "Transport og virksomhet med fly.",
+          "Transport and activity involving aircraft."
         ],
         [
           "lufthavn",
@@ -191,7 +235,9 @@
           "sg: (u) en lufthavn; (d) lufthavnen; pl: (u) lufthavner; (d) lufthavnene",
           "nou",
           "flyplass (airport)",
-          "havn (port)"
+          "havn (port)",
+          "Formelt ord for flyplass.",
+          "Formal word for airport."
         ],
         [
           "luftrom",
@@ -199,7 +245,9 @@
           "sg: (u) et luftrom; (d) luftrommet; pl: (u) luftrom; (d) luftrommene",
           "nou",
           "kontrollert luftrom (controlled airspace)",
-          "bakkeområde (ground area)"
+          "bakkeområde (ground area)",
+          "Område i lufta som kontrolleres av en stat eller myndighet.",
+          "Air area controlled by a state or authority."
         ],
         [
           "materiell",
@@ -207,7 +255,9 @@
           "sg: (u) et materiell; (d) materiellet; pl: (u) materiell; (d) materiellene",
           "nou",
           "utstyr (equipment) · rullende materiell (rolling stock)",
-          "mangel på utstyr (lack of equipment) · immateriell ressurs (intangible resource)"
+          "mangel på utstyr (lack of equipment) · immateriell ressurs (intangible resource)",
+          "Kjøretøy, utstyr eller fysisk materiale som brukes i drift.",
+          "Vehicles, equipment, or physical material used in operations."
         ],
         [
           "mellomlanding",
@@ -215,7 +265,9 @@
           "sg: (u) en mellomlanding; (d) mellomlandingen; pl: (u) mellomlandinger; (d) mellomlandingene",
           "nou",
           "transitt (transit)",
-          "direktefly (direct flight)"
+          "direktefly (direct flight)",
+          "Stopp underveis på en flyreise.",
+          "Stop during a flight journey."
         ],
         [
           "minejeger",
@@ -223,7 +275,9 @@
           "sg: (u) en minejeger; (d) minejegeren; pl: (u) minejegere; (d) minejegerne",
           "nou",
           "minerydder (minesweeper)",
-          "handelsfartøy (merchant vessel)"
+          "handelsfartøy (merchant vessel)",
+          "Fartøy som leter etter og uskadeliggjør miner.",
+          "Vessel that searches for and neutralizes mines."
         ],
         [
           "minerydder",
@@ -231,7 +285,9 @@
           "sg: (u) en minerydder; (d) minerydderen; pl: (u) mineryddere; (d) minerydderne",
           "nou",
           "minejeger (minehunter)",
-          "lasteskip (cargo ship)"
+          "lasteskip (cargo ship)",
+          "Fartøy eller person som rydder miner.",
+          "Vessel or person that clears mines."
         ],
         [
           "minerydding",
@@ -239,7 +295,9 @@
           "sg: (u) en minerydding; (d) mineryddingen; pl: (u) mineryddinger; (d) mineryddingene",
           "nou",
           "minejakt (mine hunting)",
-          "minlegging (mine laying)"
+          "minlegging (mine laying)",
+          "Arbeid med å finne og fjerne miner.",
+          "Work to find and remove mines."
         ],
         [
           "nødetat",
@@ -247,7 +305,9 @@
           "sg: (u) en nødetat; (d) nødetaten; pl: (u) nødetater; (d) nødetatene",
           "nou",
           "beredskapsetat (emergency agency)",
-          "ordinær tjeneste (ordinary service)"
+          "ordinær tjeneste (ordinary service)",
+          "Offentlig tjeneste som politi, brannvesen eller ambulanse.",
+          "Public emergency service such as police, fire service, or ambulance."
         ],
         [
           "nødlanding",
@@ -255,7 +315,9 @@
           "sg: (u) en nødlanding; (d) nødlandingen; pl: (u) nødlandinger; (d) nødlandingene",
           "nou",
           "akutt landing (emergency landing)",
-          "planlagt landing (planned landing)"
+          "planlagt landing (planned landing)",
+          "Landing på grunn av akutt fare eller teknisk problem.",
+          "Landing because of immediate danger or a technical problem."
         ],
         [
           "perrong",
@@ -263,7 +325,9 @@
           "sg: (u) en perrong; (d) perrongen; pl: (u) perronger; (d) perrongene",
           "nou",
           "plattform (platform)",
-          "tog (train) · spor (track)"
+          "tog (train) · spor (track)",
+          "Område på stasjonen der passasjerer går av og på toget.",
+          "Platform area at a station where passengers board and leave trains."
         ],
         [
           "punktlighet",
@@ -271,7 +335,9 @@
           "sg: (u) en punktlighet; (d) punktligheten; pl: (u) punktligheter; (d) punktlighetene",
           "nou",
           "presisjon (punctuality) · tidsnøyaktighet (time precision)",
-          "forsinkelse (delay) · upunktlighet (unpunctuality)"
+          "forsinkelse (delay) · upunktlighet (unpunctuality)",
+          "Hvor ofte avganger kommer eller går til rett tid.",
+          "How often departures arrive or leave on time."
         ],
         [
           "påkjørt",
@@ -279,7 +345,9 @@
           "(M/F) påkjørt · (N) påkjørt · (PL) påkjørte",
           "adj",
           "truffet (hit) · nedkjørt (knocked down)",
-          "uskadd (unharmed)"
+          "uskadd (unharmed)",
+          "Truffet av et kjøretøy.",
+          "Hit by a vehicle."
         ],
         [
           "rabattavtale",
@@ -287,7 +355,9 @@
           "sg: (u) en rabattavtale; (d) rabattavtalen; pl: (u) rabattavtaler; (d) rabattavtalene",
           "nou",
           "overenskomst (agreement) · pakt (pact)",
-          "brudd (breach) · uenighet (disagreement)"
+          "brudd (breach) · uenighet (disagreement)",
+          "Avtale som gir lavere pris.",
+          "Agreement giving a lower price."
         ],
         [
           "redningshelikopter",
@@ -295,7 +365,9 @@
           "sg: (u) et redningshelikopter; (d) redningshelikopteret; pl: (u) redningshelikoptre; (d) redningshelikoptrene",
           "nou",
           "luftambulanse (air ambulance)",
-          "passasjerfly (passenger plane)"
+          "passasjerfly (passenger plane)",
+          "Helikopter brukt i redningsoppdrag.",
+          "Helicopter used in rescue operations."
         ],
         [
           "redningsmannskap",
@@ -303,7 +375,9 @@
           "sg: (u) et redningsmannskap; (d) redningsmannskapet; pl: (u) redningsmannskap; (d) redningsmannskapene",
           "nou",
           "redningsarbeidere (rescue workers)",
-          "passasjerer (passengers)"
+          "passasjerer (passengers)",
+          "Personer som deltar i redningsarbeid.",
+          "People participating in rescue work."
         ],
         [
           "reisetid",
@@ -311,7 +385,9 @@
           "sg: (u) en reisetid; (d) reisetiden; pl: (u) reisetider; (d) reisetiderene",
           "nou",
           "reisevarighet (travel duration)",
-          "ventetid (waiting time)"
+          "ventetid (waiting time)",
+          "Tiden en reise tar.",
+          "The time a journey takes."
         ],
         [
           "rushtid",
@@ -319,7 +395,9 @@
           "sg: (u) en rushtid; (d) rushtiden; pl: (u) rushtider; (d) rushtidene",
           "nou",
           "trafikktopp (traffic peak)",
-          "lavtrafikk (off-peak traffic)"
+          "lavtrafikk (off-peak traffic)",
+          "Tid på dagen med ekstra mye trafikk.",
+          "Time of day with especially heavy traffic."
         ],
         [
           "rute",
@@ -327,7 +405,9 @@
           "sg: (u) en rute; (d) ruten; pl: (u) ruter; (d) rutene",
           "nou",
           "linje (line) · trasé (route)",
-          "avvik (deviation/disruption)"
+          "avvik (deviation/disruption)",
+          "Fast vei eller plan for transport.",
+          "Fixed route or schedule for transport."
         ],
         [
           "ruteendring",
@@ -335,7 +415,9 @@
           "sg: (u) en ruteendring; (d) ruteendringen; pl: (u) ruteendringer; (d) ruteendringene",
           "nou",
           "omlegging (rerouting) · avvik (disruption)",
-          "ordinær rute (regular route)"
+          "ordinær rute (regular route)",
+          "Endring i hvor eller når en buss, tog eller båt går.",
+          "Change in where or when a bus, train, or boat runs."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

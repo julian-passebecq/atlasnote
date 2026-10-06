@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "ei/en sosialhjelp; sosialhjelpen; sosialhjelper; sosialhjelpene",
           "noun",
           "økonomisk sosialstønad (financial social assistance)  ·  kommunal støtte (municipal support)",
-          "kontrastbegrep (contrasting term)  ·  alternativ situasjon (alternative situation)"
+          "kontrastbegrep (contrasting term)  ·  alternativ situasjon (alternative situation)",
+          "en støtte til mennesker som har problemer med å klare seg",
+          "support for people who have difficulty managing financially"
         ],
         [
           "trygd",
@@ -31,7 +35,9 @@
           "ei/en trygd; trygda/trygden; trygder; trygdene",
           "phrase",
           "stønad (benefit), ytelse (benefit / payment)",
-          "lønnsinntekt (wage income), egenforsørgelse (self-support)"
+          "lønnsinntekt (wage income), egenforsørgelse (self-support)",
+          "en offentlig forsikring",
+          "a public insurance scheme"
         ],
         [
           "uføretrygdet",
@@ -39,7 +45,9 @@
           "uføretrygdet; uføretrygdett; uføretrygdete",
           "adjective",
           "trygdemottaker (benefit recipient)  ·  person på uføretrygd (person receiving disability benefits)",
-          "yrkesaktiv (employed/active in working life)  ·  arbeidstaker (employee)"
+          "yrkesaktiv (employed/active in working life)  ·  arbeidstaker (employee)",
+          "en som får offentlig trygd fordi hen ikke kan arbeide",
+          "someone who receives public disability benefits because they cannot work"
         ],
         [
           "velferdsstat",
@@ -47,7 +55,9 @@
           "en velferdsstat; velferdsstaten; velferdsstater; velferdsstatene",
           "noun",
           "sosialstat (social state), omsorgsstat (welfare state)",
-          "minimalstat (minimal state), nattvekterstat (night-watchman state)"
+          "minimalstat (minimal state), nattvekterstat (night-watchman state)",
+          "et samfunn der staten skal sørge for økonomisk og sosial trygghet for innbyggerne",
+          "a society where the state is supposed to ensure financial and social security for its citizens"
         ],
         [
           "velferdstilbud",
@@ -55,7 +65,9 @@
           "et velferdstilbud; velferdstilbudet; velferdstilbuder; velferdstilbuderne",
           "noun",
           "velferdstjeneste (welfare service)  ·  støtteordning (support scheme)",
-          "markedsbasert tjeneste (market-based service)  ·  egenbetaling (user payment)"
+          "markedsbasert tjeneste (market-based service)  ·  egenbetaling (user payment)",
+          "tilgang på offentlige tjenester man har behov for",
+          "access to public services one needs"
         ]
       ]
     }
@@ -72,5 +84,5 @@
     "csv-table",
     "level:B1"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }
