@@ -8,7 +8,7 @@ export const TABLE_LAYOUTS=['table','pairs','lines','cards2','cards3','dictionar
 export const TABLE_PALETTES=['black','ocean','forest','paper'] as const;
 export const TABLE_SORTS=['source','norsk','english','reverse'] as const;
 export const TABLE_GROUPS=['none','letter','category','type'] as const;
-export const TABLE_PRESETS=['compact','alphabet','themes','relations','grammar','words'] as const;
+export const TABLE_PRESETS=['compact','alphabet','themes','relations','grammar','words','explanations'] as const;
 export type TableLayout=typeof TABLE_LAYOUTS[number];
 export const tableLayoutKey=(pageId:string,layout:TableLayout)=>preferenceKey('table-layout',[pageId,layout]);
 export const tableChoiceKey=(pageId:string,kind:string,value:string)=>preferenceKey('table-choice',[pageId,kind,value]);
@@ -19,13 +19,19 @@ export function setTableLayout(pageId:string,state:Record<string,boolean>,value:
 const heading=(s:string)=>s.trim().toLowerCase();
 export function tableFields(columns:string[]){const find=(pattern:RegExp)=>columns.findIndex(c=>pattern.test(heading(c)));return {category:find(/^(category|categories|categor[iy]e|catégorie|kategori|tema|theme|thème|topic)$/),type:find(/^(type|word class|part of speech|ordklasse)$/),english:find(/^(english|en|anglais)$/),relations:columns.map((c,i)=>/^(synonyms?|antonyms?|opposites?|synonymes?|antonymes?|opposés?)$/.test(heading(c))?i:-1).filter(i=>i>=0),grammar:columns.map((c,i)=>/^(forms?|gender|infinitiv|presens|preteritum|ubestemt|bestemt|bøyning|inflection)/.test(heading(c))?i:-1).filter(i=>i>=0)};}
 export function applyTablePreset(pageId:string,columns:string[],state:Record<string,boolean>,preset:string){
- const fields=tableFields(columns),selected=new Set([0,Math.min(1,columns.length-1),...(['relations','words'].includes(preset)?fields.relations:preset==='grammar'?fields.grammar:[])]);
+ const fields=tableFields(columns),selected=new Set([0,Math.min(1,columns.length-1),...(['relations','words','explanations'].includes(preset)?fields.relations:preset==='grammar'?fields.grammar:[]),...(preset==='explanations'?tableExplanationColumns(columns):[])]);
  columns.forEach((column,i)=>{state[tableColumnKey(pageId,column,i)]=!selected.has(i);});
  if(preset==='words')return;
  setTableLayout(pageId,state,preset==='grammar'?'table':'cards2');
  setTableChoice(pageId,state,'sort',preset==='alphabet'?'norsk':'source');
  setTableChoice(pageId,state,'group',preset==='alphabet'?'letter':preset==='themes'?(fields.category>=0?'category':fields.type>=0?'type':'none'):'none');
 }
+/** Explicit bilingual explanation headings; unrelated columns keep their existing behavior. */
+export function tableExplanationColumns(columns:string[]){return columns.map((c,i)=>/^(norsk forklaring|forklaring norsk|english explanation)$/iu.test(c.trim())?i:-1).filter(i=>i>=0);}
+export function tableReadingLabel(column:string){return /^synonyms?$/iu.test(column)?'Syn':/^antonyms?$/iu.test(column)?'Ant':/^norsk forklaring$/iu.test(column)?'NO':/^english explanation$/iu.test(column)?'EN':column;}
+/** Parenthesized translations stay plain; only explicit Norsk portions are emphasized. */
+export function norskRelationParts(value:string){return value.split(/(\([^)]*\))/u).filter(Boolean).map(text=>({text,bold:!text.startsWith('(')&&/\p{L}/u.test(text)}));}
+export function orderNorskReadingColumns(columns:string[],visible:number[]){const explanation=tableExplanationColumns(columns);return [...visible.filter(i=>i<2),...explanation.filter(i=>visible.includes(i)),...visible.filter(i=>i>=2&&!explanation.includes(i))];}
 /** Reading-only prefix, copied from an explicit source form. Never guess gender or infinitive. */
 export function norskReadingWord(columns:string[],row:string[],fields=tableFields(columns)){
  const word=row[0]??'';if(!word.trim()||/^(?:en|ei|et|å)\s|\((?:en|ei|et)\)\s*$/iu.test(word))return word;

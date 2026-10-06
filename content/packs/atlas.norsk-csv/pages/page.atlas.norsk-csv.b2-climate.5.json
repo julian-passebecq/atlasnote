@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "sg: (u) en forsøpling; (d) forsøplingen; pl: (u) forsøplinger; (d) forsøplingene",
           "nou",
           "søppelforurensning (waste pollution)",
-          "opprydding (clean-up)"
+          "opprydding (clean-up)",
+          "Det at søppel havner i naturen eller offentlige rom.",
+          "The fact that waste ends up in nature or public spaces."
         ],
         [
           "forurensning",
@@ -31,7 +35,9 @@
           "sg: (u) en forurensning; (d) forurensningen; pl: (u) forurensninger; (d) forurensningene",
           "nou",
           "miljøskade (environmental damage)",
-          "renhet (cleanliness)"
+          "renhet (cleanliness)",
+          "Skadelige stoffer eller påvirkning i natur, luft, jord eller vann.",
+          "Harmful substances or impacts in nature, air, soil or water."
         ],
         [
           "funn",
@@ -39,7 +45,9 @@
           "sg: (u) et funn; (d) funnet; pl: (u) funn; (d) funnene",
           "nou",
           "resultat (finding) · oppdagelse (discovery)",
-          "antakelse (assumption)"
+          "antakelse (assumption)",
+          "Noe man finner gjennom undersøkelse eller forskning.",
+          "Something one finds through investigation or research."
         ],
         [
           "gjenvinning",
@@ -47,7 +55,9 @@
           "sg: (u) en gjenvinning; (d) gjenvinningen; pl: (u) gjenvinninger; (d) gjenvinningene",
           "nou",
           "resirkulering (recycling)",
-          "deponering (landfilling)"
+          "deponering (landfilling)",
+          "Det å bruke avfall eller materialer på nytt.",
+          "Using waste or materials again."
         ],
         [
           "grenseverdi",
@@ -55,7 +65,9 @@
           "sg: (u) en grenseverdi; (d) grenseverdien; pl: (u) grenseverdier; (d) grenseverdiene",
           "nou",
           "tiltaksverdi (action value)",
-          "ubegrenset nivå (unlimited level) · ingen grense (no limit)"
+          "ubegrenset nivå (unlimited level) · ingen grense (no limit)",
+          "Tillatt eller kritisk nivå for et stoff eller en måling.",
+          "Allowed or critical level for a substance or measurement."
         ],
         [
           "havrydding",
@@ -63,7 +75,9 @@
           "sg: (u) en havrydding; (d) havryddingen; pl: (u) havryddinger; (d) havryddingene",
           "nou",
           "strandrydding (beach clean-up) · opprydding (clean-up)",
-          "forsøpling (littering)"
+          "forsøpling (littering)",
+          "Arbeid med å fjerne søppel og plast fra havet.",
+          "Work to remove waste and plastic from the sea."
         ],
         [
           "kloakk",
@@ -71,7 +85,9 @@
           "sg: (u) en kloakk; (d) kloakken; vanligvis uten flertall",
           "nou",
           "avløpsvann (wastewater)",
-          "rent vann (clean water)"
+          "rent vann (clean water)",
+          "Brukt vann og avfall fra hus og bygninger.",
+          "Used water and waste from houses and buildings."
         ],
         [
           "marin forsøpling",
@@ -79,7 +95,9 @@
           "",
           "uttr",
           "plast i havet (plastic in the sea)",
-          "rent hav (clean sea)"
+          "rent hav (clean sea)",
+          "Avfall i havet og langs kysten.",
+          "Waste in the sea and along the coast."
         ],
         [
           "miljøgift",
@@ -87,7 +105,9 @@
           "sg: (u) en miljøgift; (d) miljøgiften; pl: (u) miljøgifter; (d) miljøgiftene",
           "nou",
           "giftstoff (toxic substance)",
-          "ufarlig stoff (harmless substance)"
+          "ufarlig stoff (harmless substance)",
+          "Giftig stoff som skader natur og helse.",
+          "Toxic substance that harms nature and health."
         ],
         [
           "miljøkriminalitet",
@@ -95,7 +115,9 @@
           "sg: (u) en miljøkriminalitet; (d) miljøkriminaliteten; vanligvis uten flertall",
           "nou",
           "miljølovbrudd (environmental offence)",
-          "miljøvern (environmental protection)"
+          "miljøvern (environmental protection)",
+          "Lovbrudd som skader miljøet.",
+          "Criminal offence that harms the environment."
         ],
         [
           "motsetning",
@@ -103,7 +125,9 @@
           "sg: (u) en motsetning; (d) motsetningen; pl: (u) motsetninger; (d) motsetningene",
           "nou",
           "derimot (however) · likevel (nevertheless)",
-          "likhet (similarity)"
+          "likhet (similarity)",
+          "Kontrast eller forskjell.",
+          "Contrast or difference."
         ],
         [
           "nyanse",
@@ -111,7 +135,9 @@
           "sg: (u) en nyanse; (d) nyansen; pl: (u) nyanser; (d) nyansene",
           "nou",
           "forskjell (difference) · detalj (detail)",
-          "forenkling (simplification)"
+          "forenkling (simplification)",
+          "Forskjell eller detalj.",
+          "Difference or detail."
         ],
         [
           "personopplysning",
@@ -119,7 +145,9 @@
           "SG: (U) en personopplysning · (D) personopplysningen · PL: (U) personopplysninger · (D) personopplysningene",
           "nou",
           "persondata (personal data) · privat informasjon (private information)",
-          "anonymitet (anonymity) · fellesinformasjon (public information)"
+          "anonymitet (anonymity) · fellesinformasjon (public information)",
+          "Persondata eller privat informasjon.",
+          "Personal data or private information."
         ],
         [
           "rotteplage",
@@ -127,7 +155,9 @@
           "sg: (u) en rotteplage; (d) rotteplagen; pl: (u) rotteplager; (d) rotteplagene",
           "nou",
           "skadedyrproblem (pest problem) · rotteproblem (rat problem)",
-          "skadedyrfrihet (absence of pests)"
+          "skadedyrfrihet (absence of pests)",
+          "Problem med mange rotter i et område.",
+          "Problem with many rats in an area."
         ],
         [
           "skille",
@@ -135,7 +165,9 @@
           "G2 -te : (INF) infinitiv: å skille· (PR) presens: skiller· (PT) preteritum: skilte· (PP) presens perfektum: har skilt· (PSS) skilles· (IM) skill",
           "vrb",
           "atskille (separate) · skjelne (distinguish)",
-          "blande (mix) · forene (unite)"
+          "blande (mix) · forene (unite)",
+          "Dele fra hverandre eller se forskjell på.",
+          "Share from hverandre or see difference about."
         ],
         [
           "søppel",
@@ -143,7 +175,9 @@
           "sg: (u) et søppel; (d) søppelet; vanligvis uten flertall",
           "nou",
           "avfall (waste) · skrot (scrap)",
-          "ressurs (resource)"
+          "ressurs (resource)",
+          "Avfall som er kastet eller ligger feil sted.",
+          "Waste that has been thrown away or is in the wrong place."
         ],
         [
           "tilsvarende",
@@ -151,7 +185,9 @@
           "(M/F) tilsvarende; (N) tilsvarende; (PL) tilsvarende",
           "adj",
           "lik (similar) · liknende (similar, comparable)",
-          "forskjellig (different) · ulik (different, unlike)"
+          "forskjellig (different) · ulik (different, unlike)",
+          "Lik eller liknende.",
+          "Same or similar."
         ],
         [
           "ulik",
@@ -159,7 +195,9 @@
           "(m/f) ulik; (n) ulikt; (pl) ulike",
           "adj",
           "forskjellig (different) · annerledes (different)",
-          "lik (same) · identisk (identical)"
+          "lik (same) · identisk (identical)",
+          "Forskjellig eller annerledes.",
+          "Different or unlike."
         ],
         [
           "utredning",
@@ -167,7 +205,9 @@
           "SG: (U) en utredning · (D) utredningen · PL: (U) utredninger · (D) utredningene",
           "nou",
           "rapport (report) · undersøkelse (inquiry)",
-          "kort notat (brief note)"
+          "kort notat (brief note)",
+          "Grundig undersøkelse eller rapport om en sak.",
+          "Thorough investigation or report about a matter."
         ],
         [
           "vedlikeholdsbehov",
@@ -175,7 +215,9 @@
           "sg: (u) et vedlikeholdsbehov; (d) vedlikeholdsbehovet; pl: (u) vedlikeholdsbehov; (d) vedlikeholdsbehovene",
           "nou",
           "reparasjonsbehov (repair need) · oppgraderingsbehov (upgrade need)",
-          "vedlikeholdt stand (maintained condition) · god stand (good condition)"
+          "vedlikeholdt stand (maintained condition) · god stand (good condition)",
+          "Behov for reparasjon eller regelmessig vedlikehold.",
+          "Need for repair or regular maintenance."
         ],
         [
           "vise til",
@@ -183,7 +225,9 @@
           "G2 -te : (INF) infinitiv: å vise til; (PR) presens: viser til; (PT) preteritum: viste til; (PP) presens perfektum: har vist til",
           "vrb",
           "Referere til en kilde (referere to one source) · et eksempel (example)",
-          "se bort fra (ignore)"
+          "se bort fra (ignore)",
+          "Referere til en kilde, et eksempel eller et poeng.",
+          "Refer to a source, an example, or a point."
         ],
         [
           "faktabasert",
@@ -191,7 +235,9 @@
           "(M/F) faktabasert; (N) faktabasert; (PL) faktabaserte",
           "adj",
           "dokumentert (documented)",
-          "udokumentert (undocumented)"
+          "udokumentert (undocumented)",
+          "Bygd på fakta og dokumentasjon.",
+          "Based on facts and documentation."
         ],
         [
           "feilinformasjon",
@@ -199,7 +245,9 @@
           "sg: (u) en feilinformasjon; (d) feilinformasjonen; pl: (u) feilinformasjoner; (d) feilinformasjonene",
           "nou",
           "uriktig informasjon (incorrect information)",
-          "korrekt informasjon (correct information)"
+          "korrekt informasjon (correct information)",
+          "Feil informasjon, enten den er bevisst eller ubevisst.",
+          "False information, whether deliberate or not."
         ],
         [
           "klimaengasjement",
@@ -207,7 +255,9 @@
           "sg: (u) et klimaengasjement; (d) klimaengasjementet; vanligvis uten flertall",
           "nou",
           "miljøengasjement (environmental engagement)",
-          "likegyldighet (indifference)"
+          "likegyldighet (indifference)",
+          "Engasjement for klima og klimapolitikk.",
+          "Engagement in climate and climate policy."
         ],
         [
           "klimajournalistikk",
@@ -215,7 +265,9 @@
           "sg: (u) en klimajournalistikk; (d) klimajournalistikken; vanligvis uten flertall",
           "nou",
           "miljøjournalistikk (environmental journalism)",
-          "klimadesinformasjon (climate disinformation)"
+          "klimadesinformasjon (climate disinformation)",
+          "Journalistikk som dekker klima, miljø og samfunnsendringer.",
+          "Journalism covering climate, environment and societal change."
         ],
         [
           "miljøbevegelse",
@@ -223,7 +275,9 @@
           "sg: (u) en miljøbevegelse; (d) miljøbevegelsen; pl: (u) miljøbevegelser; (d) miljøbevegelsene",
           "nou",
           "klimabevegelse (climate movement)",
-          "miljømotstand (opposition to environmental action)"
+          "miljømotstand (opposition to environmental action)",
+          "Samlet betegnelse for organisasjoner og personer som arbeider for miljøsaker.",
+          "Collective term for organizations and people working for environmental causes."
         ],
         [
           "miljøorganisasjon",
@@ -231,7 +285,9 @@
           "sg: (u) en miljøorganisasjon; (d) miljøorganisasjonen; pl: (u) miljøorganisasjoner; (d) miljøorganisasjonene",
           "nou",
           "naturvernorganisasjon (nature-conservation organization)",
-          "forurensende bedrift (polluting company)"
+          "forurensende bedrift (polluting company)",
+          "Organisasjon som arbeider med klima, natur eller miljø.",
+          "Organization working with climate, nature or the environment."
         ],
         [
           "nedbemanning",
@@ -239,7 +295,9 @@
           "sg: (u) en nedbemanning; (d) nedbemanningen; pl: (u) nedbemanninger; (d) nedbemanningene",
           "nou",
           "kutt i årsverk (cuts in full-time positions)",
-          "oppbemanning (staff increase)"
+          "oppbemanning (staff increase)",
+          "Reduksjon i antall ansatte.",
+          "Reduction in the number of employees."
         ],
         [
           "permittering",
@@ -247,7 +305,9 @@
           "sg: (u) en permittering; (d) permitteringen; pl: (u) permitteringer; (d) permitteringene",
           "nou",
           "midlertidig oppsigelse (temporary layoff)",
-          "fast ansettelse (permanent employment)"
+          "fast ansettelse (permanent employment)",
+          "Midlertidig fritak fra arbeid fordi arbeidsgiver mangler oppgaver eller penger.",
+          "Temporary layoff because the employer lacks tasks or money."
         ],
         [
           "støtteordning",
@@ -255,7 +315,9 @@
           "sg: (u) en støtteordning; (d) støtteordningen; pl: (u) støtteordninger; (d) støtteordningene",
           "nou",
           "tilskuddsordning (grant scheme)",
-          "kuttordning (cutback scheme)"
+          "kuttordning (cutback scheme)",
+          "Ordning der noen kan få økonomisk støtte.",
+          "Scheme through which someone can receive financial support."
         ],
         [
           "utbygging",
@@ -263,7 +325,9 @@
           "sg: (u) en utbygging; (d) utbyggingen; pl: (u) utbygginger; (d) utbyggingene",
           "nou",
           "anleggsarbeid (construction work)",
-          "bevaring (preservation)"
+          "bevaring (preservation)",
+          "Det å bygge ut veier, boliger, industri eller energi.",
+          "The development of roads, housing, industry or energy."
         ],
         [
           "videre drift",
@@ -271,7 +335,9 @@
           "",
           "uttr",
           "fortsatt drift (continued operation)",
-          "nedleggelse (closure)"
+          "nedleggelse (closure)",
+          "At en virksomhet fortsetter å eksistere og arbeide.",
+          "That an organization or company continues to exist and operate."
         ]
       ]
     }
@@ -288,5 +354,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

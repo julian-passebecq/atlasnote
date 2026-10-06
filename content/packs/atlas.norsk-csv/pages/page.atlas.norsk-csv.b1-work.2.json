@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "Fellesforbundet; Fellesforbundett; Fellesforbundete",
           "adjective",
           "fagforbund (trade union federation)  ·  arbeidstakerorganisasjon (employee organization)",
-          "arbeidsgiverforening (employers’ association)  ·  uorganiserte arbeidere (unorganized workers)"
+          "arbeidsgiverforening (employers’ association)  ·  uorganiserte arbeidere (unorganized workers)",
+          "en samarbeidsorganisasjon for mange fagforeninger",
+          "a cooperative organization for many trade unions"
         ],
         [
           "tariffavtale",
@@ -31,7 +35,9 @@
           "en tariffavtale; tariffavtalen; tariffavtaler; tariffavtalene",
           "noun",
           "kollektiv avtale (collective agreement)  ·  overenskomst (agreement)",
-          "individuell kontrakt (individual contract)  ·  uenighet (disagreement)"
+          "individuell kontrakt (individual contract)  ·  uenighet (disagreement)",
+          "en avtale mellom en fagforening og en arbeidsgiverforening",
+          "an agreement between a trade union and an employers’ association; a collective agreement"
         ],
         [
           "tillitsvalgt",
@@ -39,7 +45,9 @@
           "en tillitsvalgt; den tillitsvalgte; tillitsvalgte; de tillitsvalgte",
           "noun",
           "representant (representative)  ·  ombud (delegate)",
-          "medlem (member)  ·  arbeidsgiver (employer)"
+          "medlem (member)  ·  arbeidsgiver (employer)",
+          "en representant for de fagorganiserte",
+          "a representative of unionised workers"
         ]
       ]
     }
@@ -56,5 +64,5 @@
     "csv-table",
     "level:B1"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

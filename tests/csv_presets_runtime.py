@@ -88,5 +88,29 @@ with sync_playwright() as pw:
  assert p.evaluate('async()=>('+AGENT+').getResource("notebook-page:page.atlas.norsk-csv.b2-energy.1").snapshot.page')==real_source
  assert snapshot()['history']==history
  p.screenshot(path=str(OUT/'words-source-prefixes.png'));results.append({'name':'Real CSV articles/infinitive and one-click Words survive reload without source/history changes','status':'PASS'})
+ # Source explanations in two-column cards; hide each independently and preserve raw text.
+ btn('Explain',pane).click();expect(pane.locator('.csv-layout-cards2')).to_be_visible()
+ first=pane.locator('tr[data-source-row="0"]')
+ expect(first.locator('td[data-column="6"]')).to_have_text('Rørelse, aktivitet.')
+ expect(first.locator('td[data-column="7"]')).to_have_text('Movement or activity.')
+ assert first.locator('td').evaluate_all('es=>es.map(e=>e.dataset.column)')==['0','1','6','7','4','5']
+ expect(first.locator('td[data-column="4"] strong').first).to_have_text('rørelse')
+ assert first.locator('td[data-column="4"]').get_attribute('data-label')=='Syn'
+ assert first.locator('td[data-column="5"]').get_attribute('data-label')=='Ant'
+ btn('Columns',pane).click();btn('English explanation',pane.get_by_role('group',name='Visible table columns',exact=True)).click();expect(pane.locator('td[data-column="7"]')).to_have_count(0)
+ btn('English explanation',pane.get_by_role('group',name='Visible table columns',exact=True)).click();btn('Columns',pane).click()
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-cards2');pane=p.locator('.active-pane')
+ expect(pane.locator('td[data-column="6"]')).to_have_count(40);expect(pane.locator('td[data-column="7"]')).to_have_count(40)
+ assert p.evaluate('async()=>('+AGENT+').getResource("notebook-page:page.atlas.norsk-csv.b2-energy.1").snapshot.page')==real_source
+ assert snapshot()['history']==history
+ p.screenshot(path=str(OUT/'source-explanations.png'))
+ btn('Quick Book mode',pane).click();book=pane.locator('.book-grid');expect(book.locator('tr[data-source-row]')).to_have_count(40)
+ assert book.locator('tr[data-source-row]').evaluate_all('es=>new Set(es.map(e=>e.dataset.sourceRow)).size')==40
+ assert not book.locator('.book-fallback').count()
+ assert book.locator('.sheet-body').evaluate_all('es=>es.every(e=>e.scrollHeight<=e.clientHeight+2)')
+ btn('Quick Book mode',pane).click();p.set_viewport_size({'width':700,'height':900})
+ assert pane.locator('.csv-layout-cards2').evaluate('e=>e.scrollWidth<=e.clientWidth+1')
+ assert not errors,errors
+ results.append({'name':'Original Norsk/English explanations, short Syn/Ant and Norsk emphasis survive reload and Book pagination without source/history writes','status':'PASS'})
  b.close()
 (OUT/'results.json').write_text(json.dumps({'scope':__doc__,'results':results},indent=2),encoding='utf-8');print(json.dumps(results,indent=2))

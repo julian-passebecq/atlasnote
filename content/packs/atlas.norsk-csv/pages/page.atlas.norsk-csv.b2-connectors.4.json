@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "",
           "adv/conn",
           "hvis ikke (if not) · i motsatt fall (otherwise)",
-          ""
+          "",
+          "Viser hva som skjer hvis ikke; kan bety otherwise.",
+          "Shows what happens if not; can mean otherwise."
         ],
         [
           "i alle fall",
@@ -31,7 +35,9 @@
           "",
           "adv/conn",
           "i hvert fall (at any rate) · uansett (anyway) · i det minste (at least)",
-          ""
+          "",
+          "Betyr uansett eller minst; avgrenser eller understreker et poeng.",
+          "Means in any case or at least; limits or emphasizes a point."
         ],
         [
           "i hvert fall",
@@ -39,7 +45,9 @@
           "",
           "adv/conn",
           "i alle fall (in any case) · uansett (anyway) · i det minste (at least)",
-          ""
+          "",
+          "Vanlig variant av i alle fall.",
+          "Common variant of i alle fall."
         ],
         [
           "i det minste",
@@ -47,7 +55,9 @@
           "",
           "adv/conn",
           "minst (at least) · i alle fall (at least)",
-          ""
+          "",
+          "Viser den laveste graden eller det minste man kan kreve.",
+          "Shows the lowest degree or the least one can require."
         ],
         [
           "uansett",
@@ -55,7 +65,9 @@
           "",
           "adv/conn",
           "i alle fall (in any case) · samme hva (no matter what)",
-          ""
+          "",
+          "Uavhengig av hva som skjer eller hva man velger.",
+          "Regardless of what happens or what one chooses."
         ],
         [
           "riktignok",
@@ -63,7 +75,9 @@
           "",
           "conn",
           "det er sant at (it is true that) · likevel (however)",
-          ""
+          "",
+          "Innrømmer et poeng før man nyanserer eller kontrasterer.",
+          "Concedes a point before nuance or contrast."
         ],
         [
           "for så vidt",
@@ -71,7 +85,9 @@
           "",
           "uttr",
           "til en viss grad (to some extent) · på en måte (in a way)",
-          ""
+          "",
+          "Avgrenser enighet eller relevans.",
+          "Limits agreement or relevance."
         ],
         [
           "vel å merke",
@@ -79,7 +95,9 @@
           "",
           "uttr",
           "merk at (note that) · riktignok (admittedly)",
-          ""
+          "",
+          "Presiserer en viktig begrensning.",
+          "Specifies an important limitation."
         ],
         [
           "til en viss grad",
@@ -87,7 +105,9 @@
           "",
           "uttr",
           "delvis (partly) · for så vidt (to some extent)",
-          "helt (completely)"
+          "helt (completely)",
+          "Avgrenser hvor sterkt noe gjelder.",
+          "Limits how strongly something applies."
         ],
         [
           "på en måte",
@@ -95,7 +115,9 @@
           "",
           "uttr",
           "for så vidt (in a way) · til en viss grad (to some extent)",
-          ""
+          "",
+          "Mykner eller nyanserer en påstand.",
+          "Softens or nuances a statement."
         ],
         [
           "til dels",
@@ -103,7 +125,9 @@
           "",
           "adv/conn",
           "delvis (partly) · til en viss grad (to some extent)",
-          "helt (completely)"
+          "helt (completely)",
+          "Betyr delvis, ikke helt.",
+          "Means partly, not completely."
         ],
         [
           "i praksis",
@@ -111,7 +135,9 @@
           "",
           "uttr",
           "i realiteten (in reality) · faktisk (actually)",
-          "i teorien (in theory)"
+          "i teorien (in theory)",
+          "Slik noe fungerer i virkeligheten, ikke bare i teorien.",
+          "How something works in reality, not only in theory."
         ],
         [
           "i teorien",
@@ -119,7 +145,9 @@
           "",
           "uttr",
           "prinsipielt (in principle)",
-          "i praksis (in practice)"
+          "i praksis (in practice)",
+          "Slik noe burde være etter reglene eller tanken, men ikke nødvendigvis i praksis.",
+          "How something should be according to rules or theory, but not necessarily in practice."
         ],
         [
           "i realiteten",
@@ -127,7 +155,9 @@
           "",
           "uttr",
           "faktisk (actually) · i praksis (in practice)",
-          "i teorien (in theory)"
+          "i teorien (in theory)",
+          "Slik det faktisk er.",
+          "As it actually is."
         ],
         [
           "unntatt",
@@ -135,7 +165,9 @@
           "",
           "prep/conn",
           "bortsett fra (apart from) · med unntak av (with the exception of)",
-          "inkludert (included)"
+          "inkludert (included)",
+          "Tar noe ut av en gruppe eller regel.",
+          "Excludes something from a group or rule."
         ],
         [
           "bortsett fra",
@@ -143,7 +175,9 @@
           "",
           "prep/conn",
           "unntatt (except) · med unntak av (with the exception of)",
-          "inkludert (included)"
+          "inkludert (included)",
+          "Viser et unntak fra det man sier.",
+          "Shows an exception to what is being said."
         ],
         [
           "med unntak av",
@@ -151,7 +185,9 @@
           "",
           "prep/conn",
           "bortsett fra (apart from) · unntatt (except)",
-          ""
+          "",
+          "Formelt uttrykk for bortsett fra.",
+          "Formal expression for except for."
         ],
         [
           "for eksempel",
@@ -159,7 +195,9 @@
           "",
           "conn",
           "eksempelvis (for example) · blant annet (among other things)",
-          ""
+          "",
+          "Brukes når man gir et konkret eksempel.",
+          "Used when giving a concrete example."
         ],
         [
           "eksempelvis",
@@ -167,7 +205,9 @@
           "",
           "conn",
           "for eksempel (for example) · blant annet (among other things)",
-          ""
+          "",
+          "Formelt ord for for eksempel.",
+          "Formal word for for example."
         ],
         [
           "blant annet",
@@ -175,7 +215,9 @@
           "",
           "conn",
           "for eksempel (for example) · ikke minst (not least)",
-          ""
+          "",
+          "Markerer ett eller flere eksempler blant flere.",
+          "Marks one or more examples among several."
         ],
         [
           "med andre ord",
@@ -183,7 +225,9 @@
           "",
           "conn",
           "det vil si (that is) · altså (so/that is)",
-          ""
+          "",
+          "Forklarer det samme på en annen måte.",
+          "Explains the same thing in another way."
         ],
         [
           "det vil si",
@@ -191,7 +235,9 @@
           "",
           "conn",
           "med andre ord (in other words) · nærmere bestemt (more precisely)",
-          ""
+          "",
+          "Presiserer eller forklarer mer nøyaktig.",
+          "Specifies or explains more precisely."
         ],
         [
           "nærmere bestemt",
@@ -199,7 +245,9 @@
           "",
           "conn",
           "det vil si (that is) · konkret (specifically)",
-          ""
+          "",
+          "Presiserer mer nøyaktig hva man mener.",
+          "Specifies more exactly what one means."
         ],
         [
           "kort sagt",
@@ -207,7 +255,9 @@
           "",
           "conn",
           "oppsummert (summarized) · med andre ord (in other words)",
-          ""
+          "",
+          "Sammenfatter poenget med få ord.",
+          "Summarizes the point in few words."
         ],
         [
           "eksempelet viser at",
@@ -215,7 +265,9 @@
           "",
           "uttr",
           "dette viser at (this shows that) · dette tyder på at (this suggests that)",
-          ""
+          "",
+          "Brukes når et eksempel støtter et poeng.",
+          "Used when an example supports a point."
         ],
         [
           "når det gjelder",
@@ -223,7 +275,9 @@
           "",
           "prep/conn",
           "angående (regarding) · med hensyn til (with regard to)",
-          ""
+          "",
+          "Avgrenser temaet: angående / med hensyn til.",
+          "Limits the topic: regarding / with regard to."
         ],
         [
           "angående",
@@ -231,7 +285,9 @@
           "",
           "prep/conn",
           "når det gjelder (regarding) · med hensyn til (with regard to)",
-          ""
+          "",
+          "Formelt ord for om / når det gjelder.",
+          "Formal word for about / regarding."
         ],
         [
           "med hensyn til",
@@ -239,7 +295,9 @@
           "",
           "prep/conn",
           "når det gjelder (regarding) · angående (concerning)",
-          ""
+          "",
+          "Formelt uttrykk for når det gjelder.",
+          "Formal expression for with regard to."
         ],
         [
           "i denne sammenhengen",
@@ -247,7 +305,9 @@
           "",
           "uttr",
           "her (here) · når det gjelder dette (regarding this)",
-          ""
+          "",
+          "Viser til akkurat den saken eller teksten man snakker om.",
+          "Refers to the specific matter or text being discussed."
         ],
         [
           "som",
@@ -255,7 +315,9 @@
           "",
           "sub",
           "slik som (such as/like) · på samme måte som (in the same way as)",
-          ""
+          "",
+          "Innleder sammenlikning eller rolle.",
+          "Introduces comparison or role."
         ],
         [
           "slik som",
@@ -263,7 +325,9 @@
           "",
           "sub",
           "som (as/like) · på samme måte som (in the same way as)",
-          ""
+          "",
+          "Sammenlikner med et eksempel eller en måte.",
+          "Compares with an example or a way."
         ],
         [
           "som om",
@@ -271,7 +335,9 @@
           "",
           "sub",
           "som (as) · slik som (like)",
-          ""
+          "",
+          "Sammenlikner med en tenkt eller uvirkelig situasjon.",
+          "Compares with an imagined or unreal situation."
         ],
         [
           "på samme måte som",
@@ -279,7 +345,9 @@
           "",
           "prep/conn",
           "slik som (like) · på linje med (on a par with)",
-          "i motsetning til (in contrast to)"
+          "i motsetning til (in contrast to)",
+          "Viser likhet i måte eller struktur.",
+          "Shows similarity in manner or structure."
         ],
         [
           "sammenliknet med",
@@ -287,7 +355,9 @@
           "",
           "prep/conn",
           "i forhold til (in relation to) · sett i forhold til (seen in relation to)",
-          ""
+          "",
+          "Sammenlikner to forhold direkte.",
+          "Compares two matters directly."
         ],
         [
           "i forhold til",
@@ -295,7 +365,9 @@
           "",
           "prep/conn",
           "sammenliknet med (compared with) · sett i forhold til (seen in relation to)",
-          ""
+          "",
+          "Sammenlikner eller plasserer noe i relasjon til noe annet.",
+          "Compares or places something in relation to something else."
         ],
         [
           "sett i forhold til",
@@ -303,7 +375,9 @@
           "",
           "prep/conn",
           "i forhold til (in relation to) · sammenliknet med (compared with)",
-          ""
+          "",
+          "Sammenlikner ved å sette noe opp mot en målestokk.",
+          "Compares by setting something against a standard."
         ],
         [
           "på linje med",
@@ -311,7 +385,9 @@
           "",
           "prep/conn",
           "på samme måte som (in the same way as) · tilsvarende (corresponding)",
-          ""
+          "",
+          "Viser at noe ligger på samme nivå eller måte.",
+          "Shows that something is at the same level or in the same way."
         ],
         [
           "tilsvarende",
@@ -319,7 +395,9 @@
           "",
           "conn",
           "likeledes (likewise) · på samme måte (in the same way)",
-          ""
+          "",
+          "Viser at noe ligner eller svarer til noe annet.",
+          "Shows that something resembles or corresponds to something else."
         ],
         [
           "likeledes",
@@ -327,7 +405,9 @@
           "",
           "conn",
           "tilsvarende (similarly) · på samme måte (in the same way)",
-          ""
+          "",
+          "Formelt ord for også / på samme måte.",
+          "Formal word for also / in the same way."
         ],
         [
           "annerledes enn",
@@ -335,7 +415,9 @@
           "",
           "adj/conn",
           "forskjellig fra (different from) · til forskjell fra (unlike)",
-          "lik (similar)"
+          "lik (similar)",
+          "Viser forskjell fra noe annet.",
+          "Shows difference from something else."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

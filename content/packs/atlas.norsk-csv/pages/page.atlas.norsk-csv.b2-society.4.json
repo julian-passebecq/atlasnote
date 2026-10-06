@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "sg: (u) en prins; (d) prinsen; pl: (u) prinser; (d) prinsene",
           "nou",
           "kongelig (royal)",
-          "privatperson (private person)"
+          "privatperson (private person)",
+          "Mannlig medlem av kongefamilien.",
+          "Male member of the royal family."
         ],
         [
           "prinsesse",
@@ -31,7 +35,9 @@
           "sg: (u) en prinsesse; (d) prinsessen; pl: (u) prinsesser; (d) prinsessene",
           "nou",
           "kongelig (royal)",
-          "privatperson (private person)"
+          "privatperson (private person)",
+          "Kvinnelig medlem av kongefamilien.",
+          "Female member of the royal family."
         ],
         [
           "på vegne av",
@@ -39,7 +45,9 @@
           "",
           "uttr",
           "for (for) · som representant for (as representative of)",
-          "på egne vegne (on one’s own behalf)"
+          "på egne vegne (on one’s own behalf)",
+          "Som representant for noen andre.",
+          "As a representative for someone else."
         ],
         [
           "representere",
@@ -47,7 +55,9 @@
           "G2 -te : (INF) infinitiv: å representere; (PR) presens: representerer; (PT) preteritum: representerte; (PP) presens perfektum: har representert",
           "vrb",
           "opptre på vegne av (act on behalf of)",
-          "tale bare for seg selv (speak only for oneself)"
+          "tale bare for seg selv (speak only for oneself)",
+          "Opptre på vegne av en person, gruppe eller institusjon.",
+          "Act on behalf of a person, group, or institution."
         ],
         [
           "Slottet",
@@ -55,7 +65,9 @@
           "egennavn: Slottet",
           "nou",
           "Det kongelige hoff (Royal Court)",
-          "regjeringskontor (government office)"
+          "regjeringskontor (government office)",
+          "Den norske kongefamiliens offisielle bolig og administrasjon.",
+          "The Norwegian royal family’s official residence and administration."
         ],
         [
           "ta turen",
@@ -63,7 +75,9 @@
           "",
           "uttr",
           "dra (go) · reise (travel)",
-          "bli hjemme (stay home)"
+          "bli hjemme (stay home)",
+          "Reise til et sted, ofte for å delta eller følge med.",
+          "Travel somewhere, often to take part or follow something."
         ],
         [
           "tribune",
@@ -71,7 +85,9 @@
           "sg: (u) en tribune; (d) tribunen; pl: (u) tribuner; (d) tribunene",
           "nou",
           "publikumsplass (audience area)",
-          "bane (field/pitch)"
+          "bane (field/pitch)",
+          "Sted der publikum sitter eller står under arrangement.",
+          "Place where the audience sits or stands during an event."
         ],
         [
           "trone",
@@ -79,7 +95,9 @@
           "sg: (u) en trone; (d) tronen; pl: (u) troner; (d) tronene",
           "nou",
           "monarki (monarchy)",
-          "republikk (republic)"
+          "republikk (republic)",
+          "Symbolsk eller faktisk posisjon som monark.",
+          "Symbolic or actual position as monarch."
         ],
         [
           "tronfølger",
@@ -87,7 +105,9 @@
           "sg: (u) en tronfølger; (d) tronfølgeren; pl: (u) tronfølgere; (d) tronfølgerne",
           "nou",
           "arving (heir)",
-          "sittende monark (reigning monarch)"
+          "sittende monark (reigning monarch)",
+          "Person som skal arve tronen.",
+          "Person who is to inherit the throne."
         ],
         [
           "statsråd",
@@ -95,7 +115,9 @@
           "sg: (u) en statsråd; (d) statsråden; pl: (u) statsråder; (d) statsråderene",
           "nou",
           "minister (minister)",
-          "enkeltperson (individual) · privat aktør (private actor)"
+          "enkeltperson (individual) · privat aktør (private actor)",
+          "Medlem av regjeringen med ansvar for et departement.",
+          "Member of the government responsible for a ministry."
         ],
         [
           "departement",
@@ -103,7 +125,9 @@
           "sg: (u) et departement; (d) departementet; pl: (u) departement; (d) departementene",
           "nou",
           "ministerium (ministry)",
-          "direktorat (directorate) · kommune (municipality)"
+          "direktorat (directorate) · kommune (municipality)",
+          "Statlig fagområde ledet av en minister.",
+          "A government ministry led by a minister."
         ],
         [
           "direktorat",
@@ -111,7 +135,9 @@
           "sg: (u) et direktorat; (d) direktoratet; pl: (u) direktorater; (d) direktoraterene",
           "nou",
           "etat (agency)",
-          "departement (ministry)"
+          "departement (ministry)",
+          "Statlig etat som gjennomfører politikk og regler.",
+          "Government agency that implements policy and rules."
         ],
         [
           "statsbudsjett",
@@ -119,7 +145,9 @@
           "sg: (u) et statsbudsjett; (d) statsbudsjettet; pl: (u) statsbudsjetter; (d) statsbudsjetterene",
           "nou",
           "statsbudsjett (state budget) · økonomiplan (financial plan)",
-          "budsjettsprekk (budget overrun) · underskudd (deficit)"
+          "budsjettsprekk (budget overrun) · underskudd (deficit)",
+          "Regjeringens plan for statens inntekter og utgifter.",
+          "The government budget for state income and expenditure."
         ],
         [
           "budsjettenighet",
@@ -127,7 +155,9 @@
           "sg: (u) en budsjettenighet; (d) budsjettenigheten; pl: (u) budsjettenigheter; (d) budsjettenigheterene",
           "nou",
           "budsjettforlik (budget settlement) · budsjettavtale (budget agreement)",
-          "budsjettstrid (budget conflict)"
+          "budsjettstrid (budget conflict)",
+          "Avtale om hvordan budsjettet skal vedtas.",
+          "Agreement on how a budget should be passed."
         ],
         [
           "høringsrunde",
@@ -135,7 +165,9 @@
           "sg: (u) en høringsrunde; (d) høringsrunden; pl: (u) høringsrundeer; (d) høringsrundeerene",
           "nou",
           "prosess (process) · omgang (round)",
-          "lukket behandling (closed processing)"
+          "lukket behandling (closed processing)",
+          "Periode der berørte parter kan uttale seg om et forslag.",
+          "Consultation round where affected parties can comment on a proposal."
         ],
         [
           "høringsfrist",
@@ -143,7 +175,9 @@
           "sg: (u) en høringsfrist; (d) høringsfristen; pl: (u) høringsfrister; (d) høringsfristerene",
           "nou",
           "tidsfrist (deadline) · frist (deadline)",
-          "fristoversittelse (missed deadline)"
+          "fristoversittelse (missed deadline)",
+          "Siste dato for å sende inn høringssvar.",
+          "Deadline for submitting consultation responses."
         ],
         [
           "innstilling",
@@ -151,7 +185,9 @@
           "sg: (u) en innstilling; (d) innstillingen; pl: (u) innstillinger; (d) innstillingerene",
           "nou",
           "anbefaling (recommendation)",
-          "avslag (rejection)"
+          "avslag (rejection)",
+          "Formell anbefaling fra en komité eller et utvalg.",
+          "Formal recommendation from a committee or panel."
         ],
         [
           "proposisjon",
@@ -159,7 +195,9 @@
           "sg: (u) en proposisjon; (d) proposisjonen; pl: (u) proposisjoner; (d) proposisjonerene",
           "nou",
           "lovforslag (bill)",
-          "tilbaketrekking (withdrawal)"
+          "tilbaketrekking (withdrawal)",
+          "Formelt forslag fra regjeringen til Stortinget.",
+          "Formal proposal from the government to parliament."
         ],
         [
           "komitébehandling",
@@ -167,7 +205,9 @@
           "sg: (u) en komitébehandling; (d) komitébehandlingen; pl: (u) komitébehandlinger; (d) komitébehandlingerene",
           "nou",
           "terapi (therapy) · tiltak (measure)",
-          "manglende behandling (lack of treatment) · avslag (rejection)"
+          "manglende behandling (lack of treatment) · avslag (rejection)",
+          "Behandling av en sak i en politisk komité.",
+          "Consideration of a matter in a parliamentary committee."
         ],
         [
           "lovforslag",
@@ -175,7 +215,9 @@
           "sg: (u) et lovforslag; (d) lovforslaget; pl: (u) lovforslager; (d) lovforslagerene",
           "nou",
           "utkast (draft) · initiativ (proposal/initiative)",
-          "avslag (rejection) · tilbaketrekking (withdrawal)"
+          "avslag (rejection) · tilbaketrekking (withdrawal)",
+          "Forslag til en ny lov eller en lovendring.",
+          "Proposal for a new law or legal amendment."
         ],
         [
           "lovendring",
@@ -183,7 +225,9 @@
           "sg: (u) en lovendring; (d) lovendringen; pl: (u) lovendringer; (d) lovendringerene",
           "nou",
           "justering (adjustment) · reform (reform)",
-          "status quo (status quo) · uendret tilstand (unchanged state)"
+          "status quo (status quo) · uendret tilstand (unchanged state)",
+          "Endring i en eksisterende lov.",
+          "Change to an existing law."
         ],
         [
           "rundskriv",
@@ -191,7 +235,9 @@
           "sg: (u) et rundskriv; (d) rundskrivet; pl: (u) rundskriver; (d) rundskriverene",
           "nou",
           "veiledning (guidance)",
-          "muntlig beskjed (oral message)"
+          "muntlig beskjed (oral message)",
+          "Offentlig skriv med retningslinjer eller presiseringer.",
+          "Official circular with guidelines or clarifications."
         ],
         [
           "tillitserklæring",
@@ -199,7 +245,9 @@
           "sg: (u) en tillitserklæring; (d) tillitserklæringen; pl: (u) tillitserklæringer; (d) tillitserklæringerene",
           "nou",
           "støtteerklæring (statement of support) · tillitsvotum (vote of confidence)",
-          "mistillit (no confidence)"
+          "mistillit (no confidence)",
+          "Uttalelse som viser politisk støtte.",
+          "Statement expressing political confidence or support."
         ],
         [
           "toppmøte",
@@ -207,7 +255,9 @@
           "sg: (u) et toppmøte; (d) toppmøtet; pl: (u) toppmøteer; (d) toppmøteerene",
           "nou",
           "summit (summit) · ledermøte (leaders’ meeting)",
-          "lokalmøte (local meeting) · lavnivåmøte (low-level meeting)"
+          "lokalmøte (local meeting) · lavnivåmøte (low-level meeting)",
+          "Møte mellom ledere på høyt nivå.",
+          "Meeting between high-level leaders."
         ],
         [
           "utsending",
@@ -215,7 +265,9 @@
           "sg: (u) en utsending; (d) utsendingen; pl: (u) utsendinger; (d) utsendingerene",
           "nou",
           "representant (representative)",
-          "mottaker (recipient)"
+          "mottaker (recipient)",
+          "Person sendt for å representere et land eller en organisasjon.",
+          "Person sent to represent a country or organization."
         ],
         [
           "våpenhvileavtale",
@@ -223,7 +275,9 @@
           "sg: (u) en våpenhvileavtale; (d) våpenhvileavtalen; pl: (u) våpenhvileavtaleer; (d) våpenhvileavtaleerene",
           "nou",
           "overenskomst (agreement) · pakt (pact)",
-          "brudd (breach) · uenighet (disagreement)"
+          "brudd (breach) · uenighet (disagreement)",
+          "Avtale om å stanse krigshandlinger midlertidig.",
+          "Agreement to temporarily stop hostilities."
         ],
         [
           "grensekontroll",
@@ -231,7 +285,9 @@
           "sg: (u) en grensekontroll; (d) grensekontrollen; pl: (u) grensekontroller; (d) grensekontrollerene",
           "nou",
           "tilsyn (supervision) · sjekk (check)",
-          "manglende kontroll (lack of control) · fri flyt (free flow)"
+          "manglende kontroll (lack of control) · fri flyt (free flow)",
+          "Kontroll av personer eller varer ved en grense.",
+          "Control of people or goods at a border."
         ],
         [
           "sanksjonspakke",
@@ -239,7 +295,9 @@
           "sg: (u) en sanksjonspakke; (d) sanksjonspakken; pl: (u) sanksjonspakkeer; (d) sanksjonspakkeerene",
           "nou",
           "sanksjonstiltak (sanctions package) · restriktive tiltak (restrictive measures)",
-          "lettelse (relief/easing) · sanksjonslettelse (sanctions relief)"
+          "lettelse (relief/easing) · sanksjonslettelse (sanctions relief)",
+          "Samlet sett av økonomiske eller politiske sanksjoner.",
+          "Package of economic or political sanctions."
         ],
         [
           "bistandsmiddel",
@@ -247,7 +305,9 @@
           "sg: (u) et bistandsmiddel; (d) bistandsmiddelet; pl: (u) bistandsmiddeler; (d) bistandsmiddelerene",
           "nou",
           "bistandspenger (aid funds) · støttemidler (support funds)",
-          "krigsmiddel (war means)"
+          "krigsmiddel (war means)",
+          "Penger eller ressurser brukt til bistand.",
+          "Money or resources used for aid."
         ],
         [
           "sikkerhetsgaranti",
@@ -255,7 +315,9 @@
           "sg: (u) en sikkerhetsgaranti; (d) sikkerhetsgarantien; pl: (u) sikkerhetsgarantier; (d) sikkerhetsgarantierene",
           "nou",
           "trygghetsgaranti (security guarantee) · forsikring (assurance)",
-          "usikkerhet (uncertainty) · risiko (risk)"
+          "usikkerhet (uncertainty) · risiko (risk)",
+          "Løfte om sikkerhet eller beskyttelse.",
+          "Promise of security or protection."
         ],
         [
           "allianse",
@@ -263,7 +325,9 @@
           "sg: (u) en allianse; (d) alliansen; pl: (u) allianseer; (d) allianseerene",
           "nou",
           "samarbeid (cooperation)",
-          "fiendskap (hostility) · brudd (break)"
+          "fiendskap (hostility) · brudd (break)",
+          "Formelt samarbeid mellom land eller partier.",
+          "Formal cooperation between countries or parties."
         ],
         [
           "motpart",
@@ -271,7 +335,9 @@
           "sg: (u) en motpart; (d) motparten; pl: (u) motparter; (d) motparterene",
           "nou",
           "motstander (opponent) · den andre parten (the other party)",
-          "medpart (co-party) · alliert (ally)"
+          "medpart (co-party) · alliert (ally)",
+          "Den andre parten i en konflikt eller forhandling.",
+          "The opposing or other party in a conflict or negotiation."
         ],
         [
           "observatør",
@@ -279,7 +345,9 @@
           "sg: (u) en observatør; (d) observatøren; pl: (u) observatører; (d) observatørerene",
           "nou",
           "iakttaker (observer)",
-          "deltaker (participant)"
+          "deltaker (participant)",
+          "Person som følger en prosess uten å delta fullt ut.",
+          "Person who observes a process without full participation."
         ],
         [
           "avtaletekst",
@@ -287,7 +355,9 @@
           "sg: (u) en avtaletekst; (d) avtaleteksten; pl: (u) avtaletekster; (d) avtaleteksterene",
           "nou",
           "overenskomst (agreement) · pakt (pact)",
-          "brudd (breach) · uenighet (disagreement)"
+          "brudd (breach) · uenighet (disagreement)",
+          "Den skriftlige teksten i en avtale.",
+          "The written wording of an agreement."
         ],
         [
           "stortingsgruppe",
@@ -295,7 +365,9 @@
           "sg: (u) en stortingsgruppe; (d) stortingsgruppen; pl: (u) stortingsgruppeer; (d) stortingsgruppeerene",
           "nou",
           "partigruppe (parliamentary party group) · representantgruppe (group of MPs)",
-          "enkeltrepresentant (individual representative)"
+          "enkeltrepresentant (individual representative)",
+          "Partiets representanter på Stortinget.",
+          "A party’s representatives in parliament."
         ],
         [
           "partileder",
@@ -303,7 +375,9 @@
           "sg: (u) en partileder; (d) partilederen; pl: (u) partiledere; (d) partilederene",
           "nou",
           "leder (leader) · partisjef (party leader)",
-          "underordnet (subordinate) · medarbeider (employee)"
+          "underordnet (subordinate) · medarbeider (employee)",
+          "Leder for et politisk parti.",
+          "Leader of a political party."
         ],
         [
           "partiprogram",
@@ -311,7 +385,9 @@
           "sg: (u) et partiprogram; (d) partiprogramet; pl: (u) partiprogramer; (d) partiprogramerene",
           "nou",
           "sending (broadcast) · program (program)",
-          "programstans (program halt) · avlysning (cancellation)"
+          "programstans (program halt) · avlysning (cancellation)",
+          "Dokument som beskriver et partis politikk.",
+          "Document describing a party’s policies."
         ],
         [
           "regjeringsplattform",
@@ -319,7 +395,9 @@
           "sg: (u) en regjeringsplattform; (d) regjeringsplattformen; pl: (u) regjeringsplattformer; (d) regjeringsplattformerene",
           "nou",
           "politisk plattform (political platform) · styringsgrunnlag (governing basis)",
-          "opposisjonspolitikk (opposition policy)"
+          "opposisjonspolitikk (opposition policy)",
+          "Avtale eller plan som viser regjeringens politikk.",
+          "Agreement or plan showing the government’s policy."
         ],
         [
           "stortingsmelding",
@@ -327,7 +405,9 @@
           "sg: (u) en stortingsmelding; (d) stortingsmeldingen; pl: (u) stortingsmeldinger; (d) stortingsmeldingerene",
           "nou",
           "rapport (report) · dokument (document)",
-          "privat brev (private letter)"
+          "privat brev (private letter)",
+          "Dokument fra regjeringen til Stortinget om en sak.",
+          "Government white paper/report to parliament on an issue."
         ],
         [
           "interpellasjon",
@@ -335,7 +415,9 @@
           "sg: (u) en interpellasjon; (d) interpellasjonen; pl: (u) interpellasjoner; (d) interpellasjonerene",
           "nou",
           "spørsmål (question) · politisk forespørsel (political inquiry)",
-          "taushet (silence) · manglende spørsmål (lack of question)"
+          "taushet (silence) · manglende spørsmål (lack of question)",
+          "Formell forespørsel til en statsråd i Stortinget.",
+          "Formal question to a minister in parliament."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

@@ -1,7 +1,7 @@
 import {displayVisible,displayFeature} from './display.js';
 import React,{useEffect,useRef,useState} from '../vendor/react.mjs';
 import type {Block,Page,View} from '../core/model.js';
-import {visibleTableColumns,tableOptionsKey,tableChoiceKey,tableLayout,tableChoice,tableFields,norskReadingWord,organizeTableRows,TABLE_LAYOUTS,TABLE_PALETTES} from './table-columns.js';
+import {visibleTableColumns,tableOptionsKey,tableChoiceKey,tableLayout,tableChoice,tableFields,norskReadingWord,tableExplanationColumns,tableReadingLabel,norskRelationParts,orderNorskReadingColumns,organizeTableRows,TABLE_LAYOUTS,TABLE_PALETTES} from './table-columns.js';
 import {Inline,parseMarkdown} from './markdown.js';import {Icon} from '../components/Icon.js';import {safeUrl} from '../core/validation.mjs';
 let mermaidPromise:Promise<any>|null=null;let mermaidQueue=Promise.resolve();
 export function Mermaid({code,onReady}:any){const [svg,setSvg]=useState(''),[error,setError]=useState('');const id=useRef('mermaid-'+crypto.randomUUID().replaceAll('-',''));useEffect(()=>{let alive=true;if(!mermaidPromise)mermaidPromise=import('../vendor/mermaid-loader.mjs').then(m=>{m.default.initialize({startOnLoad:false,securityLevel:'strict',suppressErrorRendering:true,theme:'neutral',flowchart:{htmlLabels:false},fontFamily:'Arial, sans-serif',maxTextSize:50000});return m.default;});mermaidQueue=mermaidQueue.catch(()=>{}).then(async()=>{try{if(code.length>50000)throw Error('Diagram exceeds the size limit');if(/%%\{\s*(init|config)\s*:/i.test(code))throw Error('Embedded renderer configuration is not allowed');const m=await mermaidPromise;const r=await m.render(id.current,code);if(alive){setSvg(r.svg);setTimeout(()=>onReady?.(),30);}}catch(e){if(alive)setError((e as Error).message);}});return()=>{alive=false;};},[code]);return error?<div className="render-error"><strong>Diagram could not be rendered</strong><p>{error}</p><pre>{code}</pre></div>:svg?<div className="mermaid-figure" data-mermaid-ready="true" dangerouslySetInnerHTML={{__html:svg}}/>:<div className="diagram-loading">Rendering diagram...</div>;}
@@ -10,6 +10,7 @@ function Table({columns,rows,page,view,id,print=false}:any){
  const interactive=!!page&&!!id&&!print,visible=interactive?visibleTableColumns(page.id,columns,view.revealed):columns.map((_:string,i:number)=>i),open=interactive&&view.revealed[tableOptionsKey(page.id,id)],layout=interactive?tableLayout(page.id,view.revealed):'table';
  const fields=tableFields(columns),sort=interactive?tableChoice(page.id,view.revealed,'sort'):'source',group=interactive?tableChoice(page.id,view.revealed,'group'):'none',organizeOpen=interactive&&view.revealed[tableChoiceKey(page.id,'menu','organize')],groups=organizeTableRows(columns,rows,sort,group);
  const norsk=page?.tags.some((tag:string)=>tag==='lang:nb'||tag==='lang:no');
+ const readingColumns=norsk&&!print?orderNorskReadingColumns(columns,visible):visible;
  const layouts={table:'Table',pairs:norsk?'NO / EN':'Side by side',lines:'Lines',cards2:'2 columns',cards3:'3 columns',dictionary:'Dictionary',tiles:'Tiles'};
  const palette=interactive?tableChoice(page.id,view.revealed,'palette'):'black',palettes={black:'Black',ocean:'Ocean',forest:'Forest',paper:'Warm paper'},paletteOpen=interactive&&view.revealed[tableChoiceKey(page.id,'menu','palette')];
  const presets=[['compact','Reading'],['alphabet','Alphabet'],...(fields.category>=0||fields.type>=0?[['themes','Categories']]:[]),...(fields.relations.length?[['relations','Synonyms / opposites']]:[]),...(fields.grammar.length?[['grammar','Grammar']]:[])];
@@ -17,6 +18,7 @@ function Table({columns,rows,page,view,id,print=false}:any){
   {interactive&&<div className="table-column-tools">
    <button className="text-button" data-action="table-options" data-block={id} aria-expanded={!!open}>Columns</button>
    {norsk&&(fields.grammar.length>0||fields.type>=0||fields.relations.length>0)&&<button className="text-button" data-action="table-preset" data-block={id} data-snippet="words" title="Keep Norsk, English and source synonyms/opposites; hide Forms and Type without changing layout">Words</button>}
+   {norsk&&tableExplanationColumns(columns).length>0&&<button className="text-button" data-action="table-preset" data-block={id} data-snippet="explanations" title="Two columns with source Norsk explanations and English translations">Explain</button>}
    <div role="group" aria-label="Table reading layout">{TABLE_LAYOUTS.map(mode=><button key={mode} className="text-button" data-action="table-layout" data-block={id} data-snippet={mode} aria-pressed={layout===mode}>{layouts[mode]}</button>)}</div>
    <button className="text-button" data-action="table-organize" data-block={id} aria-expanded={!!organizeOpen}>Views & sort</button>
    <button className="text-button" data-action="table-colors" data-block={id} aria-expanded={!!paletteOpen}>Colors</button>
@@ -29,9 +31,9 @@ function Table({columns,rows,page,view,id,print=false}:any){
     <small>Reading preferences for this page. Empty synonyms or opposites stay empty.</small>
    </div>}
   </div>}
-  <table><thead><tr>{visible.map((i:number)=><th key={i}><Inline text={columns[i]}/></th>)}</tr></thead><tbody>{groups.flatMap(g=>[
+  <table><thead><tr>{readingColumns.map((i:number)=><th key={i}><Inline text={norsk&&!print?tableReadingLabel(columns[i]):columns[i]}/></th>)}</tr></thead><tbody>{groups.flatMap(g=>[
    ...(g.title?[<tr className="csv-group-row" key={'group-'+g.title}><th colSpan={visible.length} scope="rowgroup">{g.title}</th></tr>]:[]),
-   ...g.items.map(({row,index})=><tr key={index} data-source-row={index}>{visible.map((j:number)=><td key={j} data-column={j} data-label={columns[j]}><Inline text={norsk&&!print&&j===0?norskReadingWord(columns,row,fields):row[j]??''}/></td>)}</tr>)
+   ...g.items.map(({row,index})=><tr key={index} data-source-row={index}>{readingColumns.map((j:number)=><td key={j} data-column={j} data-label={norsk&&!print?tableReadingLabel(columns[j]):columns[j]} lang={norsk&&!print&&/^Norsk forklaring$/iu.test(columns[j])?'nb':norsk&&!print&&/^English explanation$/iu.test(columns[j])?'en':undefined}>{norsk&&!print&&fields.relations.includes(j)?norskRelationParts(row[j]??'').map((part,k)=>part.bold?<strong key={k}><Inline text={part.text}/></strong>:<Inline key={k} text={part.text}/>):<Inline text={norsk&&!print&&j===0?norskReadingWord(columns,row,fields):row[j]??''}/>}</td>)}</tr>)
   ])}</tbody></table>
  </div>;
 }

@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "sg: (u) en varmegrad; (d) varmegraden; pl: (u) varmegrader; (d) varmegradene",
           "nou",
           "plussgrad (degree above zero)",
-          "kuldegrad (degree below zero)"
+          "kuldegrad (degree below zero)",
+          "Grad over null på temperaturskalaen.",
+          "A degree above zero on the temperature scale."
         ],
         [
           "varmerekord",
@@ -31,7 +35,9 @@
           "sg: (u) en varmerekord; (d) varmerekorden; pl: (u) varmerekorder; (d) varmerekordene",
           "nou",
           "temperaturrekord (temperature record)",
-          "kulderekord (cold record)"
+          "kulderekord (cold record)",
+          "Den høyeste temperaturen som er målt i en periode eller på et sted.",
+          "The highest temperature measured in a period or place."
         ],
         [
           "være på vakt",
@@ -39,7 +45,9 @@
           "",
           "uttr",
           "passe på (watch out) · være årvåken (be vigilant)",
-          "ta lett på det (take it lightly)"
+          "ta lett på det (take it lightly)",
+          "Være oppmerksom på mulig fare.",
+          "Be alert to possible danger."
         ],
         [
           "være uenig i",
@@ -47,7 +55,9 @@
           "",
           "uttr",
           "Ha en annen mening om noe (have one other opinion about something)",
-          "være enig i (agree with)"
+          "være enig i (agree with)",
+          "Ha en annen mening om noe.",
+          "Have a different opinion about something."
         ],
         [
           "værfenomen",
@@ -55,7 +65,9 @@
           "sg: (u) et værfenomen; (d) værfenomenet; pl: (u) værfenomener; (d) værfenomenene",
           "nou",
           "naturfenomen (natural phenomenon)",
-          "menneskeskapt fenomen (human-made phenomenon)"
+          "menneskeskapt fenomen (human-made phenomenon)",
+          "Naturlig fenomen knyttet til vær og klima.",
+          "Natural phenomenon linked to weather and climate."
         ],
         [
           "værmelding",
@@ -63,7 +75,9 @@
           "sg: (u) en værmelding; (d) værmeldingen; pl: (u) værmeldinger; (d) værmeldingene",
           "nou",
           "værvarsel (weather forecast)",
-          "etterpåklokskap (hindsight)"
+          "etterpåklokskap (hindsight)",
+          "Informasjon om hvordan været trolig blir.",
+          "Information about what the weather will probably be like."
         ],
         [
           "værmønster",
@@ -71,7 +85,9 @@
           "sg: (u) et værmønster; (d) værmønsteret; pl: (u) værmønstre; (d) værmønstrene",
           "nou",
           "værtype (weather type)",
-          "enkeltvær (single weather event)"
+          "enkeltvær (single weather event)",
+          "Typisk måte været utvikler seg på over tid.",
+          "Typical way weather develops over time."
         ],
         [
           "årvåken",
@@ -79,7 +95,9 @@
           "(M/F) årvåken; (N) årvåkent; (PL) årvåkne",
           "adj",
           "oppmerksom (attentive) · på vakt (on guard)",
-          "uoppmerksom (inattentive)"
+          "uoppmerksom (inattentive)",
+          "Oppmerksom og klar til å reagere.",
+          "Alert and ready to react."
         ],
         [
           "bærekraft",
@@ -87,7 +105,9 @@
           "sg: (u) en bærekraft; (d) bærekraften; vanligvis uten flertall",
           "nou",
           "varighet (durability)",
-          "rovdrift (overexploitation)"
+          "rovdrift (overexploitation)",
+          "Evne til å bruke ressurser uten å ødelegge fremtidige muligheter.",
+          "Ability to use resources without destroying future possibilities."
         ],
         [
           "bærekraftig",
@@ -95,7 +115,9 @@
           "(M/F) bærekraftig; (N) bærekraftig; (PL) bærekraftige",
           "adj",
           "varig (lasting) · miljøvennlig (environmentally friendly)",
-          "ubærekraftig (unsustainable)"
+          "ubærekraftig (unsustainable)",
+          "Som kan vare over tid uten å ødelegge miljø eller ressurser.",
+          "Able to last over time without destroying the environment or resources."
         ],
         [
           "dieselpris",
@@ -103,7 +125,9 @@
           "sg: (u) en dieselpris; (d) dieselprisen; pl: (u) dieselpriser; (d) dieselprisene",
           "nou",
           "drivstoffpris (fuel price)",
-          "gratis lading (free charging)"
+          "gratis lading (free charging)",
+          "Pris på diesel.",
+          "Price of diesel."
         ],
         [
           "elbil",
@@ -111,7 +135,9 @@
           "sg: (u) en elbil; (d) elbilen; pl: (u) elbiler; (d) elbilene",
           "nou",
           "elektrisk bil (electric car)",
-          "bensinbil (petrol car)"
+          "bensinbil (petrol car)",
+          "Bil som går på elektrisk energi.",
+          "Car that runs on electric energy."
         ],
         [
           "elektrisk lastebil",
@@ -119,7 +145,9 @@
           "",
           "uttr",
           "utslippsfri lastebil (emission-free truck)",
-          "diesellastebil (diesel truck)"
+          "diesellastebil (diesel truck)",
+          "Lastebil som bruker elektrisk motor og batteri.",
+          "Truck that uses an electric motor and battery."
         ],
         [
           "få fortgang på",
@@ -127,7 +155,9 @@
           "",
           "uttr",
           "fremskynde (accelerate) · sette fart på (speed up)",
-          "bremse (slow down)"
+          "bremse (slow down)",
+          "Gjøre at noe går raskere fremover.",
+          "Make something move forward faster."
         ],
         [
           "klimatilpasning",
@@ -135,7 +165,9 @@
           "sg: (u) en klimatilpasning; (d) klimatilpasningen; pl: (u) klimatilpasninger; (d) klimatilpasningene",
           "nou",
           "tilpasning til klima (adaptation to climate)",
-          "sårbarhet (vulnerability)"
+          "sårbarhet (vulnerability)",
+          "Tiltak som gjør samfunnet bedre forberedt på klimaendringer.",
+          "Measures that make society better prepared for climate change."
         ],
         [
           "omstilling",
@@ -143,7 +175,9 @@
           "sg: (u) en omstilling; (d) omstillingen; pl: (u) omstillinger; (d) omstillingene",
           "nou",
           "endring (change) · transformasjon (transformation)",
-          "stillstand (standstill)"
+          "stillstand (standstill)",
+          "Endring fra én måte å arbeide eller organisere seg på til en annen.",
+          "Change from one way of working or organizing to another."
         ],
         [
           "rekkevidde",
@@ -151,7 +185,9 @@
           "sg: (u) en rekkevidde; (d) rekkevidden; pl: (u) rekkevidder; (d) rekkeviddene",
           "nou",
           "kjørelengde per lading (driving distance per charge)",
-          "kort rekkevidde (short range)"
+          "kort rekkevidde (short range)",
+          "Hvor langt et kjøretøy kan kjøre før det må fylle eller lade.",
+          "How far a vehicle can travel before refueling or charging."
         ],
         [
           "advare",
@@ -159,7 +195,9 @@
           "G2 -te : (INF) infinitiv: å advare; (PR) presens: advarer· (PT) preteritum: advarte· (PP) presens perfektum: har advart· (PSS) advares· (IM) advar",
           "vrb",
           "varsle (warn) · gjøre oppmerksom på (make aware)",
-          "berolige (reassure)"
+          "berolige (reassure)",
+          "Varsle eller gjøre oppmerksom på.",
+          "Warn or make someone aware."
         ],
         [
           "analyse",
@@ -167,7 +205,9 @@
           "SG: (U) en analyse · (D) analysen · PL: (U) analyser · (D) analysene",
           "nou",
           "undersøkelse (analysis/examination) · tolkning (interpretation)",
-          "overflatisk lesing (superficial reading)"
+          "overflatisk lesing (superficial reading)",
+          "Systematisk undersøkelse av deler og sammenhenger.",
+          "A systematic examination of parts and connections."
         ],
         [
           "art",
@@ -175,7 +215,9 @@
           "sg: (u) en art; (d) arten; pl: (u) arter; (d) artene",
           "nou",
           "dyreart (animal species) · planteart (plant species)",
-          "individ (individual)"
+          "individ (individual)",
+          "Gruppe av planter eller dyr som kan formere seg med hverandre.",
+          "Group of plants or animals that can reproduce with each other."
         ],
         [
           "artikkel",
@@ -183,7 +225,9 @@
           "sg: (u) en artikkel; (d) artikkelen; pl: (u) artikler; (d) artiklene",
           "nou",
           "tekst (text/article) · innlegg (piece/post)",
-          "bok (book)"
+          "bok (book)",
+          "Saklig tekst i avis, nettavis eller faglig sammenheng.",
+          "Factual text in a newspaper, online paper, or academic context."
         ],
         [
           "artikkelforfatter",
@@ -191,7 +235,9 @@
           "sg: (u) en artikkelforfatter; (d) artikkelforfatteren; pl: (u) artikkelforfattere; (d) artikkelforfatterne",
           "nou",
           "skribent (writer) · forfatter (author)",
-          "leser (reader) · mottaker (recipient)"
+          "leser (reader) · mottaker (recipient)",
+          "Personen som har skrevet en artikkel.",
+          "The person who has written an article."
         ],
         [
           "avklare",
@@ -199,7 +245,9 @@
           "G2 -te : (INF) infinitiv: å avklare· (PR) presens: avklarer· (PT) preteritum: avklarte· (PP) presens perfektum: har avklart· (PSS) avklares· (IM) avklar",
           "vrb",
           "oppklare (clarify) · tydeliggjøre (clarify)",
-          "uklare (make unclear) · forvirre (confuse)"
+          "uklare (make unclear) · forvirre (confuse)",
+          "Gjøre noe tydelig eller finne en løsning.",
+          "Clarify something or find a solution."
         ],
         [
           "avklart",
@@ -207,7 +255,9 @@
           "(M/F) avklart · (N) avklartt · (PL) avklarte",
           "adj",
           "oppklart (clarified) · tydelig (clear)",
-          "uavklart (unclear/unsettled)"
+          "uavklart (unclear/unsettled)",
+          "Tydelig, oppklart eller bestemt.",
+          "Clear, clarified or defined."
         ],
         [
           "avvike",
@@ -215,7 +265,9 @@
           "IRR : (INF) infinitiv: å avvike· (PR) presens: avviker· (PT) preteritum: avvek· (PP) presens perfektum: har avveket· (PSS) avvikes· (IM) avvik",
           "vrb",
           "skille seg fra (differ from) · være annerledes (be different)",
-          "samsvare (correspond) · stemme (match)"
+          "samsvare (correspond) · stemme (match)",
+          "Skille seg fra eller være annerledes.",
+          "Differ from or be different."
         ],
         [
           "begynne",
@@ -223,7 +275,9 @@
           "G2 -te : (INF) infinitiv: å begynne; (PR) presens: begynner; (PT) preteritum: begynte; (PP) presens perfektum: har begynt",
           "vrb",
           "starte (start) · sette i gang (begin)",
-          "avslutte (finish)"
+          "avslutte (finish)",
+          "Starte en handling eller prosess.",
+          "Start an action or process."
         ],
         [
           "beiteområde",
@@ -231,7 +285,9 @@
           "sg: (u) et beiteområde; (d) beiteområdet; pl: (u) beiteområder; (d) beiteområdene",
           "nou",
           "beitemark (pasture)",
-          "utbygd område (developed area)"
+          "utbygd område (developed area)",
+          "Område der dyr beiter.",
+          "Area where animals graze."
         ],
         [
           "bestå",
@@ -239,7 +295,9 @@
           "IRR : (INF) infinitiv: å bestå· (PR) presens: består· (PT) preteritum: besto· (PP) presens perfektum: har bestått",
           "vrb",
           "klare (pass/manage) · bestå av (consist of)",
-          "stryke (fail) · mangle (lack)"
+          "stryke (fail) · mangle (lack)",
+          "Klare en prøve, eller være satt sammen av deler.",
+          "Pass an exam, or consist of parts."
         ],
         [
           "bevare",
@@ -247,7 +305,9 @@
           "G2 -te : (INF) infinitiv: å bevare; (PR) presens: bevarer; (PT) preteritum: bevarte; (PP) presens perfektum: har bevart; (PSS) passiv: bevares; (IM) imperativ: bevar",
           "vrb",
           "verne (protect) · ta vare på (take care of)",
-          "ødelegge (destroy)"
+          "ødelegge (destroy)",
+          "Ta vare på og hindre at noe forsvinner.",
+          "Preserve and prevent something from disappearing."
         ],
         [
           "bie",
@@ -255,7 +315,9 @@
           "sg: (u) en/ei bie; (d) bia/bien; pl: (u) bier; (d) biene",
           "nou",
           "honningbie (honeybee) · pollinator (pollinator)",
-          "skadedyr (pest)"
+          "skadedyr (pest)",
+          "Insekt som pollinerer blomster og lager honning.",
+          "Insect that pollinates flowers and makes honey."
         ],
         [
           "biologisk mangfold",
@@ -263,7 +325,9 @@
           "",
           "uttr",
           "naturmangfold (natural diversity)",
-          "ensartet natur (uniform nature)"
+          "ensartet natur (uniform nature)",
+          "Variasjon i levende organismer og naturtyper.",
+          "Variety among living organisms and habitat types."
         ],
         [
           "blomstring",
@@ -271,7 +335,9 @@
           "sg: (u) en blomstring; (d) blomstringen; pl: (u) blomstringer; (d) blomstringene",
           "nou",
           "blomstringstid (flowering season)",
-          "visning (withering)"
+          "visning (withering)",
+          "Det at planter får blomster.",
+          "The fact that plants produce flowers."
         ],
         [
           "bortsett fra",
@@ -279,7 +345,9 @@
           "",
           "uttr",
           "unntatt (except) · med unntak av (with the exception of)",
-          "inkludert (included) · medregnet (included)"
+          "inkludert (included) · medregnet (included)",
+          "Viser at noe ikke tas med i det man sier.",
+          "Shows that something is not included in what is being said."
         ],
         [
           "bryte ut",
@@ -287,7 +355,9 @@
           "IRR : (INF) infinitiv: å bryte ut· (PR) presens: bryter ut· (PT) preteritum: brøt ut· (PP) presens perfektum: har brutt ut· (PSS) —· (IM) bryt ut",
           "vrb",
           "oppstå (arise) · starte (start)",
-          "roe seg (calm down)"
+          "roe seg (calm down)",
+          "Oppstå eller starte.",
+          "Arise or start."
         ],
         [
           "det viser seg at",
@@ -295,7 +365,9 @@
           "",
           "uttr",
           "Det blir klart etter hvert at noe er tilfelle (it blir clearly after each that something is case)",
-          "det skjules at (it is hidden that)"
+          "det skjules at (it is hidden that)",
+          "Det blir klart etter hvert at noe er tilfelle.",
+          "It becomes clear over time that something is the case."
         ],
         [
           "dyreart",
@@ -303,7 +375,9 @@
           "sg: (u) en dyreart; (d) dyrearten; pl: (u) dyrearter; (d) dyreartene",
           "nou",
           "art (species)",
-          "planteart (plant species)"
+          "planteart (plant species)",
+          "Art innenfor dyreriket.",
+          "Species within the animal kingdom."
         ],
         [
           "ekte",
@@ -311,7 +385,9 @@
           "(M/F) ekte; (N) ekte; (PL) ekte",
           "adj",
           "oppriktig (genuine) · virkelig (real, genuine)",
-          "falsk (fake) · kunstig (artificial)"
+          "falsk (fake) · kunstig (artificial)",
+          "Oppriktig eller virkelig.",
+          "Genuine or real."
         ],
         [
           "fase",
@@ -319,7 +395,9 @@
           "",
           "nou",
           "periode (period) · trinn (stage)",
-          "helhet (whole)"
+          "helhet (whole)",
+          "Avgrenset del av en utvikling eller prosess.",
+          "Limited part of a development or process."
         ],
         [
           "fastslå",
@@ -327,7 +405,9 @@
           "G1 -et : (INF) infinitiv: å fastslå· (PR) presens: fastslår· (PT) preteritum: fastslået· (PP) presens perfektum: har fastslået· (PSS) fastslås· (IM) fastslå",
           "vrb",
           "Si noe klart og bestemt (say something clearly and defined)",
-          "betvile (doubt) · la være å konkludere (avoid concluding)"
+          "betvile (doubt) · la være å konkludere (avoid concluding)",
+          "Si noe klart og bestemt.",
+          "State something clearly and firmly."
         ],
         [
           "felles",
@@ -335,7 +415,9 @@
           "(m/f) felles; (n) felles; (pl) felles",
           "adj",
           "delt (shared) · kollektiv (joint)",
-          "individuell (individual) · privat (private)"
+          "individuell (individual) · privat (private)",
+          "Delt, kollektiv.",
+          "Divided or joint."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

@@ -33,8 +33,8 @@
       "sha256": "7151ba6f9019f8a9d29072c2de9a0113b6be07317e5cbb8b1a3512b70cedbc78"
     },
     "atlas.norsk-csv": {
-      "review": "Owner authorized public lexical translations and inflections on 2026-10-05, then requested category reading presets. Version 1.1.0 retains all 1,449 lexical rows and adds the original thematic category to the two A2 selections. Textbook passages, definitions, exam examples and private full translations excluded.",
-      "sha256": "cfdae822720690056adf1985cbe622508f82b8fc04664f879633df36bdc3cc8f"
+      "review": "Owner authorized public study sheets on 2026-10-05 and requested original Norsk explanations with their English translations on 2026-10-06. Version 1.2.0 retains all 1,449 lexical rows and adds 808 paired source explanations to the six B1/B2 selections, split at the first newline from the indexed source column. No generated explanations, textbook passages, exam examples, private full translations or original ZIPs published.",
+      "sha256": "da91880316af6e3eee604447f88c8b128f69b048341f1ba80a664d95f48ecbde"
     }
   }
 }

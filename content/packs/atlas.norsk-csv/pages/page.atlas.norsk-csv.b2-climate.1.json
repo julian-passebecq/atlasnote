@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "sg: (u) en arealbruk; (d) arealbruken; pl: (u) arealbruker; (d) arealbrukerene",
           "nou",
           "områdebruk (land use)",
-          "urørt natur (untouched nature)"
+          "urørt natur (untouched nature)",
+          "Hvordan land eller områder brukes.",
+          "How land or areas are used."
         ],
         [
           "ekstremvarme",
@@ -31,7 +35,9 @@
           "sg: (u) en ekstremvarme; (d) ekstremvarmen; pl: (u) ekstremvarmer; (d) ekstremvarmene",
           "nou",
           "glohet varme (scorching heat) · hete (heat)",
-          "kulde (cold) · kuldebølge (cold wave)"
+          "kulde (cold) · kuldebølge (cold wave)",
+          "Svært høy varme som kan være farlig for helse og samfunn.",
+          "Very high heat that can be dangerous for health and society."
         ],
         [
           "ekstremvær",
@@ -39,7 +45,9 @@
           "sg: (u) et ekstremvær; (d) ekstremværet; pl: (u) ekstremvær; (d) ekstremværene",
           "nou",
           "uvær (bad weather) · naturfare (natural hazard)",
-          "stabilt vær (stable weather)"
+          "stabilt vær (stable weather)",
+          "Vær som er uvanlig kraftig og kan gjøre skade.",
+          "Weather that is unusually severe and can cause damage."
         ],
         [
           "enig",
@@ -47,7 +55,9 @@
           "",
           "adj",
           "samstemt (in agreement)",
-          "uenig (disagreeing)"
+          "uenig (disagreeing)",
+          "Som har samme mening som en annen.",
+          "Having the same opinion as another person."
         ],
         [
           "evakuering",
@@ -55,7 +65,9 @@
           "sg: (u) en evakuering; (d) evakueringen; pl: (u) evakueringer; (d) evakueringerene",
           "nou",
           "bortflytting (moving away)",
-          "tilbakeflytting (return)"
+          "tilbakeflytting (return)",
+          "Det å flytte folk bort fra et farlig område.",
+          "Evacuation; moving people away from a dangerous area."
         ],
         [
           "farevarsel",
@@ -63,7 +75,9 @@
           "sg: (u) et farevarsel; (d) farevarselet; pl: (u) farevarsler; (d) farevarslene",
           "nou",
           "varsel (warning) · advarsel (warning)",
-          "trygg beskjed (reassuring message)"
+          "trygg beskjed (reassuring message)",
+          "Varsel om mulig fare, for eksempel ekstremvær.",
+          "Warning about possible danger, for example extreme weather."
         ],
         [
           "flom",
@@ -71,7 +85,9 @@
           "sg: (u) en flom; (d) flommen; pl: (u) flommer; (d) flommene",
           "nou",
           "oversvømmelse (flooding)",
-          "tørke (drought)"
+          "tørke (drought)",
+          "Svært mye vann som dekker områder som vanligvis er tørre.",
+          "Very much water covering areas that are usually dry."
         ],
         [
           "flomsikring",
@@ -79,7 +95,9 @@
           "sg: (u) en flomsikring; (d) flomsikringen; pl: (u) flomsikringer; (d) flomsikringene",
           "nou",
           "flomvern (flood defence)",
-          "manglende vern (lack of protection)"
+          "manglende vern (lack of protection)",
+          "Tiltak som skal beskytte mot flom.",
+          "Measures intended to protect against floods."
         ],
         [
           "gammel",
@@ -87,7 +105,9 @@
           "",
           "adj",
           "eldre (older) · eldgammel (ancient)",
-          "ung (young) · ny (new)"
+          "ung (young) · ny (new)",
+          "Som har høy alder eller har eksistert lenge.",
+          "Having high age or having existed for a long time."
         ],
         [
           "glohet",
@@ -95,7 +115,9 @@
           "(M/F) glohet; (N) glohett; (PL) glohete",
           "adj",
           "svært varm (very hot) · brennhet (burning hot)",
-          "iskald (ice-cold)"
+          "iskald (ice-cold)",
+          "Svært varm.",
+          "Very hot."
         ],
         [
           "ha noe på hjertet",
@@ -103,7 +125,9 @@
           "IRR : (INF) infinitiv: å ha noe på hjertet; (PR) presens: har noe på hjertet · (PT) preteritum: hadde noe på hjertet · (PP) presens perfektum: har hatt noe på hjertet",
           "vrb",
           "ville si noe (want to say something) · ta opp noe (bring something up)",
-          "tie (be silent)"
+          "tie (be silent)",
+          "Ville si noe eller ta opp noe.",
+          "Want to say something or bring something up."
         ],
         [
           "havnivå",
@@ -111,7 +135,9 @@
           "sg: (u) et havnivå; (d) havnivået; pl: (u) havnivåer; (d) havnivåene",
           "nou",
           "vannstand (water level)",
-          "lavvann (low tide/low water)"
+          "lavvann (low tide/low water)",
+          "Høyden på havoverflaten.",
+          "The height of the sea surface."
         ],
         [
           "henge sammen med",
@@ -119,7 +145,9 @@
           "",
           "uttr",
           "ha sammenheng med (be connected with) · være forbundet med (be linked with)",
-          "være løsrevet fra (be detached from)"
+          "være løsrevet fra (be detached from)",
+          "Ha en tydelig forbindelse med noe annet.",
+          "Have a clear connection with something else."
         ],
         [
           "hetebølge",
@@ -127,7 +155,9 @@
           "sg: (u) en hetebølge; (d) hetebølgen; pl: (u) hetebølger; (d) hetebølgene",
           "nou",
           "varmebølge (heatwave) · ekstremvarme (extreme heat)",
-          "kuldebølge (cold wave)"
+          "kuldebølge (cold wave)",
+          "Periode med uvanlig høy varme.",
+          "A period of unusually high heat."
         ],
         [
           "hyttebygging",
@@ -135,7 +165,9 @@
           "(SG U) en hyttebygging · (SG D) hyttebyggingen",
           "nou",
           "utbygging (development); fritidsboligbygging (holiday-home construction)",
-          "byggeforbud (construction ban); naturvern (nature protection)"
+          "byggeforbud (construction ban); naturvern (nature protection)",
+          "Bygging av hytter, ofte diskutert i natur- og arealpolitikk.",
+          "Construction of cabins, often debated in nature and land-use policy."
         ],
         [
           "høytrykk",
@@ -143,7 +175,9 @@
           "sg: (u) et høytrykk; (d) høytrykket; pl: (u) høytrykk; (d) høytrykkene",
           "nou",
           "stabilt værsystem (stable weather system)",
-          "lavtrykk (low-pressure system)"
+          "lavtrykk (low-pressure system)",
+          "Område med høyt lufttrykk som ofte gir stabilt vær.",
+          "Area with high air pressure that often gives stable weather."
         ],
         [
           "i stor grad",
@@ -151,7 +185,9 @@
           "",
           "uttr",
           "i høy grad (to a high degree) · i stor utstrekning (to a large extent)",
-          "i liten grad (to a small degree)"
+          "i liten grad (to a small degree)",
+          "Ha betydning eller påvirkning.",
+          "Have meaning or influence."
         ],
         [
           "kjøle seg ned",
@@ -159,7 +195,9 @@
           "G2 -te : (INF) infinitiv: å kjøle; (PR) presens: kjøler; (PT) preteritum: kjølte; (PP) presens perfektum: har kjølt; (PSS) passiv: kjøles; (IM) imperativ: kjøl",
           "vrb",
           "avkjøle seg (cool oneself down)",
-          "varme seg opp (warm oneself up)"
+          "varme seg opp (warm oneself up)",
+          "Bli kaldere eller gjøre kroppen kaldere.",
+          "Become cooler or cool the body down."
         ],
         [
           "kraftig nedbør",
@@ -167,7 +205,9 @@
           "",
           "uttr",
           "styrtregn (downpour) · mye regn (a lot of rain)",
-          "oppholdsvær (dry weather)"
+          "oppholdsvær (dry weather)",
+          "Mye regn eller snø på kort tid.",
+          "A lot of rain or snow in a short time."
         ],
         [
           "kuldebølge",
@@ -175,7 +215,9 @@
           "sg: (u) en kuldebølge; (d) kuldebølgen; pl: (u) kuldebølger; (d) kuldebølgerene",
           "nou",
           "ekstremkulde (extreme cold)",
-          "hetebølge (heatwave)"
+          "hetebølge (heatwave)",
+          "Periode med uvanlig sterk kulde.",
+          "Period of unusually severe cold."
         ],
         [
           "lyn",
@@ -183,7 +225,9 @@
           "sg: (u) et lyn; (d) lynet; pl: (u) lyn; (d) lynene",
           "nou",
           "lynglimt (flash of lightning) · elektrisk utladning (electrical discharge)",
-          "klarvær (clear weather)"
+          "klarvær (clear weather)",
+          "Elektrisk utladning på himmelen under uvær.",
+          "Electrical discharge in the sky during a storm."
         ],
         [
           "nattetemperatur",
@@ -191,7 +235,9 @@
           "sg: (u) en nattetemperatur; (d) nattetemperaturen; pl: (u) nattetemperaturer; (d) nattetemperaturene",
           "nou",
           "temperatur om natten (temperature at night)",
-          "dagtemperatur (daytime temperature)"
+          "dagtemperatur (daytime temperature)",
+          "Temperatur om natten.",
+          "Temperature at night."
         ],
         [
           "naturfare",
@@ -199,7 +245,9 @@
           "sg: (u) en naturfare; (d) naturfaren; pl: (u) naturfarer; (d) naturfarerene",
           "nou",
           "naturrisiko (natural risk)",
-          "trygge forhold (safe conditions)"
+          "trygge forhold (safe conditions)",
+          "Fare knyttet til naturhendelser som flom, ras eller storm.",
+          "Danger linked to natural events such as floods, landslides, or storms."
         ],
         [
           "nedbør",
@@ -207,7 +255,9 @@
           "sg: (u) en nedbør; (d) nedbøren; vanligvis uten flertall",
           "nou",
           "regn og snø (rain and snow)",
-          "tørke (drought)"
+          "tørke (drought)",
+          "Vann som faller fra skyene, som regn, snø eller hagl.",
+          "Water that falls from clouds, such as rain, snow or hail."
         ],
         [
           "oransje farevarsel",
@@ -215,7 +265,9 @@
           "",
           "uttr",
           "alvorlig varsel (serious warning)",
-          "grønt nivå (green level)"
+          "grønt nivå (green level)",
+          "Farevarsel på høyt nivå, men ikke det høyeste.",
+          "A high-level warning, but not the highest level."
         ],
         [
           "overstige",
@@ -223,7 +275,9 @@
           "IRR : (INF) infinitiv: å overstige; (PR) presens: overstiger; (PT) preteritum: oversteg; (PP) presens perfektum: har oversteget",
           "vrb",
           "være over (be above) · gå over (go above)",
-          "ligge under (be below)"
+          "ligge under (be below)",
+          "Være høyere enn en grense eller et nivå.",
+          "Be higher than a limit or level."
         ],
         [
           "oversvømmelse",
@@ -231,7 +285,9 @@
           "sg: (u) en oversvømmelse; (d) oversvømmelsen; pl: (u) oversvømmelser; (d) oversvømmelsene",
           "nou",
           "flom (flood) · vannskade (water damage)",
-          "tørke (drought)"
+          "tørke (drought)",
+          "Når vann dekker et område som vanligvis er tørt.",
+          "When water covers an area that is usually dry."
         ],
         [
           "prognose",
@@ -239,7 +295,9 @@
           "sg: (u) en prognose; (d) prognosen; pl: (u) prognoser; (d) prognosene",
           "nou",
           "varsel (forecast) · beregning (calculation)",
-          "fasit (final answer)"
+          "fasit (final answer)",
+          "Forventning eller beregning av hva som kan skje fremover.",
+          "A forecast or calculation of what may happen ahead."
         ],
         [
           "regnskyll",
@@ -247,7 +305,9 @@
           "sg: (u) et regnskyll; (d) regnskyllet; pl: (u) regnskyll; (d) regnskyllene",
           "nou",
           "styrtregn (downpour)",
-          "opphold (dry spell)"
+          "opphold (dry spell)",
+          "Kort periode med kraftig regn.",
+          "Short period of heavy rain."
         ],
         [
           "skogbrann",
@@ -255,7 +315,9 @@
           "sg: (u) en skogbrann; (d) skogbrannen; pl: (u) skogbranner; (d) skogbrannene",
           "nou",
           "naturbrann (wildfire)",
-          "brannslukking (firefighting)"
+          "brannslukking (firefighting)",
+          "Brann i skog eller utmark.",
+          "Fire in forest or wildland."
         ],
         [
           "skredfare",
@@ -263,7 +325,9 @@
           "(SG U) en skredfare · (SG D) skredfaren",
           "nou",
           "rasfare (slide risk); naturfare (natural hazard)",
-          "stabilitet (stability); trygghet (safety)"
+          "stabilitet (stability); trygghet (safety)",
+          "Fare for jord-, stein-, snø- eller kvikkleireskred.",
+          "Risk of landslides, rockslides, avalanches, or quick-clay slides."
         ],
         [
           "storm",
@@ -271,7 +335,9 @@
           "sg: (u) en storm; (d) stormen; pl: (u) stormer; (d) stormene",
           "nou",
           "uvær (stormy weather)",
-          "stille (calm)"
+          "stille (calm)",
+          "Svært sterk vind.",
+          "Very strong wind."
         ],
         [
           "sårbar",
@@ -279,7 +345,9 @@
           "(M/F) sårbar; (N) sårbart; (PL) sårbare",
           "adj",
           "utsatt (exposed) · skjør (fragile)",
-          "robust (robust)"
+          "robust (robust)",
+          "Lett å skade eller påvirke negativt.",
+          "Easy to harm or affect negatively."
         ],
         [
           "ta seg opp",
@@ -287,7 +355,9 @@
           "",
           "uttr",
           "øke (increase) · forsterkes (intensify)",
-          "avta (decrease)"
+          "avta (decrease)",
+          "Bli sterkere eller øke.",
+          "Become stronger or increase."
         ],
         [
           "temperatur",
@@ -295,7 +365,9 @@
           "sg: (u) en temperatur; (d) temperaturen; pl: (u) temperaturer; (d) temperaturene",
           "nou",
           "varmegrad (degree of heat)",
-          "kuldegrad (degree below zero)"
+          "kuldegrad (degree below zero)",
+          "Mål på hvor varmt eller kaldt noe er.",
+          "A measure of how hot or cold something is."
         ],
         [
           "trekke frem",
@@ -303,7 +375,9 @@
           "IRR",
           "vrb",
           "framheve (highlight) · peke på (point out)",
-          "tone ned (downplay)"
+          "tone ned (downplay)",
+          "Nevne eller løfte fram som eksempel.",
+          "Mention or highlight as an example."
         ],
         [
           "trekke ut",
@@ -311,7 +385,9 @@
           "G1 -et : (INF) infinitiv: å trekke ut· (PR) presens: trekker ut· (PT) preteritum: trekket ut· (PP) presens perfektum: har trekket ut· (PSS) trekkes ut· (IM) trekk ut",
           "vrb",
           "ta ut (out) · samle (pull out)",
-          "skyve inn (push in) · forkorte (shorten)"
+          "skyve inn (push in) · forkorte (shorten)",
+          "Ta ut eller samle.",
+          "Out or pull out."
         ],
         [
           "tørke",
@@ -319,7 +395,9 @@
           "sg: (u) en tørke; (d) tørken; pl: (u) tørker; (d) tørkene",
           "nou",
           "langvarig tørrvær (long dry spell)",
-          "flom (flood)"
+          "flom (flood)",
+          "Lang periode med for lite nedbør.",
+          "Long period with too little precipitation."
         ],
         [
           "uvær",
@@ -327,7 +405,9 @@
           "sg: (u) et uvær; (d) uværet; pl: (u) uvær; (d) uværene",
           "nou",
           "storm (storm) · ekstremvær (extreme weather)",
-          "godvær (nice weather)"
+          "godvær (nice weather)",
+          "Dårlig og ofte farlig vær.",
+          "Bad and often dangerous weather."
         ],
         [
           "uværsfront",
@@ -335,7 +415,9 @@
           "sg: (u) en uværsfront; (d) uværsfronten; pl: (u) uværsfronter; (d) uværsfronterene",
           "nou",
           "lavtrykksfront (low-pressure front)",
-          "høytrykk (high pressure)"
+          "høytrykk (high pressure)",
+          "Front med dårlig eller kraftig vær.",
+          "Weather front with bad or severe weather."
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

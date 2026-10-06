@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "en ansiennitet; ansienniteten; ansienniteter; ansiennitetene",
           "noun",
           "tjenestetid (length of service)  ·  tida (the time)",
-          "nyansatt status (new-employee status)  ·  kort tjenestetid (short service time)"
+          "nyansatt status (new-employee status)  ·  kort tjenestetid (short service time)",
+          "tjenestetid, tida en person har vært ansatt i en jobb",
+          "length of service; the time a person has been employed in a job"
         ],
         [
           "åpen søknad",
@@ -31,7 +35,9 @@
           "en åpen søknad, den åpne søknaden, åpne søknader, de åpne søknadene",
           "noun",
           "spontan søknad (spontaneous application), uoppfordret søknad (unsolicited application)",
-          "søknad til utlyst stilling (application to an advertised post), formell invitasjon (formal invitation)"
+          "søknad til utlyst stilling (application to an advertised post), formell invitasjon (formal invitation)",
+          "en generell søknad du kan sende til et arbeidssted, selv om stedet ikke har lyst ut en bestemt stilling. Det kan være en måte å komme inn på en arbeidsplass på.",
+          "a general application you can send to a workplace even if no specific position has been advertised. It can be a way to get into a workplace."
         ],
         [
           "arbeidsgiver",
@@ -39,7 +45,9 @@
           "en arbeidsgiver; arbeidsgiveren; arbeidsgivere; arbeidsgiverne",
           "noun",
           "bedriftseier (business owner)  ·  arbeidsplass (workplace/employer)",
-          "arbeidstaker (employee)  ·  ansatt (employee)"
+          "arbeidstaker (employee)  ·  ansatt (employee)",
+          "person som ansetter andre",
+          "a person who employs others"
         ],
         [
           "arbeidstaker",
@@ -47,7 +55,9 @@
           "en arbeidstaker; arbeidstakeren; arbeidstakere; arbeidstakerne",
           "noun",
           "ansatt (employee)  ·  lønnsmottaker (wage earner)",
-          "arbeidsgiver (employer)  ·  selvstendig næringsdrivende (self-employed person)"
+          "arbeidsgiver (employer)  ·  selvstendig næringsdrivende (self-employed person)",
+          "person som er ansatt et sted",
+          "a person employed somewhere"
         ],
         [
           "assistent",
@@ -55,7 +65,9 @@
           "en assistent, assistenten, assistenter, assistentene",
           "noun",
           "medhjelper (helper), hjelper (assistant)",
-          "leder (leader), sjef (boss)"
+          "leder (leader), sjef (boss)",
+          "en person som hjelper til, men som ikke har offisiell utdanning innen faget",
+          "a person who helps, but who does not have formal education in the field"
         ],
         [
           "bemanningsbyrå",
@@ -63,7 +75,9 @@
           "et bemanningsbyrå; bemanningsbyrået; bemanningsbyråer; bemanningsbyråerne",
           "noun",
           "firma (company)  ·  leier (rents)",
-          "fast arbeidsgiver (permanent employer)  ·  direkte ansettelse (direct employment)"
+          "fast arbeidsgiver (permanent employer)  ·  direkte ansettelse (direct employment)",
+          "firma som leier ut arbeidskraft, vikarbyrå",
+          "a company that rents out labor, a temp agency"
         ],
         [
           "frilans",
@@ -71,7 +85,9 @@
           "frilans",
           "other",
           "selvstendig (independently), på oppdrag (on assignment)",
-          "fast ansatt (permanently employed), i fast jobb (in a permanent job)"
+          "fast ansatt (permanently employed), i fast jobb (in a permanent job)",
+          "det å arbeide for seg selv uten å være ansatt av noen",
+          "freelance; working for yourself without being employed by anyone"
         ],
         [
           "høy sysselsetting",
@@ -79,7 +95,9 @@
           "",
           "phrase",
           "mange i arbeid (many people employed)  ·  høy yrkesdeltakelse (high labour-force participation)",
-          "kontrastbegrep (contrasting term)  ·  alternativ situasjon (alternative situation)"
+          "kontrastbegrep (contrasting term)  ·  alternativ situasjon (alternative situation)",
+          "det at mange er i arbeid",
+          "the fact that many people are employed"
         ],
         [
           "kandidat",
@@ -87,7 +105,9 @@
           "en kandidat; kandidaten; kandidater; kandidatene",
           "noun",
           "søker (applicant)  ·  person på valg (candidate for election)",
-          "velger (voter)  ·  sittende representant (incumbent representative)"
+          "velger (voter)  ·  sittende representant (incumbent representative)",
+          "en som er aktuell for en stilling",
+          "someone who is relevant for a position"
         ],
         [
           "lyse ut en stilling",
@@ -95,7 +115,9 @@
           "G2 -te/-t : (INF) lyse ut en stilling · (PR) lyser ut en stilling · (PT) lyste ut en stilling · (PP) lyst ut en stilling",
           "verb_expr",
           "avertere (related meaning)  ·  bruke uttrykket (use the expression)",
-          "la være (refrain)  ·  unngå (avoid)"
+          "la være (refrain)  ·  unngå (avoid)",
+          "avertere, annonsere en ledig jobb",
+          "advertise, announce a vacant job"
         ],
         [
           "medarbeider",
@@ -103,7 +125,9 @@
           "en medarbeider; medarbeideren; medarbeidere; medarbeiderne",
           "noun",
           "kollega (colleague)  ·  ansatt (employee)",
-          "sjef (boss)  ·  arbeidsgiver (employer)"
+          "sjef (boss)  ·  arbeidsgiver (employer)",
+          "en kollega, en ansatt",
+          "a colleague; an employee"
         ],
         [
           "permisjon",
@@ -111,7 +135,9 @@
           "en permisjon; permisjonen; permisjoner; permisjonene",
           "noun",
           "fri (time off), tjenestefri (leave from duty)",
-          "arbeidsplikt (duty to work), oppmøte (attendance)"
+          "arbeidsplikt (duty to work), oppmøte (attendance)",
+          "å ha midlertidig fri fra jobben. Permisjon kan være med eller uten lønn.",
+          "temporary leave from work. Leave can be with or without pay."
         ],
         [
           "sykefravær",
@@ -119,7 +145,9 @@
           "et sykefravær; sykefraværet",
           "noun",
           "sykdomsfravær (absence due to illness)  ·  sykemelding (sick leave certificate)",
-          "nærvær (attendance)  ·  friskmelding (return-to-work clearance)"
+          "nærvær (attendance)  ·  friskmelding (return-to-work clearance)",
+          "det å være borte fra jobb på grunn av sykdom",
+          "being absent from work because of illness; sick leave"
         ],
         [
           "utlysning",
@@ -127,7 +155,9 @@
           "en utlysning, utlysningen, utlysninger, utlysningene",
           "noun",
           "annonse (advertisement), stillingsannonse (job ad)",
-          "tilbaketrekking (withdrawal), hemmelighold (secrecy)"
+          "tilbaketrekking (withdrawal), hemmelighold (secrecy)",
+          "en annonse som forteller om ledige stillinger",
+          "an advertisement that announces vacant positions"
         ],
         [
           "vikariat",
@@ -135,7 +165,9 @@
           "et vikariat, vikariatet, vikariater, vikariatene",
           "noun",
           "midlertidig stilling (temporary position), engasjement (temporary engagement)",
-          "fast stilling (permanent position), fast jobb (steady job)"
+          "fast stilling (permanent position), fast jobb (steady job)",
+          "en stilling som vikar, det vil si en midlertidig stilling",
+          "a substitute position, that is, a temporary position"
         ],
         [
           "funksjonshemning",
@@ -143,7 +175,9 @@
           "en funksjonshemning; funksjonshemningen; funksjonshemninger; funksjonshemningene",
           "noun",
           "funksjonsnedsettelse (disability)  ·  handicap (handicap)",
-          "full funksjonsevne (full functional ability)  ·  helse (health)"
+          "full funksjonsevne (full functional ability)  ·  helse (health)",
+          "en redusert evne til å klare spesielle aktiviteter, et handikap",
+          "a reduced ability to manage specific activities; a disability or handicap"
         ],
         [
           "ha kveldsvakt",
@@ -151,7 +185,9 @@
           "(INF) ha kveldsvakt · (PR) har kveldsvakt · (PT) hadde kveldsvakt · (PP) hatt kveldsvakt",
           "verb",
           "jobbe kveldsskift (work evening shift)  ·  være på vakt om kvelden (be on duty in the evening)",
-          "ha fri om kvelden (have the evening off)  ·  jobbe dagvakt (work day shift)"
+          "ha fri om kvelden (have the evening off)  ·  jobbe dagvakt (work day shift)",
+          "å arbeide om kvelden",
+          "to work an evening shift"
         ],
         [
           "profesjonell",
@@ -159,7 +195,9 @@
           "profesjonell; profesjonelt; profesjonelle",
           "other",
           "faglig (professional)  ·  yrkesmessig (professional)",
-          "amatørmessig (amateurish)  ·  uprofesjonell (unprofessional)"
+          "amatørmessig (amateurish)  ·  uprofesjonell (unprofessional)",
+          "når hobby eller andre ting man gjør, er betalt arbeid",
+          "used when a hobby or activity becomes paid work; professional"
         ],
         [
           "regulert",
@@ -167,7 +205,9 @@
           "regulert; regulert; regulerte",
           "other",
           "styrt (controlled)  ·  ordnet (regulated / organized)",
-          "uregulert (unregulated)  ·  fri (free)"
+          "uregulert (unregulated)  ·  fri (free)",
+          "ordnet, som følger regler",
+          "organised; governed by rules"
         ],
         [
           "skift",
@@ -175,7 +215,9 @@
           "et skift; skiftet; skift; skiftene",
           "noun",
           "vaktlag (shift team)  ·  arbeidsskift (work shift)",
-          "pause (break)  ·  fridag (day off)"
+          "pause (break)  ·  fridag (day off)",
+          "Når ansatte jobber til forskjellige tider, kaller vi arbeidstida for et skift. Noen jobber om dagen (dagskift), andre jobber om kvelden (kveldsskift) eller om natta (nattskift).",
+          "a work period when employees work at different times, for example day, evening, or night shift"
         ],
         [
           "avling",
@@ -183,7 +225,9 @@
           "en avling; avlingen; avlinger; avlingene",
           "noun",
           "høster (harvests)  ·  dyrker (cultivates)",
-          "såing (sowing)  ·  avlingssvikt (crop failure)"
+          "såing (sowing)  ·  avlingssvikt (crop failure)",
+          "det man høster når man dyrker jorda",
+          "what one harvests when cultivating the land"
         ],
         [
           "bedrift",
@@ -191,7 +235,9 @@
           "en bedrift; bedriften; bedrifter; bedriftene",
           "noun",
           "foretak (enterprise)  ·  virksomhet (business)",
-          "husholdning (household)  ·  privatliv (private life)"
+          "husholdning (household)  ·  privatliv (private life)",
+          "et firma, en virksomhet",
+          "a business; a company; an enterprise"
         ],
         [
           "drive",
@@ -199,7 +245,9 @@
           "(INF) drive · (PR) driver · (PT) drev · (PP) drevet",
           "verb",
           "styre (run, manage)  ·  holde på med (engage in)",
-          "stoppe (stop)  ·  avvikle (close down)"
+          "stoppe (stop)  ·  avvikle (close down)",
+          "å holde i gang, å være leder for",
+          "to keep something going; to run or manage it"
         ],
         [
           "dyrke jorda",
@@ -207,7 +255,9 @@
           "G1 -et : (INF) dyrke jorda · (PR) dyrker jorda · (PT) dyrket jorda · (PP) dyrket jorda",
           "verb",
           "drive jordbruk (practice farming)  ·  pløye (plough)",
-          "la ligge brakk (leave fallow)  ·  bygge ned (build over)"
+          "la ligge brakk (leave fallow)  ·  bygge ned (build over)",
+          "å produsere mat som korn og grønnsaker",
+          "to produce food such as grain and vegetables"
         ],
         [
           "gründer",
@@ -215,7 +265,9 @@
           "en gründer; gründeren; gründere; gründerne",
           "noun",
           "entreprenør (entrepreneur)  ·  grunnlegger (founder)",
-          "ansatt (employee)  ·  arvtaker (heir)"
+          "ansatt (employee)  ·  arvtaker (heir)",
+          "en person som starter egen bedrift",
+          "a person who starts their own business; an entrepreneur"
         ],
         [
           "husdyr",
@@ -223,7 +275,9 @@
           "et husdyr / husdyret / husdyr / husdyra",
           "other",
           "tamdyr (tame animal)  ·  buskap (livestock)",
-          "villdyr (wild animal)  ·  rovdyr (predator)"
+          "villdyr (wild animal)  ·  rovdyr (predator)",
+          "tamme dyr som menneskene bruker til produksjon eller til hygge",
+          "tame animals that people use for production or companionship"
         ],
         [
           "industri",
@@ -231,7 +285,9 @@
           "en industri / industrien / industrier / industriene",
           "noun",
           "fabrikkdrift (factory operation), næringsgren (industrial sector)",
-          "jordbruk (agriculture), håndverk (craft work)"
+          "jordbruk (agriculture), håndverk (craft work)",
+          "produksjon i fabrikker ved hjelp av maskiner",
+          "production in factories with the help of machines"
         ],
         [
           "industrialisering",
@@ -239,7 +295,9 @@
           "en industrialisering / industrialiseringen / industrialiseringer / industrialiseringene",
           "noun",
           "modernisering (modernization)  ·  mekanisering (mechanization)",
-          "avindustrialisering (deindustrialization)  ·  stagnasjon (stagnation)"
+          "avindustrialisering (deindustrialization)  ·  stagnasjon (stagnation)",
+          "omlegging til fabrikkdrift",
+          "transition to factory production"
         ],
         [
           "kunde",
@@ -247,7 +305,9 @@
           "en kunde; kunden; kunder; kundene",
           "noun",
           "klient (client)  ·  kjøper (buyer)",
-          "selger (seller)  ·  leverandør (supplier)"
+          "selger (seller)  ·  leverandør (supplier)",
+          "en person som handler i butikk eller kiosk",
+          "a person who buys something in a shop or kiosk"
         ],
         [
           "mølle",
@@ -255,7 +315,9 @@
           "ei/en mølle / mølla/møllen / møller / møllene",
           "phrase",
           "kvern (grinder / mill)  ·  vindmølle (windmill)",
-          "fravær av mølle (absence of mølle)  ·  mangel på mølle (lack of mølle)"
+          "fravær av mølle (absence of mølle)  ·  mangel på mølle (lack of mølle)",
+          "et sted der man lager mel",
+          "a place where flour is made"
         ],
         [
           "næring",
@@ -263,7 +325,9 @@
           "ei/en næring / næringa/næringen / næringer / næringene",
           "phrase",
           "virksomhet (enterprise / activity)  ·  levevei (livelihood)",
-          "arbeidsløshet (unemployment)  ·  sult (hunger)"
+          "arbeidsløshet (unemployment)  ·  sult (hunger)",
+          "en økonomisk virksomhet, et levebrød",
+          "an economic activity, a livelihood"
         ],
         [
           "næringsliv",
@@ -271,7 +335,9 @@
           "et næringsliv / næringslivet",
           "noun",
           "forretningsliv (business world)  ·  økonomi (economy)",
-          "fravær av næringsliv (absence of næringsliv)  ·  mangel på næringsliv (lack of næringsliv)"
+          "fravær av næringsliv (absence of næringsliv)  ·  mangel på næringsliv (lack of næringsliv)",
+          "produksjon, økonomisk aktivitet",
+          "production, economic activity"
         ],
         [
           "ressurs",
@@ -279,7 +345,9 @@
           "en ressurs / ressursen / ressurser / ressursene",
           "noun",
           "middel (means)  ·  kilde (source)",
-          "mangel (lack)  ·  knapphet (scarcity)"
+          "mangel (lack)  ·  knapphet (scarcity)",
+          "en verdi, noe som kan være til nytte",
+          "a value, something that can be useful"
         ],
         [
           "sagbruk",
@@ -287,7 +355,9 @@
           "et sagbruk / sagbruket / sagbruk / sagbrukene",
           "noun",
           "sagverk (sawmill)  ·  treforedlingsanlegg (wood-processing plant)",
-          "fravær av sagbruk (absence of sagbruk)  ·  mangel på sagbruk (lack of sagbruk)"
+          "fravær av sagbruk (absence of sagbruk)  ·  mangel på sagbruk (lack of sagbruk)",
+          "en fabrikk der man kutter tømmer",
+          "a factory where timber is cut"
         ],
         [
           "selskap",
@@ -295,7 +365,9 @@
           "et selskap / selskapet / selskaper / selskapene",
           "noun",
           "firma (firm)  ·  bedrift (company)",
-          "å være alene (be alone)  ·  ensomhet (loneliness)"
+          "å være alene (be alone)  ·  ensomhet (loneliness)",
+          "her: et (stort) firma",
+          "here: a (large) company"
         ],
         [
           "sjømat",
@@ -303,7 +375,9 @@
           "en sjømat / sjømaten",
           "noun",
           "havmat (seafood)  ·  fiskemat (fish products)",
-          "kjøtt (meat)  ·  grønnsaker (vegetables)"
+          "kjøtt (meat)  ·  grønnsaker (vegetables)",
+          "mat laget av dyr og planter som lever i vann",
+          "food made from animals and plants that live in water"
         ],
         [
           "skipsfart",
@@ -311,7 +385,9 @@
           "en skipsfart / skipsfarten",
           "noun",
           "sjøtransport (sea transport)  ·  shipping (shipping)",
-          "luftfart (air transport)  ·  landtransport (land transport)"
+          "luftfart (air transport)  ·  landtransport (land transport)",
+          "transportvirksomhet til sjøs",
+          "transport activity at sea"
         ],
         [
           "skipsflåte",
@@ -319,7 +395,9 @@
           "en skipsflåte / skipsflåten / skipsflåter / skipsflåtene",
           "noun",
           "flåte (fleet)  ·  armada (armada)",
-          "enkeltskip (single ship)  ·  småbåt (small boat)"
+          "enkeltskip (single ship)  ·  småbåt (small boat)",
+          "samling av skip",
+          "collection of ships"
         ],
         [
           "tømmer",
@@ -327,7 +405,9 @@
           "et tømmer / tømmeret",
           "noun",
           "trevirke (wood material)  ·  plank (plank)",
-          "stål (steel)  ·  betong (concrete)"
+          "stål (steel)  ·  betong (concrete)",
+          "stammer av trær",
+          "tree trunks"
         ],
         [
           "fagforening",
@@ -335,7 +415,9 @@
           "ei/en fagforening; fagforeninga/fagforeningen; fagforeninger; fagforeningene",
           "phrase",
           "union (union)  ·  arbeidstakerorganisasjon (workers’ organization)",
-          "arbeidsgiverforening (employers’ association)  ·  uorganisert arbeidsliv (non-unionized working life)"
+          "arbeidsgiverforening (employers’ association)  ·  uorganisert arbeidsliv (non-unionized working life)",
+          "en sammenslutning av lønnstakere innenfor et yrke",
+          "an association of wage earners within a profession; a trade union"
         ]
       ]
     }
@@ -352,5 +434,5 @@
     "csv-table",
     "level:B1"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }

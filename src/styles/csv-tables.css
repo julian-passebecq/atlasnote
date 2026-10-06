@@ -29,6 +29,8 @@
 .csv-layout-cards2 td[data-column="0"],.csv-layout-cards3 td[data-column="0"]{font-weight:700}
 .csv-layout-cards2 td:nth-child(n+3),.csv-layout-cards3 td:nth-child(n+3){font-size:.8em;color:var(--muted)}
 .csv-layout-cards2 td:nth-child(n+3)::before,.csv-layout-cards3 td:nth-child(n+3)::before{content:attr(data-label) ': ';font-weight:600}
+.csv-interactive td[lang="nb"]{font-weight:600;color:var(--text)}
+.csv-interactive td[lang="en"]{color:var(--muted)}
 .csv-layout-cards2 .csv-group-row,.csv-layout-cards3 .csv-group-row{grid-column:1/-1;border-bottom:0;padding:0}
 .csv-layout-cards2 .csv-group-row th,.csv-layout-cards3 .csv-group-row th{display:block;border:0;padding:10px 8px 4px}
 .csv-layout-lines .csv-group-row,.csv-layout-pairs .csv-group-row{display:block}

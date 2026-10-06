@@ -14,7 +14,9 @@
         "Forms",
         "Type",
         "Synonyms",
-        "Antonyms"
+        "Antonyms",
+        "Norsk forklaring",
+        "English explanation"
       ],
       "rows": [
         [
@@ -23,7 +25,9 @@
           "",
           "adj/conn",
           "annerledes enn (different from) · ulik (different)",
-          "lik (similar)"
+          "lik (similar)",
+          "Viser at noe ikke er likt noe annet.",
+          "Shows that something is not the same as something else."
         ],
         [
           "ulik",
@@ -31,7 +35,9 @@
           "",
           "adj/conn",
           "forskjellig (different) · annerledes (different)",
-          "lik (similar)"
+          "lik (similar)",
+          "Ikke lik; forskjellig.",
+          "Not alike; different."
         ],
         [
           "lik",
@@ -39,7 +45,9 @@
           "",
           "adj/conn",
           "samme (same) · tilsvarende (corresponding)",
-          "ulik (different)"
+          "ulik (different)",
+          "Samme eller nesten samme.",
+          "Same or almost the same."
         ],
         [
           "samme som",
@@ -47,7 +55,9 @@
           "",
           "det/conn",
           "lik (similar) · tilsvarende (corresponding)",
-          "annerledes enn (different from)"
+          "annerledes enn (different from)",
+          "Viser at noe er identisk eller likt.",
+          "Shows that something is identical or the same."
         ],
         [
           "eller",
@@ -55,7 +65,9 @@
           "",
           "conj",
           "alternativt (alternatively) · eventuelt (possibly/alternatively)",
-          ""
+          "",
+          "Viser valg eller alternativ.",
+          "Shows a choice or alternative."
         ],
         [
           "alternativt",
@@ -63,7 +75,9 @@
           "",
           "conn",
           "eller (or) · eventuelt (possibly/alternatively)",
-          ""
+          "",
+          "Innfører et annet mulig valg.",
+          "Introduces another possible choice."
         ],
         [
           "eventuelt",
@@ -71,7 +85,9 @@
           "",
           "conn",
           "muligens (possibly) · alternativt (alternatively)",
-          ""
+          "",
+          "Betyr mulig, eventuelt som alternativ.",
+          "Means possibly or alternatively depending on context."
         ],
         [
           "enten ... eller",
@@ -79,7 +95,9 @@
           "",
           "conj",
           "alternativt (alternatively) · eller (or)",
-          "verken ... eller (neither ... nor)"
+          "verken ... eller (neither ... nor)",
+          "Viser valg mellom to eller flere alternativer.",
+          "Shows a choice between two or more alternatives."
         ],
         [
           "om ... eller",
@@ -87,7 +105,9 @@
           "",
           "sub/conn",
           "hvorvidt ... eller (whether ... or) · enten ... eller (either ... or)",
-          ""
+          "",
+          "Brukes når man uttrykker whether ... or.",
+          "Used to express whether ... or."
         ],
         [
           "hvorvidt",
@@ -95,7 +115,9 @@
           "",
           "sub",
           "om (whether) · hvorvidt eller ikke (whether or not)",
-          ""
+          "",
+          "Formelt ord for om når man uttrykker om noe er tilfelle eller ikke.",
+          "Formal word for whether when expressing whether something is the case or not."
         ],
         [
           "hvorvidt ... eller",
@@ -103,7 +125,9 @@
           "",
           "sub/conn",
           "om ... eller (whether ... or)",
-          ""
+          "",
+          "Formelt uttrykk for om ... eller.",
+          "Formal expression for whether ... or."
         ],
         [
           "uansett om",
@@ -111,7 +135,9 @@
           "",
           "sub/conn",
           "enten ... eller (whether ... or) · samme hva (no matter what)",
-          ""
+          "",
+          "Viser at resultatet er det samme i begge tilfeller.",
+          "Shows that the result is the same in both cases."
         ],
         [
           "verken ... eller",
@@ -119,7 +145,9 @@
           "",
           "conj",
           "hverken ... eller (neither ... nor) · heller ikke (not either)",
-          "både ... og (both ... and)"
+          "både ... og (both ... and)",
+          "Viser at ingen av to alternativer gjelder.",
+          "Shows that neither of two alternatives applies."
         ],
         [
           "hverken ... eller",
@@ -127,7 +155,9 @@
           "",
           "conj",
           "verken ... eller (neither ... nor)",
-          "både ... og (both ... and)"
+          "både ... og (both ... and)",
+          "Variant av verken ... eller.",
+          "Variant of verken ... eller."
         ],
         [
           "verken",
@@ -135,7 +165,9 @@
           "",
           "conj",
           "verken eller (neither nor) · heller ikke (neither/not either)",
-          ""
+          "",
+          "Første del av uttrykket verken ... eller.",
+          "First part of the expression neither ... nor."
         ],
         [
           "heller ikke",
@@ -143,7 +175,9 @@
           "",
           "adv/conn",
           "verken eller (neither nor) · ei heller (nor)",
-          "også (also)"
+          "også (also)",
+          "Viser at noe også er negativt eller ikke gjelder for en ny person/ting.",
+          "Shows that something is also negative or does not apply to another person/thing."
         ],
         [
           "ei heller",
@@ -151,7 +185,9 @@
           "",
           "conn",
           "heller ikke (neither/not either) · verken (neither)",
-          ""
+          "",
+          "Formelt/litterært uttrykk for heller ikke.",
+          "Formal/literary expression for neither / nor."
         ],
         [
           "etter min mening",
@@ -159,7 +195,9 @@
           "",
           "uttr",
           "jeg mener at (I think that) · slik jeg ser det (as I see it)",
-          ""
+          "",
+          "Markerer at man uttrykker sitt eget syn.",
+          "Indicates that one is expressing one’s own view."
         ],
         [
           "jeg mener at",
@@ -167,7 +205,9 @@
           "",
           "uttr",
           "etter min mening (in my opinion) · jeg synes at (I think that)",
-          ""
+          "",
+          "Direkte uttrykk for egen mening.",
+          "Direct expression of one’s own opinion."
         ],
         [
           "slik jeg ser det",
@@ -175,7 +215,9 @@
           "",
           "uttr",
           "etter min mening (in my opinion) · etter min vurdering (in my assessment)",
-          ""
+          "",
+          "Markerer personlig vurdering.",
+          "Marks a personal assessment."
         ],
         [
           "ifølge",
@@ -183,7 +225,9 @@
           "",
           "prep/conn",
           "i følge (variant spelling, but ifølge is recommended) · ifølge forskerne (according to researchers)",
-          ""
+          "",
+          "Viser til en kilde.",
+          "Refers to a source."
         ],
         [
           "ifølge forskerne",
@@ -191,7 +235,9 @@
           "",
           "uttr",
           "ifølge (according to) · forskning viser at (research shows that)",
-          ""
+          "",
+          "Kildeuttrykk når man viser til forskning eller eksperter.",
+          "Source phrase when referring to research or experts."
         ],
         [
           "på sin side",
@@ -199,7 +245,9 @@
           "",
           "conn",
           "for sin del (for one’s part) · på den andre siden (on the other hand)",
-          ""
+          "",
+          "Innfører hva en annen part mener eller gjør.",
+          "Introduces what another party thinks or does."
         ],
         [
           "slik sett",
@@ -207,7 +255,9 @@
           "",
           "conn",
           "på den måten (in that way) · fra det perspektivet (from that perspective)",
-          ""
+          "",
+          "Viser til et bestemt perspektiv.",
+          "Refers to a particular perspective."
         ],
         [
           "for min del",
@@ -215,7 +265,9 @@
           "",
           "uttr",
           "etter min mening (in my opinion) · personlig (personally)",
-          ""
+          "",
+          "Markerer eget perspektiv eller egen situasjon.",
+          "Marks one’s own perspective or situation."
         ],
         [
           "for å oppsummere",
@@ -223,7 +275,9 @@
           "",
           "uttr",
           "oppsummert (summarized) · kort sagt (in short)",
-          ""
+          "",
+          "Starter en kort oppsummering.",
+          "Starts a short summary."
         ],
         [
           "oppsummert",
@@ -231,7 +285,9 @@
           "",
           "conn",
           "for å oppsummere (to summarize) · kort sagt (in short)",
-          ""
+          "",
+          "Markerer en sammenfatning.",
+          "Marks a summary."
         ],
         [
           "alt i alt",
@@ -239,7 +295,9 @@
           "",
           "conn",
           "samlet sett (overall) · til syvende og sist (ultimately)",
-          ""
+          "",
+          "Gir en samlet vurdering.",
+          "Gives an overall assessment."
         ],
         [
           "samlet sett",
@@ -247,7 +305,9 @@
           "",
           "conn",
           "alt i alt (all in all) · totalt sett (overall)",
-          ""
+          "",
+          "Gir et helhetsinntrykk etter flere momenter.",
+          "Gives an overall impression after several points."
         ],
         [
           "konklusjonen er at",
@@ -255,7 +315,9 @@
           "",
           "uttr",
           "derfor kan vi si at (therefore we can say that) · alt i alt (overall)",
-          ""
+          "",
+          "Innfører sluttpoenget.",
+          "Introduces the final point."
         ],
         [
           "til syvende og sist",
@@ -263,7 +325,9 @@
           "",
           "uttr",
           "alt i alt (all in all) · til slutt (finally)",
-          ""
+          "",
+          "Når alt er vurdert; til slutt.",
+          "When everything has been considered; ultimately."
         ],
         [
           "i beste fall",
@@ -271,7 +335,9 @@
           "",
           "uttr",
           "hvis alt går bra (if all goes well)",
-          "i verste fall (at worst)"
+          "i verste fall (at worst)",
+          "Markerer det mest positive mulige utfallet.",
+          "Marks the most positive possible outcome."
         ],
         [
           "i verste fall",
@@ -279,7 +345,9 @@
           "",
           "uttr",
           "hvis alt går galt (if everything goes wrong)",
-          "i beste fall (at best)"
+          "i beste fall (at best)",
+          "Markerer det mest negative mulige utfallet.",
+          "Marks the most negative possible outcome."
         ],
         [
           "i den tro at",
@@ -287,7 +355,9 @@
           "",
           "uttr",
           "fordi man trodde at (because one believed that)",
-          ""
+          "",
+          "Forteller hva noen trodde da de handlet.",
+          "Tells what someone believed when acting."
         ]
       ]
     }
@@ -304,5 +374,5 @@
     "csv-table",
     "level:B2"
   ],
-  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05. Textbook passages, definitions, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
+  "provenance": "User-created study sheets selected from supplied workbooks. Public lexical translations and inflections authorized by the owner on 2026-10-05; source Norsk explanations and paired English explanations requested on 2026-10-06. Textbook passages, exam examples and private full translations are excluded. Source linguistic quality is retained, not independently verified."
 }
