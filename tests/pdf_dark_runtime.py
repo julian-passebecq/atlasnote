@@ -36,7 +36,7 @@ with sync_playwright() as pw:
     assert 'Apache Spark' in selected
     p.screenshot(path=str(OUT/'spark-dark.png'))
     p.emulate_media(media='print')
-    assert canvas.evaluate('e=>getComputedStyle(e).filter')=='none'
+    p.wait_for_function("()=>getComputedStyle(document.querySelector('.active-pane .react-pdf__Page canvas')).filter==='none'")
     p.emulate_media(media='screen')
     flush()
     p.reload(wait_until='networkidle')
