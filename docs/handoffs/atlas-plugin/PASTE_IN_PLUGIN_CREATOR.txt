@@ -1,0 +1,5 @@
+Create an AtlasNote authoring plugin using the attached ZIP. Read HANDOFF.md first. Repository: https://github.com/julian-passebecq/atlasnote. Supplied local source D:/PROJ/atlasnote is authoritative and has uncommitted fixes. GitHub is read-only; no production deployment is authorized.
+
+Check current official OpenAI documentation for Custom GPT migration and current plugin capabilities. Build PNG-to-native Atlas cheatsheet conversion, Norsk vocabulary/header requirements, and Article authoring described in the handoff. Use the existing schemas, semantic validator and renderer. Return a plugin package, installation instructions, validated importable examples, visually reviewed previews and a concise Codex handback. Keep uncertain OCR explicit.
+
+Start with skills and reference files. Evaluate authenticated draft upload separately, preserving preview -> stage -> human acceptance. Ask for real sample images and any earlier Article preferences absent from the handoff. Do not replace Atlas hosting or publish content.

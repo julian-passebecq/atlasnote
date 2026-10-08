@@ -11,14 +11,24 @@ with sync_playwright() as pw:
  b=launch(pw);p=b.new_page(viewport={'width':1536,'height':864});errors=[];p.on('pageerror',lambda e:errors.append(str(e)))
  p.goto(base,wait_until='networkidle');p.wait_for_selector('.atlas-app');p.wait_for_function('async()=>{const d=('+AGENT+').getStorageDiagnostics();return d.ready===true&&d.initialized===true&&d.saving===0;}',timeout=60000)
  p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
- def btn(name,scope=None):return (scope or p).get_by_role('button',name=name,exact=True)
+ def btn(name,scope=None):
+  target=scope or p
+  if name=='CSV rows':name='List'
+  if name in ['Columns','Words','Explain','List','NO / EN','Lines','Views & sort','Colors','Search','Table','Dictionary','Tiles','2 columns','3 columns']:
+   for toggle in target.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
+  if name in ['Table','Dictionary','Tiles','2 columns','3 columns']:
+   expect(target.locator('.csv-more button[aria-expanded="false"]').first).to_be_visible()
+   target.get_by_role('button',name='More layouts',exact=True).first.click()
+   expect(target.get_by_role('group',name='Additional table layouts',exact=True).first).to_be_visible()
+  return target.get_by_role('button',name=name,exact=True)
  def snapshot():return p.evaluate('async()=>{const m='+SNAPSHOT+';return await m.readPersistedWorkspace();}')
  text=io.StringIO();writer=csv.writer(text);writer.writerow(['Norsk','English','Forms','Type','Synonyms','Antonyms','Category','Subcategory'])
  words=['åpen','øvelse','ærlig','bil','arbeid','bolig']
  for i in range(36):writer.writerow([words[i%6]+str(i),f'English {35-i:02}',f'form {i}','NOUN' if i%2 else 'ADJ',f'synonym {i}' if i%3 else '',f'opposite {i}' if i%4 else '',['Home','Work','Travel'][i%3],['Core','Extra'][i%2]])
  open_settings(p);p.get_by_label('Import CSV table',exact=True).set_input_files({'name':'synthetic-presets.csv','mimeType':'text/csv','buffer':text.getvalue().encode()});expect(btn('Confirm library import')).to_be_enabled();btn('Confirm library import').click();expect(p.get_by_role('status').filter(has_text='Library imported.')).to_be_visible();btn('Close dialog').click()
  ws=snapshot();page=next(x for pack in ws['imports'] for x in pack['pages'] if 'synthetic-presets' in x['title']);page_id=page['id'];history=ws['history']
- p.goto(base+'#/page/'+page_id);p.wait_for_selector('.active-pane .table-column-tools');pane=p.locator('.active-pane')
+ p.goto(base+'#/page/'+page_id);p.wait_for_selector('.active-pane .table-column-tools',state='attached');pane=p.locator('.active-pane');
+ for toggle in pane.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
  if pane.locator('.book-grid').count():btn('Quick Book mode',pane).click()
  def preset(name):btn('Views & sort',pane).click();btn(name,pane.get_by_role('group',name='Ready-made table views',exact=True)).click()
  preset('Reading');expect(pane.locator('.csv-layout-cards2')).to_be_visible();expect(pane.locator('td[data-column="2"]')).to_have_count(0)
@@ -40,7 +50,9 @@ with sync_playwright() as pw:
  assert next(x for pack in snapshot()['imports'] for x in pack['pages'] if x['id']==page_id)==page
  results.append({'name':'Synonyms/opposites and grammar presets keep empty cells; reload preserves preferences and complete source/history','status':'PASS'})
  # Local palettes and distinct layouts preserve all cells and survive reload.
- pane=p.locator('.active-pane');btn('Colors',pane).click()
+ pane=p.locator('.active-pane');
+ for toggle in pane.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
+ btn('Colors',pane).click()
  palette_group=pane.get_by_role('group',name='Table color palette',exact=True)
  colors=[]
  for label,value in [('Black','black'),('Ocean','ocean'),('Forest','forest'),('Warm paper','paper')]:
@@ -58,7 +70,9 @@ with sync_playwright() as pw:
  assert next(x for pack in snapshot()['imports'] for x in pack['pages'] if x['id']==page_id)==page
  results.append({'name':'Four distinct palettes and Dictionary/Tiles preserve source/history and persist through reload','status':'PASS'})
  # Delegated cloned controls and semantic table-row pagination remain operational.
- pane=p.locator('.active-pane');btn('Quick Book mode',pane).click();book=pane.locator('.book-grid');expect(book.locator('.book-sheet').first).to_be_visible();expect(book.locator('tr[data-source-row]')).to_have_count(36);assert not book.locator('.book-fallback').count()
+ pane=p.locator('.active-pane');
+ for toggle in pane.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
+ btn('Quick Book mode',pane).click();book=pane.locator('.book-grid');expect(book.locator('.book-sheet').first).to_be_visible();expect(book.locator('tr[data-source-row]')).to_have_count(36);assert not book.locator('.book-fallback').count()
  for layout in ['Dictionary','Tiles']:
   btn(layout,book).first.click();expect(book.locator('tr[data-source-row]')).to_have_count(36)
   assert book.locator('tr[data-source-row]').evaluate_all('es=>new Set(es.map(e=>e.dataset.sourceRow)).size')==36
@@ -73,7 +87,8 @@ with sync_playwright() as pw:
  assert not errors,errors
  results.append({'name':'Narrow reading pane adapts columns without horizontal overflow or runtime errors','status':'PASS'})
  # Real source entries: grammar prefixes stay visible when grammar columns are hidden.
- p.set_viewport_size({'width':1536,'height':864});p.goto(base+'#/page/page.atlas.norsk-csv.b2-energy.1');p.wait_for_selector('.active-pane .table-column-tools');pane=p.locator('.active-pane')
+ p.set_viewport_size({'width':1536,'height':864});p.goto(base+'#/page/page.atlas.norsk-csv.b2-energy.1');p.wait_for_selector('.active-pane .table-column-tools',state='attached');pane=p.locator('.active-pane');
+ for toggle in pane.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
  if pane.locator('.book-grid').count():btn('Quick Book mode',pane).click()
  real_source=p.evaluate('async()=>('+AGENT+').getResource("notebook-page:page.atlas.norsk-csv.b2-energy.1").snapshot.page')
  expect(pane.locator('tr[data-source-row="0"] td[data-column="0"]')).to_have_text('en bevegelse')
@@ -83,7 +98,8 @@ with sync_playwright() as pw:
  for column in ['2','3']:expect(pane.locator('td[data-column="'+column+'"]')).to_have_count(0)
  for column in ['4','5']:expect(pane.locator('td[data-column="'+column+'"]')).to_have_count(40)
  expect(pane.locator('tr[data-source-row="0"] td[data-column="4"]')).to_contain_text('rørelse')
- p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-cards3');pane=p.locator('.active-pane')
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-cards3');pane=p.locator('.active-pane');
+ for toggle in pane.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
  expect(pane.locator('tr[data-source-row="14"] td[data-column="0"]')).to_have_text('å evakuere');expect(pane.locator('td[data-column="2"]')).to_have_count(0)
  assert p.evaluate('async()=>('+AGENT+').getResource("notebook-page:page.atlas.norsk-csv.b2-energy.1").snapshot.page')==real_source
  assert snapshot()['history']==history
@@ -99,7 +115,8 @@ with sync_playwright() as pw:
  assert first.locator('td[data-column="5"]').get_attribute('data-label')=='Ant'
  btn('Columns',pane).click();btn('English explanation',pane.get_by_role('group',name='Visible table columns',exact=True)).click();expect(pane.locator('td[data-column="7"]')).to_have_count(0)
  btn('English explanation',pane.get_by_role('group',name='Visible table columns',exact=True)).click();btn('Columns',pane).click()
- p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-cards2');pane=p.locator('.active-pane')
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-cards2');pane=p.locator('.active-pane');
+ for toggle in pane.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
  expect(pane.locator('td[data-column="6"]')).to_have_count(40);expect(pane.locator('td[data-column="7"]')).to_have_count(40)
  assert p.evaluate('async()=>('+AGENT+').getResource("notebook-page:page.atlas.norsk-csv.b2-energy.1").snapshot.page')==real_source
  assert snapshot()['history']==history
@@ -113,7 +130,8 @@ with sync_playwright() as pw:
  assert not errors,errors
  results.append({'name':'Original Norsk/English explanations, short Syn/Ant and Norsk emphasis survive reload and Book pagination without source/history writes','status':'PASS'})
  # CSV rows, per-column search and nested folds use only reader preferences.
- p.set_viewport_size({'width':1536,'height':864});p.goto(base+'#/page/'+page_id,wait_until='networkidle');pane=p.locator('.active-pane')
+ p.set_viewport_size({'width':1536,'height':864});p.goto(base+'#/page/'+page_id,wait_until='networkidle');pane=p.locator('.active-pane');
+ for toggle in pane.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
  btn('CSV rows',pane).click();btn('Views & sort',pane).click();btn('None',pane.get_by_role('group',name='Group this page',exact=True)).click();btn('Views & sort',pane).click()
  expect(pane.locator('tr[data-source-row]')).to_have_count(36)
  assert pane.locator('tr[data-source-row]').evaluate_all('es=>es.every(e=>e.getBoundingClientRect().height<40)')
@@ -125,7 +143,8 @@ with sync_playwright() as pw:
  btn('Collapse all',pane).click();expect(pane.locator('tr[data-source-row]')).to_have_count(0);expect(pane.locator('.csv-group-row')).to_have_count(3)
  btn('Expand all',pane).click();expect(pane.locator('tr[data-source-row]')).to_have_count(36)
  pane.locator('.csv-group-depth-1 button').first.click();expect(pane.locator('tr[data-source-row]')).to_have_count(30);btn('Views & sort',pane).click()
- p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-rows');pane=p.locator('.active-pane')
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-rows');pane=p.locator('.active-pane');
+ for toggle in pane.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
  expect(pane.locator('tr[data-source-row]')).to_have_count(30)
  btn('Views & sort',pane).click();btn('Expand all',pane).click();btn('Views & sort',pane).click();btn('Quick Book mode',pane).click();book=pane.locator('.book-grid');expect(book.locator('tr[data-source-row]')).to_have_count(36)
  btn('Search',book).first.click();book.get_by_role('combobox',name='Search column').first.select_option('2');book.get_by_role('searchbox',name='Search table text').first.fill('form 11');btn('Apply',book).first.click()
@@ -134,14 +153,16 @@ with sync_playwright() as pw:
  btn('Clear',book).first.click();expect(book.locator('tr[data-source-row]')).to_have_count(36);btn('Quick Book mode',pane).click()
  if not pane.get_by_role('searchbox',name='Search table text').count():btn('Search',pane).click()
  pane.get_by_role('searchbox',name='Search table text').fill('not-in-source');btn('Apply',pane).click();expect(pane.get_by_text('No matching rows. Clear search to show all source rows.',exact=True)).to_be_visible()
- p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-rows');pane=p.locator('.active-pane');expect(pane.locator('tr[data-source-row]')).to_have_count(36)
+ p.reload(wait_until='networkidle');p.wait_for_selector('.active-pane .csv-layout-rows');pane=p.locator('.active-pane');
+ for toggle in pane.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
+ expect(pane.locator('tr[data-source-row]')).to_have_count(36)
  pane.get_by_role('combobox',name='Search column').select_option('1');pane.get_by_role('searchbox',name='Search table text').fill('English 00');btn('Apply',pane).click();expect(pane.locator('tr[data-source-row]')).to_have_count(1)
  btn('Compare in two panes').click();panes=p.locator('.document-pane');expect(panes).to_have_count(2);left=panes.nth(0);right=panes.nth(1)
  p.evaluate('async(id)=>{const a='+AGENT+';await a.navigateAgentTarget(a.getResource("notebook-page:"+id).target,"here");}',page_id)
  if right.locator('.book-grid').count():btn('Quick Book mode',right).click()
  expect(right.locator('tr[data-source-row]')).to_have_count(36);expect(left.locator('tr[data-source-row]')).to_have_count(1)
  btn('Views & sort',right).click();btn('Theme',right.get_by_role('group',name='Group this page',exact=True)).click();right.locator('.csv-group-depth-0 button').first.click();expect(right.locator('tr[data-source-row]')).to_have_count(24);expect(left.locator('tr[data-source-row]')).to_have_count(1)
- p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.document-pane .table-column-tools');panes=p.locator('.document-pane');expect(panes.nth(0).locator('tr[data-source-row]')).to_have_count(36);expect(panes.nth(1).locator('tr[data-source-row]')).to_have_count(24)
+ p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}');p.reload(wait_until='networkidle');p.wait_for_selector('.document-pane .table-column-tools',state='attached');panes=p.locator('.document-pane');expect(panes.nth(0).locator('tr[data-source-row]')).to_have_count(36);expect(panes.nth(1).locator('tr[data-source-row]')).to_have_count(24)
  assert snapshot()['history']==history
  assert next(x for pack in snapshot()['imports'] for x in pack['pages'] if x['id']==page_id)==page
  assert not errors,errors

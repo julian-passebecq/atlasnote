@@ -86,3 +86,13 @@
 /* V3.1: geometry is fixed before canvas mounting; one application scroll owner. */
 .pdf-canvas-scroll{overflow-anchor:none}
 .physical-page{overflow-anchor:none}
+
+/* PDF glyphs are painted once on the canvas. Keep selectable DOM glyphs
+   invisible even when interface or browser theme rules recolor text. */
+.integrated-pdf .react-pdf__Page .textLayer :is(span,br){color:transparent!important;-webkit-text-fill-color:transparent!important;-webkit-text-stroke:0 transparent!important;text-shadow:none!important}
+
+/* Optional personal reading treatment, applied only to painted PDF pixels.
+   Source bytes, text selection, links and original-color print are retained. */
+.integrated-pdf[data-pdf-appearance="dark"] .react-pdf__Page__canvas{filter:grayscale(1) invert(1) contrast(1.2)}
+.integrated-pdf[data-pdf-appearance="dark"] .physical-page{background:#1a1a1a}
+@media print{.integrated-pdf[data-pdf-appearance="dark"] .react-pdf__Page__canvas{filter:none}.integrated-pdf[data-pdf-appearance="dark"] .physical-page{background:white}}

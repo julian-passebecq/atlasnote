@@ -87,3 +87,24 @@
 .reader-display-controls small{flex-basis:100%;color:var(--muted)}
 .cheatsheet-reader.reader-hide-text [data-block-kind="text"],.cheatsheet-reader.reader-hide-list [data-block-kind="list"],.cheatsheet-reader.reader-hide-table [data-block-kind="table"],.cheatsheet-reader.reader-hide-code [data-block-kind="code"],.cheatsheet-reader.reader-hide-callout [data-block-kind="box"],.cheatsheet-reader.reader-hide-visual :is([data-block-kind="image"],[data-block-kind="icon"],[data-block-kind="drawing"],[data-block-kind="diagram"]){visibility:hidden}
 @media print{.reader-display-controls,.pane-display-toggle{display:none}}
+
+/* Compact Norsk reading; group headers must override global table header colors. */
+.csv-norsk.csv-interactive tbody .csv-group-row th{background:var(--csv-card);color:var(--text);border:0;padding:3px 8px;font-size:.8em}
+.csv-norsk.csv-interactive tbody .csv-group-depth-1 th{background:transparent;color:var(--muted);padding-left:24px}
+.csv-norsk.csv-interactive .csv-group-row button{background:transparent;border:0;border-radius:0;box-shadow:none;padding:2px 0;min-height:22px}
+.csv-norsk.csv-interactive td,.csv-norsk.csv-interactive thead th{border:0}
+.csv-norsk.csv-interactive button[aria-pressed="true"]{box-shadow:none;border-radius:4px}
+.csv-norsk .table-column-tools .table-organization{flex-direction:row;align-items:center;gap:6px 14px;border:0}
+.csv-norsk .table-organization>div>span{min-width:0}
+.csv-norsk .table-organization>small{display:none}
+.csv-norsk .table-column-tools .table-search{flex-basis:auto}
+.csv-more{position:relative;font-size:11px}
+.csv-more summary{cursor:pointer;padding:3px 6px;min-height:24px}
+.csv-more[open]>div{display:flex;flex-wrap:wrap;gap:3px;padding:6px;border:1px solid var(--line);border-radius:4px}
+.csv-norsk:is(.csv-layout-lines,.csv-layout-pairs,.csv-layout-cards2,.csv-layout-cards3,.csv-layout-tiles) td[data-empty="true"]:nth-child(n+3){display:none}
+.csv-norsk.csv-layout-rows td{white-space:normal;overflow-wrap:anywhere}
+.csv-norsk :is(button,summary){text-decoration:none}
+
+.norsk-tools-hidden .table-column-tools{display:none}
+.pane-norsk-toggle{font-size:11px;white-space:nowrap;flex-shrink:0;padding:3px 7px}
+@media print{.norsk-tools-hidden .table-column-tools,.pane-norsk-toggle{display:none}}

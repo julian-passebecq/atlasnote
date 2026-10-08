@@ -13,7 +13,16 @@ with sync_playwright() as pw:
  p.goto(base,wait_until='networkidle');p.wait_for_selector('.atlas-app')
  p.wait_for_function('async()=>{const d=('+AGENT+').getStorageDiagnostics();return d.ready===true&&d.initialized===true&&d.saving===0;}',timeout=60000)
  p.evaluate('async()=>{const m='+SNAPSHOT+';await m.captureWorkspaceSnapshot();}')
- def btn(name,scope=None):return (scope or p).get_by_role('button',name=name,exact=True)
+ def btn(name,scope=None):
+  target=scope or p
+  if name=='CSV rows':name='List'
+  if name in ['Columns','Words','Explain','List','NO / EN','Lines','Views & sort','Colors','Search','Table','Dictionary','Tiles','2 columns','3 columns']:
+   for toggle in target.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
+  if name in ['Table','Dictionary','Tiles','2 columns','3 columns']:
+   expect(target.locator('.csv-more button[aria-expanded="false"]').first).to_be_visible()
+   target.get_by_role('button',name='More layouts',exact=True).first.click()
+   expect(target.get_by_role('group',name='Additional table layouts',exact=True).first).to_be_visible()
+  return target.get_by_role('button',name=name,exact=True)
  def snapshot():return p.evaluate('async()=>{const m='+SNAPSHOT+';return await m.readPersistedWorkspace();}')
  before=snapshot();open_settings(p)
  csv='Norsk,English,Forms,Example\n'+''.join('"Jeg leser ord '+str(i)+'","I read word '+str(i)+'",leser,"Synthetic example '+str(i)+'"\n' for i in range(65))
@@ -29,8 +38,10 @@ with sync_playwright() as pw:
  assert after['overlays']['categories'][pack['projects'][0]['id']]=='norsk'
  assert len(after['history']['revisions'])>len(before['history']['revisions'])
  results.append({'name':'CSV preview is read-only; confirmation commits all 65 rows and history atomically','status':'PASS'})
- page_id=pages[0]['id'];p.goto(base+'#/page/'+page_id);p.wait_for_selector('.active-pane .table-column-tools')
- pane=p.locator('.active-pane');book=pane.locator('.book-grid')
+ page_id=pages[0]['id'];p.goto(base+'#/page/'+page_id);p.wait_for_selector('.active-pane .table-column-tools',state='attached')
+ pane=p.locator('.active-pane');
+ for toggle in pane.get_by_role('button',name='Show Norsk controls',exact=True).all():toggle.click()
+ book=pane.locator('.book-grid')
  if book.count():btn('Quick Book mode',pane).click()
  expect(pane.locator('.continuous-content tbody tr')).to_have_count(40)
  assert pane.locator('.continuous-content').evaluate('e=>e.getBoundingClientRect().width>e.parentElement.getBoundingClientRect().width-8')

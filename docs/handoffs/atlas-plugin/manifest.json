@@ -1,0 +1,79 @@
+{
+  "repository": "https://github.com/julian-passebecq/atlasnote",
+  "sourceCommit": "ee68417b1df13728a9e27b8ecddd7082b96bff2f",
+  "workingTreeDirty": true,
+  "files": [
+    {
+      "sha256": "6F8AA5B78C2F2AE748E62F8DC27EF47B9900C4198294BCA13E8D0C4060494FA3",
+      "path": "src/content/schemas/cheatsheet-v1.schema.json"
+    },
+    {
+      "sha256": "E73877A210A0D4502EA0019175471A661A83B65EF296542027255128859E262C",
+      "path": "src/content/schemas/page-v2.schema.json"
+    },
+    {
+      "sha256": "2F8BFACD63BEDD60DC4821073555D6ABB3D5D930E84420191359FF854433F9CE",
+      "path": "src/content/schemas/documents.schema.json"
+    },
+    {
+      "sha256": "5643AB86802E594EAFFD12C9DFE947B9F604D22DCAE1AE405330413D6B7D4A35",
+      "path": "docs/1.2.6/minimal.cheatsheet.json"
+    },
+    {
+      "sha256": "B2A5C06C01A44ED7B0C08D48C194EA97E2D99830C5FD03247183CD2FE37BC861",
+      "path": "docs/1.2.6/AUTHORING.md"
+    },
+    {
+      "sha256": "904886061672C5E42D8A23FE4849EF97EFD850E48F724B935FC44AC1C9462830",
+      "path": "src/cheatsheets/model.ts"
+    },
+    {
+      "sha256": "EBE10D7FB4FF54C2389219D450DE3474A16A4A62B8BC7706060F2AF727FD57D4",
+      "path": "src/cheatsheets/validation.mjs"
+    },
+    {
+      "sha256": "F06C2720C817FE40653918F0AE896D5E8475A37DE621C654791A977287DBE07E",
+      "path": "src/cheatsheets/renderer.mjs"
+    },
+    {
+      "sha256": "5A270DEF233FE40EF2B0EEA25CAEF2E63863B686CC90BD82C996D4BB0A421C5C",
+      "path": "src/cheatsheets/assets.mjs"
+    },
+    {
+      "sha256": "B7F2BF2716E29F6E373E573096586C02FBB3E102601FC0FC55E3E7F62D06A334",
+      "path": "src/cheatsheets/text-layout.mjs"
+    },
+    {
+      "sha256": "EE439F57D55A7EECB28EED4F268754D33C7E4006DB1E1ABD33CCA8D51A826102",
+      "path": "src/cheatsheets/font-metrics.mjs"
+    },
+    {
+      "sha256": "458F6D1DEE61FCC1B815CFA3116938C42882AC6B8DF4DE7D7070438FDCA4A74C",
+      "path": "src/core/appearance.mjs"
+    },
+    {
+      "sha256": "41E45AD771D0C727D6AB200C253CFF3EECCACD1872A29344B56CC7D5D4EE798F",
+      "path": "content/norsk-csv/README.md"
+    },
+    {
+      "sha256": "22A4346CAA2A7BC3E86548E4628F8F96BB0C9895D7CFC212907FAE9E7B5D60A5",
+      "path": "START_HERE.md"
+    },
+    {
+      "sha256": "370D1BB585352C76EF5D0B6D15B3229D87D83FCC416D79EADE9015D7E92116E0",
+      "path": "V22_ARCHITECTURE.md"
+    },
+    {
+      "sha256": "75AAA8A38C49700EF602F0767B5FAC271AC71FC52FCDC8171FCD85702811E827",
+      "path": "V22_MIGRATION_AND_BACKUP.md"
+    },
+    {
+      "sha256": "B20B3581CB6ADAB78F47B36D4A3B1653E553661CC7AEF034FA66B6456BDBE35C",
+      "path": "V22_AI_CHANGESET_SPEC.md"
+    },
+    {
+      "sha256": "2E02F9FC8E9AB9CDFF9B362833915FDEE87E12FB37FCA165C85888C5FCB8926D",
+      "path": "docs/v22/PDFATLAS_CONTRACT.md"
+    }
+  ]
+}

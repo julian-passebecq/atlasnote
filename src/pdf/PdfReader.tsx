@@ -11,7 +11,7 @@ import {DocumentInfo} from './DocumentInfo.js';
 import {EngineBoundary} from './EngineBoundary.js';
 /** Hosted entry installs the integrated adapter. Native rendering is only the
  * failure/compatibility path; neither path puts provenance above the document. */
-export function PdfReader({paneId,slotId,document:doc,location,onLocation,resolve,fetchBytes,onRenderer}: {paneId?:string;slotId?:import('../core/model.js').WorkspaceNumber;document:DocumentEntry;location:Location;onLocation:any;resolve:(key:string)=>string|undefined;fetchBytes:(key:string)=>Promise<Uint8Array>;onRenderer?:(renderer:'loading'|'integrated'|'native-fallback')=>void}){
+export function PdfReader({darkPages=false,paneId,slotId,document:doc,location,onLocation,resolve,fetchBytes,onRenderer}: {darkPages?:boolean;paneId?:string;slotId?:import('../core/model.js').WorkspaceNumber;document:DocumentEntry;location:Location;onLocation:any;resolve:(key:string)=>string|undefined;fetchBytes:(key:string)=>Promise<Uint8Array>;onRenderer?:(renderer:'loading'|'integrated'|'native-fallback')=>void}){
  const [adapter,setAdapter]=useState<any>(null),[engineError,setEngineError]=useState(''),[engineAttempt,setEngineAttempt]=useState(0);
  const [engineLoading,setEngineLoading]=useState(!!window.atlasPdfLoader),[native,setNative]=useState(false),[info,setInfo]=useState(false);
  const [consent,setConsent]=useState(false),[url,setUrl]=useState<string|undefined>(()=>doc.assetKey?resolve(doc.assetKey):undefined),[externalError,setExternalError]=useState(''),[retry,setRetry]=useState(0);
@@ -37,7 +37,7 @@ export function PdfReader({paneId,slotId,document:doc,location,onLocation,resolv
  },[doc.id,doc.sha256,doc.source.url,doc.assetKey,retry]);
  const source=trusted?url:external?(consent?doc.source.url:undefined):url;
  const allow=()=>setConsent(true);
- function fallback(reason=engineError){return <div className="pdf-reader has-preview" data-pdf-renderer="native-fallback">
+ function fallback(reason=engineError||(!window.atlasPdfLoader?'This build does not include the integrated PDF engine. Open the integrated Atlas build to use Spread, grid and text search.':'')){return <div className="pdf-reader has-preview" data-pdf-renderer="native-fallback">
   <div className="pdf-fallback-strip" aria-label="Browser fallback controls">
    <span className="pdf-fallback-indicator" title={reason||'Compatibility renderer. Physical-page controls and selectable-text search require the integrated build.'}><Icon name="pdf" size={15}/>Browser PDF fallback</span>
    {window.atlasPdfLoader&&<IconButton name="swap" label="Retry integrated PDF" onClick={()=>setEngineAttempt(n=>n+1)}/>}
@@ -45,6 +45,7 @@ export function PdfReader({paneId,slotId,document:doc,location,onLocation,resolv
    {source&&<a className="icon-button" aria-label="Open original PDF" title="Open original PDF" href={source} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer"><Icon name="export" size={16}/></a>}
    {source&&<a className="icon-button" aria-label="Download original" title="Download original" href={source} download={doc.title+'.pdf'} referrerPolicy="no-referrer"><Icon name="download" size={16}/></a>}
   </div>
+  {reason&&<p className="pdf-compact-error" role="alert">{reason}</p>}
   {info&&<aside className="pdf-info-overlay" onKeyDown={e=>{if(e.key==='Escape'){e.stopPropagation();setInfo(false);}}}>
    <IconButton name="close" label="Close document info" onClick={()=>setInfo(false)}/>
    {reason&&<p className="pdf-compact-error" role="alert">{reason}</p>}
@@ -60,7 +61,7 @@ export function PdfReader({paneId,slotId,document:doc,location,onLocation,resolv
  </div></div>;
  if(engineLoading)return <div className="pdf-reader"><div className="pdf-load-state" role="status">Opening integrated PDF reader...</div></div>;
  if(adapter&&!native){const Component=adapter;return <EngineBoundary key={engineAttempt+':'+doc.id} fallback={fallback} onError={(reason:string)=>{setEngineError(reason);setNative(true);}}>
-  <Component paneId={paneId} slotId={slotId} document={doc} location={location} onLocation={onLocation} url={source} requestExternal={allow} onFallback={(reason?:string)=>{setEngineError(reason??'Integrated PDF rendering failed.');setNative(true);}}/>
+  <Component darkPages={darkPages} paneId={paneId} slotId={slotId} document={doc} location={location} onLocation={onLocation} url={source} requestExternal={allow} onFallback={(reason?:string)=>{setEngineError(reason??'Integrated PDF rendering failed.');setNative(true);}}/>
  </EngineBoundary>;}
  return fallback();
 }
