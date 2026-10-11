@@ -37,7 +37,9 @@ jobs:
       ATLAS_V23_QUOTA_SUDO: '1'
 
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Measured inherited work plus this job's full V23 rerun exceeds 30 minutes.
+    # Preserve every command and individual test deadline within a bounded job.
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4

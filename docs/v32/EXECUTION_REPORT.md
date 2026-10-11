@@ -93,6 +93,26 @@ build, protected preview, complete same-source V23, then stock inherited run.
 
 ## Live observations
 
+The next frozen candidate `23e14ef` completed all 13 V23 gates. Its inherited
+workflow passed commands 1–33, failed command 34 (`test:pdf`) at rotation, and
+left commands 35–54 not run. The original report remains at
+`docs/evidence/mission/inherited-23e14ef-failed/`. The test read a canvas after
+a fixed 500ms delay while rotation remounted the actual React-PDF page. An
+unmodified isolated rerun passed all 17 cases; an ignored repaired harness
+passed all 17 cases in three fresh runs. It waits for the current document,
+engine, geometry, render-success marker and visible canvas dimensions, while
+retaining the original aspect-ratio assertion and existing 20-second deadline.
+It also verifies the same physical page and changed rotation geometry. No app
+rotation or navigation implementation changed. These diagnostics do not qualify
+the next source; it requires a fresh build, protected preview and complete run.
+
+Measured comparable inherited command durations plus the CI job's additional
+full V23 run total 36m44.605s, exceeding its old 30-minute job budget before
+runner setup. The job now has a bounded 60-minute budget, preserving every
+command and all individual test deadlines. This measurement combines retained
+diagnostic durations to size the budget; it is not a release pass or a prediction
+of exact GitHub runtime. Remote exact-source qualification remains required.
+
 Production Worker version `161c6acc-8418-4af4-a82c-27057b20f7f5`, deployment
 `4703ec87-418a-4cfa-bb97-92a617558ff8`, is annotated with source `9034025`.
 Anonymous root, identity, static and deep-link probes redirect to Access without

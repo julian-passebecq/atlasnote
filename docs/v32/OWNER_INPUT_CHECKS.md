@@ -11,7 +11,8 @@ profile. Record the exact app commit/build identity and device/browser used.
 
 ## Physical PDF navigation (about five minutes per device)
 
-1. Open **PDF reading fixture**. In Single mode, try 75%, 100% and 150% zoom.
+1. Open **PDF reading fixture**. In Single mode, try 75%, **Fit width** and 150%
+   zoom. The selector's value `1` is Fit width; it has no literal 100% option.
    Scroll within a page, reach the bottom, make one deliberate forward gesture,
    then reverse. Confirm the reader advances deliberately, does not jump back,
    and returns to the bottom of the previous tall page. Repeat with controls
