@@ -46,6 +46,18 @@ downloaded Unicode recovery JSON on Windows. That full report is retained at
 diagnostic reached real filesystem exhaustion with exact five-store rollback;
 it remains diagnostic evidence pending fresh candidate qualification.
 
+The repaired frozen candidate completed all 13 same-source V23 gates. Its full
+inherited run then stopped at `test:reader:ui`: 17/18 compatibility DOM checks
+passed, but the fallback iframe in Focus started 45.140625px below the viewport
+because its visible reason paragraph remained in flex flow. The failure is
+retained at `docs/evidence/v23/inherited/13.log`; it is not a stale selector or a
+reason to weaken the existing full-viewport assertions. The Focus-only fallback
+alert overlay repair preserves the alert and requires a new clean source,
+build, protected preview and full same-source qualification. Temporary CSS
+causal diagnostics are not source qualification. Integrated PDF input and actual
+QA software-input observations retain their own scopes; physical mouse/trackpad
+acceptance remains separate.
+
 Independent authoring/QCM/PDF suites may run as targeted diagnostics. The full
 inherited workflow must start only after all 13 same-source V23 gates pass.
 Local Chromium input is synthetic, not hardware validation. Compatibility-entry

@@ -186,6 +186,14 @@ with sync_playwright() as pw:
         page.get_by_role('button',name='Enter focus mode').click();page.wait_for_timeout(350)
         for frame in page.locator('.pdf-fallback').all():
             box=frame.bounding_box();assert box['y']==0 and abs(box['height']-900)<=1,box
+        for pane in page.locator('.pdf-reader').all():
+            warning=pane.locator(':scope > .pdf-compact-error');assert warning.count()==1 and warning.is_visible()
+            assert warning.get_attribute('role')=='alert' and 'integrated PDF engine' in warning.inner_text()
+            alert_box=warning.bounding_box();frame_box=pane.locator('.pdf-fallback').bounding_box()
+            assert warning.evaluate('(e)=>getComputedStyle(e).position')=='absolute'
+            assert frame_box['x']<=alert_box['x'] and alert_box['x']+alert_box['width']<=frame_box['x']+frame_box['width']+1,alert_box
+            assert frame_box['y']<=alert_box['y'] and alert_box['y']+alert_box['height']<=frame_box['y']+frame_box['height']+1,alert_box
+            assert 0<alert_box['height']<=min(frame_box['height']*.25,120)+1,alert_box
         assert page.locator('.pdf-intro:visible').count()==0;page.screenshot(path=str(OUT/'focus-pdf-pdf-fallback.png'))
         page.keyboard.press('Escape');page.get_by_role('button',name='Notebook content',exact=True).click();tree('Middle modeling note').click();assert page.locator('.pdf-reader').count()==1 and page.locator('.reader-body').count()==1
         return {'PDFFrameBounds':'full viewport','engine':'Explicit native-browser fallback; physical-page engine NOT certified'}
