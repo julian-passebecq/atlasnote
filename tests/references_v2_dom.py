@@ -9,7 +9,7 @@ from playwright.sync_api import sync_playwright,expect
 from browser_support import ROOT,start_server,launch,mount_dom,close_panels,open_context,open_settings,state_action
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/v2/references-ui'));OUT.mkdir(parents=True,exist_ok=True)
 results=[];errors=[];base=start_server(dom_only=True)
-ARTICLE=json.loads((ROOT/'examples/content-hub/article-sample.json').read_text());ARTICLE.pop('text');ARTICLE['title']='Reference workflow transcript (synthetic)';ARTICLE['blocks']=[{'id':'v2.article.section','type':'section','title':'Reference target','children':[{'id':'v2.article.text','type':'markdown','text':'Synthetic browser navigation fixture, not an educational concept claim.'}]}];QCM=json.loads((ROOT/'examples/content-hub/qcm-sample.json').read_text())
+ARTICLE=json.loads((ROOT/'examples/content-hub/article-sample.json').read_text(encoding='utf-8'));ARTICLE.pop('text');ARTICLE['title']='Reference workflow transcript (synthetic)';ARTICLE['blocks']=[{'id':'v2.article.section','type':'section','title':'Reference target','children':[{'id':'v2.article.text','type':'markdown','text':'Synthetic browser navigation fixture, not an educational concept claim.'}]}];QCM=json.loads((ROOT/'examples/content-hub/qcm-sample.json').read_text(encoding='utf-8'))
 with sync_playwright() as pw:
  b=launch(pw);ctx=b.new_context(viewport={'width':1600,'height':1050},accept_downloads=True);p=ctx.new_page();p.set_default_timeout(6500);p.on('pageerror',lambda e:errors.append(str(e)));mount_dom(p,base)
  def state():return p.evaluate('JSON.parse(JSON.stringify(testStore.state))')
@@ -89,7 +89,7 @@ with sync_playwright() as pw:
   global exported
   manage();source(ARTICLE['id'],block=ARTICLE['blocks'][0]['id']);click('Review & AI handoff')
   with p.expect_download() as dl:click('Export reference review JSON')
-  path=OUT/'review.json';dl.value.save_as(str(path));exported=json.loads(path.read_text());assert exported['semanticRevision']==state()['personal']['knowledge']['revision'];assert len(exported['resources'])==1;assert exported['resources'][0]['target']['anchor']['blockId']==ARTICLE['blocks'][0]['id']
+  path=OUT/'review.json';dl.value.save_as(str(path));exported=json.loads(path.read_text(encoding='utf-8'));assert exported['semanticRevision']==state()['personal']['knowledge']['revision'];assert len(exported['resources'])==1;assert exported['resources'][0]['target']['anchor']['blockId']==ARTICLE['blocks'][0]['id']
   with p.expect_download() as dl:click('Export reference review Markdown')
   dl.value.save_as(str(OUT/'review.md'));assert 'Semantic revision' in (OUT/'review.md').read_text()
  check('Actual bounded local JSON and Markdown downloads include exact target and semantic revision',export)

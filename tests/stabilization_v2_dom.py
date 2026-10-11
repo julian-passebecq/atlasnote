@@ -90,7 +90,7 @@ with sync_playwright() as pw:
    else:doc['title']='Reviewed / '+doc['title']
    p.get_by_label('Resource source JSON').fill(json.dumps(doc));click('Apply validated JSON');assert state()['overlays']['pages'][id]['page']['title'].startswith('Reviewed /');expect(p.locator('.resource-management [role=alert]')).to_have_count(0)
    with p.expect_download() as download:click('Export JSON')
-   path=OUT/('export-'+label.lower()+'.json');download.value.save_as(path);assert json.loads(path.read_text())==json.loads(p.get_by_label('Resource source JSON').input_value());shot('manager-'+label.lower()+'-json')
+   path=OUT/('export-'+label.lower()+'.json');download.value.save_as(path);assert json.loads(path.read_text(encoding='utf-8'))==json.loads(p.get_by_label('Resource source JSON').input_value());shot('manager-'+label.lower()+'-json')
   check(label+' Visual/JSON preserves selection, rejects malformed edits, stages import and exports exact JSON',json_modes)
  def tree_reference():
   row=source_row('Article',SOURCES['Article']);before=state();dt=p.evaluate_handle('new DataTransfer()');row.dispatch_event('dragstart',{'dataTransfer':dt});button('Notebook content').dispatch_event('dragenter',{'dataTransfer':dt});expect(p.locator('aside.library-sidebar')).to_have_attribute('aria-label','Notebook library');folder=p.locator('[data-project-id="demo.v2.notebook.cloud"]>.project-row');folder.dispatch_event('drop',{'dataTransfer':dt});p.wait_for_timeout(200);after=state();assert len(after['overlays']['references'])==len(before['overlays']['references'])+1;assert before['overlays']['pages']==after['overlays']['pages'];assert before['overlays']['operations']==after['overlays']['operations'];dt.dispose()

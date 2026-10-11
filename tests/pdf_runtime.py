@@ -27,7 +27,7 @@ if not metadata.exists():
     report={'scope':'Integrated React-PDF + actual PDF.js worker on normal origin','status':'BLOCKED',
       'checks':[{'id':key,'name':name,'status':'BLOCKED','error':'Integrated React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See FINAL_TEST_STATUS.md and the dependency/build logs.'} for key,name in CASES]}
     (OUT/'results.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2));raise SystemExit(2)
-base=start_server();meta=json.loads(metadata.read_text())
+base=start_server();meta=json.loads(metadata.read_text(encoding='utf-8'))
 def record(key,detail=None):
     results.append({'id':key,'name':dict(CASES)[key],'status':'PASS','detail':detail});print('PASS',key,flush=True)
 def search(target,title):

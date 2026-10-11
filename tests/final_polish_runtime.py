@@ -19,7 +19,7 @@ try:
   def manager(kind,id):
    close_panels(p);click(kind+' content');choose_library_resource(p,id)
   def field(name,value):p.get_by_label(name,exact=True).fill(value)
-  p.goto(base,wait_until='networkidle');assert p.title()=='AtlasNote '+json.loads((ROOT/'package.json').read_text())['version'];expect(p.locator('.atlas-app')).to_be_visible();record()
+  p.goto(base,wait_until='networkidle');assert p.title()=='AtlasNote '+json.loads((ROOT/'package.json').read_text(encoding='utf-8'))['version'];expect(p.locator('.atlas-app')).to_be_visible();record()
   phase='visual single and multiple authoring with invalid-state validation'
   click('QCM content');click('New/import QCM');expect(p.get_by_label('Set title',exact=True)).to_be_visible();assert not p.get_by_label('QCM JSON',exact=True).count()
   field('Set title','Visual regression QCM');field('Question 1 prompt','Which value is even?');field('Question 1 option 1','Two');field('Question 1 option 2','Three');field('Question 1 option 1 explanation','Two divides by two.');field('Question 1 option 2 explanation','Three is odd.');field('Question 1 global explanation','Even numbers divide by two.');field('Question 1 follow-up','What about four?')
@@ -30,7 +30,7 @@ try:
   p.locator('.qcm-options input').first.check();click('Check answer');expect(p.locator('.qcm-explanation')).to_contain_text('Even numbers divide by two.');expect(p.locator('.qcm-options')).to_contain_text('Two divides by two.');click('Next question');click('Reveal answer');expect(p.locator('.qcm-explanation')).to_contain_text('Both are divisible by two.')
   manager('QCM',qcm['id']);click('Edit / details');field('Question 1 option 2','Five');field('Question 1 option 2 explanation','Five is odd.');p.get_by_label('Question 1 option 2 correct',exact=True).check();click('Save content');expect(p.locator('.qcm-reader')).to_be_visible();updated=state()['overlays']['pages'][qcm['id']]['page']['qcm'];assert updated['questions'][0]['options'][1]['id']==qcm['questions'][0]['options'][1]['id'];assert updated['questions'][0]['correctOptionIds']==[qcm['questions'][0]['options'][1]['id']];assert len(state()['personal']['qcmAttempts'])==2
   with p.expect_download() as dl:click('Export QCM set')
-  dl.value.save_as(str(OUT/'qcm.json'));assert json.loads((OUT/'qcm.json').read_text())==updated;record()
+  dl.value.save_as(str(OUT/'qcm.json'));assert json.loads((OUT/'qcm.json').read_text(encoding='utf-8'))==updated;record()
   phase='Article import reclassification source edit and independent Notebook reference'
   click('Article content');click('Add article');field('Title','Coherent article');field('Pasted article or transcript','A stable article body.');p.get_by_label('Classification subject',exact=True).last.select_option('it');click('Import local content');expect(p.locator('dialog[open]')).to_have_count(0);article=next(v['page'] for v in state()['overlays']['pages'].values() if v['page'].get('article'));aid=article['id']
   manager('Article',aid);p.get_by_label('Reference destination subject',exact=True).select_option('it');folder=p.get_by_label('Reference destination folder',exact=True).locator('option').evaluate_all('(es)=>es.find(e=>e.value).value');p.get_by_label('Reference destination folder',exact=True).select_option(folder);click('Add reference to Notebook');pin=state()['overlays']['references'][0]

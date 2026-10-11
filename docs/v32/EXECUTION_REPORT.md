@@ -58,6 +58,14 @@ causal diagnostics are not source qualification. Integrated PDF input and actual
 QA software-input observations retain their own scopes; physical mouse/trackpad
 acceptance remains separate.
 
+A read-only audit of the remaining inherited scripts also reproduced a Windows
+ANSI decoder failure on the actual UTF-8 `dist/content.json`. JSON fixture,
+metadata and download readers now explicitly use UTF-8; their assertions and
+the inherited command list remain unchanged. The intermediate `8f782d0` full
+attempt was stopped before completion and retained as incomplete evidence at
+`docs/evidence/mission/v23-8f782d0-incomplete`. Its protected navigation core
+passed 18 checks, but neither result qualifies the next source candidate.
+
 Independent authoring/QCM/PDF suites may run as targeted diagnostics. The full
 inherited workflow must start only after all 13 same-source V23 gates pass.
 Local Chromium input is synthetic, not hardware validation. Compatibility-entry

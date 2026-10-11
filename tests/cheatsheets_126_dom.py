@@ -124,7 +124,7 @@ with sync_playwright() as pw:
  def private_source():
   reset();id=import_doc(four);before=p.evaluate('(id)=>structuredClone(testStore.state.overlays.pages[id].page.cheatsheet)',id);assert before==four
   with p.expect_download() as download:btn('Export cheatsheet JSON',pane()).click()
-  path=OUT/'exported-canonical-source.json';download.value.save_as(str(path));assert json.loads(path.read_text())==four
+  path=OUT/'exported-canonical-source.json';download.value.save_as(str(path));assert json.loads(path.read_text(encoding='utf-8'))==four
   open_more(p).get_by_role('button',name='Edit current page',exact=True).click();changed=json.loads(p.get_by_label('Structured cheatsheet JSON',exact=True).input_value());changed['pages'][1]['blocks'][0]['text']='Edited local native source';p.get_by_label('Structured cheatsheet JSON',exact=True).fill(json.dumps(changed));btn('Save cheatsheet source').click();expect(p.locator('dialog[open]')).to_have_count(0);go(2);expect(svg()).to_contain_text('Edited local native source');assert p.evaluate('(id)=>testStore.state.overlays.pages[id].page.cheatsheet',id)==changed
   return {'localWrapperId':id,'sourceExportExact':True,'localEditRendered':True}
  check('Import, validate, export and edit actual canonical JSON through the existing local overlay store',private_source)

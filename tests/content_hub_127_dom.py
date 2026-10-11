@@ -9,7 +9,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright,expect
 from browser_support import ROOT,start_server,launch,mount_dom,close_panels,open_more,open_context,show_reader_controls,state_action
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/1.2.7/content-hub-ui'));OUT.mkdir(parents=True,exist_ok=True)
-ARTICLE=json.loads((ROOT/'examples/content-hub/article-sample.json').read_text());QCM=json.loads((ROOT/'examples/content-hub/qcm-sample.json').read_text())
+ARTICLE=json.loads((ROOT/'examples/content-hub/article-sample.json').read_text(encoding='utf-8'));QCM=json.loads((ROOT/'examples/content-hub/qcm-sample.json').read_text(encoding='utf-8'))
 results=[];errors=[];base=start_server(dom_only=True)
 with sync_playwright() as pw:
  browser=launch(pw);ctx=browser.new_context(viewport={'width':1440,'height':1000},accept_downloads=True);p=ctx.new_page();p.set_default_timeout(5000);p.on('pageerror',lambda e:errors.append(str(e)));mount_dom(p,base)
@@ -97,10 +97,10 @@ with sync_playwright() as pw:
  def qcm_exports():
   for label,kind in [('Export QCM set','set'),('Export attempts','attempts')]:
    with p.expect_download() as d:click(label)
-   path=OUT/(kind+'.json');d.value.save_as(str(path));v=json.loads(path.read_text());assert v['id']==QCM['id'] if kind=='set' else len(v)==4
+   path=OUT/(kind+'.json');d.value.save_as(str(path));v=json.loads(path.read_text(encoding='utf-8'));assert v['id']==QCM['id'] if kind=='set' else len(v)==4
   p.locator('.qcm-export summary').click();p.get_by_label('AI export first question',exact=True).fill('2');p.get_by_label('AI export last question',exact=True).fill('2')
   with p.expect_download() as d:click('Export AI JSON')
-  path=OUT/'bounded-review.json';d.value.save_as(str(path));v=json.loads(path.read_text());assert len(v['questions'])==1 and v['questions'][0]['id']=='q2';assert len(v['questions'][0]['attempts'])==3;assert v['questions'][0]['options'][1]['explanation']
+  path=OUT/'bounded-review.json';d.value.save_as(str(path));v=json.loads(path.read_text(encoding='utf-8'));assert len(v['questions'])==1 and v['questions'][0]['id']=='q2';assert len(v['questions'][0]['attempts'])==3;assert v['questions'][0]['options'][1]['explanation']
   with p.expect_download() as d:click('Export AI Markdown')
   path=OUT/'bounded-review.md';d.value.save_as(str(path));assert 'Attempt history' in path.read_text()
  check('Actual downloads: QCM source, attempts, bounded AI JSON and Markdown',qcm_exports)
@@ -142,7 +142,7 @@ with sync_playwright() as pw:
  def article_lifecycle():
   reset();import_source('Article',ARTICLE);click('Article content');choose_library_resource(p,ARTICLE['id']);click('Edit / details');p.get_by_label('Title',exact=True).fill('Edited native transcript');p.get_by_label('Pasted article or transcript',exact=True).fill('Edited safe local body.');open_article_advanced(p);p.get_by_label('Article status',exact=True).select_option('reading');click('Save content');expect(p.locator('.active-pane')).to_contain_text('Edited safe local body.');pg=state()['overlays']['pages'][ARTICLE['id']]['page'];assert pg['article']['status']=='reading';assert pg['article']['updatedAt']>=pg['article']['addedAt'];click('Article content');choose_library_resource(p,ARTICLE['id']);p.get_by_label('Managed article status',exact=True).select_option('finished');p.wait_for_timeout(100)
   with p.expect_download() as dl:click('Export source')
-  path=OUT/'edited-article.json';dl.value.save_as(str(path));export=json.loads(path.read_text());assert export['id']==ARTICLE['id'] and export['status']=='finished';assert export['blocks'][0]['text']=='Edited safe local body.'
+  path=OUT/'edited-article.json';dl.value.save_as(str(path));export=json.loads(path.read_text(encoding='utf-8'));assert export['id']==ARTICLE['id'] and export['status']=='finished';assert export['blocks'][0]['text']=='Edited safe local body.'
   click('Archive resource');assert ARTICLE['id'] in state()['overlays']['archived'];expect(button('Restore resource')).to_be_visible();p.get_by_role('checkbox',name='Include archived',exact=True).check();click('Restore resource');assert ARTICLE['id'] not in state()['overlays']['archived'];assert state()['overlays']['pages'][ARTICLE['id']]['page']['article']['status']=='finished';shot('article-manager-edited')
  check('Article edit, reading status, source export and archive/restore preserve identity',article_lifecycle)
  def qcm_rejection():
