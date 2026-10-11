@@ -1,6 +1,10 @@
 # Owner input required for the execution candidate
 
-Physical hardware and editorial checks below remain pending. The coordinator
+Physical hardware and editorial checks below remain pending. Automated software
+qualification does not satisfy them. Use the current protected preview linked
+from [PR #44](https://github.com/julian-passebecq/atlasnote/pull/44), and record
+its exact build identity; the b79e36b preview is a qualified implementation snapshot.
+The coordinator
 tests software navigation with Computer Use and Playwright on the actual
 protected QA preview; see the exact candidate evidence in
 `docs/evidence/mission/FINAL_STATUS.md`. The owner need only repeat navigation

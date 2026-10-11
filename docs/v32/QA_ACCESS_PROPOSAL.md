@@ -1,7 +1,8 @@
 # QA Access repair proposal — 2026-10-11
 
-Status: **Owner approved QA-only repair on 2026-10-11; protected placeholder verified**.
-Candidate preview and complete release qualification are separate steps.
+Status: **Owner approved QA-only repair on 2026-10-11; repair performed and
+canonical protected preview independently qualified**. Exact candidate evidence
+is in [CI status](CI_STATUS_20261011.md); later identities require fresh proof.
 
 Read-only Cloudflare inspection authenticated the account
 `1051e2f49d2be893b07245b1e3dced51`. The production Worker `atlasnote`
@@ -9,7 +10,7 @@ is active at `atlasnote.datapass.workers.dev`, version
 `161c6acc-8418-4af4-a82c-27057b20f7f5`. Its owner policy and deployment are
 outside this change.
 
-The former `atlasnote-v23-qa` Worker is absent. Access application
+Initial discovery found the former `atlasnote-v23-qa` Worker absent. Access application
 `17fb44cb-3994-4311-8cc1-62e3d6d0fd3d` still targets deleted Worker
 `5243815738d742bcaee5401d6fed39d4`. Its reusable allow policy contains
 `email_domain.domain = julianpassebecq@gmail.com`, rather than an email selector.
@@ -56,7 +57,11 @@ Root, representative static and deep-link probes on both the stable QA origin
 and placeholder version preview returned 302 to Access anonymously; Service
 Auth returned the intended 503 placeholder. Credentials are encrypted locally
 with Windows DPAPI in an ignored owner-only path. No token values are in this
-document or evidence. Actual owner browser login is still pending.
+document or evidence. The owner confirmed earlier candidate login; Computer Use
+subsequently opened canonical 4f87a067 through the existing owner Chrome SSO
+session. That observation is not a new credential challenge, physical-input
+validation or production owner-access proof. Dedicated Service Auth expires
+2026-10-12 at 15:38:24 UTC; expiry must never be hidden or bypassed.
 
 Cloudflare documents Worker-wide `worker` destinations and preview-only
 `preview_worker` destinations in [Workers Access](https://developers.cloudflare.com/workers/configuration/cloudflare-access/).

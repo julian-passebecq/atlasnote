@@ -39,6 +39,9 @@ content, create and independently verify a complete recovery bundle from Setting
 
 ## Qualification
 
-The V3.2 qualification workflow is **manual only**. Normal pushes do not spend Actions
-minutes. Earlier V3.1 PASS evidence remains historical evidence and must not be relabelled
-as V3.2 qualification.
+The dedicated V3.2 qualification workflow is **manual only**. Other portable and
+regression workflows still run on pushes/PRs. Complete protected V23 and inherited
+qualification require an exact-head manual dispatch; skipped work is BLOCKED, not
+PASS. See [CI status](docs/v32/CI_STATUS_20261011.md) and
+[PR #44](https://github.com/julian-passebecq/atlasnote/pull/44) for qualification
+snapshots and current checks. Earlier V3.1 results remain historical evidence.

@@ -55,7 +55,7 @@ Those PASS results are not fresh evidence for this V3.2 branch.
 Use Node >=22.12 and a real Git checkout:
 
 ```powershell
-git clone --branch feat/atlasnote-v32-web-study --single-branch https://github.com/julian-passebecq/atlasnote.git atlasnote-v32
+git clone --branch codex/v32-master-execution --single-branch https://github.com/julian-passebecq/atlasnote.git atlasnote-v32
 Set-Location atlasnote-v32
 npm ci
 npm run dev
@@ -73,8 +73,11 @@ A new workflow, **V3.2 Web study qualification**, is intentionally
 `workflow_dispatch` only. It consumes no GitHub Actions minutes from normal pushes or
 PR creation. Run it explicitly when the source pass is ready for qualification.
 
-Until that workflow and owner browser checks pass, this branch is an implementation
-candidate, not a release.
+The implementation at b79e36b passed complete same-source V23 and inherited CI
+qualification; see [CI status](docs/v32/CI_STATUS_20261011.md). Current-head CI and
+independent review must be checked again after any source or documentation commit.
+Owner physical-input, editorial/rights and private-profile recovery acceptance
+remain separate; production is not authorized.
 
 ## Cloudflare boundary
 

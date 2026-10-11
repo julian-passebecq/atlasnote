@@ -108,7 +108,9 @@ The coordinator's authenticated 2026-10-11 inspection observed production
 `atlasnote.datapass.workers.dev`, version
 `161c6acc-8418-4af4-a82c-27057b20f7f5`, deployment
 `4703ec87-418a-4cfa-bb97-92a617558ff8`, source metadata `9034025`.
-Previous rollback version: `dcb5be64-f8d3-4369-a15d-6f16826e9cfa`.
+Historical previous version: `dcb5be64-f8d3-4369-a15d-6f16826e9cfa`. For a future
+release, freshly inspect the then-current production version as the immediate
+pre-deployment rollback candidate; no rollback is authorized by this record.
 These identify the existing deployment; they do not qualify this modified source.
 Production deployment and security changes remain unauthorized.
 
@@ -116,8 +118,8 @@ Initial QA inspection found the Worker absent and a stale Access app pointing
 to a deleted Worker, an incorrect email-domain selector and no Service Auth.
 The owner subsequently authorized the isolated QA repair proposal. See
 [QA_ACCESS_PROPOSAL.md](QA_ACCESS_PROPOSAL.md) and the coordinator's fresh
-evidence for actual repair/verification status; this document does not claim it
-was performed. Never upload app assets before managed protection, anonymous
+evidence for the performed QA-only repair and exact canonical preview proof.
+Production destinations/policies and stable QA placeholder remain unchanged. Never upload app assets before managed protection, anonymous
 denial and owner policy review pass. Verify actual owner login after QA upload.
 
 ## Qualification and rollback
@@ -130,12 +132,16 @@ All 13 compactor rollback cases remain unchanged. See
 
 Freeze and build once, upload the protected preview, verify owner and service
 authorization, run complete same-source V23, then inherited suites. Retain exact
-commit/hash/version evidence. Current local unit tests and dry-run denials do
-not substitute for protected QA or full qualification.
+commit/hash/version evidence. Local unit tests and dry-run denials do
+not substitute for protected QA or full qualification. Canonical b79e36b has
+separate complete remote proof; see [CI status](CI_STATUS_20261011.md). A new
+commit (including a merge result) cannot inherit that source identity.
 
 Rollback is a production change requiring explicit authorization. Reconfirm
-account and previous version, then use Wrangler rollback with the exact recorded
-version ID and explicit `--config wrangler.production.jsonc`. This does not
+account and the freshly recorded immediate pre-deployment version, then use
+Wrangler rollback with that exact UUID and explicit
+`--config wrangler.production.jsonc`. Do not infer that target from a historical
+previous-version entry. This does not
 restore or erase IndexedDB. Before using a candidate in an existing browser
 origin, export and independently verify a manual recovery bundle; never
 auto-restore it.

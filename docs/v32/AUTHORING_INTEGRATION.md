@@ -1,5 +1,19 @@
 # AtlasNote authoring integration — 2026-10-11
 
+## Fresh compatibility snapshot
+
+At exact canonical b79e36b / source4348, the isolated integrated-app authoring
+suite passed 9/9 cases; QCM lifecycle passed 6/6, CSV importer/presets 14/14,
+plugin alignment 14/14 and six independent SQLite queries passed. Both complete
+V23 runs and inherited54 passed on remote CI. Independent review found native
+Cheatsheet1.1, source-faithful NorskCSV and ArticleSource contracts compatible,
+with QCM attempts/reflections/history and verified backup restore preserved.
+These are disposable-fixture checks, not acceptance of the owner's live library,
+complete SQL-source transcription, PostgreSQL execution or publication rights.
+See [CI status](CI_STATUS_20261011.md) for exact historical snapshot/current-head
+boundaries; earlier dirty-source diagnostics below remain separately labelled.
+
+
 The three authoring formats have reproducible real-app import coverage. The installed
 AtlasNote Authoring plugin 0.4.1 is available in this Codex session. No new importer,
 storage migration, write server or draft inbox was required.

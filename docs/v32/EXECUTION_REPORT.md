@@ -1,8 +1,38 @@
 # AtlasNote V3.2 mission delivery — 2026-10-11
 
+## Qualified implementation snapshot and final review
+
+The implementation at `b79e36b276648c64f3b91b5fd8e1438dc9749832` was freshly
+qualified with canonical source fingerprint
+`4348f63f9aba682c169a9bf55bc6e5220cdf1d219b9731566d9ecdc99c077514`.
+[CI run 38173230439](https://github.com/julian-passebecq/atlasnote/actions/runs/38173230439)
+passed both complete V23 runs (13/13 each), all 54 inherited commands in order,
+and 1,217 unit tests. The qualification job named production-release performs
+no deployment. [PR #44](https://github.com/julian-passebecq/atlasnote/pull/44)
+contains the supplied-source changes; issue #2 stays OPEN.
+
+Protected preview `4f87a067-atlasnote-v23-qa.datapass.workers.dev` qualified that
+exact implementation. Navigation 33/33 and targeted 45 cases passed; separate
+headed paint qualification passed 83/83. Computer Use retained 22 observations.
+Physical mouse/trackpad validation is UNVERIFIED. A transient white frame
+recovered; capture/readback timing does not establish its cause, which remains
+unresolved. Seed editorial/rights and owner-profile recovery acceptance remain
+separate. Production is unauthorized.
+
+This is a recorded implementation snapshot, not a claim that another source
+commit inherits its proof. The documentation-only review revision also changes
+the source fingerprint: exact-current-head checks and protected preview identity
+must be verified separately before a merge GO. Current results and independent
+file reviews are retained in ignored `docs/evidence/mission/final-review/`, with
+`docs/evidence/mission/FINAL_STATUS.md` as the local handback. The current PR body
+and Actions checks are the remote review record; no private evidence is committed.
+
+
 The mission continues the supplied `9034025` baseline on
 `codex/v32-master-execution`. See [the canonical backlog](EXECUTION_BACKLOG.md).
-GitHub was inspected read-only; no remote branch, issue, PR or merge was changed.
+Initial discovery used read-only GitHub access. The owner later approved scoped
+CI integration: branch push, draft PR #44, secure CI secrets/variables, dispatch
+and the existing issue #2 comment. No merge occurred.
 
 ## Implemented scope
 
@@ -52,8 +82,9 @@ passed, but the fallback iframe in Focus started 45.140625px below the viewport
 because its visible reason paragraph remained in flex flow. The failure is
 retained at `docs/evidence/v23/inherited/13.log`; it is not a stale selector or a
 reason to weaken the existing full-viewport assertions. The Focus-only fallback
-alert overlay repair preserves the alert and requires a new clean source,
-build, protected preview and full same-source qualification. Temporary CSS
+alert overlay repair preserves the alert and required a new clean source,
+build, protected preview and full same-source qualification, later completed
+at the canonical b79e36b snapshot above. Temporary CSS
 causal diagnostics are not source qualification. Integrated PDF input and actual
 QA software-input observations retain their own scopes; physical mouse/trackpad
 acceptance remains separate.
@@ -88,8 +119,9 @@ canonical content checks, all six themes with real reload, explicit per-case
 demo setup, and measured native forward/reverse PDF displacement with exact
 page 2 then page 1. No timeout extension, scroll-position setter, app navigation
 change or compaction assertion change was used. Ignored repair diagnostics and
-all original failures are retained. This test-only repair requires a new clean
-build, protected preview, complete same-source V23, then stock inherited run.
+all original failures are retained. This test-only repair required a new clean
+build, protected preview, complete same-source V23, then stock inherited run;
+that qualification was subsequently completed at canonical b79e36b.
 
 ## Live observations
 
@@ -103,22 +135,27 @@ passed all 17 cases in three fresh runs. It waits for the current document,
 engine, geometry, render-success marker and visible canvas dimensions, while
 retaining the original aspect-ratio assertion and existing 20-second deadline.
 It also verifies the same physical page and changed rotation geometry. No app
-rotation or navigation implementation changed. These diagnostics do not qualify
-the next source; it requires a fresh build, protected preview and complete run.
+rotation or navigation implementation changed. Those diagnostics did not qualify
+the next source; a fresh build, protected preview and complete canonical run
+were subsequently completed, as recorded above.
 
 Measured comparable inherited command durations plus the CI job's additional
 full V23 run total 36m44.605s, exceeding its old 30-minute job budget before
 runner setup. The job now has a bounded 60-minute budget, preserving every
 command and all individual test deadlines. This measurement combines retained
 diagnostic durations to size the budget; it is not a release pass or a prediction
-of exact GitHub runtime. Remote exact-source qualification remains required.
+of exact GitHub runtime. Remote exact-source qualification was subsequently completed at canonical
+b79e36b: actual inherited job duration 30m37s, all 54 commands PASS. Every later
+commit still needs fresh exact-source evidence.
 
 Production Worker version `161c6acc-8418-4af4-a82c-27057b20f7f5`, deployment
 `4703ec87-418a-4cfa-bb97-92a617558ff8`, is annotated with source `9034025`.
 Anonymous root, identity, static and deep-link probes redirect to Access without
 AtlasNote bytes. These are fresh read-only observations, not qualification of
 the modified candidate or authenticated production served-build proof.
-Recorded prior rollback version: `dcb5be64-f8d3-4369-a15d-6f16826e9cfa`.
+Historical prior version: `dcb5be64-f8d3-4369-a15d-6f16826e9cfa`. A future release
+must freshly identify its immediate pre-deployment rollback version; this record
+is not an instruction to roll production back.
 
 QA repair details and authorization are in [the Access proposal](QA_ACCESS_PROPOSAL.md).
 Its stable URL remains a harmless placeholder; candidate uploads use protected
