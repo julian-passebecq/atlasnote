@@ -33,12 +33,15 @@ def proof(base):
    page.get_by_role('button',name='Confirm library import',exact=True).wait_for()
    before=page.evaluate(RAW);record('before-five-stores',digest=page.evaluate(DIGEST))
    page.evaluate('window.__nativeEvents=[]')
-   bundle=next((ROOT/'dist/assets').glob('database-*.js'));code=bundle.read_text()
+   bundles=sorted((ROOT/'dist/assets').glob('database-*.js'));assert len(bundles)==1,'Exactly one integrated database bundle is required'
+   bundle=bundles[0]
+   observers=json.loads(subprocess.check_output(['node','tools/native-quota-observer.mjs',str(bundle)],text=True))
    cdp=context.new_cdp_session(page);cdp.send('Debugger.enable')
-   def logpoint(marker,expression):
-    offset=code.index(marker);prefix=code[:offset]
-    return cdp.send('Debugger.setBreakpointByUrl',{'url':base+'assets/'+bundle.name,'lineNumber':prefix.count('\n'),'columnNumber':len(prefix.rsplit('\n',1)[-1]),'condition':expression})
-   record('passive-debugger-observers',preflight=logpoint('return{status:n.status===`available`?', '(window.__nativeEvents.push({type:"preflight-permitted",estimate:n,required:r}),false)'),transaction=logpoint('try{let[l,u]=await Promise.all', '(window.__nativeEvents.push({type:"native-transaction-created",stores:[...s.objectStoreNames]}),s.addEventListener("abort",e=>window.__nativeEvents.push({type:"abort",trusted:e.isTrusted,error:s.error?.name,message:s.error?.message})),s.addEventListener("complete",e=>window.__nativeEvents.push({type:"complete",trusted:e.isTrusted})),false)'))
+   def logpoint(observation):
+    result=cdp.send('Debugger.setBreakpointByUrl',{'url':base+'assets/'+bundle.name,**observation})
+    assert result.get('locations'),'Passive observer must resolve to the actually loaded integrated bundle'
+    return result
+   record('passive-debugger-observers',preflightExport=observers['preflightExport'],preflight=logpoint(observers['preflight']),transaction=logpoint(observers['transaction']))
    record('native-estimate-before-pressure',estimate=page.evaluate('async()=>await navigator.storage.estimate()'))
    filler=MOUNT/'capacity-filler';fd=os.open(filler,os.O_CREAT|os.O_WRONLY,0o600)
    try:
@@ -50,7 +53,8 @@ def proof(base):
       record('filesystem-capacity-reached',errno=e.errno,free=os.statvfs(MOUNT).f_bavail*os.statvfs(MOUNT).f_frsize);break
    finally:os.close(fd)
    record('native-estimate-after-pressure',estimate=page.evaluate('async()=>await navigator.storage.estimate()'))
-   record('unmodified-preflight-observation',result=page.evaluate("async(url)=>{const m=await import(url);try{return await m.D(1048576)}catch(e){return {error:e.message}}}",base+'assets/'+bundle.name))
+   record('unmodified-preflight-observation',result=page.evaluate("async({url,exportName})=>{const m=await import(url);try{return await m[exportName](1048576)}catch(e){return {error:e.message}}}",{'url':base+'assets/'+bundle.name,'exportName':observers['preflightExport']}))
+   page.evaluate('window.__nativePhase="import"')
    page.get_by_role('button',name='Confirm library import',exact=True).click()
    page.wait_for_timeout(3000)
    record('native-write-outcome',events=page.evaluate('window.__nativeEvents'),diagnostics=page.evaluate("async()=>(await import('/app/agent/public.js')).getAgentInterface().getStorageDiagnostics()"),alerts=page.locator('[role=alert]').all_text_contents())
@@ -70,7 +74,7 @@ def proof(base):
    reopened=page.evaluate(RAW);record('reload-five-stores',exactEqual=before==reopened,digest=page.evaluate(DIGEST))
    outcome=next(x for x in report['steps'] if x['name']=='native-write-outcome')
    events=outcome['events']
-   assert any(x['type']=='preflight-permitted' for x in events)
+   assert any(x['type']=='preflight-permitted' and x.get('phase')=='import' and x.get('result',{}).get('status')=='estimated-enough' and x['result']['required']<=x['result']['available'] for x in events)
    assert any(x['type']=='native-transaction-created' and sorted(x['stores'])==['assets','history','imports','overlays','personal'] for x in events)
    assert any(x['type']=='abort' and x.get('trusted') and 'FILE_ERROR_NO_SPACE' in x.get('message','') for x in events)
    assert not any(x['type']=='complete' for x in events)

@@ -302,7 +302,7 @@ def safe_close(browser,context,page,base,out,passed):
     with page.expect_download() as pending:
         page.get_by_role('button',name='Download raw recovery JSON',exact=True).click()
     emergency=out/'unsaved-emergency.json';pending.value.save_as(str(emergency))
-    exported=json.loads(emergency.read_text())
+    exported=json.loads(emergency.read_text(encoding='utf-8'))
     assert exported['format']=='atlasnote-emergency-recovery'
     assert exported['persistence']['status']=='unsaved' and exported['persistence']['storageError']
     saved_personal=next(r['value'] for r in before['personal'] if r['key']=='active')

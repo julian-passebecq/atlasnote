@@ -21,6 +21,9 @@ GitHub was inspected read-only; no remote branch, issue, PR or merge was changed
   referenced-question guards, immutable history, reload and complete backup.
 - Owner-approved QA infrastructure repair: protected harmless placeholder,
   dedicated exact-email owner policy, dedicated expiring Service Auth.
+- Native quota qualification now derives passive debugger locations from the
+  bundle's semantic AST instead of minified aliases. Emergency recovery JSON
+  is read as UTF-8. Both harness repairs preserve the storage assertions.
 
 The app architecture/storage model and compiled content are preserved. No
 speculative app rewrite or new remote draft inbox was needed. No confirmed PDF
@@ -34,6 +37,14 @@ candidate results are generated after source freeze under ignored
 fingerprint and build identity are authoritative; this source document avoids
 self-referential commit identities. The final local handback is
 `docs/evidence/mission/FINAL_STATUS.md`. Failed diagnostic runs are retained.
+
+The frozen initial candidate passed 11 of 13 V23 gates, including capacity and
+live protected-preview authentication. Native quota observation failed before
+pressure because minified aliases had changed; safe-close failed while decoding
+downloaded Unicode recovery JSON on Windows. That full report is retained at
+`docs/evidence/mission/v23-4722-failed/`. A repaired ignored-harness native
+diagnostic reached real filesystem exhaustion with exact five-store rollback;
+it remains diagnostic evidence pending fresh candidate qualification.
 
 Independent authoring/QCM/PDF suites may run as targeted diagnostics. The full
 inherited workflow must start only after all 13 same-source V23 gates pass.
