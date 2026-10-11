@@ -67,9 +67,9 @@ jobs:
             docs/evidence/appearance
             docs/evidence/v23/build-identity
             docs/evidence/pdf-navigation-runtime
-            docs/evidence/pdf-lifecycle-runtime
+            docs/evidence/v22/pdf-lifecycle
             docs/evidence/authoring-runtime
-            docs/evidence/qcm-lifecycle
+            docs/evidence/v23/qcm-lifecycle
           retention-days: 7
       - uses: actions/upload-artifact@v4
         with:
