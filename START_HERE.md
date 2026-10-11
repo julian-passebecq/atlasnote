@@ -1,6 +1,15 @@
 # AtlasNote 3.2.0-rc.1 — Web study candidate
 
-Branch: `feat/atlasnote-v32-web-study`.
+Current execution mission (2026-10-11): read
+[the canonical backlog](docs/v32/EXECUTION_BACKLOG.md),
+[execution evidence](docs/v32/EXECUTION_REPORT.md) and
+[the QA Access repair proposal](docs/v32/QA_ACCESS_PROPOSAL.md).
+The supplied baseline is `9034025`; source work continues locally on
+`codex/v32-master-execution`. Historical qualification remains historical.
+Production deployment and Zero Trust policy changes require explicit owner
+authorization as specified in the mission.
+
+Mission branch: `codex/v32-master-execution`; supplied baseline: `9034025`.
 
 This branch continues the qualified V3.1 Web application. It does **not** replace
 AtlasNote with Electron and it does not add cloud synchronization. Atlas remains a
@@ -72,12 +81,15 @@ candidate, not a release.
 Cloudflare remains the intended primary host. The repository already contains the
 Wrangler Static Assets configuration, static security headers and provider-boundary tests.
 
-The repository configuration still names the former QA Worker
-`atlasnote-v23-qa`. **Do not run `wrangler deploy` blindly.**
+The default configuration names `atlasnote-local` and refuses deployment.
+Explicit QA and production configurations require fresh target/build/Access
+preflight evidence. **Do not run `wrangler deploy` blindly.**
 
-The last documented production observation remains source `bcd1e0f` / Cloudflare
-Worker version `6f1e75f7`; that is historical evidence, not a fresh live check.
+Read-only account inspection on 2026-10-11 observed production version
+`161c6acc-8418-4af4-a82c-27057b20f7f5`, annotated source `9034025`.
+This is distinct from authenticated served-build and full provider qualification.
 See [docs/v32/CLOUDFLARE_HANDOFF.md](docs/v32/CLOUDFLARE_HANDOFF.md).
 
-No production deploy, Access policy change, token change or Netlify activation is part of
-this branch.
+The owner approved the isolated QA Access repair on 2026-10-11. Production
+deployment/security changes and content-publication decisions remain separately
+gated. Netlify activation is outside this mission.

@@ -17,14 +17,18 @@ export const CACHE_HEADERS=Object.freeze({
  'cloudflare-cdn-cache-control':'no-store'
 });
 
-export function validateCloudflareConfig(config){
+export function validateCloudflareConfig(config,{target='qa'}={}){
  assert(config&&typeof config==='object'&&!Array.isArray(config),'Missing Wrangler configuration');
- const allowed=new Set(['$schema','name','compatibility_date','workers_dev','preview_urls','assets']);
+ const allowed=new Set(['$schema','name','compatibility_date','workers_dev','preview_urls','assets','build']);
  for(const key of Object.keys(config))assert(allowed.has(key),'Unreviewed Cloudflare configuration key: '+key);
  assert.match(config.name??'',/^[a-z][a-z0-9-]{0,62}$/,'Worker name must be a stable lowercase Workers name');
  assert(/^20\d\d-\d\d-\d\d$/.test(config.compatibility_date??''),'Explicit compatibility_date required');
- assert.equal(config.workers_dev,true,'Disposable QA Worker must keep workers.dev available');
- assert.equal(config.preview_urls,true,'Version preview URLs must stay enabled');
+ const names={local:'atlasnote-local',qa:'atlasnote-v23-qa',production:'atlasnote'};
+ assert(Object.hasOwn(names,target),'An explicit reviewed target is required');
+ assert.equal(config.name,names[target],'Worker name differs from explicit target');
+ assert.equal(config.workers_dev,target!=='local','Unexpected workers.dev exposure');
+ assert.equal(config.preview_urls,target==='qa','Only QA may enable immutable version previews');
+ assert.deepEqual(config.build,{command:'node tools/cloudflare-release-guard.mjs --target '+target},'Every target must preserve its release guard');
  assert.deepEqual(Object.keys(config.assets??{}).sort(),['directory','not_found_handling']);
  assert.equal(config.assets.directory,'./dist');
  assert.equal(config.assets.not_found_handling,'single-page-application');

@@ -6,7 +6,7 @@ import {V23_GATES,PROVIDER_CASES,COMPACTION_FAULTS,BASE_COMMIT,BASE_TREE} from '
 import {PROVIDER_CASES as LEGACY_CASES} from '../tools/legacy-netlify-contract.mjs';
 import {checkAccessBuild} from '../tools/check-access-build.mjs';
 import {secretRules} from '../tools/check-v23-secrets.mjs';
-const config=JSON.parse(fs.readFileSync('wrangler.jsonc','utf8')),headerText=fs.readFileSync('public/_headers','utf8');
+const config=JSON.parse(fs.readFileSync('wrangler.qa.jsonc','utf8')),headerText=fs.readFileSync('public/_headers','utf8');
 
 test('Cloudflare config is minimal Worker Static Assets SPA with preview URLs',()=>validateCloudflareConfig(config));
 test('Cloudflare static headers preserve the provider-neutral security/cache policy',()=>validateStaticHeaders(headerText));

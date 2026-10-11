@@ -2,7 +2,7 @@
 import fs from 'node:fs/promises';import path from 'node:path';import {pathToFileURL} from 'node:url';import assert from 'node:assert/strict';
 import {validateCloudflareConfig,validateStaticHeaders} from './provider-access-contract.mjs';
 export async function checkAccessBuild(){
- validateCloudflareConfig(JSON.parse(await fs.readFile('wrangler.jsonc','utf8')));
+ for(const [target,file] of [['local','wrangler.jsonc'],['qa','wrangler.qa.jsonc'],['production','wrangler.production.jsonc']])validateCloudflareConfig(JSON.parse(await fs.readFile(file,'utf8')),{target});
  validateStaticHeaders(await fs.readFile('public/_headers','utf8'));
  const walk=async dir=>{const out=[];for(const e of await fs.readdir(dir,{withFileTypes:true})){const p=path.join(dir,e.name);if(e.isDirectory())out.push(...await walk(p));else out.push(p);}return out;};
  for(const p of [...await walk('src'),...await walk('public')]){

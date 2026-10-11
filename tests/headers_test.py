@@ -9,7 +9,8 @@ cache_expected={'Cache-Control':'private, no-store, max-age=0','CDN-Cache-Contro
 base=start_server()
 distribution=Path(os.environ.get('ATLAS_DIST',ROOT/'dist'));text=(distribution/'_headers').read_text();assert text.splitlines()[0]=='/*'
 for key,value in {**expected,**cache_expected}.items():assert f'{key}: {value}' in text
-wrangler=json.loads((ROOT/'wrangler.jsonc').read_text());assert wrangler['assets']=={'directory':'./dist','not_found_handling':'single-page-application'};assert wrangler['preview_urls'] is True
+wrangler=json.loads((ROOT/'wrangler.qa.jsonc').read_text());assert wrangler['assets']=={'directory':'./dist','not_found_handling':'single-page-application'};assert wrangler['preview_urls'] is True
+local=json.loads((ROOT/'wrangler.jsonc').read_text());assert local['name']=='atlasnote-local';assert local['workers_dev'] is False;assert local['preview_urls'] is False
 checks=[]
 for relative in ['','app/storage/workspace-snapshot.js','content.json']:
  with urllib.request.urlopen(base+relative) as response:

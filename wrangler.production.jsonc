@@ -1,0 +1,13 @@
+{
+  "name": "atlasnote",
+  "compatibility_date": "2026-09-20",
+  "workers_dev": true,
+  "preview_urls": false,
+  "build": {
+    "command": "node tools/cloudflare-release-guard.mjs --target production"
+  },
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

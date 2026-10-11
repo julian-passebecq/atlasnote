@@ -1,0 +1,439 @@
+{
+  "schemaVersion": "1.1",
+  "id": "authoring-sql-study",
+  "title": "Authoring contract: portable SQL",
+  "pageSize": {
+    "width": 1200,
+    "height": 1600
+  },
+  "meta": {
+    "audience": "AtlasNote integration QA",
+    "goal": "Exercise typed blocks, canonical import and all five palettes",
+    "provenance": "Synthetic QA: independently authored examples. No screenshot transcription."
+  },
+  "pages": [
+    {
+      "id": "authoring-sql-p1",
+      "title": "Rows, groups and joins",
+      "blocks": [
+        {
+          "id": "authoring-sql-p1-title",
+          "type": "text",
+          "role": "title",
+          "text": "Rows, groups and joins",
+          "style": {
+            "fontSize": 38,
+            "minFontSize": 32,
+            "overflow": "error"
+          }
+        },
+        {
+          "id": "authoring-sql-p1-b1",
+          "type": "text",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "text": "Filtering and grouping\nApply WHERE before grouping; HAVING tests groups after aggregation."
+        },
+        {
+          "id": "authoring-sql-p1-b2",
+          "type": "code",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "language": "sql",
+          "title": "At least two orders per customer",
+          "code": "SELECT customer_id, COUNT(*) AS orders\nFROM orders\nWHERE amount > 0\nGROUP BY customer_id\nHAVING COUNT(*) >= 2\nORDER BY orders DESC, customer_id;"
+        },
+        {
+          "id": "authoring-sql-p1-b3",
+          "type": "table",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "columns": [
+            "customer_id",
+            "orders"
+          ],
+          "rows": [
+            [
+              "Ada",
+              "2"
+            ]
+          ]
+        },
+        {
+          "id": "authoring-sql-p1-b4",
+          "type": "code",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "language": "sql",
+          "title": "Keep customers without orders",
+          "code": "SELECT c.id, COUNT(o.id) AS orders\nFROM customers AS c\nLEFT JOIN orders AS o ON o.customer_id = c.id\nGROUP BY c.id\nORDER BY c.id;"
+        },
+        {
+          "id": "authoring-sql-p1-b5",
+          "type": "text",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "text": "Exercise\nWhy does COUNT(*) count one row for a customer with no matched order? Try COUNT(o.id)."
+        }
+      ],
+      "frames": {
+        "authoring-sql-p1-title": {
+          "x": 80,
+          "y": 55,
+          "width": 1040,
+          "height": 90
+        },
+        "authoring-sql-p1-b1": {
+          "x": 80,
+          "y": 185,
+          "width": 1040,
+          "height": 130
+        },
+        "authoring-sql-p1-b2": {
+          "x": 80,
+          "y": 345,
+          "width": 1040,
+          "height": 262
+        },
+        "authoring-sql-p1-b3": {
+          "x": 80,
+          "y": 637,
+          "width": 1040,
+          "height": 120
+        },
+        "authoring-sql-p1-b4": {
+          "x": 80,
+          "y": 787,
+          "width": 1040,
+          "height": 230
+        },
+        "authoring-sql-p1-b5": {
+          "x": 80,
+          "y": 1047,
+          "width": 1040,
+          "height": 130
+        }
+      },
+      "outline": [
+        {
+          "id": "authoring-sql-p1-b1-anchor",
+          "label": "Filtering and grouping",
+          "blockId": "authoring-sql-p1-b1"
+        },
+        {
+          "id": "authoring-sql-p1-b2-anchor",
+          "label": "At least two orders per customer",
+          "blockId": "authoring-sql-p1-b2"
+        },
+        {
+          "id": "authoring-sql-p1-b3-anchor",
+          "label": "Expected result",
+          "blockId": "authoring-sql-p1-b3"
+        },
+        {
+          "id": "authoring-sql-p1-b4-anchor",
+          "label": "Keep customers without orders",
+          "blockId": "authoring-sql-p1-b4"
+        },
+        {
+          "id": "authoring-sql-p1-b5-anchor",
+          "label": "Exercise",
+          "blockId": "authoring-sql-p1-b5"
+        }
+      ]
+    },
+    {
+      "id": "authoring-sql-p2",
+      "title": "CTEs and deterministic windows",
+      "blocks": [
+        {
+          "id": "authoring-sql-p2-title",
+          "type": "text",
+          "role": "title",
+          "text": "CTEs and deterministic windows",
+          "style": {
+            "fontSize": 38,
+            "minFontSize": 32,
+            "overflow": "error"
+          }
+        },
+        {
+          "id": "authoring-sql-p2-b1",
+          "type": "text",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "text": "One latest row per customer\nUse a stable tie-breaker so equal dates yield a deterministic latest order."
+        },
+        {
+          "id": "authoring-sql-p2-b2",
+          "type": "code",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "language": "sql",
+          "title": "Rank and filter in separate steps",
+          "code": "WITH ranked AS (\n  SELECT id, customer_id, ordered_at,\n    ROW_NUMBER() OVER (\n      PARTITION BY customer_id\n      ORDER BY ordered_at DESC, id DESC\n    ) AS rn\n  FROM orders\n)\nSELECT id, customer_id FROM ranked WHERE rn = 1;"
+        },
+        {
+          "id": "authoring-sql-p2-b3",
+          "type": "code",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "language": "sql",
+          "title": "Running total over observed rows",
+          "code": "SELECT id, customer_id, amount,\n  SUM(amount) OVER (\n    PARTITION BY customer_id\n    ORDER BY ordered_at, id\n    ROWS BETWEEN UNBOUNDED PRECEDING\n             AND CURRENT ROW\n  ) AS running_amount\nFROM orders;"
+        },
+        {
+          "id": "authoring-sql-p2-b4",
+          "type": "text",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "text": "Exercise and dialect\nRemove the ID tie-breaker and explain the ambiguity. Independently authored SQLite 3 / portable PostgreSQL examples; no screenshot SQL transcription."
+        }
+      ],
+      "frames": {
+        "authoring-sql-p2-title": {
+          "x": 80,
+          "y": 55,
+          "width": 1040,
+          "height": 90
+        },
+        "authoring-sql-p2-b1": {
+          "x": 80,
+          "y": 185,
+          "width": 1040,
+          "height": 130
+        },
+        "authoring-sql-p2-b2": {
+          "x": 80,
+          "y": 345,
+          "width": 1040,
+          "height": 358
+        },
+        "authoring-sql-p2-b3": {
+          "x": 80,
+          "y": 733,
+          "width": 1040,
+          "height": 326
+        },
+        "authoring-sql-p2-b4": {
+          "x": 80,
+          "y": 1089,
+          "width": 1040,
+          "height": 130
+        }
+      },
+      "outline": [
+        {
+          "id": "authoring-sql-p2-b1-anchor",
+          "label": "One latest row per customer",
+          "blockId": "authoring-sql-p2-b1"
+        },
+        {
+          "id": "authoring-sql-p2-b2-anchor",
+          "label": "Rank and filter in separate steps",
+          "blockId": "authoring-sql-p2-b2"
+        },
+        {
+          "id": "authoring-sql-p2-b3-anchor",
+          "label": "Running total over observed rows",
+          "blockId": "authoring-sql-p2-b3"
+        },
+        {
+          "id": "authoring-sql-p2-b4-anchor",
+          "label": "Exercise and dialect",
+          "blockId": "authoring-sql-p2-b4"
+        }
+      ]
+    },
+    {
+      "id": "authoring-sql-p3",
+      "title": "Subqueries and missing matches",
+      "blocks": [
+        {
+          "id": "authoring-sql-p3-title",
+          "type": "text",
+          "role": "title",
+          "text": "Subqueries and missing matches",
+          "style": {
+            "fontSize": 38,
+            "minFontSize": 32,
+            "overflow": "error"
+          }
+        },
+        {
+          "id": "authoring-sql-p3-b1",
+          "type": "text",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "text": "Scalar and correlated subqueries\nA scalar subquery supplies one value. NOT EXISTS keeps rows with no matching child; it also avoids NOT IN surprises caused by NULL."
+        },
+        {
+          "id": "authoring-sql-p3-b2",
+          "type": "code",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "language": "sql",
+          "title": "Above-average orders",
+          "code": "SELECT id FROM orders\nWHERE amount > (SELECT AVG(amount) FROM orders)\nORDER BY amount DESC, id;"
+        },
+        {
+          "id": "authoring-sql-p3-b3",
+          "type": "code",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "language": "sql",
+          "title": "Customers without orders",
+          "code": "SELECT id FROM customers AS c\nWHERE NOT EXISTS (\n  SELECT 1 FROM orders AS o\n  WHERE o.customer_id = c.id\n)\nORDER BY id;"
+        },
+        {
+          "id": "authoring-sql-p3-b4",
+          "type": "table",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "columns": [
+            "pattern",
+            "result"
+          ],
+          "rows": [
+            [
+              "Above-average orders",
+              "id = 2"
+            ],
+            [
+              "Customers without orders",
+              "id = Cy"
+            ]
+          ]
+        },
+        {
+          "id": "authoring-sql-p3-b5",
+          "type": "text",
+          "style": {
+            "fontSize": 22,
+            "minFontSize": 20,
+            "lineHeight": 1.3,
+            "overflow": "error"
+          },
+          "text": "Practice: preserve input grain\nAdd an order with a NULL customer_id and compare NOT IN with NOT EXISTS. Add a second order at the same timestamp and explain the tie-breaker on page 2."
+        }
+      ],
+      "frames": {
+        "authoring-sql-p3-title": {
+          "x": 80,
+          "y": 55,
+          "width": 1040,
+          "height": 90
+        },
+        "authoring-sql-p3-b1": {
+          "x": 80,
+          "y": 185,
+          "width": 1040,
+          "height": 140
+        },
+        "authoring-sql-p3-b2": {
+          "x": 80,
+          "y": 355,
+          "width": 1040,
+          "height": 166
+        },
+        "authoring-sql-p3-b3": {
+          "x": 80,
+          "y": 551,
+          "width": 1040,
+          "height": 262
+        },
+        "authoring-sql-p3-b4": {
+          "x": 80,
+          "y": 843,
+          "width": 1040,
+          "height": 150
+        },
+        "authoring-sql-p3-b5": {
+          "x": 80,
+          "y": 1023,
+          "width": 1040,
+          "height": 140
+        }
+      },
+      "outline": [
+        {
+          "id": "authoring-sql-p3-b1-anchor",
+          "label": "Scalar and correlated subqueries",
+          "blockId": "authoring-sql-p3-b1"
+        },
+        {
+          "id": "authoring-sql-p3-b2-anchor",
+          "label": "Above-average orders",
+          "blockId": "authoring-sql-p3-b2"
+        },
+        {
+          "id": "authoring-sql-p3-b3-anchor",
+          "label": "Customers without orders",
+          "blockId": "authoring-sql-p3-b3"
+        },
+        {
+          "id": "authoring-sql-p3-b4-anchor",
+          "label": "Expected results",
+          "blockId": "authoring-sql-p3-b4"
+        },
+        {
+          "id": "authoring-sql-p3-b5-anchor",
+          "label": "Practice: preserve input grain",
+          "blockId": "authoring-sql-p3-b5"
+        }
+      ]
+    }
+  ]
+}

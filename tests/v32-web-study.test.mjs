@@ -43,12 +43,14 @@ test('V32 package and committed lock identify the same candidate',()=>{
  assert.deepEqual(lock.packages[''].devDependencies,pkg.devDependencies);
 });
 
-test('V32 retains the reviewed Cloudflare QA configuration rather than guessing production',()=>{
- const config=JSON.parse(read('wrangler.jsonc'));
+test('V32 uses separate explicit Cloudflare targets and an inert local default',()=>{
+ const config=JSON.parse(read('wrangler.qa.jsonc'));
  assert.equal(config.name,'atlasnote-v23-qa');
  assert.equal(config.workers_dev,true);
  assert.equal(config.preview_urls,true);
  assert.deepEqual(config.assets,{directory:'./dist',not_found_handling:'single-page-application'});
+ const local=JSON.parse(read('wrangler.jsonc'));assert.equal(local.name,'atlasnote-local');assert.equal(local.workers_dev,false);assert.equal(local.preview_urls,false);
+ const production=JSON.parse(read('wrangler.production.jsonc'));assert.equal(production.name,'atlasnote');assert.equal(production.preview_urls,false);
  const handoff=read('docs/v32/CLOUDFLARE_HANDOFF.md');
  assert.match(handoff,/do not run plain `wrangler deploy`/);
  assert.match(handoff,/authenticated Cloudflare access/);

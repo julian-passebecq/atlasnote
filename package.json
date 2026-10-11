@@ -110,7 +110,17 @@
     "test:v31": "node --test tests/v31-stabilization.test.mjs",
     "test:v31:storage": "python tests/v31_storage_runtime.py",
     "test:v31:pdf": "python tests/v31_pdf_runtime.py",
-    "test:appearance:runtime": "python tests/appearance_runtime.py"
+    "test:appearance:runtime": "python tests/appearance_runtime.py",
+    "test:authoring": "node --test tests/authoring-contract.test.mjs",
+    "test:authoring:runtime": "python tests/authoring_runtime.py",
+    "test:authoring:sql": "python tests/authoring_sql.py",
+    "test:qcm:lifecycle": "python tests/qcm_lifecycle_runtime.py",
+    "cloudflare:preflight:qa": "node tools/cloudflare-release-guard.mjs --target qa",
+    "cloudflare:preflight:production": "node tools/cloudflare-release-guard.mjs --target production",
+    "cloudflare:dry-run:qa": "node tools/cloudflare-release-command.mjs --target qa --mode dry-run",
+    "cloudflare:preview:qa": "node tools/cloudflare-release-command.mjs --target qa --mode release",
+    "cloudflare:dry-run:production": "node tools/cloudflare-release-command.mjs --target production --mode dry-run",
+    "cloudflare:deploy:production": "node tools/cloudflare-release-command.mjs --target production --mode release"
   },
   "dependencies": {
     "jszip": "3.10.1",
