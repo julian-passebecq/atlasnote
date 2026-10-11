@@ -1,7 +1,11 @@
 # Owner input required for the execution candidate
 
-These checks remain pending. Automated wheel events are useful regression
-evidence, but do not certify physical mouse or trackpad behavior. Use a disposable
+Physical hardware and editorial checks below remain pending. The coordinator
+tests software navigation with Computer Use and Playwright on the actual
+protected QA preview; see the exact candidate evidence in
+`docs/evidence/mission/FINAL_STATUS.md`. The owner need only repeat navigation
+cases that require their physical devices. Automated wheel events do not certify
+physical mouse or trackpad behavior. Use a disposable
 browser profile, or export and verify a complete backup before using an existing
 profile. Record the exact app commit/build identity and device/browser used.
 

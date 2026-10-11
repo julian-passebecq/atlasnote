@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright,expect
 from browser_support import launch,ROOT,start_server,close_panels
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/v2-stabilization/theme-preview'));OUT.mkdir(parents=True,exist_ok=True)
 BASE=os.environ.get('ATLAS_BASE_URL') or start_server()
-THEMES={'fluent':'Fluent Blue','neutral':'Neutral/Sage','academic':'Academic Paper','lavender':'Soft Lavender','slate':'Dark Slate'}
+THEMES={'black':'Midnight Black','fluent':'Fluent Blue','neutral':'Neutral/Sage','academic':'Academic Paper','lavender':'Soft Lavender','slate':'Dark Slate'}
 READ="""()=>new Promise((resolve,reject)=>{const r=indexedDB.open('knowledge-atlas');r.onupgradeneeded=()=>{r.transaction.abort();reject(Error('Expected existing application database'));};r.onerror=()=>reject(r.error);r.onsuccess=()=>{const db=r.result,t=db.transaction('personal','readonly'),q=t.objectStore('personal').get('active');q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error);t.oncomplete=()=>db.close();};})"""
 results=[];errors=[]
 with sync_playwright() as pw:
@@ -24,13 +24,13 @@ with sync_playwright() as pw:
  colors={}
  for theme,label in THEMES.items():
   def change(theme=theme,label=label):
-   close_panels(p);before=session();button('Theme').click();button(label).click();expect(p.locator('html')).to_have_attribute('data-theme',theme)
+   close_panels(p);before=session();button('Theme').click();p.get_by_label('Interface theme',exact=True).select_option(label=label);button('Close theme').click();expect(p.locator('html')).to_have_attribute('data-theme',theme)
    p.wait_for_function("async theme=>{const r=indexedDB.open('knowledge-atlas');const d=await new Promise((res,rej)=>{r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error);});const q=d.transaction('personal').objectStore('personal').get('active');const v=await new Promise(res=>q.onsuccess=()=>res(q.result));d.close();const s=(v.activeWorkspaceSlot??1)===1?v.session:v.workspaceSlots[v.activeWorkspaceSlot];return s.theme===theme;}",arg=theme)
    after=session();before['theme']=theme;assert before==after,{'before':before,'after':after};colors[theme]=css('.reader-rail')
    p.reload(wait_until='networkidle');expect(p.locator('html')).to_have_attribute('data-theme',theme);assert session()==after,'Reload changed the saved reading session';return colors[theme]
   check('Theme '+theme+' changes only theme, and survives real-origin reload',change)
- def unique():assert len({json.dumps(v,sort_keys=True) for v in colors.values()})==5,colors;return colors
- check('Five themes have distinct computed surface/color pairs',unique)
+ def unique():assert len({json.dumps(v,sort_keys=True) for v in colors.values()})==len(THEMES)==6,colors;return colors
+ check('Six themes have distinct computed surface/color pairs',unique)
  def surfaces():
   # Leave Dark Slate selected and visit actual application surfaces.
   observed={}

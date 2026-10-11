@@ -31,7 +31,16 @@ with sync_playwright() as pw:
   for w,h in [(1366,768),(1440,900),(1920,1080),(390,844)]:
    reset();page.set_viewport_size({'width':w,'height':h});page.wait_for_timeout(400)
    box=page.locator('.sidebar-navigation').bounding_box();search=page.get_by_role('button',name='Global search',exact=True).bounding_box();rail=page.locator('.reader-rail').bounding_box()
-   assert (box['height']<=36 if w>900 else box['width']<=36) and rail['width']==(36 if w<=540 else 44),(box,rail)
+   # Oct 5 supplied V3.2 contract: 30px desktop rail, retained 36px mobile minimum.
+   # docs/v32/NORSK_COMPACT_READING.md; commits 6139b4b then 51f5a66 precede main.
+   assert (box['height']<=36 if w>900 else box['width']<=36) and rail['width']==(36 if w<=540 else 30),(box,rail)
+   controls=page.locator('.reader-rail button:visible').evaluate_all('(es)=>es.map(e=>({label:e.getAttribute("aria-label")||e.textContent.trim(),...e.getBoundingClientRect().toJSON()}))')
+   expected=['Enter focus mode','Open context panel','Open bookmarks','Open read later','Version History','Export to AI','Theme','More / Settings','Open an empty workspace',*[f'Workspace {i}' for i in range(1,6)],'Workspace 1 setup','Save current workspace','Workspace States']
+   assert [c['label'] for c in controls]==expected,controls
+   for control in controls:
+    assert control['width']==24 and control['height']==24,control
+    assert rail['x']<=control['x'] and control['right']<=rail['x']+rail['width'],(rail,control)
+    assert rail['y']<=control['y'] and control['bottom']<=rail['y']+rail['height'],(rail,control)
    assert 24<=search['width']<=28,search # 1.2.5 has nine explicitly compact, icon-only controls.
    assert page.evaluate('document.documentElement.scrollWidth-innerWidth')<=1
    assert page.locator('.topbar').count()==0

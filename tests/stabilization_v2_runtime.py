@@ -8,7 +8,7 @@ from playwright.sync_api import sync_playwright,expect
 from browser_support import ROOT,start_server,launch,close_panels,choose_library_resource
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/v2-stabilization/runtime'));OUT.mkdir(parents=True,exist_ok=True)
 BASE=os.environ.get('ATLAS_BASE_URL') or start_server()
-THEMES={'fluent':'Fluent Blue','neutral':'Neutral/Sage','academic':'Academic Paper','lavender':'Soft Lavender','slate':'Dark Slate'}
+THEMES={'black':'Midnight Black','fluent':'Fluent Blue','neutral':'Neutral/Sage','academic':'Academic Paper','lavender':'Soft Lavender','slate':'Dark Slate'}
 READ="""()=>new Promise((resolve,reject)=>{const q=indexedDB.open('knowledge-atlas');q.onupgradeneeded=()=>{q.transaction.abort();reject(Error('Application database absent'));};q.onerror=()=>reject(q.error);q.onsuccess=()=>{const d=q.result,t=d.transaction(['personal','overlays'],'readonly'),a=t.objectStore('personal').get('active'),b=t.objectStore('overlays').get('active');t.oncomplete=()=>{d.close();resolve({personal:a.result,overlays:b.result});};t.onerror=()=>{d.close();reject(t.error);};};})"""
 checks=[];errors=[];colors={}
 with sync_playwright() as pw:
@@ -25,10 +25,10 @@ with sync_playwright() as pw:
   page.goto(BASE.rstrip('/')+'/#/page/page.atlas.welcome',wait_until='networkidle');expect(page.locator('.active-pane')).to_be_visible();state()
  except Exception as e:
   blocked='ERR_BLOCKED_BY_ADMINISTRATOR' in str(e) or 'ERR_PROXY_CONNECTION_FAILED' in str(e)
-  report={'base':BASE,'scope':'Unmodified production entry and actual IndexedDB','status':'BLOCKED' if blocked else 'FAIL','passed':0,'error':str(e),'pending':['five theme changes and reload','demo persistence','capture draft return and cancel','JSON edit reload','Dashboard reader restoration','safe demo cleanup after reload']};(OUT/'results.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2));browser.close();raise SystemExit(2 if blocked else 1)
+  report={'base':BASE,'scope':'Unmodified production entry and actual IndexedDB','status':'BLOCKED' if blocked else 'FAIL','passed':0,'error':str(e),'pending':['six theme changes and reload','demo persistence','capture draft return and cancel','JSON edit reload','Dashboard reader restoration','safe demo cleanup after reload']};(OUT/'results.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2));browser.close();raise SystemExit(2 if blocked else 1)
  for theme,label in THEMES.items():
   def change(theme=theme,label=label):
-   close_panels(page);before=session();button('Theme').click();button(label).click();expect(page.locator('html')).to_have_attribute('data-theme',theme)
+   close_panels(page);before=session();button('Theme').click();page.get_by_label('Interface theme',exact=True).select_option(label=label);button('Close theme').click();expect(page.locator('html')).to_have_attribute('data-theme',theme)
    page.wait_for_function("async theme=>{const v=await ("+READ+")();const s=(v.personal.activeWorkspaceSlot??1)===1?v.personal.session:v.personal.workspaceSlots[v.personal.activeWorkspaceSlot];return s.theme===theme;}",arg=theme)
    after=session();before['theme']=theme;assert before==after,{'before':before,'after':after};colors[theme]=page.locator('.reader-rail').evaluate('(e)=>({bg:getComputedStyle(e).backgroundColor,fg:getComputedStyle(e).color})');page.reload(wait_until='networkidle');expect(page.locator('html')).to_have_attribute('data-theme',theme);assert session()==after;return colors[theme]
   check('Theme '+theme+' preserves reading state and survives actual reload',change)
@@ -45,6 +45,6 @@ with sync_playwright() as pw:
  def cleanup():
   button('Open Dashboard').click();expect(page.locator('.demo-controls')).to_be_visible();page.locator('.demo-controls>summary').click();page.once('dialog',lambda d:d.accept());button('Reset/remove demo data').click();page.wait_for_function("async()=>{const v=await ("+READ+")();return !v.overlays?.pages?.['demo.v2.article.pipeline'];}");page.reload(wait_until='networkidle');assert state()['overlays']['pages']['demo.v2.article.sql']['page']['title']=='Retained article after reload'
  check('Demo cleanup after reload retains the user-edited Article',cleanup)
- check('Five visually distinct themes and no browser exceptions',lambda:None if len({json.dumps(v,sort_keys=True) for v in colors.values()})==5 and not errors else (_ for _ in ()).throw(AssertionError({'colors':colors,'errors':errors})))
+ check('Six visually distinct themes and no browser exceptions',lambda:None if len({json.dumps(v,sort_keys=True) for v in colors.values()})==len(THEMES)==6 and not errors else (_ for _ in ()).throw(AssertionError({'colors':colors,'errors':errors})))
  report={'base':BASE,'scope':'Unmodified production entry, actual IndexedDB, real reload','checks':checks,'passed':sum(x['status']=='PASS' for x in checks),'failed':sum(x['status']=='FAIL' for x in checks),'errors':errors};(OUT/'results.json').write_text(json.dumps(report,indent=2));browser.close()
 raise SystemExit(1 if report['failed'] else 0)

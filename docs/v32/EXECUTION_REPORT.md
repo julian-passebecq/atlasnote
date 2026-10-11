@@ -71,6 +71,26 @@ inherited workflow must start only after all 13 same-source V23 gates pass.
 Local Chromium input is synthetic, not hardware validation. Compatibility-entry
 IndexedDB tests remain distinct from integrated PDF/application proof.
 
+The UTF-8 candidate completed all 13 V23 gates; its evidence is retained at
+`docs/evidence/mission/v23-cb861cf-green/`. Its stock inherited workflow passed
+commands 1–13 and failed command 14. A same-source diagnostic continuation
+finished the unchanged remaining commands and retained 49 PASS / 5 FAIL, without
+claiming release success, at `inherited-cb861cf-continuation/`. The failures were
+obsolete pre-baseline test contracts: a 44px desktop rail versus the documented
+30px rail (mobile remains 36px), two versus three authored Norsk projects, old
+theme buttons replaced by the six-option Interface theme selector, and a fixed
+1600px Continuous wheel distance that left 3px of page 1 visible. Theme failures
+also prevented an optional demo prerequisite from being created.
+
+The repaired tests retain the historical behavior checks and add exact rail
+control containment, an independent authored-project oracle, unchanged A/B and
+canonical content checks, all six themes with real reload, explicit per-case
+demo setup, and measured native forward/reverse PDF displacement with exact
+page 2 then page 1. No timeout extension, scroll-position setter, app navigation
+change or compaction assertion change was used. Ignored repair diagnostics and
+all original failures are retained. This test-only repair requires a new clean
+build, protected preview, complete same-source V23, then stock inherited run.
+
 ## Live observations
 
 Production Worker version `161c6acc-8418-4af4-a82c-27057b20f7f5`, deployment

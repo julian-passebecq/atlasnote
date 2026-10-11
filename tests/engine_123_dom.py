@@ -98,7 +98,35 @@ with sync_playwright() as pw:
   p.locator('[data-node-id="node.page.atlas.pdf"] .tree-expander').click();inspect_pdf_term(p,'Physical page - reviewed');button('Promote to global glossary').click();p.locator('dialog').wait_for(state='detached');assert p.evaluate('testStore.state.overlays.glossary.length')==1;assert number()==1;inspect_pdf_term(p,'Physical page - reviewed');assert button('In global glossary').is_disabled();p.keyboard.press('Escape')
  check('On-demand metadata editing and promotion preserve PDF content and physical position',edit)
  def continuous():
-  reset();show();p.get_by_role('combobox',name='PDF presentation',exact=True).select_option('continuous');wait();wheel(1600);p.wait_for_timeout(600);assert number()>=2
+  reset();show();p.get_by_role('combobox',name='PDF presentation',exact=True).select_option('continuous');wait();assert number()==1
+  host=canvas();before=host.evaluate('e=>e.scrollTop')
+  host.evaluate('''e=>{window.componentContinuous={scroll:[e.scrollTop],wheel:[]};e.addEventListener('scroll',()=>componentContinuous.scroll.push(e.scrollTop),{passive:true});e.addEventListener('wheel',event=>{const observed={delta:event.deltaY,trusted:event.isTrusted};componentContinuous.wheel.push(observed);queueMicrotask(()=>observed.prevented=event.defaultPrevented);},{passive:true});}''')
+  wheel(1600);p.wait_for_timeout(600);after=host.evaluate('e=>e.scrollTop');assert abs(after-before-1600)<=1,(before,after)
+  # The supplied narrower rail makes page 1 taller than 1600px. Cross the
+  # measured page-2 boundary with another native wheel, never a scroll setter.
+  extra=0
+  if number()<2:
+   extra=host.evaluate('e=>e.querySelectorAll("[data-physical-page]")[1].getBoundingClientRect().top-e.getBoundingClientRect().top+3')
+   assert extra>0,extra
+   wheel(extra);p.wait_for_function('target=>document.querySelector(".active-pane .pdf-canvas-scroll").scrollTop>=target-1&&Number(document.querySelector(".active-pane .pdf-controls input[type=number]").value)>=2',arg=after+extra)
+  assert number()>=2
+  assert number()==2,'Measured page-2 crossing must not skip a physical page'
+  final=host.evaluate('e=>e.scrollTop');observed=p.evaluate('componentContinuous')
+  assert abs(final-before-1600-extra)<=1,(before,final,extra)
+  assert all(b>=a for a,b in zip(observed['scroll'],observed['scroll'][1:])),observed
+  forwardEvents=2 if extra else 1
+  assert len(observed['wheel'])==forwardEvents,observed
+  assert all(event['trusted'] and not event['prevented'] for event in observed['wheel']),observed
+  forwardSamples=observed['scroll'];reverseStart=len(forwardSamples);wheel(-(final-before))
+  p.wait_for_function('target=>Math.abs(document.querySelector(".active-pane .pdf-canvas-scroll").scrollTop-target)<=1&&Number(document.querySelector(".active-pane .pdf-controls input[type=number]").value)===1',arg=before)
+  restored=host.evaluate('e=>e.scrollTop');observed=p.evaluate('componentContinuous')
+  reverse=[final,*observed['scroll'][reverseStart:]]
+  assert len(reverse)>1 and all(b<=a for a,b in zip(reverse,reverse[1:])),reverse
+  assert abs(restored-before)<=1 and number()==1,(before,restored,number())
+  assert len(observed['wheel'])==forwardEvents+1,observed
+  assert observed['wheel'][-1]['delta']==-(final-before),observed
+  assert all(event['trusted'] and not event['prevented'] for event in observed['wheel']),observed
+  return {'initialWheel':1600,'measuredBoundaryWheel':extra,'before':before,'forward':final,'forwardPhysicalPage':2,'reverse':restored,'reversePhysicalPage':number(),'trustedNativeWheelEvents':len(observed['wheel']),'nativeForwardReverseMonotonicNoDiscreteTurn':True,'forwardScrollSamples':forwardSamples,'reverseScrollSamples':reverse,'wheelEvents':observed['wheel']}
  check('Continuous mode keeps native scrolling rather than discrete page turns',continuous)
  check('No uncaught PDF or UI errors',lambda:None if not errors else (_ for _ in ()).throw(AssertionError(errors)))
  report={'scope':'Actual React-PDF/PDF.js using shipped synthetic PDF fixtures and browser interactions, about:blank with in-memory store; no normal-origin or IndexedDB claim','checks':results,'errors':errors,'passed':sum(x['status']=='PASS' for x in results),'failed':sum(x['status']=='FAIL' for x in results)}
