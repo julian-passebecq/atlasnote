@@ -1,4 +1,4 @@
-name: Integrated production and compatibility release gates
+name: Portable checks and gated inherited release qualification
 on:
   push:
     branches-ignore:
@@ -24,8 +24,8 @@ jobs:
       version_id: ${{ inputs.version_id || '' }}
     secrets: inherit
   production-release:
-    # Same dispatch-only condition as full-v23, so a skipped live gate never unlocks release.
-    if: inputs.preview_url != '' && inputs.version_id != ''
+    # A successful reusable workflow with skipped live jobs is not a release prerequisite.
+    if: inputs.preview_url != '' && inputs.version_id != '' && needs.v23-prerequisite.outputs.qualification_status == 'PASS'
     needs: v23-prerequisite
     env:
       ATLAS_V23_PROVIDER: cloudflare
@@ -37,13 +37,22 @@ jobs:
       ATLAS_V23_QUOTA_SUDO: '1'
 
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Measured inherited work plus this job's full V23 rerun exceeds 30 minutes.
+    # Preserve every command and individual test deadline within a bounded job.
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: atlasnote-v23-full-release
+          path: docs/evidence/v23/release
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+      # Validate downloaded exact source evidence before any inherited command starts.
+      - name: Verify exact downloaded V23 prerequisite before inherited commands
+        run: node tools/assert-v23-prerequisite.mjs
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -126,3 +135,20 @@ jobs:
           name: atlasnote-integrated-production-dist
           path: dist
           if-no-files-found: error
+  release-status:
+    if: always()
+    needs: [v23-prerequisite, production-release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Record explicit inherited-release status
+        env:
+          V23_QUALIFICATION: ${{ needs.v23-prerequisite.outputs.qualification_status }}
+          INHERITED_RESULT: ${{ needs.production-release.result }}
+          RELEASE_REQUESTED: ${{ inputs.preview_url != '' || inputs.version_id != '' }}
+        run: |
+          if [ "$V23_QUALIFICATION" = PASS ] && [ "$INHERITED_RESULT" = success ]; then
+            echo 'Inherited release qualification: **PASS**. No deployment was performed.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Inherited release qualification: **BLOCKED**. V23: ${V23_QUALIFICATION:-missing}; inherited job: $INHERITED_RESULT. Skipped jobs are not passed gates." >> "$GITHUB_STEP_SUMMARY"
+            if [ "$RELEASE_REQUESTED" = true ]; then exit 2; fi
+          fi

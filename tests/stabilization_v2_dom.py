@@ -90,7 +90,7 @@ with sync_playwright() as pw:
    else:doc['title']='Reviewed / '+doc['title']
    p.get_by_label('Resource source JSON').fill(json.dumps(doc));click('Apply validated JSON');assert state()['overlays']['pages'][id]['page']['title'].startswith('Reviewed /');expect(p.locator('.resource-management [role=alert]')).to_have_count(0)
    with p.expect_download() as download:click('Export JSON')
-   path=OUT/('export-'+label.lower()+'.json');download.value.save_as(path);assert json.loads(path.read_text())==json.loads(p.get_by_label('Resource source JSON').input_value());shot('manager-'+label.lower()+'-json')
+   path=OUT/('export-'+label.lower()+'.json');download.value.save_as(path);assert json.loads(path.read_text(encoding='utf-8'))==json.loads(p.get_by_label('Resource source JSON').input_value());shot('manager-'+label.lower()+'-json')
   check(label+' Visual/JSON preserves selection, rejects malformed edits, stages import and exports exact JSON',json_modes)
  def tree_reference():
   row=source_row('Article',SOURCES['Article']);before=state();dt=p.evaluate_handle('new DataTransfer()');row.dispatch_event('dragstart',{'dataTransfer':dt});button('Notebook content').dispatch_event('dragenter',{'dataTransfer':dt});expect(p.locator('aside.library-sidebar')).to_have_attribute('aria-label','Notebook library');folder=p.locator('[data-project-id="demo.v2.notebook.cloud"]>.project-row');folder.dispatch_event('drop',{'dataTransfer':dt});p.wait_for_timeout(200);after=state();assert len(after['overlays']['references'])==len(before['overlays']['references'])+1;assert before['overlays']['pages']==after['overlays']['pages'];assert before['overlays']['operations']==after['overlays']['operations'];dt.dispose()
@@ -106,22 +106,34 @@ with sync_playwright() as pw:
   reset();click('Compare in two panes');search('Transform then inspect');before=session()['panes'];a=button('Collapse pane A');bc=button('Collapse pane B');assert a.evaluate('(e)=>e.firstChild.textContent')=='A';assert bc.evaluate('(e)=>e.lastChild.textContent')=='B';assert 'm' in a.locator('path').get_attribute('d').lower();click('Collapse pane A');expect(button('Restore pane A')).to_be_visible();strip=p.locator('.collapsed-pane').bounding_box();hit=button('Restore pane A').bounding_box();assert strip['width']>=40 and hit['height']>=strip['height']-1;assert button('Restore pane A').evaluate('(e)=>e.firstChild.textContent')=='A';shot('collapsed-a');click('Restore pane A');click('Collapse pane B');assert button('Restore pane B').evaluate('(e)=>e.lastChild.textContent')=='B';shot('collapsed-b');click('Restore pane B');assert session()['panes']==before
  check('Directional A/B collapse and full-height widened strips preserve tabs and history exactly',pane_arrows)
  colors={}
- for theme,label in [('fluent','Fluent Blue'),('neutral','Neutral/Sage'),('academic','Academic Paper'),('lavender','Soft Lavender'),('slate','Dark Slate')]:
+ # Independent explicit UI contract: retain all historical themes and Midnight.
+ themes=[('black','Midnight Black'),('fluent','Fluent Blue'),('neutral','Neutral/Sage'),('academic','Academic Paper'),('lavender','Soft Lavender'),('slate','Dark Slate')]
+ for theme,label in themes:
   def theme_switch(theme=theme,label=label):
-   close_panels(p);before=session();click('Theme');click(label);expect(p.locator('html')).to_have_attribute('data-theme',theme);after=session();before['theme']=theme;assert after==before;colors[theme]=p.locator('.reader-rail').evaluate('(e)=>({bg:getComputedStyle(e).backgroundColor,fg:getComputedStyle(e).color})');return colors[theme]
+   close_panels(p);before=session();canonical=state();sheet=p.locator('html').get_attribute('data-sheet-theme');click('Theme')
+   selector=p.get_by_label('Interface theme',exact=True)
+   # Do not infer expected themes from appearance/model modules under test.
+   assert sorted(selector.locator('option').evaluate_all('es=>es.map(e=>[e.value,e.textContent])'))==sorted([list(t) for t in themes])
+   selector.select_option(label=label);expect(selector).to_have_value(theme);expect(p.locator('html')).to_have_attribute('data-theme',theme)
+   expect(p.locator('html')).to_have_attribute('data-sheet-theme',sheet)
+   after=session();before['theme']=theme;assert after==before
+   current=state()
+   for key in ['overlays','imports','assets','history']:assert current.get(key)==canonical.get(key),key
+   colors[theme]=p.locator('.reader-rail').evaluate('(e)=>({bg:getComputedStyle(e).backgroundColor,fg:getComputedStyle(e).color})');close_panels(p);return colors[theme]
   check('Theme '+theme+' changes only theme, preserving exact reading/workspace session',theme_switch)
  def dark_surfaces():
-  assert len({json.dumps(x,sort_keys=True) for x in colors.values()})==5,colors;demo();observed={}
+  assert len({json.dumps(x,sort_keys=True) for x in colors.values()})==len(themes)==6,colors;demo();observed={}
   def inspect(name,selector):
    style=p.locator(selector).first.evaluate('(e)=>({background:getComputedStyle(e).backgroundColor,color:getComputedStyle(e).color})');assert style['background'] not in ['rgb(255, 255, 255)','rgb(250, 250, 250)'],(name,style);observed[name]=style
   inspect('Dashboard','.dashboard-page')
   for label,id in SOURCES.items():
    click(label+' content');choose_library_resource(p,id);inspect(label,'main.library-management');click('JSON');inspect(label+' JSON','textarea[aria-label="Resource source JSON"]')
   capture();inspect('Capture','dialog[open]');click('Article',p.locator('dialog'));inspect('Article','dialog[open]');shot('slate-article');close_panels(p);click('Workspace States');inspect('Saved states','.workspace-states-panel');close_panels(p);click('Open context panel');inspect('Context','.context-drawer');close_panels(p);return observed
- check('Five distinct themes and Dark Slate across managers, JSON, capture, Article, Context and states',dark_surfaces)
+ check('Six distinct themes and Dark Slate across managers, JSON, capture, Article, Context and states',dark_surfaces)
  for w,h in [(390,844),(1366,768),(1440,900),(1920,1080)]:
   def responsive(w=w,h=h):
-   dashboard();p.set_viewport_size({'width':w,'height':h});p.wait_for_timeout(160);assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1;assert p.locator('.dashboard-mini-table table').count()==5;shot('slate-dashboard-'+str(w));click('Article content');button('Collapse notebook sidebar').click() if w<600 and button('Collapse notebook sidebar').count() else None;choose_library_resource(p,SOURCES['Article']);assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1;shot('slate-manager-'+str(w));capture();expect(p.get_by_label('Capture text 3')).to_be_visible();assert p.locator('dialog').bounding_box()['width']<=w;shot('slate-capture-'+str(w));close_panels(p);return {'viewport':[w,h],'overflow':p.evaluate('document.documentElement.scrollWidth-innerWidth')}
+   # Each viewport owns its demo prerequisite; prior failures must not cascade.
+   demo();assert SOURCES['Article'] in state()['overlays']['pages'];p.set_viewport_size({'width':w,'height':h});p.wait_for_timeout(160);assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1;assert p.locator('.dashboard-mini-table table').count()==5;shot('slate-dashboard-'+str(w));click('Article content');button('Collapse notebook sidebar').click() if w<600 and button('Collapse notebook sidebar').count() else None;choose_library_resource(p,SOURCES['Article']);expect(p.locator('.managed-resource')).to_have_attribute('data-resource-id',SOURCES['Article']);assert p.evaluate('document.documentElement.scrollWidth-innerWidth')<=1;shot('slate-manager-'+str(w));capture();expect(p.get_by_label('Capture text 3')).to_be_visible();assert p.locator('dialog').bounding_box()['width']<=w;shot('slate-capture-'+str(w));close_panels(p);return {'viewport':[w,h],'overflow':p.evaluate('document.documentElement.scrollWidth-innerWidth')}
   check('Responsive Dashboard/manager/Capture at '+str(w)+'x'+str(h),responsive)
  def cleanup():
   reset();demo();click('Article content');choose_library_resource(p,SOURCES['Article']);click('JSON');doc=json.loads(p.get_by_label('Resource source JSON').input_value());doc['title']='My retained customized Article';p.get_by_label('Resource source JSON').fill(json.dumps(doc));click('Apply validated JSON');dashboard();p.locator('.dashboard-mini-table').filter(has=p.get_by_role('heading',name='Bookmarks',exact=False)).get_by_role('button',name='Add to Bookmarks',exact=True).first.click();p.get_by_label('Typed resource destination',exact=True).select_option('page:'+SOURCES['QCM']);p.get_by_label('Saved reading title').fill('My real QCM bookmark');click('Save bookmark');capture();click('Note');p.get_by_label('Capture text 1').fill('My unrelated capture');click('Save captures');dashboard();d=p.locator('.demo-controls');d.locator('summary').click() if d.get_attribute('open') is None else None;p.once('dialog',lambda d:d.accept());click('Reset/remove demo data');after=state();assert after['overlays']['pages'][SOURCES['Article']]['page']['title']=='My retained customized Article';assert SOURCES['QCM'] in after['overlays']['pages'];assert any(x['text']=='My unrelated capture' for x in after['personal']['dashboardItems']);assert any(x['title']=='My real QCM bookmark' for x in after['personal']['bookmarks']);assert 'demo.v2.article.pipeline' not in after['overlays']['pages'];shot('safe-demo-cleanup')

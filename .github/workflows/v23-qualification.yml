@@ -3,6 +3,10 @@ name: V2.3 provider-neutral qualification
 # No deploy, GitHub write, production promotion, provider secret creation or cleanup writes.
 on:
   workflow_call:
+    outputs:
+      qualification_status:
+        description: PASS only when portable-core and full-v23 both succeeded; skipped is BLOCKED
+        value: ${{ jobs.qualification-status.outputs.qualification_status }}
     inputs:
       preview_url:
         type: string
@@ -96,3 +100,27 @@ jobs:
         with:
           name: atlasnote-v23-full-release
           path: docs/evidence/v23/release
+  qualification-status:
+    if: always()
+    needs: [portable-core, full-v23]
+    runs-on: ubuntu-latest
+    outputs:
+      qualification_status: ${{ steps.status.outputs.qualification_status }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - id: status
+        name: Report release qualification independently of portable job success
+        run: node tools/qualification-status.mjs
+        env:
+          ATLAS_PORTABLE_RESULT: ${{ needs.portable-core.result }}
+          ATLAS_FULL_RESULT: ${{ needs.full-v23.result }}
+          ATLAS_RELEASE_REQUESTED: ${{ inputs.preview_url != '' || inputs.version_id != '' }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: atlasnote-v23-qualification-status
+          path: docs/evidence/ci/qualification-status.json
+          if-no-files-found: error

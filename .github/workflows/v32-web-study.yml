@@ -43,6 +43,9 @@ jobs:
       - run: python -m playwright install --with-deps chromium
       - run: npm run build
       - run: npm run check:v23:build
+      - run: npm run test:authoring:sql
+      - run: npm run test:authoring:runtime
+      - run: npm run test:qcm:lifecycle
       - run: python tests/v3_runtime.py
       - run: python tests/v3_pdf_window.py
       - run: python tests/v3_norsk_daily.py
@@ -64,7 +67,9 @@ jobs:
             docs/evidence/appearance
             docs/evidence/v23/build-identity
             docs/evidence/pdf-navigation-runtime
-            docs/evidence/pdf-lifecycle-runtime
+            docs/evidence/v22/pdf-lifecycle
+            docs/evidence/authoring-runtime
+            docs/evidence/v23/qcm-lifecycle
           retention-days: 7
       - uses: actions/upload-artifact@v4
         with:

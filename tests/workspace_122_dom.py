@@ -8,6 +8,38 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 from browser_support import ROOT,start_server,launch,mount_dom,reader_action,open_context,open_more
 OUT=Path(os.environ.get('ATLAS_EVIDENCE',ROOT/'docs/evidence/1.2.2/dom'));OUT.mkdir(parents=True,exist_ok=True)
+
+def authored_notebook_projects():
+ # Independent oracle: read authored JSON and document indexes directly. Do not
+ # call projectLibrary/sharedFolders/categoryMatches or derive from rendered UI.
+ workspace=json.loads((ROOT/'content/workspace.json').read_text(encoding='utf-8'))
+ projects=[];pages={};pdf_ids=set();pack_ids=[]
+ for directory in sorted((ROOT/'content'/workspace['packsDirectory']).iterdir()):
+  manifest_file=directory/'atlas-pack.json'
+  if not manifest_file.is_file():continue
+  manifest=json.loads(manifest_file.read_text(encoding='utf-8'))
+  if manifest['id'] in workspace['disabledPackIds']:continue
+  pack_ids.append(manifest['id'])
+  projects.extend(json.loads((directory/manifest['files']['projects']).read_text(encoding='utf-8')))
+  for source in sorted((directory/manifest['files']['pages']).glob('*.json')):
+   page=json.loads(source.read_text(encoding='utf-8'));assert page['id'] not in pages;pages[page['id']]=page
+  document_file=directory/'atlas-documents.json'
+  if document_file.is_file():pdf_ids.update(d['pageId'] for d in json.loads(document_file.read_text(encoding='utf-8'))['documents'])
+ def native(nodes):
+  for node in nodes:
+   if 'pageId' in node:
+    page=pages[node['pageId']]
+    if page['id'] not in pdf_ids and page.get('kind') not in ['cheatsheet','article','qcm']:return True
+   elif native(node.get('children',[])):return True
+  return False
+ notebook_ids=sorted(project['id'] for project in projects if native(project['nodes']))
+ norsk_group=next(group for group in workspace['groups'] if group['id']=='group.samples.norsk')
+ norsk_ids=sorted(set(norsk_group['projectIds']) & set(notebook_ids))
+ # Known authored additions are explicit evidence; retaining both historical
+ # projects ensures a new pack cannot silently replace the original baseline.
+ assert set(norsk_ids)=={'project.samples.norsk','project.v3seed.norsk','project.atlas.norsk-csv'}
+ return {'all':notebook_ids,'norsk':norsk_ids,'packs':sorted(pack_ids),'groups':workspace['groups']}
+
 results=[];errors=[];base=start_server(dom_only=True)
 with sync_playwright() as pw:
  b=launch(pw);p=b.new_page(viewport={'width':1440,'height':900},accept_downloads=True);p.set_default_timeout(6000);p.on('pageerror',lambda e:errors.append(str(e)));mount_dom(p,base)
@@ -34,9 +66,25 @@ with sync_playwright() as pw:
   assert p.get_by_role('button',name='Workspace 1',exact=True).get_attribute('aria-pressed')=='true';shot('independent-numbers-all-categories')
  check('Five workspace numbers are independent from optional category filters; duplicates allowed',slots)
  def domain_groups():
-  reset();before=s()['panes'];overlays=snap()['overlays'];p.get_by_role('button',name='Norsk filter',exact=True).click();assert sorted(p.locator('.tree-project').evaluate_all('es=>es.map(e=>e.dataset.projectId)'))==['project.samples.norsk','project.v3seed.norsk'] # V3 seed pack adds exactly one Norsk project
-  button=p.get_by_role('button',name='Collapse group Norsk',exact=True);button.click();assert p.locator('.tree-project').count()==0;p.get_by_role('button',name='Expand group Norsk',exact=True).click();assert sorted(p.locator('.tree-project').evaluate_all('es=>es.map(e=>e.dataset.projectId)'))==['project.samples.norsk','project.v3seed.norsk']
-  assert s()['panes']==before and snap()['overlays']==overlays;p.get_by_role('button',name='Norsk filter',exact=True).click();expected=p.evaluate('''async()=>{const {projectLibrary}=await import(new URL('app/content-hub/taxonomy.js',document.baseURI));return projectLibrary(testCore.compose(testBuilt,testStore.state),testStore.state.overlays,'notes').map(p=>p.id);}''');assert set(p.locator('.tree-project').evaluate_all('(es)=>es.map(e=>e.dataset.projectId)'))==set(expected);assert p.locator('[data-node-id="node.cheatsheet.sql-analytics"]').count()==0  # Four native sheets share one added project; keep the exact all-domain projection.
+  reset();p.get_by_role('button',name='Compare in two panes',exact=True).click();p.locator('[data-node-id="node.page.atlas.language"] .tree-target').click();p.wait_for_timeout(300)
+  p.evaluate('document.dispatchEvent(new Event("atlas:before-reader-change"))')
+  expected=authored_notebook_projects();before=s();canonical=snap();built=p.evaluate('structuredClone(testBuilt)')
+  assert len(before['panes'])==2 and before['panes'][0]['views'] and before['panes'][1]['views']
+  assert sorted(pack['manifest']['id'] for pack in built['packs'])==expected['packs'];assert built['groups']==expected['groups']
+  def shown():return sorted(p.locator('.tree-project').evaluate_all('es=>es.map(e=>e.dataset.projectId)'))
+  def unchanged():
+   current=s();assert current['panes']==before['panes'];assert current['ratio']==before['ratio'];assert current['activePane']==before['activePane']
+   value=snap()
+   for key in ['overlays','imports','assets','history']:assert value.get(key)==canonical.get(key),key
+   assert p.evaluate('structuredClone(testBuilt)')==built
+  assert shown()==expected['all'];unchanged()
+  p.get_by_role('button',name='Norsk filter',exact=True).click();assert shown()==expected['norsk'];unchanged()
+  p.get_by_role('button',name='Collapse group Norsk',exact=True).click();assert shown()==[];unchanged()
+  p.get_by_role('button',name='Expand group Norsk',exact=True).click();assert shown()==expected['norsk'];unchanged()
+  p.get_by_role('button',name='Norsk filter',exact=True).click();assert shown()==expected['all'];unchanged()
+  assert p.locator('[data-node-id="node.cheatsheet.sql-analytics"]').count()==0
+  shot('canonical-norsk-filter-collapse-reopen')
+  return {'independentAuthoredNorskProjects':expected['norsk'],'independentAuthoredNotebookProjects':expected['all'],'panesPreserved':2,'checkedStages':['all','Norsk','collapsed','reopened','all restored'],'canonicalSourceOverlaysHistoryPreserved':True}
  check('Category/group filtering never changes canonical content or open tabs',domain_groups)
  def book():
   reset('page.atlas.language','parallel');before=s()['panes'][0]['views'][0]

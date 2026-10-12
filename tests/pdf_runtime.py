@@ -27,7 +27,7 @@ if not metadata.exists():
     report={'scope':'Integrated React-PDF + actual PDF.js worker on normal origin','status':'BLOCKED',
       'checks':[{'id':key,'name':name,'status':'BLOCKED','error':'Integrated React-PDF/Vite dependencies are unavailable; no integrated build/worker metadata. See FINAL_TEST_STATUS.md and the dependency/build logs.'} for key,name in CASES]}
     (OUT/'results.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2));raise SystemExit(2)
-base=start_server();meta=json.loads(metadata.read_text())
+base=start_server();meta=json.loads(metadata.read_text(encoding='utf-8'))
 def record(key,detail=None):
     results.append({'id':key,'name':dict(CASES)[key],'status':'PASS','detail':detail});print('PASS',key,flush=True)
 def search(target,title):
@@ -39,6 +39,22 @@ def input_page(target,number):
     field.fill(str(number));field.press('Enter');target.wait_for_timeout(400)
 def visible_pages(target):
     return target.locator('.physical-page').evaluate_all('(es)=>es.map(e=>Number(e.dataset.physicalPage))')
+def rendered_canvas_bounds(target,document_id,viewer_rotation):
+    # Rotation remounts PhysicalPage/React-PDF Page with a new geometry key.
+    # Canvas attachment or a fixed delay does not mean painting completed.
+    return target.wait_for_function("""({documentId,rotation,engineVersion})=>{
+      for(const root of document.querySelectorAll('.integrated-pdf[data-pdf-state="ready"][data-worker-status="compatible"]')){
+        if(root.dataset.pdfEngineVersion!==engineVersion)continue;
+        for(const physical of root.querySelectorAll('.physical-page[data-geometry-ready="true"][data-page-rendered="true"]')){
+          const key=physical.dataset.geometryKey,parts=key?.split('|');
+          if(parts?.[0]!==documentId||Number(parts[3])!==rotation)continue;
+          const canvas=physical.querySelector('.react-pdf__Page canvas');if(!canvas)continue;
+          const rect=canvas.getBoundingClientRect(),style=getComputedStyle(canvas);
+          if(canvas.isConnected&&canvas.width>0&&canvas.height>0&&rect.width>0&&rect.height>0&&style.visibility!=='hidden'&&style.display!=='none')
+            return {x:rect.x,y:rect.y,width:rect.width,height:rect.height,physicalPage:Number(physical.dataset.physicalPage),geometryKey:key,viewerRotation:rotation,engineVersion:root.dataset.pdfEngineVersion};
+        }
+      }return false;
+    }""",arg={'documentId':document_id,'rotation':viewer_rotation,'engineVersion':meta['pdfjs']}).json_value()
 def saved_records(target):
     return target.evaluate('''async()=>{const req=indexedDB.open('knowledge-atlas');const db=await new Promise((ok,no)=>{req.onsuccess=()=>ok(req.result);req.onerror=()=>no(req.error);});const tx=db.transaction(['personal','overlays'],'readonly');const out=await Promise.all(['personal','overlays'].map(n=>new Promise((ok,no)=>{const r=tx.objectStore(n).getAll();r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);})));db.close();return out;}''')
 try:
@@ -62,8 +78,12 @@ try:
         page.get_by_role('button',name='Next',exact=True).click();page.wait_for_timeout(200);assert visible_pages(page)==[4,5];record(phase)
         phase='page';page.get_by_role('combobox',name='PDF presentation').select_option('single');input_page(page,3);assert visible_pages(page)==[3];record(phase)
         phase='zoom';canvas=page.locator('.react-pdf__Page canvas').first;before=canvas.bounding_box()['width'];page.get_by_role('combobox',name='PDF zoom').select_option('1.5');page.wait_for_timeout(500);assert canvas.bounding_box()['width']>before*1.4;record(phase)
-        phase='rotation';page.get_by_role('button',name='Exit focus',exact=True).click();search(page,'Rotated PDF fixture');page.locator('.react-pdf__Page canvas').first.wait_for();page.wait_for_timeout(500)
-        show_reader_controls(page);canvas=page.locator('.react-pdf__Page canvas').first;before=canvas.bounding_box();page.get_by_role('button',name='Rotate 90 degrees',exact=True).click();page.wait_for_timeout(500);after=canvas.bounding_box();assert abs(before['height']/before['width']-after['height']/after['width'])>.1;record(phase)
+        phase='rotation';page.get_by_role('button',name='Exit focus',exact=True).click();search(page,'Rotated PDF fixture')
+        show_reader_controls(page);before=rendered_canvas_bounds(page,'doc.atlas.rotated',0);page.screenshot(path=str(OUT/'rotation-before.png'))
+        page.get_by_role('button',name='Rotate 90 degrees',exact=True).click();after=rendered_canvas_bounds(page,'doc.atlas.rotated',90)
+        assert before['physicalPage']==after['physicalPage'];assert before['geometryKey']!=after['geometryKey']
+        assert abs(before['height']/before['width']-after['height']/after['width'])>.1
+        page.screenshot(path=str(OUT/'rotation-after.png'));record(phase,{'before':before,'after':after})
         phase='outline';search(page,'PDF reading fixture');page.locator('.react-pdf__Page canvas').first.wait_for();page.get_by_role('button',name='Outline',exact=True).click();assert page.locator('.pdf-outline .react-pdf__Outline a').count()>0;record(phase)
         phase='text';input_page(page,1);page.get_by_role('button',name='Search PDF',exact=True).click();page.get_by_role('textbox',name='Find text in PDF',exact=True).fill('Atlas');page.get_by_role('button',name='Find',exact=True).click();page.locator('.pdf-search-results button').first.wait_for()
         text=page.locator('.react-pdf__Page__textContent').first

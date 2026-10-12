@@ -1,0 +1,16 @@
+{
+  "id": "authoring-contract-article",
+  "title": "Authoring contract: SQL study notes",
+  "publisher": "AtlasNote synthetic QA",
+  "sourceType": "documentation",
+  "taxonomy": {"subject": "it", "path": ["SQL", "Authoring QA"]},
+  "note": "Independently authored synthetic integration fixture. No screenshot transcription or publisher content.",
+  "blocks": [
+    {"id": "authoring-article-section", "type": "section", "title": "Aggregate at the intended grain", "children": [
+      {"id": "authoring-article-intro", "type": "markdown", "text": "Count orders by customer. Preserve quoted Norwegian: Æ, Ø, Å and å gå."},
+      {"id": "authoring-article-code", "type": "code", "language": "sql", "title": "SQLite and PostgreSQL", "code": "SELECT customer_id, COUNT(*) AS orders\nFROM orders\nGROUP BY customer_id\nHAVING COUNT(*) >= 2;"},
+      {"id": "authoring-article-table", "type": "table", "columns": ["customer_id", "orders"], "rows": [["Ada", "2"]]}
+    ]},
+    {"id": "authoring-article-trap", "type": "callout", "title": "Rows versus groups", "tone": "info", "text": "WHERE filters source rows. HAVING filters aggregated groups."}
+  ]
+}

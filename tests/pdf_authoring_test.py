@@ -126,13 +126,13 @@ with tempfile.TemporaryDirectory(prefix='atlas-authoring-tests-') as work:
     check('Actual large-image PDFs exercise 12 MiB warning and 20 MiB rejection',[127,128],size_gate)
     def template_failures():
         target=WORK/'repo';shutil.copytree(TEMPLATE,target,ignore=shutil.ignore_patterns('out','__pycache__'))
-        libpath=target/'library/library.json';original=json.loads(libpath.read_text());sidecar=target/'library'/original['documents'][0];original_doc=json.loads(sidecar.read_text());cases=[]
+        libpath=target/'library/library.json';original=json.loads(libpath.read_text(encoding='utf-8'));sidecar=target/'library'/original['documents'][0];original_doc=json.loads(sidecar.read_text(encoding='utf-8'));cases=[]
         for name,patch in [('traversal',{'file':{**original_doc['file'],'path':'../escape.pdf'}}),('false-rights',{'rights':{'status':'public','attribution':'No evidence'}}),('tampered-hash',{'file':{**original_doc['file'],'sha256':'0'*64}}),('unknown-language',{'language':''})]:
             sidecar.write_text(json.dumps({**original_doc,**patch}))
             try:validator.validate(target);raise AssertionError('Accepted '+name)
             except ValueError as e:cases.append({'case':name,'rejected':str(e)})
         sidecar.write_text(json.dumps(original_doc))
-        second=target/'library'/original['documents'][1];second_data=json.loads(second.read_text());second.write_text(json.dumps({**second_data,'file':original_doc['file']}))
+        second=target/'library'/original['documents'][1];second_data=json.loads(second.read_text(encoding='utf-8'));second.write_text(json.dumps({**second_data,'file':original_doc['file']}))
         try:validator.validate(target);raise AssertionError('Accepted duplicate')
         except ValueError as e:assert 'Duplicate PDF' in str(e)
         second.write_text(json.dumps(second_data))

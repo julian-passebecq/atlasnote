@@ -24,8 +24,8 @@ try:
   def shot(name):p.screenshot(path=str(OUT/(name+'.png')))
   assert p.locator('.tree-project').filter(has_text='PDF Atlas').count()==0;shot('notes-mode')
   p.get_by_role('button',name='PDF content',exact=True).click();assert p.locator('.sidebar-heading').inner_text().strip()=='';assert p.get_by_role('button',name='Notebook content',exact=True).is_visible();assert p.locator('.tree-project').filter(has_text='Example project').count()==0;shot('pdf-library-mode');p.get_by_role('button',name='Notebook content',exact=True).click();record(phase)
-  phase='pinned';content=json.loads((ROOT/'dist/content.json').read_text());docs=[d for pack in content['packs'] if pack['manifest']['id']=='pdfatlas.public' for d in pack['documents']];assert len(docs)==2;assert all('/fa5e83f7825cdc837078f87c5e130cb012332195/library/' in d['source']['url'] for d in docs);record(phase)
-  phase='assets';inventory=json.loads((ROOT/'dist/pdf-assets/integrity.json').read_text());assert inventory['pdfjs']=='5.4.296';assert inventory['reactPdf']=='10.5.0'
+  phase='pinned';content=json.loads((ROOT/'dist/content.json').read_text(encoding='utf-8'));docs=[d for pack in content['packs'] if pack['manifest']['id']=='pdfatlas.public' for d in pack['documents']];assert len(docs)==2;assert all('/fa5e83f7825cdc837078f87c5e130cb012332195/library/' in d['source']['url'] for d in docs);record(phase)
+  phase='assets';inventory=json.loads((ROOT/'dist/pdf-assets/integrity.json').read_text(encoding='utf-8'));assert inventory['pdfjs']=='5.4.296';assert inventory['reactPdf']=='10.5.0'
   for relative,expected in inventory['files'].items():assert hashlib.sha256((ROOT/'dist/pdf-assets'/relative).read_bytes()).hexdigest()==expected
   for prefix in ['pdf.worker.min.mjs','cmaps/','wasm/','standard_fonts/']:assert any(n.startswith(prefix) for n in inventory['files'])
   record(phase,{'verifiedAssets':len(inventory['files'])})

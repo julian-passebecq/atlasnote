@@ -298,6 +298,8 @@ input,select,textarea{border-color:var(--line)}
 .pdf-load-state{width:min(480px,calc(100% - 32px));margin:24px auto;padding:16px;line-height:1.6;font-size:13px;overflow-wrap:anywhere;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:8px}
 .pdf-load-state code{display:block;font-size:11px;margin:8px 0;overflow-wrap:anywhere}
 .focus-mode .pdf-fallback-strip{position:absolute;bottom:8px;left:50%;top:auto;transform:translateX(-50%);width:max-content;max-width:calc(100% - 16px);border:1px solid var(--line);border-radius:6px;z-index:8}
+/* Focus keeps the fallback alert visible without shrinking the document viewport. */
+.focus-mode .pdf-reader.has-preview > .pdf-compact-error{position:absolute;top:8px;left:8px;right:52px;margin:0;max-height:min(25%,120px);overflow:auto;z-index:6}
 @media(max-width:440px){.pdf-document-info dl{grid-template-columns:86px minmax(0,1fr);gap:7px 8px}.pdf-fallback-strip{padding:0 5px;font-size:10px}}
 
 .focus-mode:has(.integrated-pdf) .exit-focus,.focus-mode:has(.pdf-reader) .exit-focus{top:10px;bottom:auto;right:12px}
