@@ -49,6 +49,10 @@
 }
 :root:is([data-sheet-theme="paper"],[data-sheet-theme="warm"]) .reader-body{color-scheme:light;--token-comment:#566674;--token-keyword:#634182;--token-string:#3e6650;--token-number:#864727;--token-function:#365d85}
 :root:is([data-sheet-theme="black"],[data-sheet-theme="slate"]) .reader-body{color-scheme:dark;--token-comment:#a5afbe;--token-keyword:#d6b9ff;--token-string:#a4d5bb;--token-number:#efbf9f;--token-function:#a9cfff}
+/* Paint Continuous paper independently of chrome; retain the original Midnight surface. */
+@media screen{
+ :root[data-sheet-theme]:not([data-sheet-theme="source"]):not([data-theme="black"][data-sheet-theme="black"]) .reader-body.continuous>.note-scroller{background:var(--reading-paper)}
+}
 .sheet-figure{background:var(--reading-paper,#fbfcfd);outline-color:var(--reading-line,#cbd5df)}
 .sheet-figure.is-current{outline-color:var(--reading-accent,#476d91)}
 .sheet-figure figcaption{background:var(--surface);color:var(--text)}
