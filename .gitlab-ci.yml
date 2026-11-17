@@ -1,0 +1,36 @@
+# Private CI mirror; GitHub julian-passebecq/atlasnote remains canonical.
+# Portable source checks only; protected browser/release qualification stays manual.
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_COMMIT_BRANCH
+
+default:
+  tags: [local-windows, imac]
+  interruptible: true
+
+stages: [test]
+
+node-tests:
+  stage: test
+  timeout: 20m
+  script:
+    - $ErrorActionPreference = 'Stop'
+    - $env:PATH = 'C:\Program Files\nodejs;' + $env:PATH
+    - node --version
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    - python --version
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    - npm.cmd ci
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    - npm.cmd run typecheck
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    - npm.cmd run typecheck:online
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    - npm.cmd run validate
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    # npm test invokes pretest to build dist-offline before the Node test suite.
+    - npm.cmd test
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    - npm.cmd run build
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
