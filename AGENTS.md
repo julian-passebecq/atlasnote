@@ -4,7 +4,7 @@ The older AtlasNote web study app (React + Vite, browser IndexedDB, manual check
 
 ## Build and test
 - `npm test` (builds the offline bundle first), `npm run typecheck`, `npm run validate`; `npm run check:release` for a release.
-- CI: GitHub Actions workflows in `.github/workflows/` (public repo). No GitLab mirror.
+- CI: .gitlab-ci.yml runs portable source checks on the imac runner through the private juliandatapass-group/atlasnote mirror. GitHub stays canonical; quote the GitLab pipeline link in PRs. Existing GitHub Actions and manual release qualification remain in .github/workflows/.
 
 ## What to protect
 - His study data in the browser: every authored write goes through `WorkspaceStore` and the history engine, restore appends a new version, and a migration never resets an existing profile.
